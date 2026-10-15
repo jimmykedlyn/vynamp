@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "id": "org.vynamp.classic",
+  "version": "1.0.0",
+  "name": "Classic Graphite",
+  "author": "Vynamp example",
+  "license": "LicenseRef-ExampleOnly",
+  "min_app_version": "1.0.0",
+  "layouts": {
+    "classic": "layouts/classic.json",
+    "library": "layouts/library.json",
+    "mini": "layouts/mini.json"
+  },
+  "assets": []
+}

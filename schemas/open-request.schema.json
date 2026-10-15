@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "request_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "origin": {
+      "enum": [
+        "cli",
+        "windows-shell",
+        "linux-desktop",
+        "macos-finder",
+        "android-view",
+        "android-share",
+        "mpris",
+        "deeplink",
+        "ui"
+      ]
+    },
+    "action": {
+      "enum": [
+        "open",
+        "enqueue"
+      ]
+    },
+    "profile_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]{1,64}$"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "locator": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8192
+          },
+          "access_ref": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "locator"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 10000
+    }
+  },
+  "required": [
+    "schema_version",
+    "request_id",
+    "origin",
+    "action",
+    "profile_id",
+    "entries"
+  ],
+  "description": "Envelope interno. Broker valida bytes UTF-8 por locator <=8192 e tamanho total <=1 MiB antes de parse; maxLength conta caracteres, não bytes."
+}

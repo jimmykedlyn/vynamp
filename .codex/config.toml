@@ -1,0 +1,4 @@
+# Native Superpowers plugin is installed by Codex plugin manager, not a fabricated skill path.
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"
+# Model/auth/trust remain machine-specific; do not commit credentials or model assumptions.

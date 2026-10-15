@@ -1,0 +1,311 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "catalog_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "platform": {
+      "enum": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ]
+    },
+    "artifact_digest": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "container": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "profile": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "decode",
+          "encode",
+          "demux",
+          "render",
+          "passthrough",
+          "import",
+          "export",
+          "read",
+          "write",
+          "observe",
+          "inspect"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 100,
+      "uniqueItems": true
+    },
+    "state": {
+      "enum": [
+        "planned",
+        "experimental",
+        "verified",
+        "unavailable"
+      ]
+    },
+    "available": {
+      "type": "boolean"
+    },
+    "licensed": {
+      "type": "boolean"
+    },
+    "backend": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "backend_version": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 2048
+      },
+      "minItems": 0,
+      "maxItems": 100,
+      "uniqueItems": true
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2048
+    },
+    "codec": {
+      "type": "string",
+      "minLength": 1
+    },
+    "framing": {
+      "type": "string",
+      "minLength": 1
+    },
+    "build_features": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "license_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "limits": {
+      "type": "object",
+      "properties": {
+        "max_sample_rate": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1536000
+        },
+        "max_channels": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "sample_formats": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "s8",
+              "u8",
+              "s16",
+              "s24",
+              "s32",
+              "f32",
+              "f64",
+              "dsd",
+              "encoded"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "max_sample_rate",
+        "max_channels",
+        "sample_formats"
+      ],
+      "additionalProperties": false
+    },
+    "features": {
+      "type": "object",
+      "properties": {
+        "seek": {
+          "type": "boolean"
+        },
+        "gapless": {
+          "type": "boolean"
+        },
+        "chapters": {
+          "type": "boolean"
+        },
+        "drc": {
+          "type": "boolean"
+        },
+        "metadata_read": {
+          "type": "boolean"
+        },
+        "metadata_write": {
+          "type": "boolean"
+        },
+        "neutral_gain": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "seek",
+        "gapless",
+        "chapters",
+        "drc",
+        "metadata_read",
+        "metadata_write",
+        "neutral_gain"
+      ],
+      "additionalProperties": false
+    },
+    "level": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "drc_control": {
+      "enum": [
+        "unknown",
+        "unsupported",
+        "fixed",
+        "controllable"
+      ]
+    },
+    "neutral_path": {
+      "enum": [
+        "unknown",
+        "available",
+        "unavailable"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "catalog_id",
+    "platform",
+    "artifact_digest",
+    "container",
+    "profile",
+    "operations",
+    "state",
+    "available",
+    "licensed",
+    "backend",
+    "backend_version",
+    "evidence",
+    "reason",
+    "codec",
+    "framing",
+    "build_features",
+    "license_ids",
+    "limits",
+    "features",
+    "level",
+    "drc_control",
+    "neutral_path"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "available": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "state": {
+            "const": "verified"
+          },
+          "licensed": {
+            "const": true
+          },
+          "backend": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          },
+          "backend_version": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          },
+          "evidence": {
+            "minItems": 1
+          },
+          "license_ids": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state": {
+            "const": "verified"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "backend": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          },
+          "backend_version": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          },
+          "evidence": {
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ]
+}

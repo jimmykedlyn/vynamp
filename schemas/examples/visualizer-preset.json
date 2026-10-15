@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "123e4567-e89b-42d3-a456-426614174001",
+  "version": "1.0.0",
+  "name": "Classic Graphite Spectrum",
+  "family": "spectrum",
+  "tap": "final",
+  "channel": "mix",
+  "fft_size": 2048,
+  "window": "hann",
+  "motion": "reduced",
+  "fps": 30,
+  "palette": [
+    "#B8F35A",
+    "#66D9EF"
+  ],
+  "parameters": {
+    "smoothing_ms": 80,
+    "floor_dbfs": -90
+  }
+}

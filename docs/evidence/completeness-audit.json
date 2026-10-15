@@ -1,0 +1,65 @@
+{
+  "spec_version": "0.6.0",
+  "status": "passed",
+  "scope": "Especificação e tooling local Linux, sem player/áudio/hardware/GitHub remoto",
+  "format_catalog_entries": 68,
+  "tasks": 176,
+  "requirements": 176,
+  "epics": 17,
+  "new_tasks": 30,
+  "new_qa": "QA-022–031",
+  "schemas_and_examples": 10,
+  "independent_review": {
+    "agents": [
+      "audit_formats",
+      "audit_os",
+      "audit_product"
+    ],
+    "kind": "Codex subagents, read-only",
+    "claude_review": false,
+    "findings_addressed": [
+      "storage lock across sessions",
+      "atomic queue receipts",
+      "UTF-8 bytes limits",
+      "M3/M4 QA separation",
+      "capability level and DRC",
+      "SACD ISO",
+      "unsupported catalog statement",
+      "M0 true-peak spike"
+    ],
+    "blocking_findings_remaining": 0
+  },
+  "application_ready": false,
+  "release_enabled": false,
+  "branding_exports_ready": false,
+  "markdown_files": 292,
+  "unit_tests": 21,
+  "integration_tests": 17,
+  "total_tests": 38,
+  "checks": [
+    "Markdown/index/links, TASK/REQ/QA and DAG",
+    "10 JSON Schemas/examples and 68-entry catalog",
+    "delivery/workflows/brand reference structure",
+    "cargo fmt --all -- --check",
+    "cargo clippy --workspace --all-targets --locked -- -D warnings",
+    "cargo test --package xtask --locked"
+  ],
+  "result": "passed",
+  "verification_log": "docs/evidence/completeness-verification.log",
+  "local_os": "Linux x86_64",
+  "toolchain": "Rust 1.99.0",
+  "not_executed": [
+    "player audio",
+    "OS association runtime",
+    "hardware five targets",
+    "native icon exports",
+    "installers and signing",
+    "remote GitHub CI or publication",
+    "Claude review"
+  ],
+  "branding_reference_pngs_unchanged": true,
+  "command": "cargo xtask ci docs",
+  "verification_result": "38 tests passed, 0 failed; format/clippy/document/config checks passed",
+  "historical": true,
+  "superseded_by": "docs/evidence/windows-restart.json"
+}

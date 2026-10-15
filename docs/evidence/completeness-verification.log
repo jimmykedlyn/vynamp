@@ -1,0 +1,87 @@
+   Compiling xtask v0.6.0 (/workspace/vynamp-spec-audit/xtask)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.03s
+     Running `/workspace/.auralis-tools/vynamp-audit-target/debug/xtask ci docs`
+{
+  "epics": 17,
+  "errors": [],
+  "format_catalog_entries": 68,
+  "mandatory_platforms": [
+    "Windows x86_64",
+    "Linux x86_64",
+    "macOS Intel x86_64",
+    "macOS Apple Silicon arm64",
+    "Android arm64-v8a"
+  ],
+  "markdown_files": 292,
+  "openapi_paths": 25,
+  "operation_count": 26,
+  "phases": {
+    "M0": 16,
+    "M1": 18,
+    "M2": 37,
+    "M3": 74,
+    "M4": 17,
+    "M5": 14
+  },
+  "requirements": 176,
+  "result": "passed",
+  "schemas_and_examples": 10,
+  "scope": "Validação documental em Rust; não testa player/hardware/API/WIT.",
+  "spec_version": "0.6.0",
+  "tasks": 176
+}
+{"errors":[],"result":"passed","scope":"Structural config validation; no remote CI/signing/hardware claim","workflow_files":3}
+    Checking xtask v0.6.0 (/workspace/vynamp-spec-audit/xtask)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.53s
+   Compiling xtask v0.6.0 (/workspace/vynamp-spec-audit/xtask)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.74s
+     Running unittests src/main.rs (/workspace/.auralis-tools/vynamp-audit-target/debug/deps/xtask-6828e2a2bde72c9d)
+
+running 21 tests
+test agents::tests::plugin_unknown_or_disabled_is_not_installed ... ok
+test branding::tests::icns_requires_retina_roles_in_addition_to_pixel_sizes ... ok
+test branding::tests::native_gate_rejects_empty_icon_containers_and_non_svg_xml ... ok
+test branding::tests::native_svg_rejects_active_content_and_accepts_static_geometry ... ok
+test catalog::tests::bluetooth_cannot_be_file_handler_and_oversized_request_rejected ... ok
+test catalog::tests::canonical_planning_catalog_passes ... ok
+test catalog::tests::duplicate_id_and_missing_required_platform_rejected ... ok
+test catalog::tests::incorrect_format_category_and_webm_binding_rejected ... ok
+test catalog::tests::multibyte_locators_and_envelope_limits_are_bytes ... ok
+test branding::tests::native_gate_accepts_decodable_multisize_png_icon_containers ... ok
+test catalog::tests::visualizer_preset_cannot_embed_code_or_unbounded_fft ... ok
+test github::brand_migration_tests::overlay_removes_previous_brand_templates ... ok
+test github::symlink_tests::legacy_cleanup_never_deletes_outside_checkout ... ok
+test github::tests::overlay_removes_legacy_readme_and_preserves_unrelated_files ... ok
+test release::tests::digest_covers_xtask_and_ignores_activation_flags ... ok
+test release::tests::manifest_requires_exact_nonempty_set ... ok
+test util::tests::copy_tree_rejects_symlink_destination_parent ... ok
+test util::tests::distribution_scan_excludes_synthetic_credentials ... ok
+test validate::tests::draft_schema_rejects_invalid_example_and_format ... ok
+test validate::tests::invalid_schema_rejected ... ok
+test catalog::tests::planned_capability_cannot_advertise_availability ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.61s
+
+     Running tests/tooling.rs (/workspace/.auralis-tools/vynamp-audit-target/debug/deps/tooling-eef275ac88880d9c)
+
+running 17 tests
+test commit_on_main_is_blocked_after_bootstrap ... ok
+test desktop_detection_parses_a_real_manifest ... ok
+test agents_have_independent_files_and_indexes ... ok
+test excluded_desktop_package_does_not_activate_core_ci ... ok
+test dirty_worktree_is_preserved ... ok
+test init_creates_main_develop_without_remote ... ok
+test no_nested_worktrees ... ok
+test release_blocks_pending_native_branding_exports ... ok
+test release_cannot_publish_unimplemented_player ... ok
+test hotfix_requires_both_main_and_develop ... ok
+test renamed_product_honors_legacy_task_claims ... ok
+test task_has_only_one_owner ... ok
+test traversal_and_unknown_task_create_no_branch ... ok
+test vynamp_zip_uses_new_root_and_contains_approved_branding ... ok
+test windows_autocrlf_keeps_release_sources_identical ... ok
+test xtask_workspace_does_not_activate_player_ci ... ok
+test unmerged_worktree_is_preserved ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+

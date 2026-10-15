@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "$id": "https://spec.vynamp.invalid/playback-event.schema.json",
+  "title": "playback-event",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "event": {
+      "enum": [
+        "PlaybackStateChanged",
+        "TrackChanged",
+        "OutputNegotiated",
+        "QueueRevisionChanged",
+        "RecoverableError"
+      ]
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "generation": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "event",
+    "sequence",
+    "generation",
+    "occurred_at",
+    "payload"
+  ],
+  "additionalProperties": false
+}

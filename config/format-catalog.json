@@ -1,0 +1,2801 @@
+{
+  "schema_version": 1,
+  "revision": "0.7.0",
+  "last_reviewed": "2026-10-14",
+  "scope": "Planning catalog, not runtime availability",
+  "entries": [
+    {
+      "id": "pcm-wave",
+      "kind": "audio",
+      "codec_id": "pcm",
+      "containers": [
+        "WAV",
+        "RF64",
+        "Wave64"
+      ],
+      "profiles": [
+        "u8",
+        "s16",
+        "s24",
+        "s32",
+        "f32",
+        "f64"
+      ],
+      "extensions": [
+        "wav",
+        "wave",
+        "rf64",
+        "w64"
+      ],
+      "mime_types": [
+        "audio/wav",
+        "audio/x-wav"
+      ],
+      "phase": "M1",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "WAV M1; RF64/Wave64 e PCM32/float64 M3; valid bits, extensible, endianness, offsets u64."
+      ],
+      "sources": []
+    },
+    {
+      "id": "pcm-aiff",
+      "kind": "audio",
+      "codec_id": "pcm",
+      "containers": [
+        "AIFF",
+        "AIFF-C"
+      ],
+      "profiles": [
+        "s8",
+        "s16",
+        "s24",
+        "s32",
+        "f32",
+        "f64"
+      ],
+      "extensions": [
+        "aif",
+        "aiff",
+        "aifc"
+      ],
+      "mime_types": [
+        "audio/aiff"
+      ],
+      "phase": "M1",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "PCM AIFF M1; perfis AIFF-C M3; não anunciar toda compressão AIFF-C."
+      ],
+      "sources": []
+    },
+    {
+      "id": "pcm-caf",
+      "kind": "audio",
+      "codec_id": "pcm",
+      "containers": [
+        "CAF"
+      ],
+      "profiles": [
+        "integer",
+        "float"
+      ],
+      "extensions": [
+        "caf"
+      ],
+      "mime_types": [
+        "audio/x-caf"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": [
+        "https://developer.apple.com/library/archive/documentation/MusicAudio/Reference/CAFSpec/CAF_intro/CAF_intro.html"
+      ]
+    },
+    {
+      "id": "alac-caf",
+      "kind": "audio",
+      "codec_id": "alac",
+      "containers": [
+        "CAF"
+      ],
+      "profiles": [
+        "lossless"
+      ],
+      "extensions": [
+        "caf"
+      ],
+      "mime_types": [
+        "audio/x-caf"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "pcm-au",
+      "kind": "audio",
+      "codec_id": "pcm",
+      "containers": [
+        "AU/SND"
+      ],
+      "profiles": [
+        "linear PCM"
+      ],
+      "extensions": [
+        "au",
+        "snd"
+      ],
+      "mime_types": [
+        "audio/basic"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "g711",
+      "kind": "audio",
+      "codec_id": "g711",
+      "containers": [
+        "WAV",
+        "AU/SND"
+      ],
+      "profiles": [
+        "A-law",
+        "mu-law"
+      ],
+      "extensions": [
+        "wav",
+        "au",
+        "snd"
+      ],
+      "mime_types": [
+        "audio/wav",
+        "audio/basic"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "adpcm-wave",
+      "kind": "audio",
+      "codec_id": "adpcm",
+      "containers": [
+        "WAV"
+      ],
+      "profiles": [
+        "IMA",
+        "Microsoft ADPCM"
+      ],
+      "extensions": [
+        "wav"
+      ],
+      "mime_types": [
+        "audio/wav"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "pcm-raw",
+      "kind": "audio",
+      "codec_id": "pcm",
+      "containers": [
+        "RAW"
+      ],
+      "profiles": [
+        "manual rate/channels/endian/validbits"
+      ],
+      "extensions": [
+        "raw",
+        "pcm"
+      ],
+      "mime_types": [],
+      "phase": "M3",
+      "policy": "optional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": false,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Nunca inferir PCM pela extensão; importação exige parâmetros explícitos e tamanho limitado."
+      ],
+      "sources": []
+    },
+    {
+      "id": "flac-native",
+      "kind": "audio",
+      "codec_id": "flac",
+      "containers": [
+        "FLAC"
+      ],
+      "profiles": [
+        "16-bit",
+        "24-bit",
+        "32-bit"
+      ],
+      "extensions": [
+        "flac"
+      ],
+      "mime_types": [
+        "audio/flac"
+      ],
+      "phase": "M1",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Symphonia após spike"
+      ],
+      "restrictions": [
+        "16/24 M1; PCM32 M2/M3 conforme backend; MD5, subset e canais identificados."
+      ],
+      "sources": []
+    },
+    {
+      "id": "flac-ogg",
+      "kind": "audio",
+      "codec_id": "flac",
+      "containers": [
+        "Ogg"
+      ],
+      "profiles": [
+        "Ogg FLAC mapping"
+      ],
+      "extensions": [
+        "oga",
+        "ogg"
+      ],
+      "mime_types": [
+        "audio/ogg"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": [
+        "https://xiph.org/flac/ogg_mapping.html"
+      ]
+    },
+    {
+      "id": "flac-mp4",
+      "kind": "audio",
+      "codec_id": "flac",
+      "containers": [
+        "MP4",
+        "fMP4"
+      ],
+      "profiles": [
+        "fLaC binding"
+      ],
+      "extensions": [
+        "m4a",
+        "mp4"
+      ],
+      "mime_types": [
+        "audio/mp4"
+      ],
+      "phase": "M3",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "flac-matroska",
+      "kind": "audio",
+      "codec_id": "flac",
+      "containers": [
+        "Matroska"
+      ],
+      "profiles": [
+        "A_FLAC"
+      ],
+      "extensions": [
+        "mka",
+        "mkv"
+      ],
+      "mime_types": [
+        "audio/x-matroska"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Matroska admite FLAC; WebM convencional não."
+      ],
+      "sources": [
+        "https://www.matroska.org/technical/codec_specs.html"
+      ]
+    },
+    {
+      "id": "mp3",
+      "kind": "audio",
+      "codec_id": "mp3",
+      "containers": [
+        "MPEG elementary"
+      ],
+      "profiles": [
+        "MPEG1 Layer III",
+        "MPEG2 Layer III",
+        "MPEG2.5 Layer III"
+      ],
+      "extensions": [
+        "mp3"
+      ],
+      "mime_types": [
+        "audio/mpeg"
+      ],
+      "phase": "M1",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Symphonia após spike"
+      ],
+      "restrictions": [
+        "CBR/VBR, Xing/VBRI/LAME trim e CRC; sniff seguro."
+      ],
+      "sources": []
+    },
+    {
+      "id": "mp3-mp4",
+      "kind": "audio",
+      "codec_id": "mp3",
+      "containers": [
+        "MP4"
+      ],
+      "profiles": [
+        "MPEG audio binding"
+      ],
+      "extensions": [
+        "mp4",
+        "m4a"
+      ],
+      "mime_types": [
+        "audio/mp4"
+      ],
+      "phase": "M3",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "mp1-mp2",
+      "kind": "audio",
+      "codec_id": "mpeg-audio",
+      "containers": [
+        "MPEG elementary"
+      ],
+      "profiles": [
+        "Layer I",
+        "Layer II"
+      ],
+      "extensions": [
+        "mp1",
+        "mp2",
+        "mpa"
+      ],
+      "mime_types": [
+        "audio/mpeg"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "aac-lc-mp4",
+      "kind": "audio",
+      "codec_id": "aac",
+      "containers": [
+        "MP4",
+        "fMP4",
+        "M4B"
+      ],
+      "profiles": [
+        "AAC-LC"
+      ],
+      "extensions": [
+        "m4a",
+        "m4b",
+        "mp4"
+      ],
+      "mime_types": [
+        "audio/mp4"
+      ],
+      "phase": "M2",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Priming/edit lists, chapters e sample description por track; não implica USAC/HE."
+      ],
+      "sources": []
+    },
+    {
+      "id": "aac-lc-adts",
+      "kind": "audio",
+      "codec_id": "aac",
+      "containers": [
+        "ADTS"
+      ],
+      "profiles": [
+        "AAC-LC"
+      ],
+      "extensions": [
+        "aac",
+        "adts"
+      ],
+      "mime_types": [
+        "audio/aac"
+      ],
+      "phase": "M2",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "aac-he",
+      "kind": "audio",
+      "codec_id": "aac",
+      "containers": [
+        "MP4",
+        "fMP4",
+        "ADTS"
+      ],
+      "profiles": [
+        "HE-AAC v1 SBR",
+        "HE-AAC v2 PS"
+      ],
+      "extensions": [
+        "aac",
+        "m4a",
+        "mp4"
+      ],
+      "mime_types": [
+        "audio/aac",
+        "audio/mp4"
+      ],
+      "phase": "M2",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Perfis e taxas efetivas testados separados; AAC-LC sozinho não aprova."
+      ],
+      "sources": []
+    },
+    {
+      "id": "aac-latm",
+      "kind": "audio",
+      "codec_id": "aac",
+      "containers": [
+        "LOAS/LATM",
+        "MPEG-TS"
+      ],
+      "profiles": [
+        "AAC-LC",
+        "HE-AAC v1",
+        "HE-AAC v2"
+      ],
+      "extensions": [
+        "latm",
+        "loas",
+        "ts"
+      ],
+      "mime_types": [],
+      "phase": "M3",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": false,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "aac-adif",
+      "kind": "audio",
+      "codec_id": "aac",
+      "containers": [
+        "ADIF"
+      ],
+      "profiles": [
+        "AAC-LC"
+      ],
+      "extensions": [
+        "aac"
+      ],
+      "mime_types": [
+        "audio/aac"
+      ],
+      "phase": "M3",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Sem promessa de seek eficiente; framing ADIF separado de ADTS."
+      ],
+      "sources": []
+    },
+    {
+      "id": "aac-usac",
+      "kind": "audio",
+      "codec_id": "usac",
+      "containers": [
+        "MP4",
+        "fMP4"
+      ],
+      "profiles": [
+        "xHE-AAC AOT42",
+        "USAC"
+      ],
+      "extensions": [
+        "m4a",
+        "mp4"
+      ],
+      "mime_types": [
+        "audio/mp4"
+      ],
+      "phase": "M3",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "DRC/loudness intrinsic, licença e implementação por target; spike M0 obrigatório, resultado unsupported é explícito."
+      ],
+      "sources": [
+        "https://www2.iis.fraunhofer.de/AAC/xhe-aac.html"
+      ]
+    },
+    {
+      "id": "aac-low-delay",
+      "kind": "audio",
+      "codec_id": "aac",
+      "containers": [
+        "MP4",
+        "RTP"
+      ],
+      "profiles": [
+        "AAC-LD",
+        "AAC-ELD",
+        "AAC-ELDv2"
+      ],
+      "extensions": [
+        "m4a"
+      ],
+      "mime_types": [
+        "audio/mp4"
+      ],
+      "phase": "M5",
+      "policy": "optional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Não confundir baixa latência do codec com latência total; RTP não contratado como serviço na 1.0."
+      ],
+      "sources": []
+    },
+    {
+      "id": "alac-mp4",
+      "kind": "audio",
+      "codec_id": "alac",
+      "containers": [
+        "MP4",
+        "M4A"
+      ],
+      "profiles": [
+        "lossless"
+      ],
+      "extensions": [
+        "m4a",
+        "mp4"
+      ],
+      "mime_types": [
+        "audio/mp4"
+      ],
+      "phase": "M2",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "vorbis-ogg",
+      "kind": "audio",
+      "codec_id": "vorbis",
+      "containers": [
+        "Ogg"
+      ],
+      "profiles": [
+        "Vorbis I"
+      ],
+      "extensions": [
+        "ogg",
+        "oga"
+      ],
+      "mime_types": [
+        "audio/ogg"
+      ],
+      "phase": "M2",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "opus-ogg",
+      "kind": "audio",
+      "codec_id": "opus",
+      "containers": [
+        "Ogg"
+      ],
+      "profiles": [
+        "Opus mono/stereo",
+        "mapping families supported"
+      ],
+      "extensions": [
+        "opus",
+        "ogg",
+        "oga"
+      ],
+      "mime_types": [
+        "audio/opus",
+        "audio/ogg"
+      ],
+      "phase": "M2",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Pre-skip, end trim, output gain, R128 e chained streams; family por fixture."
+      ],
+      "sources": [
+        "https://www.rfc-editor.org/rfc/rfc7845.html"
+      ]
+    },
+    {
+      "id": "opus-mp4",
+      "kind": "audio",
+      "codec_id": "opus",
+      "containers": [
+        "MP4",
+        "fMP4"
+      ],
+      "profiles": [
+        "Opus dOps binding"
+      ],
+      "extensions": [
+        "m4a",
+        "mp4"
+      ],
+      "mime_types": [
+        "audio/mp4"
+      ],
+      "phase": "M3",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "webm-audio",
+      "kind": "audio",
+      "codec_id": "vorbis-opus",
+      "containers": [
+        "WebM"
+      ],
+      "profiles": [
+        "Opus",
+        "Vorbis"
+      ],
+      "extensions": [
+        "webm",
+        "weba"
+      ],
+      "mime_types": [
+        "audio/webm"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Áudio apenas; sem decoder de vídeo ou associação padrão video/webm."
+      ],
+      "sources": [
+        "https://www.webmproject.org/docs/container/"
+      ]
+    },
+    {
+      "id": "matroska-audio",
+      "kind": "audio",
+      "codec_id": "multiple",
+      "containers": [
+        "Matroska"
+      ],
+      "profiles": [
+        "Opus",
+        "Vorbis",
+        "PCM",
+        "AAC",
+        "MP3"
+      ],
+      "extensions": [
+        "mka",
+        "mkv"
+      ],
+      "mime_types": [
+        "audio/x-matroska"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "CodecDelay/SeekPreRoll/DiscardPadding; idiomas/default-track e seleção audio-only. Extensão MKV não torna player padrão de vídeo."
+      ],
+      "sources": []
+    },
+    {
+      "id": "ts-audio",
+      "kind": "audio",
+      "codec_id": "multiple",
+      "containers": [
+        "MPEG-TS"
+      ],
+      "profiles": [
+        "AAC-LC",
+        "HE-AAC",
+        "MP2"
+      ],
+      "extensions": [
+        "ts"
+      ],
+      "mime_types": [],
+      "phase": "M3",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": false,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Áudio selecionado e demux local; AAC framing e continuity por fixture."
+      ],
+      "sources": []
+    },
+    {
+      "id": "mov-audio",
+      "kind": "audio",
+      "codec_id": "multiple",
+      "containers": [
+        "MOV"
+      ],
+      "profiles": [
+        "PCM",
+        "AAC",
+        "ALAC"
+      ],
+      "extensions": [
+        "mov"
+      ],
+      "mime_types": [],
+      "phase": "M3",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": false,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Abrir explícito áudio apenas; sem associação de vídeo por padrão."
+      ],
+      "sources": []
+    },
+    {
+      "id": "wavpack-lossless",
+      "kind": "audio",
+      "codec_id": "wavpack",
+      "containers": [
+        "WavPack"
+      ],
+      "profiles": [
+        "integer lossless",
+        "float lossless"
+      ],
+      "extensions": [
+        "wv"
+      ],
+      "mime_types": [
+        "audio/x-wavpack"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": [
+        "https://github.com/dbry/WavPack/blob/master/doc/wavpack_doc.html"
+      ]
+    },
+    {
+      "id": "wavpack-hybrid",
+      "kind": "audio",
+      "codec_id": "wavpack",
+      "containers": [
+        "WavPack + WVC"
+      ],
+      "profiles": [
+        "hybrid lossy without WVC",
+        "hybrid lossless valid WVC"
+      ],
+      "extensions": [
+        "wv"
+      ],
+      "mime_types": [
+        "audio/x-wavpack"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "WVC é sidecar autorizado, não mídia independente; correção inválida não recebe selo lossless."
+      ],
+      "sources": []
+    },
+    {
+      "id": "wavpack-dsd",
+      "kind": "audio",
+      "codec_id": "wavpack",
+      "containers": [
+        "WavPack"
+      ],
+      "profiles": [
+        "DSD lossless"
+      ],
+      "extensions": [
+        "wv"
+      ],
+      "mime_types": [
+        "audio/x-wavpack"
+      ],
+      "phase": "M5",
+      "policy": "optional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "ape",
+      "kind": "audio",
+      "codec_id": "ape",
+      "containers": [
+        "Monkey Audio"
+      ],
+      "profiles": [
+        "compression levels supported"
+      ],
+      "extensions": [
+        "ape"
+      ],
+      "mime_types": [
+        "audio/x-ape"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Versão/nível/memória por fixture; não extrapolar compatibilidade para todas versões."
+      ],
+      "sources": []
+    },
+    {
+      "id": "tta",
+      "kind": "audio",
+      "codec_id": "tta",
+      "containers": [
+        "TTA"
+      ],
+      "profiles": [
+        "lossless"
+      ],
+      "extensions": [
+        "tta"
+      ],
+      "mime_types": [
+        "audio/x-tta"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "wma-standard",
+      "kind": "audio",
+      "codec_id": "wma",
+      "containers": [
+        "ASF"
+      ],
+      "profiles": [
+        "WMA v1",
+        "WMA v2"
+      ],
+      "extensions": [
+        "wma",
+        "asf"
+      ],
+      "mime_types": [
+        "audio/x-ms-wma"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Sem DRM; v1/v2 não aprovam Pro/Lossless/Voice."
+      ],
+      "sources": []
+    },
+    {
+      "id": "wma-lossless",
+      "kind": "audio",
+      "codec_id": "wma-lossless",
+      "containers": [
+        "ASF"
+      ],
+      "profiles": [
+        "WMA Lossless"
+      ],
+      "extensions": [
+        "wma",
+        "asf"
+      ],
+      "mime_types": [
+        "audio/x-ms-wma"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "wma-pro",
+      "kind": "audio",
+      "codec_id": "wma-pro",
+      "containers": [
+        "ASF"
+      ],
+      "profiles": [
+        "WMA Pro"
+      ],
+      "extensions": [
+        "wma",
+        "asf"
+      ],
+      "mime_types": [
+        "audio/x-ms-wma"
+      ],
+      "phase": "M3",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "wma-voice",
+      "kind": "audio",
+      "codec_id": "wma-voice",
+      "containers": [
+        "ASF"
+      ],
+      "profiles": [
+        "WMA Voice"
+      ],
+      "extensions": [
+        "wma",
+        "asf"
+      ],
+      "mime_types": [
+        "audio/x-ms-wma"
+      ],
+      "phase": "M5",
+      "policy": "optional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "musepack",
+      "kind": "audio",
+      "codec_id": "mpc",
+      "containers": [
+        "Musepack"
+      ],
+      "profiles": [
+        "SV7",
+        "SV8"
+      ],
+      "extensions": [
+        "mpc",
+        "mpp",
+        "mp+"
+      ],
+      "mime_types": [
+        "audio/x-musepack"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "dsd-pcm",
+      "kind": "audio",
+      "codec_id": "dsd",
+      "containers": [
+        "DSF",
+        "DFF"
+      ],
+      "profiles": [
+        "DSD64",
+        "DSD128",
+        "DSD256 raw"
+      ],
+      "extensions": [
+        "dsf",
+        "dff"
+      ],
+      "mime_types": [
+        "audio/x-dsf",
+        "audio/x-dff"
+      ],
+      "phase": "M3",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Decimação para PCM, Fs/headroom/duração registrados; DFF DST é capacidade distinta."
+      ],
+      "sources": []
+    },
+    {
+      "id": "dsd-dst",
+      "kind": "audio",
+      "codec_id": "dst",
+      "containers": [
+        "DFF"
+      ],
+      "profiles": [
+        "DST compressed DSD"
+      ],
+      "extensions": [
+        "dff"
+      ],
+      "mime_types": [
+        "audio/x-dff"
+      ],
+      "phase": "M5",
+      "policy": "optional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "dsd-native",
+      "kind": "audio",
+      "codec_id": "dsd",
+      "containers": [
+        "DSF",
+        "DFF"
+      ],
+      "profiles": [
+        "Native DSD",
+        "DoP"
+      ],
+      "extensions": [
+        "dsf",
+        "dff"
+      ],
+      "mime_types": [
+        "audio/x-dsf",
+        "audio/x-dff"
+      ],
+      "phase": "M5",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "passthrough"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "DAC/backend/rota reais, nenhum EQ/limiter PCM; 512+ após prova."
+      ],
+      "sources": []
+    },
+    {
+      "id": "amr",
+      "kind": "audio",
+      "codec_id": "amr",
+      "containers": [
+        "AMR",
+        "3GP"
+      ],
+      "profiles": [
+        "AMR-NB",
+        "AMR-WB"
+      ],
+      "extensions": [
+        "amr",
+        "3ga",
+        "3gp"
+      ],
+      "mime_types": [
+        "audio/amr",
+        "audio/amr-wb",
+        "audio/3gpp"
+      ],
+      "phase": "M5",
+      "policy": "optional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "speex",
+      "kind": "audio",
+      "codec_id": "speex",
+      "containers": [
+        "Ogg"
+      ],
+      "profiles": [
+        "Speex NB",
+        "WB",
+        "UWB"
+      ],
+      "extensions": [
+        "spx"
+      ],
+      "mime_types": [
+        "audio/ogg"
+      ],
+      "phase": "M5",
+      "policy": "optional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": []
+    },
+    {
+      "id": "ac3",
+      "kind": "audio",
+      "codec_id": "ac3",
+      "containers": [
+        "AC3",
+        "MP4",
+        "Matroska"
+      ],
+      "profiles": [
+        "AC-3"
+      ],
+      "extensions": [
+        "ac3"
+      ],
+      "mime_types": [],
+      "phase": "M5",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "decode",
+        "passthrough"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Decoder, renderer e passthrough são capacidades distintas; patentes/layout/downmix/receiver por prova. Atmos/DTS:X metadata não concede renderer imersivo."
+      ],
+      "sources": []
+    },
+    {
+      "id": "eac3",
+      "kind": "audio",
+      "codec_id": "eac3",
+      "containers": [
+        "EAC3",
+        "MP4",
+        "Matroska"
+      ],
+      "profiles": [
+        "E-AC-3",
+        "JOC metadata"
+      ],
+      "extensions": [
+        "eac3",
+        "ec3"
+      ],
+      "mime_types": [],
+      "phase": "M5",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "decode",
+        "passthrough"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Decoder, renderer e passthrough são capacidades distintas; patentes/layout/downmix/receiver por prova. Atmos/DTS:X metadata não concede renderer imersivo."
+      ],
+      "sources": []
+    },
+    {
+      "id": "truehd-mlp",
+      "kind": "audio",
+      "codec_id": "truehd-mlp",
+      "containers": [
+        "Matroska",
+        "elementary"
+      ],
+      "profiles": [
+        "TrueHD",
+        "MLP"
+      ],
+      "extensions": [
+        "thd",
+        "mlp"
+      ],
+      "mime_types": [],
+      "phase": "M5",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "decode",
+        "passthrough"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Decoder, renderer e passthrough são capacidades distintas; patentes/layout/downmix/receiver por prova. Atmos/DTS:X metadata não concede renderer imersivo."
+      ],
+      "sources": []
+    },
+    {
+      "id": "dts",
+      "kind": "audio",
+      "codec_id": "dts",
+      "containers": [
+        "DTS",
+        "Matroska"
+      ],
+      "profiles": [
+        "DTS Core",
+        "DTS-HD HR",
+        "DTS-HD MA"
+      ],
+      "extensions": [
+        "dts",
+        "dtshd"
+      ],
+      "mime_types": [],
+      "phase": "M5",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "decode",
+        "passthrough"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Decoder, renderer e passthrough são capacidades distintas; patentes/layout/downmix/receiver por prova. Atmos/DTS:X metadata não concede renderer imersivo."
+      ],
+      "sources": []
+    },
+    {
+      "id": "mpeg-h",
+      "kind": "audio",
+      "codec_id": "mpegh",
+      "containers": [
+        "MP4",
+        "MHAS"
+      ],
+      "profiles": [
+        "mha1",
+        "mhm1",
+        "profile/level declared"
+      ],
+      "extensions": [
+        "mhas",
+        "mp4"
+      ],
+      "mime_types": [],
+      "phase": "M5",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "decode",
+        "render"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "MPEG-H profile/level, apresentações/objetos, renderer e licença por alvo; prova M0 não garante entrega."
+      ],
+      "sources": [
+        "https://github.com/Fraunhofer-IIS/mpeghdec"
+      ]
+    },
+    {
+      "id": "ac4",
+      "kind": "audio",
+      "codec_id": "ac4",
+      "containers": [
+        "MP4",
+        "elementary"
+      ],
+      "profiles": [
+        "AC-4 presentations"
+      ],
+      "extensions": [
+        "ac4",
+        "mp4"
+      ],
+      "mime_types": [],
+      "phase": "M5",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "decode",
+        "render"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Fixture e licença por perfil/container; disponibilidade só após prova no build."
+      ],
+      "sources": [
+        "https://professional.dolby.com/technologies/ac-4/"
+      ]
+    },
+    {
+      "id": "iamf",
+      "kind": "immersive-model",
+      "codec_id": "iamf",
+      "containers": [
+        "IAMF",
+        "MP4"
+      ],
+      "profiles": [
+        "Opus",
+        "AAC-LC",
+        "FLAC",
+        "LPCM"
+      ],
+      "extensions": [
+        "iamf",
+        "mp4"
+      ],
+      "mime_types": [],
+      "phase": "M5",
+      "policy": "conditional",
+      "operations": [
+        "demux",
+        "decode",
+        "render"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "IAMF é modelo/formato imersivo, não codec único; underlying decoder não aprova rendering/mix presentation."
+      ],
+      "sources": [
+        "https://aomediacodec.github.io/iamf/"
+      ]
+    },
+    {
+      "id": "midi",
+      "kind": "audio",
+      "codec_id": "midi-events",
+      "containers": [
+        "SMF",
+        "RIFF MIDI",
+        "XMF"
+      ],
+      "profiles": [
+        "MIDI",
+        "RMI",
+        "XMF",
+        "KAR"
+      ],
+      "extensions": [
+        "mid",
+        "midi",
+        "rmi",
+        "xmf",
+        "kar"
+      ],
+      "mime_types": [
+        "audio/midi"
+      ],
+      "phase": "M5",
+      "policy": "optional",
+      "operations": [
+        "demux",
+        "render"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Synth + SF2 externo licenciado; eventos não são PCM comprimido, loops/duração/memória limitados."
+      ],
+      "sources": []
+    },
+    {
+      "id": "tracker",
+      "kind": "audio",
+      "codec_id": "tracker-module",
+      "containers": [
+        "tracker module"
+      ],
+      "profiles": [
+        "MOD",
+        "XM",
+        "IT",
+        "S3M",
+        "MO3",
+        "MTM",
+        "UMX"
+      ],
+      "extensions": [
+        "mod",
+        "xm",
+        "it",
+        "s3m",
+        "mo3",
+        "mtm",
+        "umx"
+      ],
+      "mime_types": [],
+      "phase": "M5",
+      "policy": "optional",
+      "operations": [
+        "demux",
+        "render"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "libopenmpt candidato; títulos, subsongs, loops e licença por perfil."
+      ],
+      "sources": []
+    },
+    {
+      "id": "tak",
+      "kind": "audio",
+      "codec_id": "tak",
+      "containers": [
+        "TAK"
+      ],
+      "profiles": [
+        "supported profiles only"
+      ],
+      "extensions": [
+        "tak"
+      ],
+      "mime_types": [],
+      "phase": "M5",
+      "policy": "optional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Codec/helper auditado, licença e fixture; vídeo não decodificado; sem assumir suporte universal."
+      ],
+      "sources": []
+    },
+    {
+      "id": "optimfrog",
+      "kind": "audio",
+      "codec_id": "optimfrog",
+      "containers": [
+        "OptimFROG"
+      ],
+      "profiles": [
+        "supported profiles only"
+      ],
+      "extensions": [
+        "ofr",
+        "ofs"
+      ],
+      "mime_types": [],
+      "phase": "M5",
+      "policy": "optional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Codec/helper auditado, licença e fixture; vídeo não decodificado; sem assumir suporte universal."
+      ],
+      "sources": []
+    },
+    {
+      "id": "atrac",
+      "kind": "audio",
+      "codec_id": "atrac",
+      "containers": [
+        "OMA",
+        "WAV"
+      ],
+      "profiles": [
+        "supported profiles only"
+      ],
+      "extensions": [
+        "oma",
+        "aa3"
+      ],
+      "mime_types": [],
+      "phase": "M5",
+      "policy": "optional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Codec/helper auditado, licença e fixture; vídeo não decodificado; sem assumir suporte universal."
+      ],
+      "sources": []
+    },
+    {
+      "id": "shorten",
+      "kind": "audio",
+      "codec_id": "shorten",
+      "containers": [
+        "Shorten"
+      ],
+      "profiles": [
+        "supported profiles only"
+      ],
+      "extensions": [
+        "shn"
+      ],
+      "mime_types": [],
+      "phase": "M5",
+      "policy": "optional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Codec/helper auditado, licença e fixture; vídeo não decodificado; sem assumir suporte universal."
+      ],
+      "sources": []
+    },
+    {
+      "id": "legacy-video-audio",
+      "kind": "audio",
+      "codec_id": "multiple",
+      "containers": [
+        "AVI",
+        "FLV",
+        "PS"
+      ],
+      "profiles": [
+        "supported profiles only"
+      ],
+      "extensions": [
+        "avi",
+        "flv",
+        "mpg"
+      ],
+      "mime_types": [],
+      "phase": "M5",
+      "policy": "optional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": false,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Codec/helper auditado, licença e fixture; vídeo não decodificado; sem assumir suporte universal."
+      ],
+      "sources": []
+    },
+    {
+      "id": "bt-classic",
+      "kind": "bluetooth-transport",
+      "codec_id": "bluetooth-transport",
+      "containers": [
+        "OS Bluetooth route"
+      ],
+      "profiles": [
+        "SBC",
+        "AAC",
+        "aptX",
+        "aptX HD",
+        "aptX Adaptive",
+        "aptX Lossless",
+        "LDAC"
+      ],
+      "extensions": [],
+      "mime_types": [],
+      "phase": "M3",
+      "policy": "conditional",
+      "operations": [
+        "observe"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": false,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Observabilidade conforme OS/hardware; não são arquivos locais, nem garantia de bit-perfect/hi-res/lossless."
+      ],
+      "sources": [
+        "https://www.bluetooth.com/learn-about-bluetooth/feature-enhancements/le-audio/le-audio-specifications/"
+      ]
+    },
+    {
+      "id": "bt-le",
+      "kind": "bluetooth-transport",
+      "codec_id": "bluetooth-transport",
+      "containers": [
+        "OS Bluetooth route"
+      ],
+      "profiles": [
+        "LC3 LE Audio",
+        "LC3plus where OS reports"
+      ],
+      "extensions": [],
+      "mime_types": [],
+      "phase": "M3",
+      "policy": "conditional",
+      "operations": [
+        "observe"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": false,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Observabilidade conforme OS/hardware; não são arquivos locais, nem garantia de bit-perfect/hi-res/lossless."
+      ],
+      "sources": [
+        "https://www.bluetooth.com/learn-about-bluetooth/feature-enhancements/le-audio/le-audio-specifications/"
+      ]
+    },
+    {
+      "id": "lc3-files",
+      "kind": "audio",
+      "codec_id": "lc3",
+      "containers": [
+        "experimental framing"
+      ],
+      "profiles": [
+        "explicit LC3 framing"
+      ],
+      "extensions": [],
+      "mime_types": [],
+      "phase": "M5",
+      "policy": "optional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": false,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "Só framing especificado e fixtures; nenhum handler universal .lc3 presumido."
+      ],
+      "sources": []
+    },
+    {
+      "id": "m3u",
+      "kind": "playlist",
+      "codec_id": "playlist",
+      "containers": [
+        "M3U",
+        "M3U8"
+      ],
+      "profiles": [
+        "version declared"
+      ],
+      "extensions": [
+        "m3u",
+        "m3u8"
+      ],
+      "mime_types": [],
+      "phase": "M2",
+      "policy": "required",
+      "operations": [
+        "import",
+        "export"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "M3U8 HLS por conteúdo; relativas e grants limitados, CUE tracks virtuais; export por formato sem perder fila original."
+      ],
+      "sources": []
+    },
+    {
+      "id": "pls",
+      "kind": "playlist",
+      "codec_id": "playlist",
+      "containers": [
+        "PLS"
+      ],
+      "profiles": [
+        "version declared"
+      ],
+      "extensions": [
+        "pls"
+      ],
+      "mime_types": [],
+      "phase": "M2",
+      "policy": "required",
+      "operations": [
+        "import",
+        "export"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "M3U8 HLS por conteúdo; relativas e grants limitados, CUE tracks virtuais; export por formato sem perder fila original."
+      ],
+      "sources": []
+    },
+    {
+      "id": "xspf",
+      "kind": "playlist",
+      "codec_id": "playlist",
+      "containers": [
+        "XSPF"
+      ],
+      "profiles": [
+        "version declared"
+      ],
+      "extensions": [
+        "xspf"
+      ],
+      "mime_types": [],
+      "phase": "M2",
+      "policy": "required",
+      "operations": [
+        "import",
+        "export"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "M3U8 HLS por conteúdo; relativas e grants limitados, CUE tracks virtuais; export por formato sem perder fila original."
+      ],
+      "sources": []
+    },
+    {
+      "id": "cue",
+      "kind": "playlist",
+      "codec_id": "playlist",
+      "containers": [
+        "CUE"
+      ],
+      "profiles": [
+        "version declared"
+      ],
+      "extensions": [
+        "cue"
+      ],
+      "mime_types": [],
+      "phase": "M2",
+      "policy": "required",
+      "operations": [
+        "import",
+        "export"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "M3U8 HLS por conteúdo; relativas e grants limitados, CUE tracks virtuais; export por formato sem perder fila original."
+      ],
+      "sources": []
+    },
+    {
+      "id": "encrypted-drm",
+      "kind": "excluded",
+      "codec_id": "encrypted",
+      "containers": [
+        "protected containers"
+      ],
+      "profiles": [
+        "Widevine",
+        "FairPlay",
+        "PlayReady"
+      ],
+      "extensions": [],
+      "mime_types": [],
+      "phase": "M5",
+      "policy": "unsupported",
+      "operations": [
+        "inspect"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": false,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "RFC/licenciamento futuro; não remover proteção nem simular suporte."
+      ],
+      "sources": []
+    },
+    {
+      "id": "sacd-iso",
+      "kind": "audio",
+      "codec_id": "dsd-dst",
+      "containers": [
+        "SACD ISO"
+      ],
+      "profiles": [
+        "raw DSD extraction",
+        "DST extraction when decoder available"
+      ],
+      "extensions": [
+        "iso"
+      ],
+      "mime_types": [],
+      "phase": "M5",
+      "policy": "optional",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": false,
+      "backend_candidates": [
+        "Helper isolado e auditado; spike M0"
+      ],
+      "restrictions": [
+        "Apenas imagens obtidas legalmente e não protegidas; sem circumvention. Não associar ISO genérico. DSF/DFF/raw/DST e capacidades de extração/reprodução são distintos."
+      ],
+      "sources": []
+    }
+  ]
+}

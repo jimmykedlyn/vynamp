@@ -1,0 +1,37 @@
+{
+  "spec_version": "0.7.0",
+  "result": "passed",
+  "scope": "Specification and local tooling, Linux Rust and PowerShell 7.4.7; no running player, native Windows execution, private GitHub push, actual agent runtimes or hardware claim",
+  "verification": {
+    "rust_unit_tests": 28,
+    "rust_integration_tests": 25,
+    "markdown_files": 295,
+    "tasks": 176,
+    "requirements": 176,
+    "epics": 17,
+    "format_catalog_entries": 68,
+    "schemas_and_examples": 10,
+    "workflow_files": 3,
+    "ci_docs": "passed",
+    "powershell_smoke": "passed: native local Git/Rust, simulated GitHub/Codex/Claude; repeat startup, missing publication receipt blocked, separate indexes/driver targets, prompts/cache containment"
+  },
+  "independent_review": {
+    "agent": "restart_review",
+    "kind": "Codex read-only subagent",
+    "claude_review": false,
+    "findings_addressed": [
+      "Incomplete import cannot declare ready without success receipt; preserved-checkout recovery documented",
+      "General worktree destinations validated before claim or directory creation"
+    ]
+  },
+  "readiness": {
+    "application_ready": false,
+    "release_enabled": false,
+    "branding_exports_ready": false
+  },
+  "archive_validation": "Per-file SHA256/byte-count and extracted documentation/delivery validation performed after bundling; report below accompanies downloadable ZIP",
+  "logs": [
+    "windows-restart-verification.log",
+    "windows-restart-powershell.log"
+  ]
+}

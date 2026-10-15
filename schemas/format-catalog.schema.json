@@ -1,0 +1,256 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "last_reviewed": {
+      "type": "string",
+      "format": "date"
+    },
+    "scope": {
+      "const": "Planning catalog, not runtime availability"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]{1,63}$"
+          },
+          "kind": {
+            "enum": [
+              "audio",
+              "immersive-model",
+              "bluetooth-transport",
+              "playlist",
+              "excluded"
+            ]
+          },
+          "codec_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          },
+          "containers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            "minItems": 1,
+            "maxItems": 100,
+            "uniqueItems": true
+          },
+          "profiles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            "minItems": 1,
+            "maxItems": 100,
+            "uniqueItems": true
+          },
+          "extensions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9+]{1,16}$"
+            },
+            "minItems": 0,
+            "maxItems": 100,
+            "uniqueItems": true
+          },
+          "mime_types": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            "minItems": 0,
+            "maxItems": 100,
+            "uniqueItems": true
+          },
+          "phase": {
+            "enum": [
+              "M0",
+              "M1",
+              "M2",
+              "M3",
+              "M4",
+              "M5"
+            ]
+          },
+          "policy": {
+            "enum": [
+              "required",
+              "conditional",
+              "optional",
+              "unsupported"
+            ]
+          },
+          "operations": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "demux",
+                "decode",
+                "encode",
+                "render",
+                "passthrough",
+                "import",
+                "export",
+                "read",
+                "write",
+                "observe",
+                "inspect"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 100,
+            "uniqueItems": true
+          },
+          "target_platforms": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "windows-x64",
+                "linux-x64",
+                "macos-intel",
+                "macos-silicon",
+                "android-arm64"
+              ]
+            },
+            "minItems": 1,
+            "maxItems": 5,
+            "uniqueItems": true
+          },
+          "state": {
+            "enum": [
+              "planned"
+            ]
+          },
+          "association_allowed": {
+            "type": "boolean"
+          },
+          "backend_candidates": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            "minItems": 1,
+            "maxItems": 100,
+            "uniqueItems": true
+          },
+          "restrictions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            },
+            "minItems": 1,
+            "maxItems": 100,
+            "uniqueItems": true
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "minItems": 0,
+            "maxItems": 100,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "codec_id",
+          "containers",
+          "profiles",
+          "extensions",
+          "mime_types",
+          "phase",
+          "policy",
+          "operations",
+          "target_platforms",
+          "state",
+          "association_allowed",
+          "backend_candidates",
+          "restrictions",
+          "sources"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "bluetooth-transport"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "extensions": {
+                  "maxItems": 0
+                },
+                "association_allowed": {
+                  "const": false
+                },
+                "operations": {
+                  "const": [
+                    "observe"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "policy": {
+                  "const": "unsupported"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "association_allowed": {
+                  "const": false
+                }
+              }
+            }
+          }
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 500,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schema_version",
+    "revision",
+    "last_reviewed",
+    "scope",
+    "entries"
+  ]
+}

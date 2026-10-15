@@ -1,0 +1,31 @@
+# Histórico da especificação
+
+Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+
+## 0.1.0 — 2026-10-14
+
+Especificação inicial de produto independente Rust; temas/plugins próprios; visual clássico original e tokens; funcionalidades locais/hi-res/DSP/streaming; plataforma futura; arquitetura/contratos/qualidade/segurança; tarefas rastreáveis e exemplos validados. Hipóteses e fases explicitadas. Não houve implementação do player ou uso de código do Winamp.
+
+## 0.2.0 — 2026-10-14
+
+Windows/Linux/macOS Intel+Silicon/Android obrigatórios desde provas até 1.0. Linux/macOS promovidos M5→M3 com IDs preservados; Android/core Rust+shell nativo, mobile/tablet/backends/QA/CI/distribuição adicionados. 16 novas tarefas/requisitos, épicos E13/E14, gates de release atualizados. Não houve implementação/teste de áudio no produto.
+
+## 0.3.0 — 2026-10-14
+
+Projeto raiz preparado para Codex/Claude com Superpowers obrigatório; worktree/claim/handoff/Gitflow/GitHub privado; workflows CI/release/hardware, tooling tests e recipes de installer/assinatura. 146 tarefas/15 épicos. Nenhum plugin foi instalado, repositório privado acessado/pushado, aplicativo ou instalador compilado nesta preparação.
+
+## 0.4.0 — 2026-10-14
+
+Automação migrada de Python para Rust/cargo xtask. Workspace, Rust 1.99.0 e Cargo.lock reais; Git/claims/doctor/importação, validadores, CI/hardware gates e receitas de assinatura/instaladores/releases. Hooks e workflows atualizados; CI distingue xtask de fontes reais do player. Package mantém release/application flags false. Execução local documentada em docs/evidence/rust-tooling.json; CI remoto/assinatura/player/hardware não executados nesta entrega.
+
+## 0.5.0 — 2026-10-14
+
+Nome Vynamp e identidade C — Pulso escolhidos pelo usuário. Inclui três PNGs originais de referência com SHA/dimensões, guia multiplataforma/brand tokens, ADR-008 e gates de export. Renomeia namespaces/contratos/templates/previews e ZIP, atualiza GitHub informado renomeado e preserva claims/evidências históricas. Não exporta/finge vetores/ícones nativos ou instaladores executados.
+
+## 0.6.0 — 2026-10-14
+
+Auditoria de completude: associações/Open With em cinco alvos, batch/IPC/grants, owner por perfil/portable/backup/deep links; catálogo de 68 bindings, USAC/imersivos e Bluetooth separado; trim/DRC/metadata; proteção true-peak após master/mix/resampler; contrato de visualizers e proxy. Dois novos épicos/30 tarefas, total 176 TASK/REQ em 17 épicos; QA-022–031 e quatro novos schemas. Corrige divergências de distribuição mantendo oito artefatos obrigatórios. Documentação e validação Rust; nenhuma implementação de player, export nativo ou publicação remota.
+
+## 0.7.0 — 2026-10-14
+
+Consolida correções Windows de caminhos verbatim/UNC, checks em cache distinto do executable e aliases de cache. Import evita colidir com branch de bootstrap remota existente. Novo prepare-agents preserva import branch/PR, cria Codex com claim e Claude detached/índice próprio; não depende de develop local ausente. ZIP em raiz única vynamp-media-player com pacote/repo, wrappers PowerShell, prompts automáticos e caches/tmp/logs locais. Mantém 176 TASK/REQ e 68 entradas planejadas, flags de app/release/exports false e evidências nativas ainda exigidas.

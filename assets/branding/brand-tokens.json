@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "name": "Vynamp",
+  "concept": "C",
+  "concept_name": "Pulso",
+  "colors": {
+    "brand-accent": "#FFBF69",
+    "brand-background": "#11131B",
+    "brand-wordmark-light": "#F0F2F5",
+    "brand-wordmark-dark": "#11131B"
+  },
+  "symbol": "V arredondado com play separado",
+  "ui_palette": "assets/design-tokens.json",
+  "reference_only": true
+}

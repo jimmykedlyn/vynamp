@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "$id": "https://spec.vynamp.invalid/theme-layout.schema.json",
+  "title": "theme-layout",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "mode": {
+      "enum": [
+        "classic",
+        "library",
+        "mini",
+        "phone",
+        "tablet"
+      ]
+    },
+    "reference_width_dip": {
+      "type": "integer",
+      "minimum": 320,
+      "maximum": 4096
+    },
+    "reference_height_dip": {
+      "type": "integer",
+      "minimum": 96,
+      "maximum": 2160
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1000,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "enum": [
+              "panel",
+              "text",
+              "icon",
+              "button",
+              "slider",
+              "list",
+              "image",
+              "visualizer"
+            ]
+          },
+          "x": {
+            "type": "number",
+            "minimum": 0
+          },
+          "y": {
+            "type": "number",
+            "minimum": 0
+          },
+          "width": {
+            "type": "number",
+            "minimum": 1
+          },
+          "height": {
+            "type": "number",
+            "minimum": 1
+          },
+          "binding": {
+            "type": "string"
+          },
+          "action": {
+            "enum": [
+              "play",
+              "pause",
+              "stop",
+              "seek",
+              "open-url",
+              "show-library",
+              "mute"
+            ]
+          },
+          "accessible_name": {
+            "type": "string"
+          },
+          "color_token": {
+            "enum": [
+              "background",
+              "chassis",
+              "panel-raised",
+              "panel-inset",
+              "display",
+              "border-light",
+              "border-dark",
+              "text-primary",
+              "text-secondary",
+              "text-muted",
+              "lime",
+              "cyan",
+              "amber",
+              "danger",
+              "selection"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "x",
+          "y",
+          "width",
+          "height"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "mode",
+    "reference_width_dip",
+    "reference_height_dip",
+    "nodes"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,9 @@
+{
+  "audit_complete": false,
+  "files": {
+    "windows-x64": [],
+    "linux-x64": [],
+    "macos-universal": []
+  },
+  "note": "Preencher com helpers/libs reais, paths e licenças após implementar o aplicativo; nenhuma DLL/so/dylib externa é presumida."
+}

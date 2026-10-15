@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "event": "OutputNegotiated",
+  "sequence": 42,
+  "generation": 3,
+  "occurred_at": "2026-10-14T00:00:00Z",
+  "payload": {
+    "backend": "wasapi-shared",
+    "sample_rate_hz": 48000,
+    "valid_bits": 24,
+    "channels": 2,
+    "transparent": false
+  }
+}

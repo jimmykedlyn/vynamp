@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "mode": "mini",
+  "reference_width_dip": 420,
+  "reference_height_dip": 112,
+  "nodes": [
+    {
+      "id": "root",
+      "type": "panel",
+      "x": 0,
+      "y": 0,
+      "width": 420,
+      "height": 112,
+      "color_token": "chassis"
+    },
+    {
+      "id": "title",
+      "type": "text",
+      "x": 12,
+      "y": 30,
+      "width": 220,
+      "height": 28,
+      "binding": "playback.title",
+      "color_token": "lime"
+    },
+    {
+      "id": "play",
+      "type": "button",
+      "x": 248,
+      "y": 40,
+      "width": 44,
+      "height": 32,
+      "action": "play",
+      "accessible_name": "Reproduzir"
+    },
+    {
+      "id": "stop",
+      "type": "button",
+      "x": 298,
+      "y": 40,
+      "width": 44,
+      "height": 32,
+      "action": "stop",
+      "accessible_name": "Parar"
+    },
+    {
+      "id": "mute",
+      "type": "button",
+      "x": 348,
+      "y": 40,
+      "width": 56,
+      "height": 32,
+      "action": "mute",
+      "accessible_name": "Silenciar"
+    }
+  ]
+}

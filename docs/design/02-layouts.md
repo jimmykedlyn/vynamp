@@ -1,0 +1,41 @@
+# Layouts, geometria e telas
+
+Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+
+## Coordenadas canônicas
+
+Unidade DIP, origem no topo esquerdo da área útil. DPI é responsabilidade do renderer; layout não multiplica manualmente pixels. Modos: Classic Stack (padrão), Library Workspace e Mini. [Referência visual original](../../assets/layout-reference.html) e [desenho clássico](../../assets/classic-layout.svg).
+
+### Classic Stack
+
+Janela útil inicial 600×760; mínimo 480×660; padding externo 12. Largura de painel W = largura útil −24. Layout abaixo usa W=576. Header principal x12 y12 w576 h28; player x12 y40 w576 h184; EQ x12 y232 w576 h180; playlist x12 y420 w576 h328; gaps 8. EQ oculto devolve espaço à playlist. Biblioteca abre workspace, preservando playback e geometria anterior.
+
+| Região player, origem local | Retângulo x/y/w/h | Conteúdo |
+|---|---|---|
+| Display | 12 / 12 / 352 / 78 | Tempo, título, espectro e qualidade |
+| Capa opcional | 376 / 12 / 72 / 72 | Thumbnail original/licenciada |
+| Ações de fonte | 460 / 12 / 104 / 32 | Local / Rádio / Biblioteca |
+| Seek | 12 / 102 / 552 / 20 | Slider, hover timestamp, estado LIVE |
+| Transporte | 12 / 140 / 264 / 32 | Anterior, play, pause, stop, próxima, abrir |
+| Volume / pan | 288 / 140 / 164 / 32 | Volume + mute; pan em popup |
+| Modos | 464 / 140 / 100 / 32 | Shuffle / repeat |
+
+Player header: menu esquerda, nome central, minimizar/fechar direita. Display tempo ocupa 100 DIP; título ocupa resto, codec e resolução em segunda linha. Espectro inferior 28 DIP, não cobre texto. EQ: titlebar 24, toolbar 28, preamp e dez bandas ocupam 100, footer 16. Playlist: titlebar24, tabs28, lista flex, footer32 com adicionar/remover/ordenar e contagem/duração. EQ gráfico avançado abre editor maior; não comprimir 31 bandas no painel clássico.
+
+Abaixo de 560 DIP, capa sai, botões de fonte viram menu, volume vai à segunda linha, player ganha 32 DIP e playlist perde 32. Layout mínimo ainda permite teclado e targets adequados. Snap docking a 12 DIP, soltar com Alt ignora snap; módulos destacáveis apenas em M3. Posições persistidas por monitor e limitadas à área visível na restauração.
+
+### Library Workspace
+
+Inicial 1280×800, mínimo 960×640. Topbar 56; sidebar 200; painel central flex ≥480; inspector direito 280 opcional; now-playing inferior 96. Sidebar: Biblioteca, Pastas, Playlists, Rádio, Podcasts, Favoritos, Downloads, Temas/Plugins. Search na topbar, breadcrumb e filtros no centro. Conteúdo alterna grid de álbuns, lista de faixas ou pastas. Inspector: capa, créditos, tags, letras e cadeia de áudio. Em largura <1152, inspector vira drawer; sidebar pode colapsar a 56.
+
+### Mini
+
+420×112 mínimo; título/tempo, play e próxima, volume/mute, expandir; seek de 8 DIP com área de interação24. Always-on-top opcional e indicador claro. Preferência “close to tray” desligada por padrão; se ligada, primeiro fechamento informa onde reabrir.
+
+## Telas adicionais
+
+Preferências 880×680 com navegação lateral: Reprodução, Saída, DSP, Biblioteca, Streaming, Aparência, Atalhos, Plugins, Privacidade, Avançado. EQ avançado 960×600 com gráfico, tabela de bandas e preset por dispositivo. Detalhes da faixa 800×640: informações/tags/capa/letras/capítulos. Gerenciador de jobs 800×520: progresso, erro, cancelar/retomar. Rádio: estações e URL; podcasts: feeds/episódios; temas: gallery/preview/instalação; plugins: status/permissões/versão.
+
+## Estados de tela obrigatórios
+
+Empty com CTA; Loading cancelável; Populated; Partial error com itens válidos mantidos; Offline sem apagar local; Unsupported com motivo; Permission denied; Conflict; Recovery. Dialogs focam primeira ação segura, Escape cancela, retorno de foco ao invocador. Não embutir stacktrace ou nome de crate no fluxo normal; detalhes técnicos em painel opcional.

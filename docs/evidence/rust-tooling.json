@@ -1,0 +1,63 @@
+{
+  "spec_version": "0.4.0",
+  "scope": "Automação Rust e documentação; sem player, hardware ou assinatura executados.",
+  "implementation_language": "Rust",
+  "rust_version": "1.99.0",
+  "os": "Linux x86_64",
+  "commands": [
+    {
+      "command": "cargo xtask ci docs",
+      "result": "passed",
+      "tests": 23,
+      "unit_tests": 9,
+      "integration_tests": 14
+    },
+    {
+      "command": "cargo xtask ci detect",
+      "result": {
+        "core": "false",
+        "android": "false"
+      }
+    },
+    {
+      "command": "cargo xtask release preflight --version 0.1.0",
+      "result": "blocked as required: release disabled"
+    },
+    {
+      "command": "cargo xtask quality-gate",
+      "result": "blocked as required: application absent"
+    }
+  ],
+  "checks": [
+    "Cargo.lock resolvido realmente",
+    "fmt e clippy -D warnings",
+    "243 Markdown/146 TASK/REQ/15 épicos",
+    "6 schemas Draft2020-12/exemplos",
+    "25 paths/26 operações OpenAPI",
+    "3 workflows parseados; actions pinadas",
+    "worktrees/claims/remoção/hotfix com Git real",
+    "desktop manifesto+membership+bin via metadata",
+    "overlay legado preserva arquivos alheios",
+    "symlinks de destino/cleanup recusados",
+    "scan exclui credenciais sintéticas",
+    "clone core.autocrlf=true mantém bytes das fontes"
+  ],
+  "review": {
+    "type": "independent Codex subagent read-only",
+    "claude_review_performed": false,
+    "material_findings": "Correções conferidas; nenhuma pendência Critical/Important no delta revisado."
+  },
+  "not_performed": [
+    "GitHub privado/push/PR remoto/proteções",
+    "GitHub Actions remoto",
+    "instalação/discovery de plugins na máquina do usuário",
+    "Claude Code review",
+    "execução nativa Windows/macOS/Android",
+    "áudio/player/hardware",
+    "assinatura/notarização/instaladores compilados"
+  ],
+  "authorization": "Usuário aprovou Rust/cargo xtask e migração; nenhum merge ou publicação efetuado.",
+  "historical": true,
+  "superseded_by": "vynamp-branding.json",
+  "current_audit": "docs/evidence/completeness-audit.json"
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "id": "00000000-0000-4000-8000-000000000001",
+  "name": "Flat — exemplo",
+  "author": "Vynamp example",
+  "preamp_db": 0,
+  "eq_enabled": false,
+  "bands": [
+    {
+      "type": "peaking",
+      "frequency_hz": 1000,
+      "gain_db": 0,
+      "q": 1,
+      "channel": "both"
+    }
+  ],
+  "provenance": "Preset original de demonstração, não correção medida de headphone"
+}

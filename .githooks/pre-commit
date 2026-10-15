@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eu
+# Each worktree has its own hook driver; never rebuild the caller executable.
+CARGO_TARGET_DIR="$(git rev-parse --show-toplevel)/target/xtask-hooks"
+export CARGO_TARGET_DIR
+cargo xtask guard-branch

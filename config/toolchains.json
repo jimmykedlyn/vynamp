@@ -1,0 +1,10 @@
+{
+  "rust": "1.99.0",
+  "java": "17",
+  "android_ndk": null,
+  "android_compile_sdk": null,
+  "android_target_sdk": null,
+  "status": "Rust 1.99.0 instalado e verificado nesta entrega. NDK/SDK/Windows SDK permanecem decisões M0; player ainda não implementado.",
+  "windows_sdk_version": null,
+  "android_build_tools": null
+}

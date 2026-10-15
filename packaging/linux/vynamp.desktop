@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Vynamp
+Comment=Independent audio player
+Exec=vynamp %U
+Icon=vynamp
+Terminal=false
+Categories=AudioVideo;Audio;Player;
+MimeType=audio/flac;audio/mpeg;audio/ogg;audio/x-wav;

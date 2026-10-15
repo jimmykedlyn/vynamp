@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "id": "org.vynamp.locallyrics",
+  "version": "1.0.0",
+  "sdk_version": "1.0.0",
+  "name": "Letras locais — exemplo",
+  "author": "Vynamp example",
+  "license": "LicenseRef-ExampleOnly",
+  "kind": "metadata",
+  "runtime": "wasm",
+  "entrypoint": "module.wasm",
+  "supported_platforms": [
+    "portable-wasm"
+  ],
+  "permissions": [
+    {
+      "capability": "metadata.read",
+      "purpose": "Consultar dados da faixa selecionada"
+    },
+    {
+      "capability": "files.read.selected_roots",
+      "targets": [
+        "user-selected-root"
+      ],
+      "purpose": "Ler arquivos LRC autorizados"
+    }
+  ],
+  "resource_limits": {
+    "memory_mib": 64,
+    "compute_timeout_ms": 500,
+    "max_concurrent_calls": 4
+  },
+  "files": [
+    {
+      "path": "module.wasm",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ]
+}

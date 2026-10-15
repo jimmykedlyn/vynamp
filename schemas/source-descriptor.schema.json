@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "$id": "https://spec.vynamp.invalid/source-descriptor.schema.json",
+  "title": "source-descriptor",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "transport": {
+      "enum": [
+        "local-file",
+        "http-progressive",
+        "icy",
+        "hls",
+        "android-content"
+      ]
+    },
+    "locator": {
+      "type": "string",
+      "minLength": 1
+    },
+    "codec_hint": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sample_rate_hz": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 8000,
+      "maximum": 768000
+    },
+    "valid_bits": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 64
+    },
+    "channels": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 8
+    },
+    "seekable": {
+      "type": "boolean"
+    },
+    "live": {
+      "type": "boolean"
+    },
+    "duration_ms": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "expires_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "restrictions": {
+      "type": "object",
+      "properties": {
+        "may_record": {
+          "type": "boolean"
+        },
+        "may_download": {
+          "type": "boolean"
+        },
+        "max_offline_age_seconds": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        }
+      },
+      "required": [
+        "may_record",
+        "may_download"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "source_id",
+    "transport",
+    "locator",
+    "seekable",
+    "live",
+    "duration_ms",
+    "restrictions"
+  ],
+  "additionalProperties": false
+}

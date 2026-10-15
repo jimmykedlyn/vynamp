@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "revision": "0.7.0",
+  "last_reviewed": "2026-10-14",
+  "scope": "Planning catalog, not runtime availability",
+  "entries": [
+    {
+      "id": "pcm-wave",
+      "kind": "audio",
+      "codec_id": "pcm",
+      "containers": [
+        "WAV",
+        "RF64",
+        "Wave64"
+      ],
+      "profiles": [
+        "u8",
+        "s16",
+        "s24",
+        "s32",
+        "f32",
+        "f64"
+      ],
+      "extensions": [
+        "wav",
+        "wave",
+        "rf64",
+        "w64"
+      ],
+      "mime_types": [
+        "audio/wav",
+        "audio/x-wav"
+      ],
+      "phase": "M1",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "WAV M1; RF64/Wave64 e PCM32/float64 M3; valid bits, extensible, endianness, offsets u64."
+      ],
+      "sources": []
+    },
+    {
+      "id": "pcm-aiff",
+      "kind": "audio",
+      "codec_id": "pcm",
+      "containers": [
+        "AIFF",
+        "AIFF-C"
+      ],
+      "profiles": [
+        "s8",
+        "s16",
+        "s24",
+        "s32",
+        "f32",
+        "f64"
+      ],
+      "extensions": [
+        "aif",
+        "aiff",
+        "aifc"
+      ],
+      "mime_types": [
+        "audio/aiff"
+      ],
+      "phase": "M1",
+      "policy": "required",
+      "operations": [
+        "demux",
+        "decode"
+      ],
+      "target_platforms": [
+        "windows-x64",
+        "linux-x64",
+        "macos-intel",
+        "macos-silicon",
+        "android-arm64"
+      ],
+      "state": "planned",
+      "association_allowed": true,
+      "backend_candidates": [
+        "Adapter auditado; escolher e fixar configuração em M0"
+      ],
+      "restrictions": [
+        "PCM AIFF M1; perfis AIFF-C M3; não anunciar toda compressão AIFF-C."
+      ],
+      "sources": []
+    }
+  ]
+}

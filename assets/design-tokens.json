@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "name": "Classic Graphite",
+  "colors": {
+    "background": "#11131B",
+    "chassis": "#252936",
+    "panel-raised": "#333A4D",
+    "panel-inset": "#191D2A",
+    "display": "#080D0B",
+    "border-light": "#677086",
+    "border-dark": "#090C14",
+    "text-primary": "#F1F3F7",
+    "text-secondary": "#B8C0CF",
+    "text-muted": "#8D97AB",
+    "lime": "#B8F35A",
+    "cyan": "#66D9EF",
+    "amber": "#FFBF69",
+    "danger": "#FF6B7A",
+    "selection": "#32453A"
+  },
+  "spacing": {
+    "unit": 4,
+    "panel_gap": 8,
+    "padding_small": 8,
+    "padding_medium": 12,
+    "padding_large": 16
+  },
+  "typography": {
+    "ui_family": "system-ui, Noto Sans, sans-serif",
+    "display_family": "ui-monospace, monospace",
+    "body_dip": 14,
+    "metadata_dip": 13,
+    "section_dip": 16,
+    "title_dip": 18,
+    "time_dip": 30
+  },
+  "geometry": {
+    "radius_classic": 2,
+    "radius_modern": 8,
+    "border_dip": 1,
+    "focus_dip": 2,
+    "compact_row_dip": 24,
+    "comfortable_row_dip": 36,
+    "minimum_hit_dip": 24,
+    "touch_hit_dip": 44
+  },
+  "motion": {
+    "hover_ms": 80,
+    "expand_ms": 160,
+    "dialog_ms": 120,
+    "visualizer_fps": 30,
+    "reduced_motion": true
+  }
+}

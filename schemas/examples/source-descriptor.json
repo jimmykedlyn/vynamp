@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "source_id": "track-example-001",
+  "transport": "http-progressive",
+  "locator": "https://media.example.invalid/neon-horizons.flac",
+  "codec_hint": "flac",
+  "sample_rate_hz": 192000,
+  "valid_bits": 24,
+  "channels": 2,
+  "seekable": true,
+  "live": false,
+  "duration_ms": 272000,
+  "expires_at": null,
+  "restrictions": {
+    "may_record": false,
+    "may_download": true,
+    "max_offline_age_seconds": 2592000
+  }
+}

@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "product": "Vynamp",
+  "concept": "C",
+  "state": "approved-reference-native-exports-pending",
+  "assets": [
+    {
+      "path": "assets/branding/approved-c-board.png",
+      "sha256": "faf69f5da8db89e796065b806a4b6d25a42d823784c86c9db2cef222dd388766",
+      "bytes": 1338218,
+      "width": 1536,
+      "height": 1024,
+      "format": "PNG",
+      "status": "reference",
+      "approved_concept_c": true,
+      "role": "prancha C multiplataforma"
+    },
+    {
+      "path": "assets/branding/reference/symbol-c-transparent.png",
+      "sha256": "6f24a76e8d12886a6234162a792caf3237adb7c620382ba465a9c5e50985784f",
+      "bytes": 460452,
+      "width": 1254,
+      "height": 1254,
+      "format": "PNG",
+      "status": "reference",
+      "approved_concept_c": true,
+      "role": "referência raster transparente do símbolo C"
+    },
+    {
+      "path": "assets/branding/reference/concepts-a-b-c-d.png",
+      "sha256": "2b40c8deb316abe63a8a5b9f149e8e1b71a39a1baab56a218cd095ef4c9bbb9a",
+      "bytes": 1369890,
+      "width": 1536,
+      "height": 1024,
+      "format": "PNG",
+      "status": "reference",
+      "approved_concept_c": false,
+      "role": "histórico de seleção; só C aprovado"
+    }
+  ],
+  "native_exports": {
+    "windows-x64": {
+      "status": "pending",
+      "files": [
+        "packaging/icons/vynamp.ico"
+      ]
+    },
+    "linux-x64": {
+      "status": "pending",
+      "files": [
+        "packaging/icons/vynamp.svg",
+        "packaging/icons/linux/16x16/vynamp.png",
+        "packaging/icons/linux/24x24/vynamp.png",
+        "packaging/icons/linux/32x32/vynamp.png",
+        "packaging/icons/linux/48x48/vynamp.png",
+        "packaging/icons/linux/64x64/vynamp.png",
+        "packaging/icons/linux/128x128/vynamp.png",
+        "packaging/icons/linux/256x256/vynamp.png",
+        "packaging/icons/linux/512x512/vynamp.png",
+        "packaging/icons/linux/1024x1024/vynamp.png"
+      ]
+    },
+    "macos-intel": {
+      "status": "pending",
+      "files": [
+        "packaging/icons/Vynamp.icns"
+      ]
+    },
+    "macos-silicon": {
+      "status": "pending",
+      "files": [
+        "packaging/icons/Vynamp.icns"
+      ]
+    },
+    "android-arm64": {
+      "status": "pending",
+      "files": [
+        "apps/android/app/src/main/res/drawable/vynamp_foreground.xml",
+        "apps/android/app/src/main/res/drawable/vynamp_monochrome.xml",
+        "apps/android/app/src/main/res/drawable/vynamp_notification.xml",
+        "apps/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+        "apps/android/app/src/main/res/mipmap-anydpi-v33/ic_launcher.xml",
+        "apps/android/app/src/main/res/values/colors.xml",
+        "apps/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+        "apps/android/app/src/main/res/mipmap-anydpi-v33/ic_launcher_round.xml",
+        "apps/android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+        "apps/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png",
+        "apps/android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+        "apps/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png",
+        "apps/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+        "apps/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png",
+        "apps/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+        "apps/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png",
+        "apps/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+        "apps/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
+        "packaging/icons/store/vynamp-google-play.png"
+      ]
+    }
+  },
+  "production_master": "pending vector reconstruction/wordmark outlines and review",
+  "expected_png_dimensions": {
+    "packaging/icons/linux/16x16/vynamp.png": {
+      "width": 16,
+      "height": 16
+    },
+    "packaging/icons/linux/24x24/vynamp.png": {
+      "width": 24,
+      "height": 24
+    },
+    "packaging/icons/linux/32x32/vynamp.png": {
+      "width": 32,
+      "height": 32
+    },
+    "packaging/icons/linux/48x48/vynamp.png": {
+      "width": 48,
+      "height": 48
+    },
+    "packaging/icons/linux/64x64/vynamp.png": {
+      "width": 64,
+      "height": 64
+    },
+    "packaging/icons/linux/128x128/vynamp.png": {
+      "width": 128,
+      "height": 128
+    },
+    "packaging/icons/linux/256x256/vynamp.png": {
+      "width": 256,
+      "height": 256
+    },
+    "packaging/icons/linux/512x512/vynamp.png": {
+      "width": 512,
+      "height": 512
+    },
+    "packaging/icons/linux/1024x1024/vynamp.png": {
+      "width": 1024,
+      "height": 1024
+    },
+    "apps/android/app/src/main/res/mipmap-mdpi/ic_launcher.png": {
+      "width": 48,
+      "height": 48
+    },
+    "apps/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png": {
+      "width": 48,
+      "height": 48
+    },
+    "apps/android/app/src/main/res/mipmap-hdpi/ic_launcher.png": {
+      "width": 72,
+      "height": 72
+    },
+    "apps/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png": {
+      "width": 72,
+      "height": 72
+    },
+    "apps/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png": {
+      "width": 96,
+      "height": 96
+    },
+    "apps/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png": {
+      "width": 96,
+      "height": 96
+    },
+    "apps/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png": {
+      "width": 144,
+      "height": 144
+    },
+    "apps/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png": {
+      "width": 144,
+      "height": 144
+    },
+    "apps/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png": {
+      "width": 192,
+      "height": 192
+    },
+    "apps/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png": {
+      "width": 192,
+      "height": 192
+    },
+    "packaging/icons/store/vynamp-google-play.png": {
+      "width": 512,
+      "height": 512
+    }
+  },
+  "additional_exports": {
+    "status": "pending",
+    "files": [
+      "assets/branding/vector/vynamp-horizontal-dark.svg",
+      "assets/branding/vector/vynamp-horizontal-light.svg",
+      "assets/branding/vector/vynamp-stacked.svg",
+      "assets/branding/vector/vynamp-symbol.svg",
+      "assets/branding/vector/vynamp-symbol-white.svg",
+      "assets/branding/vector/vynamp-symbol-dark.svg",
+      "packaging/icons/web/favicon.svg",
+      "packaging/icons/web/favicon.ico",
+      "packaging/icons/web/icon-192.png",
+      "packaging/icons/web/icon-512.png",
+      "packaging/icons/web/maskable-512.png"
+    ],
+    "required_before": "Respectively UI/branding distribution, web M4; native release gates above are separate"
+  }
+}

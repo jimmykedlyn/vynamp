@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "spec_version": "0.7.0",
+  "stage": "specification-and-tooling",
+  "product_version": "0.1.0-dev",
+  "application_ready": false,
+  "release_enabled": false,
+  "desktop_package": "vynamp-desktop",
+  "desktop_binary": "vynamp",
+  "android_dir": "apps/android",
+  "required_ci_context": "CI Gate",
+  "targets": {
+    "windows-x64": "x86_64-pc-windows-msvc",
+    "linux-x64": "x86_64-unknown-linux-gnu",
+    "macos-intel": "x86_64-apple-darwin",
+    "macos-silicon": "aarch64-apple-darwin",
+    "android-arm64": "aarch64-linux-android"
+  },
+  "name": "Vynamp",
+  "slug": "vynamp",
+  "branding_exports_ready": false
+}

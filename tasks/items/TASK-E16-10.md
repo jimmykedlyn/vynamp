@@ -1,0 +1,26 @@
+# TASK-E16-10 — Entregar deep links e callbacks do provider
+
+Versão 0.7.0 · Estado: planejada, não implementada.
+
+## Contrato
+
+Requisito REQ-E16-10 · M4 · P0 · responsável funcional streaming (pessoa a designar). Esforço provisório 2–5 dias úteis por contrato; reestimar e quebrar em slices de 1–3 dias antes execução. Risco alto; estimativa não é prazo.
+
+## Dependências
+
+- [TASK-E16-01](TASK-E16-01.md) — Provar envelope de ativação e protocolo comum
+- [TASK-E09-03](TASK-E09-03.md) — Implementar identidade e autorização
+
+## Entrega concreta
+
+Rotas próprias e HTTPS verificadas, OAuth state/PKCE e preview de ação.
+
+[Spec canônica](../../docs/platforms/04-activation-ownership.md) · [Matriz normativa](../../docs/product/03-requirements.md).
+
+## Aceite
+
+Links rejeitam path/shell/plugin/autoplay e callbacks falsos; não registram HTTP global; intent concedida não amplia filesystem grants.
+
+## Verificação e evidência
+
+QA-023 em [QA](../../docs/quality/01-test-strategy.md) e [cenários](../../docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.

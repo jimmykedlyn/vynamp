@@ -1,0 +1,25 @@
+# Vynamp 0.7.0 — inicio Windows
+
+Extraia a pasta vynamp-media-player em D:\Projects. Use PowerShell normal, sem elevar.
+Todos os arquivos do projeto ficam dentro de D:\Projects\vynamp-media-player.
+
+1. Execute nesta raiz:
+
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\INICIAR.ps1
+
+2. Depois de preparar, abra dois terminais nesta raiz:
+
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\ABRIR-CODEX.ps1
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\ABRIR-CLAUDE.ps1
+
+3. Cada atalho envia o prompt automaticamente ao agente. Passe o commit do Codex ao Claude para revisao.
+   Codex prepara E15-01; Claude revisa. E15-02 vem depois; E11-01 somente apos as dependencias aceitas.
+
+pacote = distribuicao original corrigida; repo = checkout Git; .cache = caches/tmp; logs = execucoes.
+Worktrees ficam em repo\.worktrees. Historico remoto e PR inicial sao preservados.
+Se INICIAR falhar, ele para e registra o motivo em logs; nenhum hook e desativado.
+Rust, Git/gh, Codex e Claude devem estar instalados e no PATH; Superpowers deve ser carregado nos dois.
+Programas e perfis de autenticacao/plugins ja instalados permanecem em suas instalacoes existentes;
+nenhum arquivo de projeto sera criado fora desta raiz nem se altera configuracao global do Git.
+Primeira execucao baixa dependencias no cache local. Aplicativo/instaladores ainda nao implementados.
+Passo a passo completo: pacote\docs\engineering\09-windows-restart.md.

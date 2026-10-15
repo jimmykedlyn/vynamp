@@ -1,0 +1,37 @@
+# TASK-E03-02 — Implementar queue independente e shuffle
+
+Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+
+## Contrato da tarefa
+
+| Campo | Valor |
+|---|---|
+| ID / requisito | TASK-E03-02 / REQ-E03-02 |
+| Fase / prioridade | M1 / P0 |
+| Estado | Planejada; não implementada |
+| Responsável funcional | library — pessoa a designar |
+| Esforço provisório | 3–8 dias úteis; reestimar após M0 |
+| Risco | médio |
+
+## Dependências
+
+- [TASK-E03-01](TASK-E03-01.md) — Implementar schema SQLite e migrations seguras
+- [TASK-E01-03](TASK-E01-03.md) — Implementar state machine e generation cancellation
+
+## Entrega concreta
+
+Queue snapshot/revisions/seed/history/repeat/stop-after.
+
+Documento canônico: [spec](../../docs/library/01-library-playlists.md). [Matriz normativa](../../docs/product/03-requirements.md).
+
+## Critérios de aceite
+
+Reorder playlist não muda queue; shuffle sem reposição, Previous usa histórico; explicit next vence repeat.
+
+## Verificação e evidência
+
+QA-001, QA-006 em [QA comum](../../docs/quality/01-test-strategy.md) e [matriz multiplataforma](../../docs/quality/03-multiplatform-matrix.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+
+## Execução e limites
+
+Confirmar ports/contratos e dependências; decompor itens grandes em slices de 1–3 dias; implementar sucesso e erro/cancelamento; executar os critérios apropriados; atualizar schema/docs/notices; aceitar somente com evidência e revisão. Preservar dados, budgets e acessibilidade. Stubs/botões desabilitados não contam. Esforço é estimativa, não data prometida. Atualizar backlog JSON e requisito junto de qualquer mudança.

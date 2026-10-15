@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "$id": "https://spec.vynamp.invalid/audio-preset.schema.json",
+  "title": "audio-preset",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "author": {
+      "type": "string",
+      "minLength": 1
+    },
+    "preamp_db": {
+      "type": "number",
+      "minimum": -24,
+      "maximum": 12
+    },
+    "eq_enabled": {
+      "type": "boolean"
+    },
+    "bands": {
+      "type": "array",
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "enum": [
+              "peaking",
+              "low-shelf",
+              "high-shelf",
+              "low-pass",
+              "high-pass",
+              "notch",
+              "band-pass"
+            ]
+          },
+          "frequency_hz": {
+            "type": "number",
+            "minimum": 10,
+            "maximum": 40000
+          },
+          "gain_db": {
+            "type": "number",
+            "minimum": -24,
+            "maximum": 24
+          },
+          "q": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 18
+          },
+          "channel": {
+            "enum": [
+              "both",
+              "left",
+              "right"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "frequency_hz",
+          "gain_db",
+          "q",
+          "channel"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "provenance": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "name",
+    "author",
+    "preamp_db",
+    "eq_enabled",
+    "bands"
+  ],
+  "additionalProperties": false
+}

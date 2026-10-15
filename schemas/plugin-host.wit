@@ -1,0 +1,25 @@
+package vynamp:plugin@1.0.0;
+
+interface host-capabilities {
+  record failure { code: string, message: string, retryable: bool }
+  record header { name: string, value: string }
+  record http-request { url: string, method: string, headers: list<header>, body: list<u8> }
+  record http-response { status: u16, headers: list<header>, body: list<u8> }
+  record metadata { media-id: string, title: string, artists: list<string> }
+  http-fetch: func(request: http-request) -> result<http-response, failure>;
+  read-selected-file: func(root-handle: string, relative-path: string, max-bytes: u32) -> result<list<u8>, failure>;
+  selected-metadata: func() -> result<metadata, failure>;
+  notify: func(message: string) -> result<_, failure>;
+}
+
+interface extension {
+  record failure { code: string, message: string, retryable: bool }
+  init: func(config-json: string) -> result<_, failure>;
+  invoke: func(method: string, payload-json: string) -> result<string, failure>;
+  stop: func() -> result<_, failure>;
+}
+
+world vynamp-extension {
+  import host-capabilities;
+  export extension;
+}

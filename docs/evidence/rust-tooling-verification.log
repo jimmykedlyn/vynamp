@@ -1,0 +1,71 @@
+   Compiling xtask v0.4.0 (/workspace/auralis-project/xtask)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.62s
+     Running `target/debug/xtask ci docs`
+{
+  "epics": 15,
+  "errors": [],
+  "mandatory_platforms": [
+    "Windows x86_64",
+    "Linux x86_64",
+    "macOS Intel x86_64",
+    "macOS Apple Silicon arm64",
+    "Android arm64-v8a"
+  ],
+  "markdown_files": 243,
+  "openapi_paths": 25,
+  "operation_count": 26,
+  "phases": {
+    "M0": 14,
+    "M1": 17,
+    "M2": 30,
+    "M3": 61,
+    "M4": 16,
+    "M5": 8
+  },
+  "requirements": 146,
+  "result": "passed",
+  "schemas_and_examples": 6,
+  "scope": "Validação documental em Rust; não testa player/hardware/API/WIT.",
+  "spec_version": "0.4.0",
+  "tasks": 146
+}
+{"errors":[],"result":"passed","scope":"Structural config validation; no remote CI/signing/hardware claim","workflow_files":3}
+    Checking xtask v0.4.0 (/workspace/auralis-project/xtask)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.75s
+   Compiling xtask v0.4.0 (/workspace/auralis-project/xtask)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.34s
+     Running unittests src/main.rs (target/debug/deps/xtask-5e9243c45e1148d3)
+
+running 9 tests
+test agents::tests::plugin_unknown_or_disabled_is_not_installed ... ok
+test github::symlink_tests::legacy_cleanup_never_deletes_outside_checkout ... ok
+test github::tests::overlay_removes_legacy_readme_and_preserves_unrelated_files ... ok
+test release::tests::digest_covers_xtask_and_ignores_activation_flags ... ok
+test util::tests::copy_tree_rejects_symlink_destination_parent ... ok
+test util::tests::distribution_scan_excludes_synthetic_credentials ... ok
+test release::tests::manifest_requires_exact_nonempty_set ... ok
+test validate::tests::invalid_schema_rejected ... ok
+test validate::tests::draft_schema_rejects_invalid_example_and_format ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/tooling.rs (target/debug/deps/tooling-883720ab61d8d3eb)
+
+running 14 tests
+test commit_on_main_is_blocked_after_bootstrap ... ok
+test agents_have_independent_files_and_indexes ... ok
+test desktop_detection_parses_a_real_manifest ... ok
+test dirty_worktree_is_preserved ... ok
+test excluded_desktop_package_does_not_activate_core_ci ... ok
+test init_creates_main_develop_without_remote ... ok
+test no_nested_worktrees ... ok
+test release_cannot_publish_unimplemented_player ... ok
+test hotfix_requires_both_main_and_develop ... ok
+test traversal_and_unknown_task_create_no_branch ... ok
+test task_has_only_one_owner ... ok
+test windows_autocrlf_keeps_release_sources_identical ... ok
+test xtask_workspace_does_not_activate_player_ci ... ok
+test unmerged_worktree_is_preserved ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+

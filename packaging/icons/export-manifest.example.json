@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "concept": "C",
+  "source_digest": null,
+  "reviewers": [],
+  "platforms": {
+    "windows-x64": {
+      "status": "pending",
+      "report": null,
+      "sha256": null
+    },
+    "linux-x64": {
+      "status": "pending",
+      "report": null,
+      "sha256": null
+    },
+    "macos-intel": {
+      "status": "pending",
+      "report": null,
+      "sha256": null
+    },
+    "macos-silicon": {
+      "status": "pending",
+      "report": null,
+      "sha256": null
+    },
+    "android-arm64": {
+      "status": "pending",
+      "report": null,
+      "sha256": null
+    }
+  },
+  "files": [
+    {
+      "path": "apps/android/app/src/main/res/drawable/vynamp_foreground.xml",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/drawable/vynamp_monochrome.xml",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/drawable/vynamp_notification.xml",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/mipmap-anydpi-v33/ic_launcher.xml",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/mipmap-anydpi-v33/ic_launcher_round.xml",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "apps/android/app/src/main/res/values/colors.xml",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "packaging/icons/Vynamp.icns",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "packaging/icons/linux/1024x1024/vynamp.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "packaging/icons/linux/128x128/vynamp.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "packaging/icons/linux/16x16/vynamp.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "packaging/icons/linux/24x24/vynamp.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "packaging/icons/linux/256x256/vynamp.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "packaging/icons/linux/32x32/vynamp.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "packaging/icons/linux/48x48/vynamp.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "packaging/icons/linux/512x512/vynamp.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "packaging/icons/linux/64x64/vynamp.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "packaging/icons/store/vynamp-google-play.png",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "packaging/icons/vynamp.ico",
+      "sha256": null,
+      "status": "pending"
+    },
+    {
+      "path": "packaging/icons/vynamp.svg",
+      "sha256": null,
+      "status": "pending"
+    }
+  ]
+}

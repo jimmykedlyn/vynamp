@@ -1,0 +1,71 @@
+{
+  "spec_version": "0.5.0",
+  "product": "Vynamp",
+  "approved_concept": "C — Pulso",
+  "scope": "Identidade de referência, specs e tooling; sem player/native exports/hardware executados",
+  "github": {
+    "repository": "jimmykedlyn/vynamp-mediaplayer",
+    "user_reported_renamed": true,
+    "remote_verified": false
+  },
+  "branding": {
+    "original_pngs": 3,
+    "copied_without_edits": true,
+    "checks": "PNG signature/dimensions/SHA256; transparência RGBA/opaque=false verificada para símbolo",
+    "native_exports_ready": false,
+    "manifest": "assets/branding/asset-manifest.json"
+  },
+  "validation": {
+    "command": "cargo xtask ci docs",
+    "result": "passed",
+    "platform": "Linux x86_64",
+    "rust": "1.99.0",
+    "tests": 31,
+    "unit_tests": 14,
+    "integration_tests": 17,
+    "markdown": 248,
+    "tasks": 146,
+    "requirements": 146,
+    "epics": 15,
+    "schemas": 6,
+    "openapi_paths": 25,
+    "openapi_operations": 26,
+    "workflows": 3
+  },
+  "previews": {
+    "source_svg_headers_updated": true,
+    "pngs_rendered_from_source_with_inkscape": [
+      "classic",
+      "library",
+      "mini",
+      "android"
+    ],
+    "classic_visually_inspected": true,
+    "browser_interactions_verified": false
+  },
+  "review": {
+    "independent_codex_agent": true,
+    "claude_review_performed": false,
+    "critical_or_important_remaining": 0,
+    "scope": "static review; runtime tests performed by implementer"
+  },
+  "gates": {
+    "application_ready": false,
+    "release_enabled": false,
+    "branding_exports_ready": false,
+    "ci_detect": {
+      "core": "false",
+      "android": "false"
+    }
+  },
+  "not_performed": [
+    "GitHub auth/push/PR/proteções/CI remoto",
+    "execução nativa Windows/macOS/Android",
+    "player/áudio/hardware",
+    "SVG/ICO/ICNS/Android resources exports reais",
+    "instaladores/assinatura/notarização",
+    "registro de marca/domínio"
+  ],
+  "historical": true,
+  "current_audit": "docs/evidence/completeness-audit.json"
+}

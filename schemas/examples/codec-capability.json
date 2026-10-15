@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "catalog_id": "flac-native",
+  "platform": "linux-x64",
+  "artifact_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+  "container": "FLAC",
+  "profile": "24-bit",
+  "operations": [
+    "demux",
+    "decode"
+  ],
+  "state": "planned",
+  "available": false,
+  "licensed": false,
+  "backend": null,
+  "backend_version": null,
+  "evidence": [],
+  "reason": "Exemplo documental; não há aplicativo implementado.",
+  "codec": "flac",
+  "framing": "native",
+  "build_features": [],
+  "license_ids": [],
+  "limits": {
+    "max_sample_rate": 384000,
+    "max_channels": 8,
+    "sample_formats": [
+      "s16",
+      "s24",
+      "s32"
+    ]
+  },
+  "features": {
+    "seek": false,
+    "gapless": false,
+    "chapters": false,
+    "drc": false,
+    "metadata_read": false,
+    "metadata_write": false,
+    "neutral_gain": false
+  },
+  "level": null,
+  "drc_control": "unknown",
+  "neutral_path": "unknown"
+}

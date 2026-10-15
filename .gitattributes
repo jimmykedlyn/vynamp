@@ -1,0 +1,11 @@
+* text=auto eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sh text eol=lf
+*.ps1 text eol=lf
+*.svg text eol=lf
+*.png binary
+*.zip binary
+*.flac binary
+*.wav binary
