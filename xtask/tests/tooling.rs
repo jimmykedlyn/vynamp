@@ -26,8 +26,31 @@ impl Fixture {
         fs::write(root.join("config/project.json"), json!({"application_ready":false,"release_enabled":false,"desktop_package":"vynamp-desktop","desktop_binary":"vynamp","product_version":"0.1.0"}).to_string()).unwrap();
         Self { _temp: temp, root }
     }
-    fn cmd(&self, exe: &str, args: &[&str], cwd: &Path) -> Output {
-        Command::new(exe)
+    fn command(&self, exe: &str, args: &[&str], cwd: &Path) -> Command {
+        let mut command = Command::new(exe);
+        // Fixtures operate on foreign repositories. Git exports these local
+        // variables to hooks; changing cwd alone does not isolate their children.
+        // Keep this list aligned with `git rev-parse --local-env-vars`.
+        for name in [
+            "GIT_ALTERNATE_OBJECT_DIRECTORIES",
+            "GIT_CONFIG",
+            "GIT_CONFIG_PARAMETERS",
+            "GIT_CONFIG_COUNT",
+            "GIT_OBJECT_DIRECTORY",
+            "GIT_DIR",
+            "GIT_WORK_TREE",
+            "GIT_IMPLICIT_WORK_TREE",
+            "GIT_GRAFT_FILE",
+            "GIT_INDEX_FILE",
+            "GIT_NO_REPLACE_OBJECTS",
+            "GIT_REPLACE_REF_BASE",
+            "GIT_PREFIX",
+            "GIT_SHALLOW_FILE",
+            "GIT_COMMON_DIR",
+        ] {
+            command.env_remove(name);
+        }
+        command
             .args(args)
             .current_dir(cwd)
             .env("GIT_AUTHOR_NAME", "Tooling Test")
@@ -35,9 +58,11 @@ impl Fixture {
             .env("GIT_COMMITTER_NAME", "Tooling Test")
             .env("GIT_COMMITTER_EMAIL", "test@example.invalid")
             .env("GIT_CONFIG_NOSYSTEM", "1")
-            .env("GIT_CONFIG_GLOBAL", self.root.join("no-global-config"))
-            .output()
-            .unwrap()
+            .env("GIT_CONFIG_GLOBAL", self.root.join("no-global-config"));
+        command
+    }
+    fn cmd(&self, exe: &str, args: &[&str], cwd: &Path) -> Output {
+        self.command(exe, args, cwd).output().unwrap()
     }
     fn run(&self, args: &[&str]) -> Output {
         let mut all = vec!["--root", self.root.to_str().unwrap()];
@@ -67,6 +92,31 @@ fn ok(o: Output) {
         String::from_utf8_lossy(&o.stdout),
         String::from_utf8_lossy(&o.stderr)
     );
+}
+#[test]
+fn fixtures_are_isolated_from_hook_repository_environment() {
+    let f = Fixture::new();
+    f.init();
+    let before = fs::read(f.root.join(".git/index")).unwrap();
+    // Run an existing fixture test as a child, with the caller's repository
+    // context just as Git exports it to hooks. Do not mutate this test process.
+    let test_names = [
+        "init_creates_main_develop_without_remote",
+        #[cfg(unix)]
+        "git_hooks_do_not_reuse_shared_outer_driver_cache",
+    ];
+    for test_name in test_names {
+        ok(Command::new(std::env::current_exe().unwrap())
+            .args(["--exact", test_name, "--nocapture"])
+            .env("GIT_DIR", f.root.join(".git"))
+            .env("GIT_COMMON_DIR", f.root.join(".git"))
+            .env("GIT_WORK_TREE", &f.root)
+            .env("GIT_INDEX_FILE", f.root.join(".git/index"))
+            .output()
+            .unwrap());
+    }
+    assert_eq!(fs::read(f.root.join(".git/index")).unwrap(), before);
+    assert!(f.git(&["status", "--porcelain"]).stdout.is_empty());
 }
 #[test]
 fn init_creates_main_develop_without_remote() {
@@ -592,18 +642,11 @@ fn git_hooks_do_not_reuse_shared_outer_driver_cache() {
         vec!["commit", "-m", "fix: hook fixture"],
         vec!["push", bare.to_str().unwrap(), "HEAD:main"],
     ] {
-        let output = Command::new("git")
-            .args(args)
-            .current_dir(&f.root)
+        let output = f
+            .command("git", &args, &f.root)
             .env("PATH", &path)
             .env("CARGO_TARGET_DIR", f.root.join("shared-driver"))
             .env("VYNAMP_HOOK_LOG", &log)
-            .env("GIT_AUTHOR_NAME", "Test")
-            .env("GIT_AUTHOR_EMAIL", "test@example.invalid")
-            .env("GIT_COMMITTER_NAME", "Test")
-            .env("GIT_COMMITTER_EMAIL", "test@example.invalid")
-            .env("GIT_CONFIG_GLOBAL", f.root.join("no-global-config"))
-            .env("GIT_CONFIG_NOSYSTEM", "1")
             .output()
             .unwrap();
         ok(output);

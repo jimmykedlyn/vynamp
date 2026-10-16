@@ -1,0 +1,35 @@
+TASK-E15-01 / QA-009: hook fixture isolation follow-up
+Date: 2026-10-16
+Author environment: Windows, jkca-notebook\codexsandboxoffline; actual local execution.
+Base reviewed SHA: eac3221ab4d0101926dac6e73dc280318e393825
+Status at capture: correction in working tree, not included in the base SHA.
+
+Root cause and TDD (observations, not a verbatim terminal transcript):
+- Existing init_creates_main_develop_without_remote: direct invocation passed (exit 0).
+- Same test with GIT_DIR pointing to author's worktree gitdir: failed (test exit 101), stderr Nested repository refused.
+- New fixtures_are_isolated_from_hook_repository_environment before fix: cargo test failed (exit 1), child test failed with Nested repository refused.
+- Fixture.cmd previously inherited repository-local Git variables. In repo::init, git rev-parse --show-toplevel then resolved the caller's repository instead of testing discovery at the temporary fixture path.
+- Fix only removes repository-local Git environment from Fixture.cmd subprocesses. Production code, hook scripts and nested-repository guard are unchanged. No process-global environment mutation in Rust tests.
+
+Verification after fix:
+- cargo fmt --all: exit 0.
+- cargo test --package xtask --locked: exit 0; 29 unit + 24 integration passed.
+- Integration binary with GIT_DIR, GIT_COMMON_DIR, GIT_WORK_TREE and GIT_INDEX_FILE pointing to author's linked worktree: exit 0, all 24 passed. Log: task-e15-01-hook-fixtures-green.log. Variables restored afterward in orchestrating PowerShell process. No real push involved.
+- New regression runs a real child test under foreign repository context and verifies source index bytes unchanged and clean source status.
+- cargo clippy --workspace --all-targets --locked -- -D warnings: exit 0.
+- git diff --check: exit 0.
+- cargo xtask ci docs: exit 1; docs/config and fmt passed, then access denied opening target/xtask-ci/debug/.cargo-build-lock. Separate complete tests and clippy used CARGO_TARGET_DIR=D:/Projects/vynamp-media-player/.cache/e15-01-verification-20261015. Log: task-e15-01-hook-ci-docs-sandbox.log.
+
+Limits:
+- Full pre-push/push and GitHub CI on the corrected delta have not passed in this capture. No remote publication or PR claim.
+- No Linux/macOS/Android execution, player/hardware/service or release claim.
+- Claude's approval of eac3221 remains valid for that SHA, not this uncommitted delta. Only the follow-up delta needs re-review after commit.
+- Historical QA-009 JSON/artifact hashes describe their original snapshot; they were not rewritten to misrepresent the follow-up as part of eac3221.
+
+Primary reference: https://git-scm.com/docs/githooks (description: clear local Git environment for operations in foreign repositories).
+
+Follow-up after auxiliary static review:
+- Shared Fixture.command constructor also used by Unix-only hook cache test. Regression runs that child test on Unix as well. No Unix execution claimed here.
+- Final direct tests after this adjustment: 29+24 passed; cargo test exit 0; clippy exit 0. Log: task-e15-01-hook-direct-final.log.
+- Auxiliary static re-review found no remaining Important/Critical issues. Not Claude approval.
+- git add of the correction/evidence failed before commit: unable to create shared gitdir index.lock, Permission denied. Nothing staged; HEAD remains eac3221. Normal-user command prepared in external guide. No hook bypass.
