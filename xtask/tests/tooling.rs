@@ -501,6 +501,102 @@ fn integrated_feature_removal_cleans_only_its_resources() {
     );
 }
 
+fn integrated_feature_for_deletion() -> (Fixture, PathBuf) {
+    let f = Fixture::new();
+    f.init();
+    ok(f.work("TASK-E01-03", "codex", "deletion", "feature"));
+    let p = f.path("codex", "TASK-E01-03", "deletion");
+    fs::write(p.join("new"), "merged in develop only").unwrap();
+    ok(f.cmd("git", &["add", "new"], &p));
+    ok(f.cmd("git", &["commit", "-m", "feat: deletion fixture"], &p));
+    ok(f.git(&["switch", "develop"]));
+    ok(f.git(&[
+        "merge",
+        "--no-ff",
+        "feature/task-e01-03-codex-deletion",
+        "-m",
+        "merge fixture",
+    ]));
+    (f, p)
+}
+
+fn assert_branch_deletion_preflight_preserves_resources(f: &Fixture, p: &Path) {
+    let claim = fs::read(f.claim("TASK-E01-03").join("owner.json")).unwrap();
+    let head = f.cmd("git", &["rev-parse", "HEAD"], p).stdout;
+    let o = f.remove("TASK-E01-03", "codex");
+    assert!(!o.status.success());
+    assert!(
+        p.join(".git").is_file(),
+        "worktree removed before branch deletion was validated"
+    );
+    assert_eq!(fs::read(p.join("new")).unwrap(), b"merged in develop only");
+    assert_eq!(f.cmd("git", &["rev-parse", "HEAD"], p).stdout, head);
+    assert_eq!(
+        fs::read(f.claim("TASK-E01-03").join("owner.json")).unwrap(),
+        claim
+    );
+    ok(f.git(&[
+        "show-ref",
+        "--verify",
+        "refs/heads/feature/task-e01-03-codex-deletion",
+    ]));
+    let error = String::from_utf8_lossy(&o.stderr);
+    assert!(
+        error.contains("Branch deletion not merged into upstream/checkout HEAD; removal refused"),
+        "{error}"
+    );
+}
+
+fn assert_deletion_resources_removed(f: &Fixture, p: &Path) {
+    assert!(!p.exists());
+    assert!(!f.claim("TASK-E01-03").exists());
+    assert!(
+        !f.git(&[
+            "show-ref",
+            "--verify",
+            "refs/heads/feature/task-e01-03-codex-deletion"
+        ])
+        .status
+        .success()
+    );
+}
+
+#[test]
+fn removal_preserves_integrated_feature_when_central_head_is_unmerged() {
+    let (f, p) = integrated_feature_for_deletion();
+    ok(f.git(&["switch", "main"]));
+    assert_branch_deletion_preflight_preserves_resources(&f, &p);
+    // A normal retry works after choosing the integration branch centrally.
+    ok(f.git(&["switch", "develop"]));
+    ok(f.remove("TASK-E01-03", "codex"));
+    assert_deletion_resources_removed(&f, &p);
+}
+
+#[test]
+fn removal_preflights_configured_upstream() {
+    let (f, p) = integrated_feature_for_deletion();
+    ok(f.git(&[
+        "branch",
+        "--set-upstream-to=main",
+        "feature/task-e01-03-codex-deletion",
+    ]));
+    // Even with central HEAD in develop, branch -d prefers the upstream main.
+    assert_branch_deletion_preflight_preserves_resources(&f, &p);
+    ok(f.git(&[
+        "branch",
+        "--set-upstream-to=develop",
+        "feature/task-e01-03-codex-deletion",
+    ]));
+    ok(f.git(&["switch", "main"]));
+    // Conversely, a merged upstream permits deletion while central HEAD is main.
+    ok(f.remove("TASK-E01-03", "codex"));
+    assert_deletion_resources_removed(&f, &p);
+    assert_eq!(
+        String::from_utf8_lossy(&f.git(&["branch", "--show-current"]).stdout).trim(),
+        "main"
+    );
+}
+
 #[test]
 fn hotfix_merged_only_to_main_is_preserved() {
     let f = Fixture::new();
@@ -559,7 +655,7 @@ fn removal_preserves_detached_worktree() {
     check_removal_after_checkout_drift(true);
 }
 
-fn check_inconsistent_claim(key: &str, value: &str) {
+fn check_inconsistent_claim(key: &str, value: &str, expected_error: &str) {
     let f = Fixture::new();
     f.init();
     ok(f.work("TASK-E01-03", "codex", "metadata", "feature"));
@@ -568,10 +664,10 @@ fn check_inconsistent_claim(key: &str, value: &str) {
     rec[key] = json!(value);
     fs::write(&file, rec.to_string()).unwrap();
     let before = fs::read(&file).unwrap();
-    assert!(
-        !f.remove("TASK-E01-03", "codex").status.success(),
-        "accepted inconsistent {key}"
-    );
+    let o = f.remove("TASK-E01-03", "codex");
+    assert!(!o.status.success(), "accepted inconsistent {key}");
+    let error = String::from_utf8_lossy(&o.stderr);
+    assert!(error.contains(expected_error), "{error}");
     assert!(
         f.path("codex", "TASK-E01-03", "metadata")
             .join(".git")
@@ -582,17 +678,17 @@ fn check_inconsistent_claim(key: &str, value: &str) {
 
 #[test]
 fn removal_preserves_inconsistent_task() {
-    check_inconsistent_claim("task", "TASK-E02-03");
+    check_inconsistent_claim("task", "TASK-E02-03", "Claim task differs; preserve it");
 }
 
 #[test]
 fn removal_preserves_inconsistent_base() {
-    check_inconsistent_claim("base", "main");
+    check_inconsistent_claim("base", "main", "Claim base differs; preserve it");
 }
 
 #[test]
 fn removal_preserves_inconsistent_branch() {
-    check_inconsistent_claim("branch", "develop");
+    check_inconsistent_claim("branch", "develop", "Invalid claimed branch; preserve it");
 }
 
 #[test]
@@ -601,7 +697,13 @@ fn removal_by_other_owner_preserves_claim_and_worktree() {
     f.init();
     ok(f.work("TASK-E01-03", "codex", "owner", "feature"));
     let claim = fs::read(f.claim("TASK-E01-03").join("owner.json")).unwrap();
-    assert!(!f.remove("TASK-E01-03", "claude").status.success());
+    let o = f.remove("TASK-E01-03", "claude");
+    assert!(!o.status.success());
+    let error = String::from_utf8_lossy(&o.stderr);
+    assert!(
+        error.contains("Worktree belongs to another agent"),
+        "{error}"
+    );
     assert_eq!(
         fs::read(f.claim("TASK-E01-03").join("owner.json")).unwrap(),
         claim
@@ -626,7 +728,10 @@ fn removal_preserves_foreign_repository_and_claim() {
     fs::write(&file, rec.to_string()).unwrap();
     let claim = fs::read(&file).unwrap();
     let index = fs::read(foreign.root.join(".git/index")).unwrap();
-    assert!(!f.remove("TASK-E01-03", "codex").status.success());
+    let o = f.remove("TASK-E01-03", "codex");
+    assert!(!o.status.success());
+    let error = String::from_utf8_lossy(&o.stderr);
+    assert!(error.contains("Unsafe claimed worktree path"), "{error}");
     assert_eq!(fs::read(&file).unwrap(), claim);
     assert_eq!(fs::read(foreign.root.join(".git/index")).unwrap(), index);
     assert!(

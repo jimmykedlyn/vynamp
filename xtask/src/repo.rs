@@ -191,6 +191,22 @@ pub fn remove(root: &Path, agent: &str, id: &str) -> Result<()> {
             "Unmerged commits in {base}; removal refused"
         );
     }
+    // branch -d uses its configured upstream, falling back to the central HEAD.
+    // Preflight that extra condition before removing the worktree, so a normal
+    // retry can still inspect its path/claim if branch deletion would refuse.
+    let deletion_base = git(
+        root,
+        &["rev-parse", "--verify", &format!("{branch}@{{upstream}}")],
+    )
+    .unwrap_or_else(|_| "HEAD".to_owned());
+    ensure!(
+        Command::new("git")
+            .args(["merge-base", "--is-ancestor", &head, &deletion_base])
+            .current_dir(root)
+            .status()?
+            .success(),
+        "Branch deletion not merged into upstream/checkout HEAD; removal refused"
+    );
     run(root, "git", &["worktree", "remove", &command_path(&path)?])?;
     run(root, "git", &["branch", "-d", branch])?;
     fs::remove_file(claim.join("owner.json"))?;
