@@ -1,0 +1,21 @@
+TASK-E15-01 / QA-009 — macOS physical hook root follow-up
+Date: 2026-10-16
+Base: abebc3db08dfb587612f79907035be9da8b244d3
+Previous independent Claude approval: 3e4c26edfae0557c32f1219b16f89b332c56119b
+
+Actual remote evidence:
+- PR #8 was merged by the maintainer into develop as eb0f1090373635b696545f21f9c510322cf3e10e while CI was still running. Author verified state=MERGED, base=develop and the two-parent merge commit via GitHub and Git.
+- Central checkout was clean and advanced via git switch develop; git merge --ff-only origin/develop. HEAD=origin/develop=eb0f1090373635b696545f21f9c510322cf3e10e, with abebc3d as ancestor. Agent worktrees preserved.
+- Run https://github.com/jimmykedlyn/vynamp-mediaplayer/actions/runs/38936049535, job tooling (macos-15): https://github.com/jimmykedlyn/vynamp-mediaplayer/actions/runs/38936049535/job/117092703588.
+- git_hooks_do_not_reuse_shared_outer_driver_cache failed at tooling.rs:657: actual hook root /private/var/folders/.../project with spaces/target/xtask-hooks, expected /var/folders/.../project with spaces/target/xtask-hooks.
+- fixtures_are_isolated_from_hook_repository_environment failed because it runs that same Unix test as a child. Integration results: 24 passed, 2 failed. Linux docs passed on this head; that does not approve macOS.
+
+Minimal test-only correction:
+- Compare the hook target to the canonical existing fixture root joined with target/xtask-hooks. Git emits the physical root; tempfile may preserve the /var alias to /private/var on macOS.
+- Keep both hook invocations, the two-line count, the exact target suffix, and the foreign-context regression. No hook, production code or permissions changed; no skip or bypass introduced.
+- The real macOS failing assertions are the red oracle. Windows cannot execute this cfg(unix) test; remote rerun required for green evidence.
+
+Status at capture and limitations:
+- Follow-up in author worktree, not part of merged PR #8. New SHA, complementary PR, CI result and independent review must be recorded in the external guide after execution.
+- The project-path expectation correction in abebc3d also still requires Claude review. Preserve approvals of eac3221 and 3e4c26e; review only subsequent delta(s).
+- No acceptance of TASK-E15-01/E15-02, player, hardware or release implied by merge or local Windows checks.
