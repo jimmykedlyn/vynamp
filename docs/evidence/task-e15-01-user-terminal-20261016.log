@@ -1,0 +1,61 @@
+Provenance: PowerShell transcript supplied by the user in this conversation on 2026-10-16.
+This file contains selected verbatim command/output excerpts; dependency compilation lines and most passing test names are omitted.
+Execution timestamp, explicit $LASTEXITCODE values, source SHA and source digest were not included in the supplied transcript.
+
+PS C:\Users\jimmy> cd D:\Projects\vynamp-media-player\repo\.worktrees\codex\task-e15-01-bootstrap
+PS D:\Projects\vynamp-media-player\repo\.worktrees\codex\task-e15-01-bootstrap> . D:\Projects\vynamp-media-player\AMBIENTE.ps1
+PS D:\Projects\vynamp-media-player\repo\.worktrees\codex\task-e15-01-bootstrap> cargo xtask doctor --agent both
+   Compiling xtask v0.7.0 (D:\Projects\vynamp-media-player\repo\.worktrees\codex\task-e15-01-bootstrap\xtask)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 46.13s
+     Running `D:\Projects\vynamp-media-player\.cache\bootstrap-build\debug\xtask.exe doctor --agent both`
+codex: plugin manager confirmed Superpowers; confirm skill discovery in session
+claude: plugin manager confirmed Superpowers; confirm skill discovery in session
+PS D:\Projects\vynamp-media-player\repo\.worktrees\codex\task-e15-01-bootstrap> cargo xtask ci docs
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.25s
+     Running `D:\Projects\vynamp-media-player\.cache\bootstrap-build\debug\xtask.exe ci docs`
+{
+  "epics": 17,
+  "errors": [],
+  "format_catalog_entries": 68,
+  "mandatory_platforms": [
+    "Windows x86_64",
+    "Linux x86_64",
+    "macOS Intel x86_64",
+    "macOS Apple Silicon arm64",
+    "Android arm64-v8a"
+  ],
+  "markdown_files": 296,
+  "openapi_paths": 25,
+  "operation_count": 26,
+  "phases": {
+    "M0": 16,
+    "M1": 18,
+    "M2": 37,
+    "M3": 74,
+    "M4": 17,
+    "M5": 14
+  },
+  "requirements": 176,
+  "result": "passed",
+  "schemas_and_examples": 10,
+  "scope": "Validação documental em Rust; não testa player/hardware/API/WIT.",
+  "spec_version": "0.7.0",
+  "tasks": 176
+}
+{"errors":[],"result":"passed","scope":"Structural config validation; no remote CI/signing/hardware claim","workflow_files":3}
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 27.95s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 46.51s
+     Running unittests src\main.rs (target\xtask-ci\debug\deps\xtask-1f7242a65c42289e.exe)
+
+running 29 tests
+test agents::tests::plugin_unknown_or_disabled_is_not_installed ... ok
+test agents::tests::real_codex_manager_output_is_confirmed ... ok
+test agents::tests::lock_pins_each_agent_separately ... ok
+test agents::tests::claude_entry_of_another_project_does_not_count ... ok
+test util::tests::windows_npm_shim_is_resolved_through_pathext ... ok
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.65s
+
+     Running tests\tooling.rs (target\xtask-ci\debug\deps\tooling-3010aac78c6c7b9c.exe)
+
+running 23 tests
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 19.41s

@@ -1,0 +1,28 @@
+
+running 24 tests
+test excluded_desktop_package_does_not_activate_core_ci ... ok
+test desktop_detection_parses_a_real_manifest ... ok
+test init_creates_main_develop_without_remote ... ok
+test commit_on_main_is_blocked_after_bootstrap ... ok
+test dirty_worktree_is_preserved ... ok
+test no_nested_worktrees ... ok
+test agents_have_independent_files_and_indexes ... ok
+test prepare_agents_adopts_numbered_import_branch ... ok
+test release_blocks_pending_native_branding_exports ... ok
+test release_cannot_publish_unimplemented_player ... ok
+test fixtures_are_isolated_from_hook_repository_environment ... ok
+test hotfix_requires_both_main_and_develop ... ok
+test prepare_agents_rejects_claim_without_codex_index ... ok
+test prepare_agents_preserves_dirty_import_checkout ... ok
+test vynamp_zip_uses_new_root_and_contains_approved_branding ... ok
+test prepare_agents_isolates_bootstrap_and_reviewer_and_can_resume ... ok
+test xtask_workspace_does_not_activate_player_ci ... ok
+test prepare_agents_rejects_plain_reviewer_folder ... ok
+test renamed_product_honors_legacy_task_claims ... ok
+test task_has_only_one_owner ... ok
+test prepare_agents_reuses_import_branch_when_develop_is_absent ... ok
+test traversal_and_unknown_task_create_no_branch ... ok
+test windows_autocrlf_keeps_release_sources_identical ... ok
+test unmerged_worktree_is_preserved ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.83s

@@ -595,3 +595,8 @@ Versão 0.7.0 · Markdown de produto, tooling, bootstrap e evidências históric
 - [Organização de testes](../tests/README.md) — tests/README.md
 
 - [Automação Rust com cargo xtask](../xtask/README.md) — xtask/README.md
+# Execução E15-01
+
+- [Plano de integração e verificação E15-01](superpowers/plans/2026-10-15-e15-01-verification.md) — docs/superpowers/plans/2026-10-15-e15-01-verification.md
+
+- [Evidência E15-01 / QA-009](evidence/task-e15-01-qa-009.json) — docs/evidence/task-e15-01-qa-009.json; checks locais e limites de instalação/discovery/revisão.

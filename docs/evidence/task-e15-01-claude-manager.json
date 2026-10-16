@@ -1,0 +1,67 @@
+[
+  {
+    "id": "frontend-design@claude-plugins-official",
+    "version": "d4226d062928",
+    "scope": "project",
+    "enabled": false,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\frontend-design\\d4226d062928",
+    "installedAt": "2026-10-04T14:44:33.451Z",
+    "lastUpdated": "2026-10-05T22:46:46.315Z",
+    "projectPath": "D:\\Projects\\vigesima",
+    "projectEnabled": false
+  },
+  {
+    "id": "humanizer@humanizer",
+    "version": "3.1.0",
+    "scope": "project",
+    "enabled": false,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\humanizer\\humanizer\\3.1.0",
+    "installedAt": "2026-10-04T14:46:57.640Z",
+    "lastUpdated": "2026-10-04T14:46:57.640Z",
+    "projectPath": "D:\\Projects\\vigesima",
+    "projectEnabled": false
+  },
+  {
+    "id": "superpowers@claude-plugins-official",
+    "version": "6.4.1",
+    "scope": "project",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\6.4.1",
+    "installedAt": "2026-10-04T14:39:51.715Z",
+    "lastUpdated": "2026-10-04T14:39:51.715Z",
+    "projectPath": "D:\\Projects\\vigesima",
+    "projectEnabled": true
+  },
+  {
+    "id": "superpowers@claude-plugins-official",
+    "version": "6.4.1",
+    "scope": "project",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\6.4.1",
+    "installedAt": "2026-10-14T13:26:43.613Z",
+    "lastUpdated": "2026-10-14T13:26:43.613Z",
+    "projectPath": "C:\\Users\\jimmy",
+    "projectEnabled": true
+  },
+  {
+    "id": "superpowers@claude-plugins-official",
+    "version": "6.4.1",
+    "scope": "project",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\6.4.1",
+    "installedAt": "2026-10-14T23:51:55.610Z",
+    "lastUpdated": "2026-10-14T23:51:55.610Z",
+    "projectPath": "D:\\Projects\\vynamp-git",
+    "projectEnabled": true
+  },
+  {
+    "id": "superpowers@claude-plugins-official",
+    "version": "6.4.1",
+    "scope": "user",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\6.4.1",
+    "installedAt": "2026-10-16T00:54:01.685Z",
+    "lastUpdated": "2026-10-16T00:54:01.685Z",
+    "projectEnabled": true
+  }
+]

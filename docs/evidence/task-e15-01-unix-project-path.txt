@@ -1,0 +1,23 @@
+TASK-E15-01 / REQ-E15-01 / QA-009 — Unix project-path test follow-up
+Date: 2026-10-16
+Base reviewed SHA: 3e4c26edfae0557c32f1219b16f89b332c56119b
+PR: https://github.com/jimmykedlyn/vynamp-mediaplayer/pull/8 (base develop)
+Status at capture: follow-up prepared in author worktree; requires review of new delta.
+
+Actual author observations:
+- git push -u origin feature/task-e15-01-codex-bootstrap passed (exit 0), with AMBIENTE.ps1 and the pre-push hook active. Its cargo xtask ci docs passed 29 unit tests and 24 integration tests on Windows.
+- GitHub API confirmed private=true and PR head=3e4c26edfae0557c32f1219b16f89b332c56119b.
+- CI run https://github.com/jimmykedlyn/vynamp-mediaplayer/actions/runs/38935121466 failed in docs on ubuntu-22.04. CI Gate failed; tooling/core/android were skipped after docs failed.
+- Real Linux unit results: 31 passed, 1 failed. Failing test: agents::tests::claude_entry_of_another_project_does_not_count, xtask/src/agents.rs:152. Assertion: confirmed(&here, "6.4.1", Path::new(&format!(r"\\?\{ROOT}"))). The fixture lowercased projectPath unconditionally, while same_path only folds case on Windows.
+- This existing failing CI test is the red oracle. Local Windows success did not cover the Unix branch. No claim of local Linux execution.
+
+Minimal correction:
+- Assert exact projectPath match on every platform.
+- Preserve the lowercase/extended-path positive assertion on Windows.
+- Assert that differently cased projectPath is rejected on non-Windows platforms.
+- Only test code changes; production same_path/confirmed, manager pins and hook scripts are unchanged.
+
+Limits and provenance:
+- The failed run is evidence of the base SHA, not of the follow-up. Later commands, new SHA, rerun URLs/status and independent Claude review belong in the PR and external guide after execution.
+- Claude's approvals of eac3221 and 3e4c26e remain valid for their scopes; the follow-up requires review of only the new delta.
+- No GitHub protection change, merge, release, player/hardware/Android acceptance or credential disclosure.

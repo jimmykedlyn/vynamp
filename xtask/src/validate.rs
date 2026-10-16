@@ -362,7 +362,10 @@ pub fn delivery(root: &Path) -> Result<()> {
     c.check(read_json(root.join(".claude/settings.json"))?["enabledPlugins"]["superpowers@claude-plugins-official"]==true,"Claude plugin not enabled");
     let lock = read_json(root.join("config/superpowers.lock.json"))?;
     c.check(
-        lock["required"] == true && lock["expected_version"].is_string(),
+        lock["required"] == true
+            && ["codex", "claude"]
+                .iter()
+                .all(|a| lock["expected_versions"][a].is_string()),
         "Superpowers lock missing",
     );
     let github = read_json(root.join("config/github.json"))?;
