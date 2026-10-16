@@ -84,6 +84,12 @@ impl Fixture {
         self.root
             .join(format!(".worktrees/{agent}/{}-{slug}", task.to_lowercase()))
     }
+    fn claim(&self, task: &str) -> PathBuf {
+        self.root.join(".git/auralis/claims").join(task)
+    }
+    fn remove(&self, task: &str, agent: &str) -> Output {
+        self.run(&["repo", "remove-worktree", "--task", task, "--agent", agent])
+    }
 }
 fn ok(o: Output) {
     assert!(
@@ -135,8 +141,39 @@ fn agents_have_independent_files_and_indexes() {
     ok(f.work("TASK-E02-03", "claude", "ui", "feature"));
     let a = f.path("codex", "TASK-E01-03", "state");
     let b = f.path("claude", "TASK-E02-03", "ui");
+    let index = |path: &Path| {
+        let o = f.cmd("git", &["rev-parse", "--git-path", "index"], path);
+        assert!(o.status.success());
+        path.join(String::from_utf8(o.stdout).unwrap().trim())
+            .canonicalize()
+            .unwrap()
+    };
+    assert_ne!(index(&a), index(&b));
+    assert_ne!(index(&a), index(&f.root));
+    let root_index = fs::read(index(&f.root)).unwrap();
+    let b_index = fs::read(index(&b)).unwrap();
     fs::write(a.join("isolated.txt"), "private").unwrap();
     ok(f.cmd("git", &["add", "isolated.txt"], &a));
+    assert_eq!(fs::read(index(&b)).unwrap(), b_index);
+    fs::write(b.join("review.txt"), "reviewer").unwrap();
+    ok(f.cmd("git", &["add", "review.txt"], &b));
+    assert_eq!(fs::read(index(&f.root)).unwrap(), root_index);
+    assert_eq!(
+        String::from_utf8_lossy(
+            &f.cmd("git", &["diff", "--cached", "--name-only"], &a)
+                .stdout
+        )
+        .trim(),
+        "isolated.txt"
+    );
+    assert_eq!(
+        String::from_utf8_lossy(
+            &f.cmd("git", &["diff", "--cached", "--name-only"], &b)
+                .stdout
+        )
+        .trim(),
+        "review.txt"
+    );
     assert!(!b.join("isolated.txt").exists());
     assert!(
         !String::from_utf8_lossy(&f.git(&["status", "--porcelain"]).stdout).contains("isolated")
@@ -180,24 +217,32 @@ fn traversal_and_unknown_task_create_no_branch() {
 }
 #[test]
 fn dirty_worktree_is_preserved() {
-    let f = Fixture::new();
-    f.init();
-    ok(f.work("TASK-E01-03", "codex", "state", "feature"));
-    let p = f.path("codex", "TASK-E01-03", "state");
-    fs::write(p.join("precious"), "keep").unwrap();
-    assert!(
-        !f.run(&[
-            "repo",
-            "remove-worktree",
-            "--task",
-            "TASK-E01-03",
-            "--agent",
-            "codex"
-        ])
-        .status
-        .success()
-    );
-    assert!(p.join("precious").exists());
+    for state in ["untracked", "modified", "staged"] {
+        let f = Fixture::new();
+        f.init();
+        ok(f.work("TASK-E01-03", "codex", "state", "feature"));
+        let p = f.path("codex", "TASK-E01-03", "state");
+        let file = if state == "untracked" {
+            "precious"
+        } else {
+            "README.md"
+        };
+        fs::write(p.join(file), "keep").unwrap();
+        if state == "staged" {
+            ok(f.cmd("git", &["add", file], &p));
+        }
+        let claim = fs::read(f.claim("TASK-E01-03").join("owner.json")).unwrap();
+        let status = f.cmd("git", &["status", "--porcelain"], &p).stdout;
+        let o = f.remove("TASK-E01-03", "codex");
+        assert!(!o.status.success());
+        assert!(String::from_utf8_lossy(&o.stderr).contains("Dirty worktree"));
+        assert_eq!(fs::read(p.join(file)).unwrap(), b"keep");
+        assert_eq!(f.cmd("git", &["status", "--porcelain"], &p).stdout, status);
+        assert_eq!(
+            fs::read(f.claim("TASK-E01-03").join("owner.json")).unwrap(),
+            claim
+        );
+    }
 }
 #[test]
 fn unmerged_worktree_is_preserved() {
@@ -292,6 +337,322 @@ fn no_nested_worktrees() {
         &p,
     );
     assert!(!o.status.success());
+}
+
+// REQ-E15-02: assert resource effects with real Git, rather than source text.
+#[test]
+fn concurrent_task_claim_has_one_winner() {
+    let f = Fixture::new();
+    f.init();
+    let barrier = std::sync::Barrier::new(2);
+    let results = std::thread::scope(|scope| {
+        let a = scope.spawn(|| {
+            barrier.wait();
+            f.work("TASK-E01-03", "codex", "race", "feature")
+        });
+        let b = scope.spawn(|| {
+            barrier.wait();
+            f.work("TASK-E01-03", "claude", "race", "feature")
+        });
+        [a.join().unwrap(), b.join().unwrap()]
+    });
+    assert_eq!(results.iter().filter(|o| o.status.success()).count(), 1);
+    let winner = if results[0].status.success() {
+        "codex"
+    } else {
+        "claude"
+    };
+    let loser = if winner == "codex" { "claude" } else { "codex" };
+    let rec: Value =
+        serde_json::from_slice(&fs::read(f.claim("TASK-E01-03").join("owner.json")).unwrap())
+            .unwrap();
+    assert_eq!(rec["agent"], winner);
+    assert_eq!(rec["task"], "TASK-E01-03");
+    assert_eq!(rec["branch"], format!("feature/task-e01-03-{winner}-race"));
+    assert_eq!(
+        Path::new(rec["path"].as_str().unwrap())
+            .canonicalize()
+            .unwrap(),
+        f.path(winner, "TASK-E01-03", "race")
+            .canonicalize()
+            .unwrap()
+    );
+    assert!(f.path(winner, "TASK-E01-03", "race").join(".git").is_file());
+    assert!(!f.path(loser, "TASK-E01-03", "race").exists());
+    assert!(
+        !f.git(&[
+            "show-ref",
+            "--verify",
+            &format!("refs/heads/feature/task-e01-03-{loser}-race")
+        ])
+        .status
+        .success()
+    );
+    let error = &results.iter().find(|o| !o.status.success()).unwrap().stderr;
+    assert!(String::from_utf8_lossy(error).contains("Task already claimed"));
+}
+
+#[test]
+fn failed_creation_preserves_existing_resources_and_releases_own_claim() {
+    let f = Fixture::new();
+    f.init();
+    let path = f.path("codex", "TASK-E01-03", "existing");
+    fs::create_dir_all(&path).unwrap();
+    fs::write(path.join("precious"), "keep").unwrap();
+    assert!(
+        !f.work("TASK-E01-03", "codex", "existing", "feature")
+            .status
+            .success()
+    );
+    assert_eq!(fs::read(path.join("precious")).unwrap(), b"keep");
+    assert!(!f.claim("TASK-E01-03").exists());
+    ok(f.git(&["branch", "feature/task-e01-03-codex-collision"]));
+    let before = f
+        .git(&["rev-parse", "feature/task-e01-03-codex-collision"])
+        .stdout;
+    assert!(
+        !f.work("TASK-E01-03", "codex", "collision", "feature")
+            .status
+            .success()
+    );
+    assert!(!f.claim("TASK-E01-03").exists());
+    assert_eq!(
+        f.git(&["rev-parse", "feature/task-e01-03-codex-collision"])
+            .stdout,
+        before
+    );
+    ok(f.work("TASK-E01-03", "codex", "retry", "feature"));
+}
+
+#[test]
+fn invalid_worktree_arguments_have_no_side_effects() {
+    let f = Fixture::new();
+    f.init();
+    let refs = f.git(&["show-ref"]).stdout;
+    for (id, agent, slug, kind) in [
+        ("../../escape", "codex", "valid", "feature"),
+        ("TASK-E99-99", "codex", "valid", "feature"),
+        ("TASK-E01-03", "../claude", "valid", "feature"),
+        ("TASK-E01-03", "codex", "../escape", "feature"),
+        ("TASK-E01-03", "codex", "C:\\escape", "feature"),
+        ("TASK-E01-03", "codex", "valid", "../main"),
+    ] {
+        assert!(!f.work(id, agent, slug, kind).status.success());
+        assert_eq!(f.git(&["show-ref"]).stdout, refs);
+        assert!(!f.root.join(".worktrees").exists());
+        assert!(!f.root.join(".git/auralis/claims").exists());
+    }
+}
+
+#[test]
+fn interrupted_claim_is_preserved_without_automatic_takeover() {
+    let f = Fixture::new();
+    f.init();
+    fs::create_dir_all(f.claim("TASK-E01-03")).unwrap();
+    assert!(
+        !f.work("TASK-E01-03", "claude", "retry", "feature")
+            .status
+            .success()
+    );
+    assert!(f.claim("TASK-E01-03").is_dir());
+    assert!(!f.path("claude", "TASK-E01-03", "retry").exists());
+}
+
+#[test]
+fn integrated_feature_removal_cleans_only_its_resources() {
+    let f = Fixture::new();
+    f.init();
+    ok(f.work("TASK-E01-03", "codex", "done", "feature"));
+    ok(f.work("TASK-E02-03", "claude", "keep", "chore"));
+    let p = f.path("codex", "TASK-E01-03", "done");
+    fs::write(p.join("new"), "merged").unwrap();
+    ok(f.cmd("git", &["add", "new"], &p));
+    ok(f.cmd("git", &["commit", "-m", "feat: complete fixture"], &p));
+    ok(f.git(&["switch", "develop"]));
+    ok(f.git(&[
+        "merge",
+        "--no-ff",
+        "feature/task-e01-03-codex-done",
+        "-m",
+        "merge fixture",
+    ]));
+    let review_claim = fs::read(f.claim("TASK-E02-03").join("owner.json")).unwrap();
+    ok(f.remove("TASK-E01-03", "codex"));
+    assert!(!p.exists());
+    assert!(!f.claim("TASK-E01-03").exists());
+    assert!(
+        !f.git(&[
+            "show-ref",
+            "--verify",
+            "refs/heads/feature/task-e01-03-codex-done"
+        ])
+        .status
+        .success()
+    );
+    assert_eq!(fs::read(f.root.join("new")).unwrap(), b"merged");
+    assert_eq!(
+        fs::read(f.claim("TASK-E02-03").join("owner.json")).unwrap(),
+        review_claim
+    );
+    assert!(
+        f.path("claude", "TASK-E02-03", "keep")
+            .join(".git")
+            .is_file()
+    );
+}
+
+#[test]
+fn hotfix_merged_only_to_main_is_preserved() {
+    let f = Fixture::new();
+    f.init();
+    ok(f.work("TASK-E01-03", "codex", "hot", "hotfix"));
+    let p = f.path("codex", "TASK-E01-03", "hot");
+    fs::write(p.join("hot"), "fix").unwrap();
+    ok(f.cmd("git", &["add", "hot"], &p));
+    ok(f.cmd("git", &["commit", "-m", "fix: fixture"], &p));
+    ok(f.git(&[
+        "merge",
+        "--no-ff",
+        "hotfix/task-e01-03-codex-hot",
+        "-m",
+        "main only",
+    ]));
+    assert!(!f.remove("TASK-E01-03", "codex").status.success());
+    assert_eq!(fs::read(p.join("hot")).unwrap(), b"fix");
+    assert!(f.claim("TASK-E01-03").join("owner.json").exists());
+}
+
+fn check_removal_after_checkout_drift(detached: bool) {
+    let f = Fixture::new();
+    f.init();
+    ok(f.work("TASK-E01-03", "codex", "drift", "feature"));
+    let p = f.path("codex", "TASK-E01-03", "drift");
+    if detached {
+        ok(f.cmd("git", &["switch", "--detach"], &p));
+    } else {
+        ok(f.cmd("git", &["switch", "-c", "fix/task-e02-03-codex-other"], &p));
+    }
+    fs::write(p.join("precious"), "unmerged").unwrap();
+    ok(f.cmd("git", &["add", "precious"], &p));
+    ok(f.cmd("git", &["commit", "-m", "fix: preserve actual HEAD"], &p));
+    let head = f.cmd("git", &["rev-parse", "HEAD"], &p).stdout;
+    let claim = fs::read(f.claim("TASK-E01-03").join("owner.json")).unwrap();
+    assert!(
+        !f.remove("TASK-E01-03", "codex").status.success(),
+        "removed drifted worktree (detached={detached})"
+    );
+    assert_eq!(fs::read(p.join("precious")).unwrap(), b"unmerged");
+    assert_eq!(f.cmd("git", &["rev-parse", "HEAD"], &p).stdout, head);
+    assert_eq!(
+        fs::read(f.claim("TASK-E01-03").join("owner.json")).unwrap(),
+        claim
+    );
+}
+
+#[test]
+fn removal_preserves_switched_worktree() {
+    check_removal_after_checkout_drift(false);
+}
+
+#[test]
+fn removal_preserves_detached_worktree() {
+    check_removal_after_checkout_drift(true);
+}
+
+fn check_inconsistent_claim(key: &str, value: &str) {
+    let f = Fixture::new();
+    f.init();
+    ok(f.work("TASK-E01-03", "codex", "metadata", "feature"));
+    let file = f.claim("TASK-E01-03").join("owner.json");
+    let mut rec: Value = serde_json::from_slice(&fs::read(&file).unwrap()).unwrap();
+    rec[key] = json!(value);
+    fs::write(&file, rec.to_string()).unwrap();
+    let before = fs::read(&file).unwrap();
+    assert!(
+        !f.remove("TASK-E01-03", "codex").status.success(),
+        "accepted inconsistent {key}"
+    );
+    assert!(
+        f.path("codex", "TASK-E01-03", "metadata")
+            .join(".git")
+            .is_file()
+    );
+    assert_eq!(fs::read(&file).unwrap(), before);
+}
+
+#[test]
+fn removal_preserves_inconsistent_task() {
+    check_inconsistent_claim("task", "TASK-E02-03");
+}
+
+#[test]
+fn removal_preserves_inconsistent_base() {
+    check_inconsistent_claim("base", "main");
+}
+
+#[test]
+fn removal_preserves_inconsistent_branch() {
+    check_inconsistent_claim("branch", "develop");
+}
+
+#[test]
+fn removal_by_other_owner_preserves_claim_and_worktree() {
+    let f = Fixture::new();
+    f.init();
+    ok(f.work("TASK-E01-03", "codex", "owner", "feature"));
+    let claim = fs::read(f.claim("TASK-E01-03").join("owner.json")).unwrap();
+    assert!(!f.remove("TASK-E01-03", "claude").status.success());
+    assert_eq!(
+        fs::read(f.claim("TASK-E01-03").join("owner.json")).unwrap(),
+        claim
+    );
+    assert!(
+        f.path("codex", "TASK-E01-03", "owner")
+            .join(".git")
+            .is_file()
+    );
+}
+
+#[test]
+fn removal_preserves_foreign_repository_and_claim() {
+    let f = Fixture::new();
+    f.init();
+    ok(f.work("TASK-E01-03", "codex", "foreign", "feature"));
+    let foreign = Fixture::new();
+    foreign.init();
+    let file = f.claim("TASK-E01-03").join("owner.json");
+    let mut rec: Value = serde_json::from_slice(&fs::read(&file).unwrap()).unwrap();
+    rec["path"] = json!(foreign.root);
+    fs::write(&file, rec.to_string()).unwrap();
+    let claim = fs::read(&file).unwrap();
+    let index = fs::read(foreign.root.join(".git/index")).unwrap();
+    assert!(!f.remove("TASK-E01-03", "codex").status.success());
+    assert_eq!(fs::read(&file).unwrap(), claim);
+    assert_eq!(fs::read(foreign.root.join(".git/index")).unwrap(), index);
+    assert!(
+        f.path("codex", "TASK-E01-03", "foreign")
+            .join(".git")
+            .is_file()
+    );
+}
+
+#[cfg(unix)]
+#[test]
+fn symlink_worktree_destination_is_preserved() {
+    let f = Fixture::new();
+    f.init();
+    let outside = f._temp.path().join("outside");
+    fs::create_dir(&outside).unwrap();
+    fs::write(outside.join("precious"), "keep").unwrap();
+    std::os::unix::fs::symlink(&outside, f.root.join(".worktrees")).unwrap();
+    assert!(
+        !f.work("TASK-E01-03", "codex", "escape", "feature")
+            .status
+            .success()
+    );
+    assert_eq!(fs::read(outside.join("precious")).unwrap(), b"keep");
+    assert!(!f.claim("TASK-E01-03").exists());
+    assert!(!outside.join("codex").exists());
 }
 #[test]
 fn release_cannot_publish_unimplemented_player() {
