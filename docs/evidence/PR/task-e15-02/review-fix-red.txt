@@ -1,0 +1,32 @@
+   Compiling xtask v0.7.0 (D:\Projects\vynamp-media-player\repo\.worktrees\codex\task-e15-02-isolamento\xtask)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.40s
+     Running tests\tooling.rs (target\xtask-ci\debug\deps\tooling-3010aac78c6c7b9c.exe)
+
+running 10 tests
+test removal_preserves_inconsistent_base ... ok
+test removal_preserves_inconsistent_branch ... ok
+test removal_preserves_inconsistent_task ... ok
+test removal_by_other_owner_preserves_claim_and_worktree ... ok
+test removal_preserves_detached_worktree ... ok
+
+thread 'removal_preflights_configured_upstream' (35600) panicked at xtask\tests\tooling.rs:528:5:
+worktree removed before branch deletion was validated
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test removal_preflights_configured_upstream ... FAILED
+test removal_preserves_foreign_repository_and_claim ... ok
+test integrated_feature_removal_cleans_only_its_resources ... ok
+test removal_preserves_switched_worktree ... ok
+
+thread 'removal_preserves_integrated_feature_when_central_head_is_unmerged' (29332) panicked at xtask\tests\tooling.rs:528:5:
+worktree removed before branch deletion was validated
+test removal_preserves_integrated_feature_when_central_head_is_unmerged ... FAILED
+
+failures:
+
+failures:
+    removal_preflights_configured_upstream
+    removal_preserves_integrated_feature_when_central_head_is_unmerged
+
+test result: FAILED. 8 passed; 2 failed; 0 ignored; 0 measured; 29 filtered out; finished in 9.73s
+
+error: test failed, to rerun pass `-p xtask --test tooling`

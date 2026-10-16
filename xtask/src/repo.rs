@@ -118,20 +118,64 @@ pub fn worktree(root: &Path, agent: &str, id: &str, slug: &str, kind: &str) -> R
 }
 pub fn remove(root: &Path, agent: &str, id: &str) -> Result<()> {
     task(root, id)?;
-    let claim = common(root)?.join("auralis/claims").join(id);
+    let shared = common(root)?;
+    ensure!(
+        git(root, &["rev-parse", "--show-superproject-working-tree"])?.is_empty()
+            && PathBuf::from(git(root, &["rev-parse", "--absolute-git-dir"])?).canonicalize()?
+                == shared
+            && PathBuf::from(git(root, &["rev-parse", "--show-toplevel"])?).canonicalize()?
+                == root.canonicalize()?,
+        "Run removal from the root checkout, not a worktree or submodule"
+    );
+    let claim = shared.join("auralis/claims").join(id);
     let rec = read_json(claim.join("owner.json"))?;
+    ensure!(rec["task"] == id, "Claim task differs; preserve it");
     ensure!(rec["agent"] == agent, "Worktree belongs to another agent");
+    let branch = string(&rec, "branch")?;
+    let pattern = Regex::new(
+        r"^(feature|fix|chore|hotfix)/(task-e\d{2}-\d{2})-(codex|claude)-([a-z0-9]+(?:-[a-z0-9]+)*)$",
+    )?;
+    let parts = pattern
+        .captures(branch)
+        .ok_or_else(|| anyhow::anyhow!("Invalid claimed branch; preserve it"))?;
+    ensure!(
+        parts[2] == id.to_lowercase() && &parts[3] == agent,
+        "Claim branch differs from task/owner; preserve it"
+    );
+    let base = if &parts[1] == "hotfix" {
+        "main"
+    } else {
+        "develop"
+    };
+    ensure!(rec["base"] == base, "Claim base differs; preserve it");
+    let relative = PathBuf::from(format!(
+        ".worktrees/{agent}/{}-{}",
+        id.to_lowercase(),
+        &parts[4]
+    ));
+    validate_destination(root, &relative)?;
     let path = PathBuf::from(string(&rec, "path")?);
     ensure!(
-        path.canonicalize()?
-            .starts_with(root.canonicalize()?.join(".worktrees")),
+        path.is_absolute() && path.canonicalize()? == root.join(relative).canonicalize()?,
         "Unsafe claimed worktree path"
+    );
+    ensure!(
+        path.join(".git").is_file()
+            && common(&path)? == shared
+            && PathBuf::from(git(&path, &["rev-parse", "--show-toplevel"])?).canonicalize()?
+                == path.canonicalize()?,
+        "Claim does not identify this repository's worktree; preserve it"
+    );
+    ensure!(
+        git(&path, &["branch", "--show-current"])? == branch,
+        "Worktree branch differs from claim (or HEAD is detached); preserve it"
     );
     ensure!(
         git(&path, &["status", "--porcelain"])?.is_empty(),
         "Dirty worktree; removal refused"
     );
-    let branch = string(&rec, "branch")?;
+    // Check the worktree's actual commit, not merely a possibly stale claim ref.
+    let head = git(&path, &["rev-parse", "HEAD"])?;
     let bases = if branch.starts_with("hotfix/") {
         vec!["develop", "main"]
     } else {
@@ -140,13 +184,29 @@ pub fn remove(root: &Path, agent: &str, id: &str) -> Result<()> {
     for base in bases {
         ensure!(
             Command::new("git")
-                .args(["merge-base", "--is-ancestor", branch, base])
+                .args(["merge-base", "--is-ancestor", &head, base])
                 .current_dir(root)
                 .status()?
                 .success(),
             "Unmerged commits in {base}; removal refused"
         );
     }
+    // branch -d uses its configured upstream, falling back to the central HEAD.
+    // Preflight that extra condition before removing the worktree, so a normal
+    // retry can still inspect its path/claim if branch deletion would refuse.
+    let deletion_base = git(
+        root,
+        &["rev-parse", "--verify", &format!("{branch}@{{upstream}}")],
+    )
+    .unwrap_or_else(|_| "HEAD".to_owned());
+    ensure!(
+        Command::new("git")
+            .args(["merge-base", "--is-ancestor", &head, &deletion_base])
+            .current_dir(root)
+            .status()?
+            .success(),
+        "Branch deletion not merged into upstream/checkout HEAD; removal refused"
+    );
     run(root, "git", &["worktree", "remove", &command_path(&path)?])?;
     run(root, "git", &["branch", "-d", branch])?;
     fs::remove_file(claim.join("owner.json"))?;

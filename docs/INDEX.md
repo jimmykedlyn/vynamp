@@ -600,3 +600,9 @@ Versão 0.7.0 · Markdown de produto, tooling, bootstrap e evidências históric
 - [Plano de integração e verificação E15-01](superpowers/plans/2026-10-15-e15-01-verification.md) — docs/superpowers/plans/2026-10-15-e15-01-verification.md
 
 - [Evidência E15-01 / QA-009](evidence/task-e15-01-qa-009.json) — docs/evidence/task-e15-01-qa-009.json; checks locais e limites de instalação/discovery/revisão.
+
+# Execução E15-02
+
+- [Plano de isolamento E15-02](superpowers/plans/2026-10-16-e15-02-isolation.md) — docs/superpowers/plans/2026-10-16-e15-02-isolation.md
+
+- [Evidência E15-02 / QA-009 / QA-012](evidence/PR/task-e15-02/README.md) — docs/evidence/PR/task-e15-02/README.md; Git real, RED/GREEN, concorrência e preservação de worktrees.

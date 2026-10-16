@@ -21,3 +21,7 @@ Scripts e regras de isolamento, claim atômico e remoção segura.
 ## Evidência
 
 QA-009, QA-012; registrar commit/digest, comando, ambiente/OS/ABI, outputs e limitações. Instalação de plugin/repo privado/assinatura requer ambiente real; não substituir por mocks/documentos. Quebrar em slices pequenas antes execução, implementar sucesso/erro/cancelamento, revisar pelo outro agente e preservar resultados no PR/docs/evidence.
+
+## Execução E15-02
+
+[Plano em slices](../../docs/superpowers/plans/2026-10-16-e15-02-isolation.md) e [evidência do autor](../../docs/evidence/PR/task-e15-02/README.md). A validação local do tooling não constitui aceite da TASK: revisão Claude do SHA exato, CI remoto e integração pelo mantenedor são etapas separadas; produto/hardware/release continuam fora deste aceite.

@@ -1,0 +1,17 @@
+   Compiling xtask v0.7.0 (D:\Projects\vynamp-media-player\repo\.worktrees\codex\task-e15-02-isolamento\xtask)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.26s
+     Running tests\tooling.rs (target\xtask-ci\debug\deps\tooling-3010aac78c6c7b9c.exe)
+
+running 10 tests
+test removal_preserves_inconsistent_base ... ok
+test removal_preserves_inconsistent_branch ... ok
+test removal_preserves_inconsistent_task ... ok
+test removal_by_other_owner_preserves_claim_and_worktree ... ok
+test removal_preserves_detached_worktree ... ok
+test removal_preserves_foreign_repository_and_claim ... ok
+test integrated_feature_removal_cleans_only_its_resources ... ok
+test removal_preflights_configured_upstream ... ok
+test removal_preserves_switched_worktree ... ok
+test removal_preserves_integrated_feature_when_central_head_is_unmerged ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 29 filtered out; finished in 12.15s
