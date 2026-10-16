@@ -653,8 +653,11 @@ fn git_hooks_do_not_reuse_shared_outer_driver_cache() {
     }
     let output = fs::read_to_string(log).unwrap();
     assert_eq!(output.lines().count(), 2);
+    // Git resolves the worktree root physically (for example /var -> /private/var
+    // on macOS), while tempfile may preserve an alias in its original path.
+    let expected = f.root.canonicalize().unwrap().join("target/xtask-hooks");
     for value in output.lines() {
-        assert_eq!(Path::new(value), f.root.join("target/xtask-hooks"));
+        assert_eq!(Path::new(value), expected);
     }
 }
 
