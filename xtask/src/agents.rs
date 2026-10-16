@@ -148,12 +148,19 @@ mod tests {
         assert!(!confirmed(&other, "6.4.1", Path::new(ROOT)));
         let user = json!([{"id":"superpowers@claude-plugins-official","version":"6.4.1","scope":"user","enabled":true,"projectEnabled":true}]);
         assert!(confirmed(&user, "6.4.1", Path::new(ROOT)));
-        let here = json!([{"id":"superpowers@claude-plugins-official","version":"6.4.1","scope":"project","enabled":true,"projectPath":ROOT.to_lowercase()}]);
+        let here = json!([{"id":"superpowers@claude-plugins-official","version":"6.4.1","scope":"project","enabled":true,"projectPath":ROOT}]);
+        assert!(confirmed(&here, "6.4.1", Path::new(ROOT)));
+        let lower = json!([{"id":"superpowers@claude-plugins-official","version":"6.4.1","scope":"project","enabled":true,"projectPath":ROOT.to_lowercase()}]);
+        // Windows accepts case aliases and extended paths; Unix must not accept
+        // a differently cased project as the current project.
+        #[cfg(windows)]
         assert!(confirmed(
-            &here,
+            &lower,
             "6.4.1",
             Path::new(&format!(r"\\?\{ROOT}"))
         ));
+        #[cfg(not(windows))]
+        assert!(!confirmed(&lower, "6.4.1", Path::new(ROOT)));
     }
     #[test]
     fn lock_pins_each_agent_separately() {
