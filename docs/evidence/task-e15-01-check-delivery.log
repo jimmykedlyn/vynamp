@@ -1,0 +1,3 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.26s
+     Running `D:/Projects/vynamp-media-player/.cache/e15-01-verification-20261015\debug\xtask.exe check-delivery`
+{"errors":[],"result":"passed","scope":"Structural config validation; no remote CI/signing/hardware claim","workflow_files":3}

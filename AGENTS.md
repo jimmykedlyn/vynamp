@@ -20,8 +20,14 @@ Executar cargo xtask ci docs e checks do subsistema. Não testar só espelho de 
 
 ## Entrega
 
+Obrigatório para toda entrega do Codex: atualizar o bloco **REVISAR — enviar ao Claude:** da TASK no guia externo `D:\Projects\vynamp-media-player\GUIA-PROMPTS-CODEX-CLAUDE.md`, inclusive após correções, novos commits/checks ou bloqueios. Preencher branch, SHA completo existente, base, PR real ou pendência, escopo commitado, evidências, comandos/resultados/ambiente/limitações e checks para o revisor; distinguir transcrição do usuário, arquivos staged e verificações pendentes. Templates futuros permanecem templates. Entregar ao usuário o link do bloco atualizado; não inventar SHA/PR nem declarar evidência staged como parte do commit.
+
+Obrigatório para o Claude: após cada revisão/reavaliação, atualizar nesse guia externo seu próprio registro de checks, separado dos resultados do autor. Registrar SHA revisado, comandos, status por check (passou/falhou/não executado/não aplicável com justificativa), ambiente/evidências, achados, limitações e decisão técnica; apontar o registro na resposta. O Codex não marca aprovação/checks pelo Claude. Essa atualização do guia compartilhado não autoriza editar a worktree do autor nem assumir sua claim.
+
 Produto ainda não implementado; stages/release flags distinguem tooling de app. Não criar executável placeholder, selo hi-res falso ou installer fictício. Release precisa licenças/notices/fixtures/evidências/runtime inventory/certificados reais. Não criar licença final sem decisão registrada. Não publicar plataformaweb antesM4. Atualizar docs/schema/backlog/ADR/notices conforme mudança, mantendo IDs e links.
 
 ## Identidade Vynamp
 
 Nome Vynamp e conceito C — Pulso aprovados. [Guia de marca](docs/design/04-brand-identity.md) e [PNGs incluídos](assets/branding/README.md). Preserve geometria e cores da marca e paleta semântica da UI. Não usar PNG de referência como ícone nativo já verificado. Repo informado renomeado: jimmykedlyn/vynamp-mediaplayer.
+
+Em todo handoff, atualize tambem o painel Proxima acao no topo do guia e entregue etapa atual, proximo responsavel, pasta exata, comando ou prompt pronto, resultado esperado e caminho apos sucesso/falha. O agente prepara o workflow; o usuario nao precisa adivinhar pastas/SHAs/comandos nem montar prompts. Ao receber "commit feito", leia o novo SHA no Git e atualize o handoff antes da revisao.
