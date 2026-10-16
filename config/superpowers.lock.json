@@ -1,9 +1,12 @@
 {
   "required": true,
   "source": "https://github.com/obra/superpowers",
-  "expected_version": "7.0.0",
-  "version_source": "https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.claude-plugin/plugin.json",
-  "metadata_checked_on": "2026-10-14",
+  "expected_versions": {
+    "codex": "6.4.2",
+    "claude": "6.4.1"
+  },
+  "version_source": "Saida real de `codex plugin list --json` (superpowers@openai-curated-remote) e `claude plugin list --json` (superpowers@claude-plugins-official). Cada marketplace publica sua propria versao; o main do GitHub nao e pin.",
+  "metadata_checked_on": "2026-10-15",
   "codex_install": null,
   "claude_install": [
     "claude",
@@ -13,6 +16,6 @@
     "--scope",
     "project"
   ],
-  "note": "Instalação nativa separada em cada agente. Doctor aceita somente discovery explícito de versão ativa. Se o manager não expõe JSON conhecido, conferir sessão e adaptar o parser com evidência; nunca fabricar instalação.",
+  "note": "Instalação nativa separada em cada agente. Doctor aceita somente discovery explícito de versão ativa, por agente. Se o manager não expõe JSON conhecido, conferir sessão e adaptar o parser com evidência; nunca fabricar instalação. Atualizar versões por PR.",
   "codex_install_instructions": "codex > /plugins > buscar superpowers > Install Plugin"
 }

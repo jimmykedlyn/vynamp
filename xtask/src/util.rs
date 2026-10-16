@@ -64,9 +64,34 @@ pub fn write_json(path: impl AsRef<Path>, value: &Value) -> Result<()> {
 pub fn text(path: impl AsRef<Path>) -> Result<String> {
     Ok(fs::read_to_string(path)?)
 }
+/// Windows `Command` only appends `.exe`; npm shims such as `codex.cmd` need PATHEXT lookup.
+fn find_program(
+    exe: &str,
+    path: Option<&std::ffi::OsStr>,
+    pathext: &str,
+    windows: bool,
+) -> Option<PathBuf> {
+    if !windows || Path::new(exe).extension().is_some() || exe.contains(['/', '\\']) {
+        return None;
+    }
+    let exts: Vec<&str> = pathext.split(';').filter(|e| !e.is_empty()).collect();
+    std::env::split_paths(path?).find_map(|dir| {
+        exts.iter()
+            .map(|ext| dir.join(format!("{exe}{}", ext.to_lowercase())))
+            .find(|candidate| candidate.is_file())
+    })
+}
+fn program(exe: &str) -> Command {
+    let pathext = std::env::var("PATHEXT").unwrap_or_else(|_| ".COM;.EXE;.BAT;.CMD".into());
+    let path = std::env::var_os("PATH");
+    match find_program(exe, path.as_deref(), &pathext, cfg!(windows)) {
+        Some(resolved) => Command::new(resolved),
+        None => Command::new(exe),
+    }
+}
 pub fn run(root: &Path, exe: &str, args: &[&str]) -> Result<()> {
     ensure!(
-        Command::new(exe)
+        program(exe)
             .args(args)
             .current_dir(root)
             .status()
@@ -77,7 +102,7 @@ pub fn run(root: &Path, exe: &str, args: &[&str]) -> Result<()> {
     Ok(())
 }
 pub fn capture(root: &Path, exe: &str, args: &[&str]) -> Result<String> {
-    let o = Command::new(exe)
+    let o = program(exe)
         .args(args)
         .current_dir(root)
         .output()
@@ -95,7 +120,7 @@ pub fn secret_call(
     args: &[&str],
     envs: &[(String, String)],
 ) -> Result<String> {
-    let o = Command::new(exe)
+    let o = program(exe)
         .args(args)
         .envs(envs.iter().cloned())
         .current_dir(root)
@@ -277,6 +302,22 @@ pub fn check_host(platform: &str) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn windows_npm_shim_is_resolved_through_pathext() {
+        let temp = tempfile::tempdir().unwrap();
+        fs::write(temp.path().join("codex"), b"#!/bin/sh").unwrap();
+        fs::write(temp.path().join("codex.cmd"), b"@echo off").unwrap();
+        let path = std::env::join_paths([temp.path()]).unwrap();
+        assert_eq!(
+            find_program("codex", Some(&path), ".COM;.EXE;.BAT;.CMD", true),
+            Some(temp.path().join("codex.cmd"))
+        );
+        assert_eq!(
+            find_program("missing", Some(&path), ".EXE;.CMD", true),
+            None
+        );
+        assert_eq!(find_program("codex", Some(&path), "", false), None);
+    }
     #[test]
     fn distribution_scan_excludes_synthetic_credentials() {
         let temp = tempfile::tempdir().unwrap();
