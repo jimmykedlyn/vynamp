@@ -1,0 +1,22 @@
+woodpecker-cli 3.19.0 exec --backend-engine local (Windows, pwsh 7.4.20), 2026-10-18
+
+fail.yaml:
+skip_clone: true
+steps:
+  - name: fail-mid
+    image: pwsh
+    commands:
+      - $PSNativeCommandUseErrorActionPreference = $true
+      - cmd /c exit 7
+      - Write-Host 'SHOULD-NOT-PRINT'
+result: step failed ("Program cmd.exe ended with non-zero exit code: 7"), cli exit 1
+
+nopref.yaml:
+skip_clone: true
+steps:
+  - name: masked-without-pref
+    image: pwsh
+    commands:
+      - cmd /c exit 7
+      - Write-Host 'PRINTED-MASKED'
+result: PRINTED-MASKED printed, cli exit 0 (failure masked)

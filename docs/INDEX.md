@@ -625,3 +625,4 @@ Versão 0.7.0 · Markdown de produto, tooling, bootstrap e evidências históric
 - [Desenho Woodpecker e Cloudflare Tunnel](superpowers/specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md) — docs/superpowers/specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md
 - [Plano Woodpecker E15-04](superpowers/plans/2026-10-18-e15-04-woodpecker.md) — docs/superpowers/plans/2026-10-18-e15-04-woodpecker.md
 - [Operação Woodpecker piloto](../infra/ci/woodpecker/README.md) — infra/ci/woodpecker/README.md
+- [Evidência E15-04](evidence/PR/task-e15-04/README.md) — docs/evidence/PR/task-e15-04/README.md

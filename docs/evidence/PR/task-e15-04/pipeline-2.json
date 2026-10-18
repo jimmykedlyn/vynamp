@@ -1,0 +1,49 @@
+{
+  "number": 2,
+  "event": "push",
+  "status": "failure",
+  "commit": "05f47394270a3ceaad0424a6c8a9ee4da63505a8",
+  "ref": "refs/heads/chore/e15-04-pilot-fail",
+  "branch": "chore/e15-04-pilot-fail",
+  "created": "2026-10-18T21:56:53.0000000+00:00",
+  "started": "2026-10-18T22:01:42.0000000+00:00",
+  "finished": "2026-10-18T22:07:29.0000000+00:00",
+  "workflows": [
+    {
+      "name": "linux",
+      "state": "failure",
+      "agent_id": 1,
+      "platform": null,
+      "steps": [
+        {
+          "name": "clone",
+          "state": "success",
+          "exit_code": 0
+        },
+        {
+          "name": "tooling",
+          "state": "failure",
+          "exit_code": 1
+        }
+      ]
+    },
+    {
+      "name": "windows",
+      "state": "failure",
+      "agent_id": 2,
+      "platform": null,
+      "steps": [
+        {
+          "name": "clone",
+          "state": "success",
+          "exit_code": 0
+        },
+        {
+          "name": "tooling",
+          "state": "failure",
+          "exit_code": 1
+        }
+      ]
+    }
+  ]
+}

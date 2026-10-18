@@ -1,0 +1,49 @@
+{
+  "number": 1,
+  "event": "push",
+  "status": "success",
+  "commit": "72094aa8e2a19ddceaacab0f443cb7586d8de2c6",
+  "ref": "refs/heads/chore/task-e15-04-claude-woodpecker",
+  "branch": "chore/task-e15-04-claude-woodpecker",
+  "created": "2026-10-18T21:54:39.0000000+00:00",
+  "started": "2026-10-18T21:54:43.0000000+00:00",
+  "finished": "2026-10-18T22:05:17.0000000+00:00",
+  "workflows": [
+    {
+      "name": "linux",
+      "state": "success",
+      "agent_id": 1,
+      "platform": null,
+      "steps": [
+        {
+          "name": "clone",
+          "state": "success",
+          "exit_code": 0
+        },
+        {
+          "name": "tooling",
+          "state": "success",
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "name": "windows",
+      "state": "success",
+      "agent_id": 2,
+      "platform": null,
+      "steps": [
+        {
+          "name": "clone",
+          "state": "success",
+          "exit_code": 0
+        },
+        {
+          "name": "tooling",
+          "state": "success",
+          "exit_code": 0
+        }
+      ]
+    }
+  ]
+}
