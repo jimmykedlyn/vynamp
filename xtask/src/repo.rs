@@ -240,7 +240,10 @@ fn protection_status(result: &Result<Value, String>) -> String {
             let locked = p["allow_force_pushes"]["enabled"] == false
                 && p["allow_deletions"]["enabled"] == false
                 && p["enforce_admins"]["enabled"] == true;
-            if gate && locked {
+            // PR required even with review_count 0 (solo account); absent fields fail closed.
+            let reviewed = p["required_pull_request_reviews"]["dismiss_stale_reviews"] == true
+                && p["required_conversation_resolution"]["enabled"] == true;
+            if gate && locked && reviewed {
                 "applied"
             } else {
                 "incomplete"
@@ -270,12 +273,18 @@ fn audit_report(meta: &Value, protections: &[(&str, Result<Value, String>)]) -> 
     {
         pending.push("merge methods are not merge commit only".to_owned());
     }
+    if meta["delete_branch_on_merge"] != true {
+        pending.push(format!(
+            "delete_branch_on_merge is {} instead of true",
+            meta["delete_branch_on_merge"]
+        ));
+    }
     let mut status = serde_json::Map::new();
     for (branch, result) in protections {
         let s = protection_status(result);
         if s != "applied" {
             pending.push(format!(
-                "{branch} protection {s}: CI Gate/force-push/deletion rules not enforced"
+                "{branch} protection {s}: CI Gate/PR/stale-review/conversation/force-push/deletion rules not enforced"
             ));
         }
         status.insert((*branch).to_owned(), json!(s));
@@ -519,7 +528,68 @@ mod github_policy_tests {
         json!({"full_name":"o/r","private":true,"default_branch":default,"allow_merge_commit":true,"allow_squash_merge":squash,"allow_rebase_merge":false,"delete_branch_on_merge":true})
     }
     fn applied() -> serde_json::Value {
-        json!({"required_status_checks":{"strict":true,"contexts":["CI Gate"]},"enforce_admins":{"enabled":true},"allow_force_pushes":{"enabled":false},"allow_deletions":{"enabled":false}})
+        json!({"required_status_checks":{"strict":true,"contexts":["CI Gate"]},"enforce_admins":{"enabled":true},"required_pull_request_reviews":{"dismiss_stale_reviews":true,"required_approving_review_count":0},"required_conversation_resolution":{"enabled":true},"allow_force_pushes":{"enabled":false},"allow_deletions":{"enabled":false}})
+    }
+    fn assert_weakened_is_incomplete(weak: serde_json::Value) {
+        let r = audit_report(
+            &meta("develop", false),
+            &[("main", Ok(weak)), ("develop", Ok(applied()))],
+        );
+        assert_eq!(r["protection"]["main"], "incomplete");
+        assert_eq!(r["protection"]["develop"], "applied");
+        assert_eq!(r["pending"].as_array().unwrap().len(), 1, "{r}");
+    }
+    #[test]
+    fn protection_without_required_pull_request_is_incomplete() {
+        let mut weak = applied();
+        weak["required_pull_request_reviews"] = json!(null);
+        assert_weakened_is_incomplete(weak.clone());
+        weak.as_object_mut()
+            .unwrap()
+            .remove("required_pull_request_reviews");
+        assert_weakened_is_incomplete(weak);
+    }
+    #[test]
+    fn protection_keeping_stale_reviews_is_incomplete() {
+        let mut weak = applied();
+        weak["required_pull_request_reviews"]["dismiss_stale_reviews"] = json!(false);
+        assert_weakened_is_incomplete(weak.clone());
+        weak["required_pull_request_reviews"]
+            .as_object_mut()
+            .unwrap()
+            .remove("dismiss_stale_reviews");
+        assert_weakened_is_incomplete(weak);
+    }
+    #[test]
+    fn protection_without_conversation_resolution_is_incomplete() {
+        let mut weak = applied();
+        weak["required_conversation_resolution"]["enabled"] = json!(false);
+        assert_weakened_is_incomplete(weak.clone());
+        weak.as_object_mut()
+            .unwrap()
+            .remove("required_conversation_resolution");
+        assert_weakened_is_incomplete(weak);
+    }
+    #[test]
+    fn solo_review_count_zero_still_counts_as_applied() {
+        let mut solo = applied();
+        solo["required_pull_request_reviews"]["required_approving_review_count"] = json!(0);
+        let r = audit_report(
+            &meta("develop", false),
+            &[("main", Ok(solo)), ("develop", Ok(applied()))],
+        );
+        assert_eq!(r["pending"], json!([]));
+    }
+    #[test]
+    fn delete_branch_on_merge_drift_is_pending() {
+        for drift in [json!(false), json!(null)] {
+            let mut m = meta("develop", false);
+            m["delete_branch_on_merge"] = drift;
+            let r = audit_report(&m, &[("main", Ok(applied())), ("develop", Ok(applied()))]);
+            let pending = r["pending"].as_array().unwrap();
+            assert_eq!(pending.len(), 1, "{pending:?}");
+            assert!(pending[0].as_str().unwrap().contains("delete_branch_on_merge"));
+        }
     }
     #[test]
     fn plan_limited_protection_is_recognised() {

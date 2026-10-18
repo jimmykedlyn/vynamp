@@ -37,3 +37,14 @@ Ambiente em [environment.txt](environment.txt): Windows 11 build 26300, PowerShe
 - Secret scanning e push protection aparecem `disabled` na resposta da API; não fazem parte desta TASK.
 - Environments de release (`release-signing`, `release-publish`, `hardware-validation`) não existem (0) e continuam fora do escopo.
 - **Pendência do mantenedor:** habilitar proteção exige plano que suporte proteção em repositório privado; tornar público não é aceito. Depois, reexecutar `repo protect --reviews 0` e `repo audit` até exit 0. Até lá, main/develop aceitam push direto pelo GitHub; os hooks locais e o merge manual com CI Gate verde são a única barreira.
+
+## Correções após revisão Codex de 2783f6f (2026-10-18)
+
+Revisão Codex de `2783f6f99bb4376d91298eb8bc0512e7a420ed54` solicitou correções; resultados abaixo são do autor, ambiente igual ao acima.
+
+- **F1/P2:** `repo audit` só considerava `applied` CI Gate strict, admins e bloqueio de force push/deletion. Agora exige também `required_pull_request_reviews` presente com `dismiss_stale_reviews=true` e `required_conversation_resolution.enabled=true`; campos ausentes falham fechado (`incomplete`). `required_approving_review_count=0` (conta única) continua aceito, mas o PR segue obrigatório.
+- **F2/P3:** `delete_branch_on_merge` diferente de `true` (inclusive ausente) vira pendência.
+- RED: `cargo test -p xtask --bin xtask github_policy_tests` exit 101, 6 passaram e 4 falharam (PR ausente/nulo, stale review, conversas, delete_branch) ([tdd-fix-red.txt](tdd-fix-red.txt)). GREEN: exit 0, 10/10 ([tdd-fix-green.txt](tdd-fix-green.txt)). O teste de review_count 0 já passava e protege o modo solo.
+- `repo audit` real, somente leitura, depois da correção: exit 1 com as mesmas duas pendências de plano (main/develop `unavailable_plan`); privacidade, default, merge commit e `delete_branch_on_merge=true` conferem ([audit-fix.txt](audit-fix.txt), [audit-fix.json](audit-fix.json)). `repo protect` não foi reexecutado.
+- `git diff --check`: capturas `ci-docs-baseline.txt`, `ci-docs-final.txt` (linha vazia extra no EOF) e `history.txt` (espaço final) normalizadas só em espaços; conteúdo factual inalterado.
+- `origin/develop` (merge do PR11, `98a1a73`) incorporado por merge na branch, sem rebase/force; `VALIDATION.json` regenerado por `cargo xtask ci docs`.

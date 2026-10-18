@@ -3,7 +3,7 @@ origin/main=247b4246c66cc5640c08b8bccf1c275377525034
 origin/develop=edfb1ade703f9cee2029d88bd5e26f39d12902a7
 merge-base --is-ancestor origin/main origin/develop exit=0
 commits em develop: 11
-raiz: 247b4246c66cc5640c08b8bccf1c275377525034 
+raiz: 247b4246c66cc5640c08b8bccf1c275377525034
 
 # gh api repos/jimmykedlyn/vynamp-mediaplayer/activity?activity_type=force_push
 force_push_events=0

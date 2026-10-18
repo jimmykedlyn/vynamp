@@ -1,0 +1,56 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.61s
+     Running unittests src\main.rs (target\xtask-driver\debug\deps\xtask-1f7242a65c42289e.exe)
+
+running 10 tests
+test repo::github_policy_tests::fully_enforced_gitflow_has_no_pending_items ... ok
+test repo::github_policy_tests::plan_limit_and_settings_drift_are_reported_not_hidden ... ok
+test repo::github_policy_tests::delete_branch_on_merge_drift_is_pending ... FAILED
+test repo::github_policy_tests::plan_limited_protection_is_recognised ... ok
+test repo::github_policy_tests::protection_without_ci_gate_or_allowing_force_push_is_incomplete ... ok
+test repo::github_policy_tests::protection_without_conversation_resolution_is_incomplete ... FAILED
+test repo::github_policy_tests::protection_keeping_stale_reviews_is_incomplete ... FAILED
+test repo::github_policy_tests::protection_without_required_pull_request_is_incomplete ... FAILED
+test repo::github_policy_tests::public_repository_is_pending ... ok
+test repo::github_policy_tests::solo_review_count_zero_still_counts_as_applied ... ok
+
+failures:
+
+---- repo::github_policy_tests::delete_branch_on_merge_drift_is_pending stdout ----
+
+thread 'repo::github_policy_tests::delete_branch_on_merge_drift_is_pending' (29636) panicked at xtask\src\repo.rs:581:13:
+assertion `left == right` failed: []
+  left: 0
+ right: 1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- repo::github_policy_tests::protection_without_conversation_resolution_is_incomplete stdout ----
+
+thread 'repo::github_policy_tests::protection_without_conversation_resolution_is_incomplete' (46220) panicked at xtask\src\repo.rs:529:9:
+assertion `left == right` failed
+  left: String("applied")
+ right: "incomplete"
+
+---- repo::github_policy_tests::protection_keeping_stale_reviews_is_incomplete stdout ----
+
+thread 'repo::github_policy_tests::protection_keeping_stale_reviews_is_incomplete' (29996) panicked at xtask\src\repo.rs:529:9:
+assertion `left == right` failed
+  left: String("applied")
+ right: "incomplete"
+
+---- repo::github_policy_tests::protection_without_required_pull_request_is_incomplete stdout ----
+
+thread 'repo::github_policy_tests::protection_without_required_pull_request_is_incomplete' (39212) panicked at xtask\src\repo.rs:529:9:
+assertion `left == right` failed
+  left: String("applied")
+ right: "incomplete"
+
+
+failures:
+    repo::github_policy_tests::delete_branch_on_merge_drift_is_pending
+    repo::github_policy_tests::protection_keeping_stale_reviews_is_incomplete
+    repo::github_policy_tests::protection_without_conversation_resolution_is_incomplete
+    repo::github_policy_tests::protection_without_required_pull_request_is_incomplete
+
+test result: FAILED. 6 passed; 4 failed; 0 ignored; 0 measured; 29 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p xtask --bin xtask`

@@ -1,0 +1,17 @@
+   Compiling xtask v0.7.0 (D:\Projects\vynamp-media-player\repo\.worktrees\claude\task-e15-03-gitflow\xtask)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.85s
+     Running unittests src\main.rs (target\xtask-driver\debug\deps\xtask-1f7242a65c42289e.exe)
+
+running 10 tests
+test repo::github_policy_tests::plan_limited_protection_is_recognised ... ok
+test repo::github_policy_tests::plan_limit_and_settings_drift_are_reported_not_hidden ... ok
+test repo::github_policy_tests::fully_enforced_gitflow_has_no_pending_items ... ok
+test repo::github_policy_tests::protection_without_required_pull_request_is_incomplete ... ok
+test repo::github_policy_tests::protection_without_conversation_resolution_is_incomplete ... ok
+test repo::github_policy_tests::delete_branch_on_merge_drift_is_pending ... ok
+test repo::github_policy_tests::protection_keeping_stale_reviews_is_incomplete ... ok
+test repo::github_policy_tests::protection_without_ci_gate_or_allowing_force_push_is_incomplete ... ok
+test repo::github_policy_tests::solo_review_count_zero_still_counts_as_applied ... ok
+test repo::github_policy_tests::public_repository_is_pending ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 29 filtered out; finished in 0.02s
