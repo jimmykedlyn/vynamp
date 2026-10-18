@@ -588,7 +588,12 @@ mod github_policy_tests {
             let r = audit_report(&m, &[("main", Ok(applied())), ("develop", Ok(applied()))]);
             let pending = r["pending"].as_array().unwrap();
             assert_eq!(pending.len(), 1, "{pending:?}");
-            assert!(pending[0].as_str().unwrap().contains("delete_branch_on_merge"));
+            assert!(
+                pending[0]
+                    .as_str()
+                    .unwrap()
+                    .contains("delete_branch_on_merge")
+            );
         }
     }
     #[test]
