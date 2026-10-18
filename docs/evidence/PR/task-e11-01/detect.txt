@@ -1,0 +1,5 @@
+COMMAND: cargo xtask ci detect
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.62s
+     Running `target\xtask-driver\debug\xtask.exe ci detect`
+{"android":"false","core":"false"}
+EXIT: 0
