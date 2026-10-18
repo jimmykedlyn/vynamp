@@ -2782,7 +2782,7 @@
       "title": "Criar workspace e baseline de engenharia",
       "phase": "M0",
       "priority": "P0",
-      "status": "planned",
+      "status": "in_progress",
       "owner_role": "delivery",
       "requirements": [
         "REQ-E11-01"
