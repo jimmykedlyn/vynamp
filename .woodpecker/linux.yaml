@@ -18,7 +18,9 @@ steps:
       - cargo xtask ci docs
       - cargo clippy --package xtask --all-targets --locked -- -D warnings
       - cargo test --workspace --all-targets --locked
-      - cargo xtask ci detect | tee detect.json
+      # No pipe: sh -e has no pipefail, so `detect | tee` would mask a detect failure.
+      - cargo xtask ci detect > detect.json
+      - cat detect.json
       - |
         if grep -q '"core":"true"' detect.json; then
           apt-get update && apt-get install -y libasound2-dev libudev-dev pkg-config

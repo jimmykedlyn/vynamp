@@ -26,6 +26,7 @@ Comandos nos steps: ver [.woodpecker/linux.yaml](../../../../.woodpecker/linux.y
 - Persistência: `Stop-Woodpecker.ps1` + `Start-Woodpecker.ps1` (todos os containers parados) → repo ativo, pipelines #1–#4 preservadas, agentes reconectados, túnel 204.
 - Exit code PowerShell (local, `woodpecker-cli exec`): sem `$PSNativeCommandUseErrorActionPreference` um `cmd /c exit 7` intermediário é mascarado (exit 0); com ele, step falha (exit 1). Por isso é o primeiro comando do pipeline Windows.
 - Execução local prévia (`woodpecker-cli exec`, clones descartáveis, `b5bee8c`): Windows success após mover workspace para caminho curto (primeira tentativa falhou com `LNK1104` por MAX_PATH); Linux success.
+- Revisão final do autor: no Linux `cargo xtask ci detect | tee` mascarava falha do detect (`sh -e` sem pipefail; provado na imagem rust pinada: pipe exit 0, redirecionamento exit 1). Corrigido para redirecionamento. No Windows a forma com pipe falha corretamente (provado com `woodpecker-cli exec`).
 - Segredos: `server.env`/`agent.env`/`cli.env`/credenciais do túnel só em `D:\Projects\vynamp-media-player\.cache\woodpecker\secrets` (ACL só do usuário); preflight varre arquivos versionados e estes logs sem achados.
 
 ## Limitações e pendências
