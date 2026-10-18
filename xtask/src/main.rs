@@ -144,6 +144,13 @@ enum Repo {
         #[arg(long,default_value_t=1,value_parser=clap::value_parser!(u8).range(0..=2))]
         reviews: u8,
     },
+    /// Read-only report of privacy, default branch, merge methods and protections.
+    Audit {
+        #[arg(long)]
+        repo: String,
+        #[arg(long)]
+        out: Option<PathBuf>,
+    },
 }
 #[derive(Subcommand)]
 enum Ci {
@@ -212,6 +219,7 @@ fn execute() -> Result<()> {
             } => repo::worktree(&root, agent.as_str(), &task, &slug, kind.as_str()),
             Repo::RemoveWorktree { agent, task } => repo::remove(&root, agent.as_str(), &task),
             Repo::Protect { repo, reviews } => repo::policy(&root, &repo, reviews),
+            Repo::Audit { repo, out } => repo::audit(&root, &repo, out.as_deref()),
         },
         Action::Ci { command } => match command {
             Ci::Docs => ci::docs(&root),

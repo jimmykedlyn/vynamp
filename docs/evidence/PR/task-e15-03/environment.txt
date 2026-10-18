@@ -1,0 +1,10 @@
+captured_at: 2026-10-18T16:16:02Z
+worktree_head: edfb1ade703f9cee2029d88bd5e26f39d12902a7 (base; captura anterior ao commit da TASK)
+branch: chore/task-e15-03-claude-gitflow
+os: Microsoft Windows NT 10.0.26300.0
+pwsh: 7.4.20
+git version 2.47.1.windows.2
+gh version 2.102.0 (2026-09-30)
+rustc 1.99.0 (b940084d7 2026-09-28)
+cargo 1.99.0 (5f94df478 2026-08-27)
+CARGO_TARGET_DIR: target/xtask-driver (próprio da worktree)
