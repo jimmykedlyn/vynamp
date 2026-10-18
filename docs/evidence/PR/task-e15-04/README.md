@@ -14,6 +14,8 @@ Notebook Windows 11 Pro 10.0.26300, PowerShell 7.4.20, git 2.47.1.windows.2, Rus
 | 2 | push `05f47394270a3ceaad0424a6c8a9ee4da63505a8` (branch descartável `chore/e15-04-pilot-fail`, violação rustfmt deliberada) | failure: `tooling` exit 1 nos dois agentes | failure nos dois contextos | `pipeline-2*` |
 | 3 | manual `72094aa`, agente Windows parado | linux success; windows **pending sem agente** até cancelamento → pipeline killed, windows skipped | windows ficou `pending` (nunca success) | `pipeline-3*` |
 | 4 | manual `72094aa`, cancelado com `tooling` em execução nos dois | killed nos dois; nenhum processo cargo/rustc nem container de step restante | `error` nos dois contextos | `pipeline-4*` |
+| 5 | push `9507e1eec88412305e70b7c2c89d9f8e1b0c2f6f` | success linux e windows | `woodpecker-pilot/push/*` success | `pipeline-5*` |
+| 6 | pull_request PR #16, `ref=refs/pull/16/merge`; `git rev-parse HEAD` = `9507e1e` (head, não merge commit) | success linux e windows | `woodpecker-pilot/pr/*` success; GitHub Actions do mesmo PR falhou por billing (job não iniciado) | `pipeline-6*` |
 
 Comandos nos steps: ver [.woodpecker/linux.yaml](../../../../.woodpecker/linux.yaml) e [.woodpecker/windows.yaml](../../../../.woodpecker/windows.yaml). Cada log de tooling imprime `tested sha=<CI_COMMIT_SHA> ref=<CI_COMMIT_REF>` e `git rev-parse HEAD`.
 
@@ -35,5 +37,5 @@ Comandos nos steps: ver [.woodpecker/linux.yaml](../../../../.woodpecker/linux.y
 - Após cancelar uma pipeline com workflow ainda pendente (#3), o contexto Windows permaneceu `pending` no GitHub (Woodpecker não publicou estado final do workflow skipped). Não vira success, mas não é atualizado.
 - Backend Local não isola steps: herdam o ambiente do agente, incluindo `WOODPECKER_AGENT_SECRET`. Tokens da sessão interativa são removidos antes de iniciar o agente.
 - Agente Windows e stack não iniciam sozinhos após reboot do Windows (sem serviço/tarefa agendada); Compose usa `restart: unless-stopped` enquanto o Docker Desktop estiver ativo.
-- Status de PR (`pull_request`) ainda não exercitado: requer PR aberto; registrado no handoff.
+- Status de PR exercitado no PR #16 (#6). O commit final `fix(ci)` posterior tem pipelines próprias registradas no handoff do guia.
 - MacIntel, MacSilicon, Android e hardware: pendentes. Workflows GitHub Actions inalterados; o bloqueio de billing do PR15 permanece.
