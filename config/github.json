@@ -9,6 +9,8 @@
   ],
   "merge_method": "merge",
   "review_count": 1,
-  "remote_verified": false,
-  "reason": "Repositório informado renomeado pelo usuário; acesso/privacidade/proteções ainda não verificados remotamente nesta entrega."
+  "remote_verified": true,
+  "verified_at": "2026-10-18",
+  "protection_status": "pending_plan",
+  "reason": "TASK-E15-03: privacidade, default develop e merge commit exclusivo verificados por cargo xtask repo audit; branch protection/rulesets indisponíveis (HTTP 403) no plano atual do repositório privado, CI Gate não obrigatório até o mantenedor resolver o plano."
 }

@@ -595,6 +595,12 @@ Versão 0.7.0 · Markdown de produto, tooling, bootstrap e evidências históric
 - [Organização de testes](../tests/README.md) — tests/README.md
 
 - [Automação Rust com cargo xtask](../xtask/README.md) — xtask/README.md
+# Execução E15-03
+
+- [Plano Gitflow E15-03](superpowers/plans/2026-10-18-e15-03-gitflow.md) — docs/superpowers/plans/2026-10-18-e15-03-gitflow.md
+
+- [Evidência E15-03 / QA-012](evidence/PR/task-e15-03/README.md) — docs/evidence/PR/task-e15-03/README.md; privacidade, histórico, configurações aplicadas e proteções pendentes por plano.
+
 # Execução E15-01
 
 - [Plano de integração e verificação E15-01](superpowers/plans/2026-10-15-e15-01-verification.md) — docs/superpowers/plans/2026-10-15-e15-01-verification.md

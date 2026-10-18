@@ -1,0 +1,27 @@
+   Compiling xtask v0.7.0 (D:\Projects\vynamp-media-player\repo\.worktrees\claude\task-e15-03-gitflow\xtask)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.51s
+     Running `target\xtask-driver\debug\xtask.exe repo audit --repo jimmykedlyn/vynamp-mediaplayer --out docs/evidence/PR/task-e15-03/audit-before.json`
+{
+  "default_branch": "main",
+  "merge": {
+    "allow_merge_commit": true,
+    "allow_rebase_merge": true,
+    "allow_squash_merge": true,
+    "delete_branch_on_merge": false
+  },
+  "pending": [
+    "default_branch is \"main\" instead of develop",
+    "merge methods are not merge commit only",
+    "main protection unavailable_plan: CI Gate/force-push/deletion rules not enforced",
+    "develop protection unavailable_plan: CI Gate/force-push/deletion rules not enforced"
+  ],
+  "private": true,
+  "protection": {
+    "develop": "unavailable_plan",
+    "main": "unavailable_plan"
+  },
+  "repository": "jimmykedlyn/vynamp-mediaplayer"
+}
+Gitflow not fully enforced: 4 pending item(s)
+error: process didn't exit successfully: `target\xtask-driver\debug\xtask.exe repo audit --repo jimmykedlyn/vynamp-mediaplayer --out docs/evidence/PR/task-e15-03/audit-before.json` (exit code: 1)
+audit-before exit=1

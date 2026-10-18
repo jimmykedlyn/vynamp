@@ -3865,7 +3865,7 @@
       "title": "Importar GitHub privado e ativar Gitflow",
       "phase": "M0",
       "priority": "P0",
-      "status": "planned",
+      "status": "in_progress",
       "owner_role": "engineering-delivery",
       "requirements": [
         "REQ-E15-03"

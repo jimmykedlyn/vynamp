@@ -1,7 +1,7 @@
 use crate::util::*;
 use anyhow::{Result, bail, ensure};
 use regex::Regex;
-use serde_json::json;
+use serde_json::{Value, json};
 use std::{
     fs,
     path::{Path, PathBuf},
@@ -225,10 +225,111 @@ pub fn guard(root: &Path) -> Result<()> {
     ensure!(Regex::new(r"^(?:(?:feature|fix|chore|hotfix)/task-e\d{2}-\d{2}-(?:codex|claude)-[a-z0-9]+(?:-[a-z0-9]+)*|release/\d+\.\d+\.\d+(?:-[a-z0-9.-]+)?)$")?.is_match(&b),"Commit blocked: invalid Gitflow branch");
     Ok(())
 }
-pub fn policy(root: &Path, repo: &str, reviews: u8) -> Result<()> {
+const PROTECTED: [&str; 2] = ["main", "develop"];
+/// GitHub answers HTTP 403 with this text when a private repository's plan lacks protection.
+fn plan_blocks_protection(error: &str) -> bool {
+    error.contains("Upgrade to GitHub Pro")
+}
+fn protection_status(result: &Result<Value, String>) -> String {
+    match result {
+        Ok(p) => {
+            let gate = p["required_status_checks"]["strict"] == true
+                && p["required_status_checks"]["contexts"]
+                    .as_array()
+                    .is_some_and(|c| c.iter().any(|c| c == "CI Gate"));
+            let locked = p["allow_force_pushes"]["enabled"] == false
+                && p["allow_deletions"]["enabled"] == false
+                && p["enforce_admins"]["enabled"] == true;
+            if gate && locked {
+                "applied"
+            } else {
+                "incomplete"
+            }
+            .to_owned()
+        }
+        Err(e) if plan_blocks_protection(e) => "unavailable_plan".to_owned(),
+        Err(e) if e.contains("Branch not protected") => "absent".to_owned(),
+        Err(e) => format!("error: {}", e.trim()),
+    }
+}
+/// Compare the remote state with the Gitflow policy; every gap is listed, never inferred as applied.
+fn audit_report(meta: &Value, protections: &[(&str, Result<Value, String>)]) -> Value {
+    let mut pending = Vec::new();
+    if meta["private"] != true {
+        pending.push("repository is not private".to_owned());
+    }
+    if meta["default_branch"] != "develop" {
+        pending.push(format!(
+            "default_branch is {} instead of develop",
+            meta["default_branch"]
+        ));
+    }
+    if meta["allow_merge_commit"] != true
+        || meta["allow_squash_merge"] != false
+        || meta["allow_rebase_merge"] != false
+    {
+        pending.push("merge methods are not merge commit only".to_owned());
+    }
+    let mut status = serde_json::Map::new();
+    for (branch, result) in protections {
+        let s = protection_status(result);
+        if s != "applied" {
+            pending.push(format!(
+                "{branch} protection {s}: CI Gate/force-push/deletion rules not enforced"
+            ));
+        }
+        status.insert((*branch).to_owned(), json!(s));
+    }
+    json!({"repository":meta["full_name"],"private":meta["private"],"default_branch":meta["default_branch"],"merge":{"allow_merge_commit":meta["allow_merge_commit"],"allow_squash_merge":meta["allow_squash_merge"],"allow_rebase_merge":meta["allow_rebase_merge"],"delete_branch_on_merge":meta["delete_branch_on_merge"]},"protection":status,"pending":pending})
+}
+fn checked_repo(repo: &str) -> Result<()> {
     ensure!(
         Regex::new(r"^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$")?.is_match(repo),
         "Use OWNER/REPOSITORY"
+    );
+    Ok(())
+}
+fn repo_meta(root: &Path, repo: &str) -> Result<Value> {
+    Ok(serde_json::from_str(&capture(
+        root,
+        "gh",
+        &["api", &format!("repos/{repo}")],
+    )?)?)
+}
+/// Read-only: print the real remote state and fail while any Gitflow rule is pending.
+pub fn audit(root: &Path, repo: &str, out: Option<&Path>) -> Result<()> {
+    checked_repo(repo)?;
+    let meta = repo_meta(root, repo)?;
+    let protections: Vec<_> = PROTECTED
+        .iter()
+        .map(|b| {
+            let r = capture(
+                root,
+                "gh",
+                &["api", &format!("repos/{repo}/branches/{b}/protection")],
+            )
+            .map_err(|e| e.to_string())
+            .and_then(|s| serde_json::from_str(&s).map_err(|e| e.to_string()));
+            (*b, r)
+        })
+        .collect();
+    let report = audit_report(&meta, &protections);
+    if let Some(out) = out {
+        write_json(out, &report)?;
+    }
+    println!("{}", serde_json::to_string_pretty(&report)?);
+    let pending = report["pending"].as_array().map_or(0, Vec::len);
+    ensure!(
+        pending == 0,
+        "Gitflow not fully enforced: {pending} pending item(s)"
+    );
+    Ok(())
+}
+pub fn policy(root: &Path, repo: &str, reviews: u8) -> Result<()> {
+    checked_repo(repo)?;
+    ensure!(
+        repo_meta(root, repo)?["private"] == true,
+        "Repository not confirmed private; nothing changed"
     );
     run(
         root,
@@ -254,8 +355,8 @@ pub fn policy(root: &Path, repo: &str, reviews: u8) -> Result<()> {
     let tmp = tempfile::tempdir()?;
     let file = tmp.path().join("protection.json");
     write_json(&file, &p)?;
-    for b in ["main", "develop"] {
-        run(
+    for b in PROTECTED {
+        if let Err(e) = capture(
             root,
             "gh",
             &[
@@ -266,7 +367,16 @@ pub fn policy(root: &Path, repo: &str, reviews: u8) -> Result<()> {
                 "--input",
                 &command_path(&file)?,
             ],
-        )?;
+        ) {
+            if plan_blocks_protection(&e.to_string()) {
+                bail!(
+                    "PENDING: branch protection unavailable for this private repository plan (HTTP 403). Repository settings were applied (merge commit only, delete branch on merge, default develop); main/develop are NOT protected and CI Gate is NOT required."
+                );
+            }
+            return Err(e.context(format!(
+                "Protecting {b} failed after repository settings were applied"
+            )));
+        }
     }
     println!("Protection applied. Configure protected signing/publish environments separately.");
     Ok(())
@@ -399,4 +509,80 @@ pub fn prepare_agents(root: &Path) -> Result<()> {
         json!({"codex_worktree":code,"codex_branch":branch,"claude_review_worktree":review,"task":ID,"review_only":true,"note":"No task has been accepted; verify Superpowers and prerequisites, review commits before feature work."})
     );
     Ok(())
+}
+
+#[cfg(test)]
+mod github_policy_tests {
+    use super::*;
+    const PLAN_403: &str = "Command failed: gh: gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)";
+    fn meta(default: &str, squash: bool) -> serde_json::Value {
+        json!({"full_name":"o/r","private":true,"default_branch":default,"allow_merge_commit":true,"allow_squash_merge":squash,"allow_rebase_merge":false,"delete_branch_on_merge":true})
+    }
+    fn applied() -> serde_json::Value {
+        json!({"required_status_checks":{"strict":true,"contexts":["CI Gate"]},"enforce_admins":{"enabled":true},"allow_force_pushes":{"enabled":false},"allow_deletions":{"enabled":false}})
+    }
+    #[test]
+    fn plan_limited_protection_is_recognised() {
+        assert!(plan_blocks_protection(PLAN_403));
+        assert!(!plan_blocks_protection("gh: Not Found (HTTP 404)"));
+    }
+    #[test]
+    fn fully_enforced_gitflow_has_no_pending_items() {
+        let r = audit_report(
+            &meta("develop", false),
+            &[("main", Ok(applied())), ("develop", Ok(applied()))],
+        );
+        assert_eq!(r["protection"]["main"], "applied");
+        assert_eq!(r["pending"], json!([]));
+    }
+    #[test]
+    fn plan_limit_and_settings_drift_are_reported_not_hidden() {
+        let r = audit_report(
+            &meta("main", true),
+            &[
+                ("main", Err(PLAN_403.to_owned())),
+                (
+                    "develop",
+                    Err("gh: Branch not protected (HTTP 404)".to_owned()),
+                ),
+            ],
+        );
+        assert_eq!(r["protection"]["main"], "unavailable_plan");
+        assert_eq!(r["protection"]["develop"], "absent");
+        let pending = r["pending"].as_array().unwrap();
+        assert_eq!(pending.len(), 4, "{pending:?}");
+        assert!(
+            pending
+                .iter()
+                .any(|p| p.as_str().unwrap().contains("default_branch"))
+        );
+        assert!(
+            pending
+                .iter()
+                .any(|p| p.as_str().unwrap().contains("merge commit only"))
+        );
+    }
+    #[test]
+    fn protection_without_ci_gate_or_allowing_force_push_is_incomplete() {
+        let mut weak = applied();
+        weak["allow_force_pushes"]["enabled"] = json!(true);
+        let r = audit_report(
+            &meta("develop", false),
+            &[
+                ("main", Ok(weak)),
+                ("develop", Ok(json!({"required_status_checks":null}))),
+            ],
+        );
+        assert_eq!(r["protection"]["main"], "incomplete");
+        assert_eq!(r["protection"]["develop"], "incomplete");
+        assert_eq!(r["pending"].as_array().unwrap().len(), 2);
+    }
+    #[test]
+    fn public_repository_is_pending() {
+        let mut m = meta("develop", false);
+        m["private"] = json!(false);
+        let r = audit_report(&m, &[("main", Ok(applied())), ("develop", Ok(applied()))]);
+        assert_eq!(r["private"], false);
+        assert!(r["pending"][0].as_str().unwrap().contains("private"));
+    }
 }

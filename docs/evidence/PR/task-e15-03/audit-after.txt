@@ -1,0 +1,24 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.29s
+     Running `target\xtask-driver\debug\xtask.exe repo audit --repo jimmykedlyn/vynamp-mediaplayer --out docs/evidence/PR/task-e15-03/audit-after.json`
+{
+  "default_branch": "develop",
+  "merge": {
+    "allow_merge_commit": true,
+    "allow_rebase_merge": false,
+    "allow_squash_merge": false,
+    "delete_branch_on_merge": true
+  },
+  "pending": [
+    "main protection unavailable_plan: CI Gate/force-push/deletion rules not enforced",
+    "develop protection unavailable_plan: CI Gate/force-push/deletion rules not enforced"
+  ],
+  "private": true,
+  "protection": {
+    "develop": "unavailable_plan",
+    "main": "unavailable_plan"
+  },
+  "repository": "jimmykedlyn/vynamp-mediaplayer"
+}
+Gitflow not fully enforced: 2 pending item(s)
+error: process didn't exit successfully: `target\xtask-driver\debug\xtask.exe repo audit --repo jimmykedlyn/vynamp-mediaplayer --out docs/evidence/PR/task-e15-03/audit-after.json` (exit code: 1)
+audit-after exit=1

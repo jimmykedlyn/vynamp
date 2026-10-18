@@ -1,0 +1,22 @@
+# git fetch origin main develop; consultas somente leitura
+origin/main=247b4246c66cc5640c08b8bccf1c275377525034
+origin/develop=edfb1ade703f9cee2029d88bd5e26f39d12902a7
+merge-base --is-ancestor origin/main origin/develop exit=0
+commits em develop: 11
+raiz: 247b4246c66cc5640c08b8bccf1c275377525034 
+
+# gh api repos/jimmykedlyn/vynamp-mediaplayer/activity?activity_type=force_push
+force_push_events=0
+
+# gh api repos/jimmykedlyn/vynamp-mediaplayer/rulesets
+{"message":"Upgrade to GitHub Pro or make this repository public to enable this feature.","documentation_url":"https://docs.github.com/rest/repos/rules#get-all-repository-rulesets","status":"403"}gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)
+
+# PRs abertos (base)
+#11 base=develop head=feature/task-e11-01-codex-workspace
+#7 base=develop head=dependabot/cargo/base64-0.23.1
+#6 base=develop head=dependabot/github_actions/actions/upload-artifact-7.0.2
+#5 base=develop head=dependabot/cargo/jsonschema-0.58.6
+#4 base=develop head=dependabot/github_actions/actions/checkout-7.0.1
+#3 base=develop head=dependabot/cargo/quick-xml-0.42.0
+#2 base=develop head=dependabot/cargo/zip-9.0.2
+#1 base=develop head=dependabot/cargo/toml-1.1.8spec-1.1.0

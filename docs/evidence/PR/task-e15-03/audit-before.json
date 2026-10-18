@@ -1,0 +1,21 @@
+{
+  "default_branch": "main",
+  "merge": {
+    "allow_merge_commit": true,
+    "allow_rebase_merge": true,
+    "allow_squash_merge": true,
+    "delete_branch_on_merge": false
+  },
+  "pending": [
+    "default_branch is \"main\" instead of develop",
+    "merge methods are not merge commit only",
+    "main protection unavailable_plan: CI Gate/force-push/deletion rules not enforced",
+    "develop protection unavailable_plan: CI Gate/force-push/deletion rules not enforced"
+  ],
+  "private": true,
+  "protection": {
+    "develop": "unavailable_plan",
+    "main": "unavailable_plan"
+  },
+  "repository": "jimmykedlyn/vynamp-mediaplayer"
+}

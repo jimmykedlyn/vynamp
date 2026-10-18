@@ -2,7 +2,7 @@
 
 Versão 0.7.0 · 2026-10-14 · Configuração do projeto; player ainda não implementado.
 
-Repositório escolhido: jimmykedlyn/vynamp-mediaplayer, privado segundo usuário. Acesso não verificado neste ambiente; scripts confirmam a privacidade pela API antes import. Nenhum push ou mudança remota executado nesta preparação.
+Repositório: jimmykedlyn/vynamp-mediaplayer, privado. Estado remoto verificado na TASK-E15-03 (2026-10-18, [evidência](../evidence/PR/task-e15-03/README.md)): `private=true`, default `develop`, somente merge commit, exclusão de branch após merge; histórico da E15-01 preservado sem force push. **Pendência:** branch protection e rulesets retornam HTTP 403 no plano atual do repositório privado; main/develop não estão protegidas e o CI Gate não é obrigatório pelo GitHub. Até o mantenedor resolver o plano, a disciplina vem dos hooks locais, revisão cruzada e merge manual somente com CI Gate verde. Tornar o repositório público não é alternativa aceita.
 
 | Branch | Base / destino | Regra |
 |---|---|---|
@@ -18,7 +18,7 @@ Publicar feature: `git push -u origin <branch>`, `gh pr create --base develop --
 
 Import inicial preserva histórico via cargo xtask github-import. O importador automatiza o bootstrap quando o repositório está vazio. Alternativa manual: clonar para pasta nova, copiar todos arquivos do pacote exceto .git/.worktrees/.superpowers/target/dist; `git symbolic-ref HEAD refs/heads/main`, `git add --all`, `git commit -m "chore: bootstrap Vynamp"`, `git branch develop`, `git push -u origin main`, `git push -u origin develop`. Esse primeiro commit é exceção de bootstrap, não licença para desenvolver diretamente em main.
 
-Depois, `repo.py protect` configura GitHub: CI Gate obrigatório/strict, dismiss stale reviews, conversations resolvidas, sem force push/deletion, admins sujeitos às regras; default branch develop. Se plano/permissão privada não suportar a API, falhar e registrar pendência, não dizer que ficou protegido. GitHub Environments release-signing/release-publish/hardware-validation usam responsáveis/proteções quando disponíveis.
+Depois, `cargo xtask repo protect` configura GitHub (confirma privacidade antes de alterar qualquer coisa): CI Gate obrigatório/strict, dismiss stale reviews, conversations resolvidas, sem force push/deletion, admins sujeitos às regras; default branch develop. Se plano/permissão privada não suportar a API, falhar e registrar pendência, não dizer que ficou protegido. O comando falha com `PENDING` nesse caso, e `cargo xtask repo audit` relata o estado real, falhando enquanto houver pendência. Com uma única conta, `--reviews 1` mais admins sujeitos às regras impediria o próprio mantenedor de integrar; usar `--reviews 0`. GitHub Environments release-signing/release-publish/hardware-validation usam responsáveis/proteções quando disponíveis.
 
 Tags `vX.Y.Z` e `vX.Y.Z-beta.N` apontam a commit aprovado de main. Pipeline cria draft privado, assinatura/verificação/manifest/SBOM e evidência revisados antes publish pelo mantenedor. A plataforma web futura tem deploy separado M4, não é acionada ao subir spec/player.
 
