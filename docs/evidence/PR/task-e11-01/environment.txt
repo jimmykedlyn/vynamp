@@ -1,0 +1,19 @@
+Capture UTC: 2026-10-18T15:57:59.2331275Z
+PowerShell: 7.4.20
+OS: Microsoft Windows 10.0.26300
+Architecture: X64
+Worktree: D:\Projects\vynamp-media-player\repo\.worktrees\codex\task-e11-01-workspace
+Driver target: D:\Projects\vynamp-media-player\repo\.worktrees\codex\task-e11-01-workspace\target\xtask-driver
+TEMP: D:\Projects\vynamp-media-player\.cache\tmp
+Cargo.lock SHA256 before: F07C0EA5C30B9FE1A2B9575140DE0A780F8A039225F73EED85A8EC51EC54B9EA
+edfb1ade703f9cee2029d88bd5e26f39d12902a7
+git version 2.47.1.windows.2
+rustc 1.99.0 (b940084d7 2026-09-28)
+binary: rustc
+commit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4
+commit-date: 2026-09-28
+host: x86_64-pc-windows-msvc
+release: 1.99.0
+LLVM version: 23.1.1
+cargo 1.99.0 (5f94df478 2026-08-27)
+Cargo.lock SHA256 after: F07C0EA5C30B9FE1A2B9575140DE0A780F8A039225F73EED85A8EC51EC54B9EA
