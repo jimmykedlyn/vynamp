@@ -44,6 +44,7 @@ foreach ($tool in $pins.windows) {
         if ($tool.url -notmatch '\.zip$') { Assert-FileSha256 -Path $path -Sha256 $tool.sha256 }
     } else { Write-Warning "tool not installed yet: $($tool.file)" }
 }
+Get-GlobalCloudflared | Out-Null
 $repoRoot = Resolve-Path (Join-Path $WoodpeckerConfig '..\..\..')
 $tracked = Invoke-Native { git -C $repoRoot ls-files -- infra .woodpecker }
 foreach ($rel in $tracked) { Test-NoSecretText (Get-Content -Raw (Join-Path $repoRoot $rel)) -Source $rel }

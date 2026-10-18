@@ -29,7 +29,7 @@ $pidFile = Join-Path $home_ 'agent.pid'
 if ((Test-Path $pidFile) -and (Get-Process -Id (Get-Content $pidFile) -ErrorAction SilentlyContinue)) {
     Write-Host 'windows agent already running'; return
 }
-foreach ($d in 'work', 'tmp', 'cargo-home') { New-Item -ItemType Directory -Force (Join-Path $home_ $d) | Out-Null }
+foreach ($d in 'tmp', 'cargo-home') { New-Item -ItemType Directory -Force (Join-Path $home_ $d) | Out-Null }
 New-Item -ItemType Directory -Force $WoodpeckerLogs | Out-Null
 
 # Credentials of the interactive session must not reach pipeline steps.
@@ -43,7 +43,9 @@ $env:WOODPECKER_HOSTNAME = 'vynamp-windows'
 $env:WOODPECKER_AGENT_LABELS = 'host=vynamp-windows'
 $env:WOODPECKER_MAX_WORKFLOWS = '1'
 $env:WOODPECKER_AGENT_CONFIG_FILE = Join-Path $home_ 'agent.conf'
-$env:WOODPECKER_BACKEND_LOCAL_TEMP_DIR = Join-Path $home_ 'work'
+# Short base path: MSVC link.exe fails with LNK1104 once build paths pass MAX_PATH.
+$env:WOODPECKER_BACKEND_LOCAL_TEMP_DIR = 'D:\Projects\vynamp-media-player\.cache\wpw\w'
+New-Item -ItemType Directory -Force $env:WOODPECKER_BACKEND_LOCAL_TEMP_DIR | Out-Null
 $env:TEMP = $env:TMP = Join-Path $home_ 'tmp'
 $env:CARGO_HOME = Join-Path $home_ 'cargo-home'
 Remove-Item env:CARGO_TARGET_DIR -ErrorAction SilentlyContinue

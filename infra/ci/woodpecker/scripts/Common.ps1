@@ -12,6 +12,14 @@ function Get-WoodpeckerPins {
     Get-Content -Raw (Join-Path $WoodpeckerConfig 'versions.json') | ConvertFrom-Json
 }
 
+# cloudflared is the maintainer's global winget install, not a project copy.
+function Get-GlobalCloudflared {
+    $pin = (Get-WoodpeckerPins).cloudflared_global
+    if (-not (Test-Path $pin.path)) { throw "cloudflared not found at $($pin.path): winget install Cloudflare.cloudflared --version $($pin.version)" }
+    Assert-FileSha256 -Path $pin.path -Sha256 $pin.sha256
+    $pin.path
+}
+
 function Assert-FileSha256([string]$Path, [string]$Sha256) {
     $actual = (Get-FileHash -Algorithm SHA256 -Path $Path).Hash.ToLowerInvariant()
     if ($actual -ne $Sha256.ToLowerInvariant()) {

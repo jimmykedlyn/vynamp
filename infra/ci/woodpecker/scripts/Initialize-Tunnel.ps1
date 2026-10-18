@@ -6,7 +6,7 @@ param([string]$TunnelName = 'vynamp-woodpecker')
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'Common.ps1')
 
-$cloudflared = Join-Path $WoodpeckerBin 'cloudflared.exe'
+$cloudflared = Get-GlobalCloudflared
 $dir = Join-Path $WoodpeckerSecrets 'cloudflared'
 $cert = Join-Path $env:USERPROFILE '.cloudflared\cert.pem'
 if (-not (Test-Path $cert)) { throw "Cloudflare login missing ($cert): run cloudflared tunnel login first" }

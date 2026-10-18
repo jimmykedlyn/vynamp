@@ -31,12 +31,12 @@
       "url": "https://github.com/woodpecker-ci/plugin-git/releases/download/2.10.1/windows-amd64_plugin-git.exe",
       "sha256": "3b4efd40b59d3cb73823fed86a25db87f2e921b49072c3691118db5ee3394774",
       "file": "plugin-git.exe"
-    },
-    {
-      "name": "cloudflared",
-      "url": "https://github.com/cloudflare/cloudflared/releases/download/2026.10.1/cloudflared-windows-amd64.exe",
-      "sha256": "4d2490e74082c5d48dbfedaf92576fa5bd1702379ab88eb7faa0cfbe8dc891b6",
-      "file": "cloudflared.exe"
     }
-  ]
+  ],
+  "cloudflared_global": {
+    "install": "winget Cloudflare.cloudflared 2026.10.1 (MSI oficial, hash verificado pelo winget)",
+    "path": "C:\\Program Files (x86)\\cloudflared\\cloudflared.exe",
+    "version": "2026.10.1",
+    "sha256": "4d2490e74082c5d48dbfedaf92576fa5bd1702379ab88eb7faa0cfbe8dc891b6"
+  }
 }

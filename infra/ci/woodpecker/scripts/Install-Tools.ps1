@@ -1,6 +1,6 @@
 # Downloads the pinned Windows binaries into the project runtime folder and
 # verifies the published SHA256 before anything is extracted or executed.
-# System-wide installs (for example cloudflared under Program Files) are untouched.
+# cloudflared is not handled here: it is the global winget install (see versions.json).
 [CmdletBinding()]
 param()
 $ErrorActionPreference = 'Stop'
