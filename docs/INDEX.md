@@ -619,3 +619,7 @@ Versão 0.7.0 · Markdown de produto, tooling, bootstrap e evidências históric
 - [ADR-009 — workspace mínimo](architecture/adr/ADR-009-engineering-baseline.md) — docs/architecture/adr/ADR-009-engineering-baseline.md
 - [Paths e contrato de fixtures](../tests/fixtures/README.md) — tests/fixtures/README.md
 - [Evidência E11-01](evidence/PR/task-e11-01/README.md) — docs/evidence/PR/task-e11-01/README.md
+
+# Preparação E15-04
+
+- [Desenho Woodpecker e Cloudflare Tunnel](superpowers/specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md) — docs/superpowers/specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md
