@@ -623,3 +623,4 @@ Versão 0.7.0 · Markdown de produto, tooling, bootstrap e evidências históric
 # Preparação E15-04
 
 - [Desenho Woodpecker e Cloudflare Tunnel](superpowers/specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md) — docs/superpowers/specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md
+- [Plano Woodpecker E15-04](superpowers/plans/2026-10-18-e15-04-woodpecker.md) — docs/superpowers/plans/2026-10-18-e15-04-woodpecker.md

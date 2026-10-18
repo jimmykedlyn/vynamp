@@ -1,6 +1,6 @@
 # E15-04 — Woodpecker local com Cloudflare Tunnel
 
-Data: 2026-10-18. Estado: desenho para revisão do mantenedor; infraestrutura ainda não instalada/ativada. Owner desta execução: Codex; revisão técnica: Claude. Fonte: [TASK-E15-04](../../../tasks/items/TASK-E15-04.md), REQ-E15-04 e QA-018/QA-021.
+Data: 2026-10-18. Estado: desenho aprovado pelo mantenedor em 2026-10-18, hostname `ci-cd-vynamp.jkca.lat`; implementação Claude conforme [plano](../plans/2026-10-18-e15-04-woodpecker.md). Desenho escrito pelo Codex; autoria da implementação transferida ao Claude, revisão técnica Codex. Fonte: [TASK-E15-04](../../../tasks/items/TASK-E15-04.md), REQ-E15-04 e QA-018/QA-021.
 
 ## Objetivo e decisões do usuário
 
