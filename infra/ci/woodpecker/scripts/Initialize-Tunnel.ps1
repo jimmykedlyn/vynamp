@@ -10,6 +10,7 @@ $cloudflared = Get-GlobalCloudflared
 $dir = Join-Path $WoodpeckerSecrets 'cloudflared'
 $cert = Join-Path $env:USERPROFILE '.cloudflared\cert.pem'
 if (-not (Test-Path $cert)) { throw "Cloudflare login missing ($cert): run cloudflared tunnel login first" }
+Protect-SecretsFolder
 New-Item -ItemType Directory -Force $dir | Out-Null
 
 $tunnels = Invoke-Native { & $cloudflared tunnel list --output json --name $TunnelName } | ConvertFrom-Json

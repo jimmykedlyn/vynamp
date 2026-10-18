@@ -17,7 +17,7 @@ Invoke-Native { docker compose -f $compose @profileArgs up -d }
 
 $deadline = (Get-Date).AddSeconds(60)
 while ($true) {
-    try { if ((Invoke-WebRequest -UseBasicParsing http://127.0.0.1:8000/healthz).StatusCode -eq 200) { break } } catch {}
+    try { if ((Invoke-WebRequest -UseBasicParsing http://127.0.0.1:8000/healthz).StatusCode -in 200..299) { break } } catch {}
     if ((Get-Date) -gt $deadline) { throw 'Woodpecker server not healthy on 127.0.0.1:8000 after 60s' }
     Start-Sleep -Seconds 2
 }

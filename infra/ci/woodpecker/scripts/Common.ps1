@@ -20,6 +20,19 @@ function Get-GlobalCloudflared {
     $pin.path
 }
 
+# Secrets folder: only the current user, children inherit (no Authenticated Users).
+function Protect-SecretsFolder {
+    New-Item -ItemType Directory -Force $WoodpeckerSecrets | Out-Null
+    Invoke-Native { icacls $WoodpeckerSecrets /inheritance:r /grant:r "${env:USERNAME}:(OI)(CI)F" | Out-Null }
+    if (Get-ChildItem $WoodpeckerSecrets) { Invoke-Native { icacls "$WoodpeckerSecrets\*" /reset /T | Out-Null } }
+}
+
+function New-RandomHex {
+    $bytes = [byte[]]::new(32)
+    [Security.Cryptography.RandomNumberGenerator]::Fill($bytes)
+    [Convert]::ToHexString($bytes).ToLowerInvariant()
+}
+
 function Assert-FileSha256([string]$Path, [string]$Sha256) {
     $actual = (Get-FileHash -Algorithm SHA256 -Path $Path).Hash.ToLowerInvariant()
     if ($actual -ne $Sha256.ToLowerInvariant()) {
