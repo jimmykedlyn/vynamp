@@ -1,0 +1,28 @@
+# Woodpecker pilot, Linux/Docker agent (TASK-E15-04). Mirrors the GitHub Actions
+# docs/tooling/core checks; it is a partial pilot, not the multi-platform CI Gate.
+labels:
+  host: vynamp-linux
+
+when:
+  - event: [push, pull_request, manual]
+
+steps:
+  - name: tooling
+    image: docker.io/library/rust:1.99.0-bookworm@sha256:114c7a4425406451c2866b6aafe69fe29b1b298832db1277d411ac73c82d04d6
+    environment:
+      CARGO_TERM_COLOR: never
+    commands:
+      - echo "tested sha=$CI_COMMIT_SHA ref=$CI_COMMIT_REF event=$CI_PIPELINE_EVENT"
+      - git rev-parse HEAD
+      - rustc --version
+      - cargo xtask ci docs
+      - cargo clippy --package xtask --all-targets --locked -- -D warnings
+      - cargo test --workspace --all-targets --locked
+      - cargo xtask ci detect | tee detect.json
+      - |
+        if grep -q '"core":"true"' detect.json; then
+          apt-get update && apt-get install -y libasound2-dev libudev-dev pkg-config
+          cargo xtask ci core --target x86_64-unknown-linux-gnu
+        else
+          echo 'core sources absent: desktop app not tested (not an app approval)'
+        fi

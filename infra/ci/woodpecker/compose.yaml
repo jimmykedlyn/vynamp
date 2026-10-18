@@ -1,0 +1,60 @@
+# Woodpecker pilot (TASK-E15-04). Secrets and data live outside Git under
+# D:/Projects/vynamp-media-player/.cache/woodpecker. Ports bind to loopback only;
+# the tunnel exposes HTTP 8000 and never gRPC 9000.
+name: vynamp-woodpecker
+services:
+  woodpecker-server:
+    image: docker.io/woodpeckerci/woodpecker-server:v3.19.0@sha256:6ca167a3c58b50c5a3c903dd8db92b39cfc30c560a47052cff7dd0235123a9cb
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8000:8000"
+      - "127.0.0.1:9000:9000"
+    volumes:
+      - woodpecker-data:/var/lib/woodpecker
+    env_file:
+      - D:/Projects/vynamp-media-player/.cache/woodpecker/secrets/server.env
+    environment:
+      WOODPECKER_HOST: https://ci-cd-vynamp.jkca.lat
+      WOODPECKER_OPEN: "false"
+      WOODPECKER_ADMIN: jimmykedlyn
+      WOODPECKER_REPO_OWNERS: jimmykedlyn
+      WOODPECKER_GITHUB: "true"
+      WOODPECKER_DISABLE_USER_AGENT_REGISTRATION: "true"
+      WOODPECKER_STATUS_CONTEXT: woodpecker-pilot
+      WOODPECKER_DEFAULT_CLONE_PLUGIN: docker.io/woodpeckerci/plugin-git:2.10.1@sha256:550075c844fcec0af41d9d28f9860aa5d8c43e1e9419be4b9266dc02c2f29804
+      WOODPECKER_PLUGINS_TRUSTED_CLONE: docker.io/woodpeckerci/plugin-git:2.10.1@sha256:550075c844fcec0af41d9d28f9860aa5d8c43e1e9419be4b9266dc02c2f29804
+      WOODPECKER_MAX_PIPELINE_TIMEOUT: "120"
+      WOODPECKER_LOG_LEVEL: info
+
+  woodpecker-agent-linux:
+    image: docker.io/woodpeckerci/woodpecker-agent:v3.19.0@sha256:f85f163e09494ace3377a3f3a6043f131fb47e3e627f7438de42417ee06ca56d
+    restart: unless-stopped
+    depends_on:
+      - woodpecker-server
+    volumes:
+      - woodpecker-agent-linux:/etc/woodpecker
+      - /var/run/docker.sock:/var/run/docker.sock
+    env_file:
+      - D:/Projects/vynamp-media-player/.cache/woodpecker/secrets/agent.env
+    environment:
+      WOODPECKER_SERVER: woodpecker-server:9000
+      WOODPECKER_BACKEND: docker
+      WOODPECKER_HOSTNAME: vynamp-linux
+      WOODPECKER_AGENT_LABELS: host=vynamp-linux
+      WOODPECKER_MAX_WORKFLOWS: "1"
+
+  cloudflared:
+    image: docker.io/cloudflare/cloudflared:2026.10.1@sha256:a15a3b50b8dabd57ac2090e9484c0247dba9dfa1f0df4d298d4317f9d69eb2d5
+    profiles: [tunnel]
+    restart: unless-stopped
+    depends_on:
+      - woodpecker-server
+    command: tunnel --no-autoupdate --config /etc/cloudflared/config.yml run
+    volumes:
+      - D:/Projects/vynamp-media-player/.cache/woodpecker/secrets/cloudflared:/etc/cloudflared:ro
+
+volumes:
+  woodpecker-data:
+    name: vynamp-woodpecker-data
+  woodpecker-agent-linux:
+    name: vynamp-woodpecker-agent-linux
