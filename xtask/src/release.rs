@@ -3,7 +3,7 @@ use anyhow::{Context, Result, ensure};
 use base64::Engine;
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
-use std::{collections::BTreeSet, fs, io::Write, path::Path};
+use std::{collections::BTreeSet, fs, path::Path};
 pub const PLATFORMS: [&str; 5] = [
     "windows-x64",
     "linux-x64",
@@ -127,11 +127,11 @@ pub fn preflight(root: &Path, version: &str) -> Result<Value> {
             "Missing report or evidence hash mismatch"
         );
     }
-    if std::env::var("GITHUB_ACTIONS").as_deref() == Ok("true") {
-        ensure!(
-            required("GITHUB_REF")? == format!("refs/tags/v{version}"),
-            "Release requires matching v* tag"
-        );
+    if woodpecker_tag(
+        std::env::var("CI").ok().as_deref(),
+        std::env::var("CI_COMMIT_TAG").ok().as_deref(),
+        version,
+    )? {
         run(
             root,
             "git",
@@ -310,14 +310,25 @@ pub fn command(
     };
     Ok(())
 }
-pub fn tag_version() -> Result<()> {
-    let name = required("GITHUB_REF_NAME")?;
+/// In Woodpecker CI a release must run from the `v<version>` tag; returns
+/// whether the CI checks apply.
+fn woodpecker_tag(ci: Option<&str>, tag: Option<&str>, version: &str) -> Result<bool> {
+    if ci != Some("woodpecker") {
+        return Ok(false);
+    }
+    ensure!(
+        tag == Some(format!("v{version}").as_str()),
+        "Release requires matching v* tag"
+    );
+    Ok(true)
+}
+fn version_from_tag(name: &str) -> Result<String> {
     let v = name.strip_prefix('v').context("Expected v* tag")?;
     validate_version(v)?;
-    let mut out = fs::OpenOptions::new()
-        .append(true)
-        .open(required("GITHUB_OUTPUT")?)?;
-    writeln!(out, "version={v}")?;
+    Ok(v.to_owned())
+}
+pub fn tag_version() -> Result<()> {
+    println!("{}", version_from_tag(&required("CI_COMMIT_TAG")?)?);
     Ok(())
 }
 #[cfg(test)]
@@ -341,6 +352,19 @@ mod tests {
         fs::write(&p, b"fixture").unwrap();
         fs::write(tmp.path().join("unexpected.exe"), b"unexpected").unwrap();
         assert!(artifact_manifest(tmp.path(), "0.1.0").is_err());
+    }
+    #[test]
+    fn version_comes_from_v_tag_only() {
+        assert_eq!(version_from_tag("v0.1.0").unwrap(), "0.1.0");
+        assert!(version_from_tag("0.1.0").is_err());
+        assert!(version_from_tag("vbad").is_err());
+    }
+    #[test]
+    fn woodpecker_release_requires_matching_tag() {
+        assert!(!woodpecker_tag(None, None, "0.1.0").unwrap());
+        assert!(woodpecker_tag(Some("woodpecker"), Some("v0.1.0"), "0.1.0").unwrap());
+        assert!(woodpecker_tag(Some("woodpecker"), Some("v0.2.0"), "0.1.0").is_err());
+        assert!(woodpecker_tag(Some("woodpecker"), None, "0.1.0").is_err());
     }
     #[test]
     fn digest_covers_xtask_and_ignores_activation_flags() {

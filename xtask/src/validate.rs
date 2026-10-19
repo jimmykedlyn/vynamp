@@ -356,6 +356,76 @@ pub fn spec(root: &Path) -> Result<()> {
     ensure!(c.errors.is_empty(), "Specification validation failed");
     Ok(())
 }
+/// CI is Woodpecker-only (ADR-010): GitHub Actions workflows must not return,
+/// Docker steps use digest-pinned images and the Windows Local agent runs pwsh.
+fn woodpecker(root: &Path, c: &mut Checks) -> Result<usize> {
+    c.check(
+        !root.join(".github/workflows").exists(),
+        "GitHub Actions workflows present; CI is Woodpecker-only (ADR-010)",
+    );
+    let pinned = Regex::new(r"^[^@\s]+:[^@\s]+@sha256:[0-9a-f]{64}$")?;
+    let mut flows = BTreeMap::new();
+    for p in files(&root.join(".woodpecker"))? {
+        let name = p
+            .file_stem()
+            .and_then(|s| s.to_str())
+            .unwrap_or("")
+            .to_owned();
+        let v: Value = serde_yaml::from_str(&text(&p)?)?;
+        c.check(
+            v.get("when").is_some(),
+            format!("Workflow triggers absent: {name}"),
+        );
+        let windows = v["labels"]["host"] == "vynamp-windows";
+        for step in v["steps"].as_array().into_iter().flatten() {
+            let image = step["image"].as_str().unwrap_or("");
+            c.check(
+                if windows {
+                    image == "pwsh"
+                } else {
+                    pinned.is_match(image)
+                },
+                format!("Unpinned image {image} in {name}"),
+            );
+            for key in ["privileged", "volumes", "network_mode"] {
+                c.check(
+                    step.get(key).is_none(),
+                    format!("Privileged step option {key} in {name}"),
+                );
+            }
+        }
+        flows.insert(name, v);
+    }
+    for (flow, target) in [
+        ("linux", "x86_64-unknown-linux-gnu"),
+        ("windows", "x86_64-pc-windows-msvc"),
+    ] {
+        c.check(
+            flows.get(flow).is_some_and(|v| {
+                v.to_string()
+                    .contains(&format!("cargo xtask ci core --target {target}"))
+            }),
+            format!("Missing desktop target {target}"),
+        );
+    }
+    c.check(
+        flows
+            .get("android")
+            .is_some_and(|v| v.to_string().contains("cargo xtask ci android")),
+        "Missing Android CI",
+    );
+    let deps = flows
+        .get("gate")
+        .map(|v| strings(&v["depends_on"]))
+        .unwrap_or_default();
+    c.check(
+        ["linux", "windows", "android"]
+            .iter()
+            .all(|d| deps.contains(*d)),
+        "CI Gate workflow must depend on linux, windows and android",
+    );
+    Ok(flows.len())
+}
 pub fn delivery(root: &Path) -> Result<()> {
     let mut c = Checks::default();
     let _: toml::Value = toml::from_str(&text(root.join(".codex/config.toml"))?)?;
@@ -395,46 +465,7 @@ pub fn delivery(root: &Path) -> Result<()> {
     for name in [".worktrees/", ".superpowers/", "*.pfx", "*.jks"] {
         c.check(ignore.contains(name), format!("Missing ignore {name}"));
     }
-    let mut count = 0;
-    let pinned = Regex::new(r"^[^@]+@[0-9a-f]{40}$")?;
-    for p in files(&root.join(".github/workflows"))? {
-        let v: Value = serde_yaml::from_str(&text(&p)?)?;
-        count += 1;
-        c.check(v.get("on").is_some(), "Workflow triggers absent");
-        c.check(
-            !v["on"].to_string().contains("pull_request_target"),
-            "Unsafe trigger",
-        );
-        c.check(
-            v["permissions"]["contents"] == "read",
-            "Root permissions not read",
-        );
-        for job in v["jobs"].as_object().context("Jobs")?.values() {
-            for step in job["steps"].as_array().into_iter().flatten() {
-                if let Some(u) = step["uses"].as_str() {
-                    c.check(pinned.is_match(u), format!("Unpinned action {u}"));
-                    if u.starts_with("actions/checkout@") {
-                        c.check(
-                            step["with"]["persist-credentials"] == false,
-                            "Persisted checkout credentials",
-                        );
-                    }
-                }
-            }
-        }
-    }
-    let ci: Value = serde_yaml::from_str(&text(root.join(".github/workflows/ci.yml"))?)?;
-    c.check(
-        ci["jobs"]["gate"]["name"] == "CI Gate",
-        "Wrong CI gate name",
-    );
-    c.check(
-        ci["jobs"]["core"]["strategy"]["matrix"]["include"]
-            .as_array()
-            .is_some_and(|x| x.len() == 4),
-        "Missing desktop matrix",
-    );
-    c.check(ci["jobs"].get("android").is_some(), "Missing Android CI");
+    let count = woodpecker(root, &mut c)?;
     xml(&root.join("packaging/macos/Info.plist"))?;
     crate::branding::references(root)?;
     c.check(
@@ -467,5 +498,112 @@ mod tests {
     #[test]
     fn invalid_schema_rejected() {
         assert!(schema_example(&json!({"type":42}), &json!({})).is_err());
+    }
+    const IMG: &str = "docker.io/library/rust:1.99.0-bookworm@sha256:114c7a4425406451c2866b6aafe69fe29b1b298832db1277d411ac73c82d04d6";
+    fn ci_fixture() -> tempfile::TempDir {
+        let tmp = tempfile::tempdir().unwrap();
+        let w = tmp.path().join(".woodpecker");
+        std::fs::create_dir_all(&w).unwrap();
+        let linux = format!(
+            "labels:\n  host: vynamp-linux\nwhen:\n  - event: [push]\nsteps:\n  - name: tooling\n    image: {IMG}\n    commands:\n      - cargo xtask ci core --target x86_64-unknown-linux-gnu\n"
+        );
+        let windows = "labels:\n  host: vynamp-windows\nwhen:\n  - event: [push]\nsteps:\n  - name: tooling\n    image: pwsh\n    commands:\n      - cargo xtask ci core --target x86_64-pc-windows-msvc\n";
+        let android = format!(
+            "labels:\n  host: vynamp-linux\nwhen:\n  - event: [push]\nsteps:\n  - name: android\n    image: {IMG}\n    commands:\n      - cargo xtask ci android\n"
+        );
+        let gate = format!(
+            "labels:\n  host: vynamp-linux\nwhen:\n  - event: [push]\ndepends_on: [linux, windows, android]\nsteps:\n  - name: gate\n    image: {IMG}\n    commands:\n      - echo ok\n"
+        );
+        for (n, t) in [
+            ("linux", linux.as_str()),
+            ("windows", windows),
+            ("android", android.as_str()),
+            ("gate", gate.as_str()),
+        ] {
+            std::fs::write(w.join(format!("{n}.yaml")), t).unwrap();
+        }
+        tmp
+    }
+    fn ci_errors(root: &Path) -> Vec<String> {
+        let mut c = Checks::default();
+        woodpecker(root, &mut c).unwrap();
+        c.errors
+    }
+    fn edit(root: &Path, name: &str, from: &str, to: &str) {
+        let p = root.join(".woodpecker").join(name);
+        let t = std::fs::read_to_string(&p).unwrap();
+        assert!(t.contains(from));
+        std::fs::write(p, t.replace(from, to)).unwrap();
+    }
+    #[test]
+    fn woodpecker_config_valid_passes() {
+        let f = ci_fixture();
+        assert_eq!(ci_errors(f.path()), Vec::<String>::new());
+    }
+    #[test]
+    fn woodpecker_config_rejects_unpinned_image() {
+        let f = ci_fixture();
+        edit(f.path(), "linux.yaml", IMG, "docker.io/library/rust:latest");
+        assert!(
+            ci_errors(f.path())
+                .iter()
+                .any(|e| e.contains("Unpinned image"))
+        );
+    }
+    #[test]
+    fn woodpecker_config_rejects_pwsh_outside_windows_agent() {
+        let f = ci_fixture();
+        edit(f.path(), "android.yaml", IMG, "pwsh");
+        assert!(
+            ci_errors(f.path())
+                .iter()
+                .any(|e| e.contains("Unpinned image"))
+        );
+    }
+    #[test]
+    fn woodpecker_config_rejects_github_actions() {
+        let f = ci_fixture();
+        let wf = f.path().join(".github/workflows");
+        std::fs::create_dir_all(&wf).unwrap();
+        std::fs::write(wf.join("ci.yml"), "on: push\n").unwrap();
+        assert!(
+            ci_errors(f.path())
+                .iter()
+                .any(|e| e.contains("GitHub Actions"))
+        );
+    }
+    #[test]
+    fn woodpecker_config_rejects_gate_missing_dependency() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "gate.yaml",
+            "[linux, windows, android]",
+            "[linux, windows]",
+        );
+        assert!(ci_errors(f.path()).iter().any(|e| e.contains("CI Gate")));
+    }
+    #[test]
+    fn woodpecker_config_rejects_privileged_step() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "linux.yaml",
+            "    commands:",
+            "    privileged: true\n    commands:",
+        );
+        assert!(ci_errors(f.path()).iter().any(|e| e.contains("Privileged")));
+    }
+    #[test]
+    fn woodpecker_config_requires_platform_workflows() {
+        let f = ci_fixture();
+        std::fs::remove_file(f.path().join(".woodpecker/android.yaml")).unwrap();
+        edit(f.path(), "windows.yaml", "x86_64-pc-windows-msvc", "x");
+        let e = ci_errors(f.path());
+        assert!(e.iter().any(|e| e.contains("Missing Android CI")));
+        assert!(
+            e.iter()
+                .any(|e| e.contains("Missing desktop target x86_64-pc-windows-msvc"))
+        );
     }
 }
