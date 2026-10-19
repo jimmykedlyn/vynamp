@@ -1,0 +1,80 @@
+{
+  "number": 10,
+  "event": "pull_request",
+  "status": "success",
+  "commit": "71f708680d73f5598562873fe534867ccd60debc",
+  "ref": "refs/pull/16/merge",
+  "branch": "develop",
+  "created": "2026-10-19T13:18:45.0000000+00:00",
+  "started": "2026-10-19T13:25:57.0000000+00:00",
+  "finished": "2026-10-19T13:39:03.0000000+00:00",
+  "workflows": [
+    {
+      "name": "android",
+      "state": "success",
+      "agent_id": 1,
+      "platform": null,
+      "steps": [
+        {
+          "name": "clone",
+          "state": "success",
+          "exit_code": 0
+        },
+        {
+          "name": "android",
+          "state": "success",
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "name": "gate",
+      "state": "success",
+      "agent_id": 1,
+      "platform": null,
+      "steps": [
+        {
+          "name": "gate",
+          "state": "success",
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "name": "linux",
+      "state": "success",
+      "agent_id": 1,
+      "platform": null,
+      "steps": [
+        {
+          "name": "clone",
+          "state": "success",
+          "exit_code": 0
+        },
+        {
+          "name": "tooling",
+          "state": "success",
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "name": "windows",
+      "state": "success",
+      "agent_id": 2,
+      "platform": null,
+      "steps": [
+        {
+          "name": "clone",
+          "state": "success",
+          "exit_code": 0
+        },
+        {
+          "name": "tooling",
+          "state": "success",
+          "exit_code": 0
+        }
+      ]
+    }
+  ]
+}

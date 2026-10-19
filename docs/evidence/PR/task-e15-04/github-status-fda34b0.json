@@ -1,0 +1,34 @@
+{
+  "sha": "fda34b023271ba57e432e9d8ac000f7da86b77c8",
+  "state": "failure",
+  "statuses": [
+    {
+      "context": "CI Gate",
+      "state": "pending",
+      "description": "Pipeline was skipped",
+      "target_url": "https://ci-cd-vynamp.jkca.lat/repos/1/pipeline/11/2",
+      "updated_at": "2026-10-19T13:56:33Z"
+    },
+    {
+      "context": "woodpecker/push/android",
+      "state": "success",
+      "description": "Pipeline was successful",
+      "target_url": "https://ci-cd-vynamp.jkca.lat/repos/1/pipeline/11/1",
+      "updated_at": "2026-10-19T13:54:42Z"
+    },
+    {
+      "context": "woodpecker/push/linux",
+      "state": "failure",
+      "description": "Pipeline failed",
+      "target_url": "https://ci-cd-vynamp.jkca.lat/repos/1/pipeline/11/3",
+      "updated_at": "2026-10-19T13:56:32Z"
+    },
+    {
+      "context": "woodpecker/push/windows",
+      "state": "failure",
+      "description": "Pipeline failed",
+      "target_url": "https://ci-cd-vynamp.jkca.lat/repos/1/pipeline/11/4",
+      "updated_at": "2026-10-19T13:55:56Z"
+    }
+  ]
+}

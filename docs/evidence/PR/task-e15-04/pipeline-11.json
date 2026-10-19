@@ -1,0 +1,80 @@
+{
+  "number": 11,
+  "event": "push",
+  "status": "failure",
+  "commit": "fda34b023271ba57e432e9d8ac000f7da86b77c8",
+  "ref": "refs/heads/chore/e15-04-gate-fail",
+  "branch": "chore/e15-04-gate-fail",
+  "created": "2026-10-19T13:52:15.0000000+00:00",
+  "started": "2026-10-19T13:52:24.0000000+00:00",
+  "finished": "2026-10-19T13:56:31.0000000+00:00",
+  "workflows": [
+    {
+      "name": "android",
+      "state": "success",
+      "agent_id": 1,
+      "platform": null,
+      "steps": [
+        {
+          "name": "clone",
+          "state": "success",
+          "exit_code": 0
+        },
+        {
+          "name": "android",
+          "state": "success",
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "name": "gate",
+      "state": "skipped",
+      "agent_id": 1,
+      "platform": null,
+      "steps": [
+        {
+          "name": "gate",
+          "state": "killed",
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "name": "linux",
+      "state": "failure",
+      "agent_id": 1,
+      "platform": null,
+      "steps": [
+        {
+          "name": "clone",
+          "state": "success",
+          "exit_code": 0
+        },
+        {
+          "name": "tooling",
+          "state": "failure",
+          "exit_code": 1
+        }
+      ]
+    },
+    {
+      "name": "windows",
+      "state": "failure",
+      "agent_id": 2,
+      "platform": null,
+      "steps": [
+        {
+          "name": "clone",
+          "state": "success",
+          "exit_code": 0
+        },
+        {
+          "name": "tooling",
+          "state": "failure",
+          "exit_code": 1
+        }
+      ]
+    }
+  ]
+}

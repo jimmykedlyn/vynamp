@@ -33,21 +33,21 @@
 
 **Files:** Modify `xtask/src/validate.rs`, `xtask/src/release.rs`.
 
-- [ ] Testes `woodpecker_config_*` em `validate.rs` (fixture tempdir): config válida passa; imagem sem digest, `.github/workflows` presente, gate sem dependência android e step `privileged` falham. Rodar: FAIL (função ausente).
-- [ ] Implementar `fn woodpecker(root: &Path, c: &mut Checks) -> Result<usize>` e chamá-la em `delivery`. Rodar: PASS.
-- [ ] Testes `version_from_tag` e `woodpecker_tag_check` em `release.rs`; implementar; `tag-version` lê `CI_COMMIT_TAG` e imprime a versão; preflight verifica tag quando `CI=woodpecker`.
-- [ ] `cargo test --package xtask --locked` verde; commit.
+- [x] Testes `woodpecker_config_*` em `validate.rs` (fixture tempdir): config válida passa; imagem sem digest, `.github/workflows` presente, gate sem dependência android e step `privileged` falham. Rodar: FAIL (função ausente).
+- [x] Implementar `fn woodpecker(root: &Path, c: &mut Checks) -> Result<usize>` e chamá-la em `delivery`. Rodar: PASS.
+- [x] Testes `version_from_tag` e `woodpecker_tag_check` em `release.rs`; implementar; `tag-version` lê `CI_COMMIT_TAG` e imprime a versão; preflight verifica tag quando `CI=woodpecker`.
+- [x] `cargo test --package xtask --locked` verde; commit.
 
 ### Task 2: workflows e servidor
 
 **Files:** Create `.woodpecker/{android,gate,release}.yaml`; modify `.woodpecker/{linux,windows}.yaml`, `infra/ci/woodpecker/compose.yaml`; delete `.github/workflows/*`, entrada `github-actions` de `.github/dependabot.yml`.
 
-- [ ] `WOODPECKER_STATUS_CONTEXT=woodpecker` e `WOODPECKER_STATUS_CONTEXT_FORMAT` que publica `CI Gate` para o workflow `gate` e `woodpecker/<workflow>` para os demais.
-- [ ] `woodpecker-cli lint` nos cinco arquivos; `cargo xtask check-delivery` exit 0; preflight `-SelfTest` 9/9.
-- [ ] Recriar o servidor (`compose up -d`), dados preservados; commit e push.
+- [x] `WOODPECKER_STATUS_CONTEXT=woodpecker` e `WOODPECKER_STATUS_CONTEXT_FORMAT` que publica `CI Gate` para o workflow `gate` e `woodpecker/<workflow>` para os demais.
+- [x] `woodpecker-cli lint` nos cinco arquivos; `cargo xtask check-delivery` exit 0; preflight `-SelfTest` 9/9.
+- [x] Recriar o servidor (`compose up -d`), dados preservados; commit e push.
 
 ### Task 3: docs e evidência real
 
-- [ ] ADR-010; atualizar 04-ci-cd, 03-gitflow, ADR-009 (nota), AGENTS.md, PR template, TASK-E15-04, README infra, config/github.json, INDEX.
-- [ ] Evidência real: push success com `CI Gate` success no GitHub; branch descartável com falha → `CI Gate` não success; tag não é criada (release só verificado por lint/preflight local).
-- [ ] Atualizar PR #16 e bloco REVISAR do guia.
+- [x] ADR-010; atualizar 04-ci-cd, 03-gitflow, ADR-009 (nota), AGENTS.md, PR template, TASK-E15-04, README infra, config/github.json, INDEX.
+- [x] Evidência real: push success com `CI Gate` success no GitHub; branch descartável com falha → `CI Gate` não success; tag não é criada (release só verificado por lint/preflight local). Resultado: #9 push e #10 PR de `71f7086` success com `CI Gate` success; #11 `fda34b0` failure com `CI Gate` pending/skipped ([evidência](../../evidence/PR/task-e15-04/README.md)).
+- [x] Atualizar PR #16 e bloco REVISAR do guia.
