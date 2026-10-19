@@ -18,4 +18,4 @@ Revisão técnica pelo outro agente (Codex ou Claude Code), commit revisado e ac
 - [ ] Superpowers carregado; teste útil e verificação executados.
 - [ ] Sucesso/erro/cancelamento e acessibilidade aplicáveis cobertos.
 - [ ] Docs/contracts/notices atualizados; nenhuma credencial no diff.
-- [ ] CI Gate aprovado; hardware não disponível marcado como não verificado.
+- [ ] CI Gate (Woodpecker) aprovado; macOS/hardware não disponível marcado como não verificado.

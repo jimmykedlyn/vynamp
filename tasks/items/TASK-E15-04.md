@@ -10,7 +10,7 @@ Fase M1 / P0 · Owner engineering-delivery · Esforço inicial 3–10 dias útei
 
 ## Entrega concreta
 
-CI docs/tooling e matriz Cargo/Android, required aggregate context.
+CI docs/tooling e matriz Cargo/Android, required aggregate context. Desde 2026-10-19 somente Woodpecker ([ADR-010](../../docs/architecture/adr/ADR-010-woodpecker-only-ci.md)); macOS não verificado até existir agente Mac.
 
 [Spec](../../docs/engineering/04-ci-cd.md) · REQ-E15-04 em [matriz](../../docs/product/03-requirements.md).
 

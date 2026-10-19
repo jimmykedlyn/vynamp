@@ -12,7 +12,7 @@ Um owner porTASK, worktree/branch/index próprios. `.worktrees/<agent>/<task>-<s
 
 Superpowers: using-superpowers → spec/brainstorming se decisão nova → writing-plans → using-git-worktrees → TDD para comportamento → verification-before-completion → revisão técnica pelo outro agente → finishing-a-development-branch. Planos em docs/superpowers/plans; evidência permanente em docs/evidence/PR; scratch .superpowers ignored. Decisões já dadas pelo usuário não requerem aprovação repetida. Escopo explícito/autorizações do usuário prevalecem sobre skills.
 
-Branch feature/fix/chore porTASK de develop; hotfix de main; PR e merge commit. main/develop protegidas, CI Gate obrigatório, merge/publicação pelo mantenedor. PR template documenta fonte/task/command/result/limitações e review do outro agente; duas ferramentas não são duas identidades GitHub.
+Branch feature/fix/chore porTASK de develop; hotfix de main; PR e merge commit. main/develop protegidas, CI Gate (Woodpecker, ADR-010) obrigatório, merge/publicação pelo mantenedor. PR template documenta fonte/task/command/result/limitações e review do outro agente; duas ferramentas não são duas identidades GitHub.
 
 ## Qualidade
 

@@ -1,4 +1,4 @@
-# Woodpecker pilot (TASK-E15-04). Secrets and data live outside Git under
+# Woodpecker CI/CD (TASK-E15-04, ADR-010). Secrets and data live outside Git under
 # D:/Projects/vynamp-media-player/.cache/woodpecker. Ports bind to loopback only;
 # the tunnel exposes HTTP 8000 and never gRPC 9000.
 name: vynamp-woodpecker
@@ -20,7 +20,9 @@ services:
       WOODPECKER_REPO_OWNERS: jimmykedlyn
       WOODPECKER_GITHUB: "true"
       WOODPECKER_DISABLE_USER_AGENT_REGISTRATION: "true"
-      WOODPECKER_STATUS_CONTEXT: woodpecker-pilot
+      # The gate workflow is the required GitHub status "CI Gate" (ADR-010).
+      WOODPECKER_STATUS_CONTEXT: woodpecker
+      WOODPECKER_STATUS_CONTEXT_FORMAT: '{{ if eq .workflow "gate" }}CI Gate{{ else }}{{ .context }}/{{ .event }}/{{ .workflow }}{{ end }}'
       WOODPECKER_DEFAULT_CLONE_PLUGIN: docker.io/woodpeckerci/plugin-git:2.10.1@sha256:550075c844fcec0af41d9d28f9860aa5d8c43e1e9419be4b9266dc02c2f29804
       WOODPECKER_PLUGINS_TRUSTED_CLONE: docker.io/woodpeckerci/plugin-git:2.10.1@sha256:550075c844fcec0af41d9d28f9860aa5d8c43e1e9419be4b9266dc02c2f29804
       WOODPECKER_MAX_PIPELINE_TIMEOUT: "120"

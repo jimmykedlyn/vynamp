@@ -1,5 +1,5 @@
-# Woodpecker pilot, Linux/Docker agent (TASK-E15-04). Mirrors the GitHub Actions
-# docs/tooling/core checks; it is a partial pilot, not the multi-platform CI Gate.
+# Linux/Docker agent CI (ADR-010): docs, tooling and desktop core for
+# x86_64-unknown-linux-gnu. Part of the Woodpecker CI Gate.
 labels:
   host: vynamp-linux
 

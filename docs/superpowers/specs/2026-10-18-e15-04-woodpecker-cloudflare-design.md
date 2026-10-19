@@ -1,6 +1,6 @@
 # E15-04 — Woodpecker local com Cloudflare Tunnel
 
-Data: 2026-10-18. Estado: desenho aprovado pelo mantenedor em 2026-10-18, hostname `ci-cd-vynamp.jkca.lat`; implementação Claude conforme [plano](../plans/2026-10-18-e15-04-woodpecker.md). Desenho escrito pelo Codex; autoria da implementação transferida ao Claude, revisão técnica Codex. Fonte: [TASK-E15-04](../../../tasks/items/TASK-E15-04.md), REQ-E15-04 e QA-018/QA-021.
+Data: 2026-10-18. Estado: desenho aprovado pelo mantenedor em 2026-10-18, hostname `ci-cd-vynamp.jkca.lat`; implementação Claude conforme [plano](../plans/2026-10-18-e15-04-woodpecker.md). Desenho escrito pelo Codex; autoria da implementação transferida ao Claude, revisão técnica Codex. Fonte: [TASK-E15-04](../../../tasks/items/TASK-E15-04.md), REQ-E15-04 e QA-018/QA-021. Atualização 2026-10-19: o mantenedor tornou o Woodpecker o único CI/CD ([ADR-010](../../architecture/adr/ADR-010-woodpecker-only-ci.md), [adendo](../plans/2026-10-19-e15-04-woodpecker-only-ci.md)); onde este desenho diz "piloto" ou "não toca no CI Gate", vale o ADR-010.
 
 ## Objetivo e decisões do usuário
 

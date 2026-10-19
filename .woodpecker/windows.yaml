@@ -1,4 +1,4 @@
-# Woodpecker pilot, native Windows agent with the Local backend (TASK-E15-04).
+# Native Windows agent CI with the Local backend (ADR-010).
 # The Local backend has no isolation: only trusted code of the private repo runs
 # here; fork pull requests require approval and never run unattended.
 labels:
