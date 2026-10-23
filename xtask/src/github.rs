@@ -3,7 +3,7 @@ use anyhow::{Result, ensure};
 use serde_json::Value;
 use std::{fs, path::Path};
 fn available_import_branch(refs: &str) -> String {
-    let base = "chore/task-e15-01-codex-project-bootstrap";
+    let base = "chore/task-e15-01-project-bootstrap";
     let mut name = base.to_owned();
     let mut suffix = 2u64;
     while refs
@@ -252,7 +252,7 @@ mod import_branch_tests {
     use super::*;
     #[test]
     fn existing_remote_bootstrap_branches_are_preserved() {
-        let base = "chore/task-e15-01-codex-project-bootstrap";
+        let base = "chore/task-e15-01-project-bootstrap";
         let refs = format!("abc\trefs/heads/{base}\ndef\trefs/heads/{base}-2\n");
         assert_eq!(available_import_branch(&refs), format!("{base}-3"));
         assert_eq!(available_import_branch("abc\trefs/heads/main\n"), base);

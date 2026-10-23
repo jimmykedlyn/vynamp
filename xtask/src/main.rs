@@ -22,28 +22,22 @@ struct Cli {
 }
 #[derive(Clone, Copy, ValueEnum)]
 enum Agent {
-    Codex,
     Claude,
-    Both,
 }
 impl Agent {
     fn as_str(self) -> &'static str {
         match self {
-            Self::Codex => "codex",
             Self::Claude => "claude",
-            Self::Both => "both",
         }
     }
 }
 #[derive(Clone, Copy, ValueEnum)]
 enum Owner {
-    Codex,
     Claude,
 }
 impl Owner {
     fn as_str(self) -> &'static str {
         match self {
-            Self::Codex => "codex",
             Self::Claude => "claude",
         }
     }
@@ -68,11 +62,11 @@ impl Kind {
 #[derive(Subcommand)]
 enum Action {
     Doctor {
-        #[arg(long, value_enum, default_value = "both")]
+        #[arg(long, value_enum, default_value = "claude")]
         agent: Agent,
     },
     Install {
-        #[arg(long, value_enum, default_value = "both")]
+        #[arg(long, value_enum, default_value = "claude")]
         agent: Agent,
     },
     #[command(name = "check-docs")]
@@ -119,8 +113,6 @@ enum Action {
 #[derive(Subcommand)]
 enum Repo {
     Init,
-    #[command(name = "prepare-agents")]
-    PrepareAgents,
     Worktree {
         #[arg(long, value_enum)]
         agent: Owner,
@@ -210,7 +202,6 @@ fn execute() -> Result<()> {
         Action::TagVersion => release::tag_version(),
         Action::Repo { command } => match command {
             Repo::Init => repo::init(&root),
-            Repo::PrepareAgents => repo::prepare_agents(&root),
             Repo::Worktree {
                 agent,
                 task,
@@ -255,9 +246,7 @@ fn bundle(root: &std::path::Path, output: &std::path::Path) -> Result<()> {
     let wrappers = [
         ("INICIAR.ps1", "INICIAR.ps1"),
         ("AMBIENTE.ps1", "AMBIENTE.ps1"),
-        ("ABRIR-CODEX.ps1", "ABRIR-CODEX.ps1"),
         ("ABRIR-CLAUDE.ps1", "ABRIR-CLAUDE.ps1"),
-        ("PROMPT-CODEX.txt", "PROMPT-CODEX.txt"),
         ("PROMPT-CLAUDE.txt", "PROMPT-CLAUDE.txt"),
         ("LEIA-ME.txt", "LEIA-ME.md"),
     ];

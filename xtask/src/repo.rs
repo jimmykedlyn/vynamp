@@ -133,7 +133,7 @@ pub fn remove(root: &Path, agent: &str, id: &str) -> Result<()> {
     ensure!(rec["agent"] == agent, "Worktree belongs to another agent");
     let branch = string(&rec, "branch")?;
     let pattern = Regex::new(
-        r"^(feature|fix|chore|hotfix)/(task-e\d{2}-\d{2})-(codex|claude)-([a-z0-9]+(?:-[a-z0-9]+)*)$",
+        r"^(feature|fix|chore|hotfix)/(task-e\d{2}-\d{2})-(claude)-([a-z0-9]+(?:-[a-z0-9]+)*)$",
     )?;
     let parts = pattern
         .captures(branch)
@@ -222,7 +222,7 @@ pub fn guard(root: &Path) -> Result<()> {
         !b.is_empty() && b != "main" && b != "develop",
         "Commit blocked on main/develop/detached HEAD"
     );
-    ensure!(Regex::new(r"^(?:(?:feature|fix|chore|hotfix)/task-e\d{2}-\d{2}-(?:codex|claude)-[a-z0-9]+(?:-[a-z0-9]+)*|release/\d+\.\d+\.\d+(?:-[a-z0-9.-]+)?)$")?.is_match(&b),"Commit blocked: invalid Gitflow branch");
+    ensure!(Regex::new(r"^(?:(?:feature|fix|chore|hotfix)/task-e\d{2}-\d{2}-claude-[a-z0-9]+(?:-[a-z0-9]+)*|release/\d+\.\d+\.\d+(?:-[a-z0-9.-]+)?)$")?.is_match(&b),"Commit blocked: invalid Gitflow branch");
     Ok(())
 }
 const PROTECTED: [&str; 2] = ["main", "develop"];
@@ -388,135 +388,6 @@ pub fn policy(root: &Path, repo: &str, reviews: u8) -> Result<()> {
         }
     }
     println!("Protection applied. Configure protected signing/publish environments separately.");
-    Ok(())
-}
-
-pub fn prepare_agents(root: &Path) -> Result<()> {
-    const ID: &str = "TASK-E15-01";
-    task(root, ID)?;
-    let shared = common(root)?;
-    ensure!(
-        PathBuf::from(git(root, &["rev-parse", "--absolute-git-dir"])?).canonicalize()? == shared,
-        "Run prepare-agents from the root checkout, not a worktree"
-    );
-    let code_rel = Path::new(".worktrees/codex/task-e15-01-bootstrap");
-    let review_rel = Path::new(".worktrees/claude/review-bootstrap");
-    validate_destination(root, code_rel)?;
-    validate_destination(root, review_rel)?;
-    let code = root.join(code_rel);
-    let review = root.join(review_rel);
-    let claim = shared.join("auralis/claims").join(ID);
-    let branch;
-    if claim.exists() {
-        let record = read_json(claim.join("owner.json"))?;
-        ensure!(
-            record["agent"] == "codex" && record["task"] == ID,
-            "Bootstrap task already claimed by another owner"
-        );
-        ensure!(
-            PathBuf::from(string(&record, "path")?).canonicalize()? == code.canonicalize()?,
-            "Existing claim points to a different worktree; preserve it"
-        );
-        ensure!(
-            code.join(".git").is_file(),
-            "Claim has no registered Codex worktree; preserve it"
-        );
-        ensure!(
-            PathBuf::from(git(&code, &["rev-parse", "--absolute-git-dir"])?).canonicalize()?
-                != shared,
-            "Codex must have its own Git index"
-        );
-        ensure!(
-            common(&code)? == shared,
-            "Codex worktree belongs to another repository"
-        );
-        branch = string(&record, "branch")?.to_owned();
-        ensure!(
-            git(&code, &["branch", "--show-current"])? == branch,
-            "Codex branch differs from claim"
-        );
-    } else {
-        ensure!(
-            !code.exists(),
-            "Codex path exists without claim; preserve it"
-        );
-        let current = git(root, &["branch", "--show-current"])?;
-        if Regex::new(r"^chore/task-e15-01-codex-project-bootstrap(?:-[0-9]+)?$")?
-            .is_match(&current)
-        {
-            ensure!(
-                git(root, &["status", "--porcelain"])?.is_empty(),
-                "Import checkout has pending changes; commit or preserve them before preparing agents"
-            );
-            fs::create_dir_all(claim.parent().unwrap())?;
-            fs::create_dir(&claim)?;
-            let result = (|| -> Result<()> {
-                fs::create_dir_all(code.parent().unwrap())?;
-                write_json(
-                    claim.join("owner.json"),
-                    &json!({"task":ID,"agent":"codex","path":code,"branch":current,"base":"import-bootstrap"}),
-                )?;
-                run(root, "git", &["switch", "--detach"])?;
-                run(
-                    root,
-                    "git",
-                    &["worktree", "add", &command_path(&code)?, &current],
-                )
-            })();
-            if let Err(error) = result {
-                if !code.join(".git").exists() {
-                    let _ = fs::remove_file(claim.join("owner.json"));
-                    let _ = fs::remove_dir(&claim);
-                    let _ = run(root, "git", &["switch", &current]);
-                }
-                return Err(error);
-            }
-            branch = current;
-        } else {
-            ensure!(
-                matches!(current.as_str(), "main" | "develop"),
-                "Unexpected root branch; finish existing work before bootstrap"
-            );
-            ensure!(
-                git(root, &["rev-parse", "--verify", "develop"]).is_ok(),
-                "Develop missing: import the package or integrate the bootstrap PR first"
-            );
-            worktree(root, "codex", ID, "bootstrap", "feature")?;
-            branch = "feature/task-e15-01-codex-bootstrap".to_owned();
-        }
-    }
-    if review.exists() {
-        ensure!(
-            review.join(".git").is_file(),
-            "Review path is not a registered worktree; preserve it"
-        );
-        ensure!(
-            PathBuf::from(git(&review, &["rev-parse", "--absolute-git-dir"])?).canonicalize()?
-                != shared,
-            "Reviewer must have its own Git index"
-        );
-        ensure!(
-            common(&review)? == shared && git(&review, &["branch", "--show-current"])?.is_empty(),
-            "Existing review path must be a detached worktree of this repository; preserve it"
-        );
-    } else {
-        fs::create_dir_all(review.parent().unwrap())?;
-        run(
-            root,
-            "git",
-            &[
-                "worktree",
-                "add",
-                "--detach",
-                &command_path(&review)?,
-                &branch,
-            ],
-        )?;
-    }
-    println!(
-        "{}",
-        json!({"codex_worktree":code,"codex_branch":branch,"claude_review_worktree":review,"task":ID,"review_only":true,"note":"No task has been accepted; verify Superpowers and prerequisites, review commits before feature work."})
-    );
     Ok(())
 }
 

@@ -112,7 +112,7 @@ pub fn preflight(root: &Path, version: &str) -> Result<Value> {
         .filter_map(Value::as_str)
         .collect();
     ensure!(
-        reviewers == BTreeSet::from(["codex", "claude"]),
+        reviewers == BTreeSet::from(["claude"]),
         "Independent reviews missing"
     );
     for platform in PLATFORMS {

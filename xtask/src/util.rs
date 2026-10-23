@@ -64,7 +64,7 @@ pub fn write_json(path: impl AsRef<Path>, value: &Value) -> Result<()> {
 pub fn text(path: impl AsRef<Path>) -> Result<String> {
     Ok(fs::read_to_string(path)?)
 }
-/// Windows `Command` only appends `.exe`; npm shims such as `codex.cmd` need PATHEXT lookup.
+/// Windows `Command` only appends `.exe`; npm shims such as `sometool.cmd` need PATHEXT lookup.
 fn find_program(
     exe: &str,
     path: Option<&std::ffi::OsStr>,
@@ -305,18 +305,18 @@ mod tests {
     #[test]
     fn windows_npm_shim_is_resolved_through_pathext() {
         let temp = tempfile::tempdir().unwrap();
-        fs::write(temp.path().join("codex"), b"#!/bin/sh").unwrap();
-        fs::write(temp.path().join("codex.cmd"), b"@echo off").unwrap();
+        fs::write(temp.path().join("sometool"), b"#!/bin/sh").unwrap();
+        fs::write(temp.path().join("sometool.cmd"), b"@echo off").unwrap();
         let path = std::env::join_paths([temp.path()]).unwrap();
         assert_eq!(
-            find_program("codex", Some(&path), ".COM;.EXE;.BAT;.CMD", true),
-            Some(temp.path().join("codex.cmd"))
+            find_program("sometool", Some(&path), ".COM;.EXE;.BAT;.CMD", true),
+            Some(temp.path().join("sometool.cmd"))
         );
         assert_eq!(
             find_program("missing", Some(&path), ".EXE;.CMD", true),
             None
         );
-        assert_eq!(find_program("codex", Some(&path), "", false), None);
+        assert_eq!(find_program("sometool", Some(&path), "", false), None);
     }
     #[test]
     fn distribution_scan_excludes_synthetic_credentials() {
