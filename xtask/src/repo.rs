@@ -222,7 +222,7 @@ pub fn guard(root: &Path) -> Result<()> {
         !b.is_empty() && b != "main" && b != "develop",
         "Commit blocked on main/develop/detached HEAD"
     );
-    ensure!(Regex::new(r"^(?:(?:feature|fix|chore|hotfix)/task-e\d{2}-\d{2}-claude-[a-z0-9]+(?:-[a-z0-9]+)*|release/\d+\.\d+\.\d+(?:-[a-z0-9.-]+)?)$")?.is_match(&b),"Commit blocked: invalid Gitflow branch");
+    ensure!(Regex::new(r"^(?:(?:feature|fix|chore|hotfix)/task-e\d{2}-\d{2}-claude-[a-z0-9]+(?:-[a-z0-9]+)*|chore/claude-[a-z0-9]+(?:-[a-z0-9]+)*|release/\d+\.\d+\.\d+(?:-[a-z0-9.-]+)?)$")?.is_match(&b),"Commit blocked: invalid Gitflow branch");
     Ok(())
 }
 const PROTECTED: [&str; 2] = ["main", "develop"];

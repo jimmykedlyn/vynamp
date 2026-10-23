@@ -797,6 +797,15 @@ fn commit_on_main_is_blocked_after_bootstrap() {
     assert!(!f.run(&["guard-branch"]).status.success());
 }
 #[test]
+fn guard_accepts_agent_chore_branch_without_task_but_not_arbitrary_names() {
+    let f = Fixture::new();
+    f.init();
+    ok(f.git(&["switch", "-c", "chore/claude-sole-owner"]));
+    ok(f.run(&["guard-branch"]));
+    ok(f.git(&["switch", "-c", "chore/anything-else"]));
+    assert!(!f.run(&["guard-branch"]).status.success());
+}
+#[test]
 fn desktop_detection_parses_a_real_manifest() {
     let f = Fixture::new();
     fs::create_dir_all(f.root.join("apps/desktop/src")).unwrap();
