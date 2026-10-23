@@ -1,18 +1,20 @@
-# Contrato comum de trabalho dos agentes
+# Contrato de trabalho do agente
 
 Versão 0.7.0 · 2026-10-14 · Configuração do projeto; player ainda não implementado.
 
+Fluxo de agente único: Claude Code é o único autor e revisor. Subagentes: Opus orquestra e trata alto risco; Sonnet implementa e revisa; Haiku executa checks. Merge, tag e release pertencem ao mantenedor humano.
+
 ## Antes da tarefa
 
-Superpowers é obrigatório para Codex e Claude Code. Ler START-HERE, SPEC, docs/engineering, TASK/REQ/QA e ADRs; instalar/confirmar native plugin em cada agente e skill discovery. Configurações não equivalem a plugin instalado. Não alegar usar skill inexistente nem fabricar testes/assinaturas.
+Superpowers é obrigatório. Ler START-HERE, SPEC, docs/engineering, TASK/REQ/QA e ADRs; instalar/confirmar o native plugin e a skill discovery. Configurações não equivalem a plugin instalado. Não alegar usar skill inexistente nem fabricar testes/assinaturas.
 
 ## Trabalho
 
-Um owner porTASK, worktree/branch/index próprios. `.worktrees/<agent>/<task>-<slug>` é padrão do script; worktree nativa existente é reutilizada. Root/main/develop são para bootstrap/sincronização, não feature edits. Claims no common Git dir para sessões locais; máquinas diferentes coordenam pelo PR/issue. Nunca editar worktree do outro agente, reset --hard, clean -fdx ou force push.
+Um owner por TASK, worktree/branch/index próprios. `.worktrees/claude/<task>-<slug>` é o padrão do script; worktree nativa existente é reutilizada. Root/main/develop são para sincronização, não feature edits. Claims no common Git dir evitam sessões concorrentes na mesma TASK. Nunca reset --hard, clean -fdx ou force push.
 
-Superpowers: using-superpowers → spec/brainstorming se decisão nova → writing-plans → using-git-worktrees → TDD para comportamento → verification-before-completion → revisão técnica pelo outro agente → finishing-a-development-branch. Planos em docs/superpowers/plans; evidência permanente em docs/evidence/PR; scratch .superpowers ignored. Decisões já dadas pelo usuário não requerem aprovação repetida. Escopo explícito/autorizações do usuário prevalecem sobre skills.
+Superpowers: using-superpowers → spec/brainstorming se decisão nova → writing-plans → using-git-worktrees → TDD para comportamento → verification-before-completion → revisão técnica por subagente em contexto limpo (Sonnet; Opus para alto risco) → finishing-a-development-branch. Planos em docs/superpowers/plans; evidência permanente em docs/evidence/PR; scratch .superpowers ignored. Decisões já dadas pelo usuário não requerem aprovação repetida. Escopo explícito/autorizações do usuário prevalecem sobre skills.
 
-Branch feature/fix/chore porTASK de develop; hotfix de main; PR e merge commit. main/develop protegidas, CI Gate (Woodpecker, ADR-010) obrigatório, merge/publicação pelo mantenedor. PR template documenta fonte/task/command/result/limitações e review do outro agente; duas ferramentas não são duas identidades GitHub.
+Branch feature/fix/chore por TASK de develop; hotfix de main; PR e merge commit. main/develop protegidas, CI Gate (Woodpecker, ADR-010) obrigatório, merge/publicação pelo mantenedor. PR template documenta fonte/task/command/result/limitações e a revisão técnica.
 
 ## Qualidade
 
@@ -20,14 +22,10 @@ Executar cargo xtask ci docs e checks do subsistema. Não testar só espelho de 
 
 ## Entrega
 
-Obrigatório para toda entrega do Codex: atualizar o bloco **REVISAR — enviar ao Claude:** da TASK no guia externo `D:\Projects\vynamp-media-player\GUIA-PROMPTS-CODEX-CLAUDE.md`, inclusive após correções, novos commits/checks ou bloqueios. Preencher branch, SHA completo existente, base, PR real ou pendência, escopo commitado, evidências, comandos/resultados/ambiente/limitações e checks para o revisor; distinguir transcrição do usuário, arquivos staged e verificações pendentes. Templates futuros permanecem templates. Entregar ao usuário o link do bloco atualizado; não inventar SHA/PR nem declarar evidência staged como parte do commit.
+Ao entregar: branch, SHA completo, base, PR real (ou motivo da pendência), escopo commitado, comandos/resultados/ambiente/limitações. Publicar a branch sem force push e criar/atualizar o PR por head+base (template e --body-file), sem duplicar. Entregar ao mantenedor a URL real do PR, head revisado, status de revisão/CI e o pedido “aprove e faça o merge commit pelo GitHub”. Não inventar SHA/PR/CI. Falha de autenticação/rede é registrada com o erro real. Após o merge, verificar o PR real (state=MERGED), `git fetch origin` e sincronizar a integração por fast-forward, preservando worktrees alheias.
 
-Obrigatório para o Claude: após cada revisão/reavaliação, atualizar nesse guia externo seu próprio registro de checks, separado dos resultados do autor. Registrar SHA revisado, comandos, status por check (passou/falhou/não executado/não aplicável com justificativa), ambiente/evidências, achados, limitações e decisão técnica; apontar o registro na resposta. O Codex não marca aprovação/checks pelo Claude. Essa atualização do guia compartilhado não autoriza editar a worktree do autor nem assumir sua claim.
-
-Produto ainda não implementado; stages/release flags distinguem tooling de app. Não criar executável placeholder, selo hi-res falso ou installer fictício. Release precisa licenças/notices/fixtures/evidências/runtime inventory/certificados reais. Não criar licença final sem decisão registrada. Não publicar plataformaweb antesM4. Atualizar docs/schema/backlog/ADR/notices conforme mudança, mantendo IDs e links.
+Produto ainda não implementado; stages/release flags distinguem tooling de app. Não criar executável placeholder, selo hi-res falso ou installer fictício. Release precisa licenças/notices/fixtures/evidências/runtime inventory/certificados reais. Não criar licença final sem decisão registrada. Não publicar plataforma web antes de M4. Atualizar docs/schema/backlog/ADR/notices conforme mudança, mantendo IDs e links.
 
 ## Identidade Vynamp
 
 Nome Vynamp e conceito C — Pulso aprovados. [Guia de marca](docs/design/04-brand-identity.md) e [PNGs incluídos](assets/branding/README.md). Preserve geometria e cores da marca e paleta semântica da UI. Não usar PNG de referência como ícone nativo já verificado. Repo informado renomeado: jimmykedlyn/vynamp-mediaplayer.
-
-Em todo handoff, atualize tambem o painel Proxima acao no topo do guia e entregue etapa atual, proximo responsavel, pasta exata, comando ou prompt pronto, resultado esperado e caminho apos sucesso/falha. O agente prepara o workflow; o usuario nao precisa adivinhar pastas/SHAs/comandos nem montar prompts. Ao receber "commit feito", leia o novo SHA no Git e atualize o handoff antes da revisao.

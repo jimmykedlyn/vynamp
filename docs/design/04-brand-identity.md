@@ -58,6 +58,6 @@ QA: transparência/alpha; pixels isolados/fringing; desenho e gap em16/20/24/32;
 
 ## Contrato do receipt de exportação
 
-[Exemplo pendente](../../packaging/icons/export-manifest.example.json) define campos; não é evidência de execução. Após exports/QA, criar packaging/icons/export-manifest.json com conceito C, source_digest de cargo xtask release digest, reviewers codex/claude, status verified por plataforma/report/hash e files path/sha256. Atualizar status do asset-manifest a verified somente com essa evidência. O receipt é excluído do digest para evitar auto-referência; native files/tokens/assets são incluídos.
+[Exemplo pendente](../../packaging/icons/export-manifest.example.json) define campos; não é evidência de execução. Após exports/QA, criar packaging/icons/export-manifest.json com conceito C, source_digest de cargo xtask release digest, reviewers claude, status verified por plataforma/report/hash e files path/sha256. Atualizar status do asset-manifest a verified somente com essa evidência. O receipt é excluído do digest para evitar auto-referência; native files/tokens/assets são incluídos.
 
 Gates atuais exigem ICO e ICNS modernos com frames PNG decodificáveis nos tamanhos nativos, SVG restrito a geometria/path sem refs externas e PNGs Linux/Android com dimensões explícitas. ICO/ICNS só com prefixo/header ou arquivos com extensão falsa são recusados. Codificação ICNS PNG-backed deve ser produzida/verificada no spike macOS; outputs RLE/JP2 antigos exigem decoder adicional e regressões antes aceitação. Preview PNG ainda não constitui export.

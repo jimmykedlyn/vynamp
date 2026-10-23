@@ -12,9 +12,9 @@ Plano Superpowers e evidência de execução:
 
 Comandos, resultados, ambientes/fixtures e limitações:
 
-Revisão técnica pelo outro agente (Codex ou Claude Code), commit revisado e achados:
+Revisão técnica (subagente Sonnet/Opus), commit revisado e achados:
 
-- [ ] Worktree e owner próprios; nenhuma edição no checkout do outro agente.
+- [ ] Worktree e owner próprios.
 - [ ] Superpowers carregado; teste útil e verificação executados.
 - [ ] Sucesso/erro/cancelamento e acessibilidade aplicáveis cobertos.
 - [ ] Docs/contracts/notices atualizados; nenhuma credencial no diff.

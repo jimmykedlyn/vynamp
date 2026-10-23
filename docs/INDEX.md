@@ -6,8 +6,6 @@ Versão 0.7.0 · Markdown de produto, tooling, bootstrap e evidências históric
 
 
 
-- [Configuração Codex](../.codex/README.md) — .codex/README.md
-
 - [Pull request — Vynamp](../.github/pull_request_template.md) — .github/pull_request_template.md
 
 - [Contrato comum de trabalho dos agentes](../AGENTS.md) — AGENTS.md
@@ -98,7 +96,7 @@ Versão 0.7.0 · Markdown de produto, tooling, bootstrap e evidências históric
 
 - [Layout Android, tablet e identidade compartilhada](design/04-mobile-tablet.md) — docs/design/04-mobile-tablet.md
 
-- [Codex, Claude Code e Superpowers obrigatório](engineering/01-agents-superpowers.md) — docs/engineering/01-agents-superpowers.md
+- [Claude Code e Superpowers obrigatório](engineering/01-agents-superpowers.md) — docs/engineering/01-agents-superpowers.md
 
 - [Worktrees, ownership e recuperação](engineering/02-worktrees.md) — docs/engineering/02-worktrees.md
 
@@ -512,7 +510,7 @@ Versão 0.7.0 · Markdown de produto, tooling, bootstrap e evidências históric
 
 - [TASK-E14-06 — Fechar release 1.0 multiplataforma](../tasks/items/TASK-E14-06.md) — tasks/items/TASK-E14-06.md
 
-- [TASK-E15-01 — Configurar Codex/Claude e Superpowers obrigatório](../tasks/items/TASK-E15-01.md) — tasks/items/TASK-E15-01.md
+- [TASK-E15-01 — Configurar Claude Code e Superpowers obrigatório](../tasks/items/TASK-E15-01.md) — tasks/items/TASK-E15-01.md
 
 - [TASK-E15-02 — Validar worktrees, claims e handoff](../tasks/items/TASK-E15-02.md) — tasks/items/TASK-E15-02.md
 

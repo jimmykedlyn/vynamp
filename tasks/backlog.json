@@ -3811,7 +3811,7 @@
     {
       "id": "TASK-E15-01",
       "epic": "E15",
-      "title": "Configurar Codex/Claude e Superpowers obrigatório",
+      "title": "Configurar Claude Code e Superpowers obrigatório",
       "phase": "M0",
       "priority": "P0",
       "status": "planned",
