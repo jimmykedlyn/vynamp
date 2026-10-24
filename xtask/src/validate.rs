@@ -424,6 +424,35 @@ fn woodpecker(root: &Path, c: &mut Checks) -> Result<usize> {
             .all(|d| deps.contains(*d)),
         "CI Gate workflow must depend on linux, windows and android",
     );
+    let release = flows.get("release");
+    let tag_only = release.is_some_and(|v| {
+        let when = v["when"].as_array().cloned().unwrap_or_default();
+        !when.is_empty()
+            && when
+                .iter()
+                .all(|w| w["event"] == "tag" && w["ref"] == "refs/tags/v*")
+    });
+    c.check(
+        tag_only,
+        "Release workflow must trigger only on event: tag (refs/tags/v*)",
+    );
+    c.check(
+        release.is_some_and(|v| v.to_string().contains("release preflight")),
+        "Release workflow must run release preflight",
+    );
+    c.check(
+        release.is_some_and(|v| {
+            v["steps"].as_array().is_some_and(|steps| {
+                steps.iter().any(|s| {
+                    s["name"] == "publish"
+                        && s["commands"]
+                            .as_array()
+                            .is_some_and(|c| c.last().is_some_and(|l| l == "exit 1"))
+                })
+            })
+        }),
+        "Release workflow must keep a fail-closed publish step (exit 1)",
+    );
     Ok(flows.len())
 }
 pub fn delivery(root: &Path) -> Result<()> {
@@ -510,7 +539,26 @@ mod tests {
         let gate = format!(
             "labels:\n  host: vynamp-linux\nwhen:\n  - event: [push]\ndepends_on: [linux, windows, android]\nsteps:\n  - name: gate\n    image: {IMG}\n    commands:\n      - echo ok\n"
         );
+        let release = format!(
+            "labels:
+  host: vynamp-linux
+when:
+  - event: tag
+    ref: refs/tags/v*
+steps:
+  - name: preflight
+    image: {IMG}
+    commands:
+      - cargo xtask release preflight --version \"$${{VERSION}}\"
+  - name: publish
+    image: {IMG}
+    commands:
+      - echo blocked
+      - exit 1
+"
+        );
         for (n, t) in [
+            ("release", release.as_str()),
             ("linux", linux.as_str()),
             ("windows", windows),
             ("android", android.as_str()),
@@ -601,5 +649,34 @@ mod tests {
             e.iter()
                 .any(|e| e.contains("Missing desktop target x86_64-pc-windows-msvc"))
         );
+    }
+    #[test]
+    fn woodpecker_config_requires_release_workflow() {
+        let f = ci_fixture();
+        std::fs::remove_file(f.path().join(".woodpecker/release.yaml")).unwrap();
+        assert!(ci_errors(f.path()).iter().any(|e| e.contains("Release")));
+    }
+    #[test]
+    fn woodpecker_config_rejects_release_on_push() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "release.yaml",
+            "event: tag\n    ref: refs/tags/v*",
+            "event: push",
+        );
+        assert!(ci_errors(f.path()).iter().any(|e| e.contains("Release")));
+    }
+    #[test]
+    fn woodpecker_config_rejects_release_without_preflight() {
+        let f = ci_fixture();
+        edit(f.path(), "release.yaml", "release preflight", "version");
+        assert!(ci_errors(f.path()).iter().any(|e| e.contains("Release")));
+    }
+    #[test]
+    fn woodpecker_config_rejects_release_publish_not_fail_closed() {
+        let f = ci_fixture();
+        edit(f.path(), "release.yaml", "      - exit 1\n", "");
+        assert!(ci_errors(f.path()).iter().any(|e| e.contains("Release")));
     }
 }
