@@ -1,0 +1,12 @@
++ git init --object-format sha1 -b chore/e15-04-gate-fail
+Initialized empty Git repository in D:/Projects/vynamp-media-player/.cache/wpw/w/woodpecker-local-3650104498/workspace/.git/
++ git config --global --replace-all safe.directory D:\Projects\vynamp-media-player\.cache\wpw\w\woodpecker-local-3650104498\workspace
++ git remote add origin https://github.com/jimmykedlyn/vynamp-mediaplayer.git
++ git fetch --no-tags --depth=1 --filter=tree:0 origin +fda34b023271ba57e432e9d8ac000f7da86b77c8:
+From https://github.com/jimmykedlyn/vynamp-mediaplayer
+ * branch            fda34b023271ba57e432e9d8ac000f7da86b77c8 -> FETCH_HEAD
++ git reset --hard -q fda34b023271ba57e432e9d8ac000f7da86b77c8
++ git submodule update --init --recursive --depth=1 --recommend-shallow
++ git lfs fetch
+fetch: Fetching reference refs/heads/chore/e15-04-gate-fail
++ git lfs checkout

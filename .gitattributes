@@ -9,3 +9,4 @@
 *.zip binary
 *.flac binary
 *.wav binary
+docs/evidence/**/*.log -whitespace

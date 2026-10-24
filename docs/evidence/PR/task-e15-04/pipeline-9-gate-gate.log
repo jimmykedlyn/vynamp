@@ -1,0 +1,6 @@
+▶  echo "CI Gate passed for sha=$CI_COMMIT_SHA (linux, windows, android workflows succeeded)"
+CI Gate passed for sha=71f708680d73f5598562873fe534867ccd60debc (linux, windows, android workflows succeeded)
+▶  echo 'NOT VERIFIED - macOS Intel and macOS Apple Silicon - no Mac agent'
+NOT VERIFIED - macOS Intel and macOS Apple Silicon - no Mac agent
+▶  echo 'Hardware, signing and release acceptance remain separate gates'
+Hardware, signing and release acceptance remain separate gates

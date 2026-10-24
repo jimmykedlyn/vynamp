@@ -1,0 +1,24 @@
+# Release on v* tags (ADR-010). Fail-closed: the preflight blocks until the app,
+# hardware evidence and reviews exist, and the distributed build/publish (Mac
+# agent, cross-agent artifacts, signing secrets) is not migrated yet.
+labels:
+  host: vynamp-linux
+
+when:
+  - event: tag
+    ref: refs/tags/v*
+
+steps:
+  - name: preflight
+    image: docker.io/library/rust:1.99.0-bookworm@sha256:114c7a4425406451c2866b6aafe69fe29b1b298832db1277d411ac73c82d04d6
+    environment:
+      CARGO_TERM_COLOR: never
+    commands:
+      # $$ escapes Woodpecker substitution so the shell expands VERSION.
+      - VERSION=$(cargo xtask tag-version)
+      - cargo xtask release preflight --version "$${VERSION}"
+  - name: publish
+    image: docker.io/library/rust:1.99.0-bookworm@sha256:114c7a4425406451c2866b6aafe69fe29b1b298832db1277d411ac73c82d04d6
+    commands:
+      - echo 'Release build and publication are not available in Woodpecker yet (no Mac agent, no cross-agent artifacts); see ADR-010'
+      - exit 1

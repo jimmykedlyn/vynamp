@@ -1,0 +1,9 @@
+?  $PSNativeCommandUseErrorActionPreference = $true
+?  Write-Host "tested sha=$env:CI_COMMIT_SHA ref=$env:CI_COMMIT_REF event=$env:CI_PIPELINE_EVENT"
+tested sha=72094aa8e2a19ddceaacab0f443cb7586d8de2c6 ref=refs/heads/chore/task-e15-04-claude-woodpecker event=manual
+?  git rev-parse HEAD
+72094aa8e2a19ddceaacab0f443cb7586d8de2c6
+?  rustc --version
+info: syncing channel updates for 1.99.0-x86_64-pc-windows-msvc
+info: latest update on 2026-10-01 for version 1.99.0 (b940084d7 2026-09-28)
+info: downloading 5 components

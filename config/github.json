@@ -12,5 +12,5 @@
   "remote_verified": true,
   "verified_at": "2026-10-18",
   "protection_status": "pending_plan",
-  "reason": "TASK-E15-03: privacidade, default develop e merge commit exclusivo verificados por cargo xtask repo audit; branch protection/rulesets indisponíveis (HTTP 403) no plano atual do repositório privado, CI Gate não obrigatório até o mantenedor resolver o plano."
+  "reason": "TASK-E15-03: privacidade, default develop e merge commit exclusivo verificados por cargo xtask repo audit; branch protection/rulesets indisponíveis (HTTP 403) no plano atual do repositório privado, CI Gate não obrigatório até o mantenedor resolver o plano. Desde 2026-10-19 o status CI Gate é publicado pelo Woodpecker (ADR-010)."
 }

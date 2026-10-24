@@ -12,7 +12,7 @@ Reutilizar `Cargo.toml` com membro/default-member `xtask`, resolver 3 e `Cargo.l
 
 O workspace ainda não inclui crates/apps de áudio/UI. Os diretórios com README de contratos não são membros compiláveis. A adição de código real ocorre nas respectivas tarefas, incluindo-o explicitamente no workspace e ativando seus gates; não criar executáveis placeholder para tornar um job verde.
 
-O CI inicial existente executa tooling em Windows, Linux, macOS Intel e Apple Silicon, com `CI Gate` agregado. Core/Android permanecem condicionais à existência de app real. Pin/ABI/SDK/NDK, hardware, licença final, inventário runtime, assinatura e release exigem seus gates próprios; build de xtask não os aprova. Proteções GitHub/default branch pertencem à TASK-E15-03.
+O CI inicial executava tooling em Windows, Linux, macOS Intel e Apple Silicon no GitHub Actions, com `CI Gate` agregado; desde 2026-10-19 o CI é somente Woodpecker ([ADR-010](ADR-010-woodpecker-only-ci.md)), com macOS não verificado. Core/Android permanecem condicionais à existência de app real. Pin/ABI/SDK/NDK, hardware, licença final, inventário runtime, assinatura e release exigem seus gates próprios; build de xtask não os aprova. Proteções GitHub/default branch pertencem à TASK-E15-03.
 
 Fixtures persistentes usam [tests/fixtures](../../../tests/fixtures/README.md). Fixtures Git do tooling continuam temporárias/isoladas em `xtask/tests/tooling.rs`. O contrato exige origem, licença/permissão, SHA-256 e oráculo independente antes de introduzir corpus; esta decisão não adiciona corpus nem aprova codecs.
 

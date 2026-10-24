@@ -1,0 +1,49 @@
+{
+  "number": 6,
+  "event": "pull_request",
+  "status": "success",
+  "commit": "9507e1eec88412305e70b7c2c89d9f8e1b0c2f6f",
+  "ref": "refs/pull/16/merge",
+  "branch": "develop",
+  "created": "2026-10-18T22:20:00.0000000+00:00",
+  "started": "2026-10-18T22:25:22.0000000+00:00",
+  "finished": "2026-10-18T22:41:45.0000000+00:00",
+  "workflows": [
+    {
+      "name": "linux",
+      "state": "success",
+      "agent_id": 1,
+      "platform": null,
+      "steps": [
+        {
+          "name": "clone",
+          "state": "success",
+          "exit_code": 0
+        },
+        {
+          "name": "tooling",
+          "state": "success",
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "name": "windows",
+      "state": "success",
+      "agent_id": 2,
+      "platform": null,
+      "steps": [
+        {
+          "name": "clone",
+          "state": "success",
+          "exit_code": 0
+        },
+        {
+          "name": "tooling",
+          "state": "success",
+          "exit_code": 0
+        }
+      ]
+    }
+  ]
+}

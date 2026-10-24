@@ -1,0 +1,28 @@
+# Native Windows agent CI with the Local backend (ADR-010).
+# The Local backend has no isolation: only trusted code of the private repo runs
+# here; fork pull requests require approval and never run unattended.
+labels:
+  host: vynamp-windows
+
+when:
+  - event: [push, pull_request, manual]
+
+steps:
+  - name: tooling
+    image: pwsh
+    environment:
+      CARGO_TERM_COLOR: never
+    commands:
+      # Make a failing native command stop the step instead of being masked.
+      - $PSNativeCommandUseErrorActionPreference = $true
+      - Write-Host "tested sha=$env:CI_COMMIT_SHA ref=$env:CI_COMMIT_REF event=$env:CI_PIPELINE_EVENT"
+      - git rev-parse HEAD
+      - rustc --version
+      - $env:CARGO_TARGET_DIR = Join-Path $env:CI_WORKSPACE 'target'
+      - cargo xtask ci docs
+      - cargo clippy --package xtask --all-targets --locked -- -D warnings
+      - cargo test --workspace --all-targets --locked
+      - $detect = cargo xtask ci detect | ConvertFrom-Json
+      - >-
+        if ($detect.core -eq 'true') { cargo xtask ci core --target x86_64-pc-windows-msvc }
+        else { Write-Host 'core sources absent: desktop app not tested (not an app approval)' }

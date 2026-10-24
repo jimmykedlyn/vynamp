@@ -1,0 +1,23 @@
+# Android CI on the Linux/Docker agent (ADR-010). Without real Android sources
+# the workflow only reports their absence; it never approves an Android app.
+labels:
+  host: vynamp-linux
+
+when:
+  - event: [push, pull_request, manual]
+
+steps:
+  - name: android
+    image: docker.io/library/rust:1.99.0-bookworm@sha256:114c7a4425406451c2866b6aafe69fe29b1b298832db1277d411ac73c82d04d6
+    environment:
+      CARGO_TERM_COLOR: never
+    commands:
+      - echo "tested sha=$CI_COMMIT_SHA ref=$CI_COMMIT_REF event=$CI_PIPELINE_EVENT"
+      - cargo xtask ci detect > detect.json
+      - cat detect.json
+      - |
+        if grep -q '"android":"true"' detect.json; then
+          cargo xtask ci android
+        else
+          echo 'android sources absent: Android app not tested (not an app approval)'
+        fi

@@ -617,5 +617,14 @@ Versão 0.7.0 · Markdown de produto, tooling, bootstrap e evidências históric
 
 - [Plano de baseline E11-01](superpowers/plans/2026-10-18-e11-01-workspace.md) — docs/superpowers/plans/2026-10-18-e11-01-workspace.md
 - [ADR-009 — workspace mínimo](architecture/adr/ADR-009-engineering-baseline.md) — docs/architecture/adr/ADR-009-engineering-baseline.md
+- [ADR-010 — CI/CD somente Woodpecker](architecture/adr/ADR-010-woodpecker-only-ci.md) — docs/architecture/adr/ADR-010-woodpecker-only-ci.md
 - [Paths e contrato de fixtures](../tests/fixtures/README.md) — tests/fixtures/README.md
 - [Evidência E11-01](evidence/PR/task-e11-01/README.md) — docs/evidence/PR/task-e11-01/README.md
+
+# Preparação E15-04
+
+- [Desenho Woodpecker e Cloudflare Tunnel](superpowers/specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md) — docs/superpowers/specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md
+- [Plano Woodpecker E15-04](superpowers/plans/2026-10-18-e15-04-woodpecker.md) — docs/superpowers/plans/2026-10-18-e15-04-woodpecker.md
+- [Adendo CI/CD somente Woodpecker](superpowers/plans/2026-10-19-e15-04-woodpecker-only-ci.md) — docs/superpowers/plans/2026-10-19-e15-04-woodpecker-only-ci.md
+- [Operação Woodpecker CI/CD](../infra/ci/woodpecker/README.md) — infra/ci/woodpecker/README.md
+- [Evidência E15-04](evidence/PR/task-e15-04/README.md) — docs/evidence/PR/task-e15-04/README.md

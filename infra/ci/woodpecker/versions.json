@@ -1,0 +1,42 @@
+{
+  "consulted": "2026-10-18",
+  "sources": [
+    "https://github.com/woodpecker-ci/woodpecker/releases/tag/v3.19.0",
+    "https://github.com/woodpecker-ci/plugin-git/releases/tag/2.10.1",
+    "https://github.com/cloudflare/cloudflared/releases/tag/2026.10.1",
+    "https://hub.docker.com"
+  ],
+  "images": {
+    "server": "docker.io/woodpeckerci/woodpecker-server:v3.19.0@sha256:6ca167a3c58b50c5a3c903dd8db92b39cfc30c560a47052cff7dd0235123a9cb",
+    "agent": "docker.io/woodpeckerci/woodpecker-agent:v3.19.0@sha256:f85f163e09494ace3377a3f3a6043f131fb47e3e627f7438de42417ee06ca56d",
+    "clone": "docker.io/woodpeckerci/plugin-git:2.10.1@sha256:550075c844fcec0af41d9d28f9860aa5d8c43e1e9419be4b9266dc02c2f29804",
+    "cloudflared": "docker.io/cloudflare/cloudflared:2026.10.1@sha256:a15a3b50b8dabd57ac2090e9484c0247dba9dfa1f0df4d298d4317f9d69eb2d5",
+    "rust": "docker.io/library/rust:1.99.0-bookworm@sha256:114c7a4425406451c2866b6aafe69fe29b1b298832db1277d411ac73c82d04d6"
+  },
+  "windows": [
+    {
+      "name": "woodpecker-agent",
+      "url": "https://github.com/woodpecker-ci/woodpecker/releases/download/v3.19.0/woodpecker-agent_windows_amd64.zip",
+      "sha256": "1ebcb00e547289e8393d9889102cedab87d162689ef2d2de1354869a17081276",
+      "file": "woodpecker-agent.exe"
+    },
+    {
+      "name": "woodpecker-cli",
+      "url": "https://github.com/woodpecker-ci/woodpecker/releases/download/v3.19.0/woodpecker-cli_windows_amd64.zip",
+      "sha256": "0f6fa22372cdd4ee27684fe1f992d6192345350080a6aab3ef43e132164d8f38",
+      "file": "woodpecker-cli.exe"
+    },
+    {
+      "name": "plugin-git",
+      "url": "https://github.com/woodpecker-ci/plugin-git/releases/download/2.10.1/windows-amd64_plugin-git.exe",
+      "sha256": "3b4efd40b59d3cb73823fed86a25db87f2e921b49072c3691118db5ee3394774",
+      "file": "plugin-git.exe"
+    }
+  ],
+  "cloudflared_global": {
+    "install": "winget Cloudflare.cloudflared 2026.10.1 (MSI oficial, hash verificado pelo winget)",
+    "path": "C:\\Program Files (x86)\\cloudflared\\cloudflared.exe",
+    "version": "2026.10.1",
+    "sha256": "4d2490e74082c5d48dbfedaf92576fa5bd1702379ab88eb7faa0cfbe8dc891b6"
+  }
+}
