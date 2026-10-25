@@ -12,4 +12,4 @@ Desktop hardware: WindowsDAC, Linuxaudio server, IntelCoreAudio e SiliconCoreAud
 
 Instaladores: clean install, upgrade de duas versões anteriores, launch smoke, uninstall preserva dados, rollback, assinaturas/quarantine e privacidade. Windowsuser scope semadmin; Linux AppImage/DEB libs auditadas; MacUniversal2/native fixtures/notarização; AndroidAPK/AAB signer/page size e grants. Fail-to-build não vira skip na1.0.
 
-Evidências em docs/evidence e tasks/EVIDENCE: source digest, commit/runs, fixture hashes, device/driver/OS, resultado e limite. Para release: docs/evidence/release/<version>.json com reviewers codex/claude e cinco plataformas passed + relatório real/hardware/hash. Relatório não é criado como passed por este pacote. Assertions documentais não provam execução da API/installer/app.
+Evidências em docs/evidence e tasks/EVIDENCE: source digest, commit/runs, fixture hashes, device/driver/OS, resultado e limite. Para release: docs/evidence/release/<version>.json com reviewers claude e cinco plataformas passed + relatório real/hardware/hash. Relatório não é criado como passed por este pacote. Assertions documentais não provam execução da API/installer/app.

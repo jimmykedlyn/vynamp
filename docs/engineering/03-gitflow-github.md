@@ -14,7 +14,7 @@ Repositório: jimmykedlyn/vynamp-mediaplayer, privado. Estado remoto verificado 
 
 Merge commit é obrigatório; squash/rebase merge desativados para preservar ancestry e cleanup confiável das worktrees. Commits Conventional Commits (`feat`, `fix`, `test`, `docs`, `chore`, `build`, `ci`). Nenhum force push em main/develop; feature compartilhada não é reescrita sem coordenação. Não commitar secrets/instaladores/binários pesados.
 
-Publicar feature: `git push -u origin <branch>`, `gh pr create --base develop --body-file <arquivo>`; comparar diff/task/CI antes merge. Aprovação técnica por Codex/Claude não equivale a aprovação por outra identidade GitHub. `--reviews 1` exige pessoa/conta autorizada diferente do autor; solo pode usar0 e manter revisão/evidência técnica, com merge pelo mantenedor.
+Publicar feature: `git push -u origin <branch>`, `gh pr create --base develop --body-file <arquivo>`; comparar diff/task/CI antes merge. Aprovação técnica do Claude não equivale a aprovação por outra identidade GitHub. `--reviews 1` exige pessoa/conta autorizada diferente do autor; solo pode usar0 e manter revisão/evidência técnica, com merge pelo mantenedor.
 
 Import inicial preserva histórico via cargo xtask github-import. O importador automatiza o bootstrap quando o repositório está vazio. Alternativa manual: clonar para pasta nova, copiar todos arquivos do pacote exceto .git/.worktrees/.superpowers/target/dist; `git symbolic-ref HEAD refs/heads/main`, `git add --all`, `git commit -m "chore: bootstrap Vynamp"`, `git branch develop`, `git push -u origin main`, `git push -u origin develop`. Esse primeiro commit é exceção de bootstrap, não licença para desenvolver diretamente em main.
 

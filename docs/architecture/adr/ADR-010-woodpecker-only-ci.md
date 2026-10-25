@@ -1,6 +1,6 @@
 # ADR-010 — CI/CD somente pelo Woodpecker
 
-Data: 2026-10-19. Estado: decisão do mantenedor; revisão técnica do Codex pendente ([TASK-E15-04](../../../tasks/items/TASK-E15-04.md)).
+Data: 2026-10-19. Estado: decisão do mantenedor; revisão técnica pelo Claude Code ([TASK-E15-04](../../../tasks/items/TASK-E15-04.md)).
 
 ## Contexto
 

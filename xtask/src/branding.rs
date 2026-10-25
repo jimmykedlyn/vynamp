@@ -74,7 +74,7 @@ pub fn exports(root: &Path) -> Result<()> {
         .filter_map(Value::as_str)
         .collect();
     ensure!(
-        reviewers == BTreeSet::from(["codex", "claude"]),
+        reviewers == BTreeSet::from(["claude"]),
         "Branding export reviews missing"
     );
     let files = receipt["files"]

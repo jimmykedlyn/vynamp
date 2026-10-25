@@ -1,5 +1,5 @@
 use crate::util::*;
-use anyhow::{Context, Result, bail, ensure};
+use anyhow::{Context, Result, ensure};
 use serde_json::Value;
 use std::path::Path;
 fn same_path(a: &str, b: &Path) -> bool {
@@ -56,33 +56,19 @@ pub fn confirmed(v: &Value, expected: &str, root: &Path) -> bool {
 }
 pub fn doctor(root: &Path, agent: &str) -> Result<()> {
     let expected = read_json(root.join("config/superpowers.lock.json"))?;
-    let mut failures = vec![];
-    for a in if agent == "both" {
-        vec!["codex", "claude"]
-    } else {
-        vec![agent]
-    } {
-        let result = (|| -> Result<()> {
-            let output = capture(root, a, &["plugin", "list", "--json"])?;
-            let data: Value = serde_json::from_str(&output)?;
-            ensure!(
-                confirmed(&data, expected_version(&expected, a)?, root),
-                "{a}: Superpowers active/version not confirmed; verify native /plugins (Codex) or /plugin (Claude); update parser/lock from real output if needed"
-            );
-            println!(
-                "{a}: plugin manager confirmed Superpowers; confirm skill discovery in session"
-            );
-            Ok(())
-        })();
-        if let Err(e) = result {
-            failures.push(format!("{a}: {e}"));
-        }
-    }
-    ensure!(failures.is_empty(), "{}", failures.join("\n"));
+    let a = agent;
+    let output = capture(root, a, &["plugin", "list", "--json"])
+        .and_then(|output| Ok(serde_json::from_str::<Value>(&output)?))
+        .map_err(|e| anyhow::anyhow!("{a}: {e}"))?;
+    ensure!(
+        confirmed(&output, expected_version(&expected, a)?, root),
+        "{a}: Superpowers active/version not confirmed; verify native /plugin (Claude); update parser/lock from real output if needed"
+    );
+    println!("{a}: plugin manager confirmed Superpowers; confirm skill discovery in session");
     Ok(())
 }
 pub fn install(root: &Path, agent: &str) -> Result<()> {
-    if agent == "claude" || agent == "both" {
+    if agent == "claude" {
         run(
             root,
             "claude",
@@ -94,11 +80,6 @@ pub fn install(root: &Path, agent: &str) -> Result<()> {
                 "project",
             ],
         )?;
-    }
-    if agent == "codex" || agent == "both" {
-        bail!(
-            "Codex: open codex, use /plugins, search superpowers and Install Plugin. Then restart and run cargo xtask doctor. No installation is being claimed."
-        );
     }
     doctor(root, agent)
 }
@@ -131,17 +112,7 @@ mod tests {
             root
         ));
     }
-    // Shapes captured from `codex plugin list --json` (codex-cli 0.162.1) and
-    // `claude plugin list --json` on Windows, 2026-10-15.
-    #[test]
-    fn real_codex_manager_output_is_confirmed() {
-        let out = json!({"installed":[
-            {"pluginId":"pdf@openai-primary-runtime","name":"pdf","version":"26.1013.11914","installed":true,"enabled":true},
-            {"pluginId":"superpowers@openai-curated-remote","name":"superpowers","marketplaceName":"openai-curated-remote","version":"6.4.2","installed":true,"enabled":true}
-        ],"available":[]});
-        assert!(confirmed(&out, "6.4.2", Path::new(ROOT)));
-        assert!(!confirmed(&out, "6.4.1", Path::new(ROOT)));
-    }
+    // Shape captured from `claude plugin list --json` on Windows, 2026-10-15.
     #[test]
     fn claude_entry_of_another_project_does_not_count() {
         let other = json!([{"id":"superpowers@claude-plugins-official","version":"6.4.1","scope":"project","enabled":true,"projectPath":"D:\\Projects\\vigesima","projectEnabled":true}]);
@@ -163,9 +134,8 @@ mod tests {
         assert!(!confirmed(&lower, "6.4.1", Path::new(ROOT)));
     }
     #[test]
-    fn lock_pins_each_agent_separately() {
-        let lock = json!({"expected_versions":{"codex":"6.4.2","claude":"6.4.1"}});
-        assert_eq!(expected_version(&lock, "codex").unwrap(), "6.4.2");
+    fn lock_pins_agent_version() {
+        let lock = json!({"expected_versions":{"claude":"6.4.1"}});
         assert_eq!(expected_version(&lock, "claude").unwrap(), "6.4.1");
         assert!(expected_version(&lock, "gemini").is_err());
     }

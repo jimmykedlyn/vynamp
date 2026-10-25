@@ -457,14 +457,10 @@ fn woodpecker(root: &Path, c: &mut Checks) -> Result<usize> {
 }
 pub fn delivery(root: &Path) -> Result<()> {
     let mut c = Checks::default();
-    let _: toml::Value = toml::from_str(&text(root.join(".codex/config.toml"))?)?;
     c.check(read_json(root.join(".claude/settings.json"))?["enabledPlugins"]["superpowers@claude-plugins-official"]==true,"Claude plugin not enabled");
     let lock = read_json(root.join("config/superpowers.lock.json"))?;
     c.check(
-        lock["required"] == true
-            && ["codex", "claude"]
-                .iter()
-                .all(|a| lock["expected_versions"][a].is_string()),
+        lock["required"] == true && lock["expected_versions"]["claude"].is_string(),
         "Superpowers lock missing",
     );
     let github = read_json(root.join("config/github.json"))?;

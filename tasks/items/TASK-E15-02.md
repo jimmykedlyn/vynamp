@@ -6,7 +6,7 @@ Fase M0 / P0 · Owner engineering-delivery · Esforço inicial 2–5 dias úteis
 
 ## Dependências
 
-- [TASK-E15-01](TASK-E15-01.md) — Configurar Codex/Claude e Superpowers obrigatório
+- [TASK-E15-01](TASK-E15-01.md) — Configurar Claude Code e Superpowers obrigatório
 
 ## Entrega concreta
 

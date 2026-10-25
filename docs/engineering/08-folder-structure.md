@@ -5,13 +5,12 @@ Versão 0.7.0 · 2026-10-14 · Configuração do projeto; player ainda não impl
 ```text
 D:\Projects\vynamp-media-player\
 ├── INICIAR.ps1 / AMBIENTE.ps1
-├── ABRIR-CODEX.ps1 / ABRIR-CLAUDE.ps1
-├── PROMPT-CODEX.txt / PROMPT-CLAUDE.txt / LEIA-ME.md
+├── ABRIR-CLAUDE.ps1
+├── PROMPT-CLAUDE.txt / LEIA-ME.md
 ├── pacote\                # spec e tooling originais do ZIP
 ├── repo\                  # checkout Git preservando histórico
 │   ├── .git\
-│   ├── .worktrees\codex\task-e15-01-bootstrap\
-│   ├── .worktrees\claude\review-bootstrap\
+│   ├── .worktrees\claude\<task>-<slug>\
 │   ├── target\xtask-ci\   # cache dos checks isolado do driver
 │   └── dist\              # artefatos futuros, ignored
 ├── .cache\cargo\          # dependências Cargo do projeto

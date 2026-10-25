@@ -323,12 +323,12 @@ mod docs_target_tests {
         let temp = tempfile::tempdir().unwrap();
         let root = temp.path().canonicalize().unwrap();
         let exe = root.join("external-cache/debug/xtask.exe");
-        fs::create_dir_all(root.join("codex-worktree")).unwrap();
+        fs::create_dir_all(root.join("agent-worktree")).unwrap();
         fs::create_dir_all(root.join("claude-worktree")).unwrap();
-        let a = docs_target(&root.join("codex-worktree"), &exe).unwrap();
+        let a = docs_target(&root.join("agent-worktree"), &exe).unwrap();
         let b = docs_target(&root.join("claude-worktree"), &exe).unwrap();
         assert_ne!(a, b);
-        assert!(a.starts_with(root.join("codex-worktree/target")));
+        assert!(a.starts_with(root.join("agent-worktree/target")));
         assert!(b.starts_with(root.join("claude-worktree/target")));
     }
     #[cfg(unix)]

@@ -29,3 +29,7 @@ Auditoria de completude: associações/Open With em cinco alvos, batch/IPC/grant
 ## 0.7.0 — 2026-10-14
 
 Consolida correções Windows de caminhos verbatim/UNC, checks em cache distinto do executable e aliases de cache. Import evita colidir com branch de bootstrap remota existente. Novo prepare-agents preserva import branch/PR, cria Codex com claim e Claude detached/índice próprio; não depende de develop local ausente. ZIP em raiz única vynamp-media-player com pacote/repo, wrappers PowerShell, prompts automáticos e caches/tmp/logs locais. Mantém 176 TASK/REQ e 68 entradas planejadas, flags de app/release/exports false e evidências nativas ainda exigidas.
+
+## Não lançado — 2026-10-23
+
+Fluxo migrado para agente único: o Codex foi removido do tooling (`doctor`/`install` só para Claude, sem `prepare-agents` nem worktrees `.worktrees/codex`), do bootstrap, do lock do Superpowers e dos docs vivos. Claude Code é o único autor e revisor (Opus orquestra, Sonnet implementa e revisa, Haiku executa checks); merge e release permanecem com o mantenedor. ADR-007 recebeu nota de superação parcial. Evidências e planos históricos que citam o Codex foram preservados.

@@ -2,7 +2,7 @@
 
 Versão 0.7.0 · 2026-10-14 · Configuração do projeto; player ainda não implementado.
 
-Não commitar credenciais, .env, PFX/P12/JKS/P8 ou export de tokens. Plugin/account auth é por máquina; Codex e Claude não herdam token do outro agente automaticamente. gh auth login/setup-git na máquina autorizada, sem token colado na conversa/repo. O ambiente de preparação não acessou repo privado; config/github.json registra isso explicitamente.
+Não commitar credenciais, .env, PFX/P12/JKS/P8 ou export de tokens. Plugin/account auth é por máquina; o agente não herda token de outra ferramenta automaticamente. gh auth login/setup-git na máquina autorizada, sem token colado na conversa/repo. O ambiente de preparação não acessou repo privado; config/github.json registra isso explicitamente.
 
 Environment release-signing: WIN_PFX_BASE64/WIN_PFX_PASSWORD e WIN_TIMESTAMP_URL como variável validada; MAC_P12_BASE64/MAC_P12_PASSWORD/MAC_SIGN_IDENTITY e MAC_NOTARY_KEY_BASE64/MAC_NOTARY_KEY_ID/MAC_NOTARY_ISSUER; ANDROID_KEYSTORE_BASE64/ANDROID_STORE_PASSWORD/ANDROID_KEY_ALIAS/ANDROID_KEY_PASSWORD. Linux VYNAMP_MAINTAINER é variável pública real; appimagetool URL/hash em tools.lock. Java/SDK/build-tools pin noM0.
 

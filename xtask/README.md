@@ -8,9 +8,8 @@ Requer Rust/rustup 1.99.0 e ferramentas externas por operação. Cargo.lock é r
 | Validar configs | `cargo xtask check-delivery` |
 | Gates locais | `cargo xtask ci docs` |
 | Regressões de tooling | `cargo test --package xtask --locked` |
-| Verificar plugins nativos | `cargo xtask doctor --agent both` |
-| Preparar autor/revisor bootstrap | `cargo xtask repo prepare-agents` |
-| Worktree | `cargo xtask repo worktree --agent codex --task TASK-E11-01 --slug foundation` |
+| Verificar plugins nativos | `cargo xtask doctor` |
+| Worktree | `cargo xtask repo worktree --agent claude --task TASK-E11-01 --slug foundation` |
 | Importar GitHub privado | `cargo xtask github-import --destination ../vynamp-git --push` |
 | Proteções | `cargo xtask repo protect --repo jimmykedlyn/vynamp-mediaplayer --reviews 0` |
 | Auditoria remota (somente leitura) | `cargo xtask repo audit --repo jimmykedlyn/vynamp-mediaplayer --out <arquivo.json>`; falha enquanto houver pendência Gitflow |
@@ -24,7 +23,7 @@ Requer Rust/rustup 1.99.0 e ferramentas externas por operação. Cargo.lock é r
 
 Validadores verificam Markdown/index/links, REQ/TASK/QA, DAG/fases, plataformas M3, sincronia JSON/MD, dez schemas Draft2020-12 e exemplos, OpenAPI refs/operações/params, SVG/XML e contraste. VALIDATION.json registra o resultado. Não substituem compilação WIT, validação integral OpenAPI ou QA do player.
 
-Doctor rejeita plugin ausente, desabilitado, versão diferente e discovery desconhecido. Instalação Codex usa o manager interativo oficial `/plugins`; Claude usa seu marketplace oficial. Ajustar parser/lock por PR e evidência real se os managers mudarem.
+Doctor rejeita plugin ausente, desabilitado, versão diferente e discovery desconhecido. A instalação usa o marketplace oficial do Claude. Ajustar parser/lock por PR e evidência real se os managers mudarem.
 
 Instaladores dependem de app, toolchains Android, runtime audit, licenças, certificados e evidências ainda ausentes. Release permanece bloqueada. Comandos externos recebem argumentos separados; operações sensíveis suprimem logs de assinatura e usam credenciais efêmeras. Publicação automatizada cria somente draft.
 

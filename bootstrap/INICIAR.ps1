@@ -7,7 +7,7 @@ if ($env:OS -eq 'Windows_NT') {
         throw 'Abra um PowerShell normal, sem Executar como administrador, para evitar ownership incorreto do Git.'
     }
 }
-foreach ($program in @('cargo', 'git', 'gh', 'codex', 'claude')) {
+foreach ($program in @('cargo', 'git', 'gh', 'claude')) {
     if (-not (Get-Command $program -ErrorAction SilentlyContinue)) { throw "Ferramenta ausente no PATH: $program" }
 }
 & gh auth status
@@ -47,16 +47,11 @@ try {
     }
     Invoke-VynampCommand -Program 'git' -Arguments @('-C', $VynampRepo, 'config', 'user.name', $gitName.Trim())
     Invoke-VynampCommand -Program 'git' -Arguments @('-C', $VynampRepo, 'config', 'user.email', $gitEmail.Trim())
-    Push-Location $VynampRepo
-    try { Invoke-VynampCommand -Program 'cargo' -Arguments @('xtask', 'repo', 'prepare-agents') }
-    finally { Pop-Location }
     Write-Host ''
-    Write-Host 'Preparacao concluida. Abra dois terminais normais nesta pasta:'
+    Write-Host 'Preparacao concluida. Abra um terminal normal nesta pasta:'
     Write-Host $VynampRoot
-    Write-Host 'Terminal 1: powershell -NoProfile -ExecutionPolicy Bypass -File .\ABRIR-CODEX.ps1'
-    Write-Host 'Terminal 2: powershell -NoProfile -ExecutionPolicy Bypass -File .\ABRIR-CLAUDE.ps1'
-    Write-Host 'Os prompts serao enviados automaticamente. Primeiro Codex configura e Claude revisa.'
-    Write-Host 'Nao iniciar fundacao antes de concluir/revisar E15-01 e E15-02 e integrar o PR inicial quando houver.'
+    Write-Host 'powershell -NoProfile -ExecutionPolicy Bypass -File .\ABRIR-CLAUDE.ps1'
+    Write-Host 'O prompt sera enviado automaticamente. Claude e o unico autor e revisor; merge e release ficam com o mantenedor.'
 } finally {
     if ($transcript) { Stop-Transcript | Out-Null }
 }

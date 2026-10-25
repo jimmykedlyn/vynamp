@@ -33,7 +33,7 @@ Versão 0.7.0 · 2026-10-14 · Auditoria documental; produto não implementado. 
 | Conversor/encoders, scan RG/BPM, batch rename/dedupe, scheduler/sleep | Ferramentas e jobs persistidos | E08 |
 | Scrobble/presence, audiobook, controle remoto autenticado | Integrações e provider; opt-in/privacy | E08/E09 |
 | Plataforma web, ingest, CDN, direitos, auth, sync e registry | Streaming platform/OpenAPI; futuro M4 | E09 |
-| Codex/Claude, Superpowers, worktree, claims, Gitflow/GitHub e handoff | Docs engineering e configuração Rust existente | E15 |
+| Claude Code, Superpowers, worktree, claims, Gitflow/GitHub e entrega | Docs engineering e configuração Rust existente | E15 |
 | CI, testes numéricos/property/fuzz/E2E/hardware, segurança, SBOM/licenças | Docs quality/engineering; novos QA-022–031 | E10/E11/E14/E15/E17 |
 | Installers, assinatura, atualização/rollback, backups/recovery | Docs delivery/engineering; nada publicado remotamente | E11/E15/E16 |
 
