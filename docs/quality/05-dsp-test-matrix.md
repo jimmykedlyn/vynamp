@@ -36,13 +36,13 @@ Convenção das subseções 2.1 e 2.2: testes **planejados para o nativo** e tes
 
 ### 2.1 Aceite de acesso e controles (DSP-UX-AC)
 
-Origem: pedido v1.4 §9.1, complementa os testes técnicos anteriores. Requisitos cobertos: DSP-UX-01..21 em [painel DSP §8](../design/05-dsp-panel.md#8-acesso-e-controles-dsp-ux). IDs locais mapeáveis aos oficiais.
+Origem: pedido v1.4 §9.1, complementa os testes técnicos anteriores. Requisitos cobertos: DSP-UX-01..21, exceto DSP-UX-09 (campo textual ou seletor), que não tem cenário próprio nesta matriz, em [painel DSP §8](../design/05-dsp-panel.md#8-acesso-e-controles-dsp-ux). IDs locais mapeáveis aos oficiais.
 
 | ID | Cenário | Resultado exigido | Requisitos | Protótipo (relatado) | Nativo |
 |---|---|---|---|---|---|
 | DSP-UX-AC-01 | Abrir pelo cabeçalho e pelos quatro atalhos (EQ, Dinâmica, Estéreo, Vitrola). | Painel/editor correto, sem navegação profunda; estado compartilhado e retorno de foco ao fechar. | UX-01, 02, 05 | `audio-header-validation`, testes de retorno de foco | planejado |
 | DSP-UX-AC-02 | Percorrer as oito categorias, pesquisar e alternar módulos. | Categoria e módulo selecionados identificáveis, destino visível, catálogo completo alcançável; busca anterior não esconde o atalho acionado. | UX-03, 04 | testes de categorias | planejado |
-| DSP-UX-AC-03 | Ajustar knob por arraste vertical, Shift e teclado; ajustar slider e chave. | Valor, unidade, posição e estado efetivo coerentes; nomes acessíveis; sem depender somente de gesto. | UX-06..08, 11, 12, 19 | `audio-controls-validation` | planejado |
+| DSP-UX-AC-03 | Ajustar knob por arraste vertical, Shift e teclado; ajustar slider e chave. | Valor, unidade, posição e estado efetivo coerentes; nomes acessíveis; sem depender somente de gesto. | UX-06..08, 11, 12, 13, 19 | `audio-controls-validation` | planejado |
 | DSP-UX-AC-04 | Abrir edição exata, confirmar valor válido e cancelar outro ajuste. | Confirmação aplica uma vez; cancelamento mantém o valor anterior; foco retorna ao acionador. | UX-10, 12, 15 | `audio-controls-validation` | planejado |
 | DSP-UX-AC-05 | Carregar preset válido com valor fora do passo de gesto (por exemplo −23,5 quando permitido). | Valor preservado no estado, no readout e na exportação; **não quantizado** ao renderizar ou trocar tema. | UX-14 | `audio-control-regressions` (regressão 1) | planejado |
 | DSP-UX-AC-06 | Tentar crossover igual ou invertido e depois corrigir. | Rejeição mantém o editor aberto e o último valor válido; mensagem explica a relação; correção válida confirma e sincroniza os controles. **Valor rejeitado não é aceito visualmente.** | UX-15, 16 | `audio-control-regressions` (regressão 2) | planejado |

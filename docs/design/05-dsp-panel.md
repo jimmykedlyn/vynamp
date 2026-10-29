@@ -85,7 +85,7 @@ Contrato de apresentação dos 12 VU meters estéreo aprovados, vindo da referê
 | Status | Situação |
 |---|---|
 | Especificado | VU-INT-01..06 abaixo |
-| Implementado no protótipo (relatado) | três acabamentos (Original, Metal adaptativo, Integrado ao painel, este o padrão), preferência persistida em Aparência; evidência relatada da referência externa rev. 14/15, não verificada neste repositório |
+| Implementado no protótipo (relatado) | três acabamentos (Original, Metal adaptativo, Integrado ao painel, este o padrão), preferência persistida em Aparência; evidência relatada da referência externa rev. 15, não verificada neste repositório |
 | Validado no protótipo (relatado) | 144 combinações de 12 skins × 12 VUs, claro/escuro/mobile, reversão ao original; Chrome/Windows, não verificado aqui |
 | Nativo | nada implementado |
 
@@ -147,7 +147,7 @@ O protótipo usa controles range nativos ligados a SVG e a um estado canônico �
 
 ### 8.5 Limites do ajuste
 
-Preservam-se: Classic 10 bandas, Gráficos 10/20/31/64 e Paramétrico até 32 filtros (knobs não substituem o editor de bandas); Vinyl/Vitrola e Tube Amplifier com configuração, presets, prioridade e bypass independentes; visões Básica/Avançada, A/B e desfazer (ausência no protótipo não autoriza removê-los da spec); rótulo **DEMO — sem processamento de áudio neste modo** onde não houver adaptação. A organização por famílias não altera a ordem da cadeia, não habilita reordenação livre e não muda marcos nativos (EQ64 segue em M5, salvo decisão formal). Decisões: [D-DSP-11 em diante](../product/05-decisions.md).
+Preservam-se: Classic 10 bandas, Gráficos 10/20/31/64 e Paramétrico até 32 filtros (knobs não substituem o editor de bandas); Vinyl/Vitrola e Tube Amplifier com configuração, presets, prioridade e bypass independentes; visões Básica/Avançada, A/B e desfazer (ausência no protótipo não autoriza removê-los da spec); rótulo `[DEMO — sem processamento de áudio neste modo]` onde não houver adaptação. A organização por famílias não altera a ordem da cadeia, não habilita reordenação livre e não muda marcos nativos (EQ64 segue em M5, salvo decisão formal). Decisões: [D-DSP-11 em diante](../product/05-decisions.md).
 
 ## 9. Fluxo modular (grafo) — referência do protótipo
 
@@ -184,4 +184,4 @@ Vista **Fluxo modular**, acessível por Áudio e efeitos, complementa o editor t
 
 **Limites, segurança e recuperação.** Limites do adaptador web: 64 nós, 128 conexões, preset de até 512 KiB, 512 biquads e 32 MiB de IR sintética; não são capacidade nativa comprovada, e latência/CPU exigem medição antes de metas. Presets validados atomicamente; leitura atrasada não sobrescreve edição recente; falha de ativação volta ao bypass com motivo. Ajustes incompatíveis não são executados parcialmente nem ganham badge de processamento real. Foco visível, ações sem arraste, Escape e retorno de foco permanecem requisitos; leitor de tela e WCAG completo seguem pendentes.
 
-**Pendente (fora do protótipo):** processadores nativos e sua qualidade sonora, Vinyl/Tube completos, gate/expander, true peak certificado, LUFS/BS.1770, importação de IR no grafo, compensação de latência entre ramos e reordenação livre no nativo.
+**Pendente (fora do protótipo):** processadores nativos e sua qualidade sonora, Vinyl/Tube completos, gate/expander, true peak certificado, LUFS/BS.1770, demais recursos do catálogo sem adaptador, saída/driver nativos, cobertura integral do MVP v1.2, importação de IR no grafo, compensação de latência entre ramos e reordenação livre no nativo.

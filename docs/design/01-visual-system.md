@@ -52,8 +52,8 @@ Contrato de controles em [painel DSP §8](05-dsp-panel.md#8-acesso-e-controles-d
 |---|---|---|
 | knob-size | 88×88 DIP | área do controle; o alvo mínimo da plataforma (24 DIP desktop, 48 dp touch/Android, conforme [painel DSP §1](05-dsp-panel.md#1-princípios) e REQ-E13-05; a referência externa não define tamanho de toque) prevalece se maior |
 | knob-arc | 270° | varredura do arco de valor; posição normalizada não é o valor serializado |
-| knob-track / knob-fill / knob-pointer | tokens de panel-inset, amber ou cyan e text-primary | cor do arco nunca é a única indicação de valor; rótulo, unidade e readout sempre presentes |
-| knob-readout | text-secondary, fonte de dados do display | valor clicável abaixo ou junto do knob, abre o editor exato |
+| knob-track / knob-fill / knob-pointer | **proposto**: tokens de panel-inset, amber ou cyan e text-primary | cor do arco nunca é a única indicação de valor; rótulo, unidade e readout sempre presentes |
+| knob-readout | **proposto**: text-secondary, fonte de dados do display | valor clicável abaixo ou junto do knob, abre o editor exato |
 
 Sem bordas ou caixas decorativas por parâmetro, sem cores novas competindo com a música; foco usa o anel cyan padrão; movimento reduzido remove a animação do ponteiro sem mudar o valor. Sliders dos equalizadores gráficos não viram knobs.
 

@@ -38,10 +38,10 @@ Fluxo migrado para agente único: o Codex foi removido do tooling (`doctor`/`ins
 
 Documentação DSP revisada para 0.7.1 nos arquivos tocados: visão funcional do DSP com diagrama Mermaid da cadeia real ([03-dsp](docs/audio/03-dsp.md)); subcapítulo obrigatório de equalizadores Gráfico 10/20/31/64 + Paramétrico até 32 filtros, com grades de frequência, Nyquist, modelo de dados, UI, MVP × nativo e testes ([08](docs/audio/08-equalizers.md)); catálogo de módulos ([09](docs/audio/09-dsp-catalog.md)); integração por referência do vitrola, com design aprovado em 2026-10-23 ([10](docs/audio/10-vitrola.md)); painel DSP/medidores, matriz de testes, QA-032/033, roadmap DSP, riscos, glossário e decisões D-DSP-01..10 com divergências. PEQ32 nativo segue M3; EQ-64 gráfico e PEQ64 nativos seguem M5; o MVP HTML/SVG/JS cobre agora a UI dos cinco modos. Só Markdown; nenhum código, schema, backlog ou pipeline alterado.
 
-## Não lançado — 2026-10-28
+## Não lançado — 2026-10-28 (DSP v1.4)
 
 Documentação DSP v1.4: painel Áudio e efeitos com acesso e controles DSP-UX-01..21 e integração dos VUs VU-INT-01..06 em [design/05-dsp-panel.md](docs/design/05-dsp-panel.md) (§6.1, §8, §9); critérios DSP-UX-AC-01..12 e testes do grafo/VU-INT em [quality/05-dsp-test-matrix.md](docs/quality/05-dsp-test-matrix.md) (§2); grafo modular × nativo em [audio/03-dsp.md](docs/audio/03-dsp.md); status da revisão 15 em [audio/08-equalizers.md](docs/audio/08-equalizers.md) (§14); decisões D-DSP-11..18 em [product/05-decisions.md](docs/product/05-decisions.md). O protótipo HTML/SVG/JS é externo: evidência relatada da referência externa rev. 14/15, não verificada neste repositório; nada nativo implementado. Só Markdown; nenhum código, schema, backlog ou pipeline alterado.
 
-## Não lançado — 2026-10-28
+## Não lançado — 2026-10-28 (letras)
 
 Letras: componente resumido sob o VU e fontes em [library/02-tags-lyrics-tools.md](docs/library/02-tags-lyrics-tools.md), com IDs LYR-01..15 e LYR-AC-01..12, layout em [design/02-layouts.md](docs/design/02-layouts.md), decisões D-LYR-01..09 em [product/05-decisions.md](docs/product/05-decisions.md) e critérios da tarefa em [TASK-E03-09](tasks/items/TASK-E03-09.md). A referência do protótipo é externa: evidência relatada da referência externa rev. 14, não verificada neste repositório; nada nativo implementado. Só Markdown; nenhum código, schema, backlog ou pipeline alterado (TASK-E03-09 foi atualizada apenas em texto: entrega, dependências e critérios).

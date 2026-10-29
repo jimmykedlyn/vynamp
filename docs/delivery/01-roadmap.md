@@ -1,6 +1,6 @@
 # Roadmap e gates de entrega
 
-Versão: 0.7.1 · Data: 2026-10-25 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.2 · Data: 2026-10-28 · Estado: especificação proposta, implementação não iniciada.
 
 | Fase | Entrega | Gate de saída |
 |---|---|---|
@@ -33,7 +33,7 @@ Adiciona ao roadmap acima as fases do pedido DSP v1.3, mapeadas aos marcos reais
 
 | Fase DSP | Item | Marco nativo · TASK | MVP HTML/SVG/JS | Estado |
 |---|---|---|---|---|
-| Fundação | Grafo modular, smoothing, bypass, latência | M2 · E04-03 | UI de cadeia e estados | planejado |
+| Fundação | Arquitetura DSP modular (ordem fixa por stream), smoothing, bypass, latência | M2 · E04-03 | UI de cadeia e estados | planejado |
 | Fundação | Preamp, **EQ-10** clássico, ReplayGain | M1 · E04-01 | obrigatório e interativo | planejado |
 | Fundação | **EQ-20, EQ-31, EQ-PEQ32**, presets | M3 · E04-04 (UI E02-07) | obrigatório e interativo | planejado |
 | Fundação | **EQ-64 gráfico nativo** (e PEQ de 64 filtros) | **M5** · E12-10 | **obrigatório e interativo agora (64 controles reais)** | planejado no nativo (M5) |

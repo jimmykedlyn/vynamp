@@ -59,7 +59,7 @@ Valores iniciais da revisão 14 do protótipo (relatados): linha de 26 DIP no de
 
 Ordem de escolha: **LRC explicitamente importado para a faixa na sessão, depois metadados embutidos, depois estado informativo sem letra utilizável**. A leitura inicial usa os metadados; importar um LRC é escolha explícita que os sobrepõe; "Usar letra dos metadados" remove a substituição e tenta de novo a fonte embutida. Descobrir arquivos auxiliares ou consultar provedores silenciosamente exige requisito separado (a busca online segue opt-in, conforme a seção de capas e letras acima).
 
-A tabela abaixo é a **baseline relatada da referência do protótipo**, não suporte nativo. O nativo depende de [TASK-E03-04](../../tasks/items/TASK-E03-04.md) e do plano 04 (metadados e CUE) da biblioteca privada `vynamp-decode` (https://github.com/jimmykedlyn/vynamp-decode).
+A tabela abaixo é a **baseline relatada da referência do protótipo**, não suporte nativo. O nativo depende de [TASK-E03-04](../../tasks/items/TASK-E03-04.md) e do plano 04 (metadados e CUE) da biblioteca própria `vynamp-decode` (repositório privado externo, não verificado neste repositório).
 
 | Família | Cobertura relatada da referência / ressalva |
 |---|---|

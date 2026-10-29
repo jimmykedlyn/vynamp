@@ -4,7 +4,7 @@ Versão 0.7.1 · Data: 2026-10-28
 
 ## Escopo
 
-Branch `chore/claude-dsp-eq-docs`, sem commit nesta etapa. Três blocos integrados no working tree:
+Branch `chore/claude-dsp-eq-docs`, três commits (dd22d48 DSP v1.3, abf7274 DSP v1.4, 9399ca4 letras) mais um commit de correções da revisão Opus. Três blocos integrados:
 
 - **(a) DSP v1.3** — entrada de 2026-10-25 em [CHANGELOG](../../../../CHANGELOG.md).
 - **(b) DSP v1.4** — DSP-UX-01..21, DSP-UX-AC-01..12, VU-INT-01..06, grafo modular e decisões D-DSP-11..18 ([product/05](../../../product/05-decisions.md)).
@@ -50,8 +50,9 @@ Contagens encontradas em `docs/` e `tasks/`: DSP-UX 21; DSP-UX-AC 12; VU-INT 6; 
 
 ## Pendências
 
-- Revisão final, commits e PR para develop (Gitflow): Etapa 4.
-- CI Gate (Woodpecker): não executado para esta branch.
+- PR para develop (Gitflow): pendente de abertura.
+- O mapa de IDs DSP-UX/VU-INT/D-DSP-11..18 deste resumo entrou no commit de letras (9399ca4) porque o resumo é único.
+- CI Gate (Woodpecker): pendente, não executado para esta branch.
 - Ausência de validação relatada específica para EQ-10, EQ-20 e EQ-31 no protótipo: fato registrado, não omissão da documentação; não corrigível só pela documentação.
 - Decisões abertas em product/05: D-DSP-05, D-DSP-06, D-DSP-08, D-DSP-12.
 - Divergência de versão (esperada): cada documento sobe um patch por edição, por isso 0.7.1, 0.7.2 e 0.7.3 coexistem. Cabeçalhos atuais dos arquivos modificados: 0.7.3 em docs/GLOSSARY.md e docs/product/05-decisions.md; 0.7.2 em docs/audio/03-dsp.md, 08-equalizers.md, 09-dsp-catalog.md, 10-vitrola.md, docs/design/02-layouts.md, docs/design/05-dsp-panel.md e docs/quality/05-dsp-test-matrix.md; 0.7.1 em CHANGELOG.md, docs/INDEX.md, este resumo, docs/audio/01-engine.md, docs/audio/07-dsp-signal-contract.md, docs/delivery/01-roadmap.md, docs/delivery/03-risks-open-questions.md, docs/design/01-visual-system.md, docs/design/03-accessibility-i18n.md, docs/library/02-tags-lyrics-tools.md, docs/product/03-requirements.md, docs/product/06-feature-parity.md, docs/quality/01-test-strategy.md, docs/quality/04-integration-codecs-dsp.md e tasks/items/TASK-E03-09.md.

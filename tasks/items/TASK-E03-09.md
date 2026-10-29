@@ -17,7 +17,7 @@ Versão: 0.7.1 · Data: 2026-10-28 · Estado: especificação proposta, implemen
 
 - [TASK-E03-04](TASK-E03-04.md) — Implementar leitura de tags e capas segura
 - [TASK-E03-02](TASK-E03-02.md) — Implementar queue independente e shuffle
-- Plano 04 (metadados e CUE) da biblioteca privada `vynamp-decode` (https://github.com/jimmykedlyn/vynamp-decode), com TASK-E03-04: leitura nativa de USLT/SYLT e campos de letras. A tabela de famílias de tags no [doc canônico](../../docs/library/02-tags-lyrics-tools.md#letras-componente-resumido-sob-o-vu-e-fontes) é baseline relatada de um protótipo externo, **não suporte nativo**.
+- Plano 04 (metadados e CUE) da biblioteca própria `vynamp-decode` (repositório privado externo, não verificado neste repositório), com TASK-E03-04: leitura nativa de USLT/SYLT e campos de letras. A tabela de famílias de tags no [doc canônico](../../docs/library/02-tags-lyrics-tools.md#letras-componente-resumido-sob-o-vu-e-fontes) é baseline relatada de um protótipo externo, **não suporte nativo**.
 
 ## Entrega concreta
 
