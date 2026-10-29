@@ -1,6 +1,6 @@
 # Catálogo de funcionalidades e destino
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.1 · Data: 2026-10-25 · Estado: especificação proposta, implementação não iniciada.
 
 Esta é uma cobertura funcional planejada, sem compatibilidade de arquivo/ABI e sem alegação de reproduzir cada submenu histórico. Todo recurso tem fase/tarefa; exceções são explícitas. “Fiel” refere-se ao conceito clássico, controles e riqueza funcional; cores/medidas são tokens próprios.
 
@@ -10,7 +10,7 @@ Esta é uma cobertura funcional planejada, sem compatibilidade de arquivo/ABI e 
 | Playlist | Várias abas,queue separada,drag/drop,sort/group,search,undo,lock,smart,CUE,imports | M1–M3 E02/E03 |
 | Biblioteca | Pastas,artistas/álbuns,gênero/ano,ratings,histórico,favorites,100k,metadata/covers | M2–M3 E03 |
 | Som clássico | EQ10,preamp,visualizer,VU,waveform,ReplayGain,gapless | M1–M3 E01/E04/E06 |
-| Som avançado | EQ20/31/paramétrico32,compressor/limiter,tone,pitch/tempo,crossfade,channel mapping | M2–M3 E04 |
+| Som avançado | EQ20/31/paramétrico32,compressor/limiter,tone,pitch/tempo,crossfade,channel mapping; vitrola (vinil + válvula, após E04-03, [spec](../audio/10-vitrola.md)) | M2–M3 E04 |
 | Hi-res | PCM16/24/32 até384k,exclusive/ASIO opcional,transparent,DACprofiles/diagnostics | M3 E04 |
 | Formatos modernos | FLAC/ALAC/AAC/HE-AAC/Opus/Vorbis/WAV/AIFF/MP3/WebM/MKA e lossless adicionais | M1–M3 E01 |
 | Rádio | URL,ICY,stationbookmarks,retry,metadata,HLSlive,record,timeshift | M2–M3 E05 |
@@ -20,7 +20,7 @@ Esta é uma cobertura funcional planejada, sem compatibilidade de arquivo/ABI e 
 | Utilitários | Batchtagwrite,converter,RG/BPMscan,rename/dedupe,scheduler/alarm/sleep,CLI | M3 E03/E08 |
 | Integrações | Media keys/tray/SMTC,hotkeys,file assoc,scrobble/presence,remotecontrol | M2–M4 E08 |
 | Plataforma | Catálogo,VOD,live,accounts,rights,sync,admin,ingest,CDN,registry | M4 E09 |
-| Expansão | ARM adicional Windows/Linux,DSDnative/DoP/768k,MIDI/trackers/raros,CD,VST3,DASH/cloud,casting,EQ64/1M | M5 E12 |
+| Expansão | ARM adicional Windows/Linux,DSDnative/DoP/768k,MIDI/trackers/raros,CD,VST3,DASH/cloud,casting,EQ64 gráfico e paramétrico 64 nativos/1M (UI dos cinco modos já obrigatória no MVP HTML/SVG/JS, [equalizadores](../audio/08-equalizers.md)) | M5 E12 |
 | Não reproduzido | WinampDLL/MAKI/skins,video/DVD,AndroidDVC/EQglobal,DRM comercial,store legado | Fora de escopo conforme visão |
 
 ## Complementos para evitar lacunas

@@ -1,6 +1,6 @@
 # Glossário e convenções
 
-Versão 0.7.0.
+Versão 0.7.1 · 2026-10-25 (termos DSP adicionados).
 
 | Termo | Significado nesta spec |
 |---|---|
@@ -27,5 +27,18 @@ Versão 0.7.0.
 | P0/P1/P2 | Prioridade dentro da fase; não datas |
 | M0–M5 | Provas, alpha, beta, 1.0, plataforma e expansão |
 | ADR / RFC | Registro de decisão / proposta de mudança com alternativas e impacto |
+| DSP / nó | Processamento digital de sinal / módulo do grafo com prepare, process, reset e latência declarada |
+| Bypass | Nó desligado sem alterar o sinal (bypass real), com crossfade na transição |
+| Smoothing | Interpolação de parâmetro (10–50 ms) para evitar zipper noise e cliques |
+| Headroom | Margem até 0 dBFS (ou até o ceiling) antes de clipar |
+| EQ gráfico / PEQ | Bandas de centro fixo com ganho / filtros com tipo, frequência, ganho, Q e canal livres |
+| EQ-10/20/31/64, EQ-PEQ32 | IDs das cinco modalidades de [equalizadores](audio/08-equalizers.md) |
+| Q / 1/3 de oitava | Seletividade do filtro (centro/largura) / série de centros espaçados por 2^(1/3) (ISO 266); 64 bandas **não** é 1/3 de oitava |
+| Nyquist / 0,45×Fs | Metade da taxa de amostragem / limite superior prático do editor de EQ |
+| Oversampling | Processar em taxa multiplicada para reduzir aliasing de não linearidades ou medir true peak |
+| Wow / flutter | Flutuação lenta / rápida de velocidade e afinação simulada pelo vitrola |
+| vitrola | Biblioteca própria de simulação de vinil e amplificador valvulado hospedada no DSP ([spec](audio/10-vitrola.md)) |
+| vynamp-decode / vynamp-output | Bibliotecas próprias de decodificação / saída de áudio; a saída nunca aplica ganho, dither ou resampling |
+| MVP HTML/SVG/JS | Protótipo interativo de UI; `[DEMO]` marca o que não processa áudio; não é a engine nativa |
 
 IDs são estáveis e não mudam com renomeação de arquivo. “Alvo”, “gate” e “proposta” nunca significam resultado já medido. Dados nos previews são fictícios. O nome Vynamp é provisório.

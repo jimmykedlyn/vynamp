@@ -1,10 +1,10 @@
 # Contrato do sinal, headroom e proteção final true-peak
 
-Versão 0.7.0 · Corrige cadeia da spec 0.5; não é motor DSP implementado.
+Versão 0.7.1 · 2026-10-25 · Corrige cadeia da spec 0.5; não é motor DSP implementado. Revisão 0.7.1: só referências cruzadas a [equalizadores](08-equalizers.md) e [vitrola](10-vitrola.md); a ordem canônica e a proteção final não mudaram.
 
 ## Caminho processado canônico
 
-Fonte/demux/decode → trim e gain codec intrínseco declarado → ReplayGain/preamp/headroom → EQ/tone/efeitos/routing por stream → mix/crossfade → ganho master digital → resampler na taxa de saída → proteção final true-peak → quantização/dither/conversão → backend. Medidores source/pre-EQ/post-EQ/final têm tap/units/Fs explicitados. Alterações na ordem criativa respeitam proteção final fixa. Não permitir ganho, plugin, mix ou resampling depois da proteção final; dither/conversão são únicos estágios posteriores e entram no teste do teto final.
+Fonte/demux/decode → trim e gain codec intrínseco declarado → ReplayGain/preamp/headroom → EQ/tone/efeitos/routing por stream → mix/crossfade → ganho master digital → resampler na taxa de saída → proteção final true-peak → quantização/dither/conversão → backend. Medidores source/pre-EQ/post-EQ/final têm tap/units/Fs explicitados. Alterações na ordem criativa respeitam proteção final fixa. O módulo [vitrola](10-vitrola.md) entra no segmento "efeitos por stream", depois do EQ e antes do ganho master; o pedido do vitrola de ficar "depois do resampler" é o conflito aberto D-DSP-05 e não altera esta ordem sem decisão. Não permitir ganho, plugin, mix ou resampling depois da proteção final; dither/conversão são únicos estágios posteriores e entram no teste do teto final.
 
 Limiter criativo/compressor reordenável é diferente da proteção final de saída. Usuário pode desligar proteção e escolher headroom manual, com clipping meter/estado claro; não mostrar protegido com nó final bypass. Core usa float com headroom em processamento e nunca hard-clip entre nós como tratamento padrão. Limiter não corrige overflow/NaN de filtros instáveis: detectar, bypass seguro/erro e preservar áudio quando possível. Snapshot de grafo por generation, coefficients fora callback e transições de 10–50 ms; sem allocations/locks/log/I/O/JNI.
 
@@ -18,7 +18,7 @@ Rate change/oversampling latency integrados no clock consumido e compensação; 
 
 ## EQ e presets
 
-Conservar gráfico 10/20/31 e paramétrico 32 M3/64 M5. Biquad/topology/Q/peaking/shelves/cuts documentados por algoritmo; ganhos/Q/frequências limitados, import error por JSON pointer, coeficientes estáveis perto Nyquist. Presets gráficos e paramétricos são namespaces distintos, conversion preview sem alegar equivalência exata; undo/reset/AB comparação e autosave opt-in, device/genre/track precedence preservada. Curva usa filtros reais. AutoEQ/headphone correction é import com origem/licença, pré-ganho documentado, sem claim universal de correção perfeita.
+Conservar no nativo: gráfico 10 (M1), 20/31 (M3) e paramétrico 32 (M3); gráfico 64 e paramétrico 64 em M5 (TASK-E12-10). O MVP HTML/SVG/JS cobre agora a UI dos cinco modos 10/20/31/64/paramétrico 32, sem antecipar o marco nativo ([equalizadores](08-equalizers.md), decisão D-DSP-01). Biquad/topology/Q/peaking/shelves/cuts documentados por algoritmo; ganhos/Q/frequências limitados, import error por JSON pointer, coeficientes estáveis perto Nyquist. Presets gráficos e paramétricos são namespaces distintos, conversion preview sem alegar equivalência exata; undo/reset/AB comparação e autosave opt-in, device/genre/track precedence preservada. Curva usa filtros reais. AutoEQ/headphone correction é import com origem/licença, pré-ganho documentado, sem claim universal de correção perfeita.
 
 Compressor/limiter: threshold/ratio/knee/attack/release/makeup/reduction meter e unidades. Bass/treble/loudness compensation opcionais dentro do grafo, não global OS EQ; pitch/tempo não duplicam parâmetros e mostram transformações. Testes no telefone incluem CPU/energia, clipping/headroom, Fs/route changes e limites de ganho. Nenhum DVC/bypass proprietário ou EQ de outros aplicativos é anunciado.
 

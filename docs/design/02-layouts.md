@@ -1,6 +1,6 @@
 # Layouts, geometria e telas
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.1 · Data: 2026-10-25 · Estado: especificação proposta, implementação não iniciada.
 
 ## Coordenadas canônicas
 
@@ -34,7 +34,7 @@ Inicial 1280×800, mínimo 960×640. Topbar 56; sidebar 200; painel central flex
 
 ## Telas adicionais
 
-Preferências 880×680 com navegação lateral: Reprodução, Saída, DSP, Biblioteca, Streaming, Aparência, Atalhos, Plugins, Privacidade, Avançado. EQ avançado 960×600 com gráfico, tabela de bandas e preset por dispositivo. Detalhes da faixa 800×640: informações/tags/capa/letras/capítulos. Gerenciador de jobs 800×520: progresso, erro, cancelar/retomar. Rádio: estações e URL; podcasts: feeds/episódios; temas: gallery/preview/instalação; plugins: status/permissões/versão.
+Preferências 880×680 com navegação lateral: Reprodução, Saída, DSP, Biblioteca, Streaming, Aparência, Atalhos, Plugins, Privacidade, Avançado. EQ avançado 960×600 com seletor Gráfico 10/20/31/64/Paramétrico (até 32 filtros), gráfico, tabela de bandas e preset por dispositivo; no nativo, 64 aparece como "indisponível nesta versão (M5)" até TASK-E12-10, e no MVP HTML/SVG/JS os cinco modos são interativos ([equalizadores](../audio/08-equalizers.md), [painel DSP](05-dsp-panel.md)). Detalhes da faixa 800×640: informações/tags/capa/letras/capítulos. Gerenciador de jobs 800×520: progresso, erro, cancelar/retomar. Rádio: estações e URL; podcasts: feeds/episódios; temas: gallery/preview/instalação; plugins: status/permissões/versão.
 
 ## Estados de tela obrigatórios
 

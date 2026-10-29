@@ -626,3 +626,12 @@ Versão 0.7.0 · Markdown de produto, tooling, bootstrap e evidências históric
 - [Adendo CI/CD somente Woodpecker](superpowers/plans/2026-10-19-e15-04-woodpecker-only-ci.md) — docs/superpowers/plans/2026-10-19-e15-04-woodpecker-only-ci.md
 - [Operação Woodpecker CI/CD](../infra/ci/woodpecker/README.md) — infra/ci/woodpecker/README.md
 - [Evidência E15-04](evidence/PR/task-e15-04/README.md) — docs/evidence/PR/task-e15-04/README.md
+
+# Documentação DSP e equalizadores (2026-10-25)
+
+- [Equalizadores — gráfico 10/20/31/64 e paramétrico até 32 filtros](audio/08-equalizers.md) — docs/audio/08-equalizers.md
+- [Catálogo de módulos DSP](audio/09-dsp-catalog.md) — docs/audio/09-dsp-catalog.md
+- [vitrola — Vinyl Simulator e Tube Amplifier Simulator no DSP](audio/10-vitrola.md) — docs/audio/10-vitrola.md
+- [Painel Audio DSP, equalizador e medidores — UI/UX](design/05-dsp-panel.md) — docs/design/05-dsp-panel.md
+- [Matriz de testes DSP e requisitos não funcionais](quality/05-dsp-test-matrix.md) — docs/quality/05-dsp-test-matrix.md
+- [Evidência chore-dsp-eq-docs](evidence/PR/chore-dsp-eq-docs/summary.md) — docs/evidence/PR/chore-dsp-eq-docs/summary.md

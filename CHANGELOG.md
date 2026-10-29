@@ -33,3 +33,7 @@ Consolida correções Windows de caminhos verbatim/UNC, checks em cache distinto
 ## Não lançado — 2026-10-23
 
 Fluxo migrado para agente único: o Codex foi removido do tooling (`doctor`/`install` só para Claude, sem `prepare-agents` nem worktrees `.worktrees/codex`), do bootstrap, do lock do Superpowers e dos docs vivos. Claude Code é o único autor e revisor (Opus orquestra, Sonnet implementa e revisa, Haiku executa checks); merge e release permanecem com o mantenedor. ADR-007 recebeu nota de superação parcial. Evidências e planos históricos que citam o Codex foram preservados.
+
+## Não lançado — 2026-10-25
+
+Documentação DSP revisada para 0.7.1 nos arquivos tocados: visão funcional do DSP com diagrama Mermaid da cadeia real ([03-dsp](docs/audio/03-dsp.md)); subcapítulo obrigatório de equalizadores Gráfico 10/20/31/64 + Paramétrico até 32 filtros, com grades de frequência, Nyquist, modelo de dados, UI, MVP × nativo e testes ([08](docs/audio/08-equalizers.md)); catálogo de módulos ([09](docs/audio/09-dsp-catalog.md)); integração por referência do vitrola, com design aprovado em 2026-10-23 ([10](docs/audio/10-vitrola.md)); painel DSP/medidores, matriz de testes, QA-032/033, roadmap DSP, riscos, glossário e decisões D-DSP-01..10 com divergências. PEQ32 nativo segue M3; EQ-64 gráfico e PEQ64 nativos seguem M5; o MVP HTML/SVG/JS cobre agora a UI dos cinco modos. Só Markdown; nenhum código, schema, backlog ou pipeline alterado.

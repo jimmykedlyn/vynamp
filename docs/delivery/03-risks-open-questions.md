@@ -1,6 +1,6 @@
 # Riscos e decisões de execução
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.1 · Data: 2026-10-25 · Estado: especificação proposta, implementação não iniciada.
 
 | Risco | Impacto | Mitigação / gatilho |
 |---|---|---|
@@ -16,6 +16,10 @@ Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implemen
 | Encoding/distribuição | lançamento bloqueado | license inventory e builds separados |
 | Download/record rights | conteúdo indevido publicado | restrictions/rights antes delivery |
 | Drivers variam | suporte difícil | capability probes e hardware matrix |
+| UI do MVP confundida com DSP real | claim falso de processamento | rótulo `[DEMO — sem processamento de áudio neste modo]`, EQ-T-14 |
+| EQ-64/PEQ/FIR excedem orçamento de CPU | underrun/dropouts | benchmark antes do aceite M5 (TASK-E12-10), qualidade/limites declarados |
+| Posição do vitrola × resampler final (D-DSP-05) | aliasing ou mudança do contrato 07 | decisão do mantenedor antes de integrar o vitrola |
+| Emulações colorativas mascaram clipping ou soam "melhores" só por volume | qualidade enganosa | medidores pré/pós, A/B com loudness igualado, proteção final fixa |
 
 ## Pendências reais
 
