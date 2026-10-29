@@ -2,7 +2,7 @@
 
 
 
-Versão 0.7.0 · Markdown de produto, tooling, bootstrap e evidências históricas.
+Versão 0.7.1 · 2026-10-28 · Markdown de produto, tooling, bootstrap e evidências históricas.
 
 
 
@@ -635,3 +635,10 @@ Versão 0.7.0 · Markdown de produto, tooling, bootstrap e evidências históric
 - [Painel Audio DSP, equalizador e medidores — UI/UX](design/05-dsp-panel.md) — docs/design/05-dsp-panel.md
 - [Matriz de testes DSP e requisitos não funcionais](quality/05-dsp-test-matrix.md) — docs/quality/05-dsp-test-matrix.md
 - [Evidência chore-dsp-eq-docs](evidence/PR/chore-dsp-eq-docs/summary.md) — docs/evidence/PR/chore-dsp-eq-docs/summary.md
+- [Painel DSP §6.1 — integração visual dos VU meters (VU-INT-01..06)](design/05-dsp-panel.md#61-integração-visual-dos-vu-meters-vu-int) — docs/design/05-dsp-panel.md
+- [Painel DSP §8 — acesso e controles (DSP-UX-01..21)](design/05-dsp-panel.md#8-acesso-e-controles-dsp-ux) — docs/design/05-dsp-panel.md
+- [Painel DSP §9 — fluxo modular (grafo), referência do protótipo](design/05-dsp-panel.md#9-fluxo-modular-grafo--referência-do-protótipo) — docs/design/05-dsp-panel.md
+- [Matriz DSP §2.1 — aceite de acesso e controles (DSP-UX-AC-01..12)](quality/05-dsp-test-matrix.md#21-aceite-de-acesso-e-controles-dsp-ux-ac) — docs/quality/05-dsp-test-matrix.md
+- [Matriz DSP §2.2 — grafo modular e VU-INT](quality/05-dsp-test-matrix.md#22-grafo-modular-e-vu-int) — docs/quality/05-dsp-test-matrix.md
+- [Grafo modular: protótipo × nativo](audio/03-dsp.md#grafo-modular-protótipo--nativo) — docs/audio/03-dsp.md
+- [Decisões DSP D-DSP-11..18](product/05-decisions.md#decisões-dsp-e-equalizadores-2026-10-25) — docs/product/05-decisions.md

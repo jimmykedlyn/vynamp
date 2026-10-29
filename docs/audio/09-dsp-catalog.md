@@ -1,12 +1,42 @@
 # Catálogo de módulos DSP
 
-Versão: 0.7.1 · Data: 2026-10-25 · Estado: especificação proposta. **Nenhum módulo está implementado.**
+Versão: 0.7.2 · Data: 2026-10-28 · Estado: especificação proposta. **Nenhum módulo está implementado no produto nativo.** O protótipo web (referência externa, rev. 15) relata alguns módulos com áudio real; é evidência relatada, não verificada neste repositório (ver [Famílias v1.4](#famílias-v14-e-estado-no-protótipo-rev-15-relatado)).
 
 Cada módulo informa: estado, prioridade/fase, objetivo e uso, parâmetros e faixas, posição na [cadeia real](03-dsp.md#cadeia-real-de-processamento), dependências, bypass, trade-offs, UX e testes. Faixas sem justificativa técnica ficam como **decisão aberta**, sem números inventados. Os testes `DSP-T-xx` estão na [matriz de testes DSP](../quality/05-dsp-test-matrix.md).
 
 **Fases** (adaptam a proposta do pedido aos marcos reais): **Fundação** = M1–M3 com TASK existente · **Fase 2 / Hi-Fi** · **Fase 3 / Avançado** · **Fase 4 / Ecossistema**. Um módulo **proposto** sem TASK não tem marco comprometido. O marco é definido quando a TASK for criada.
 
 Regras comuns: todo nó tem bypass real com crossfade, smoothing de 10–50 ms, latência e tail declarados, parâmetros serializáveis e versionados, bypass seguro em NaN/instabilidade, e status ativo/inativo/bypass/incompatível/erro na UI ([painel DSP](../design/05-dsp-panel.md)).
+
+## Famílias v1.4 e estado no protótipo (rev. 15, relatado)
+
+O painel DSP navega por **oito famílias**: Ganho/EQ, Dinâmica, Acústica, Estéreo, Tempo/formato, Criativos, Vitrola e Saída (DSP-UX-03; [painel DSP §8](../design/05-dsp-panel.md#8-acesso-e-controles-dsp-ux)). As famílias são navegação, **não** switches de processamento nem um limite de oito efeitos, e não alteram a ordem da cadeia. Os capítulos 1 a 6 abaixo continuam sendo a organização textual da v1.3 (cinco blocos de módulos e extensibilidade); a tabela mapeia cada módulo à família de navegação. Medidores (Spectrum, pico/RMS, VU, LUFS, true peak) são uma **área própria, fora das famílias** ([painel DSP §2 e §6](../design/05-dsp-panel.md#6-medidores-e-visualização)). O mapeamento de módulos sem família explícita na fonte é **proposto**, a confirmar com o design do painel.
+
+Colunas do protótipo: **evidência relatada da referência externa rev. 14/15, não verificada neste repositório**. A referência cita 39 módulos e 198 campos verificados; são números do protótipo, não congelam o catálogo nativo nem excluem módulos exigidos aqui. Nativo: **nada implementado** em nenhuma linha; fases e prioridades de cada módulo seguem as seções 1 a 6. Um nó configurável não comprova processamento.
+
+| Módulo (seção) | Família v1.4 | Protótipo rev. 15 (relatado) |
+|---|---|---|
+| Preamp / Input Gain · Ganho · Mixer (soma de rotas) | Ganho/EQ | áudio real; o mixer soma rotas e pode aumentar picos |
+| Equalizadores gráficos 10/20/31/64 e paramétrico 32 (§1) | Ganho/EQ | áudio real **dentro do grafo** ([EQ §14](08-equalizers.md#14-mvp-htmlsvgjs--contrato-documental)) |
+| Filtros passa-altas/baixas, shelves/bell, controles tonais (§1) | Ganho/EQ | áudio real; frequência acima de 0,45 × Fs bloqueia a ativação em vez de ser movida |
+| Dynamic EQ, Loudness Compensation, AutoEQ, Bass Enhancer, Harmonic Exciter (§1) | Ganho/EQ (Bass Enhancer e Exciter: Criativos, a confirmar) | nó de configuração, indisponível para áudio |
+| Convolution/FIR, Room Correction (§1); Spatial/HRTF (§3) | Acústica | configuração; importação de IR segue o fluxo anterior, sem aplicação no grafo |
+| Compressor (§2) | Dinâmica | áudio real (compressor do navegador com makeup automático mais ganho Makeup; o nível de saída pode subir) |
+| **Limiter amostral** (§2) | Dinâmica | áudio real **com limitações**: compressor 20:1 com knee 0. **Não é brickwall, não é True Peak, não mede dBTP e não garante proteção contra clipping.** Não substitui o True Peak Limiter exigido (§2 e [contrato do sinal](07-dsp-signal-contract.md)) |
+| Multiband Compressor, Declipper, gate/expander (§2) | Dinâmica | nó de configuração, explicitamente indisponível para áudio |
+| True Peak Limiter e Clipping Protection (§2) | Saída (proteção final; proposto) | nó de configuração, explicitamente indisponível para áudio; sem dBTP. Indicadores de clipping/true peak exibidos ficam na área Medidores |
+| ReplayGain/R128 e Loudness Normalization/LUFS (§2) | Dinâmica (normalização de loudness; proposto) | nó de configuração, explicitamente indisponível para áudio; sem LUFS. A **medição** de loudness pertence à área Medidores |
+| Stereo Width, Mid/Side, Balance/Pan/Mono, Phase Alignment e Channel Delay, Crossfeed (§3) | Estéreo | áudio real; Width com graves em mono ainda sem adaptador; pan com lei de −3 dB; fonte mono expandida para estéreo |
+| Channel Matrix/Upmix/Downmix, Bass Management (§3) | Estéreo | sem adaptador relatado |
+| Resampler/SRC, Time Stretch e Pitch Shift (§4) | Tempo/formato | sem adaptador relatado |
+| Dither/Noise Shaping, Output Gain e Format Conversion (§4) | Saída | sem adaptador relatado; no protótipo a saída é a do navegador, antes do volume do player |
+| Echo e Reverb (§4, criativos) | Criativos | áudio real; Echo com feedback limitado; Reverb com resposta ao impulso sintética e determinística, **não** é sala medida nem importação FIR |
+| **Saturação suave** | Criativos | áudio real (tanh com oversampling 2×, drive e dry/wet). **Não equivale ao Tube Amplifier**; não afirmar que implementa uma válvula |
+| LFO → Ganho | Criativos | controle real (modulação senoidal limitada a ±0,25 do ganho linear); sem ligação a portas de áudio |
+| Spectrum e pico/RMS | área Medidores (fora das famílias; [painel DSP §6](../design/05-dsp-panel.md#6-medidores-e-visualização)) | análise real: FFT de 1024 amostras, pico amostral e RMS em dBFS, antes do volume; não são LUFS nem dBTP |
+| **Vinyl Simulator e Tube Amplifier** (§5) | Vitrola | **configuração completa preservada, sem processamento desses modelos**; dependem de adaptadores e validação acústica próprios ([vitrola](10-vitrola.md)) |
+
+Regras que valem para o catálogo: se um nó indisponível estiver habilitado na rota ativa do protótipo, a cadeia não é ativada e a razão é exibida; o bypass explícito permite a rota sem alegar o efeito. Os módulos anteriores, fases e prioridades não mudam por causa do protótipo.
 
 ## 1. Ganho, equalização e correção tonal
 
@@ -215,7 +245,7 @@ Regras comuns: todo nó tem bypass real com crossfade, smoothing de 10–50 ms, 
 ## 5. Emulações analógicas já planejadas
 
 ### Vinyl Simulator e Tube Amplifier Simulator (vitrola)
-- **Estado** design aprovado em 2026-10-23; integração depois de E04-03 (M3 nas specs de skin).
+- **Estado** design aprovado em 2026-10-23; integração depois de E04-03 (M3 nas specs de skin). Protótipo (relatado, rev. 15): só configuração, sem processamento; nativo: nada.
 - **Especificação** [10-vitrola](10-vitrola.md). São dois módulos com identidade própria, opcionais e colorativos, com macro de intensidade e painel avançado.
 - **Testes** VIT-T-01..10.
 

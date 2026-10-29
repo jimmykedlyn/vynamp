@@ -1,6 +1,6 @@
 # vitrola — Vinyl Simulator e Tube Amplifier Simulator no DSP
 
-Versão: 0.7.1 · Data: 2026-10-25 · Estado: **planejamento pré-existente preservado**. O design da biblioteca foi aprovado em 2026-10-23. Biblioteca e integração não foram implementadas.
+Versão: 0.7.2 · Data: 2026-10-28 · Estado: **planejamento pré-existente preservado**. O design da biblioteca foi aprovado em 2026-10-23. Biblioteca e integração não foram implementadas. No protótipo web (referência externa rev. 15, relatado, não verificado aqui) Vinyl e Tube só têm configuração, sem processamento.
 
 ## 1. Fonte da verdade e escopo
 
@@ -77,6 +77,11 @@ O pedido traz parâmetros "candidatos a validar". A regra: o que a referência d
 - Nível 2: painel avançado por elemento (lado A/B e disco atual em texto, rpm, superfície, rituais com aviso "altera a duração", cápsula, barra de desgaste somente leitura + "Comprar disco novo", perfil da válvula, sag, transformador, "acoplar ao volume").
 - **Proibido**: ilustração de toca-discos, agulha, disco girando, braço ou válvulas animadas. Um ícone genérico pequeno de categoria é permitido.
 - A/B com loudness igualado (**proposto**): o efeito não deve parecer "melhor" só por estar mais alto.
+- **Atalho Vitrola (DSP-UX-02, v1.4).** O atalho "Vitrola" junto à área do instrumento e a família "Vitrola" do painel são **entradas para a área existente** (Vinil e Válvula, com configurações, presets, prioridades e bypass independentes). Não fundem os dois simuladores nem duplicam o estado dos parâmetros entre acessos. No protótipo o destino inicial é o vinil. Contrato: [painel DSP §8](../design/05-dsp-panel.md#8-acesso-e-controles-dsp-ux).
+
+### Estado no protótipo (rev. 15, relatado) × nativo
+
+Evidência relatada da referência externa rev. 14/15, não verificada neste repositório. **Especificado**: este documento e a referência vitrola. **Implementado no protótipo (relatado)**: a configuração completa do catálogo para Vinyl e Tube, **sem processamento** desses modelos no grafo modular; o preset de cadeia "Vinyl" carrega essa configuração indisponível para processamento, sem simular som de vinil. **Validado no protótipo (relatado)**: nenhuma validação sonora; a referência diz que esses modelos dependem de adaptadores e algoritmos próprios e de validação acústica ainda não feitos. **Nativo**: nada. A Saturação suave do protótipo (tanh, oversampling 2×) **não é** o Tube Amplifier. Fases, prioridade e a pendência de TASK (seção 6) não mudam.
 
 ## 6. Roadmap (status herdado)
 

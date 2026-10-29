@@ -1,6 +1,6 @@
 # DSP, equalização e presets
 
-Versão: 0.7.1 · Data: 2026-10-25 · Estado: especificação proposta, implementação não iniciada. **Nenhum módulo DSP está implementado.**
+Versão: 0.7.2 · Data: 2026-10-28 · Estado: especificação proposta, implementação nativa não iniciada. **Nenhum módulo DSP está implementado no produto nativo.** O protótipo web (referência externa, rev. 15) relata um subconjunto com áudio real, não verificado neste repositório (ver [grafo modular](#grafo-modular-protótipo--nativo)).
 
 Este documento é a visão funcional e técnica do subsistema DSP. Os detalhes estão em:
 
@@ -90,6 +90,18 @@ Proposto, a fixar em TASK-E04-03. O formato espelha a trait `Processor` do vitro
 **Análise × reprodução.** O DSP de visualização (FFT, LUFS, true-peak meter, correlação) roda em worker sobre cópias e nunca altera o caminho de reprodução. A proteção final true-peak é um nó de reprodução, separado do true-peak meter.
 
 **Fallback.** Se um nó falhar (NaN/Inf, instabilidade, plugin travado), ele entra em bypass seguro e o diagnóstico fica visível, sem derrubar a reprodução. Preset incompatível com a Fs ou os canais é rejeitado ou adaptado com aviso identificável.
+
+## Grafo modular: protótipo × nativo
+
+Complemento da revisão 15 da referência HTML/SVG/JS (2026-10-28). Separação de status: **especificado** (este documento) · **implementado no protótipo** (relatado) · **validado no protótipo** (relatado) · **nativo** (hoje: nada). O protótipo é do Codex, fica fora deste repositório, e os arquivos de evidência dele (`interactive/*`, `*-validation.json`) não existem aqui: tudo abaixo é **evidência relatada da referência externa rev. 14/15, não verificada neste repositório**.
+
+- **Contrato do protótipo.** A visão "Fluxo modular", acessível por Áudio e efeitos, é um grafo editável: nós com parâmetros próprios por instância, portas tipadas (áudio estéreo e controle CV, só saída→entrada do mesmo tipo), sem ciclos, conexões duplicadas ou autoconexões, com nós fixos de entrada e saída, fan-out e soma de rotas paralelas (que exige headroom). A ordem de construção é topológica e determinística; nó desconectado não processa; cadeia habilitada sem caminho de entrada a saída resulta em silêncio, sem rota seca oculta. O grafo é **contrato do protótipo**: define o que a referência web demonstra, não o que o produto nativo promete.
+- **Relação com o editor tradicional.** O catálogo e os editores anteriores continuam disponíveis e não passam a ser DSP real por causa do grafo. "Copiar ajuste do catálogo" é ação explícita. Posição no fluxo do protótipo: entrada após o EQ clássico existente, saída antes do volume digital do player (ver [contrato do sinal](07-dsp-signal-contract.md) para a ordem fixa nativa).
+- **Ligação com áudio no protótipo (relatado).** Nós nativos do Web Audio, sem AudioWorklet; ajustes comuns atualizam parâmetros com suavização e mudanças de topologia criam nova rota com transição curta. Limites do adaptador relatados: 64 nós, 128 conexões, preset de até 512 KiB, até 512 biquads de EQ e 32 MiB de IR sintética. Esses limites são do adaptador web e **não** são capacidade comprovada da engine nativa; latência e CPU precisam de medição antes de virar meta.
+- **No nativo, a reordenação livre continua não prometida** (D-DSP-10). A ordem fixa por stream de [Cadeia real](#cadeia-real-de-processamento) e do [contrato do sinal](07-dsp-signal-contract.md) permanece. A organização do painel em famílias não muda a ordem da cadeia nem habilita reordenação.
+- **Decisão aberta (D-DSP-12).** Se e quando o produto nativo oferecerá roteamento livre (grafo editável pelo usuário) ou manterá a ordem fixa com módulos opcionais fica sem decisão. Enquanto não houver decisão formal do mantenedor, as TASKs nativas não devem assumir grafo livre, nem o protótipo deve ser lido como compromisso de marco. Ver [decisões](../product/05-decisions.md#decisões-dsp-e-equalizadores-2026-10-25).
+- **Capacidades por módulo e limites** (Limiter amostral que não é True Peak; Saturação que não é o Tube; Vinyl/Tube só com configuração): [catálogo](09-dsp-catalog.md#famílias-v14-e-estado-no-protótipo-rev-15-relatado). Equalizadores no grafo: [EQ §14](08-equalizers.md#14-mvp-htmlsvgjs--contrato-documental).
+- **Interface.** Acesso, controles e aceite DSP-UX: [painel DSP §8](../design/05-dsp-panel.md#8-acesso-e-controles-dsp-ux); fluxo no painel: [§9](../design/05-dsp-panel.md#9-fluxo-modular-grafo--referência-do-protótipo); VUs integrados: [§6.1](../design/05-dsp-panel.md#61-integração-visual-dos-vu-meters-vu-int). Testes: [matriz §2.2](../quality/05-dsp-test-matrix.md#22-grafo-modular-e-vu-int), planejados para o nativo.
 
 ## Bypass, transições e presets
 

@@ -1,6 +1,6 @@
 # Glossário e convenções
 
-Versão 0.7.1 · 2026-10-25 (termos DSP adicionados).
+Versão 0.7.2 · 2026-10-28 (termos de controles DSP, grafo modular e VU adicionados).
 
 | Termo | Significado nesta spec |
 |---|---|
@@ -40,5 +40,10 @@ Versão 0.7.1 · 2026-10-25 (termos DSP adicionados).
 | vitrola | Biblioteca própria de simulação de vinil e amplificador valvulado hospedada no DSP ([spec](audio/10-vitrola.md)) |
 | vynamp-decode / vynamp-output | Bibliotecas próprias de decodificação / saída de áudio; a saída nunca aplica ganho, dither ou resampling |
 | MVP HTML/SVG/JS | Protótipo interativo de UI; `[DEMO]` marca o que não processa áudio; não é a engine nativa |
+| Knob | Controle circular de parâmetro contínuo, ajustado por gesto vertical; ver [painel DSP](design/05-dsp-panel.md#8-acesso-e-controles-dsp-ux) |
+| Readout | Valor numérico com unidade junto ao knob ou slider; clicável para abrir o editor exato |
+| Grafo modular | Vista de nós e conexões do DSP; no protótipo, referência relatada, no nativo, nada implementado ([painel DSP §9](design/05-dsp-panel.md#9-fluxo-modular-grafo--referência-do-protótipo)) |
+| Porta CV | Porta de controle que liga uma saída de modulação (ex.: LFO) à entrada de modulação de um nó; não carrega áudio nem MIDI |
+| Acabamento de VU | Apresentação do gabinete externo dos VU meters (Original, Metal adaptativo, Integrado ao painel); não altera o SVG nem é efeito DSP ([VU-INT](design/05-dsp-panel.md#61-integração-visual-dos-vu-meters-vu-int)) |
 
 IDs são estáveis e não mudam com renomeação de arquivo. “Alvo”, “gate” e “proposta” nunca significam resultado já medido. Dados nos previews são fictícios. O nome Vynamp é provisório.

@@ -1,6 +1,6 @@
 # Equalizadores — gráfico 10/20/31/64 e paramétrico até 32 filtros
 
-Versão: 0.7.1 · Data: 2026-10-25 · Estado: especificação proposta; nenhum equalizador está implementado, nem no player nativo nem no MVP HTML/SVG/JS.
+Versão: 0.7.2 · Data: 2026-10-28 · Estado: especificação proposta; **nenhum equalizador está implementado no player nativo**. No protótipo HTML/SVG/JS (referência externa do Codex, fora deste repositório) a rev. 15 relata EQ e PEQ com áudio real dentro do grafo modular (ver §14); esse relato não foi verificado aqui.
 
 Subcapítulo obrigatório do [DSP](03-dsp.md). Consolida o que já estava em [03-dsp](03-dsp.md) (v0.7.0), no [contrato do sinal](07-dsp-signal-contract.md) e nas tarefas [TASK-E04-01](../../tasks/items/TASK-E04-01.md), [TASK-E04-04](../../tasks/items/TASK-E04-04.md), [TASK-E02-07](../../tasks/items/TASK-E02-07.md) e [TASK-E12-10](../../tasks/items/TASK-E12-10.md). Decisões e divergências estão em [decisões DSP](../product/05-decisions.md#decisões-dsp-e-equalizadores-2026-10-25).
 
@@ -170,6 +170,7 @@ EqState {
 - **Paramétrico**: gráfico com nós arrastáveis + **tabela de filtros** (nº, ativo, tipo, frequência, ganho, Q, slope, canal, remover) + contador visível "n/32".
 - **Acessibilidade**: cada slider anuncia nome, frequência e valor ("Banda 12 de 64, 66,8 hertz, mais 3,0 decibéis"). Foco visível, setas, Home/End e estados active/disabled/focus/indisponível sem depender só da cor. Leitores de tela não recebem eventos por quadro.
 - **Estados**: desligado (bandas esmaecidas, mas editáveis, **proposto**), preset modificado, bloqueado pelo modo transparente (aviso + "Sair do modo transparente"), carregando preset, erro de preset, banda indisponível por Nyquist, headroom baixo e clipping.
+- **Controles (DSP-UX)**: knobs, chaves e edição exata sob demanda não substituem os sliders por banda: os gráficos 10/20/31/64 mantêm todos os sliders reais e editáveis, e o PEQ32 mantém todos os filtros (DSP-UX-07, DSP-UX-AC-10). Um preset válido com valor fora do passo do gesto é preservado, sem quantizar (DSP-UX-14). Contrato completo: [painel DSP §8](../design/05-dsp-panel.md#8-acesso-e-controles-dsp-ux).
 - Detalhes do painel DSP e dos medidores: [painel DSP](../design/05-dsp-panel.md).
 
 ## 13. Bypass, transições, bit-perfect e segurança
@@ -190,6 +191,23 @@ Este é um requisito para o GPT/Codex que desenvolve o protótipo ([SKIN-REQUIRE
 4. **Verdade funcional**: o protocolo declara exatamente quais modos processam som (ex.: `BiquadFilterNode` conectado e testado). Os demais exibem o rótulo visível **`[DEMO — sem processamento de áudio neste modo]`** (en: `[DEMO — no audio processing in this mode]`). Um controle manipulável não prova processamento audível. Um gráfico SVG não é chamado de DSP real.
 5. Evidência exigida: contagem de controles por modo, capturas, a matriz PASS/FAIL/BLOCKED e o estado do console. Mockup estático não é aceito.
 
+### Status da revisão 15 (2026-10-28)
+
+Todos os itens abaixo são **evidência relatada da referência externa rev. 14/15, não verificada neste repositório** (o código `interactive/*` e os `*-validation.json` do protótipo não estão aqui; a validação relatada foi em Chrome/Windows com fixtures controladas). Separação: **especificado** · **implementado no protótipo (relatado)** · **validado no protótipo (relatado)** · **nativo (hoje: nada)**.
+
+| Item | Especificado | Protótipo: implementado (relatado) | Protótipo: validado (relatado) | Nativo |
+|---|---|---|---|---|
+| EQ gráfico 10/20/31/64 como instância do grafo modular | este capítulo | áudio real dentro do grafo: biquads peaking em série, ±15 dB por banda, preamp −24/+12 dB; EQ10 em centros clássicos, EQ31 em 1/3 de oitava, EQ20/EQ64 em distribuição logarítmica 20 Hz–20 kHz; Q e centros no inspetor | render offline com EQ64 e WAV estéreo local pela cadeia real (`modular-audio-validation`, `modular-live-validation`); controles reais de 64 bandas (`modular-editing-validation`) | nada; EQ10 M1, EQ20/31 M3, **EQ-64 continua M5** (§15) |
+| PEQ até 32 filtros como instância do grafo | §10 | áudio real: peaking, shelves, passes, notch, bandpass; Both/Left/Right; bypass individual; frequência/ganho/Q; **sem seletor de slope arbitrário** nesta visão | PEQ por canal em render offline; 32 filtros reais (`modular-audio-validation`, `modular-editing-validation`) | nada; M3 (TASK-E04-04) |
+| Editor avançado anterior (modos e rótulos `[DEMO]`) | §14 itens 1–5 | conserva rótulos e ligação de áudio originais: o EQ clássico de 10 bandas tem adaptação de áudio web; outros modos sem adaptação seguem `[DEMO — sem processamento de áudio neste modo]` | nenhuma validação relatada específica | nada |
+
+Limites que não podem ser omitidos:
+
+- A capacidade real de EQ/PEQ é das **instâncias do grafo**; a nova capacidade de EQ real não retroage ao editor avançado anterior. Não marcar retroativamente um editor desconectado como funcional no áudio; um controle manipulável continua não provando processamento.
+- A referência não implementa slopes, presets globais/por dispositivo, auto-seleção, FIR nem LUFS; esses requisitos continuam no contrato deste capítulo e dos demais.
+- O marco nativo **não muda**: EQ-64 gráfico e qualquer PEQ de 64 filtros seguem em **M5** (TASK-E12-10) salvo decisão formal (D-DSP-01). Processamento no Web Audio não é evidência de latência, CPU ou qualidade sonora do nativo.
+- Contrato do grafo: [DSP, grafo modular](03-dsp.md#grafo-modular-protótipo--nativo). Testes: [matriz §2.2](../quality/05-dsp-test-matrix.md#22-grafo-modular-e-vu-int) e [§2.1](../quality/05-dsp-test-matrix.md#21-aceite-de-acesso-e-controles-dsp-ux-ac), planejados para o nativo.
+
 ## 15. Roadmap: MVP visual × engine nativa
 
 | ID | MVP HTML/SVG/JS | Nativo: processamento | Nativo: UI | Observação |
@@ -197,7 +215,7 @@ Este é um requisito para o GPT/Codex que desenvolve o protótipo ([SKIN-REQUIRE
 | EQ-10 | Obrigatório agora | M1 · TASK-E04-01 | Classic M1 (TASK-E02-03); avançado M3 (TASK-E02-07) | — |
 | EQ-20 | Obrigatório agora | M3 · TASK-E04-04 | M3 · TASK-E02-07 | grade §5 a aprovar em E04-04 |
 | EQ-31 | Obrigatório agora | M3 · TASK-E04-04 | M3 · TASK-E02-07 | — |
-| EQ-64 | Obrigatório agora (64 controles reais) | **M5** · TASK-E12-10 | Até M5: seleção visível no nativo, com o estado "indisponível nesta versão (M5)" | marco M5 mantido até decisão formal |
+| EQ-64 | Obrigatório agora (64 controles reais; rev. 15 relata áudio real no grafo) | **M5** · TASK-E12-10 | Até M5: seleção visível no nativo, com o estado "indisponível nesta versão (M5)" | marco M5 mantido até decisão formal |
 | EQ-PEQ32 | Obrigatório agora (≤ 32 filtros) | M3 · TASK-E04-04 | M3 · TASK-E02-07 | 64 filtros: M5 · TASK-E12-10 |
 
 Roadmap DSP completo: [roadmap](../delivery/01-roadmap.md#roadmap-dsp-e-equalizadores).
