@@ -1,6 +1,6 @@
 # Glossário e convenções
 
-Versão 0.7.2 · 2026-10-28 (termos de controles DSP, grafo modular e VU adicionados).
+Versão 0.7.3 · 2026-10-28 (termos de controles DSP, grafo modular e VU adicionados; termos de letras adicionados).
 
 | Termo | Significado nesta spec |
 |---|---|
@@ -45,5 +45,11 @@ Versão 0.7.2 · 2026-10-28 (termos de controles DSP, grafo modular e VU adicion
 | Grafo modular | Vista de nós e conexões do DSP; no protótipo, referência relatada, no nativo, nada implementado ([painel DSP §9](design/05-dsp-panel.md#9-fluxo-modular-grafo--referência-do-protótipo)) |
 | Porta CV | Porta de controle que liga uma saída de modulação (ex.: LFO) à entrada de modulação de um nó; não carrega áudio nem MIDI |
 | Acabamento de VU | Apresentação do gabinete externo dos VU meters (Original, Metal adaptativo, Integrado ao painel); não altera o SVG nem é efeito DSP ([VU-INT](design/05-dsp-panel.md#61-integração-visual-dos-vu-meters-vu-int)) |
+| Letra sincronizada | Letra com timestamps (LRC, SYLT em milissegundos) que permite escolher a linha atual pela posição de reprodução; texto sem tempos nunca é tratado assim ([letras](library/02-tags-lyrics-tools.md#letras-componente-resumido-sob-o-vu-e-fontes)) |
+| LRC | Arquivo de letra com timestamps por linha, múltiplos tempos por linha e offset; pode ser importado explicitamente para uma faixa |
+| Componente resumido de letra | Exibição de três linhas (anterior, atual, próxima) imediatamente abaixo do VU; não substitui o painel completo de letras |
+| Fonte de letra | Origem da letra mostrada: LRC local importado, metadados embutidos ou DEMO; a ordem de escolha é LRC importado, depois metadados |
+| Letra desligada × instrumental | Desligada é preferência global de exibição; instrumental/sem letra é marca reversível por faixa, nunca deduzida da ausência de tags |
+| Offset de letra | Deslocamento temporal aplicado à seleção da linha (tag de offset do LRC e ajuste −/+100 ms do painel completo) |
 
 IDs são estáveis e não mudam com renomeação de arquivo. “Alvo”, “gate” e “proposta” nunca significam resultado já medido. Dados nos previews são fictícios. O nome Vynamp é provisório.

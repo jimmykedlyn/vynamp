@@ -1,6 +1,6 @@
 # Decisões, hipóteses e pontos em aberto
 
-Versão: 0.7.2 · Data: 2026-10-28 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.3 · Data: 2026-10-28 · Estado: especificação proposta, implementação não iniciada.
 
 ## Decisões fixadas pelo pedido
 
@@ -78,3 +78,31 @@ Vêm da revisão documental do DSP (pedido "Documentação DSP — Equalizadores
 | Pedido v1.4 §5.1 "referência contém 39 módulos / 198 campos" × catálogo [09](../audio/09-dsp-catalog.md) | contagens do protótipo não coincidem com o catálogo nativo (que também tem módulos propostos sem adaptador) | D-DSP-11: números não congelam o catálogo; evidência relatada |
 | Pedido v1.4 (evidências `interactive/*`, `*-validation.json`, `CONTROLES-DE-AUDIO.md`, `DSP-MODULAR-E-VU.md`) × repositório | os arquivos citados não existem neste repositório | D-DSP-16: citados como relato da referência externa; nenhum caminho linkado; registrar a referência no repositório do produto fica pendente |
 | `docs/audio/07-dsp-signal-contract.md` §Caminho | mixer soma streams antes do resampler final; fontes com Fs diferentes no crossfade não têm conversão definida | dependente de investigação (junto com D-DSP-05) |
+
+## Decisões de letras (2026-10-28)
+
+Vêm do adendo "letras integradas ao VU meter" v1.0 (2026-10-25). Estado: **proposto**, até a aprovação do mantenedor no PR. Nenhuma altera código. Detalhes em [Letras: componente resumido sob o VU e fontes](../library/02-tags-lyrics-tools.md#letras-componente-resumido-sob-o-vu-e-fontes), [layouts](../design/02-layouts.md#letras-sob-o-vu-2026-10-28), [acessibilidade](../design/03-accessibility-i18n.md#letras-acessibilidade-e-localização), [requisitos](03-requirements.md#rastreabilidade-de-letras-lyr) e [TASK-E03-09](../../tasks/items/TASK-E03-09.md).
+
+| ID | Decisão | Razão / revisão |
+|---|---|---|
+| D-LYR-01 | Os IDs `LYR-01..15` e `LYR-AC-01..12` do adendo são adotados como IDs canônicos, rastreados por REQ-E03-09 / TASK-E03-09, até um mapeamento oficial | O adendo permite o mapeamento sem perder a correspondência; sem novo REQ para não alterar contagens da matriz |
+| D-LYR-02 | O componente resumido sob o VU **acrescenta** a apresentação e a prioridade de fontes; o painel completo de letras e seus controles (auto-scroll, offset, tamanho, busca opt-in, edição, cópia, leitura assistiva) continuam obrigatórios; clique em linha para seek segue proposta | O adendo proíbe reduzir a cobertura; três linhas não promovem os demais controles a concluídos |
+| D-LYR-03 | Ordem de fontes: LRC importado para a faixa na sessão, depois metadados embutidos, depois estado informativo. Sem descoberta de arquivos auxiliares nem provedores silenciosos (exigiria requisito separado); busca online segue opt-in | Alinhado a "sem rede involuntária" de REQ-E03-09 |
+| D-LYR-04 | Texto sem timestamps nunca é tratado como sincronizado; "Desligar" é preferência global de exibição e "Instrumental" é marca reversível por faixa, nunca deduzida da ausência de tags; ambos persistem por identidade estável de faixa da biblioteca e nunca alteram tags | LYR-08, LYR-11, LYR-12 |
+| D-LYR-05 | Concorrência: leitura/importação pertence à faixa que a iniciou; resultado obsoleto é descartado ou guardado só no cache da faixa correta e nunca religa a exibição após Desligar | LYR-AC-08 |
+| D-LYR-06 | A tabela de famílias de tags (ID3v2.3/2.4, FLAC, Ogg/Opus, M4A, WAV/RIFF, LRC) é **baseline relatada** do protótipo, não suporte nativo; o nativo depende de TASK-E03-04 e do plano 04 (metadados e CUE) da `vynamp-decode`. SYLT com timestamps em quadros MPEG: a referência não converte; o nativo pode converter com testes próprios | Adendo §4; sem alegar "suporte universal" |
+| D-LYR-07 | Persistir arquivos LRC importados no produto **não está especificado** (na referência só há cache de sessão e preferências leves); exige requisito próprio. Limites de leitura da referência (16 MiB por leitura, 32 MiB de orçamento, 512 KiB de texto) são relatados; os do produto ficam a definir | Aberto; evita pressupor o que não existe |
+| D-LYR-08 | A referência (protótipo Codex, revisão 14: `interactive/*`, validações `lyrics-*`, `LETRAS-SINCRONIZADAS.md`, `MVP-COMPLIANCE.md`) **não existe neste repositório**: é citada como evidência relatada, sem links; registrá-la no repositório do produto fica pendente. Níveis sempre separados: especificado, implementado no protótipo, validado no protótipo, nativo (hoje: nada) | Mesmo tratamento de D-DSP-16 |
+| D-LYR-09 | O componente de letras e o VU têm estados independentes; o componente adapta-se ao espaço sem reduzir nem distorcer os 12 VUs, e não é imposto no modo Mini sem espaço | LYR-15; adendo §6 |
+
+### Divergências de letras
+
+| Onde | O que diverge | Tratamento |
+|---|---|---|
+| Adendo §2 (seções 5.13, 5.16, 5.18, 8, 9, 12, 13 e MVP-09 da spec web v1.2) × repositório | essas seções e o grupo MVP-09 não existem neste repositório (a spec web v1.2 é externa) | mapeado para os docs do repositório (biblioteca, layouts, acessibilidade, requisitos); nenhuma seção externa editada |
+| Adendo §1 (atualizar `SKIN-REQUIREMENTS-CODEX.md` e `SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO-v1.2.md`) × escopo deste PR | os arquivos de skin estão fora do repositório (hoje GPT-MVP v1.3 e CODEX v1.2) | não alterados neste PR; a parte de letras entra nos SKIN na próxima etapa (Etapa 3), para evitar duas definições do mesmo comportamento (pendente) |
+| Adendo §5 (privacidade e persistência) × `docs/security/02-privacy-licensing.md` | o documento de privacidade não cobre persistência de preferência/marca instrumental nem leitura local de letras | não atualizado neste PR; pendente |
+| Adendo §8 (LYR-AC) × `docs/quality` | não há item QA para LYR-AC-01..12 em `01-test-strategy.md` nem `04-integration-codecs-dsp.md` | ausente; pendente (ver TASK-E03-09) |
+| Adendo §3 LYR-01 ("layout estendido aprovado" com VU) × [02-layouts](../design/02-layouts.md) | os layouts em DIP não definem região de VU estendido; o VU é descrito em [painel DSP §6](../design/05-dsp-panel.md#6-medidores-e-visualização) | posição relativa especificada (abaixo do VU); geometria exata pendente |
+| Adendo §3 LYR-05 (relógio) × [engine](../audio/01-engine.md) | o protótipo usa o evento de posição de reprodução do navegador; o nativo usa o relógio consumido | vale o relógio consumido no nativo, como o adendo e REQ-E03-09 já preveem |
+| Adendo §7 × painel completo de letras | controles do painel completo não estão no componente do protótipo | mantidos como obrigatórios e pendentes; sem promoção a concluídos (D-LYR-02) |

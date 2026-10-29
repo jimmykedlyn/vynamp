@@ -642,3 +642,9 @@ Versão 0.7.1 · 2026-10-28 · Markdown de produto, tooling, bootstrap e evidên
 - [Matriz DSP §2.2 — grafo modular e VU-INT](quality/05-dsp-test-matrix.md#22-grafo-modular-e-vu-int) — docs/quality/05-dsp-test-matrix.md
 - [Grafo modular: protótipo × nativo](audio/03-dsp.md#grafo-modular-protótipo--nativo) — docs/audio/03-dsp.md
 - [Decisões DSP D-DSP-11..18](product/05-decisions.md#decisões-dsp-e-equalizadores-2026-10-25) — docs/product/05-decisions.md
+
+# Letras sincronizadas (2026-10-28)
+
+- [Letras — componente resumido sob o VU e fontes (LYR-01..15, LYR-AC-01..12)](library/02-tags-lyrics-tools.md#letras-componente-resumido-sob-o-vu-e-fontes) — docs/library/02-tags-lyrics-tools.md
+- [Decisões de letras D-LYR-01..09](product/05-decisions.md#decisões-de-letras-2026-10-28) — docs/product/05-decisions.md
+- [TASK-E03-09 — Entregar letras, bookmarks e histórico](../tasks/items/TASK-E03-09.md) — tasks/items/TASK-E03-09.md
