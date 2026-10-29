@@ -1,6 +1,6 @@
 # Matriz normativa de requisitos e rastreabilidade
 
-Versão 0.7.0 · 176 requisitos e tarefas planejados, 17 épicos. Configuração entregue não equivale a aplicativo ou release assinado. Cinco alvos obrigatórios M3.
+Versão 0.7.1 · Data: 2026-10-28 · 176 requisitos e tarefas planejados, 17 épicos. Configuração entregue não equivale a aplicativo ou release assinado. Cinco alvos obrigatórios M3.
 
 | Requisito | Resultado | Fase | Aceite | Tarefa | Spec |
 |---|---|---|---|---|---|
@@ -32,7 +32,7 @@ Versão 0.7.0 · 176 requisitos e tarefas planejados, 17 épicos. Configuração
 | REQ-E03-06 | Entregar playlists import/export e CUE | M2 | Loop de playlists bloqueado; CUE75fps preserva offsets; export sem token; undo/redo100 ops da sessão. | [TASK-E03-06](../../tasks/items/TASK-E03-06.md) | [Spec](../../docs/library/01-library-playlists.md) |
 | REQ-E03-07 | Implementar smart playlists e templates | M3 | Query invalid rejeitada; atualização cancelável; playlist lock não bloqueia playback; snapshots consistentes. | [TASK-E03-07](../../tasks/items/TASK-E03-07.md) | [Spec](../../docs/library/01-library-playlists.md) |
 | REQ-E03-08 | Implementar escrita de tags e capítulos em lote | M3 | Fields mistos não são apagados sem escolha; kill/locked file mantém mídia; capítulo inválido não é gravado. | [TASK-E03-08](../../tasks/items/TASK-E03-08.md) | [Spec](../../docs/library/01-library-playlists.md) |
-| REQ-E03-09 | Entregar letras, bookmarks e histórico | M3 | Synced lyrics seguem clock consumido; rescan preserva bookmark; seek não conta como consumo; sem rede involuntária. | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/01-library-playlists.md) |
+| REQ-E03-09 | Entregar letras, bookmarks e histórico | M3 | Synced lyrics seguem clock consumido; rescan preserva bookmark; seek não conta como consumo; sem rede involuntária. | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/01-library-playlists.md); letras: [LYR](../../docs/library/02-tags-lyrics-tools.md#letras-componente-resumido-sob-o-vu-e-fontes) |
 | REQ-E03-10 | Completar recovery, export e large-library gate | M3 | Fila restaura sem autoplay; missing files têm erro agrupado; ratings/bookmarks sobrevivem upgrade e rollback seguro. | [TASK-E03-10](../../tasks/items/TASK-E03-10.md) | [Spec](../../docs/library/01-library-playlists.md) |
 | REQ-E04-01 | Implementar EQ10, ganho e ReplayGain playback | M1 | On/off/flat coerentes; metadata absent usa ganho configurado; coefficient swap sem zipper e sem allocRT. | [TASK-E04-01](../../tasks/items/TASK-E04-01.md) | [Spec](../../docs/audio/04-outputs-hires.md) |
 | REQ-E04-02 | Provar resampler e sample conversion | M0 | Impulse/sweep e alias/CPU/latência registrados; integer bypass sample-exact e dither só ao reduzir precisão. | [TASK-E04-02](../../tasks/items/TASK-E04-02.md) | [Spec](../../docs/audio/04-outputs-hires.md) |
@@ -180,3 +180,27 @@ Versão 0.7.0 · 176 requisitos e tarefas planejados, 17 épicos. Configuração
 | REQ-E17-18 | Certificar expansão MIDI, trackers e DSD especial | M5 | Rendering MIDI não é decode PCM; SoundFont licenciado explícito; loops/memória bound; DSD raw/DST/PCM/DoP distinguíveis. SACD ISO separa extração raw/DST, perfis e capacidade legal, sem contornar proteção. | [TASK-E17-18](../../tasks/items/TASK-E17-18.md) | [Spec](../../docs/audio/06-codec-capability-registry.md) |
 | REQ-E17-19 | Expor capacidades Bluetooth e headroom por rota | M3 | SBC/AAC/aptX/LDAC/LC3 não geram associações; API ausente mostra desconhecido; troca de rota não aumenta volume nem garante hi-res. | [TASK-E17-19](../../tasks/items/TASK-E17-19.md) | [Spec](../../docs/audio/06-codec-capability-registry.md) |
 | REQ-E17-20 | Fechar gate combinado de codecs, DSP e visualizers | M3 | Cinco alvos passam required M3; conditional reportado honestamente; nenhum gate depende de features M4/M5; QA e limites publicados. | [TASK-E17-20](../../tasks/items/TASK-E17-20.md) | [Spec](../../docs/delivery/04-capability-release-gates.md) |
+
+## Rastreabilidade de letras (LYR)
+
+Detalhamento de REQ-E03-09 / [TASK-E03-09](../../tasks/items/TASK-E03-09.md) pelo adendo "letras integradas ao VU meter" v1.0 (2026-10-25). Fase herdada de REQ-E03-09 (M3); nenhuma fase ou prioridade existente foi alterada. Os IDs `LYR-*` são os do adendo, até mapeamento oficial. Estado de todos: **especificado**; protótipo externo (revisão 14) é só evidência relatada, não verificada aqui; **nativo: nada implementado**. Texto completo no [doc canônico](../library/02-tags-lyrics-tools.md#letras-componente-resumido-sob-o-vu-e-fontes); decisões em [D-LYR](05-decisions.md#decisões-de-letras-2026-10-28).
+
+| Requisito | Resultado | Fase | Aceite | Tarefa | Spec |
+|---|---|---|---|---|---|
+| LYR-01 | Componente de letra imediatamente abaixo do VU, integrado à skin, sem moldura | M3 | LYR-AC-10 | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/02-tags-lyrics-tools.md#componente-resumido-sob-o-vu) |
+| LYR-02 | Três posições: anterior, atual (peso/contraste superiores) e próxima | M3 | LYR-AC-01, LYR-AC-10 | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/02-tags-lyrics-tools.md#componente-resumido-sob-o-vu) |
+| LYR-03 | Uma linha visual por posição; sem overflow da página; acesso ao texto completo | M3 | LYR-AC-10 | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/02-tags-lyrics-tools.md#componente-resumido-sob-o-vu) |
+| LYR-04 | Conjunto sobe ao próximo trecho em reprodução; pausa congela | M3 | LYR-AC-02 | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/02-tags-lyrics-tools.md#componente-resumido-sob-o-vu) |
+| LYR-05 | Posição efetiva (relógio consumido) como fonte única; seek/troca/Stop recalculam | M3 | LYR-AC-02, LYR-AC-03 | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/02-tags-lyrics-tools.md#componente-resumido-sob-o-vu) |
+| LYR-06 | Movimento reduzido e saltos atualizam de imediato; animação não altera o instante | M3 | LYR-AC-09 | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/02-tags-lyrics-tools.md#componente-resumido-sob-o-vu) |
+| LYR-07 | Leitura automática de letra embutida suportada | M3 | LYR-AC-01, LYR-AC-05 | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/02-tags-lyrics-tools.md#fontes-metadados-e-sincronização) |
+| LYR-08 | Texto sem timestamps não é sincronizado; aviso e "Ver letra completa" | M3 | LYR-AC-04 | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/02-tags-lyrics-tools.md#fontes-metadados-e-sincronização) |
+| LYR-09 | Importar LRC local e voltar aos metadados; LRC inválido preserva fonte anterior | M3 | LYR-AC-06 | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/02-tags-lyrics-tools.md#fontes-metadados-e-sincronização) |
+| LYR-10 | Menu de opções (Mostrar, Desligar, Instrumental, Importar LRC, Usar metadados) | M3 | LYR-AC-06, LYR-AC-09 | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/02-tags-lyrics-tools.md#fontes-metadados-e-sincronização) |
+| LYR-11 | Desligar é preferência global persistente, distinta de Instrumental | M3 | LYR-AC-07 | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/02-tags-lyrics-tools.md#estados-persistência-e-concorrência) |
+| LYR-12 | Instrumental por faixa, reversível, nunca deduzido da ausência de tags | M3 | LYR-AC-07 | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/02-tags-lyrics-tools.md#estados-persistência-e-concorrência) |
+| LYR-13 | Oito estados distintos (sincronizada, simples, procurando, nenhuma, instrumental, desligada, erro, não suportado) | M3 | LYR-AC-11 | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/02-tags-lyrics-tools.md#estados-persistência-e-concorrência) |
+| LYR-14 | Origem discreta (metadados, LRC local, DEMO) | M3 | LYR-AC-11 | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/02-tags-lyrics-tools.md#estados-persistência-e-concorrência) |
+| LYR-15 | Estados independentes de letra e VU | M3 | LYR-AC-12 | [TASK-E03-09](../../tasks/items/TASK-E03-09.md) | [Spec](../../docs/library/02-tags-lyrics-tools.md#estados-persistência-e-concorrência) |
+
+Critérios sem requisito exclusivo (aparecem na coluna Aceite de outros requisitos): LYR-AC-03 (LYR-05), LYR-AC-05 (LYR-07), LYR-AC-08 (concorrência: leitura pertence à faixa; resultado obsoleto descartado, em [estados](../library/02-tags-lyrics-tools.md#estados-persistência-e-concorrência)) e LYR-AC-12 (regressão). Requisitos anteriores do painel completo de letras continuam obrigatórios e não são promovidos a concluídos ([requisitos anteriores](../library/02-tags-lyrics-tools.md#requisitos-anteriores-que-continuam)).

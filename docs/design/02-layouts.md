@@ -1,6 +1,6 @@
 # Layouts, geometria e telas
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.2 · Data: 2026-10-28 · Estado: especificação proposta, implementação não iniciada.
 
 ## Coordenadas canônicas
 
@@ -34,8 +34,20 @@ Inicial 1280×800, mínimo 960×640. Topbar 56; sidebar 200; painel central flex
 
 ## Telas adicionais
 
-Preferências 880×680 com navegação lateral: Reprodução, Saída, DSP, Biblioteca, Streaming, Aparência, Atalhos, Plugins, Privacidade, Avançado. EQ avançado 960×600 com gráfico, tabela de bandas e preset por dispositivo. Detalhes da faixa 800×640: informações/tags/capa/letras/capítulos. Gerenciador de jobs 800×520: progresso, erro, cancelar/retomar. Rádio: estações e URL; podcasts: feeds/episódios; temas: gallery/preview/instalação; plugins: status/permissões/versão.
+Preferências 880×680 com navegação lateral: Reprodução, Saída, DSP, Biblioteca, Streaming, Aparência, Atalhos, Plugins, Privacidade, Avançado. EQ avançado 960×600 com seletor Gráfico 10/20/31/64/Paramétrico (até 32 filtros), gráfico, tabela de bandas e preset por dispositivo; no nativo, 64 aparece como "indisponível nesta versão (M5)" até TASK-E12-10, e no MVP HTML/SVG/JS os cinco modos são interativos ([equalizadores](../audio/08-equalizers.md), [painel DSP](05-dsp-panel.md)). Detalhes da faixa 800×640: informações/tags/capa/letras/capítulos. Gerenciador de jobs 800×520: progresso, erro, cancelar/retomar. Rádio: estações e URL; podcasts: feeds/episódios; temas: gallery/preview/instalação; plugins: status/permissões/versão.
 
 ## Estados de tela obrigatórios
 
 Empty com CTA; Loading cancelável; Populated; Partial error com itens válidos mantidos; Offline sem apagar local; Unsupported com motivo; Permission denied; Conflict; Recovery. Dialogs focam primeira ação segura, Escape cancela, retorno de foco ao invocador. Não embutir stacktrace ou nome de crate no fluxo normal; detalhes técnicos em painel opcional.
+
+## Letras sob o VU (2026-10-28)
+
+Posição do componente resumido de letras (LYR-01..LYR-06, LYR-15); regras completas em [Letras: componente resumido sob o VU e fontes](../library/02-tags-lyrics-tools.md#letras-componente-resumido-sob-o-vu-e-fontes). Estado: especificado; protótipo externo relatado (revisão 14, não verificado aqui); nativo: nada.
+
+- **Onde:** imediatamente abaixo do VU, no layout estendido aprovado de referência (os 12 VUs estéreo e seus [acabamentos](05-dsp-panel.md#61-integração-visual-dos-vu-meters-vu-int)), integrado à superfície da skin, sem moldura ou caixa adicional (LYR-01). Os layouts em DIP acima ainda não definem a região do VU estendido; a geometria exata do componente fica a definir com ela, e nenhuma coordenada é fixada aqui.
+- **Três linhas:** anterior, atual (central) e próxima, uma linha visual cada, altura a partir de tokens e da escala de texto; referência do protótipo (relatada): 26 DIP no desktop, 30 DIP em tela estreita (LYR-02, LYR-03).
+- **Sem reduzir o VU:** o componente adapta o espaço sem diminuir excessivamente o VU, distorcer suas proporções ou encobrir controles de reprodução; deve ser testado com texto ampliado e layouts compactos (LYR-AC-10).
+- **Classic Stack e Library Workspace:** exibido onde o VU estendido for exibido; no Library Workspace, o inspector já lista "letras" e continua sendo o acesso ao texto completo.
+- **Mini:** a regra de três linhas vale onde o componente é exibido; não é imposto no modo Mini quando faltar espaço (acesso à letra completa fica no painel).
+- **Texto longo:** nenhuma quebra de grid nem rolagem horizontal da página; alternativa de leitura completa (LYR-03).
+- **Independência:** ocultar a letra não oculta nem redimensiona o instrumento; trocar o visualizador não apaga a preferência de letra (LYR-15).

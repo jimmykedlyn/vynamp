@@ -1,6 +1,6 @@
 # QA complementar — integração, codecs, DSP e capacidades
 
-Versão 0.7.0 · Cenários de implementação; nenhum teste de aplicativo declarado.
+Versão 0.7.1 · 2026-10-25 · Cenários de implementação; nenhum teste de aplicativo declarado.
 
 | QA | Cenário | Oráculo |
 |---|---|---|
@@ -14,6 +14,8 @@ Versão 0.7.0 · Cenários de implementação; nenhum teste de aplicativo declar
 | QA-029 | Proxy, stream bindings e reconnect | 407 distinto de 401; credenciais separadas; sem direct fallback silencioso; cancel e ABR seguros |
 | QA-030 | Manifest real e associações | Só capacidades verificadas, disponíveis e licenciadas geram handler; catálogo não concede suporte |
 | QA-031 | Upgrade, uninstall, portable e backup | Remove apenas registros próprios; preserva mídia/defaults; staging/rollback e lock respeitados |
+| QA-032 | Equalizadores 10/20/31/64 + paramétrico 32 (nativo e MVP HTML/SVG/JS) | Cinco modos alcançáveis; exatamente 10/20/31/64 controles e até 32 filtros; centros/Q/Nyquist conforme [equalizadores](../audio/08-equalizers.md); curva = cascata calculada; estado independente por modo; MVP rotula `[DEMO]` o que não processa áudio |
+| QA-033 | vitrola (vinil + válvula) integrado ao grafo | Bypass transparente, desativação automática em bit-perfect/DSD, multicanal, picos de estalos, rituais/WearState e combinação com EQ sob QA-027 ([vitrola](../audio/10-vitrola.md)) |
 
 ## Entrada pelos sistemas
 
@@ -25,7 +27,7 @@ Música autoral/licenciada, PCM gerado, tones/impulses/sweeps e canais identific
 
 ## DSP, render e rede
 
-Crossfade correlacionado, EQ/preamp extremos, 44.1↔48/192/384 kHz, pitch, routing, tails e dither 16/24/32-bit. Oráculo true-peak independente no buffer final; medir apenas o nó limiter é insuficiente. Testar GPU ausente/device-loss, fullscreen/Escape, resize/DPI, background Android, reduced motion e budgets agregados. Grafo/preset/plugin com limites de fuel e tempo não causa deadlock.
+Crossfade correlacionado, EQ/preamp extremos nos cinco modos (EQ-10/20/31/64/PEQ32, [matriz DSP](05-dsp-test-matrix.md)), vitrola + EQ, 44.1↔48/192/384 kHz, pitch, routing, tails e dither 16/24/32-bit. Oráculo true-peak independente no buffer final; medir apenas o nó limiter é insuficiente. Testar GPU ausente/device-loss, fullscreen/Escape, resize/DPI, background Android, reduced motion e budgets agregados. Grafo/preset/plugin com limites de fuel e tempo não causa deadlock.
 
 Servidor/proxy local determinístico: TLS, Range, ICY, HLS, 407, token renewal, discontinuity, DNS e redirects maliciosos. Perfil desconhecido é rejeitado antes de ABR switch. CI não depende de rádio pública. Fuzz de mídia, IPC, playlist, registry e scenes; fixtures/licenças versionadas. Relatório inclui build/OS/ABI/device, hash de entrada, comandos, esperado/observado, latência e limitações; documento não concede available.
 

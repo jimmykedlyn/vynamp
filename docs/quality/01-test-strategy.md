@@ -1,6 +1,6 @@
 # Estratégia de testes e critérios de qualidade
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.1 · Data: 2026-10-25 · Estado: especificação proposta, implementação não iniciada.
 
 ## Camadas
 
@@ -56,5 +56,7 @@ QA-018: Linux/macOS Intel+Silicon nativos. QA-019: Android playback/lifecycle/fo
 | QA-029 | Proxy, stream bindings e reconnect | 407 distinto de 401; credenciais separadas; sem direct fallback silencioso; cancel e ABR seguros |
 | QA-030 | Manifest real e associações | Só capacidades verificadas, disponíveis e licenciadas geram handler; catálogo não concede suporte |
 | QA-031 | Upgrade, uninstall, portable e backup | Remove apenas registros próprios; preserva mídia/defaults; staging/rollback e lock respeitados |
+| QA-032 | Equalizadores 10/20/31/64 + paramétrico 32 (nativo e MVP HTML/SVG/JS) | Cinco modos alcançáveis; exatamente 10/20/31/64 controles e até 32 filtros; centros/Q/Nyquist conforme [equalizadores](../audio/08-equalizers.md); curva = cascata calculada; estado independente por modo; MVP rotula `[DEMO]` o que não processa áudio |
+| QA-033 | vitrola (vinil + válvula) integrado ao grafo | Bypass transparente, desativação automática em bit-perfect/DSD, multicanal, picos de estalos, rituais/WearState e combinação com EQ sob QA-027 ([vitrola](../audio/10-vitrola.md)) |
 
-[Cenários completos](04-integration-codecs-dsp.md). QA-026 nos formatos M5 é futuro; M3 exige decisões/limitações dos condicionais e provas dos codecs comuns.
+QA-032/033 (2026-10-25) detalham a [matriz de testes DSP](05-dsp-test-matrix.md). [Cenários completos](04-integration-codecs-dsp.md). QA-026 nos formatos M5 é futuro; M3 exige decisões/limitações dos condicionais e provas dos codecs comuns.
