@@ -313,7 +313,8 @@
         "REQ-E02-02"
       ],
       "dependencies": [
-        "TASK-E02-01"
+        "TASK-E02-01",
+        "TASK-E02-11"
       ],
       "spec": "docs/design/02-layouts.md",
       "deliverable": "Theme token loader builtin, buttons/sliders/list rows com estados completos.",
@@ -547,6 +548,163 @@
       "estimate_days": {
         "min": 5,
         "max": 15
+      },
+      "risk": "médio"
+    },
+    {
+      "id": "TASK-E02-11",
+      "epic": "E02",
+      "title": "Congelar MVP de referência e extrair SVGs, ícones e temas",
+      "phase": "M0",
+      "priority": "P0",
+      "status": "in_progress",
+      "owner_role": "design",
+      "requirements": [
+        "REQ-E02-11"
+      ],
+      "dependencies": [],
+      "spec": "docs/design/06-mvp-reference.md",
+      "deliverable": "Pacote assets/reference/mvp com MVP rev.37 congelado por hash, 12 temas resolvidos, 91 ícones, 16 medidores e SVGs renderizados, extraídos por ferramenta reprodutível.",
+      "acceptance": "Cada SVG renderiza em resvg sem pixel de geometria divergente do Chrome (delta>48 fora do antialiasing de 1 px; texto registrado e resolvido em E02-12; recurso sem suporte no resvg vira requisito do carregador nativo); cada tema traz resolvidos todos os tokens --* que define em :root, e toda variável referenciada que o tema não define em :root consta de unsetVars com fallback, origem e temas afetados (valor por estado em E02-12); reextração reproduz os mesmos hashes.",
+      "qa": [
+        "QA-034"
+      ],
+      "estimate_days": {
+        "min": 2,
+        "max": 4
+      },
+      "risk": "médio"
+    },
+    {
+      "id": "TASK-E02-12",
+      "epic": "E02",
+      "title": "Gerar gabarito visual e estratégia de fontes",
+      "phase": "M0",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "design",
+      "requirements": [
+        "REQ-E02-12"
+      ],
+      "dependencies": [
+        "TASK-E02-11"
+      ],
+      "spec": "docs/design/06-mvp-reference.md",
+      "deliverable": "Capturas por tema, layout, largura e estado com dump de geometria e estilo por elemento e fontes efetivas por nó; estratégia de fontes por plataforma com licenças.",
+      "acceptance": "Todo estado alcançável do MVP tem captura e dump (geometria, estilo computado e custom properties --* por elemento, inclusive as de unsetVars), incluindo os estados cujo clique expira na varredura de TASK-E02-11 (`rendered/click-failures.json`: link de salto com foco, fila limpa), acionados por teclado ou script; cada família de fonte usada tem fonte nativa ou substituta licenciada com métricas comparadas; armazenamento dos PNG decidido.",
+      "qa": [
+        "QA-034"
+      ],
+      "estimate_days": {
+        "min": 3,
+        "max": 6
+      },
+      "risk": "médio"
+    },
+    {
+      "id": "TASK-E02-13",
+      "epic": "E02",
+      "title": "Gerar gabarito de movimento, medidores e ondas",
+      "phase": "M0",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "design",
+      "requirements": [
+        "REQ-E02-13"
+      ],
+      "dependencies": [
+        "TASK-E02-11"
+      ],
+      "spec": "docs/design/06-mvp-reference.md",
+      "deliverable": "Transições CSS, séries rAF sob sinais determinísticos, constantes de AnalyserNode e balística e estilos de onda em formato consumível pelo Rust.",
+      "acceptance": "Cada animação do MVP tem duração, easing e keyframes ou série temporal; medidores e ondas respondem a degrau, seno e rajada com tolerância documentada; Web Audio entra só como comportamento reimplementável.",
+      "qa": [
+        "QA-034"
+      ],
+      "estimate_days": {
+        "min": 3,
+        "max": 6
+      },
+      "risk": "alto"
+    },
+    {
+      "id": "TASK-E02-14",
+      "epic": "E02",
+      "title": "Gerar gabarito de comportamento e preferências",
+      "phase": "M0",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "design",
+      "requirements": [
+        "REQ-E02-14"
+      ],
+      "dependencies": [
+        "TASK-E02-11"
+      ],
+      "spec": "docs/design/06-mvp-reference.md",
+      "deliverable": "Roteiros de interação por teclado, ponteiro e toque com estado esperado e esquema das preferências persistidas com defaults e migração.",
+      "acceptance": "Cada controle do MVP tem roteiro com resultado verificável; o esquema cobre todas as chaves lidas ou escritas; nenhuma ação fica sem roteiro.",
+      "qa": [
+        "QA-034"
+      ],
+      "estimate_days": {
+        "min": 2,
+        "max": 5
+      },
+      "risk": "médio"
+    },
+    {
+      "id": "TASK-E02-15",
+      "epic": "E02",
+      "title": "Mapear lacunas web para nativo por plataforma",
+      "phase": "M0",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "design",
+      "requirements": [
+        "REQ-E02-15"
+      ],
+      "dependencies": [
+        "TASK-E02-12",
+        "TASK-E02-13",
+        "TASK-E02-14"
+      ],
+      "spec": "docs/design/06-mvp-reference.md",
+      "deliverable": "Mapa de cada recurso web usado pelo MVP para o equivalente nativo em Windows, Linux, macOS, iOS e Android, com biblioteca própria planejada onde faltar.",
+      "acceptance": "Zero lacunas sem plano; exceções só para APIs intrínsecas do navegador com comportamento reimplementado; toda biblioteca nova tem repositório git próprio e modular.",
+      "qa": [
+        "QA-034"
+      ],
+      "estimate_days": {
+        "min": 2,
+        "max": 4
+      },
+      "risk": "médio"
+    },
+    {
+      "id": "TASK-E02-16",
+      "epic": "E02",
+      "title": "Implementar harness de fidelidade com egui_kittest",
+      "phase": "M1",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "design",
+      "requirements": [
+        "REQ-E02-16"
+      ],
+      "dependencies": [
+        "TASK-E02-15",
+        "TASK-E02-01"
+      ],
+      "spec": "docs/design/06-mvp-reference.md",
+      "deliverable": "Crate de testes que renderiza telas nativas e as compara com os gabaritos visual, de movimento e de comportamento do MVP no CI.",
+      "acceptance": "O harness falha quando uma tela ou estado excede a tolerância e aponta o elemento divergente; roda no CI Gate em Linux e Windows.",
+      "qa": [
+        "QA-034"
+      ],
+      "estimate_days": {
+        "min": 4,
+        "max": 8
       },
       "risk": "médio"
     },

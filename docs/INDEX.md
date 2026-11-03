@@ -278,6 +278,18 @@ Versão 0.7.1 · 2026-10-28 · Markdown de produto, tooling, bootstrap e evidên
 
 - [TASK-E02-10 — Validar experiência desktop ponta a ponta](../tasks/items/TASK-E02-10.md) — tasks/items/TASK-E02-10.md
 
+- [TASK-E02-11 — Congelar MVP de referência e extrair SVGs, ícones e temas](../tasks/items/TASK-E02-11.md) — tasks/items/TASK-E02-11.md
+
+- [TASK-E02-12 — Gerar gabarito visual e estratégia de fontes](../tasks/items/TASK-E02-12.md) — tasks/items/TASK-E02-12.md
+
+- [TASK-E02-13 — Gerar gabarito de movimento, medidores e ondas](../tasks/items/TASK-E02-13.md) — tasks/items/TASK-E02-13.md
+
+- [TASK-E02-14 — Gerar gabarito de comportamento e preferências](../tasks/items/TASK-E02-14.md) — tasks/items/TASK-E02-14.md
+
+- [TASK-E02-15 — Mapear lacunas web para nativo por plataforma](../tasks/items/TASK-E02-15.md) — tasks/items/TASK-E02-15.md
+
+- [TASK-E02-16 — Implementar harness de fidelidade com egui_kittest](../tasks/items/TASK-E02-16.md) — tasks/items/TASK-E02-16.md
+
 - [TASK-E03-01 — Implementar schema SQLite e migrations seguras](../tasks/items/TASK-E03-01.md) — tasks/items/TASK-E03-01.md
 
 - [TASK-E03-02 — Implementar queue independente e shuffle](../tasks/items/TASK-E03-02.md) — tasks/items/TASK-E03-02.md
@@ -633,6 +645,11 @@ Versão 0.7.1 · 2026-10-28 · Markdown de produto, tooling, bootstrap e evidên
 - [Catálogo de módulos DSP](audio/09-dsp-catalog.md) — docs/audio/09-dsp-catalog.md
 - [vitrola — Vinyl Simulator e Tube Amplifier Simulator no DSP](audio/10-vitrola.md) — docs/audio/10-vitrola.md
 - [Painel Audio DSP, equalizador e medidores — UI/UX](design/05-dsp-panel.md) — docs/design/05-dsp-panel.md
+
+- [Referência do MVP web para a UI nativa](design/06-mvp-reference.md) — docs/design/06-mvp-reference.md
+
+- [Pacote de referência do MVP](../assets/reference/mvp/README.md) — assets/reference/mvp/README.md
+- [Evidência E02-11 / QA-034](evidence/PR/task-e02-11/README.md) — docs/evidence/PR/task-e02-11/README.md; MVP congelado, verificação resvg × Chrome e reprodutibilidade.
 - [Matriz de testes DSP e requisitos não funcionais](quality/05-dsp-test-matrix.md) — docs/quality/05-dsp-test-matrix.md
 - [Evidência chore-dsp-eq-docs](evidence/PR/chore-dsp-eq-docs/summary.md) — docs/evidence/PR/chore-dsp-eq-docs/summary.md
 - [Painel DSP §6.1 — integração visual dos VU meters (VU-INT-01..06)](design/05-dsp-panel.md#61-integração-visual-dos-vu-meters-vu-int) — docs/design/05-dsp-panel.md

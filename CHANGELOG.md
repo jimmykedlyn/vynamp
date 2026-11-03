@@ -45,3 +45,7 @@ Documentação DSP v1.4: painel Áudio e efeitos com acesso e controles DSP-UX-0
 ## Não lançado — 2026-10-28 (letras)
 
 Letras: componente resumido sob o VU e fontes em [library/02-tags-lyrics-tools.md](docs/library/02-tags-lyrics-tools.md), com IDs LYR-01..15 e LYR-AC-01..12, layout em [design/02-layouts.md](docs/design/02-layouts.md), decisões D-LYR-01..09 em [product/05-decisions.md](docs/product/05-decisions.md) e critérios da tarefa em [TASK-E03-09](tasks/items/TASK-E03-09.md). A referência do protótipo é externa: evidência relatada da referência externa rev. 14, não verificada neste repositório; nada nativo implementado. Só Markdown; nenhum código, schema, backlog ou pipeline alterado (TASK-E03-09 foi atualizada apenas em texto: entrega, dependências e critérios).
+
+## Não lançado — 2026-11-03 (referência do MVP)
+
+MVP web rev.37 congelado por hash como especificação da UI nativa (egui) em [design/06-mvp-reference.md](docs/design/06-mvp-reference.md); pacote extraído em [assets/reference/mvp](assets/reference/mvp/README.md) (12 temas, 91 ícones, 16 medidores, SVGs renderizados) pelo repositório próprio `vynamp-mvp-reference`; QA-034 e TASK-E02-11..16 (fases de gabarito visual, movimento, comportamento, lacunas e harness egui_kittest). Verificação resvg × Chrome em [evidência](docs/evidence/PR/task-e02-11/README.md). Nada nativo implementado.

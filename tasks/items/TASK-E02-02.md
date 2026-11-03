@@ -16,6 +16,7 @@ Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implemen
 ## Dependências
 
 - [TASK-E02-01](TASK-E02-01.md) — Validar toolkit Rust com UI clássica acessível
+- [TASK-E02-11](TASK-E02-11.md) — Congelar MVP de referência e extrair SVGs, ícones e temas
 
 ## Entrega concreta
 

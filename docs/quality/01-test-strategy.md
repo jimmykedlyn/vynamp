@@ -58,5 +58,6 @@ QA-018: Linux/macOS Intel+Silicon nativos. QA-019: Android playback/lifecycle/fo
 | QA-031 | Upgrade, uninstall, portable e backup | Remove apenas registros próprios; preserva mídia/defaults; staging/rollback e lock respeitados |
 | QA-032 | Equalizadores 10/20/31/64 + paramétrico 32 (nativo e MVP HTML/SVG/JS) | Cinco modos alcançáveis; exatamente 10/20/31/64 controles e até 32 filtros; centros/Q/Nyquist conforme [equalizadores](../audio/08-equalizers.md); curva = cascata calculada; estado independente por modo; MVP rotula `[DEMO]` o que não processa áudio |
 | QA-033 | vitrola (vinil + válvula) integrado ao grafo | Bypass transparente, desativação automática em bit-perfect/DSD, multicanal, picos de estalos, rituais/WearState e combinação com EQ sob QA-027 ([vitrola](../audio/10-vitrola.md)) |
+| QA-034 | Fidelidade ao MVP de referência | Gabaritos da [referência do MVP](../design/06-mvp-reference.md) (SVG, tema, ícone, captura, movimento, roteiro) reproduzidos no nativo dentro da tolerância declarada; exceção só para API intrínseca do navegador, com comportamento reimplementado |
 
 QA-032/033 (2026-10-25) detalham a [matriz de testes DSP](05-dsp-test-matrix.md). [Cenários completos](04-integration-codecs-dsp.md). QA-026 nos formatos M5 é futuro; M3 exige decisões/limitações dos condicionais e provas dos codecs comuns.
