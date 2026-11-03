@@ -1,6 +1,6 @@
 # TASK-E02-11 — MVP de referência congelado e extração
 
-Autor: Claude, 2026-11-03. Base `develop` `b5974f4`; branch `feature/task-e02-11-claude-mvp-reference`. Regras e tolerâncias: [referência do MVP](../../../design/06-mvp-reference.md). Pacote: [assets/reference/mvp](../../../../assets/reference/mvp/README.md), proveniência por arquivo em `SOURCE.json`.
+Autor: Claude, 2026-11-03. Base `develop` `b5974f4`; branch `feature/task-e02-11-claude-mvp-reference`. Regras e tolerâncias: [referência do MVP](../../../design/06-mvp-reference.md). Pacote: `assets/reference/mvp` (retirado depois deste repositório; hoje só em `vynamp-mvp-reference`), proveniência por arquivo em `SOURCE.json`.
 
 ## Fonte e ambiente
 

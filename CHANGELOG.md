@@ -48,4 +48,6 @@ Letras: componente resumido sob o VU e fontes em [library/02-tags-lyrics-tools.m
 
 ## Não lançado — 2026-11-03 (referência do MVP)
 
-MVP web rev.37 congelado por hash como especificação da UI nativa (egui) em [design/06-mvp-reference.md](docs/design/06-mvp-reference.md); pacote extraído em [assets/reference/mvp](assets/reference/mvp/README.md) (12 temas, 91 ícones, 16 medidores, SVGs renderizados) pelo repositório próprio `vynamp-mvp-reference`; QA-034 e TASK-E02-11..16 (fases de gabarito visual, movimento, comportamento, lacunas e harness egui_kittest). Verificação resvg × Chrome em [evidência](docs/evidence/PR/task-e02-11/README.md). Nada nativo implementado.
+MVP web rev.37 congelado por hash como especificação da UI nativa (egui) em [design/06-mvp-reference.md](docs/design/06-mvp-reference.md); pacote extraído (12 temas, 91 ícones, 16 medidores, SVGs renderizados) pelo repositório próprio `vynamp-mvp-reference`; QA-034 e TASK-E02-11..16 (fases de gabarito visual, movimento, comportamento, lacunas e harness egui_kittest). Verificação resvg × Chrome em [evidência](docs/evidence/PR/task-e02-11/README.md). Nada nativo implementado.
+
+Pacote do MVP retirado deste repositório: nenhum arquivo do MVP fica aqui; ele e o pacote extraído vivem só em `vynamp-mvp-reference`.
