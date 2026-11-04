@@ -1,6 +1,6 @@
 # TASK-E17-10 — Certificar visualizers, fallback e energia mobile
 
-Versão 0.7.0 · Estado: planejada, não implementada.
+Versão 0.7.1 · Data: 2026-11-03 · Estado: planejada, não implementada.
 
 ## Contrato
 
@@ -11,6 +11,8 @@ Requisito REQ-E17-10 · M3 · P0 · responsável funcional qa (pessoa a designar
 - [TASK-E17-09](TASK-E17-09.md) — Entregar presets e taps limitados de visualização
 - [TASK-E13-05](TASK-E13-05.md) — Entregar interface phone e navegação acessível
 - [TASK-E14-04](TASK-E14-04.md) — Executar corpus e outputs por alvo
+
+Referência visual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 (rev.38), caminhos `mvp/...` e `out/...` conforme [referência do MVP](../../docs/design/06-mvp-reference.md). Caminhos relevantes: `out/svg/meters/` e `out/svg/meters/dynamic.json`.
 
 ## Entrega concreta
 

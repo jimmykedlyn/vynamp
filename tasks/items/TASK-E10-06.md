@@ -1,6 +1,6 @@
 # TASK-E10-06 — Automatizar semântica e regressão visual
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Contrato da tarefa
 
@@ -17,6 +17,8 @@ Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implemen
 
 - [TASK-E02-06](TASK-E02-06.md) — Entregar Mini, preferências e estados de erro
 - [TASK-E06-04](TASK-E06-04.md) — Produzir três temas originais
+
+Referência visual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 (rev.38), caminhos `mvp/...` e `out/...` conforme [referência do MVP](../../docs/design/06-mvp-reference.md). Caminhos relevantes: `out/svg/rendered/` e `out/check/report.json`.
 
 ## Entrega concreta
 

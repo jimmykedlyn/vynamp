@@ -1,6 +1,6 @@
 # TASK-E17-09 — Entregar presets e taps limitados de visualização
 
-Versão 0.7.0 · Estado: planejada, não implementada.
+Versão 0.7.1 · Data: 2026-11-03 · Estado: planejada, não implementada.
 
 ## Contrato
 
@@ -10,6 +10,8 @@ Requisito REQ-E17-09 · M3 · P0 · responsável funcional design (pessoa a desi
 
 - [TASK-E06-06](TASK-E06-06.md) — Entregar visualizações avançadas
 - [TASK-E07-01](TASK-E07-01.md) — Provar sandbox WASM e capabilities
+
+Referência visual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 (rev.38), caminhos `mvp/...` e `out/...` conforme [referência do MVP](../../docs/design/06-mvp-reference.md). Caminhos relevantes: `out/svg/meters/` e `out/svg/meters/dynamic.json`.
 
 ## Entrega concreta
 

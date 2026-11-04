@@ -1,6 +1,6 @@
 # TASK-E06-08 — Entregar galeria local e recovery visual
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Contrato da tarefa
 
@@ -16,6 +16,8 @@ Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implemen
 ## Dependências
 
 - [TASK-E06-07](TASK-E06-07.md) — Entregar editor e preview de temas
+
+Referência visual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 (rev.38), caminhos `mvp/...` e `out/...` conforme [referência do MVP](../../docs/design/06-mvp-reference.md). Caminhos relevantes: `out/themes/themes.json`.
 
 ## Entrega concreta
 
