@@ -639,6 +639,7 @@ Versão 0.7.2 · 2026-11-03 · Markdown de produto, tooling, bootstrap e evidên
 - [Adendo CI/CD somente Woodpecker](superpowers/plans/2026-10-19-e15-04-woodpecker-only-ci.md) — docs/superpowers/plans/2026-10-19-e15-04-woodpecker-only-ci.md
 - [Operação Woodpecker CI/CD](../infra/ci/woodpecker/README.md) — infra/ci/woodpecker/README.md
 - [Evidência E15-04](evidence/PR/task-e15-04/README.md) — docs/evidence/PR/task-e15-04/README.md
+- [Evidência Woodpecker 3.20.1](evidence/PR/chore-woodpecker-3-20-1/README.md) — docs/evidence/PR/chore-woodpecker-3-20-1/README.md
 
 # Documentação DSP e equalizadores (2026-10-25)
 

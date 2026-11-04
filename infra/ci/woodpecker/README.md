@@ -4,7 +4,7 @@ Versão 0.7.0 · 2026-10-19 · TASK-E15-04: único CI/CD do projeto ([ADR-010](.
 
 ## Componentes
 
-- `compose.yaml`: servidor Woodpecker 3.19.0 (HTTP `127.0.0.1:8000`, gRPC `127.0.0.1:9000`, SQLite no volume `vynamp-woodpecker-data`), agente Linux/Docker (`host=vynamp-linux`) e cloudflared (profile `tunnel`).
+- `compose.yaml`: servidor Woodpecker 3.20.1 (HTTP `127.0.0.1:8000`, gRPC `127.0.0.1:9000`, SQLite no volume `vynamp-woodpecker-data`), agente Linux/Docker (`host=vynamp-linux`) e cloudflared (profile `tunnel`).
 - Agente Windows nativo, backend Local (`host=vynamp-windows`), iniciado por `scripts/Start-Woodpecker.ps1` com ambiente sem tokens da sessão interativa.
 - Túnel nomeado `vynamp-woodpecker` → `https://ci-cd-vynamp.jkca.lat` → somente `http://woodpecker-server:8000`; fallback 404; gRPC nunca exposto.
 - Pins e hashes em `versions.json`; `scripts/Install-Tools.ps1` baixa e verifica os binários Windows em `D:\Projects\vynamp-media-player\.cache\woodpecker\bin` sem alterar instalações do sistema; cloudflared é a instalação global winget 2026.10.1, verificada por hash.

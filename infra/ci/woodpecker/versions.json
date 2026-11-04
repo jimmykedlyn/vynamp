@@ -1,14 +1,14 @@
 {
-  "consulted": "2026-10-18",
+  "consulted": "2026-11-04",
   "sources": [
-    "https://github.com/woodpecker-ci/woodpecker/releases/tag/v3.19.0",
+    "https://github.com/woodpecker-ci/woodpecker/releases/tag/v3.20.1",
     "https://github.com/woodpecker-ci/plugin-git/releases/tag/2.10.1",
     "https://github.com/cloudflare/cloudflared/releases/tag/2026.10.1",
     "https://hub.docker.com"
   ],
   "images": {
-    "server": "docker.io/woodpeckerci/woodpecker-server:v3.19.0@sha256:6ca167a3c58b50c5a3c903dd8db92b39cfc30c560a47052cff7dd0235123a9cb",
-    "agent": "docker.io/woodpeckerci/woodpecker-agent:v3.19.0@sha256:f85f163e09494ace3377a3f3a6043f131fb47e3e627f7438de42417ee06ca56d",
+    "server": "docker.io/woodpeckerci/woodpecker-server:v3.20.1@sha256:0f31560e29d67ec4a06d6eeee4bac38d2a2697a6a741b8a0db3998180f3a3517",
+    "agent": "docker.io/woodpeckerci/woodpecker-agent:v3.20.1@sha256:a7d7299a13add0b3936fa0ac9ed23507fe283a7fc7d9596c4289d7e8206541eb",
     "clone": "docker.io/woodpeckerci/plugin-git:2.10.1@sha256:550075c844fcec0af41d9d28f9860aa5d8c43e1e9419be4b9266dc02c2f29804",
     "cloudflared": "docker.io/cloudflare/cloudflared:2026.10.1@sha256:a15a3b50b8dabd57ac2090e9484c0247dba9dfa1f0df4d298d4317f9d69eb2d5",
     "rust": "docker.io/library/rust:1.99.0-bookworm@sha256:114c7a4425406451c2866b6aafe69fe29b1b298832db1277d411ac73c82d04d6"
@@ -16,14 +16,14 @@
   "windows": [
     {
       "name": "woodpecker-agent",
-      "url": "https://github.com/woodpecker-ci/woodpecker/releases/download/v3.19.0/woodpecker-agent_windows_amd64.zip",
-      "sha256": "1ebcb00e547289e8393d9889102cedab87d162689ef2d2de1354869a17081276",
+      "url": "https://github.com/woodpecker-ci/woodpecker/releases/download/v3.20.1/woodpecker-agent_windows_amd64.zip",
+      "sha256": "b98db20f085540a1b6ef19c0cec38e81d0d1953296e60f210e08ee705176f4cb",
       "file": "woodpecker-agent.exe"
     },
     {
       "name": "woodpecker-cli",
-      "url": "https://github.com/woodpecker-ci/woodpecker/releases/download/v3.19.0/woodpecker-cli_windows_amd64.zip",
-      "sha256": "0f6fa22372cdd4ee27684fe1f992d6192345350080a6aab3ef43e132164d8f38",
+      "url": "https://github.com/woodpecker-ci/woodpecker/releases/download/v3.20.1/woodpecker-cli_windows_amd64.zip",
+      "sha256": "8982eac8380fd3732e3f0f172ab9aa454677aedf29f2ef6b061ce45d556c2412",
       "file": "woodpecker-cli.exe"
     },
     {
