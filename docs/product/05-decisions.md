@@ -1,6 +1,6 @@
 # Decisões, hipóteses e pontos em aberto
 
-Versão: 0.7.3 · Data: 2026-10-28 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.4 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Decisões fixadas pelo pedido
 
@@ -40,7 +40,7 @@ Vêm da revisão documental do DSP (pedido "Documentação DSP — Equalizadores
 | D-DSP-05 | **Aberto**: o vitrola §8.1 pede "depois do resampler", mas o contrato 07 tem um único resampler final. A decisão vitrola fica preservada e o 07 não muda; opção A (taxa do stream) × B (resampler por stream, emenda do 07) | Precisa de decisão do mantenedor; afeta também mixer com Fs diferentes |
 | D-DSP-06 | **Aberto**: crossfade com o vitrola ligado (candidato: desativar o crossfade com aviso) | A referência pressupõe disco contínuo/gapless |
 | D-DSP-07 | O vitrola é hospedado por referência; os parâmetros "candidatos" do pedido que a referência não define ficam **a validar**; nos conflitos vale a referência; falta uma TASK de integração (M3, após E04-03) | Preservar o acordo anterior; criar a TASK num PR de backlog |
-| D-DSP-08 | **Aberto**: os candidatos de resampler rubato/SoXR (de terceiros) em [saídas](../audio/04-outputs-hires.md) versus a preferência por bibliotecas próprias | Decidir no ADR de TASK-E04-02 |
+| D-DSP-08 | **Decidido (2026-11-03)**: lib própria de resampling, nome a definir (repositório a criar pelo mantenedor); sem resampler de terceiros ([ADR-011](../architecture/adr/ADR-011-own-audio-stack.md)) | Spike e ADR de qualidade na TASK-E04-02 |
 | D-DSP-09 | Um único modo de EQ processa por vez; os outros ficam guardados. AutoEQ/headphone correction é outro nó, depois do EQ | Pipeline "gráfico OU paramétrico"; correção sem ocupar o EQ do usuário |
 | D-DSP-10 | Ordem proposta no segmento por stream: EQ → correção → vitrola → dinâmica/imagem/criativos; reordenação livre não é prometida | Pedido v1.3 §3.5 compatível com vitrola §8.1 |
 | D-DSP-11 | As **oito famílias** do painel (Ganho/EQ, Dinâmica, Acústica, Estéreo, Tempo/formato, Criativos, Vitrola, Saída) são navegação: não são switches de processamento, não limitam o catálogo a oito efeitos, não alteram a ordem da cadeia nem os marcos nativos. Os 39 módulos e 198 campos do protótipo descrevem o protótipo e não congelam a arquitetura nativa | Pedido v1.4 §5.1 (DSP-UX-03, §5.1.5); mapeamento módulo→família em [09](../audio/09-dsp-catalog.md#famílias-v14-e-estado-no-protótipo-rev-15-relatado) é proposto |
@@ -68,7 +68,7 @@ Vêm da revisão documental do DSP (pedido "Documentação DSP — Equalizadores
 | Pedido v1.3 §3.5.B (Bias, Oversampling/Quality, seed) × vitrola §4/§8.7 | bias dinâmico interno, qualidade automática, semente automática | vale a referência; controles do usuário a validar |
 | vitrola §8.1 × `docs/audio/07-dsp-signal-contract.md` §Caminho | "depois do resampler" × resampler único final | D-DSP-05 |
 | Contexto informado × `ROADMAP-rodadas.md` (raiz) | não há linha vitrola; a ordem "após E04-03" está em `STATE.md` e no vitrola §6 | TASK de integração pendente (D-DSP-07) |
-| `docs/audio/04-outputs-hires.md` §Backend matrix × design `vynamp-output` 2026-10-25 | "WASAPI shared via CPAL" e "ASIO opcional" × biblioteca própria substitui o CPAL; ASIO fora do núcleo | não editado (fora do escopo DSP); atualizar com TASK-E04-05/plano 05 da vynamp-output |
+| `docs/audio/04-outputs-hires.md` §Backend matrix × design `vynamp-output` 2026-10-25 | "WASAPI shared via biblioteca de terceiros" e "ASIO opcional" × biblioteca própria substitui a de terceiros; ASIO fora do núcleo | resolvido em 2026-11-03 por [ADR-011](../architecture/adr/ADR-011-own-audio-stack.md); a integração segue o plano 05 da vynamp-output |
 | [Painel DSP](../design/05-dsp-panel.md) v1.3, Navegação: 7 categorias (incluindo Medidores) × DSP-UX-03: 8 famílias | Medidores vira área própria, fora das famílias | D-DSP-11 |
 | Catálogo [09](../audio/09-dsp-catalog.md) (v1.3: seis seções, cinco de módulos mais extensibilidade) × pedido v1.4 DSP-UX-03 (oito famílias) | agrupamentos diferentes para o mesmo conjunto de módulos | D-DSP-11: capítulos mantidos, família de navegação adicionada por módulo (proposta); sem renumerar seções |
 | Grafo modular livre do protótipo (rev. 15) × D-DSP-10 / [07](../audio/07-dsp-signal-contract.md) (ordem fixa por stream) | o protótipo permite roteamento livre; o nativo não promete reordenação | D-DSP-12 (aberto); grafo é contrato do protótipo, ordem fixa permanece no nativo |

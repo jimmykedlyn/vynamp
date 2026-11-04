@@ -1,6 +1,6 @@
 # Referências de mercado e interpretação
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 Pesquisa de páginas oficiais em 2026-10-14. Referências são inspirações de experiência; a lista de requisitos do Vynamp é projeto próprio. Produtos mudam e funcionalidades em beta não equivalem a disponibilidade estável.
 
@@ -21,6 +21,6 @@ Escolher tecnologias pelo conjunto: qualidade de áudio demonstrável, estabilid
 
 ## Tecnologias de referência
 
-[Symphonia](https://docs.rs/symphonia/latest/symphonia/) é candidato Rust para demux/decode; suporte varia por codec, versão e feature. [CPAL](https://docs.rs/cpal/latest/cpal/) é candidato para saída multiplataforma, não garantia de exclusivo/bit-perfect. [egui](https://github.com/emilk/egui) é candidato para UI Rust customizável. [Wasmtime](https://docs.wasmtime.dev/security.html) orienta sandbox de extensões. [FFmpeg](https://ffmpeg.org/legal.html) exige revisar configuração/licenciamento do build, não apenas citar o nome.
+Decoders e saídas Rust de terceiros foram avaliados; a decisão e a pilha própria estão no [ADR-011](../architecture/adr/ADR-011-own-audio-stack.md). Nenhuma saída multiplataforma garante exclusivo/bit-perfect por si só. [egui](https://github.com/emilk/egui) é candidato para UI Rust customizável. [Wasmtime](https://docs.wasmtime.dev/security.html) orienta sandbox de extensões. [FFmpeg](https://ffmpeg.org/legal.html) exige revisar configuração/licenciamento do build, não apenas citar o nome.
 
 Normas: [HLS RFC 8216](https://www.rfc-editor.org/info/rfc8216/) para streaming; [HTTP RFC 9110](https://www.rfc-editor.org/info/rfc9110/) para semântica de transferência; [WCAG 2.2](https://www.w3.org/TR/WCAG22/) como referência de contraste, foco e alvos, complementada por testes desktop com leitor de tela.

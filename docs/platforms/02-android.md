@@ -1,12 +1,12 @@
 # Android: shell nativo e núcleo Rust
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Arquitetura proposta
 
 Core Rust continua responsável por domain, queue, clock, decode, DSP, library e SourceDescriptor. Shell Android em Kotlin/Jetpack Compose para lifecycle, permissões, MediaSession e acessibilidade. Ponte JNI/C ABI ou UniFFI após spike de ownership/threading; não requer reimplementar regras de reprodução em Kotlin. A escolha de UI nativa é proposta de adapter, não abandono de Rust no núcleo.
 
-Activity/Compose → commands bridge → service playback owner → Rust control/engine → AAudio/Oboe output. Media3 MediaSession/MediaLibraryService usa adapter Player do motor Rust. Não iniciar ExoPlayer e Rust output simultaneamente nem manter duas filas independentes. Se Media3 decode for usado como fallback de perfil, registry declara seleção e mantém mesma sessão/clock/política DSP.
+Activity/Compose → commands bridge → service playback owner → Rust control/engine → AAudio output (vynamp-output, ADR-011). Media3 MediaSession/MediaLibraryService usa adapter Player do motor Rust. Não iniciar ExoPlayer e Rust output simultaneamente nem manter duas filas independentes. Se Media3 decode for usado como fallback de perfil, registry declara seleção e mantém mesma sessão/clock/política DSP.
 
 Bridge transmite IDs, buffers com ownership explícito e snapshots coalescidos. Não chamar JNI, UI, alocar, anexar threads JVM, acessar arquivo/rede ou realizar callbacks Kotlin dentro da callback de áudio. Life of native handles não depende de Activity; close/dispose idempotentes, sem use-after-free ao girar tela ou parar service.
 

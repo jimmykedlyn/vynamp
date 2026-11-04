@@ -1026,7 +1026,7 @@
         "TASK-E01-02"
       ],
       "spec": "docs/audio/04-outputs-hires.md",
-      "deliverable": "Spike rubato/SoXR, PCM24/32 packing e ADR de qualidade.",
+      "deliverable": "Spike da lib própria de resampling (ADR-011), PCM24/32 packing e ADR de qualidade.",
       "acceptance": "Impulse/sweep e alias/CPU/latência registrados; integer bypass sample-exact e dither só ao reduzir precisão.",
       "qa": [
         "QA-003",
@@ -3510,7 +3510,7 @@
         "TASK-E01-02"
       ],
       "spec": "docs/platforms/02-android.md",
-      "deliverable": "Spike NDK/ABI Rust, ownership de buffers, AAudio/Oboe e adapter Media3, com decisões de UI/runtime.",
+      "deliverable": "Spike NDK/ABI Rust, ownership de buffers, AAudio direto (vynamp-output) e adapter Media3, com decisões de UI/runtime.",
       "acceptance": "Tocar WAV/FLAC em aparelho arm64 real; callback sem JNI/alloc; native build compatível com requisitos de páginas; comparar lifecycle e runtime antes congelar.",
       "qa": [
         "QA-019",

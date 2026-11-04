@@ -1,6 +1,6 @@
 # Plataformas obrigatórias e paridade
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Compromisso do produto
 
@@ -12,7 +12,7 @@ Windows, Linux, macOS Intel, macOS Apple Silicon e Android são plataformas de p
 | Linux | x86_64; Ubuntu 22.04+ e Fedora estável como referências | PipeWire/PulseAudio, ALSA opcional, MPRIS, Secret Service | AppImage + DEB obrigatórios; Flatpak futuro opcional |
 | macOS Intel | x86_64, macOS 13+ | CoreAudio, Now Playing, VoiceOver, Keychain | DMG + ZIP Universal2 assinados e notarizados |
 | macOS Apple Silicon | arm64, macOS 13+ | Mesmo núcleo e APIs, execução nativa | Mesmo DMG + ZIP Universal2 com slices Intel e Silicon nativas |
-| Android | Android 10/API 29+, arm64-v8a em aparelhos reais | AAudio/Oboe, MediaSession/foreground playback, MediaStore/SAF, Keystore | APK assinado e AAB; target SDK conforme política vigente de publicação |
+| Android | Android 10/API 29+, arm64-v8a em aparelhos reais | AAudio (vynamp-output), MediaSession/foreground playback, MediaStore/SAF, Keystore | APK assinado e AAB; target SDK conforme política vigente de publicação |
 
 Baselines são decisões técnicas propostas, revisadas em M0 conforme toolchain e testes. x86_64 Android é alvo de emulador/CI, não substituto de arm64 real. Mac Intel não depende de Rosetta; Silicon exige slice nativa. Linux/Windows ARM64 e Android 32-bit são expansão separada, não requisito implícito.
 

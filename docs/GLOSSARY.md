@@ -1,6 +1,6 @@
 # Glossário e convenções
 
-Versão 0.7.3 · 2026-10-28 (termos de controles DSP, grafo modular e VU adicionados; termos de letras adicionados).
+Versão 0.7.4 · 2026-11-03 (termos de controles DSP, grafo modular e VU adicionados; termos de letras adicionados; pilha de áudio própria).
 
 | Termo | Significado nesta spec |
 |---|---|
@@ -38,7 +38,8 @@ Versão 0.7.3 · 2026-10-28 (termos de controles DSP, grafo modular e VU adicion
 | Oversampling | Processar em taxa multiplicada para reduzir aliasing de não linearidades ou medir true peak |
 | Wow / flutter | Flutuação lenta / rápida de velocidade e afinação simulada pelo vitrola |
 | vitrola | Biblioteca própria de simulação de vinil e amplificador valvulado hospedada no DSP ([spec](audio/10-vitrola.md)) |
-| vynamp-decode / vynamp-output | Bibliotecas próprias de decodificação / saída de áudio; a saída nunca aplica ganho, dither ou resampling |
+| vynamp-decode / vynamp-output | Bibliotecas próprias de decodificação / saída de áudio; a saída nunca aplica ganho, dither ou resampling ([ADR-011](architecture/adr/ADR-011-own-audio-stack.md)) |
+| Lib própria de resampling | Futura biblioteca própria de conversão de taxa de amostragem (nome e repositório a definir); decisão D-DSP-08 |
 | MVP HTML/SVG/JS | Protótipo interativo de UI; `[DEMO]` marca o que não processa áudio; não é a engine nativa |
 | Knob | Controle circular de parâmetro contínuo, ajustado por gesto vertical; ver [painel DSP](design/05-dsp-panel.md#8-acesso-e-controles-dsp-ux) |
 | Readout | Valor numérico com unidade junto ao knob ou slider; clicável para abrir o editor exato |

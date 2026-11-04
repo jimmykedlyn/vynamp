@@ -1,6 +1,6 @@
 # Histórico da especificação
 
-Versão: 0.7.1 · Data: 2026-10-28 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.2 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## 0.1.0 — 2026-10-14
 
@@ -51,3 +51,7 @@ Letras: componente resumido sob o VU e fontes em [library/02-tags-lyrics-tools.m
 MVP web rev.37 congelado por hash como especificação da UI nativa (egui) em [design/06-mvp-reference.md](docs/design/06-mvp-reference.md); pacote extraído (12 temas, 91 ícones, 16 medidores, SVGs renderizados) pelo repositório próprio `vynamp-mvp-reference`; QA-034 e TASK-E02-11..16 (fases de gabarito visual, movimento, comportamento, lacunas e harness egui_kittest). Verificação resvg × Chrome em [evidência](docs/evidence/PR/task-e02-11/README.md). Nada nativo implementado.
 
 Pacote do MVP retirado deste repositório: nenhum arquivo do MVP fica aqui; ele e o pacote extraído vivem só em `vynamp-mvp-reference`.
+
+## Não lançado — 2026-11-03 (pilha de áudio própria)
+
+[ADR-011](docs/architecture/adr/ADR-011-own-audio-stack.md): decode, saída, efeitos e tags passam a vir das bibliotecas próprias vynamp-decode, vynamp-output e vitrola (SHAs fixos, estado API real × planejado e tabela de lacunas); o resampler será uma nova lib própria (nome a definir, D-DSP-08 decidido) e a escrita de tags estenderá `vynamp-decode-meta`. ADR-002 marcada como parcialmente substituída; specs de stack, formatos, saídas, backends, catálogo DSP, referências, licenças e TASK-E04-02 reescritas sem os nomes de bibliotecas de terceiros. Somente documentação.

@@ -1,6 +1,6 @@
 # TASK-E13-01 — Provar Android arm64, bridge Rust e output
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Contrato da tarefa
 
@@ -21,7 +21,7 @@ Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implemen
 
 ## Entrega concreta
 
-Spike NDK/ABI Rust, ownership de buffers, AAudio/Oboe e adapter Media3, com decisões de UI/runtime.
+Spike NDK/ABI Rust, ownership de buffers, AAudio direto (vynamp-output) e adapter Media3, com decisões de UI/runtime.
 
 Documento canônico: [spec](../../docs/platforms/02-android.md). [Matriz normativa](../../docs/product/03-requirements.md).
 
