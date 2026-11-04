@@ -25,6 +25,10 @@ services:
       WOODPECKER_STATUS_CONTEXT_FORMAT: '{{ if eq .workflow "gate" }}CI Gate{{ else }}{{ .context }}/{{ .event }}/{{ .workflow }}{{ end }}'
       WOODPECKER_DEFAULT_CLONE_PLUGIN: docker.io/woodpeckerci/plugin-git:2.10.1@sha256:550075c844fcec0af41d9d28f9860aa5d8c43e1e9419be4b9266dc02c2f29804
       WOODPECKER_PLUGINS_TRUSTED_CLONE: docker.io/woodpeckerci/plugin-git:2.10.1@sha256:550075c844fcec0af41d9d28f9860aa5d8c43e1e9419be4b9266dc02c2f29804
+      # The link to api.github.com drops ~1 in 5 new connections; a hung dial
+      # used to burn the single 30s attempt ("context deadline exceeded").
+      WOODPECKER_FORGE_TIMEOUT: 45s
+      WOODPECKER_FORGE_RETRY: "10"
       WOODPECKER_MAX_PIPELINE_TIMEOUT: "120"
       WOODPECKER_LOG_LEVEL: info
 
