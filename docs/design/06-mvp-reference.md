@@ -18,14 +18,14 @@ Só fica fora o que é intrínseco ao navegador (motor DOM/CSS, a API Web Audio 
 | Pin | `vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452` |
 | Congelamento | rev.38 congelada no commit `0a6342c` ("Freeze MVP rev.38: all 16 meters selectable"); `0d9860b` ("Make mvp/ the only, editable copy of the MVP") é o pin |
 | Fonte | `mvp/`: 203 arquivos, 2.118.012 bytes (~2,1 MB) |
-| Hash de conteúdo de `mvp/` | `20ecd5798ee87b4b4c579bd2b2dbae8e47f5148bf78185976101306c36f19097` (sha256 das linhas `<sha256> *./<caminho>` ordenadas por caminho, cada uma terminada em LF, formato `sha256sum --binary`) |
+| Hash de conteúdo de `mvp/` | `f00f766045edf4c1032c9a30c5826803c090f960ac9377d815c020079f398bba` (sha256 das linhas `<sha256> *./<caminho>` ordenadas por caminho, cada uma terminada em LF, formato `sha256sum --binary`), calculado sobre os blobs do commit (checkout limpo; uma cópia de trabalho com CRLF dá outro valor) |
 | Git tree ids (outra definição, não misturar com o hash acima) | `mvp/` = `f85fd66247ecdb4cd649b45804f51ab2a140bf9a`, `out/` = `1d9f9615fd372d9ed6d39a1fa54be18b96440b4a` (`git rev-parse 0d9860b:mvp` e `:out`) |
 | Bytes | `.gitattributes` `* -text`: `mvp/` e `out/` são hasheados byte a byte, sem conversão de fim de linha |
 | Ferramentas | `tools/extract.cjs`, `tools/svgcheck.cjs`, `tools/verify.cjs`, `tools/serve.cjs`, `tools/package.cjs` |
-| Ambiente | Node ≥ 20, Playwright 1.64.1, resvg 0.49.0, Google Chrome (README do repositório de referência). Rev.37, histórico: extraída com Node 24.15, Chrome 156.0.8078.79, Windows 11 |
+| Ambiente | Node ≥ 20, Google Chrome e resvg 0.49.0 (README do repositório de referência); Playwright 1.64.1 (`package.json`). Rev.37, histórico: extraída com Node 24.15, Chrome 156.0.8078.79, Windows 11 |
 | Proveniência | URL do repositório + SHA do commit + hash de conteúdo/tree. Não existe mais `SOURCE.json` |
 
-Pendência fora deste repositório: `tools/package.cjs` e o README de `vynamp-mvp-reference` ainda copiam `out/` para `assets/reference/mvp/` e escrevem `SOURCE.json`. Isso deve ser removido lá (follow-up no repositório de referência); este repositório não aceita esse pacote.
+Pendência fora deste repositório: no pin `0d9860b`, `tools/package.cjs` e o README de `vynamp-mvp-reference` ainda copiam `out/` para `assets/reference/mvp/` e escrevem `SOURCE.json`. Isso deve ser removido lá (follow-up no repositório de referência); este repositório não aceita esse pacote.
 
 A ferramenta roda num navegador real porque a fonte é web. Ela não entra no produto nem no build Rust.
 
@@ -39,7 +39,7 @@ Nenhum arquivo do MVP fica neste repositório. O pacote é gerado e mantido em `
 | `out/svg/icons/` | 91 ícones standalone (grade 24×24, traço 1,5, `currentColor`), 9 aliases, 4 ícones CSS, `icons.json` e `usage.json` (uso por tela) | TASK-E02-02, E02-03 |
 | `out/svg/meters/<16 diretórios>/` e `out/svg/meters/dynamic.json` | 16 medidores: SVG fonte, metadados (tipo, canais, escala dB/ângulo, pivôs, temas que o citam, selecionável) e atributos dinâmicos. Na rev.38 os 16 são selecionáveis e montados | TASK-E02-07, E02-13 |
 | `out/svg/rendered/` | Cada SVG distinto que a UI desenha, serializado standalone com estilos computados embutidos, e o índice de estados onde aparece; inclui `click-failures.json` | TASK-E02-12, E02-16 |
-| `out/check/report.json` (e `out/check/diff`, `out/check/resvg`) | Comparação resvg × Chrome de cada SVG (substitui o antigo `svg-check.json`) | QA-034 |
+| `out/check/report.json` (`out/check/diff/` e `out/check/resvg/` são saídas locais do svgcheck, não versionadas) | Comparação resvg × Chrome de cada SVG (substitui o antigo `svg-check.json`) | QA-034 |
 
 A reextração é verificada por `npm run verify`, que extrai de novo para um diretório temporário e compara byte a byte com `out/` (rev.38: 499 arquivos, 0 diferem); cliques que expiram ficam em `out/svg/rendered/click-failures.json`, para que uma diferença de cobertura apareça na comparação.
 
