@@ -1,6 +1,6 @@
 # Glossário e convenções
 
-Versão 0.7.4 · 2026-11-03 (termos de controles DSP, grafo modular e VU adicionados; termos de letras adicionados; pilha de áudio própria).
+Versão 0.7.5 · 2026-11-03 (termos de controles DSP, grafo modular e VU adicionados; termos de letras adicionados; pilha de áudio própria; MVP rev.38).
 
 | Termo | Significado nesta spec |
 |---|---|
@@ -40,7 +40,7 @@ Versão 0.7.4 · 2026-11-03 (termos de controles DSP, grafo modular e VU adicion
 | vitrola | Biblioteca própria de simulação de vinil e amplificador valvulado hospedada no DSP ([spec](audio/10-vitrola.md)) |
 | vynamp-decode / vynamp-output | Bibliotecas próprias de decodificação / saída de áudio; a saída nunca aplica ganho, dither ou resampling ([ADR-011](architecture/adr/ADR-011-own-audio-stack.md)) |
 | Lib própria de resampling | Futura biblioteca própria de conversão de taxa de amostragem (nome e repositório a definir); decisão D-DSP-08 |
-| MVP HTML/SVG/JS | Protótipo interativo de UI; `[DEMO]` marca o que não processa áudio; não é a engine nativa |
+| MVP HTML/SVG/JS | Protótipo interativo de UI, rev.38 em `vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452` (repositório privado, fora deste); `[DEMO]` marca o que não processa áudio; não é a engine nativa ([referência do MVP](design/06-mvp-reference.md)) |
 | Knob | Controle circular de parâmetro contínuo, ajustado por gesto vertical; ver [painel DSP](design/05-dsp-panel.md#8-acesso-e-controles-dsp-ux) |
 | Readout | Valor numérico com unidade junto ao knob ou slider; clicável para abrir o editor exato |
 | Grafo modular | Vista de nós e conexões do DSP; no protótipo, referência relatada, no nativo, nada implementado ([painel DSP §9](design/05-dsp-panel.md#9-fluxo-modular-grafo--referência-do-protótipo)) |

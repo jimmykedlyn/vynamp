@@ -1,6 +1,6 @@
 # TASK-E02-16 — Implementar harness de fidelidade com egui_kittest
 
-Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.2 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Contrato da tarefa
 
@@ -20,13 +20,15 @@ Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implemen
 
 ## Entrega concreta
 
-Crate de testes que renderiza telas nativas e as compara com os gabaritos visual, de movimento e de comportamento do MVP no CI.
+Crate de testes que renderiza telas nativas e as compara com os gabaritos visual, de movimento e de comportamento do MVP, executada localmente.
+
+Referência visual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 (rev.38), caminhos `mvp/...` e `out/...` conforme [referência do MVP](../../docs/design/06-mvp-reference.md). Caminhos relevantes: `out/svg/rendered/`, `out/check/report.json`.
 
 Documento canônico: [referência do MVP](../../docs/design/06-mvp-reference.md). [Matriz normativa](../../docs/product/03-requirements.md).
 
 ## Critérios de aceite
 
-O harness falha quando uma tela ou estado excede a tolerância e aponta o elemento divergente; roda no CI Gate em Linux e Windows.
+O harness falha quando uma tela ou estado excede a tolerância e aponta o elemento divergente; roda apenas localmente, na máquina do mantenedor, com o clone de vynamp-mvp-reference no SHA 0d9860b901510021bcca4c31a25014373ea7c452; o CI Gate o marca como não executado.
 
 ## Verificação e evidência
 

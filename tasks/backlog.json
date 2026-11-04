@@ -670,7 +670,7 @@
         "TASK-E02-14"
       ],
       "spec": "docs/design/06-mvp-reference.md",
-      "deliverable": "Mapa de cada recurso web usado pelo MVP para o equivalente nativo em Windows, Linux, macOS, iOS e Android, com biblioteca própria planejada onde faltar.",
+      "deliverable": "Mapa de cada recurso web usado pelo MVP para o equivalente nativo em Windows, Linux, macOS e Android (iOS fora da 1.0), com biblioteca própria planejada onde faltar.",
       "acceptance": "Zero lacunas sem plano; exceções só para APIs intrínsecas do navegador com comportamento reimplementado; toda biblioteca nova tem repositório git próprio e modular.",
       "qa": [
         "QA-034"
@@ -697,8 +697,8 @@
         "TASK-E02-01"
       ],
       "spec": "docs/design/06-mvp-reference.md",
-      "deliverable": "Crate de testes que renderiza telas nativas e as compara com os gabaritos visual, de movimento e de comportamento do MVP no CI.",
-      "acceptance": "O harness falha quando uma tela ou estado excede a tolerância e aponta o elemento divergente; roda no CI Gate em Linux e Windows.",
+      "deliverable": "Crate de testes que renderiza telas nativas e as compara com os gabaritos visual, de movimento e de comportamento do MVP, executada localmente.",
+      "acceptance": "O harness falha quando uma tela ou estado excede a tolerância e aponta o elemento divergente; roda apenas localmente, na máquina do mantenedor, com o clone de vynamp-mvp-reference no SHA 0d9860b901510021bcca4c31a25014373ea7c452; o CI Gate o marca como não executado.",
       "qa": [
         "QA-034"
       ],

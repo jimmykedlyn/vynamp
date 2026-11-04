@@ -1,6 +1,6 @@
 # Histórico da especificação
 
-Versão: 0.7.2 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.3 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## 0.1.0 — 2026-10-14
 
@@ -51,6 +51,10 @@ Letras: componente resumido sob o VU e fontes em [library/02-tags-lyrics-tools.m
 MVP web rev.37 congelado por hash como especificação da UI nativa (egui) em [design/06-mvp-reference.md](docs/design/06-mvp-reference.md); pacote extraído (12 temas, 91 ícones, 16 medidores, SVGs renderizados) pelo repositório próprio `vynamp-mvp-reference`; QA-034 e TASK-E02-11..16 (fases de gabarito visual, movimento, comportamento, lacunas e harness egui_kittest). Verificação resvg × Chrome em [evidência](docs/evidence/PR/task-e02-11/README.md). Nada nativo implementado.
 
 Pacote do MVP retirado deste repositório: nenhum arquivo do MVP fica aqui; ele e o pacote extraído vivem só em `vynamp-mvp-reference`.
+
+## Não lançado — 2026-11-03 (referências ao MVP rev.38)
+
+As specs passam a citar o MVP web rev.38 por URL, SHA fixo e caminho: `vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452` (`mvp/...`, `out/...`); nenhum arquivo do MVP é copiado para este repositório. [Referência do MVP](docs/design/06-mvp-reference.md) reescrita (v0.8.0): os 16 medidores são selecionáveis, caminhos reais de `out/`, hashes de conteúdo e git tree rotulados, sem `SOURCE.json`; `tools/package.cjs` e o README do repositório de referência ainda copiam `out/` para `assets/reference/mvp/` (follow-up lá). TASK-E02-01..10 e E02-12..16 apontam para o pin; TASK-E02-11 permanece como histórico da rev.37. O harness de TASK-E02-16 roda só localmente; o CI Gate o marca como não executado. iOS deixa de constar como alvo em TASK-E02-15 (fora da 1.0). Citações de `interactive/` (protótipo Codex rev.14/15) marcadas como históricas.
 
 ## Não lançado — 2026-11-03 (pilha de áudio própria)
 
