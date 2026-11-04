@@ -25,7 +25,7 @@ Só fica fora o que é intrínseco ao navegador (motor DOM/CSS, a API Web Audio 
 | Ambiente | Node ≥ 20, Google Chrome e resvg 0.49.0 (README do repositório de referência); Playwright 1.64.1 (`package.json`). Rev.37, histórico: extraída com Node 24.15, Chrome 156.0.8078.79, Windows 11 |
 | Proveniência | URL do repositório + SHA do commit + hash de conteúdo/tree. Não existe mais `SOURCE.json` |
 
-Pendência fora deste repositório: no pin `0d9860b`, `tools/package.cjs` e o README de `vynamp-mvp-reference` ainda copiam `out/` para `assets/reference/mvp/` e escrevem `SOURCE.json`. Isso deve ser removido lá (follow-up no repositório de referência); este repositório não aceita esse pacote.
+Ferramenta de pin: no pin `0d9860b`, `tools/package.cjs` e o README de `vynamp-mvp-reference` ainda copiavam `out/` para `assets/reference/mvp/` e escreviam `SOURCE.json`. Isso foi removido em `vynamp-mvp-reference@741316f` (PR #1), que troca `package.cjs` por `tools/pin.cjs` (`npm run pin -- <commit>`): lê os blobs do commit e imprime os valores desta tabela. `mvp/` e `out/` não mudaram, então o pin do conteúdo continua `0d9860b`. Este repositório não aceita o pacote antigo.
 
 A ferramenta roda num navegador real porque a fonte é web. Ela não entra no produto nem no build Rust.
 
