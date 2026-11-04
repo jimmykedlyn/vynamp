@@ -1,10 +1,10 @@
 # Saídas, hi-res e modo transparente
 
-Versão: 0.8.0 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.8.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Backend matrix
 
-Windows M1: WASAPI shared via vynamp-output (plano 02 de vynamp-output, plano ainda não escrito); M3: WASAPI exclusive event-driven (Camada 2); ASIO fora do núcleo (adapter privado opcional futuro). Linux M1–M3: ALSA simples (Camada 1, plano 03), ALSA hw (Camada 2), PipeWire nativo e PulseAudio fallback (Camada 3); macOS Intel/Silicon M1–M3: CoreAudio e seleção de sample rate; Android M1–M3: AAudio (Camada 3, plano 04 de vynamp-output, plano ainda não escrito) com fallback negociado, audio focus e routes nativas. Ver [backends por plataforma](05-platform-backends.md). ASIO/ALSA/CoreAudio não garantem transparência sem negociação/teste.
+Windows M1: WASAPI shared via vynamp-output (plano 02 de vynamp-output, plano ainda não escrito); M3: WASAPI exclusive event-driven (Camada 2); ASIO fora do núcleo (adapter privado opcional futuro). Linux M1–M3: ALSA simples (Camada 1, plano 03), ALSA hw (Camada 2), PipeWire nativo e PulseAudio fallback (Camada 3); macOS Intel/Silicon M1–M3: CoreAudio (dispositivo default na Camada 1, hog mode/formato físico/sample rate na Camada 2; plano 04 de vynamp-output, plano ainda não escrito); Android M1–M3: AAudio (Camada 3, plano 04 de vynamp-output, plano ainda não escrito) com fallback negociado, audio focus e routes nativas. Ver [backends por plataforma](05-platform-backends.md). ASIO/ALSA/CoreAudio não garantem transparência sem negociação/teste.
 
 Perfil por dispositivo: stable ID quando disponível, backend, sample rate policy, formato, canais, buffer, fallback, EQ e volume. Não persistir index numérico de enumeração. Dispositivos ausentes mantêm perfil para futura reconexão. Enumerar não bloqueia UI; tratamento explícito de driver que trava.
 

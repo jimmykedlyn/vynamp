@@ -2,7 +2,7 @@
 
 
 
-Versão 0.7.1 · 2026-10-28 · Markdown de produto, tooling, bootstrap e evidências históricas.
+Versão 0.7.2 · 2026-11-03 · Markdown de produto, tooling, bootstrap e evidências históricas.
 
 
 

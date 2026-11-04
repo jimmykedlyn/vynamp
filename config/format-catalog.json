@@ -378,7 +378,7 @@
       "state": "planned",
       "association_allowed": true,
       "backend_candidates": [
-        "Symphonia após spike"
+        "vynamp-decode (ADR-011)"
       ],
       "restrictions": [
         "16/24 M1; PCM32 M2/M3 conforme backend; MD5, subset e canais identificados."
@@ -544,7 +544,7 @@
       "state": "planned",
       "association_allowed": true,
       "backend_candidates": [
-        "Symphonia após spike"
+        "vynamp-decode (ADR-011)"
       ],
       "restrictions": [
         "CBR/VBR, Xing/VBRI/LAME trim e CRC; sniff seguro."

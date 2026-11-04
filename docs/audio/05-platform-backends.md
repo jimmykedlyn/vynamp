@@ -1,6 +1,6 @@
 # Backends multiplataforma e negociação
 
-Versão: 0.8.0 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.8.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Obrigação M1–M3
 
@@ -10,15 +10,15 @@ Backends enumeram dispositivos/rotas por API de OS, negociam formato e mantêm c
 
 | Recurso | Windows | Linux | macOS Intel/Silicon | Android |
 |---|---|---|---|---|
-| Shared playback | WASAPI | PipeWire/PulseAudio | CoreAudio | AAudio/Oboe/AudioTrack |
-| Direct/exclusive | WASAPI; ASIO opcional | ALSA direto opcional | Controle de dispositivo/taxa/hog quando aplicável | Requisição de sharing/rota conforme hardware; não promete bypass total |
+| Shared playback | WASAPI | PipeWire/PulseAudio | CoreAudio | AAudio (vynamp-output, Camada 3) |
+| Direct/exclusive | WASAPI exclusive (Camada 2); ASIO fora do núcleo | ALSA direto opcional | Controle de dispositivo/taxa/hog quando aplicável | Requisição de sharing/rota conforme hardware; não promete bypass total |
 | Route changes | Device events | Server/device events | CoreAudio callbacks | AudioManager/device callbacks e noisy/focus |
 | Hi-res | Negociação DAC/driver | Servidor/ALSA e hardware | CoreAudio/DAC | OS/ROM/route/DAC; PCM24/192 não presumido |
 | Volume | Digital ou device explícito | Mixer/device explícito | Digital/device explícito | Media stream hardware volume distinto de preamp/digital |
 
 ## Android
 
-API output selecionada em M0 por medições AAudio direto, Oboe ou adapter disponível. Shared é default seguro; low-latency/exclusive só se dispositivo realmente permite. Consultar taxa, channels, format e sharing obtidos ao abrir. Tratamento de disconnect recria stream fora callback; sem JNI/logs/locks no audio callback. Não escolher o maior sample rate sem considerar fonte/energia.
+API output selecionada em M0 por medições do AAudio direto da vynamp-output (Camada 3; Oboe e OpenSL ES fora da pilha, [ADR-011](../architecture/adr/ADR-011-own-audio-stack.md)). Shared é default seguro; low-latency/exclusive só se dispositivo realmente permite. Consultar taxa, channels, format e sharing obtidos ao abrir. Tratamento de disconnect recria stream fora callback; sem JNI/logs/locks no audio callback. Não escolher o maior sample rate sem considerar fonte/energia.
 
 USB DAC via rota do sistema na 1.0 quando suportado. Driver USB exclusivo próprio requer spike e novo requisito se necessário para alvo hi-res, não pressuposto da paridade. Bluetooth codec/link details só aparecem quando OS expõe informação; não presumir LDAC/aptX nem qualidade lossless a partir de sample rate app.
 
