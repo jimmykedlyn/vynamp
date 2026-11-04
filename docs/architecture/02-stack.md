@@ -1,18 +1,18 @@
 # Stack, seleção e política de dependências
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.8.0 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 | Camada | Preferência proposta | Prova antes congelar |
 |---|---|---|
 | Linguagem/build | Rust stable, Cargo workspace, rustfmt/clippy | MSRV definida por lockfile/CI, sem “latest” no release |
 | UI desktop | egui/eframe + AccessKit + wgpu | Windows/Linux/macOS Intel+Silicon, leitores de tela/DPI M0 |
 | UI Android | Kotlin/Compose, service Media3, bridge JNI/UniFFI/C ABI proposta | TalkBack, focus, lifecycle, buffer ownership e arm64 M0 |
-| Decode | Symphonia onde suportado | Perfis/container/gapless/seek e custo hi-res |
+| Decode | vynamp-decode (própria; API real: PCM, WAV/RF64/W64, AIFF, FLAC; demais formatos planejados por camada, [ADR-011](adr/ADR-011-own-audio-stack.md)) | Perfis/container/gapless/seek e custo hi-res |
 | Codecs adicionais | adapters libopus/libFLAC/FFmpeg/helper | Cobertura, licenças e isolamento |
-| Saída shared | CPAL | Latência, device events e formato real |
-| Saída avançada | Windows WASAPI adapter via windows crate; ASIO opcional | Exclusive/event-mode/PCM24/32 e driver ocupado |
-| Resampling | rubato Rust ou SoXR adapter | Resposta, alias rejection, CPU/latência e distribuição |
-| Tags | Lofty candidato + parser/adapters por formato | Roundtrip e unknown fields |
+| Saída shared | vynamp-output (própria; core em PR #1, backends WASAPI/ALSA/CoreAudio planejados, [ADR-011](adr/ADR-011-own-audio-stack.md)) | Latência, device events e formato real |
+| Saída avançada | vynamp-output Camada 2 (WASAPI exclusive, ALSA hw, CoreAudio hog); ASIO fora do núcleo (adapter privado opcional futuro) | Exclusive/event-mode/PCM24/32 e driver ocupado |
+| Resampling | Nova biblioteca própria de resampling (nome a definir, [ADR-011](adr/ADR-011-own-audio-stack.md)) | Resposta, alias rejection, CPU/latência e distribuição |
+| Tags | vynamp-decode-meta (leitura: plano 04 de vynamp-decode; escrita: escopo futuro a definir) | Roundtrip e unknown fields |
 | Storage | SQLite/rusqlite/FTS5 | Migrations, Unicode search,100k dataset |
 | Network | reqwest/rustls + Tokio | Cancel, proxy, TLS, Range e HLS helpers |
 | Plugin | Wasmtime + WIT/host capabilities | Budgets/traps/permissions e footprint |

@@ -1,17 +1,19 @@
 # Matriz de formatos, codecs e tags
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.8.0 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
+
+Decode pela pilha própria ([ADR-011](../architecture/adr/ADR-011-own-audio-stack.md)): onde a coluna diz "planejada", ainda não há API.
 
 Um container não garante suporte a todos os codecs dentro dele. Features e versões de decoder devem ser travadas após prova M0. Cada formato exige fixtures licenciadas, reprodução, seek quando aplicável, duração, metadados, corrupt input e memória limitada. Decoder preferido é candidato, não disponibilidade comprovada.
 
 | Grupo / container | Codec / perfis | Fase | Estratégia candidata / restrições |
 |---|---|---|---|
-| WAV, AIFF | PCM 8/16/24/32 inteiro, float32/64 | M1 | Symphonia/reader próprio pequeno; endianness e extensible |
-| FLAC | lossless 16/24/32 conforme decoder | M1/M2 | Symphonia; PCM32 validado em M2 |
-| MP3 | MPEG Layer III CBR/VBR | M1 | Symphonia; Xing/LAME para gapless |
-| M4A/MP4/M4B | AAC-LC, ALAC; capítulos | M2 | Symphonia quando suportado; fallback auditado |
+| WAV, AIFF | PCM 8/16/24/32 inteiro, float32/64 | M1 | vynamp-decode (RIFF/AIFF: API real); endianness e extensible |
+| FLAC | lossless 16/24/32 conforme decoder | M1/M2 | vynamp-decode (FLAC: API real, conformance IETF); PCM32 validado em M2 |
+| MP3 | MPEG Layer III CBR/VBR | M1 | vynamp-decode, Camada 1 planejada (plano 03 de vynamp-decode, plano ainda não escrito); Xing/LAME para gapless |
+| M4A/MP4/M4B | AAC-LC, ALAC; capítulos | M2 | vynamp-decode, Camada 2 planejada (AAC-LC, ALAC); fallback auditado |
 | ADTS/MP4 | HE-AAC v1/v2 | M2 | Backend validado/FFmpeg opcional; não confundir AAC-LC com HE |
-| Ogg | Vorbis, Opus | M2 | Symphonia para suportado; libopus adapter se necessário |
+| Ogg | Vorbis, Opus | M2 | vynamp-decode, Camada 2 planejada (Vorbis, Opus); libopus adapter se necessário |
 | WebM | Opus, Vorbis | M3 | WebM convencional não inclui FLAC |
 | Matroska/MKA | Opus, Vorbis, FLAC e outros bindings provados | M3 | CodecDelay/SeekPreRoll/DiscardPadding e seleção de áudio |
 | WavPack, APE, TTA | lossless/hybrid conforme perfil | M3 | Libraries/FFmpeg isolado, licença revisada |

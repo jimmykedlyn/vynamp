@@ -1,6 +1,6 @@
 # TASK-E04-02 — Provar resampler e sample conversion
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Contrato da tarefa
 
@@ -20,7 +20,7 @@ Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implemen
 
 ## Entrega concreta
 
-Spike rubato/SoXR, PCM24/32 packing e ADR de qualidade.
+Spike da lib própria de resampling (ADR-011), PCM24/32 packing e ADR de qualidade.
 
 Documento canônico: [spec](../../docs/audio/04-outputs-hires.md). [Matriz normativa](../../docs/product/03-requirements.md).
 

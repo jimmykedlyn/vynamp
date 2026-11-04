@@ -628,6 +628,7 @@ Versão 0.7.1 · 2026-10-28 · Markdown de produto, tooling, bootstrap e evidên
 - [Plano de baseline E11-01](superpowers/plans/2026-10-18-e11-01-workspace.md) — docs/superpowers/plans/2026-10-18-e11-01-workspace.md
 - [ADR-009 — workspace mínimo](architecture/adr/ADR-009-engineering-baseline.md) — docs/architecture/adr/ADR-009-engineering-baseline.md
 - [ADR-010 — CI/CD somente Woodpecker](architecture/adr/ADR-010-woodpecker-only-ci.md) — docs/architecture/adr/ADR-010-woodpecker-only-ci.md
+- [ADR-011 — pilha de áudio própria](architecture/adr/ADR-011-own-audio-stack.md) — docs/architecture/adr/ADR-011-own-audio-stack.md
 - [Paths e contrato de fixtures](../tests/fixtures/README.md) — tests/fixtures/README.md
 - [Evidência E11-01](evidence/PR/task-e11-01/README.md) — docs/evidence/PR/task-e11-01/README.md
 

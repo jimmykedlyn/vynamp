@@ -1,6 +1,6 @@
 # Catálogo de módulos DSP
 
-Versão: 0.7.2 · Data: 2026-10-28 · Estado: especificação proposta. **Nenhum módulo está implementado no produto nativo.** O protótipo web (referência externa, rev. 15) relata alguns módulos com áudio real; é evidência relatada, não verificada neste repositório (ver [Famílias v1.4](#famílias-v14-e-estado-no-protótipo-rev-15-relatado)).
+Versão: 0.7.3 · Data: 2026-11-03 · Estado: especificação proposta. **Nenhum módulo está implementado no produto nativo.** O protótipo web (referência externa, rev. 15) relata alguns módulos com áudio real; é evidência relatada, não verificada neste repositório (ver [Famílias v1.4](#famílias-v14-e-estado-no-protótipo-rev-15-relatado)).
 
 Cada módulo informa: estado, prioridade/fase, objetivo e uso, parâmetros e faixas, posição na [cadeia real](03-dsp.md#cadeia-real-de-processamento), dependências, bypass, trade-offs, UX e testes. Faixas sem justificativa técnica ficam como **decisão aberta**, sem números inventados. Os testes `DSP-T-xx` estão na [matriz de testes DSP](../quality/05-dsp-test-matrix.md).
 
@@ -219,7 +219,7 @@ Regras que valem para o catálogo: se um nó indisponível estiver habilitado na
 - **Estado** planejado · M0 spike · TASK-E04-02.
 - **Escopo** modos balanced/high, latência e CPU medidas, razão não inteira, estado entre blocos.
 - **Posição** final única (ver conflito D-DSP-05 com o vitrola).
-- **Nota** os candidatos citados em [saídas](04-outputs-hires.md) (rubato/SoXR) são de terceiros; a política de bibliotecas próprias do mantenedor pode exigir revisão (D-DSP-08).
+- **Nota** o resampler será uma nova biblioteca própria (nome a definir), decidido em D-DSP-08 e [ADR-011](../architecture/adr/ADR-011-own-audio-stack.md).
 - **Testes** DSP-T-13.
 
 ### Time Stretch e Pitch Shift

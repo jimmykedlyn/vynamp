@@ -1,10 +1,10 @@
 # Backends multiplataforma e negociação
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.8.0 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Obrigação M1–M3
 
-Todos os alvos têm backend nativo desde a slice M1. Windows shared WASAPI; Linux PipeWire/PulseAudio com escolha por disponibilidade; macOS CoreAudio em Intel e Silicon; Android AAudio/Oboe ou AudioTrack fallback explícito. CPAL é candidato onde seus adapters atendem a spec; não universalizar um crate se faltam clock/route/format capabilities.
+Todos os alvos têm backend nativo desde a slice M1. Os backends vêm da vynamp-output ([ADR-011](../architecture/adr/ADR-011-own-audio-stack.md)): Windows shared WASAPI; Linux ALSA simples na Camada 1 e PipeWire/PulseAudio com escolha por disponibilidade na Camada 3; macOS CoreAudio em Intel e Silicon (compilado, não verificado sem agente Mac); Android AAudio (Camada 3) com fallback explícito. Além do core, ainda não há API de backend; não universalizar um backend se faltam clock/route/format capabilities.
 
 Backends enumeram dispositivos/rotas por API de OS, negociam formato e mantêm clock/drain/error. Android AudioManager e bridge tratam routes/focus; AAudio sozinho não fornece todas integrações. Quando exclusive/direct não disponível, informar saída shared real. Transparência bit a bit é teste por conjunto, não consequência de pedir flag de exclusive.
 
