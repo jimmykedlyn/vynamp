@@ -8,6 +8,15 @@ when:
   - event: tag
     ref: refs/tags/v*
 
+# Full (non-partial) clone with retries: the link to github.com drops about 1
+# in 5 new connections, and partial clones open more of them during checkout.
+clone:
+  - name: clone
+    image: docker.io/woodpeckerci/plugin-git:2.10.1@sha256:550075c844fcec0af41d9d28f9860aa5d8c43e1e9419be4b9266dc02c2f29804
+    settings:
+      partial: false
+      attempts: 10
+
 steps:
   - name: preflight
     image: docker.io/library/rust:1.99.0-bookworm@sha256:114c7a4425406451c2866b6aafe69fe29b1b298832db1277d411ac73c82d04d6
