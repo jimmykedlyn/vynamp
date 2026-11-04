@@ -648,7 +648,6 @@ Versão 0.7.1 · 2026-10-28 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Referência do MVP web para a UI nativa](design/06-mvp-reference.md) — docs/design/06-mvp-reference.md
 
-- [Pacote de referência do MVP](../assets/reference/mvp/README.md) — assets/reference/mvp/README.md
 - [Evidência E02-11 / QA-034](evidence/PR/task-e02-11/README.md) — docs/evidence/PR/task-e02-11/README.md; MVP congelado, verificação resvg × Chrome e reprodutibilidade.
 - [Matriz de testes DSP e requisitos não funcionais](quality/05-dsp-test-matrix.md) — docs/quality/05-dsp-test-matrix.md
 - [Evidência chore-dsp-eq-docs](evidence/PR/chore-dsp-eq-docs/summary.md) — docs/evidence/PR/chore-dsp-eq-docs/summary.md

@@ -10,5 +10,3 @@
 *.flac binary
 *.wav binary
 docs/evidence/**/*.log -whitespace
-# frozen MVP reference: bytes must match SHA256SUMS exactly
-assets/reference/mvp/** -text

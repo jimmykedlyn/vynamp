@@ -1,6 +1,6 @@
 # Referência do MVP web para a UI nativa
 
-Versão: 0.7.1 · Data: 2026-11-03 · Estado: TASK-E02-11 em execução (PR em revisão); TASK-E02-12..16 planejadas.
+Versão: 0.7.2 · Data: 2026-11-03 · Estado: TASK-E02-11 integrada (PR #23); pacote retirado deste repositório e mantido em `vynamp-mvp-reference`; TASK-E02-12..16 planejadas.
 
 Base: [visual](01-visual-system.md), [layouts](02-layouts.md), [marca](04-brand-identity.md), [painel DSP](05-dsp-panel.md), [estratégia de QA](../quality/01-test-strategy.md) (QA-034).
 
@@ -18,13 +18,13 @@ Só fica fora o que é intrínseco ao navegador (motor DOM/CSS, a API Web Audio 
 | Hash da árvore | `1a8902c9b5d3b1e148d829d25c6defee93ed492a654da95dcb7641c4097fa71a` (sha256 da concatenação das linhas ordenadas `<sha256> *./<caminho>`, cada uma terminada em LF, formato `sha256sum --binary`) |
 | Repositório da ferramenta | `vynamp-mvp-reference` (privado): `mvp/` congelado, `tools/extract.cjs`, `tools/svgcheck.cjs`, `tools/verify.cjs`, `tools/serve.cjs`, `tools/package.cjs` |
 | Ambiente da extração | Node 24.15, Playwright 1.64.1, Google Chrome 156.0.8078.79, resvg 0.49.0, Windows 11 |
-| Proveniência por arquivo | [SOURCE.json](../../assets/reference/mvp/SOURCE.json) |
+| Proveniência por arquivo | `SOURCE.json` gerado por `tools/package.cjs` em `vynamp-mvp-reference` |
 
 A ferramenta roda num navegador real porque a fonte é web. Ela não entra no produto nem no build Rust.
 
-## 3. Pacote no repositório
+## 3. Pacote de referência
 
-O pacote fica em [assets/reference/mvp](../../assets/reference/mvp/README.md):
+Nenhum arquivo do MVP fica neste repositório. O pacote é gerado e mantido no repositório `vynamp-mvp-reference` (`out/`):
 
 | Caminho | Conteúdo | Consumidor |
 |---|---|---|
