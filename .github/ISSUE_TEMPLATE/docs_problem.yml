@@ -52,5 +52,5 @@ body:
     attributes:
       label: Preflight
       options:
-        - label: I ran `cargo xtask check-docs` and the failure is not already reported there.
+        - label: I ran `cargo xtask check-docs` and it passes — this is a semantic problem the validator cannot see, not a structural error it already reports.
           required: true

@@ -57,8 +57,8 @@ Ambiente: Windows 11 Pro 10.0.26300, `rustc 1.99.0 (b940084d7 2026-09-28)`, `git
 |---|---|
 | `cargo fmt --all --check` | exit 0, sem diff |
 | `cargo clippy --workspace --all-targets --locked -- -D warnings` | sem aviso |
-| `cargo test --workspace --locked` | 86 passed (2 suites, 26.31s) |
-| `cargo xtask check-docs` | `"result": "passed"`, `"errors": []`, 351 arquivos Markdown, 191 requisitos, 19 épicos |
+| `cargo test --workspace --locked` | 86 passed (2 suites, 26.31s) antes da revisão, 30.26s depois; mesmo resultado |
+| `cargo xtask check-docs` | `"result": "passed"`, `"errors": []`, 353 arquivos Markdown, 191 requisitos, 19 épicos |
 | `cargo xtask check-delivery` | `{"errors":[],"result":"passed","workflow_files":3}` |
 
 Saída literal de `check-docs`, antes e depois da correção:
@@ -76,6 +76,22 @@ Saída literal de `check-docs`, antes e depois da correção:
 "errors": [],
 "result": "passed",
 ```
+
+## Revisão independente e correções
+
+Revisão em contexto limpo (Sonnet 5-5, sem acesso ao raciocínio do autor) devolveu cinco achados. Todos foram reconferidos pelo autor e todos eram reais; nenhum foi contestado.
+
+| # | Achado | Correção |
+|---|---|---|
+| 1 | `CONTRIBUTING.md` documentava o padrão de branch `feature\|fix\|chore/<task>-<slug>`, que o hook real recusa | padrão substituído pelo regex de `xtask/src/repo.rs:225` nos dois idiomas, com exemplo e a menção ao `guard-branch` |
+| 2 | `bug_report.yml` apontava para `../blob/develop/SECURITY.md` — caminho relativo que não resolve | `../../SECURITY.md` |
+| 3 | `tasks/backlog.json` marcava TASK-E19-01 como `implemented` enquanto sua spec dizia "Estado planejado" — viola a regra de `tasks/README.md` de alterar JSON e Markdown juntos | JSON voltou a `in_progress`; as duas specs passaram a "em execução" |
+| 4 | `README.md` listava `vynamp-restore`/`vynamp-converter`/`vynamp-encode` como se fossem repositórios existentes | texto corrigido nos dois idiomas: decididos, **ainda não criados** (TASK-E19-04) |
+| 5 | `docs_problem.yml` pedia para o repórter confirmar que `check-docs` "não reporta a falha" — mas `check-docs` é estrutural e passa num erro semântico; o texto induzia a um check irrelevante | rótulo reescrito para "`check-docs` passa — é um problema semântico que o validador não vê" |
+
+O achado 3 foi causado pelo próprio autor deste PR: a primeira versão marcou E19-01 como `implemented` ao mergear o PR #30, o que o validador não detecta porque `validate::spec` compara `title`/`deliverable`/`acceptance` entre backlog e Markdown, não `status`.
+
+`tasks/README.md:5` foi corrigido junto: afirmava "todos os itens estão planejados", o que já era falso antes deste PR (três itens em `in_progress`).
 
 ## Verificação de aceite
 

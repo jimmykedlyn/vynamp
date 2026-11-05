@@ -37,7 +37,7 @@ Ambiente: Windows 11 Pro 10.0.26300 · `rustc 1.99.0 (b940084d7 2026-09-28)` · 
 | `cargo fmt --all --check` | exit 0, sem diff |
 | `cargo clippy --workspace --all-targets --locked -- -D warnings` | sem aviso |
 | `cargo test --workspace --locked` | 86 passed (2 suites) |
-| `cargo xtask check-docs` | `"result": "passed"`, `"errors": []` — 351 arquivos Markdown, 191 requisitos, 19 épicos |
+| `cargo xtask check-docs` | `"result": "passed"`, `"errors": []` — 353 arquivos Markdown, 191 requisitos, 19 épicos |
 | `cargo xtask check-delivery` | `{"errors":[],"result":"passed","workflow_files":3}` |
 
 Aceite da TASK, item por item:
@@ -61,13 +61,23 @@ Aceite da TASK, item por item:
 - A escolha de licença não passou por revisão jurídica; foi feita por paridade com as libs e registrada como decisão do mantenedor.
 - `crates-copyleft/`, codecs de terceiros e a marca Vynamp seguem fora da licença — declarado, não resolvido.
 
-Revisão técnica: subagente de contexto limpo foi acionado e ainda não devolveu relatório utilizado nesta versão do PR; a revisão é registrada aqui antes do merge.
+## Revisão independente
+
+Revisão em contexto limpo (Sonnet 5-5, sem o raciocínio do autor) devolveu cinco achados. Todos foram reconferidos pelo autor, todos eram reais e todos foram corrigidos neste PR:
+
+1. `CONTRIBUTING.md` documentava o padrão de branch `feature|fix|chore/<task>-<slug>`, que o hook real recusa → substituído pelo regex de `xtask/src/repo.rs:225` nos dois idiomas.
+2. `bug_report.yml` apontava para `../blob/develop/SECURITY.md`, caminho relativo que não resolve → `../../SECURITY.md`.
+3. TASK-E19-01 estava `implemented` no `backlog.json` com a spec ainda em "planejado" → JSON de volta a `in_progress`, as duas specs em "em execução". O validador não pega isso: `validate::spec` compara `title`/`deliverable`/`acceptance`, não `status`.
+4. `README.md` listava `vynamp-restore`/`vynamp-converter`/`vynamp-encode` como repositórios existentes → corrigido para "decididos, ainda não criados" nos dois idiomas.
+5. `docs_problem.yml` pedia confirmação de que `check-docs` "não reporta a falha", mas o validador é estrutural e passa num erro semântico → rótulo reescrito.
+
+Corrigido junto `tasks/README.md:5`, que afirmava "todos os itens estão planejados" — já falso antes deste PR.
 
 - [x] Worktree e owner próprios.
 - [x] Superpowers carregado; verificação executada.
 - [x] Sucesso/erro/cancelamento: validador exercitado no caminho de falha (`Missing index`) e no de sucesso.
 - [x] Docs/contracts/notices atualizados; nenhuma credencial no diff.
-- [ ] CI Gate (GitHub Actions) — aguardando o run deste SHA.
-- [ ] Revisão técnica independente — pendente.
+- [x] Revisão técnica independente — cinco achados, todos corrigidos.
+- [ ] CI Gate (GitHub Actions) — aguardando o run do SHA final.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)

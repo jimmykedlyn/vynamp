@@ -8,7 +8,7 @@ body:
       value: |
         This is **not** the channel for security problems. Do not describe a
         vulnerability here — use the private advisory form described in
-        [SECURITY.md](../blob/develop/SECURITY.md).
+        [SECURITY.md](../../SECURITY.md).
 
         Use this form for the repository's own artefacts: `cargo xtask`,
         documentation, schemas, CI workflows and the `vynamp-*` libraries.

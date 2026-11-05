@@ -17,7 +17,11 @@ and [CI and gates](docs/engineering/04-ci-cd.md).
 
 ### The change
 
-One branch per task, from `develop`, named `feature|fix|chore/<task>-<slug>`.
+One branch per task, from `develop`, named
+`feature|fix|chore/task-e<NN>-<NN>-claude-<slug>` — for example
+`feature/task-e19-02-claude-governance-bilingual-readme`. The name is enforced:
+`.githooks/pre-commit` runs `cargo xtask guard-branch`, which rejects any commit
+on a branch that does not match (`xtask/src/repo.rs`).
 Small commits, Conventional Commits (`feat`, `fix`, `test`, `docs`, `chore`,
 `build`, `ci`). No force push to a shared branch, no squash, no rebase merge —
 merge commits only, to keep ancestry and worktree cleanup reliable.
@@ -87,7 +91,10 @@ Leia [`AGENTS.md`](AGENTS.md) (o contrato de trabalho), o
 ### A mudança
 
 Uma branch por tarefa, a partir de `develop`, nomeada
-`feature|fix|chore/<task>-<slug>`. Commits pequenos, Conventional Commits
+`feature|fix|chore/task-e<NN>-<NN>-claude-<slug>` — por exemplo
+`feature/task-e19-02-claude-governance-bilingual-readme`. O nome é imposto:
+`.githooks/pre-commit` roda `cargo xtask guard-branch`, que recusa qualquer commit
+em branch fora do padrão (`xtask/src/repo.rs`). Commits pequenos, Conventional Commits
 (`feat`, `fix`, `test`, `docs`, `chore`, `build`, `ci`). Sem force push em branch
 compartilhada, sem squash, sem rebase merge — somente merge commit, para
 preservar ancestry e a limpeza confiável das worktrees.

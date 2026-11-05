@@ -59,10 +59,11 @@ Identity: [Vynamp C / Pulso brand guide](docs/design/04-brand-identity.md) and t
 pending, per the manifest. The PNGs are raster references, not vector sources or
 compiled `ICO`/`ICNS`/Android resources.
 
-Related repositories: `vynamp-decode` (decoding), `vynamp-output` (audio output),
-`vynamp-mvp-reference` (the visual reference for the native UI), and — planned as
-separate applications — `vynamp-restore` and `vynamp-converter`, with
-`vynamp-encode` as the encoder library behind the converter.
+Related repositories: `vynamp-decode` (decoding), `vynamp-output` (audio output)
+and `vynamp-mvp-reference` (the visual reference for the native UI). Three more
+are decided but **not created yet** (TASK-E19-04): `vynamp-restore` and
+`vynamp-converter` as separate applications, and `vynamp-encode` as the encoder
+library behind the converter.
 
 ---
 
@@ -128,6 +129,7 @@ conforme manifest. Os PNGs são referências raster, não fontes vetoriais nem
 recursos `ICO`/`ICNS`/Android compilados.
 
 Repositórios relacionados: `vynamp-decode` (decodificação), `vynamp-output`
-(saída de áudio), `vynamp-mvp-reference` (referência visual da UI nativa) e — como
-aplicações separadas planejadas — `vynamp-restore` e `vynamp-converter`, com
-`vynamp-encode` como a biblioteca de encoders por trás do conversor.
+(saída de áudio) e `vynamp-mvp-reference` (referência visual da UI nativa). Outros
+três estão decididos mas **ainda não existem** (TASK-E19-04): `vynamp-restore` e
+`vynamp-converter` como aplicações separadas, e `vynamp-encode` como a biblioteca
+de encoders por trás do conversor.
