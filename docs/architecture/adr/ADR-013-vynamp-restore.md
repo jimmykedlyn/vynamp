@@ -1,6 +1,6 @@
 # ADR-013 — Vynamp Restore como ferramenta desktop dedicada
 
-Versão: 0.1.0 · Data: 2026-11-05 · Estado: decisão do mantenedor; especificação normativa da ferramenta de restauração.
+Versão: 0.1.1 · Data: 2026-11-05 · Estado: decisão do mantenedor; especificação normativa da ferramenta de restauração.
 
 Status: aceito pelo mantenedor em 2026-11-05. Complementa [ADR-012](ADR-012-shell-integration.md) §3 e §5 (ferramentas auxiliares), [ADR-011](ADR-011-own-audio-stack.md) (pilha de áudio própria) e [ADR-008](ADR-008-vynamp-brand.md) (identidade). Orienta [TASK-E18-01](../../../tasks/items/TASK-E18-01.md).
 
@@ -70,6 +70,8 @@ A spec nativa **não** reproduz quatro incoerências do MVP:
 | Presets embutidos | Os 5 presets do MVP (`restore-presets.js`) baseiam a ação principal em `denoise: 0.25–0.5`, que não existe na 1.0 (fora de escopo), sem `deartifact`/`bwe`/`declip` | **Redefinidos na 1.0.** Cada preset de built-in recebe um bloco `tools` explícito com as ferramentas e valores da 1.0; a ação principal sai de `denoise` para as ferramentas existentes (de-crackle, de-click, gate, DC, rumble, zumbido). O aviso de perda de agudos acima de 8 kHz aciona em filtro de zumbido ativo ou passa-baixa agressivo, não em "redução de ruído alta" do denoise descartado. |
 
 Toda divergência em relação ao MVP é registrada nesta ADR e na spec, para que a paridade de recursos seja auditável e não implícita.
+
+**Destino da "decisão futura".** A linha da região `overlay` deixou de ser um beco sem saída: a decisão sobre restauração por IA foi registrada em [ADR-015](ADR-015-ai-restoration-future-phase.md) e especificada em [Restore — restauração por IA](../../tools/03-vynamp-restore-ia.md), como **fase opt-in pós-1.0, planejada e não prometida**. Nada aqui muda: `overlay` continua removido, o denoise continua fora de escopo, e a 1.0 continua sem nenhuma capacidade de aprendizado de máquina.
 
 ### 5. Formato de saída e preservação de metadados
 

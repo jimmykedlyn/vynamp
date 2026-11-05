@@ -188,6 +188,8 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Vynamp Converter — conversão e transcodificação](tools/02-vynamp-converter.md) — docs/tools/02-vynamp-converter.md
 
+- [Vynamp Restore — restauração por IA (fase futura)](tools/03-vynamp-restore-ia.md) — docs/tools/03-vynamp-restore-ia.md
+
 - [Completeness Audit Implementation Plan](superpowers/plans/2026-10-14-completeness-audit.md) — docs/superpowers/plans/2026-10-14-completeness-audit.md
 
 - [Project Tooling Implementation Plan](superpowers/plans/2026-10-14-project-tooling.md) — docs/superpowers/plans/2026-10-14-project-tooling.md
@@ -717,3 +719,9 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 - [Evidência chore-specs-vynamp-restore](evidence/PR/chore-specs-vynamp-restore/README.md) — docs/evidence/PR/chore-specs-vynamp-restore/README.md; verificações locais, revisão por subagente e limitações declaradas.
 - [Corpo do PR chore-specs-vynamp-restore](evidence/PR/chore-specs-vynamp-restore/pr-body.md) — docs/evidence/PR/chore-specs-vynamp-restore/pr-body.md
 
+# Restauração por IA: fase futura (2026-11-05)
+
+- [ADR-015 — Restauração por IA admitida apenas como fase opt-in pós-1.0](architecture/adr/ADR-015-ai-restoration-future-phase.md) — docs/architecture/adr/ADR-015-ai-restoration-future-phase.md
+- [Vynamp Restore — restauração por IA](tools/03-vynamp-restore-ia.md) — docs/tools/03-vynamp-restore-ia.md; planejada e não prometida, opt-in, CPU primeiro, pesos por download
+- [Evidência chore-specs-ia-futura](evidence/PR/chore-specs-ia-futura/README.md) — docs/evidence/PR/chore-specs-ia-futura/README.md; verificações locais e limitações declaradas.
+- [Corpo do PR chore-specs-ia-futura](evidence/PR/chore-specs-ia-futura/pr-body.md) — docs/evidence/PR/chore-specs-ia-futura/pr-body.md

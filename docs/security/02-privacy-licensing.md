@@ -1,6 +1,6 @@
 # Privacidade, conteúdo e distribuição
 
-Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.2 · Data: 2026-11-05 · Estado: especificação proposta, implementação não iniciada.
 
 Sem analytics por padrão, sem upload de biblioteca, sem fingerprint online automático. Crash reports opt-in e preview do conteúdo, redaction de paths/URLs/tokens/metadata privada. Logs locais rotativos limitados20MiB por padrão e retenção7dias; usuário pode exportar diagnóstico sanitizado. Plays/history são locais até autorizar scrobble/sync.
 
@@ -13,5 +13,7 @@ vynamp-decode/vynamp-output/vitrola (licenças a definir pelo mantenedor), nativ
 Themes/plugins têm license metadata; publisher é responsável pela origem, registry mantém denúncia/revogação e notices. Conteúdo streaming próprio precisa rights/territories/availability_window e flags download/record; plataforma não publica apenas porque consegue fazer transcode. Conteúdo não autorizado não é requisito para validar player: usar fixtures autorais/públicas com licença identificada.
 
 No release: LICENSE de código efetivamente escolhido, THIRD_PARTY_NOTICES gerado, SBOM, política de privacidade, termos de conteúdo/plataforma quando aplicável. Não criar LICENSE “MIT” agora como se tivesse sido decisão do usuário.
+
+Pesos de modelo de aprendizado de máquina são **obra de terceiros** e seguem a mesma regra de codecs: entram no inventário de dependências com origem, versão, checksum e licença, e a licença do código do produto não concede direito sobre eles. Nenhum peso é embutido no instalador; o download é explícito e verificado por SHA-256. Licença de peso não conferida impede oferecer o modelo na interface e bloqueia release que o distribua. Não há download automático nem telemetria associada a modelos.
 
 Android: permissões de áudio/grants selecionados somente quando necessários; negar acesso local não bloqueia rádio; sem MANAGE_EXTERNAL_STORAGE obrigatório. Tokens protegidos por Keystore. Native plugins externos e políticas de código dinâmico exigem validação de plataforma/loja; não prometer unrestricted desktop plugins no APK. LinuxSecretService indisponível oferece sessão não persistida ou armazenamento seguro escolhido, nunca fallbackplaintext automático.
