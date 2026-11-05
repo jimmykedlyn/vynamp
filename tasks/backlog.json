@@ -5160,6 +5160,201 @@
         "max": 35
       },
       "risk": "alto"
+    },
+    {
+      "id": "TASK-E19-01",
+      "epic": "E19",
+      "title": "Migrar o CI do repo principal para GitHub Actions",
+      "phase": "M1",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "engineering-delivery",
+      "requirements": [
+        "REQ-E19-01"
+      ],
+      "dependencies": [
+        "TASK-E15-03"
+      ],
+      "spec": "docs/engineering/04-ci-cd.md",
+      "deliverable": "ADR-014, workflows ci/release/quality em GitHub Actions com actions fixadas por SHA e gate único CI Gate, xtask de validação e release reescrito para Actions e remoção do Woodpecker.",
+      "acceptance": "Actions fixadas por SHA; gate reprova dependência falha, cancelada ou ausente; release só em tag v* e falha fechado; macOS Intel e Apple Silicon viram alvos verificados; nenhum segredo no histórico.",
+      "qa": [
+        "QA-018",
+        "QA-021"
+      ],
+      "estimate_days": {
+        "min": 3,
+        "max": 10
+      },
+      "risk": "alto"
+    },
+    {
+      "id": "TASK-E19-02",
+      "epic": "E19",
+      "title": "Higiene, governança e README bilíngue do repo principal",
+      "phase": "M1",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "engineering-delivery",
+      "requirements": [
+        "REQ-E19-02"
+      ],
+      "dependencies": [
+        "TASK-E19-01"
+      ],
+      "spec": "docs/security/01-threat-model.md",
+      "deliverable": "LICENSE dual, LEGAL, CODE_OF_CONDUCT, GOVERNANCE, templates de issue, SECURITY.md com canal de advisory e README bilíngue EN/PT, com docs de CI e Gitflow reescritos para o repo público.",
+      "acceptance": "README bilíngue EN/PT na raiz; SECURITY.md aponta para GitHub Security Advisories e não inventa contato; LICENSE dual presente; docs não afirmam capacidade ou alvo não verificado.",
+      "qa": [
+        "QA-018",
+        "QA-030"
+      ],
+      "estimate_days": {
+        "min": 2,
+        "max": 5
+      },
+      "risk": "médio"
+    },
+    {
+      "id": "TASK-E19-03",
+      "epic": "E19",
+      "title": "Dissolver o vitrola no DSP interno do app",
+      "phase": "M3",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "audio",
+      "requirements": [
+        "REQ-E19-03"
+      ],
+      "dependencies": [
+        "TASK-E04-03"
+      ],
+      "spec": "docs/audio/10-vitrola.md",
+      "deliverable": "Design aprovado do vitrola incorporado como módulo DSP interno, referências ao repositório externo removidas e repositório vitrola arquivado de forma reversível.",
+      "acceptance": "Nenhum documento normativo cita jimmykedlyn/vitrola; a spec descreve módulo DSP interno preservando VIT-T-01..10; o design local não se perde; o repositório remoto fica arquivado e reversível.",
+      "qa": [
+        "QA-033",
+        "QA-005"
+      ],
+      "estimate_days": {
+        "min": 1,
+        "max": 3
+      },
+      "risk": "médio"
+    },
+    {
+      "id": "TASK-E19-04",
+      "epic": "E19",
+      "title": "Re-apontar as specs de Restore e Converter e criar os repos próprios",
+      "phase": "M3",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "engineering-delivery",
+      "requirements": [
+        "REQ-E19-04"
+      ],
+      "dependencies": [
+        "TASK-E18-01",
+        "TASK-E18-02"
+      ],
+      "spec": "docs/tools/02-vynamp-converter.md",
+      "deliverable": "Specs de Restore e Converter re-apontadas para repositórios próprios, com a fonte normativa mantida no repo principal e os repos vynamp-encode, vynamp-converter e vynamp-restore criados públicos.",
+      "acceptance": "As specs apontam para URLs reais dos repos novos; a fonte normativa continua única no repo principal; os três repos existem, públicos, com README bilíngue, LICENSE e SECURITY.md.",
+      "qa": [
+        "QA-022",
+        "QA-030"
+      ],
+      "estimate_days": {
+        "min": 2,
+        "max": 6
+      },
+      "risk": "médio"
+    },
+    {
+      "id": "TASK-E19-05",
+      "epic": "E19",
+      "title": "CI e README bilíngue nas libs Rust e no MVP de referência",
+      "phase": "M1",
+      "priority": "P1",
+      "status": "planned",
+      "owner_role": "engineering-delivery",
+      "requirements": [
+        "REQ-E19-05"
+      ],
+      "dependencies": [
+        "TASK-E19-01"
+      ],
+      "spec": "docs/engineering/08-folder-structure.md",
+      "deliverable": "GitHub Actions com gate CI Gate em vynamp-decode e vynamp-output, CI próprio em Node no vynamp-mvp-reference, e README bilíngue EN/PT nos três repos, com Woodpecker removido.",
+      "acceptance": "Cada repo publica o contexto CI Gate e reprova falha ou cancelamento; o CI do MVP roda serve e verify encadeados; os READMEs são bilíngues; nenhum workflow referencia Woodpecker.",
+      "qa": [
+        "QA-018",
+        "QA-034"
+      ],
+      "estimate_days": {
+        "min": 2,
+        "max": 6
+      },
+      "risk": "médio"
+    },
+    {
+      "id": "TASK-E19-06",
+      "epic": "E19",
+      "title": "Abrir os repositórios ao público e proteger as branches",
+      "phase": "M3",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "engineering-delivery",
+      "requirements": [
+        "REQ-E19-06"
+      ],
+      "dependencies": [
+        "TASK-E19-01",
+        "TASK-E19-02",
+        "TASK-E19-04",
+        "TASK-E19-05"
+      ],
+      "spec": "docs/engineering/03-gitflow-github.md",
+      "deliverable": "Sete repositórios Vynamp abertos ao público e branch protection aplicada em develop exigindo o contexto CI Gate, com descriptions e wiki ajustadas.",
+      "acceptance": "Os sete repos reportam visibility public; develop exige CI Gate e proíbe force push e exclusão; description não promete abertura futura; repo sem proteção não é considerado pronto.",
+      "qa": [
+        "QA-009",
+        "QA-030"
+      ],
+      "estimate_days": {
+        "min": 1,
+        "max": 3
+      },
+      "risk": "alto"
+    },
+    {
+      "id": "TASK-E19-07",
+      "epic": "E19",
+      "title": "Integrar o módulo DSP vitrola no grafo do player",
+      "phase": "M3",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "audio",
+      "requirements": [
+        "REQ-E19-07"
+      ],
+      "dependencies": [
+        "TASK-E19-03",
+        "TASK-E04-03"
+      ],
+      "spec": "docs/audio/03-dsp.md",
+      "deliverable": "Módulo DSP interno de vinil e válvula integrado ao grafo do player, com bypass, desativação automática, persistência de WearState e os testes VIT-T-01..10 executáveis.",
+      "acceptance": "Bypass transparente após o crossfade; desativação automática em bit-perfect e DSD com motivo visível; WearState persistido por álbum; os testes VIT-T-01..10 rodam com oráculo independente.",
+      "qa": [
+        "QA-033",
+        "QA-005",
+        "QA-027"
+      ],
+      "estimate_days": {
+        "min": 8,
+        "max": 20
+      },
+      "risk": "alto"
     }
   ]
 }

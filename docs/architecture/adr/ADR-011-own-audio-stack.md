@@ -40,7 +40,7 @@ A saída nunca faz resampling, dither nem ganho (design de vynamp-output @e534aa
 | Android AAudio | vynamp-output | Camada 3; plano 04 de vynamp-output (plano ainda não escrito) |
 | Exclusivo (WASAPI exclusive, ALSA hw, CoreAudio hog), capabilities, hot-plug, IDs estáveis | vynamp-output | Camada 2 do design de vynamp-output @e534aad |
 | DSD/DoP nativo, 384/768 kHz, volume de hardware | vynamp-output | Camada 4 |
-| macOS CoreAudio | vynamp-output | Plano 04 de vynamp-output; macOS continua compilado e não verificado (sem agente Mac, [ADR-010](ADR-010-woodpecker-only-ci.md)) |
+| macOS CoreAudio | vynamp-output | Plano 04 de vynamp-output; compila no alvo macOS Intel/Apple Silicon verificado pelo CI desde a [ADR-014](ADR-014-public-github-actions-and-in-app-dsp.md) — hardware de áudio ainda não testado |
 | ASIO | fora do núcleo (design de vynamp-output §5.4) | Adapter privado opcional futuro; sem plano |
 | iOS | nenhuma | Fora do escopo 1.0 do produto; sem backend |
 

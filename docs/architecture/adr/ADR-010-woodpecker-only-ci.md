@@ -1,6 +1,8 @@
 # ADR-010 — CI/CD somente pelo Woodpecker
 
-Data: 2026-10-19. Estado: decisão do mantenedor; revisão técnica pelo Claude Code ([TASK-E15-04](../../../tasks/items/TASK-E15-04.md)).
+> **Substituída pela [ADR-014](ADR-014-public-github-actions-and-in-app-dsp.md) em 2026-11-05.** O mantenedor tornou os repositórios públicos, o que torna os runners hospedados do GitHub gratuitos e devolve a branch protection ao plano gratuito — as duas razões que sustentavam esta ADR. O texto abaixo é preservado como histórico da decisão; não é mais normativo.
+
+Data: 2026-10-19. Estado: substituída pela ADR-014.
 
 ## Contexto
 
@@ -18,7 +20,7 @@ O GitHub Actions do repositório privado está bloqueado por billing desde o PR1
 
 ## Consequências
 
-- Não há custo de minutos GitHub; a disponibilidade do CI depende do notebook (Docker Desktop + agente Windows ligados, ver [operação](../../../infra/ci/woodpecker/README.md)).
+- Não há custo de minutos GitHub; a disponibilidade do CI depende do notebook (Docker Desktop + agente Windows ligados). A operação do Woodpecker vivia em `infra/ci/woodpecker/README.md`, removido pela ADR-014.
 - Branch protection continua indisponível no plano atual (HTTP 403); `CI Gate` é publicado, mas não obrigatório até o mantenedor resolver o plano.
 - Workflow `gate` pulado (dependência falhou/cancelada) pode deixar o status `CI Gate` em `pending`; isso nunca é success.
 - Reverter para Actions exige novo ADR e alteração de `check-delivery`.

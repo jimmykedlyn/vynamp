@@ -3,7 +3,7 @@ use anyhow::{Context, Result, ensure};
 use base64::Engine;
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
-use std::{collections::BTreeSet, fs, path::Path};
+use std::{collections::BTreeSet, fs, io::Write, path::Path};
 pub const PLATFORMS: [&str; 5] = [
     "windows-x64",
     "linux-x64",
@@ -127,9 +127,9 @@ pub fn preflight(root: &Path, version: &str) -> Result<Value> {
             "Missing report or evidence hash mismatch"
         );
     }
-    if woodpecker_tag(
-        std::env::var("CI").ok().as_deref(),
-        std::env::var("CI_COMMIT_TAG").ok().as_deref(),
+    if release_tag(
+        std::env::var("GITHUB_ACTIONS").as_deref() == Ok("true"),
+        std::env::var("GITHUB_REF").ok().as_deref(),
         version,
     )? {
         run(
@@ -310,14 +310,14 @@ pub fn command(
     };
     Ok(())
 }
-/// In Woodpecker CI a release must run from the `v<version>` tag; returns
-/// whether the CI checks apply.
-fn woodpecker_tag(ci: Option<&str>, tag: Option<&str>, version: &str) -> Result<bool> {
-    if ci != Some("woodpecker") {
+/// In GitHub Actions a release is checked against the tag that triggered the
+/// run; outside CI the local preflight keeps working without a tag.
+fn release_tag(actions: bool, reference: Option<&str>, version: &str) -> Result<bool> {
+    if !actions {
         return Ok(false);
     }
     ensure!(
-        tag == Some(format!("v{version}").as_str()),
+        reference == Some(format!("refs/tags/v{version}").as_str()),
         "Release requires matching v* tag"
     );
     Ok(true)
@@ -328,7 +328,12 @@ fn version_from_tag(name: &str) -> Result<String> {
     Ok(v.to_owned())
 }
 pub fn tag_version() -> Result<()> {
-    println!("{}", version_from_tag(&required("CI_COMMIT_TAG")?)?);
+    let name = required("GITHUB_REF_NAME")?;
+    let v = version_from_tag(&name)?;
+    let mut out = fs::OpenOptions::new()
+        .append(true)
+        .open(required("GITHUB_OUTPUT")?)?;
+    writeln!(out, "version={v}")?;
     Ok(())
 }
 #[cfg(test)]
@@ -360,11 +365,12 @@ mod tests {
         assert!(version_from_tag("vbad").is_err());
     }
     #[test]
-    fn woodpecker_release_requires_matching_tag() {
-        assert!(!woodpecker_tag(None, None, "0.1.0").unwrap());
-        assert!(woodpecker_tag(Some("woodpecker"), Some("v0.1.0"), "0.1.0").unwrap());
-        assert!(woodpecker_tag(Some("woodpecker"), Some("v0.2.0"), "0.1.0").is_err());
-        assert!(woodpecker_tag(Some("woodpecker"), None, "0.1.0").is_err());
+    fn github_actions_release_requires_matching_tag() {
+        assert!(!release_tag(false, None, "0.1.0").unwrap());
+        assert!(release_tag(true, Some("refs/tags/v0.1.0"), "0.1.0").unwrap());
+        assert!(release_tag(true, Some("refs/tags/v0.2.0"), "0.1.0").is_err());
+        assert!(release_tag(true, Some("refs/heads/develop"), "0.1.0").is_err());
+        assert!(release_tag(true, None, "0.1.0").is_err());
     }
     #[test]
     fn digest_covers_xtask_and_ignores_activation_flags() {

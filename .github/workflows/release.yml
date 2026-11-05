@@ -1,0 +1,58 @@
+name: Release
+
+# A release is created only from a v* tag. The preflight is the gate: it refuses
+# to continue unless the real player, hardware evidence, independent reviews and
+# a matching source digest all exist. Publication itself stays fail-closed — no
+# signed artifact leaves this workflow until a maintainer enables it (ADR-014,
+# ADR-010 §fail-closed, AGENTS.md: no automatic release).
+#
+# The four-platform installer matrix from 247b424 is deliberately NOT restored
+# yet: it needs cross-agent artifacts plus the signing secrets
+# WIN_PFX_*, MAC_P12_*, MAC_NOTARY_*, ANDROID_KEYSTORE_*, MINISIGN_SECRET_KEY_BASE64
+# and a macOS arm64 build path that the preflight still refuses. Restoring it
+# before that is real would only publish the shape of a release that cannot run.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    runs-on: ubuntu-22.04
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      # fetch-depth: 0 — the preflight runs `git merge-base --is-ancestor HEAD
+      # origin/main`, which needs the full history and the main ref.
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Provision pinned Rust toolchain
+        run: rustup show
+      # tag-version validates GITHUB_REF_NAME and exposes `version`; it fails on
+      # a non-v* or malformed tag instead of guessing.
+      - id: version
+        run: cargo xtask tag-version
+      - run: cargo xtask release preflight --version ${{ steps.version.outputs.version }}
+
+  publish:
+    needs: preflight
+    environment: release-publish
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Publication not enabled
+        shell: bash
+        env:
+          VERSION: ${{ needs.preflight.outputs.version }}
+        run: |
+          echo "Preflight passed for v${VERSION}, but release publication is not enabled."
+          echo 'Signed installers require cross-agent artifacts, validated signing and maintainer approval.'
+          echo 'See ADR-014 and docs/delivery/02-release-devops.md.'
+          exit 1

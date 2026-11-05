@@ -1,0 +1,110 @@
+name: CI
+
+# Runs only when it proves something: a pull request against develop, or a push
+# to a branch that is actually integrated (develop/main). A push to a feature
+# branch does not trigger it — its pull request already covers the change.
+# See ADR-014.
+on:
+  pull_request:
+    branches: [develop]
+  push:
+    branches: [develop, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  docs:
+    runs-on: ubuntu-22.04
+    outputs:
+      core: ${{ steps.detect.outputs.core }}
+      android: ${{ steps.detect.outputs.android }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      # rust-toolchain.toml is the single source for the pinned version and
+      # components; `rustup show` materialises it instead of repeating the
+      # version in every job.
+      - name: Provision pinned Rust toolchain
+        run: rustup show
+      - run: cargo xtask ci docs
+      - id: detect
+        run: cargo xtask ci detect
+
+  tooling:
+    needs: docs
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [windows-2022, ubuntu-22.04, macos-15-intel, macos-15]
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Provision pinned Rust toolchain
+        run: rustup show
+      - run: cargo clippy --package xtask --all-targets --locked -- -D warnings
+
+  core:
+    needs: docs
+    if: needs.docs.outputs.core == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: windows-2022
+            target: x86_64-pc-windows-msvc
+          - runner: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+          - runner: macos-15-intel
+            target: x86_64-apple-darwin
+          - runner: macos-15
+            target: aarch64-apple-darwin
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Provision pinned Rust toolchain
+        run: rustup show
+      - if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libasound2-dev libudev-dev pkg-config
+      - run: cargo xtask ci core --target ${{ matrix.target }}
+
+  android:
+    needs: docs
+    if: needs.docs.outputs.android == 'true'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Provision pinned Rust toolchain
+        run: rustup show
+      - run: cargo xtask ci android
+
+  # The required status check is this job. `if: always()` makes it run even
+  # after a failed or cancelled dependency, and the assertions below turn any
+  # non-success into a red gate: a skipped job must never read as green.
+  gate:
+    name: CI Gate
+    if: always()
+    needs: [docs, tooling, core, android]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Aggregate
+        shell: bash
+        run: |
+          test "${{ needs.docs.result }}" = success
+          test "${{ needs.tooling.result }}" = success
+          if [ "${{ needs.docs.outputs.core }}" = true ]; then test "${{ needs.core.result }}" = success; fi
+          if [ "${{ needs.docs.outputs.android }}" = true ]; then test "${{ needs.android.result }}" = success; fi
+          echo 'CI Gate passed on Windows, Linux, macOS Intel, macOS Apple Silicon, and Android when present.'
+          echo 'Hardware, signing and release acceptance remain separate gates.'

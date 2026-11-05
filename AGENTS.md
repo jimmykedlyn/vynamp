@@ -14,7 +14,7 @@ Um owner por TASK, worktree/branch/index próprios. `.worktrees/claude/<task>-<s
 
 Superpowers: using-superpowers → spec/brainstorming se decisão nova → writing-plans → using-git-worktrees → TDD para comportamento → verification-before-completion → revisão técnica por subagente em contexto limpo (Sonnet; Opus para alto risco) → finishing-a-development-branch. Planos em docs/superpowers/plans; evidência permanente em docs/evidence/PR; scratch .superpowers ignored. Decisões já dadas pelo usuário não requerem aprovação repetida. Escopo explícito/autorizações do usuário prevalecem sobre skills.
 
-Branch feature/fix/chore por TASK de develop; hotfix de main; PR e merge commit. main/develop protegidas, CI Gate (Woodpecker, ADR-010) obrigatório, merge/publicação pelo mantenedor. PR template documenta fonte/task/command/result/limitações e a revisão técnica.
+Branch feature/fix/chore por TASK de develop; hotfix de main; PR e merge commit. CI Gate (GitHub Actions, ADR-014) é obrigatório como critério de merge e roda em todo PR para develop — mas, enquanto o repositório for privado, a API de branch protection responde 403 e o status **não está tecnicamente exigido**: vale como disciplina revisada à mão, não como bloqueio do GitHub. main/develop passam a estar protegidas quando a TASK-E19-06 abrir os repositórios e aplicar `cargo xtask repo protect`. Merge/publicação pelo mantenedor. PR template documenta fonte/task/command/result/limitações e a revisão técnica.
 
 ## Qualidade
 

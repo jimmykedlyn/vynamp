@@ -1,7 +1,0 @@
-# Rendered by Initialize-Tunnel.ps1 into .cache/woodpecker/secrets/cloudflared/config.yml.
-tunnel: __TUNNEL_ID__
-credentials-file: /etc/cloudflared/__TUNNEL_ID__.json
-ingress:
-  - hostname: ci-cd-vynamp.jkca.lat
-    service: http://woodpecker-server:8000
-  - service: http_status:404
