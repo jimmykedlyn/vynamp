@@ -643,6 +643,7 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 - [TASK-E19-07 — Integrar o módulo DSP vitrola no grafo do player](../tasks/items/TASK-E19-07.md) — tasks/items/TASK-E19-07.md
 - [Evidência TASK-E19-01](evidence/PR/task-e19-01/README.md) — docs/evidence/PR/task-e19-01/README.md; workflows Actions, validador invertido, gates locais e limitações (nenhum workflow executado no remoto).
 - [Evidência TASK-E19-02](evidence/PR/task-e19-02/README.md) — docs/evidence/PR/task-e19-02/README.md; licença dual, governança, canal de advisory, README bilíngue e limitações (nada aberto, nada assinado).
+- [Corpo do PR task-e19-02](evidence/PR/task-e19-02/pr-body.md) — docs/evidence/PR/task-e19-02/pr-body.md
 
 - [Organização de testes](../tests/README.md) — tests/README.md
 
