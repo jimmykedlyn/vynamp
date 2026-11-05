@@ -1,6 +1,8 @@
 # ADR-010 — CI/CD somente pelo Woodpecker
 
-Data: 2026-10-19. Estado: decisão do mantenedor; revisão técnica pelo Claude Code ([TASK-E15-04](../../../tasks/items/TASK-E15-04.md)).
+> **Substituída pela [ADR-014](ADR-014-public-github-actions-and-in-app-dsp.md) em 2026-11-05.** O mantenedor tornou os repositórios públicos, o que torna os runners hospedados do GitHub gratuitos e devolve a branch protection ao plano gratuito — as duas razões que sustentavam esta ADR. O texto abaixo é preservado como histórico da decisão; não é mais normativo.
+
+Data: 2026-10-19. Estado: substituída pela ADR-014.
 
 ## Contexto
 

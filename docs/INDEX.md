@@ -70,6 +70,8 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 - [ADR-013 — Vynamp Restore como ferramenta desktop dedicada](architecture/adr/ADR-013-vynamp-restore.md) — docs/architecture/adr/ADR-013-vynamp-restore.md
 
+- [ADR-014 — Repositórios públicos, CI em GitHub Actions e vinil/válvula como DSP interno](architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md) — docs/architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md
+
 - [Engine de áudio e invariantes](audio/01-engine.md) — docs/audio/01-engine.md
 
 - [Matriz de formatos, codecs e tags](audio/02-formats.md) — docs/audio/02-formats.md
@@ -249,6 +251,8 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 - [E17 — Codecs por perfil, sinal final e visualização](../tasks/epics/E17.md) — tasks/epics/E17.md
 
 - [E18 — Ferramentas de arquivo: Restore e Converter](../tasks/epics/E18.md) — tasks/epics/E18.md
+
+- [E19 — Repos públicos, CI público e reorganização](../tasks/epics/E19.md) — tasks/epics/E19.md
 
 - [TASK-E01-01 — Provar decode, gapless e precisão de samples](../tasks/items/TASK-E01-01.md) — tasks/items/TASK-E01-01.md
 
@@ -617,6 +621,20 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 - [TASK-E18-01 — Entregar Vynamp Restore como ferramenta desktop de restauração](../tasks/items/TASK-E18-01.md) — tasks/items/TASK-E18-01.md
 
 - [TASK-E18-02 — Entregar Vynamp Converter e a lib de encoders](../tasks/items/TASK-E18-02.md) — tasks/items/TASK-E18-02.md
+
+- [TASK-E19-01 — Migrar o CI do repo principal para GitHub Actions](../tasks/items/TASK-E19-01.md) — tasks/items/TASK-E19-01.md
+
+- [TASK-E19-02 — Higiene, governança e README bilíngue do repo principal](../tasks/items/TASK-E19-02.md) — tasks/items/TASK-E19-02.md
+
+- [TASK-E19-03 — Dissolver o vitrola no DSP interno do app](../tasks/items/TASK-E19-03.md) — tasks/items/TASK-E19-03.md
+
+- [TASK-E19-04 — Re-apontar as specs de Restore e Converter e criar os repos próprios](../tasks/items/TASK-E19-04.md) — tasks/items/TASK-E19-04.md
+
+- [TASK-E19-05 — CI e README bilíngue nas libs Rust e no MVP de referência](../tasks/items/TASK-E19-05.md) — tasks/items/TASK-E19-05.md
+
+- [TASK-E19-06 — Abrir os repositórios ao público e proteger as branches](../tasks/items/TASK-E19-06.md) — tasks/items/TASK-E19-06.md
+
+- [TASK-E19-07 — Integrar o módulo DSP vitrola no grafo do player](../tasks/items/TASK-E19-07.md) — tasks/items/TASK-E19-07.md
 
 - [Organização de testes](../tests/README.md) — tests/README.md
 
