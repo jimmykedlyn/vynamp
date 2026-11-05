@@ -674,3 +674,5 @@ Versão 0.7.3 · 2026-11-03 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Plano de integração com o shell e ícones](superpowers/plans/2026-11-05-specs-shell-integration.md) — docs/superpowers/plans/2026-11-05-specs-shell-integration.md
 - [ADR-012 — integração nativa com o shell, menus de contexto e pacotes de ícones](architecture/adr/ADR-012-shell-integration.md) — docs/architecture/adr/ADR-012-shell-integration.md
+- [Evidência chore-specs-shell-integration](evidence/PR/chore-specs-shell-integration/README.md) — docs/evidence/PR/chore-specs-shell-integration/README.md; verificações locais, revisão por subagente e limitações declaradas.
+- [Corpo do PR chore-specs-shell-integration](evidence/PR/chore-specs-shell-integration/pr-body.md) — docs/evidence/PR/chore-specs-shell-integration/pr-body.md
