@@ -14,7 +14,13 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Claude Code — Vynamp](../CLAUDE.md) — CLAUDE.md
 
+- [Code of Conduct / Código de Conduta](../CODE_OF_CONDUCT.md) — CODE_OF_CONDUCT.md
+
+- [Governance / Governança](../GOVERNANCE.md) — GOVERNANCE.md
+
 - [Contribuições e revisão](../CONTRIBUTING.md) — CONTRIBUTING.md
+
+- [Legal notes](../LEGAL.md) — LEGAL.md
 
 - [Vynamp — especificação de produto e engenharia](../README.md) — README.md
 
@@ -636,6 +642,7 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 - [TASK-E19-07 — Integrar o módulo DSP vitrola no grafo do player](../tasks/items/TASK-E19-07.md) — tasks/items/TASK-E19-07.md
 - [Evidência TASK-E19-01](evidence/PR/task-e19-01/README.md) — docs/evidence/PR/task-e19-01/README.md; workflows Actions, validador invertido, gates locais e limitações (nenhum workflow executado no remoto).
+- [Evidência TASK-E19-02](evidence/PR/task-e19-02/README.md) — docs/evidence/PR/task-e19-02/README.md; licença dual, governança, canal de advisory, README bilíngue e limitações (nada aberto, nada assinado).
 
 - [Organização de testes](../tests/README.md) — tests/README.md
 

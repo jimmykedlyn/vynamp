@@ -1,0 +1,56 @@
+name: Documentation or specification problem
+description: A document is wrong, contradicts another, or claims something unverified.
+title: "docs: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Vynamp is **specification-first**: most of this repository is normative
+        documentation for a player that does not exist yet. A document that
+        overstates what is built is treated as a defect, not a wording nit.
+  - type: input
+    id: document
+    attributes:
+      label: Document
+      description: Path, e.g. `docs/engineering/04-ci-cd.md`.
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of problem
+      options:
+        - States as done something that is not implemented
+        - Contradicts another document
+        - Broken link or missing index entry
+        - Wrong technical fact
+        - Unclear or untranslated
+    validations:
+      required: true
+  - type: textarea
+    id: quote
+    attributes:
+      label: The exact sentence and where it is
+      description: Quote it verbatim with its section, so the fix does not target a paraphrase.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it is wrong, and what is true
+      description: Cite the evidence — a commit SHA, command output, a spec, or an ADR. "I believe" is not evidence.
+    validations:
+      required: true
+  - type: textarea
+    id: conflict
+    attributes:
+      label: Conflicting document (if any)
+      description: Path and quote of the document this one contradicts.
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight
+      options:
+        - label: I ran `cargo xtask check-docs` and the failure is not already reported there.
+          required: true

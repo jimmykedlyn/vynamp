@@ -1,7 +1,140 @@
-# Contribuições e revisão
+# Contributing / Contribuições
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão 0.9.0 · 2026-11-05 · Estado: contrato vigente; o player ainda não está implementado.
 
-Antes implementar: selecionar TASK, confirmar deps e REQ, descrever comportamento esperado. Branch por slice, commits pequenos, PR com problema/resultado/validação/limitações. Checklist: cancelamento, errors, budgets, a11y, secrets, schema/version e notices aplicáveis. UI inclui screenshot e estados; áudio inclui evidência numerical/hardware pertinente. Não incluir arquivos musicais sem licença.
+## English
 
-Spec changes: atualizar documentos canônicos primeiro, exemplos/schemas/backlog depois, executar validador. Não adicionar duplicata de regra em vários lugares sem link. Documento tem owner funcional na tarefa correspondente; decisão tecnológica nova usa ADR. Relatório de validação deve diferenciar teste executado do alvo futuro.
+### Before you start
+
+Pick a `TASK-*` from [`tasks/backlog.json`](tasks/backlog.json) and open its spec
+in [`tasks/items/`](tasks/items/). Read the requirement it traces to in the
+[matrix](docs/product/03-requirements.md), and any ADR that constrains it. If the
+task does not exist, the change is not ready to be written — the backlog is the
+unit of work, not the diff.
+
+Read [`AGENTS.md`](AGENTS.md) (the working contract), [Gitflow](docs/engineering/03-gitflow-github.md)
+and [CI and gates](docs/engineering/04-ci-cd.md).
+
+### The change
+
+One branch per task, from `develop`, named `feature|fix|chore/<task>-<slug>`.
+Small commits, Conventional Commits (`feat`, `fix`, `test`, `docs`, `chore`,
+`build`, `ci`). No force push to a shared branch, no squash, no rebase merge —
+merge commits only, to keep ancestry and worktree cleanup reliable.
+
+Then run, in this order:
+
+```bash
+cargo fmt --all --check
+cargo clippy --workspace --all-targets --locked -- -D warnings
+cargo test --workspace --locked
+cargo xtask check-docs
+cargo xtask check-delivery
+```
+
+`check-docs` requires every Markdown file to have a `# ` title and an entry in
+[`docs/INDEX.md`](docs/INDEX.md). `check-delivery` validates the workflows:
+every `uses:` pinned by full commit SHA, the `CI Gate` job present and
+fail-closed.
+
+### The pull request
+
+Open against `develop` with a body that states: **source** (task, requirement,
+ADR), **what changed**, **commands and their real output**, and **limitations**
+— what you did not run, what remains unverified, and any skipped check. A PR
+that claims more than it demonstrated is a defect in this project, not a
+marketing choice.
+
+The required status is `CI Gate`. A green gate does not mean the player works:
+with the workspace holding only `xtask`, the `core` and `android` jobs are
+skipped by `cargo xtask ci detect`.
+
+### Rules of evidence
+
+- Do not report a test as executed unless you executed it, and quote the output.
+- Do not report a target as verified if the job covering it was skipped.
+- Do not commit music, personal data, tokens or signed artefacts.
+- Do not introduce code or assets from Winamp or any other player.
+- Do not add a rule in two places; state it once and link to it.
+
+### Review and merge
+
+Every change is reviewed in a clean context, by someone other than the author of
+the change. Only the maintainer merges, tags and publishes. Approval of the
+technical review is not approval of a GitHub identity, and vice versa.
+
+### Licence
+
+Contributions are accepted under `MIT OR Apache-2.0` unless you state otherwise.
+See [LEGAL.md](LEGAL.md). Security problems go to
+[GitHub Security Advisories](https://github.com/jimmykedlyn/vynamp-mediaplayer/security/advisories/new)
+— never to a public issue. See [SECURITY.md](SECURITY.md).
+
+## Português
+
+### Antes de começar
+
+Escolha uma `TASK-*` em [`tasks/backlog.json`](tasks/backlog.json) e abra a spec
+em [`tasks/items/`](tasks/items/). Leia o requisito correspondente na
+[matriz](docs/product/03-requirements.md) e qualquer ADR que restrinja a
+mudança. Se a tarefa não existe, a mudança não está pronta para ser escrita — a
+unidade de trabalho é o backlog, não o diff.
+
+Leia [`AGENTS.md`](AGENTS.md) (o contrato de trabalho), o
+[Gitflow](docs/engineering/03-gitflow-github.md) e o
+[CI e gates](docs/engineering/04-ci-cd.md).
+
+### A mudança
+
+Uma branch por tarefa, a partir de `develop`, nomeada
+`feature|fix|chore/<task>-<slug>`. Commits pequenos, Conventional Commits
+(`feat`, `fix`, `test`, `docs`, `chore`, `build`, `ci`). Sem force push em branch
+compartilhada, sem squash, sem rebase merge — somente merge commit, para
+preservar ancestry e a limpeza confiável das worktrees.
+
+Depois rode, nesta ordem:
+
+```bash
+cargo fmt --all --check
+cargo clippy --workspace --all-targets --locked -- -D warnings
+cargo test --workspace --locked
+cargo xtask check-docs
+cargo xtask check-delivery
+```
+
+`check-docs` exige que todo arquivo Markdown tenha título `# ` e entrada no
+[`docs/INDEX.md`](docs/INDEX.md). `check-delivery` valida os workflows: todo
+`uses:` fixado por SHA completo de commit, o job `CI Gate` presente e
+fail-closed.
+
+### O pull request
+
+Abra contra `develop` com um corpo que declare: **fonte** (tarefa, requisito,
+ADR), **o que mudou**, **comandos e a saída real** e **limitações** — o que você
+não rodou, o que segue não verificado e qualquer check pulado. Um PR que afirma
+mais do que demonstrou é defeito neste projeto, não escolha de marketing.
+
+O status exigido é `CI Gate`. Gate verde não significa que o player funciona: com
+o workspace contendo só `xtask`, os jobs `core` e `android` ficam pulados por
+`cargo xtask ci detect`.
+
+### Regras de evidência
+
+- Não relate um teste como executado se você não o executou; cole a saída.
+- Não relate um alvo como verificado se o job que o cobre foi pulado.
+- Não commite música, dados pessoais, tokens nem artefatos assinados.
+- Não introduza código ou assets do Winamp nem de outro player.
+- Não duplique uma regra em dois lugares; declare uma vez e linke.
+
+### Revisão e merge
+
+Toda mudança é revisada em contexto limpo, por alguém que não é o autor da
+mudança. Só o mantenedor mergeia, cria tag e publica. A aprovação da revisão
+técnica não equivale à aprovação de uma identidade GitHub, e vice-versa.
+
+### Licença
+
+Contribuições são aceitas sob `MIT OR Apache-2.0` salvo declaração em contrário.
+Ver [LEGAL.md](LEGAL.md). Problemas de segurança vão para
+[GitHub Security Advisories](https://github.com/jimmykedlyn/vynamp-mediaplayer/security/advisories/new)
+— nunca para issue pública. Ver [SECURITY.md](SECURITY.md).
