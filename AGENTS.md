@@ -1,6 +1,6 @@
 # Contrato de trabalho do agente
 
-Versão 0.7.0 · 2026-10-14 · Configuração do projeto; player ainda não implementado.
+Versão 0.9.0 · 2026-11-05 · Configuração do projeto; player ainda não implementado.
 
 Fluxo de agente único: Claude Code é o único autor e revisor. Subagentes: Opus orquestra e trata alto risco; Sonnet implementa e revisa; Haiku executa checks. Merge, tag e release pertencem ao mantenedor humano.
 
@@ -24,7 +24,7 @@ Executar cargo xtask ci docs e checks do subsistema. Não testar só espelho de 
 
 Ao entregar: branch, SHA completo, base, PR real (ou motivo da pendência), escopo commitado, comandos/resultados/ambiente/limitações. Publicar a branch sem force push e criar/atualizar o PR por head+base (template e --body-file), sem duplicar. Entregar ao mantenedor a URL real do PR, head revisado, status de revisão/CI e o pedido “aprove e faça o merge commit pelo GitHub”. Não inventar SHA/PR/CI. Falha de autenticação/rede é registrada com o erro real. Após o merge, verificar o PR real (state=MERGED), `git fetch origin` e sincronizar a integração por fast-forward, preservando worktrees alheias.
 
-Produto ainda não implementado; stages/release flags distinguem tooling de app. Não criar executável placeholder, selo hi-res falso ou installer fictício. Release precisa licenças/notices/fixtures/evidências/runtime inventory/certificados reais. Não criar licença final sem decisão registrada. Não publicar plataforma web antes de M4. Atualizar docs/schema/backlog/ADR/notices conforme mudança, mantendo IDs e links.
+Produto ainda não implementado; stages/release flags distinguem tooling de app. Não criar executável placeholder, selo hi-res falso ou installer fictício. Release precisa licenças/notices/fixtures/evidências/runtime inventory/certificados reais. Não criar licença final sem decisão registrada (a do código deste repositório está registrada em D-LIC-01: `MIT OR Apache-2.0`, ver [LEGAL.md](LEGAL.md)). Não publicar plataforma web antes de M4. Atualizar docs/schema/backlog/ADR/notices conforme mudança, mantendo IDs e links.
 
 ## Identidade Vynamp
 

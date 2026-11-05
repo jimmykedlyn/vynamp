@@ -1,6 +1,6 @@
 # Decisões, hipóteses e pontos em aberto
 
-Versão: 0.7.5 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.8.0 · Data: 2026-11-05 · Estado: especificação proposta, implementação não iniciada.
 
 ## Decisões fixadas pelo pedido
 
@@ -21,7 +21,7 @@ Produto independente em Rust; inspiração visual clássica com cores especifica
 
 ## Decisões pendentes com dono e prazo
 
-UI final e backend exclusivo: responsável engenharia, M0, provas de acessibilidade/latência. Licença do código e marca: responsável produto, antes publicar M3. Encoder AAC/MP3, ASIO e FFmpeg: engenharia/revisão de distribuição, antes empacotar. Hosting/região/custos/CDN: plataforma, entrada M4. Catálogo próprio, royalties e territórios: produto/plataforma, antes ingest público. DRM e assinatura: nova RFC, não dependência de M1–M3. Datas dependem de equipe/hardware; estimativas por tarefa são faixas, não calendário prometido.
+UI final e backend exclusivo: responsável engenharia, M0, provas de acessibilidade/latência. Licença do **código**: resolvida em 2026-11-05 (D-LIC-01, `MIT OR Apache-2.0`); a **marca** (registro e domínio) segue pendente, responsável produto, antes publicar M3. Encoder AAC/MP3, ASIO e FFmpeg: engenharia/revisão de distribuição, antes empacotar. Hosting/região/custos/CDN: plataforma, entrada M4. Catálogo próprio, royalties e territórios: produto/plataforma, antes ingest público. DRM e assinatura: nova RFC, não dependência de M1–M3. Datas dependem de equipe/hardware; estimativas por tarefa são faixas, não calendário prometido.
 
 ## Gestão de escopo
 
@@ -78,6 +78,14 @@ Vêm da revisão documental do DSP (pedido "Documentação DSP — Equalizadores
 | Pedido v1.4 §5.1 "referência contém 39 módulos / 198 campos" × catálogo [09](../audio/09-dsp-catalog.md) | contagens do protótipo não coincidem com o catálogo nativo (que também tem módulos propostos sem adaptador) | D-DSP-11: números não congelam o catálogo; evidência relatada |
 | Pedido v1.4 (protótipo Codex rev.14/15, histórico; fonte atual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 rev.38; evidências `interactive/*`, `*-validation.json`, `CONTROLES-DE-AUDIO.md`, `DSP-MODULAR-E-VU.md`) × repositório | os arquivos citados não existem neste repositório | D-DSP-16: citados como relato da referência externa; nenhum caminho linkado; registrar a referência no repositório do produto fica pendente |
 | `docs/audio/07-dsp-signal-contract.md` §Caminho | mixer soma streams antes do resampler final; fontes com Fs diferentes no crossfade não têm conversão definida | dependente de investigação (junto com D-DSP-05) |
+
+## Decisões de licença e governança (2026-11-05)
+
+| ID | Decisão | Razão / revisão |
+|---|---|---|
+| D-LIC-01 | O código deste repositório é **`MIT OR Apache-2.0`**, com `LICENSE`, `LICENSE-MIT` e `LICENSE-APACHE` na raiz, igual às bibliotecas `vynamp-decode` e `vynamp-output` | Decisão do mantenedor em 2026-11-05, registrada aqui porque `AGENTS.md` proíbe criar licença final sem decisão registrada e [02-privacy-licensing](../security/02-privacy-licensing.md) proibia criar `LICENSE` "como se tivesse sido decisão do usuário". Sem licença, abrir os repositórios (TASK-E19-06) publicaria código que ninguém pode usar legalmente. Ver [LEGAL.md](../../LEGAL.md); TASK-E19-02 |
+| D-LIC-02 | A licença cobre **só o código deste repositório**. Não relicencia código que as bibliotecas de áudio reservam para `crates-copyleft/` (convenção ainda vazia nas duas), não concede direitos sobre codecs de terceiros e **não** equivale a release: `release preflight` continua exigindo `THIRD_PARTY_NOTICES`, evidência de hardware real por plataforma e registro de revisores, nenhum dos três existente; `publish-draft` exige ainda assinatura minisign | Evitar que a existência de `LICENSE` seja lida como "produto pronto para distribuir"; TASK-E19-02 |
+| D-GOV-01 | Canal de vulnerabilidade = **GitHub Security Advisories** do próprio repositório (`/security/advisories/new`), privado por padrão, sem endereço de e-mail novo | Decisão do mantenedor em 2026-11-05. Fecha a pendência "URL/email de segurança aprovado" de [SECURITY.md](../../SECURITY.md) sem inventar contato operacional; TASK-E19-02 |
 
 ## Decisões de letras (2026-10-28)
 

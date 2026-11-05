@@ -2,7 +2,7 @@
 
 Versão: 0.8.0 · Data: 2026-11-05 · Estado: especificação proposta, implementação não iniciada.
 
-191 tarefas em 19 épicos; todos os itens estão planejados. Cada tarefa tem requisito, fase, prioridade, entregável, dependências, aceite, QA e faixa inicial de esforço. Nenhuma tarefa está concluída por este pacote documental.
+191 tarefas em 19 épicos; a maioria planejada, algumas em execução (`in_progress` no JSON, "em execução" no Markdown da tarefa). Cada tarefa tem requisito, fase, prioridade, entregável, dependências, aceite, QA e faixa inicial de esforço. Nenhuma tarefa está concluída enquanto o player não existir.
 
 O [JSON canônico](backlog.json) é fonte para tooling; os Markdown são a interface de leitura. Alterar ambos ao mudar scope/status. As faixas variam de 2–5 dias para provas a 10–25 dias para expansões; são esforço provisório, não calendário. Antes de execução, decompor itens grandes em subtarefas de 1–3 dias conforme descoberta técnica.
 
