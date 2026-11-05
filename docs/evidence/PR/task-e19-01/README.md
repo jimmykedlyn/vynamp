@@ -1,6 +1,6 @@
 # Evidência TASK-E19-01 — CI do repo principal em GitHub Actions
 
-Versão 0.8.0 · 2026-11-05 · Autor Claude (branch `feature/task-e19-01-claude-public-github-actions`, base develop `a381d27`). Documento, gate local e configuração de CI; **não** é aceite de app, hardware nem release.
+Versão 0.8.1 · 2026-11-05 · Autor Claude (branch `feature/task-e19-01-claude-public-github-actions`, base develop `a381d27`). Documento, gate local e configuração de CI; **não** é aceite de app, hardware nem release.
 
 ## Escopo entregue
 
@@ -45,14 +45,31 @@ Ambiente: Windows 11 Pro 10.0.26300, Rust 1.99.0 (rustup), git 2.47.1.windows.2.
 | `cargo xtask ci detect` | `{"android":"false","core":"false"}` |
 | `grep -rn "uses:" .github/workflows/` | 6 referências, todas com SHA de 40 hex |
 
+### Execução real no GitHub
+
+O workflow rodou no PR #30, em `36d0e02` (evento `pull_request`), e concluiu com sucesso. Run [42089094392](https://github.com/jimmykedlyn/vynamp-mediaplayer/actions/runs/42089094392).
+
+| Check | Resultado | Duração |
+|---|---|---|
+| `docs` | pass | 2m20s |
+| `tooling (windows-2022)` | pass | 1m45s |
+| `tooling (ubuntu-22.04)` | pass | 52s |
+| `tooling (macos-15-intel)` | pass | 1m35s |
+| `tooling (macos-15)` | pass | 22s |
+| **`CI Gate`** | **pass** | 4s |
+| `core` | skipped | — |
+| `android` | skipped | — |
+
+Isso corrige a afirmação anterior desta evidência de que nenhum workflow teria rodado. O repositório é **privado** e o Actions executou normalmente — o bloqueio de billing registrado em 2026-10-18/23 (runs `39171754196`, `39979729441` etc., que falhavam sem executar nenhum step) não se repete hoje. A razão da mudança não foi determinada: pode ser consumo de cota do plano, ciclo de reset ou configuração da conta. **Não** se deve tratar "repo privado" como suficiente para prever bloqueio, nem como suficiente para prever que roda.
+
 ## Limitações — o que este PR não prova
 
-- **Nenhum workflow rodou no GitHub.** A abertura para público é a TASK-E19-06 e, até ela, o CI do repositório privado não inicia por billing. Os jobs estão validados por estrutura (parse YAML + regras do validador), não por execução real.
-- `core` e `android` ficam **pulados**: `cargo xtask ci detect` devolve `false`/`false` porque o workspace contém só `xtask`. Skip declarado não significa que o player passou testes.
-- O gate real publicado como status `CI Gate` só existe depois do primeiro `pull_request` executado no remoto. `config/github.json` continua `protection_status: pending_plan` porque a branch protection segue indisponível no repositório privado.
-- `release.yml` falha de propósito em `publish`; nenhum artefato assinado é produzido.
+- `core` e `android` ficam **pulados**: `cargo xtask ci detect` devolve `false`/`false` porque o workspace contém só `xtask`. Skip declarado não significa que o player passou testes, e o `CI Gate` verde não exercita build de áudio, app desktop nem Android.
+- O gate publicado como status `CI Gate` já existe e passou, mas `config/github.json` continua `protection_status: pending_plan`: a branch protection **é o que exige** esse status, e segue indisponível no repositório privado. Sem ela o check é informativo, não bloqueante.
+- `release.yml` falha de propósito em `publish`; nenhum artefato assinado é produzido. O caminho de tag nunca foi executado.
+- `quality.yml` nunca rodou — depende de runners self-hosted inexistentes.
 - Hardware segue sem cobertura de CI — depende da TASK-E15-05.
-- macOS Intel/Apple Silicon entram como alvos **verificáveis** pelo desenho; a verificação só existe após uma execução real no Actions.
+- macOS Intel/Apple Silicon executaram `tooling` com sucesso, mas o job `core` neles está pulado; a cobertura macOS de código de produto continua não exercitada.
 
 ## Controles de segurança preservados
 

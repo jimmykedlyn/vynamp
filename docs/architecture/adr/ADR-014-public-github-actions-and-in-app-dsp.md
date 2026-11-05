@@ -8,7 +8,7 @@ Status: aceito pelo mantenedor em 2026-11-05. **Substitui a [ADR-010](ADR-010-wo
 
 A ADR-010 (2026-10-19) decidiu CI/CD exclusivamente pelo Woodpecker local, e para isso **deletou** três workflows de GitHub Actions que já existiam e funcionavam, além de reescrever o validador para **proibir** `.github/workflows`. Duas razões a sustentavam:
 
-1. **Billing.** O GitHub Actions do repositório **privado** estava bloqueado por billing; nenhum job iniciava. O plano Free dá US$ 12/mês de compute a repositório privado.
+1. **Billing.** Em outubro de 2026, o GitHub Actions do repositório **privado** estava bloqueado por billing; nenhum job iniciava. O plano Free dá US$ 12/mês de compute a repositório privado. Esse bloqueio **não** é permanente nem determinístico: em 2026-11-05 o mesmo repositório privado executou o `ci.yml` com sucesso no PR #30 (run `42089094392`, todos os jobs com steps reais). A decisão de tornar os repositórios públicos não depende mais de billing — ela se sustenta na gratuidade de runners em repo público, na branch protection e na abertura pretendida. Ver [evidência TASK-E19-01](../../evidence/PR/task-e19-01/README.md).
 2. **Branch protection.** `rulesets` e a API de proteção retornavam HTTP 403 "Upgrade to GitHub Pro" no repositório privado, então o `CI Gate` publicado pelo Woodpecker não podia ser exigido pelo GitHub.
 
 Em 2026-11-05 o mantenedor decidiu tornar os repositórios Vynamp **públicos**. Isso derruba as duas razões de uma vez:
@@ -83,7 +83,7 @@ Duplicar a spec em dois repositórios criaria divergência silenciosa entre arqu
 1. **Manter Woodpecker e tornar os repositórios públicos apenas por causa da licença.**
    *Rejeitado.* Manteria a limitação de macOS, exigiria que o notebook do mantenedor estivesse ligado para haver CI, e o `CI Gate` continuaria sem poder ser exigido pelo GitHub.
 2. **Usar GitHub Actions mantendo os repositórios privados.**
-   *Rejeitado pelo billing*: US$ 12/mês de compute no plano Free não sustenta a matriz de cinco alvos por PR, e a branch protection continuaria em 403.
+   *Rejeitado por dois motivos independentes.* O compute pago do plano Free (US$ 12/mês) não sustenta com folga a matriz de cinco alvos por PR, com picos de uso esgotando a cota e bloqueando o CI sem aviso — o que já aconteceu em outubro de 2026. E a branch protection continuaria em 403 no repositório privado, então o `CI Gate` seguiria sem poder ser exigido. Note que Actions **funciona** hoje em repo privado (ver Contexto): o argumento não é que ele não rode, é que não há garantia de cota nem de proteção.
 3. **Escrever os workflows do zero em vez de restaurar `247b424`.**
    *Rejeitado.* O desenho já existia, já passava no validador da época e usa actions fixadas por SHA. Reescrever descartaria trabalho validado e reintroduziria risco de pin por tag flutuante.
 4. **Manter o `vitrola` como biblioteca e apenas deixá-la sem repositório público.**
