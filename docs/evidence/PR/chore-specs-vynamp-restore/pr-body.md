@@ -21,7 +21,7 @@ Decisões-chave registradas:
 | Motor | O app é a casca; o motor de restauração é biblioteca interna reaproveitável |
 | Cadeia DSP | Ordem fixa e auditável de 11 estágios: de-crackle (AR, P=48, 2 passagens) → LPF linear-phase (63 taps, Kaiser β=6) → remoção de artefatos MP3 (STFT N=512/H=128) → BWE → de-click → offset DC → de-rumble → notch de hum → gate → anti-saturação → blend de regiões |
 | Diagnóstico | 12 detectores (clipping, true_peak, click, crackle, hum50, hum60, hiss, rumble, discontinuity, skip, dc_offset, band_limit) com severidade `mild`/`moderate`/`severe`, evidência numérica e correção sugerida |
-| Exportação | A origem **nunca** é sobrescrita sem `--overwrite`; temporário no mesmo volume → `fsync` → `rename`; validação pós-escrita com releitura e decodificação; falha remove a saída e preserva a origem |
+| Exportação | A origem **nunca** é sobrescrita sem `--overwrite`; temporário no mesmo volume → `fsync` → validação pós-escrita **no temporário** → `rename`; falha remove o temporário e preserva a origem |
 | Metadados | ID3v2, RIFF `LIST`/`INFO` e XMP extraídos, preservados e re-embutidos; campos desconhecidos não são descartados quando o contêiner suporta |
 | Formatos | Saída em FLAC, WAV (16/24/32 int, 32 float), AIFF e ALAC; sem saída DSD na 1.0 |
 | Codificadores | Lib própria `vynamp-encode` (`std`-only, repositório privado) como **única** fonte de encoders; a entrega dos codificadores é E08-02, a ferramenta que os usa é E18-02 |
@@ -30,9 +30,24 @@ Decisões-chave registradas:
 
 Incoerências do MVP corrigidas e **declaradas** na spec nativa:
 
-1. **De-crackle** — o módulo `mid/side` do MVP é código morto; o que roda de fato é o modelo AR/L-SAR, que é o que a spec fixa.
-2. **Denoise Wiener** — inalcançável no MVP (sem UI, descartado pelo state store); declarado fora de escopo na 1.0 em vez de ausente em silêncio.
+1. **De-crackle** — o módulo `mid/side` do MVP é código morto; o de-crackle realmente executado é o modelo AR/L-SAR, que é o que a spec normativa fixa (ordem P=48, 2 passagens por canal).
+2. **Denoise Wiener** — inalcançável no MVP (sem UI e descartado pelo state store); declarado **fora de escopo** da 1.0 em vez de silenciosamente ausente.
 3. **Região `kind: overlay`** — placeholder ("AI separation pending") no MVP; a 1.0 suporta apenas regiões de ganho/fade (`kind: between`).
+4. **Detector de cliques** — `restore-click-detector.js` roda no worker e escreve `report.clickDetection`, mas nenhum consumidor da UI lê o campo; a 1.0 mantém só o detector `click` do diagnóstico.
+
+Correções da revisão independente (subagente Opus, contexto limpo), aplicadas e verificadas contra o MVP rev.38:
+
+| # | Achado | Correção |
+|---|---|---|
+| 1 | Exportação com `--overwrite` perdia a origem em falha de validação | Validação pós-escrita movida para **o temporário**, antes do `rename`; "meso volume" → "mesmo volume" corrigido |
+| 2 | `band_limit` atribuído a codec *lossless* | Atribuído a compressão **com perda** (MP3/AAC); correção passa a ser `bwe: 0.5` + `bweCutoff` + `deartifact: 0.5`, conforme o MVP |
+| 3 | Ordem acústica declarada como justificada | Declarada como herança de `this.pre` do MVP (artefato de partição), não decisão acústica; viés `+ μ²` e corrupção de frame AR registrados |
+| 4 | Passa-baixa Kaiser travado em 18 kHz destrói banda hi-res | Parâmetro `decrackleCutoff` (8000–22000 Hz, padrão 18000) + regra `min(corte, 0.4·fs)` |
+| 5 | Presets dependiam do denoise removido; aviso fantasma de "redução de ruído alta" | Tabela de `tools` exata dos 5 presets; aviso de 8 kHz re-chaveado para zumbido ativo / LPF agressivo |
+| 6 | `clipping` com `declip: −2` estático | `declip: <headroomDB>` dinâmico + `decrackle: 0.15` em moderate/severe |
+| 7 | Justificativa do gate antes da anti-saturação inválida | Reescrita: evita que o declip descalibre o envelope do gate |
+| 8 | Crackle indefinido em mono/surround | Mono = canal único; estéreo = mid/side; surround = por canal, contagem somada |
+| 9 | QA-ID divergentes entre TMDs, specs e backlog | Alinhadas em `QA-015, QA-016, QA-023, QA-024, QA-031` nos quatro fontes |
 
 TASK / REQ / QA:
 
@@ -55,11 +70,10 @@ Executados localmente (Windows 11 Pro 10.0.26300, Rust 1.99.0):
 - `cargo xtask check-docs` → `result: passed`, 0 erros, 338 arquivos Markdown, 184 tarefas, 184 requisitos, 18 épicos, 68 entradas de catálogo.
 - `cargo xtask check-delivery` → `result: passed`, 0 erros.
 - `cargo test -p xtask` → 85 testes aprovados, 0 falhas.
-- Hook de pre-push (mesmos checks do CI: `xtask ci docs` + 51 testes de `xtask` + 34 testes de `tests/tooling.rs`) → aprovado.
 
 Revisão técnica (subagente Opus, contexto limpo), commit revisado e achados:
 
-- Revisão por subagente de contexto limpo (Opus — alto risco, define a arquitetura de uma ferramenta de áudio) sobre ADR-013, as duas specs, épico E18, TASKs, backlog, matriz normativa, índice, glossário, feature-parity e CHANGELOG → **veredito APROVADO COM RESSALVAS com 9 achados**; cada achado foi verificado contra o código do MVP rev.38 antes da aplicação; todos os 9 foram corrigidos neste branch (ordem de exportação com validação no temporário antes do `rename`, `band_limit` atribuído a compressão com perda + `deartifact: 0.5`, parâmetro `decrackleCutoff`, tabela de `tools` dos 5 presets, ordem de estágios declarada como herança do `this.pre`, `clipping` com `headroomDB` dinâmico e `decrackle: 0.15`, justificativa do gate reescrita, crackle em mono/surround, QA-ID sincronizados entre TASKs/specs/backlog). Detalhes em `docs/evidence/PR/chore-specs-vynamp-restore/README.md`.
+- Revisão por subagente de contexto limpo (Opus — alto risco, define a arquitetura de uma ferramenta de áudio) sobre ADR-013, as duas specs, épico E18, TASKs, backlog, matriz normativa, índice, glossário, feature-parity e CHANGELOG → veredito APROVADO COM RESSALVAS com 9 achados, todos corrigidos neste branch e detalhados acima.
 - Nenhuma credencial no diff.
 
 Limitações declaradas:
@@ -67,15 +81,13 @@ Limitações declaradas:
 - **Nada foi implementado nem testado.** Este PR é exclusivamente de especificação: nenhuma linha de código de restauração, conversão ou encoder foi escrita ou executada; nenhum arquivo de áudio foi restaurado ou transcodificado.
 - **CI Gate (Woodpecker) não verificado**, conforme instrução vigente do mantenedor de ignorar o CI/CD por enquanto. O CI Gate precisa ser conferido pelo mantenedor no SHA final antes do merge.
 - **macOS e hardware de saída de áudio não verificados** (sem agente Mac nem hardware de teste neste ambiente) — marcados como não verificados.
-- **PR5 (execução) está fora deste PR**: a lib `vynamp-encode`, a fila de jobs e os artefatos de release do Converter ficam para a próxima entrega.
+- **PR5 (execução)** está fora deste PR: a lib `vynamp-encode`, a fila de jobs e os artefatos de release do Converter ficam para a próxima entrega.
 
 - [x] Worktree e owner próprios.
 - [x] Superpowers carregado; teste útil e verificação executados.
 - [x] Sucesso/erro/cancelamento e acessibilidade aplicáveis cobertos (n/a — entrega documental; os contratos de erro e cancelamento estão nas specs).
 - [x] Docs/contracts/notices atualizados; nenhuma credencial no diff.
 - [ ] CI Gate (Woodpecker) aprovado; macOS/hardware não disponível marcado como não verificado.
-
----
 
 Aprovação e merge são do mantenedor (merge commit pelo GitHub).
 
