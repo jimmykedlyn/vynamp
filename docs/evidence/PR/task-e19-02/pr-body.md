@@ -88,6 +88,6 @@ Junto: `LICENSE` dizia "both … and" para uma licença **OR**; `xtask/Cargo.tom
 - [x] Sucesso/erro/cancelamento: validador exercitado no caminho de falha (`Missing index`) e no de sucesso.
 - [x] Docs/contracts/notices atualizados; nenhuma credencial no diff.
 - [x] Revisão técnica independente — oito achados em duas passagens, todos corrigidos; sem terceira passagem (as seguintes morreram por cota do plano).
-- [x] CI Gate (GitHub Actions) — verde em `ae10e3b` (run 42125289298): `docs`, `tooling` em ubuntu-22.04, windows-2022, macos-15-intel e macos-15, mais o gate; `core` e `android` pulados por `cargo xtask ci detect`.
+- [x] CI Gate (GitHub Actions) — verde: `docs`, `tooling` em ubuntu-22.04, windows-2022, macos-15-intel e macos-15, mais o gate; `core` e `android` pulados por `cargo xtask ci detect`. O SHA e o run verificados não são citados aqui de propósito: este arquivo faz parte do commit, então qualquer SHA escrito nele já nasce obsoleto. O run do head é o que o GitHub mostra na aba Checks deste PR, e é ele que vale.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
