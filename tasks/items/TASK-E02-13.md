@@ -1,6 +1,6 @@
 # TASK-E02-13 — Gerar gabarito de movimento, medidores e ondas
 
-Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.2 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Contrato da tarefa
 
@@ -20,6 +20,8 @@ Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implemen
 ## Entrega concreta
 
 Transições CSS, séries rAF sob sinais determinísticos, constantes de AnalyserNode e balística e estilos de onda em formato consumível pelo Rust.
+
+Referência visual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 (rev.38), caminhos `mvp/...` e `out/...` conforme [referência do MVP](../../docs/design/06-mvp-reference.md). Caminhos relevantes: `out/svg/meters/dynamic.json`, `mvp/`.
 
 Documento canônico: [referência do MVP](../../docs/design/06-mvp-reference.md). [Matriz normativa](../../docs/product/03-requirements.md).
 

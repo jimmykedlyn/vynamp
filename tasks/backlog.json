@@ -670,7 +670,7 @@
         "TASK-E02-14"
       ],
       "spec": "docs/design/06-mvp-reference.md",
-      "deliverable": "Mapa de cada recurso web usado pelo MVP para o equivalente nativo em Windows, Linux, macOS, iOS e Android, com biblioteca própria planejada onde faltar.",
+      "deliverable": "Mapa de cada recurso web usado pelo MVP para o equivalente nativo em Windows, Linux, macOS e Android (iOS fora da 1.0), com biblioteca própria planejada onde faltar.",
       "acceptance": "Zero lacunas sem plano; exceções só para APIs intrínsecas do navegador com comportamento reimplementado; toda biblioteca nova tem repositório git próprio e modular.",
       "qa": [
         "QA-034"
@@ -697,8 +697,8 @@
         "TASK-E02-01"
       ],
       "spec": "docs/design/06-mvp-reference.md",
-      "deliverable": "Crate de testes que renderiza telas nativas e as compara com os gabaritos visual, de movimento e de comportamento do MVP no CI.",
-      "acceptance": "O harness falha quando uma tela ou estado excede a tolerância e aponta o elemento divergente; roda no CI Gate em Linux e Windows.",
+      "deliverable": "Crate de testes que renderiza telas nativas e as compara com os gabaritos visual, de movimento e de comportamento do MVP, executada localmente.",
+      "acceptance": "O harness falha quando uma tela ou estado excede a tolerância e aponta o elemento divergente; roda apenas localmente, na máquina do mantenedor, com o clone de vynamp-mvp-reference no SHA 0d9860b901510021bcca4c31a25014373ea7c452; o CI Gate o marca como não executado.",
       "qa": [
         "QA-034"
       ],
@@ -4303,7 +4303,7 @@
     {
       "id": "TASK-E16-03",
       "epic": "E16",
-      "title": "Entregar associação e Abrir com no Windows",
+      "title": "Entregar associação, menu de contexto e pacotes de ícones no Windows",
       "phase": "M2",
       "priority": "P0",
       "status": "planned",
@@ -4317,8 +4317,8 @@
         "TASK-E08-06"
       ],
       "spec": "docs/platforms/03-system-integration.md",
-      "deliverable": "Registro HKCU, defaults por consentimento e verbos Open/Enqueue com batch comprovado.",
-      "acceptance": "Explorer abre lote ordenado por contrato demonstrado; não altera UserChoice; registro/removal próprios e portable explícito passam.",
+      "deliverable": "Registro HKCU, pacote esparso MSIX com IExplorerCommand, verbos completos e pacotes de ícones .ico multi-res.",
+      "acceptance": "Explorer moderno (Win11) e clássico (Win10) abrem lote ordenado por IShellItemArray; pacote esparso registrado via PackageManager; remoção limpa; suporte às 3 famílias de ícones.",
       "qa": [
         "QA-022",
         "QA-023",
@@ -4333,7 +4333,7 @@
     {
       "id": "TASK-E16-04",
       "epic": "E16",
-      "title": "Entregar MIME e abertura externa no Linux",
+      "title": "Entregar MIME, extensões de shell e abertura externa no Linux",
       "phase": "M2",
       "priority": "P0",
       "status": "planned",
@@ -4347,8 +4347,8 @@
         "TASK-E14-02"
       ],
       "spec": "docs/platforms/03-system-integration.md",
-      "deliverable": "Desktop Entry, DEB/AppImage, MIME, portais e MPRIS ligados ao mesmo owner.",
-      "acceptance": "X11/Wayland e Nautilus/Dolphin abrem arquivos concedidos; %U não usa shell; defaults preservados; não alegar menu contextual universal.",
+      "deliverable": "Desktop Entry com Desktop Actions, extensões/ServiceMenus (Dolphin, Nautilus, Thunar), MIME hicolor e MPRIS.",
+      "acceptance": "Gerenciadores (Dolphin, Nautilus, Thunar) exibem submenu Vynamp com verbos canônicos; %U repassa lote sem shell; ícones hicolor por família instalados.",
       "qa": [
         "QA-022",
         "QA-023",
@@ -4363,7 +4363,7 @@
     {
       "id": "TASK-E16-05",
       "epic": "E16",
-      "title": "Entregar document types e Finder nos dois Macs",
+      "title": "Entregar document types, Quick Actions e Finder nos dois Macs",
       "phase": "M2",
       "priority": "P0",
       "status": "planned",
@@ -4377,8 +4377,8 @@
         "TASK-E14-02"
       ],
       "spec": "docs/platforms/03-system-integration.md",
-      "deliverable": "UTTypes/document types e callbacks LaunchServices com grants e bootstrap seguro.",
-      "acceptance": "Intel e Silicon recebem cold/warm batches; bookmarks stale/placeholder canceláveis; não dependem de Rosetta nem alteram defaults.",
+      "deliverable": "UTTypes/document types, Quick Actions (NSServices) no Finder, callbacks LaunchServices e pacotes de ícones in-app.",
+      "acceptance": "Intel e Silicon recebem cold/warm batches via application(_:openFiles:); Quick Actions no Finder ativas; pacotes de ícones aplicados na UI interna; defaults preservados.",
       "qa": [
         "QA-022",
         "QA-023",
@@ -4469,8 +4469,8 @@
         "TASK-E15-08"
       ],
       "spec": "docs/platforms/04-activation-ownership.md",
-      "deliverable": "Backup/restore consistente, portable relocável e uninstall de registros próprios.",
-      "acceptance": "Restore por staging e rollback preserva mídia; credenciais não exportadas; mover portable não toma defaults; update respeita owner e playback.",
+      "deliverable": "Backup/restore consistente, portable relocável e uninstall de registros próprios (ProgIDs e pacote esparso).",
+      "acceptance": "Restore por staging e rollback preserva mídia; desinstalação remove pacote esparso e HKCU sem sobras; portable permite ativar/desativar integração com confirmação; update respeita owner.",
       "qa": [
         "QA-024",
         "QA-031"
@@ -5091,6 +5091,73 @@
       "estimate_days": {
         "min": 2,
         "max": 5
+      },
+      "risk": "alto"
+    },
+    {
+      "id": "TASK-E18-01",
+      "epic": "E18",
+      "title": "Entregar Vynamp Restore como ferramenta desktop de restauração",
+      "phase": "M3",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "library",
+      "requirements": [
+        "REQ-E18-01"
+      ],
+      "dependencies": [
+        "TASK-E08-01",
+        "TASK-E01-07",
+        "TASK-E16-03",
+        "TASK-E16-04",
+        "TASK-E16-05"
+      ],
+      "spec": "docs/tools/01-vynamp-restore.md",
+      "deliverable": "Ferramenta desktop `vynamp-restore` com motor de restauração próprio, diagnóstico de defeitos e exportação preservando metadados.",
+      "acceptance": "A fonte nunca é sobrescrita sem confirmação; escrita atômica com validação pós-escrita preserva origem e metadados; defeitos reportados têm severidade e evidência; correção nunca é aplicada sem previsualização; saída registra versão do motor e parâmetros usados.",
+      "qa": [
+        "QA-015",
+        "QA-016",
+        "QA-023",
+        "QA-024",
+        "QA-031"
+      ],
+      "estimate_days": {
+        "min": 10,
+        "max": 25
+      },
+      "risk": "alto"
+    },
+    {
+      "id": "TASK-E18-02",
+      "epic": "E18",
+      "title": "Entregar Vynamp Converter e a lib de encoders",
+      "phase": "M3",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "library",
+      "requirements": [
+        "REQ-E18-02"
+      ],
+      "dependencies": [
+        "TASK-E08-01",
+        "TASK-E01-07",
+        "TASK-E08-02",
+        "TASK-E11-03"
+      ],
+      "spec": "docs/tools/02-vynamp-converter.md",
+      "deliverable": "Ferramenta desktop `vynamp-converter` com fila de jobs persistida, apoiada na lib própria `vynamp-encode` como única fonte de codificadores.",
+      "acceptance": "Conversão lossy nunca é anunciada como restauração hi-res; degradação de profundidade ou taxa exige confirmação e aparece no relatório; cancelamento e disco cheio preservam a source; saída é validada após escrita; colisão de nome não sobrescreve.",
+      "qa": [
+        "QA-015",
+        "QA-016",
+        "QA-023",
+        "QA-024",
+        "QA-031"
+      ],
+      "estimate_days": {
+        "min": 15,
+        "max": 35
       },
       "risk": "alto"
     }

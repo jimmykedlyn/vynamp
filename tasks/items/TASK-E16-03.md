@@ -1,6 +1,6 @@
-# TASK-E16-03 — Entregar associação e Abrir com no Windows
+# TASK-E16-03 — Entregar associação, menu de contexto e pacotes de ícones no Windows
 
-Versão 0.7.0 · Estado: planejada, não implementada.
+Versão 0.8.0 · Estado: planejada, não implementada (conforme [ADR-012](../../docs/architecture/adr/ADR-012-shell-integration.md)).
 
 ## Contrato
 
@@ -14,13 +14,13 @@ Requisito REQ-E16-03 · M2 · P0 · responsável funcional platform (pessoa a de
 
 ## Entrega concreta
 
-Registro HKCU, defaults por consentimento e verbos Open/Enqueue com batch comprovado.
+Registro HKCU, pacote esparso MSIX com IExplorerCommand, verbos completos e pacotes de ícones .ico multi-res. Detalhe: o pacote esparso assinado habilita o menu moderno do Windows 11 (`IExplorerCommand`), o submenu clássico cobre o Windows 10 e o fallback "Mostrar mais opções", os verbos canônicos são Reproduzir, Abrir em nova lista, Adicionar à lista, Adicionar à fila, Editar etiquetas, Converter e Restaurar com Vynamp Restore, o lote chega atomicamente via `IShellItemArray` e os `.ico` multi-resolução (16 a 256px) cobrem as 3 famílias (Documento, Disco e Sinal) nos 17 formatos.
 
-[Spec canônica](../../docs/platforms/03-system-integration.md) · [Matriz normativa](../../docs/product/03-requirements.md).
+[Spec canônica](../../docs/platforms/03-system-integration.md) · [Matriz normativa](../../docs/product/03-requirements.md) · [ADR-012](../../docs/architecture/adr/ADR-012-shell-integration.md).
 
 ## Aceite
 
-Explorer abre lote ordenado por contrato demonstrado; não altera UserChoice; registro/removal próprios e portable explícito passam.
+Explorer moderno (Win11) e clássico (Win10) abrem lote ordenado por IShellItemArray; pacote esparso registrado via PackageManager; remoção limpa; suporte às 3 famílias de ícones. Detalhe: o lote atômico evita processos múltiplos, o `UserChoice` não é alterado, a instalação é em escopo de usuário (`$LOCALAPPDATA\Programs\Vynamp`), a desinstalação remove ProgIDs e pacote esparso sem sobras, o modo portátil permite associação explícita e a troca de família de ícones reflete no Explorer.
 
 ## Verificação e evidência
 

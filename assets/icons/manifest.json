@@ -1,0 +1,220 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "schema_version": 1,
+  "name": "Vynamp Audio File Icon Packs",
+  "version": "0.8.0",
+  "brand": {
+    "concept": "C",
+    "concept_name": "Pulso",
+    "colors": {
+      "accent": "#FFBF69",
+      "background": "#11131B",
+      "wordmark_light": "#F0F2F5",
+      "wordmark_dark": "#11131B"
+    }
+  },
+  "tools": [
+    {
+      "id": "vynamp",
+      "name": "Vynamp Media Player",
+      "description": "Reprodutor de áudio principal de alta fidelidade",
+      "executable": "vynamp",
+      "icon": "vynamp-symbol-c.svg"
+    },
+    {
+      "id": "vynamp-restore",
+      "name": "Vynamp Restore",
+      "description": "Ferramenta desktop dedicada de análise e restauração acústica",
+      "executable": "vynamp-restore",
+      "icon": "tools/vynamp-restore.svg",
+      "badge_color": "#66D9EF"
+    },
+    {
+      "id": "vynamp-converter",
+      "name": "Vynamp Converter",
+      "description": "Ferramenta desktop dedicada de transcodificação e conversão em lote",
+      "executable": "vynamp-converter",
+      "icon": "tools/vynamp-converter.svg",
+      "badge_color": "#B8F35A"
+    }
+  ],
+  "families": [
+    {
+      "id": "document",
+      "name": "Documento",
+      "description": "Arquivo com dobra superior direita, etiqueta tipográfica e glifo musical",
+      "glyph_source": "file-audio (MVP rev.38)",
+      "target_users": "Organização clássica de pastas e listagem densa"
+    },
+    {
+      "id": "disc",
+      "name": "Disco",
+      "description": "Vinil estilizado com ranhuras concêntricas escuras e rótulo central colorido",
+      "glyph_source": "vinyl (MVP rev.38)",
+      "target_users": "Entusiastas do conceito analógico e identidade Vynamp"
+    },
+    {
+      "id": "signal",
+      "name": "Sinal",
+      "description": "Chassis técnico com barras de forma de onda espectral e rotulagem de estúdio",
+      "glyph_source": "waveform (MVP rev.38)",
+      "target_users": "Perfis de produção, análise e masterização acústica"
+    }
+  ],
+  "resolutions": [16, 24, 32, 48, 64, 128, 256],
+  "formats": [
+    {
+      "id": "flac",
+      "label": "FLAC",
+      "category": "lossless",
+      "extensions": [".flac"],
+      "mime": "audio/flac",
+      "color": "#FFBF69",
+      "description": "Free Lossless Audio Codec (IETF 64/64)"
+    },
+    {
+      "id": "wav",
+      "label": "WAV",
+      "category": "lossless",
+      "extensions": [".wav"],
+      "mime": "audio/wav",
+      "color": "#FF9F43",
+      "description": "Waveform Audio File Format PCM"
+    },
+    {
+      "id": "aiff",
+      "label": "AIFF",
+      "category": "lossless",
+      "extensions": [".aif", ".aiff"],
+      "mime": "audio/aiff",
+      "color": "#EE5253",
+      "description": "Audio Interchange File Format"
+    },
+    {
+      "id": "alac",
+      "label": "ALAC",
+      "category": "lossless",
+      "extensions": [".m4a", ".alac"],
+      "mime": "audio/mp4",
+      "color": "#9B59B6",
+      "description": "Apple Lossless Audio Codec"
+    },
+    {
+      "id": "ape",
+      "label": "APE",
+      "category": "lossless",
+      "extensions": [".ape"],
+      "mime": "audio/x-ape",
+      "color": "#D35400",
+      "description": "Monkey's Audio Lossless"
+    },
+    {
+      "id": "wv",
+      "label": "WV",
+      "category": "lossless",
+      "extensions": [".wv"],
+      "mime": "audio/x-wavpack",
+      "color": "#F39C12",
+      "description": "WavPack Lossless / Hybrid"
+    },
+    {
+      "id": "mp3",
+      "label": "MP3",
+      "category": "lossy",
+      "extensions": [".mp3"],
+      "mime": "audio/mpeg",
+      "color": "#0ABDE3",
+      "description": "MPEG-1/2 Audio Layer III"
+    },
+    {
+      "id": "aac",
+      "label": "AAC",
+      "category": "lossy",
+      "extensions": [".aac"],
+      "mime": "audio/aac",
+      "color": "#48DBFB",
+      "description": "Advanced Audio Coding"
+    },
+    {
+      "id": "m4a",
+      "label": "M4A",
+      "category": "lossy",
+      "extensions": [".m4a"],
+      "mime": "audio/mp4",
+      "color": "#5F27CD",
+      "description": "MPEG-4 Audio Container"
+    },
+    {
+      "id": "ogg",
+      "label": "OGG",
+      "category": "lossy",
+      "extensions": [".ogg"],
+      "mime": "audio/ogg",
+      "color": "#1DD1A1",
+      "description": "Ogg Vorbis Audio"
+    },
+    {
+      "id": "opus",
+      "label": "OPUS",
+      "category": "lossy",
+      "extensions": [".opus"],
+      "mime": "audio/opus",
+      "color": "#10AC84",
+      "description": "Opus Interactive Audio Codec"
+    },
+    {
+      "id": "wma",
+      "label": "WMA",
+      "category": "lossy",
+      "extensions": [".wma"],
+      "mime": "audio/x-ms-wma",
+      "color": "#2E86DE",
+      "description": "Windows Media Audio"
+    },
+    {
+      "id": "mp2",
+      "label": "MP2",
+      "category": "lossy",
+      "extensions": [".mp2"],
+      "mime": "audio/x-mp2",
+      "color": "#54A0FF",
+      "description": "MPEG Audio Layer II Broadcast"
+    },
+    {
+      "id": "webm",
+      "label": "WEBM",
+      "category": "lossy",
+      "extensions": [".webm"],
+      "mime": "audio/webm",
+      "color": "#FF6B6B",
+      "description": "WebM Audio Container"
+    },
+    {
+      "id": "dsf",
+      "label": "DSF",
+      "category": "dsd",
+      "extensions": [".dsf"],
+      "mime": "audio/x-dsf",
+      "color": "#F1C40F",
+      "description": "Direct Stream Digital Sony DSD64/128/256"
+    },
+    {
+      "id": "dff",
+      "label": "DFF",
+      "category": "dsd",
+      "extensions": [".dff"],
+      "mime": "audio/x-dff",
+      "color": "#F39C12",
+      "description": "Direct Stream Digital Philips DSDIFF"
+    },
+    {
+      "id": "audio",
+      "label": "AUDIO",
+      "category": "generic",
+      "extensions": [],
+      "mime": "audio/*",
+      "color": "#8395A7",
+      "description": "Formato de áudio genérico associado"
+    }
+  ]
+}

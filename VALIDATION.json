@@ -1,5 +1,5 @@
 {
-  "epics": 17,
+  "epics": 18,
   "errors": [],
   "format_catalog_entries": 68,
   "mandatory_platforms": [
@@ -9,21 +9,21 @@
     "macOS Apple Silicon arm64",
     "Android arm64-v8a"
   ],
-  "markdown_files": 325,
+  "markdown_files": 338,
   "openapi_paths": 25,
   "operation_count": 26,
   "phases": {
     "M0": 21,
     "M1": 19,
     "M2": 37,
-    "M3": 74,
+    "M3": 76,
     "M4": 17,
     "M5": 14
   },
-  "requirements": 182,
+  "requirements": 184,
   "result": "passed",
   "schemas_and_examples": 10,
   "scope": "Validação documental em Rust; não testa player/hardware/API/WIT.",
   "spec_version": "0.7.0",
-  "tasks": 182
+  "tasks": 184
 }

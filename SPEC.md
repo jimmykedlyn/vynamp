@@ -44,7 +44,7 @@ M3/1.0 exige Windows/Linux/macOS Intel+Silicon/Android, UI adequada a cada host,
 
 ## Aceite e execução
 
-176 requisitos ligados a 176 tarefas em 17 épicos. Cada tarefa tem dependências e aceite; itens grandes são agrupadores e devem ser decompostos em slices de 1–3 dias antes execução, conforme descoberta M0. Faixas são esforço provisório, não calendário.
+184 requisitos ligados a 184 tarefas em 18 épicos. Cada tarefa tem dependências e aceite; itens grandes são agrupadores e devem ser decompostos em slices de 1–3 dias antes execução, conforme descoberta M0. Faixas são esforço provisório, não calendário.
 
 Começar por [NEXT](tasks/NEXT.md). Aceitar tarefas apenas com evidência numérica, integração, UI, hardware ou segurança apropriada. O [relatório documental](VALIDATION.json) só valida consistência de arquivos/contratos. Não existem player, testes de áudio executados ou servidor funcionando neste pacote.
 
@@ -58,8 +58,12 @@ Nome Vynamp e conceito C — Pulso aprovados. [Guia de marca](docs/design/04-bra
 
 ## Auditoria de completude 0.6
 
-[Auditoria e cobertura](docs/product/08-completeness-audit.md), [catálogo de 68 bindings](config/format-catalog.json), [ativação/associações](docs/platforms/03-system-integration.md), [ownership](docs/platforms/04-activation-ownership.md), [sinal final](docs/audio/07-dsp-signal-contract.md), [visualizers](docs/extensions/04-visualizer-contract.md) e [novos gates](docs/delivery/04-capability-release-gates.md). São 176 TASK/REQ em 17 épicos; nenhum item de aplicativo está concluído por este pacote.
+[Auditoria e cobertura](docs/product/08-completeness-audit.md), [catálogo de 68 bindings](config/format-catalog.json), [ativação/associações](docs/platforms/03-system-integration.md), [ownership](docs/platforms/04-activation-ownership.md), [sinal final](docs/audio/07-dsp-signal-contract.md), [visualizers](docs/extensions/04-visualizer-contract.md) e [novos gates](docs/delivery/04-capability-release-gates.md). São 184 TASK/REQ em 18 épicos; nenhum item de aplicativo está concluído por este pacote.
+
+## Ferramentas de arquivo 0.8
+
+[Vynamp Restore](docs/tools/01-vynamp-restore.md) e [Vynamp Converter](docs/tools/02-vynamp-converter.md) são executáveis desktop separados sobre as mesmas libs do player ([ADR-012](docs/architecture/adr/ADR-012-shell-integration.md) §3, [ADR-013](docs/architecture/adr/ADR-013-vynamp-restore.md)), com épico próprio [E18](tasks/epics/E18.md). O Restore entrega diagnóstico de defeitos, restauração e exportação não destrutiva; o Converter entrega transcodificação em lote sobre a lib própria `vynamp-encode`. Nenhuma das duas foi implementada por este pacote.
 
 ## Bootstrap consolidado 0.7
 
-[Reinício Windows](docs/engineering/09-windows-restart.md): todos os arquivos de projeto na raiz D:\Projects\vynamp-media-player, com pacote/repo/worktrees/cache/tmp/logs. CLI prepare-agents isola autor e revisor sem depender de develop ainda ausente na importação. Codecs/áudio/UI e as 176 tarefas permanecem planejados. Não altera o nome do repositório GitHub nem os contratos funcionais.
+[Reinício Windows](docs/engineering/09-windows-restart.md): todos os arquivos de projeto na raiz D:\Projects\vynamp-media-player, com pacote/repo/worktrees/cache/tmp/logs. CLI prepare-agents isola autor e revisor sem depender de develop ainda ausente na importação. Codecs/áudio/UI e as 184 tarefas permanecem planejados. Não altera o nome do repositório GitHub nem os contratos funcionais.

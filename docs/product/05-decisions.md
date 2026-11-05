@@ -1,6 +1,6 @@
 # Decisões, hipóteses e pontos em aberto
 
-Versão: 0.7.4 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.5 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Decisões fixadas pelo pedido
 
@@ -76,7 +76,7 @@ Vêm da revisão documental do DSP (pedido "Documentação DSP — Equalizadores
 | Pedido v1.4 §12.3 "Limiter amostral" × exigência de True Peak Limiter (07 e catálogo §2) | um limitador no protótipo poderia ser lido como o True Peak exigido | D-DSP-17: não é True Peak nem garantia contra clipping; o True Peak Limiter continua exigido e sem adaptador |
 | Pedido v1.4 §12.3 "Saturação suave" × Tube Amplifier (vitrola) | nome parecido, processamento diferente | D-DSP-17: Saturação (tanh, 2×) não é o Tube; Vinyl e Tube só com configuração |
 | Pedido v1.4 §5.1 "referência contém 39 módulos / 198 campos" × catálogo [09](../audio/09-dsp-catalog.md) | contagens do protótipo não coincidem com o catálogo nativo (que também tem módulos propostos sem adaptador) | D-DSP-11: números não congelam o catálogo; evidência relatada |
-| Pedido v1.4 (evidências `interactive/*`, `*-validation.json`, `CONTROLES-DE-AUDIO.md`, `DSP-MODULAR-E-VU.md`) × repositório | os arquivos citados não existem neste repositório | D-DSP-16: citados como relato da referência externa; nenhum caminho linkado; registrar a referência no repositório do produto fica pendente |
+| Pedido v1.4 (protótipo Codex rev.14/15, histórico; fonte atual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 rev.38; evidências `interactive/*`, `*-validation.json`, `CONTROLES-DE-AUDIO.md`, `DSP-MODULAR-E-VU.md`) × repositório | os arquivos citados não existem neste repositório | D-DSP-16: citados como relato da referência externa; nenhum caminho linkado; registrar a referência no repositório do produto fica pendente |
 | `docs/audio/07-dsp-signal-contract.md` §Caminho | mixer soma streams antes do resampler final; fontes com Fs diferentes no crossfade não têm conversão definida | dependente de investigação (junto com D-DSP-05) |
 
 ## Decisões de letras (2026-10-28)
@@ -92,7 +92,7 @@ Vêm do adendo "letras integradas ao VU meter" v1.0 (2026-10-25). Estado: **prop
 | D-LYR-05 | Concorrência: leitura/importação pertence à faixa que a iniciou; resultado obsoleto é descartado ou guardado só no cache da faixa correta e nunca religa a exibição após Desligar | LYR-AC-08 |
 | D-LYR-06 | A tabela de famílias de tags (ID3v2.3/2.4, FLAC, Ogg/Opus, M4A, WAV/RIFF, LRC) é **baseline relatada** do protótipo, não suporte nativo; o nativo depende de TASK-E03-04 e do plano 04 (metadados e CUE) da `vynamp-decode`. SYLT com timestamps em quadros MPEG: a referência não converte; o nativo pode converter com testes próprios | Adendo §4; sem alegar "suporte universal" |
 | D-LYR-07 | Persistir arquivos LRC importados no produto **não está especificado** (na referência só há cache de sessão e preferências leves); exige requisito próprio. Limites de leitura da referência (16 MiB por leitura, 32 MiB de orçamento, 512 KiB de texto) são relatados; os do produto ficam a definir | Aberto; evita pressupor o que não existe |
-| D-LYR-08 | A referência (protótipo Codex, revisão 14: `interactive/*`, validações `lyrics-*`, `LETRAS-SINCRONIZADAS.md`, `MVP-COMPLIANCE.md`) **não existe neste repositório**: é citada como evidência relatada, sem links; registrá-la no repositório do produto fica pendente. Níveis sempre separados: especificado, implementado no protótipo, validado no protótipo, nativo (hoje: nada) | Mesmo tratamento de D-DSP-16 |
+| D-LYR-08 | A referência (protótipo Codex, revisão 14, histórico; fonte atual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 rev.38; `interactive/*`, validações `lyrics-*`, `LETRAS-SINCRONIZADAS.md`, `MVP-COMPLIANCE.md`) **não existe neste repositório**: é citada como evidência relatada, sem links; registrá-la no repositório do produto fica pendente. Níveis sempre separados: especificado, implementado no protótipo, validado no protótipo, nativo (hoje: nada) | Mesmo tratamento de D-DSP-16 |
 | D-LYR-09 | O componente de letras e o VU têm estados independentes; o componente adapta-se ao espaço sem reduzir nem distorcer os 12 VUs, e não é imposto no modo Mini sem espaço | LYR-15; adendo §6 |
 
 ### Divergências de letras

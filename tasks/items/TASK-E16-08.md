@@ -1,6 +1,6 @@
 # TASK-E16-08 — Validar portable, backup e limpeza de integração
 
-Versão 0.7.0 · Estado: planejada, não implementada.
+Versão 0.8.0 · Estado: planejada, não implementada (conforme [ADR-012](../../docs/architecture/adr/ADR-012-shell-integration.md)).
 
 ## Contrato
 
@@ -15,13 +15,13 @@ Requisito REQ-E16-08 · M3 · P0 · responsável funcional delivery (pessoa a de
 
 ## Entrega concreta
 
-Backup/restore consistente, portable relocável e uninstall de registros próprios.
+Backup/restore consistente, portable relocável e uninstall de registros próprios (ProgIDs e pacote esparso). Detalhe: cobre o backup e restore da base de dados e configurações, a relocação da pasta no modo portátil e a desinstalação completa de registros próprios (ProgIDs HKCU e pacote esparso MSIX no Windows; desktop entries, ServiceMenus e MIME no Linux).
 
-[Spec canônica](../../docs/platforms/04-activation-ownership.md) · [Matriz normativa](../../docs/product/03-requirements.md).
+[Spec canônica](../../docs/platforms/04-activation-ownership.md) · [Spec de integração](../../docs/platforms/03-system-integration.md) · [Matriz normativa](../../docs/product/03-requirements.md) · [ADR-012](../../docs/architecture/adr/ADR-012-shell-integration.md).
 
 ## Aceite
 
-Restore por staging e rollback preserva mídia; credenciais não exportadas; mover portable não toma defaults; update respeita owner e playback.
+Restore por staging e rollback preserva mídia; desinstalação remove pacote esparso e HKCU sem sobras; portable permite ativar/desativar integração com confirmação; update respeita owner. Detalhe: restore por staging e rollback preserva arquivos de mídia do usuário, credenciais não são exportadas, mover a instalação portátil não assume defaults sem confirmação, o desinstalador oficial NSIS remove o pacote esparso e ProgIDs sem deixar chaves órfãs e updates respeitam o owner e playback ativo.
 
 ## Verificação e evidência
 
