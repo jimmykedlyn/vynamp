@@ -56,7 +56,7 @@ Aceite da TASK, item por item:
 
 - Nada foi aberto: visibilidade, `description`, Issues e branch protection continuam na TASK-E19-06.
 - Os três Issue Forms são YAML válido, mas o GitHub só os valida ao renderizar a página de nova issue — não verificado.
-- Nenhum advisory foi aberto; o canal está correto e existe, mas o fluxo não foi exercitado com relatório real.
+- Nenhum advisory foi aberto e o canal **não está no ar**: o repositório é privado, então `private-vulnerability-reporting` retorna 404 e as URLs de advisory também. `SECURITY.md` e `CODE_OF_CONDUCT.md` dizem isso explicitamente e apontam a TASK-E19-06, que agora exige o `PUT` do PVR como critério de aceite. O fluxo só se prova com o repo público e um relatório real.
 - O `CHANGELOG.md` bilíngue reconstrói decisões a partir do registro de decisões, das ADRs e das evidências; não reemite releases, que nunca existiram como tags.
 - A escolha de licença não passou por revisão jurídica; foi feita por paridade com as libs e registrada como decisão do mantenedor.
 - `crates-copyleft/`, codecs de terceiros e a marca Vynamp seguem fora da licença — declarado, não resolvido.
