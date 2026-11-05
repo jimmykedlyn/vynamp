@@ -1,8 +1,18 @@
-# Legal notes
+# Legal notes / Notas legais
+
+Each section appears in English and then in Portuguese; where the two texts
+appear to differ, the Portuguese text of that section prevails.
+
+Cada seção aparece em inglês e depois em português; onde os dois textos
+parecerem divergir, prevalece o texto em português daquela seção.
 
 This file is not legal advice. Whoever distributes a build is responsible for
 complying with the licences of everything they ship, and for obtaining any
 patent licences that apply in their jurisdiction.
+
+Este arquivo não é aconselhamento jurídico. Quem distribui um build responde
+pelo cumprimento das licenças de tudo o que entrega e pela obtenção de
+licenças de patente aplicáveis na sua jurisdição.
 
 ## Licence of this repository
 
@@ -22,20 +32,24 @@ repositories reserve a `crates-copyleft/` directory for it, a convention
 documented in [`vynamp-decode`](https://github.com/jimmykedlyn/vynamp-decode)'s
 own legal notes and not yet populated in any of them.
 
-## Notas legais (português)
-
-Este arquivo não é aconselhamento jurídico. Quem distribui um build responde
-pelo cumprimento das licenças de tudo o que entrega e pela obtenção de
-licenças de patente aplicáveis na sua jurisdição.
+### Licença deste repositório
 
 O código deste repositório é licenciado duplamente sob **MIT OR Apache-2.0**,
-à escolha de quem usa. A licença cobre o **código-fonte deste repositório**;
-não concede direitos sobre codecs, conteúdo, fontes, marcas ou SDKs de
-terceiros. Também não relicencia código que as bibliotecas de áudio mantêm sob
-licença copyleft: elas reservam um diretório `crates-copyleft/` para isso,
-convenção documentada nas notas legais do próprio
-[`vynamp-decode`](https://github.com/jimmykedlyn/vynamp-decode) e ainda não
-preenchida em nenhuma delas.
+à escolha de quem usa:
+
+- [`LICENSE-MIT`](LICENSE-MIT)
+- [`LICENSE-APACHE`](LICENSE-APACHE)
+- [`LICENSE`](LICENSE) — a declaração de que as duas se aplicam
+
+`SPDX-License-Identifier: MIT OR Apache-2.0`. Contribuições são aceitas sob a
+mesma licença dupla salvo declaração em contrário.
+
+A licença cobre o **código-fonte deste repositório**. Não concede direitos sobre
+codecs, conteúdo, fontes, marcas ou SDKs de terceiros. Também não relicencia
+código que as bibliotecas de áudio mantêm sob licença copyleft: elas reservam um
+diretório `crates-copyleft/` para isso, convenção documentada nas notas legais do
+próprio [`vynamp-decode`](https://github.com/jimmykedlyn/vynamp-decode) e ainda
+não preenchida em nenhuma delas.
 
 ## Why the licence exists now, and why it did not before
 
@@ -55,6 +69,24 @@ platform and a signed reviewer record — none of which exist yet — and
 `publish-draft` additionally verifies a minisign signature. A tagged release
 remains fail-closed.
 
+### Por que a licença existe agora, e por que não antes
+
+Até 2026-11-05 este repositório **não** tinha arquivo de licença, por decisão e
+não por descuido: `docs/security/02-privacy-licensing.md` mandava não criar
+`LICENSE` "como se tivesse sido decisão do usuário", e `AGENTS.md` proibia criar
+licença final sem decisão registrada. O mantenedor tomou essa decisão em
+2026-11-05 — MIT OR Apache-2.0, igual a `vynamp-decode` e `vynamp-output` — e ela
+está registrada como D-LIC-01 em
+[`docs/product/05-decisions.md`](docs/product/05-decisions.md). Sem licença,
+abrir os repositórios (TASK-E19-06) publicaria código que ninguém pode usar
+legalmente.
+
+A licença **não** é alegação de release. `cargo xtask release preflight` ainda
+exige `THIRD_PARTY_NOTICES`, evidência em hardware real para cada plataforma
+suportada e registro assinado de revisor — nenhum dos três existe ainda — e
+`publish-draft` verifica adicionalmente uma assinatura minisign. Um release com
+tag continua fail-closed.
+
 ## Format policy
 
 This repository holds no codec implementation. The policy for the decode,
@@ -67,6 +99,19 @@ encode and output libraries lives with those libraries, where the code does:
 
 `vynamp-encode`, which will be the single source of encoders for the Converter,
 does not exist as a repository yet; its format policy is written when it does.
+
+### Política de formatos
+
+Este repositório não contém implementação de codec. A política das bibliotecas
+de decodificação, codificação e saída vive com elas, onde está o código:
+
+- `vynamp-decode` — especificações abertas ou patentes expiradas em `default`;
+  formatos onerosos ou obtidos por engenharia reversa desligados por padrão.
+- `vynamp-output` — nenhum código de terceiros linkado; componentes de
+  plataforma usados apenas por suas APIs públicas.
+
+`vynamp-encode`, que será a fonte única de encoders do Conversor, ainda não
+existe como repositório; sua política de formatos é escrita quando ele existir.
 
 ## Trademarks and third-party assets
 
@@ -83,3 +128,18 @@ licence and an entry in the notices inventory. That inventory is
 `THIRD_PARTY_NOTICES`, which does not exist yet: no third-party asset has been
 admitted so far, and `release preflight` blocks a release until the file is
 created.
+
+### Marcas e ativos de terceiros
+
+"Vynamp" é o nome escolhido pelo mantenedor. Nenhum registro de marca ou domínio
+foi verificado. Os ativos de marca em `assets/branding/` foram gerados para este
+projeto e aprovados pelo mantenedor; foram copiados para o repositório sem
+edição, e [`assets/branding/README.md`](assets/branding/README.md) registra essa
+procedência junto com os hashes. Não há código, arte ou ativo do Winamp nem de
+qualquer outro player; a ausência é regra do projeto, não alegação de licença.
+
+Fixtures de teste, fontes e amostras de terceiros entram apenas com licença
+identificada e entrada no inventário de avisos. Esse inventário é
+`THIRD_PARTY_NOTICES`, que ainda não existe: nenhum ativo de terceiros foi
+admitido até agora, e `release preflight` bloqueia o release até o arquivo
+existir.
