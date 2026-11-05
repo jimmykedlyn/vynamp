@@ -5093,6 +5093,72 @@
         "max": 5
       },
       "risk": "alto"
+    },
+    {
+      "id": "TASK-E18-01",
+      "epic": "E18",
+      "title": "Entregar Vynamp Restore como ferramenta desktop de restauração",
+      "phase": "M3",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "library",
+      "requirements": [
+        "REQ-E18-01"
+      ],
+      "dependencies": [
+        "TASK-E08-01",
+        "TASK-E01-07",
+        "TASK-E16-03",
+        "TASK-E16-04",
+        "TASK-E16-05"
+      ],
+      "spec": "docs/tools/01-vynamp-restore.md",
+      "deliverable": "Ferramenta desktop `vynamp-restore` com motor de restauração próprio, diagnóstico de defeitos e exportação preservando metadados.",
+      "acceptance": "A fonte nunca é sobrescrita sem confirmação; escrita atômica com validação pós-escrita preserva origem e metadados; defeitos reportados têm severidade e evidência; correção nunca é aplicada sem previsualização; saída registra versão do motor e parâmetros usados.",
+      "qa": [
+        "QA-015",
+        "QA-016",
+        "QA-023",
+        "QA-024",
+        "QA-031"
+      ],
+      "estimate_days": {
+        "min": 10,
+        "max": 25
+      },
+      "risk": "alto"
+    },
+    {
+      "id": "TASK-E18-02",
+      "epic": "E18",
+      "title": "Entregar Vynamp Converter e a lib de encoders",
+      "phase": "M3",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "library",
+      "requirements": [
+        "REQ-E18-02"
+      ],
+      "dependencies": [
+        "TASK-E08-01",
+        "TASK-E01-07",
+        "TASK-E08-02",
+        "TASK-E11-03"
+      ],
+      "spec": "docs/tools/02-vynamp-converter.md",
+      "deliverable": "Ferramenta desktop `vynamp-converter` com fila de jobs persistida, apoiada na lib própria `vynamp-encode` como única fonte de codificadores.",
+      "acceptance": "Conversão lossy nunca é anunciada como restauração hi-res; degradação de profundidade ou taxa exige confirmação e aparece no relatório; cancelamento e disco cheio preservam a source; saída é validada após escrita; colisão de nome não sobrescreve.",
+      "qa": [
+        "QA-015",
+        "QA-016",
+        "QA-023",
+        "QA-031"
+      ],
+      "estimate_days": {
+        "min": 15,
+        "max": 35
+      },
+      "risk": "alto"
     }
   ]
 }

@@ -1,6 +1,6 @@
 # Matriz normativa de requisitos e rastreabilidade
 
-Versão 0.7.2 · Data: 2026-11-03 · 182 requisitos e tarefas planejados, 17 épicos. Configuração entregue não equivale a aplicativo ou release assinado. Cinco alvos obrigatórios M3.
+Versão 0.8.0 · Data: 2026-11-05 · 184 requisitos e tarefas planejados, 18 épicos. Configuração entregue não equivale a aplicativo ou release assinado. Cinco alvos obrigatórios M3.
 
 | Requisito | Resultado | Fase | Aceite | Tarefa | Spec |
 |---|---|---|---|---|---|
@@ -186,6 +186,8 @@ Versão 0.7.2 · Data: 2026-11-03 · 182 requisitos e tarefas planejados, 17 ép
 | REQ-E17-18 | Certificar expansão MIDI, trackers e DSD especial | M5 | Rendering MIDI não é decode PCM; SoundFont licenciado explícito; loops/memória bound; DSD raw/DST/PCM/DoP distinguíveis. SACD ISO separa extração raw/DST, perfis e capacidade legal, sem contornar proteção. | [TASK-E17-18](../../tasks/items/TASK-E17-18.md) | [Spec](../../docs/audio/06-codec-capability-registry.md) |
 | REQ-E17-19 | Expor capacidades Bluetooth e headroom por rota | M3 | SBC/AAC/aptX/LDAC/LC3 não geram associações; API ausente mostra desconhecido; troca de rota não aumenta volume nem garante hi-res. | [TASK-E17-19](../../tasks/items/TASK-E17-19.md) | [Spec](../../docs/audio/06-codec-capability-registry.md) |
 | REQ-E17-20 | Fechar gate combinado de codecs, DSP e visualizers | M3 | Cinco alvos passam required M3; conditional reportado honestamente; nenhum gate depende de features M4/M5; QA e limites publicados. | [TASK-E17-20](../../tasks/items/TASK-E17-20.md) | [Spec](../../docs/delivery/04-capability-release-gates.md) |
+| REQ-E18-01 | Entregar Vynamp Restore como ferramenta desktop de restauração | M3 | A fonte nunca é sobrescrita sem confirmação; escrita atômica com validação pós-escrita preserva origem e metadados; defeitos reportados têm severidade e evidência; correção nunca é aplicada sem previsualização; saída registra versão do motor e parâmetros usados. | [TASK-E18-01](../../tasks/items/TASK-E18-01.md) | [Spec](../../docs/tools/01-vynamp-restore.md) |
+| REQ-E18-02 | Entregar Vynamp Converter e a lib de encoders | M3 | Conversão lossy nunca é anunciada como restauração hi-res; degradação de profundidade ou taxa exige confirmação e aparece no relatório; cancelamento e disco cheio preservam a source; saída é validada após escrita; colisão de nome não sobrescreve. | [TASK-E18-02](../../tasks/items/TASK-E18-02.md) | [Spec](../../docs/tools/02-vynamp-converter.md) |
 
 ## Rastreabilidade de letras (LYR)
 

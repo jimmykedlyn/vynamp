@@ -1,6 +1,6 @@
 # Glossário e convenções
 
-Versão 0.8.0 · 2026-11-05 (termos de integração com o shell, pacotes de ícones e ferramentas auxiliares adicionados; termos de controles DSP, grafo modular e VU; termos de letras; pilha de áudio própria; MVP rev.38).
+Versão 0.8.0 · 2026-11-05 (termos de integração com o shell, pacotes de ícones e ferramentas auxiliares adicionados; termos de motor de restauração, defeito, severidade, região e projeto de restauração; termos de controles DSP, grafo modular e VU; termos de letras; pilha de áudio própria; MVP rev.38).
 
 | Termo | Significado nesta spec |
 |---|---|
@@ -61,5 +61,13 @@ Versão 0.8.0 · 2026-11-05 (termos de integração com o shell, pacotes de íco
 | Quick Actions | Menu de serviços do Finder no macOS, declarado pela chave `NSServices` do `Info.plist` |
 | Pacote de ícones de arquivo | Conjunto de ícones por família (Documento, Disco, Sinal) aplicado aos 17 formatos de áudio; no Windows/Linux altera o shell, no macOS/Android só a UI interna |
 | Vynamp Restore / Vynamp Converter | Ferramentas desktop executáveis separadas (`vynamp-restore`, `vynamp-converter`) para restauração acústica e transcodificação em lote ([ADR-012](architecture/adr/ADR-012-shell-integration.md)) |
+| Motor de restauração | Biblioteca interna que executa a cadeia normativa de DSP de restauração; o app `vynamp-restore` é a casca e o motor é reaproveitável ([ADR-013](architecture/adr/ADR-013-vynamp-restore.md)) |
+| Cadeia de restauração | Sequência fixa e auditável de 11 estágios DSP aplicada ao arquivo de origem; a ordem é normativa e não configurável ([spec do Restore](tools/01-vynamp-restore.md#3-cadeia-de-restauração)) |
+| Defeito | Falha acústica detectada no sinal (clipe, zumbido, chiado, clique, trinca, rumble, offset DC, banda limitada), com severidade, evidência numérica e correção sugerida |
+| Severidade | Classificação `mild` / `moderate` / `severe` de um defeito, atribuída pelo detector a partir da evidência medida |
+| Região | Trecho do arquivo tratado de forma diferente (ganho e fade), com limites `start`/`end`; `kind: between` é o tipo suportado na 1.0 (`overlay` foi placeholder no MVP e está fora de escopo) |
+| Projeto de restauração | Arquivo `.vynamp-restore` (JSON versionado) com cadeia, parâmetros, regiões e presets; guarda as decisões de um projeto, não o áudio processado |
+| Saída restaurada | Arquivo gravado pelo Restore, sempre derivado e nunca substituto da origem; a escrita é atômica e validada após a gravação ([spec do Restore](tools/01-vynamp-restore.md#8-exportação)) |
+| `vynamp-encode` | Biblioteca própria de codificadores, única fonte de encoders do produto; `std`-only, repositório privado, criada no PR5 ([spec do Converter](tools/02-vynamp-converter.md#1-escopo)) |
 
 IDs são estáveis e não mudam com renomeação de arquivo. “Alvo”, “gate” e “proposta” nunca significam resultado já medido. Dados nos previews são fictícios. O nome Vynamp é provisório.

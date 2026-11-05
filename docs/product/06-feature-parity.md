@@ -1,6 +1,6 @@
 # Catálogo de funcionalidades e destino
 
-Versão: 0.7.1 · Data: 2026-10-25 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.8.0 · Data: 2026-11-05 · Estado: especificação proposta, implementação não iniciada.
 
 Esta é uma cobertura funcional planejada, sem compatibilidade de arquivo/ABI e sem alegação de reproduzir cada submenu histórico. Todo recurso tem fase/tarefa; exceções são explícitas. “Fiel” refere-se ao conceito clássico, controles e riqueza funcional; cores/medidas são tokens próprios.
 
@@ -18,6 +18,7 @@ Esta é uma cobertura funcional planejada, sem compatibilidade de arquivo/ABI e 
 | Aparência | Classic/Modern/Mini,Copper,DPI,zoom,docking,editor,own themes | M1–M3 E02/E06 |
 | Extensões | Own WASM/provider/lyrics/visualizer/utility,SDK,helper sandbox,registry | M3–M4 E07/E09 |
 | Utilitários | Batchtagwrite,converter,RG/BPMscan,rename/dedupe,scheduler/alarm/sleep,CLI | M3 E03/E08 |
+| Ferramentas de arquivo | Vynamp Restore (análise, diagnóstico de defeitos, restauração, exportação preservando metadados) e Vynamp Converter (transcodificação em lote) como apps desktop separados ([spec do Restore](../tools/01-vynamp-restore.md) · [spec do Converter](../tools/02-vynamp-converter.md)) | M3 E18 |
 | Integrações | Media keys/tray/SMTC,hotkeys,file assoc,scrobble/presence,remotecontrol | M2–M4 E08 |
 | Plataforma | Catálogo,VOD,live,accounts,rights,sync,admin,ingest,CDN,registry | M4 E09 |
 | Expansão | ARM adicional Windows/Linux,DSDnative/DoP/768k,MIDI/trackers/raros,CD,VST3,DASH/cloud,casting,EQ64 gráfico e paramétrico 64 nativos/1M (UI dos cinco modos já obrigatória no MVP HTML/SVG/JS, [equalizadores](../audio/08-equalizers.md)) | M5 E12 |
@@ -34,3 +35,7 @@ PlataformasM0–M3: Windows/Linux/macOS Intel+Silicon/Android. UI phone/tablet, 
 ## Complementos 0.6
 
 [Auditoria](08-completeness-audit.md): E16 fecha associação/Open With/grants/batch/IPC/perfis/backup/deep links. E17 fecha perfis modernos, trim/DRC, guard final, visualizer runtime, proxy, Bluetooth e manifest por artefato. [Catálogo](../../config/format-catalog.json) diferencia required/conditional/optional/unsupported e planejamento de capacidade real.
+
+## Complementos 0.8 (2026-11-05)
+
+E18 fecha as **ferramentas de arquivo** como apps desktop separados: [Vynamp Restore](../tools/01-vynamp-restore.md) (cadeia normativa de 11 estágios DSP, 12 detectores de defeito, exportação determinística e não destrutiva) e [Vynamp Converter](../tools/02-vynamp-converter.md) (matriz de formatos, fila de jobs persistida, lib própria `vynamp-encode`). E08-02 entrega os codificadores; E18-02 entrega o app que os usa. A restauração não é anunciada como criação de qualidade: a conversão lossy nunca é rotulada como restauração hi-res ([ADR-013](../architecture/adr/ADR-013-vynamp-restore.md)).
