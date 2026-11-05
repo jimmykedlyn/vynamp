@@ -52,14 +52,14 @@ Comandos, resultados, ambientes/fixtures e limitações:
 
 Executados localmente (Windows 11 Pro 10.0.26300, Rust 1.99.0):
 
-- `cargo xtask check-docs` → `result: passed`, 0 erros, 336 arquivos Markdown, 184 tarefas, 184 requisitos, 18 épicos, 68 entradas de catálogo.
+- `cargo xtask check-docs` → `result: passed`, 0 erros, 338 arquivos Markdown, 184 tarefas, 184 requisitos, 18 épicos, 68 entradas de catálogo.
 - `cargo xtask check-delivery` → `result: passed`, 0 erros.
 - `cargo test -p xtask` → 85 testes aprovados, 0 falhas.
 - Hook de pre-push (mesmos checks do CI: `xtask ci docs` + 51 testes de `xtask` + 34 testes de `tests/tooling.rs`) → aprovado.
 
 Revisão técnica (subagente Opus, contexto limpo), commit revisado e achados:
 
-- Revisão por subagente de contexto limpo (Opus — alto risco, define a arquitetura de uma ferramenta de áudio) sobre ADR-013, as duas specs, épico E18, TASKs, backlog, matriz normativa, índice, glossário, feature-parity e CHANGELOG → veredito e achados na evidência.
+- Revisão por subagente de contexto limpo (Opus — alto risco, define a arquitetura de uma ferramenta de áudio) sobre ADR-013, as duas specs, épico E18, TASKs, backlog, matriz normativa, índice, glossário, feature-parity e CHANGELOG → **veredito APROVADO COM RESSALVAS com 9 achados**; cada achado foi verificado contra o código do MVP rev.38 antes da aplicação; todos os 9 foram corrigidos neste branch (ordem de exportação com validação no temporário antes do `rename`, `band_limit` atribuído a compressão com perda + `deartifact: 0.5`, parâmetro `decrackleCutoff`, tabela de `tools` dos 5 presets, ordem de estágios declarada como herança do `this.pre`, `clipping` com `headroomDB` dinâmico e `decrackle: 0.15`, justificativa do gate reescrita, crackle em mono/surround, QA-ID sincronizados entre TASKs/specs/backlog). Detalhes em `docs/evidence/PR/chore-specs-vynamp-restore/README.md`.
 - Nenhuma credencial no diff.
 
 Limitações declaradas:

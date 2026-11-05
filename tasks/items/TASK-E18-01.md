@@ -33,7 +33,7 @@ A fonte nunca é sobrescrita sem confirmação; escrita atômica com validação
 
 ## Verificação e evidência
 
-QA-015, QA-016 em [QA comum](../../docs/quality/01-test-strategy.md) e [matriz multiplataforma](../../docs/quality/03-multiplatform-matrix.md); fixtures por defeito em [matriz DSP](../../docs/quality/05-dsp-test-matrix.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+QA-015, QA-016, QA-023, QA-024, QA-031 em [QA comum](../../docs/quality/01-test-strategy.md) e [matriz multiplataforma](../../docs/quality/03-multiplatform-matrix.md); fixtures por defeito em [matriz DSP](../../docs/quality/05-dsp-test-matrix.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
 
 ## Execução e limites
 

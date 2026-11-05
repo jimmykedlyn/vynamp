@@ -12,7 +12,7 @@ Ao levar esse conjunto para o produto nativo, surgem cinco problemas que a refer
 
 1. **Escopo.** O MVP trata a restauração como uma aba dentro do player. A decisão do mantenedor em 2026-11-03 ([ADR-012](ADR-012-shell-integration.md) §3) é que **Restore e Converter sejam executáveis desktop separados**, com escopo funcional maior que o MVP. O motivo declarado é impedir que trabalho pesado de restauração afete a estabilidade e o tempo real da engine de playback.
 2. **Corpus do MVP.** A referência tem 17 dos 17 formatos de áudio suportados pelo produto, mas o motor de restauração do MVP trabalha só com **dois canais** e trava acima de **96 MiB de PCM** (`restore.js` recusa o arquivo). Um utilitário desktop de restauração é usado justamente em coleções grandes e masterizações de hi-res.
-3. **Incoerências do MVP.** A referência contém três módulos que a própria referência não exercita: o de-crackle mid/side (`restore-decrackle.js`) é definido mas nunca chamado — o que de fato roda é um reparo AR/L-SAR em `restore-dsp.js`; o denoise Wiener existe no código mas é descartado pelo modelo de estado e não tem controle na UI; e o tipo de região `overlay` é oferecido na interface e declarado como pendente ("separação de voz e reconstrução por IA ainda não estão implementadas"). Uma spec nativa que apenas transcrevesse o MVP herdaria essas incoerências.
+3. **Incoerências do MVP.** A referência contém quatro módulos que a própria referência não exercita: o de-crackle mid/side (`restore-decrackle.js`) é definido mas nunca chamado — o que de fato roda é um reparo AR/L-SAR em `restore-dsp.js`; o denoise Wiener existe no código mas é descartado pelo modelo de estado e não tem controle na UI; o tipo de região `overlay` é oferecido na interface e declarado como pendente ("separação de voz e reconstrução por IA ainda não estão implementadas"); e o detector de cliques (`restore-click-detector.js`) produz `report.clickDetection` no worker sem que nenhum consumidor da UI leia o campo. Uma spec nativa que apenas transcrevesse o MVP herdaria essas incoerências.
 4. **Limites de escrita.** O MVP exporta **apenas WAV float32 de 32 bits**, escrito à mão em memória, e regrava metadados ID3/LIST-INFO num WAV recém-gerado. Um arquivo de origem FLAC, ALAC, AIFF ou WMA perde o contêiner e os metadados originais; nada é preservado do ponto de vista do formato de saída.
 5. **Reprodutibilidade e auditoria.** A restauração altera o áudio. Um procedimento de restauração precisa ser **repetível**, **inspecionável** (qual detector disparou, com que severidade, qual parâmetro foi mudado) e **não destrutivo por padrão** (a fonte nunca é sobrescrita sem confirmação explícita).
 
@@ -43,7 +43,8 @@ Ver o contrato completo em [spec da ferramenta](../../tools/01-vynamp-restore.md
 
 O motor é uma **cadeia de estágios em ordem fixa**, applied sobre o sinal decodificado. A ordem é normativa e não configurável pelo usuário (ver [spec §3](../../tools/01-vynamp-restore.md#3-cadeia-de-restauração)):
 
-1. Reparo de crepitação (de-crackle, modelo AR) — 2 passagens.2. Filtro passa-baixa de fase linear (63 taps, Kaiser) — condicionado ao de-crackle.
+1. Reparo de crepitação (de-crackle, modelo AR) — 2 passagens.
+2. Filtro passa-baixa de fase linear (63 taps, Kaiser) — condicionado ao de-crackle.
 3. Remoção de artefatos de compressão (STFT, supressão de *birdies* e pré-eco).
 4. Extensão de banda (síntese de alta faixa a partir da faixa-fonte).
 5. De-click (substituição de amostra por média de vizinhos).
@@ -58,23 +59,25 @@ A cadeia é **documentada e versionada**; cada alteração de ordem é uma nova 
 
 ### 4. Correção das incoerências do MVP
 
-A spec nativa **não** reproduz três incoerências do MVP:
+A spec nativa **não** reproduz quatro incoerências do MVP:
 
 | Coerência do MVP | Situação no MVP | Decisão nativa |
 |---|---|---|
 | De-crackle | `restore-decrackle.js` (mid/side) é definido e nunca chamado; o que roda é o reparo AR de `restore-dsp.js` | Mantém **um** mecanismo: o reparo AR/L-SAR, especificado com ordem, passes e latência. O módulo mid/side não é portado. |
 | Denoise | Implementado (Wiener), mas descartado pelo modelo de estado e sem controle na UI | **Declarado fora de escopo na 1.0.** Sem controle, sem persistência, sem promessa. A redução de chiado espectral é separada de gate e não é prometida. |
 | Região `overlay` | Oferecida na UI e marcada como pendente ("separação de voz e reconstrução por IA pendentes") | **Removida.** A 1.0 tem apenas regiões de ganho com fade (`between`). Separação de voz por IA é decisão futura e não é prometida. |
+| Detector de cliques | `restore-click-detector.js` roda no worker e escreve `report.clickDetection`, mas nenhum consumidor da UI lê esse campo: o resultado é produzido e descartado | **Não portado como motor separado.** A detecção de cliques vive no detector `click` do diagnóstico (§6 da spec), que já emite severidade, evidência e correção sugerida no mesmo relatório; não há segundo relatório paralelo. |
+| Presets embutidos | Os 5 presets do MVP (`restore-presets.js`) baseiam a ação principal em `denoise: 0.25–0.5`, que não existe na 1.0 (fora de escopo), sem `deartifact`/`bwe`/`declip` | **Redefinidos na 1.0.** Cada preset de built-in recebe um bloco `tools` explícito com as ferramentas e valores da 1.0; a ação principal sai de `denoise` para as ferramentas existentes (de-crackle, de-click, gate, DC, rumble, zumbido). O aviso de perda de agudos acima de 8 kHz aciona em filtro de zumbido ativo ou passa-baixa agressivo, não em "redução de ruído alta" do denoise descartado. |
 
 Toda divergência em relação ao MVP é registrada nesta ADR e na spec, para que a paridade de recursos seja auditável e não implícita.
 
 ### 5. Formato de saída e preservação de metadados
 
 - **A fonte nunca é sobrescrita.** O Restore grava em arquivo novo; sobrescrever a fonte exige confirmação explícita e propõe nome com sufixo.
-- **Escrita atômica**: arquivo temporário no **mesmo volume**, `fsync`, `rename`. Disco cheio ou falha no meio não deixa saída parcial nem toca a fonte.
+- **Escrita atômica**: arquivo temporário no **mesmo volume**, `fsync`, validação pós-escrita no temporário (releitura e decodificação do contêiner, taxa, canais e duração) e, só então, `rename` sobre o destino. Em caso de falha de validação, o temporário é removido e a origem permanece intacta; não deixa saída parcial nem toca a fonte.
 - **O contêiner de saída é escolhido pelo usuário**, entre os formatos de saída comprovados pelo produto: FLAC, WAV (PCM 16/24/32 bits e float32), AIFF e ALAC. O **WAV float32** do MVP é mantido como opção, mas deixa de ser o único.
 - **Metadados são preservados** da origem para a saída: tags, capa e campos técnicos, reescritos no contêiner de destino sem perda de campos conhecidos e sem descartar campos desconhecidos.
-- **A saída é validada após a escrita**: o arquivo é relido e decodificado; contêiner, taxa, canais e duração precisam coincidir com o esperado. Uma saída que falha na validação é removida e a origem reportada como intacta.
+- **A saída é validada após a escrita**: o **temporário** é relido e decodificado; contêiner, taxa, canais e duração precisam coincidir com o esperado. Uma saída que falha na validação tem o temporário removido e a origem reportada como intacta.
 
 ### 6. Diagnóstico é o produto, não um extra
 
@@ -106,7 +109,7 @@ Conforme [ADR-008](ADR-008-vynamp-brand.md) e [ADR-012](ADR-012-shell-integratio
    - *Rejeitado pelo mantenedor em 2026-11-03.* Uma sessão longa de restauração disputa CPU com a reprodução, mistura ciclo de vida do player com o da ferramenta e impede o uso do Restore em máquina onde o player não está instalado.
 2. **Manter a exportação apenas em WAV float32 (como no MVP).**
    - *Rejeitado.* Perder o contêiner de origem é lossiness que o produto não pode anunciar como restauração. A escolha de contêiner é do usuário e a preservação de metadados é regra.
-3. **Portar os três módulos inativos do MVP (de-crackle mid/side, denoise Wiener, região `overlay`).**
+3. **Portar os módulos inativos do MVP (de-crackle mid/side, denoise Wiener, região `overlay`, detector de cliques).**
    - *Rejeitado.* Portar código que a própria referência não exercita significa depurar comportamento nunca observado em uso real e prometer capacidades sem evidência. O motor nativo começa pelo que o MVP efetivamente executa.
 4. **Fazer do Restore um plugin/extensão do player.**
    - *Rejeitado.* Extensões do Vynamp são agentes de terceiros com permissões restritas ([ADR-004](ADR-004-extensions.md)); a ferramenta é produto próprio, com identidade, release e garantia próprias.
@@ -117,4 +120,4 @@ Conforme [ADR-008](ADR-008-vynamp-brand.md) e [ADR-012](ADR-012-shell-integratio
 - Novo épico E18 (`tasks/epics/E18.md`) com `TASK-E18-01` (Restore) e `TASK-E18-02` (Converter), e os requisitos `REQ-E18-01` / `REQ-E18-02`.
 - O motor de restauração passa a ser **biblioteca interna com contrato de teste próprio**, com fixtures de referência por defeito (saturação, zumbido 50/60 Hz, cliques, crepitação, chiado, ronco, DC, corte de banda).
 - O diagnóstico passa a ter **formato de relatório estruturado** (não texto), para ser gravado em log, exibido na UI e exportado em evidência.
-- A paridade de recursos com o MVP é medida contra a spec nativa, e as três divergências declaradas em §4 são a linha de base do que o MVP não entrega.
+- A paridade de recursos com o MVP é medida contra a spec nativa, e as quatro divergências declaradas em §4 são a linha de base do que o MVP não entrega.

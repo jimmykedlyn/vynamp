@@ -111,7 +111,7 @@ A ordem é **normativa e fixa**. Não é configurável pelo usuário.
 | # | Estágio | Condição | Observação |
 |---|---|---|---|
 | 1 | Reparo de crepitação (AR) | `decrackle > 0` | 2 passagens por canal |
-| 2 | Passa-baixa de fase linear | `decrackle > 0` | 63 taps, Kaiser β=6 |
+| 2 | Passa-baixa de fase linear | `decrackle > 0` | 63 taps, Kaiser β=6; corte `min(18000 Hz, 0.4·fs)` |
 | 3 | Remoção de artefatos de compressão | `deartifact > 0` | STFT |
 | 4 | Extensão de banda | `bwe > 0` | Síntese de alta faixa |
 | 5 | De-click | `click = true` | Substituição por média de vizinhos |
@@ -122,9 +122,11 @@ A ordem é **normativa e fixa**. Não é configurável pelo usuário.
 | 10 | Anti-saturação | `declip < 0` | Joelho em `tanh` |
 | 11 | Regiões e ganho | sempre | Mistura e ganho por região |
 
-**Alinhamento:** os estágios 1–4 têm latência. Quando qualquer deles está ativo, o sinal **original** é atrasado pela mesma quantidade, de modo que `original` e `treated` permaneçam temporalmente alinhados em todas as comparações. A latência total é exposta e exibida.
+**Alinhamento:** os estágios 1–4 têm latência (o de-crackle em duas passagens, o filtro de fase linear, a STFT e a extensão de banda). Quando qualquer deles está ativo, o sinal **original** é atrasado pela mesma quantidade, de modo que `original` e `treated` permaneçam temporalmente alinhados em todas as comparações. A latência total é exposta e exibida.
 
-**Por que esta ordem:** o reparo e a filtragem de banda vêm antes porque as detecções seguintes operam sobre um sinal já saneado; a remoção de artefatos precede a extensão de banda porque a extensão sintetiza a partir do que sobrou; o gate vem antes da anti-saturação porque reduz o que a anti-saturação precisaria corrigir.
+**Por que esta ordem:** o reparo e a filtragem de banda vêm antes porque as detecções seguintes operam sobre um sinal já saneado; a remoção de artefatos precede a extensão de banda porque a extensão sintetiza a partir do que sobrou; o gate vem antes da anti-saturação para que a atenuação de ganho aplicada pelo declip não descalibre a detecção de envelope do limiar de ruído (o piso que o gate mede está mais de 40 dB abaixo do joelho do declip, então um não corrige o que o outro corrige).
+
+**Herança da ordem (declarada):** esta sequência reproduz exatamente o MVP web rev.38, onde ela **não** foi uma decisão acústica, e sim um artefato de partição da arquitetura JS: os estágios em bloco (reparo AR → passa-baixa → STFT → extensão de banda) rodam em `this.pre`, antes do laço por amostra, e o restante (de-click, DC, rumble, zumbido, gate, declip, ganho de região) vive dentro desse laço. A ordem deixa de ser inocente: o modelo AR de ordem 48 assume sinal de média zero, então um offset DC contamina a autocorrelação com um termo `+ μ²` e enviesa a estimação dos polos, e cliques impulsivos corrompem o frame de estimação. A 1.0 **mantém** a ordem por fidelidade ao protótipo; mover DC e de-click para antes do estágio 1 é melhoria acústica defensável, mas exige divergência explícita declarada em [ADR-013](../architecture/adr/ADR-013-vynamp-restore.md) e revalidação com fixtures novas — não é silenciosa.
 
 ### 3.2 Parâmetros das ferramentas
 
@@ -140,6 +142,7 @@ A ordem é **normativa e fixa**. Não é configurável pelo usuário.
 | De-rumble | `rumble` | `0 .. 80` Hz (`0` = desligado) | `0` | Passa-altas Butterworth 2ª ordem, Q=0.7071 |
 | De-crackle | `decrackle` | `0 .. 0.5` (`0` = desligado) | `0` | Modelo AR/L-SAR, ordem 48 |
 | | `decrackleMode` | `soft` \| `strong` | `strong` | `soft` corta só o excedente; `strong` ressintetiza o trecho |
+| | `decrackleCutoff` | `8000 .. 22000` Hz | `18000` | Corte do passa-baixa Kaiser do de-crackle; `min(corte, 0.4·fs)` |
 | Anti-saturação | `declip` | `−12 .. 0` dB (`0` = desligado) | `0` | Atenua e arredonda picos acima do joelho em `−1 dBFS` |
 | Artefatos de compressão | `deartifact` | `0 .. 1` | `0` | STFT: supressão de *birdies* e de pré-eco |
 | Extensão de banda | `bwe` | `0 .. 1` | `0` | Síntese da faixa alta a partir da faixa-fonte |
@@ -152,23 +155,24 @@ A ordem é **normativa e fixa**. Não é configurável pelo usuário.
 - **Extensão de banda** é **síntese**, não recuperação: o resultado **não** recupera informação perdida e é rotulado como estimativa. A extensão só é possível se existir uma oitava abaixo do corte; abaixo dessa condição a ferramenta fica indisponível com motivo explícito.
 - **Gate de ruído** não é redução de ruído espectral — apenas atenua abaixo do limiar. A redução espectral não é prometida na 1.0.
 - **De-crackle** tem latência própria e é a etapa mais cara da cadeia.
+- **Passa-baixa do de-crackle:** o corte efetivo é `min(decrackleCutoff, 0.4·fs)`. Em qualquer taxa ≥ 44,1 kHz o corte travado do MVP (18 kHz) elimina conteúdo acima de 18 kHz, incluindo o espectro ultrassônico de gravações de 96 kHz/192 kHz. Restaurações de masterizações de hi-res que precisem preservar essa banda devem elevar `decrackleCutoff` ou desligar o de-crackle (`decrackle = 0`) — este comportamento é intencional e está declarado em [ADR-013](../architecture/adr/ADR-013-vynamp-restore.md#4-correção-das-incoerências-do-mvp).
 - **Artefatos de compressão** operam em STFT e implicam atraso próprio, exibido ao usuário.
 
 ### 3.3 Presets
 
-**5 presets integrados**, imutáveis:
+**5 presets integrados**, imutáveis. Cada um declara o bloco `tools` exato que aplica; o denoise Wiener do MVP está fora de escopo na 1.0, então a ação principal de cada preset usa as ferramentas existentes (de-crackle, de-click, gate, DC, rumble, zumbido).
 
-| id | Nome | Cobre |
-|---|---|---|
-| `builtin-scratched-cd` | CD arranhado | Cliques isolados e chiado leve de superfície |
-| `builtin-vinyl` | Vinil / LP | Crepitação densa, zumbido de rede, ronco grave |
-| `builtin-cassette` | Fita K7 | Chiado de fita e saturação leve |
-| `builtin-phone-recording` | Gravação celular | Ruído ambiente, possível offset DC, agudos limitados |
-| `builtin-low-mp3` | MP3 baixa qualidade | Artefatos de compressão, chiado digital, perda de agudos |
+| id | Nome | `tools` aplicado | Cobre |
+|---|---|---|---|
+| `builtin-scratched-cd` | CD arranhado | `dc: true`, `gate: true`, `threshold: −45`, `click: true`, `clickThreshold: 0.18`, `decrackle: 0`, `rumble: 0`, `hum: 0` | Cliques isolados e chiado leve de superfície |
+| `builtin-vinyl` | Vinil / LP | `dc: true`, `hum: 60`, `gate: false`, `threshold: −45`, `click: true`, `clickThreshold: 0.22`, `decrackle: 0.15`, `rumble: 30` | Crepitação densa, zumbido de rede, ronco grave |
+| `builtin-cassette` | Fita K7 | `dc: true`, `hum: 0`, `gate: false`, `threshold: −45`, `click: false`, `clickThreshold: 0.2`, `decrackle: 0`, `rumble: 20` | Chiado de fita e saturação leve |
+| `builtin-phone-recording` | Gravação celular | `dc: true`, `hum: 0`, `gate: true`, `threshold: −40`, `click: false`, `clickThreshold: 0.2`, `decrackle: 0`, `rumble: 40` | Ruído ambiente, possível offset DC, agudos limitados |
+| `builtin-low-mp3` | MP3 baixa qualidade | `dc: false`, `hum: 0`, `gate: false`, `threshold: −45`, `click: false`, `clickThreshold: 0.2`, `decrackle: 0`, `rumble: 0` | Artefatos de compressão, chiado digital, perda de agudos |
 
 **Presets de usuário:** armazenamento próprio, com o mesmo esquema de validação dos parâmetros. Campos: `id` (≤ 80 caracteres), `name` (1–60 caracteres), `description` (≤ 120 caracteres, truncada). Um preset de usuário define **apenas** as ferramentas presentes; as demais mantêm o valor corrente. Regiões e diagnósticos **não** são afetados por preset.
 
-**Aviso obrigatório:** aplicar um preset que reduza agudos de forma relevante (zumbido ativo ou redução de ruído alta) exibe aviso de que pode perder conteúdo acima de 8 kHz.
+**Aviso obrigatório:** aplicar um preset com **zumbido ativo** (`hum: 50` ou `hum: 60`, ou `humAdaptive = true`) ou **passe-baixa agressivo** (corte abaixo de 8 kHz) exibe aviso de que pode perder conteúdo acima de 8 kHz. A condição de "redução de ruído alta" do denoise do MVP foi removida da 1.0 com o módulo denoise (fora de escopo).
 
 ## 4. Diagnóstico
 
@@ -203,19 +207,21 @@ Cada defeito:
 
 | Tipo | Detecção | Severidade | Correção sugerida |
 |---|---|---|---|
-| `clipping` | Amostras acima de 0.999; contagem de blocos contíguos, overs e pico | `severe` se há overs ou > 60 blocos/min; `moderate` se > 10 | `declip: −2` |
+| `clipping` | Amostras acima de 0.999; contagem de blocos contíguos, overs e pico | `severe` se há overs ou > 60 blocos/min; `moderate` se > 10 | `declip: <headroomDB>`, sendo `headroomDB = −min(12, max(1, ⌈pico dBFS + 1⌉))`; em `moderate`/`severe` acrescenta `decrackle: 0.15` |
 | `true_peak` | Interpolação linear 2× entre amostras; reportado só quando não há clipping | `severe` se > 1.1, senão `moderate` | `declip: −2` |
 | `click` | Impulsos adaptativos: resíduo acima do piso e acima de 20× a média central; vizinhos não impulsivos | Por taxa: `severe` > 30/min, `moderate` > 5/min | `click: true` com limiar derivado |
-| `crackle` | Mesmo detector, aplicado a mid `(L+R)/2` e side `(L−R)/2` | Por taxa: `severe` > 120/min, `moderate` > 20/min | `decrackle: 0.15` |
+| `crackle` | Mesmo detector. **Mono**: opera no canal único (não existe side). **Estéreo**: aplica a mid `(L+R)/2` e side `(L−R)/2`. **Surround (≥ 3 canais)**: opera **por canal**, sem par side, e a contagem é a soma dos canais | Por taxa: `severe` > 120/min, `moderate` > 20/min | `decrackle: 0.15` |
 | `hum50` / `hum60` | FFT com harmônicos 1–4; proeminência > 10 dB; rejeição de tons musicais | `severe` se proeminência > 20 dB, senão `moderate` | `hum: <frequência>` |
 | `hiss` | Energia acima de 4 kHz em janelas; proxy de achatamento espectral | `severe` se razão > 0.5, `moderate` se > 0.35 | `null` |
 | `rumble` | RMS na banda 5–40 Hz | `severe` se > −20 dBFS, senão `moderate` | `rumble: 30` |
 | `discontinuity` | Saltos entre amostras adjacentes acima de 12× a média local, excluindo cliques isolados | Por taxa: `severe` > 20/min, `moderate` > 3/min | `null` |
 | `skip` | Correlação cruzada de blocos consecutivos acima de 0.995 | `severe` se > 10 ocorrências, senão `moderate` | `null` |
 | `dc_offset` | Média por canal acima de 0.005 | `severe` se > 0.02, senão `moderate` | `dc: true` |
-| `band_limit` | Corte de banda de codec lossless: degrau ≥ 15 dB entre 10 kHz e 0.45·fs | `moderate` se corte < 17 kHz, senão `mild` | `bwe: 0.5` + `bweCutoff` |
+| `band_limit` | Corte de banda de compressão com perda (MP3/AAC): degrau ≥ 15 dB entre 10 kHz e 0.45·fs | `moderate` se corte < 17 kHz, senão `mild` | `bwe: 0.5` + `bweCutoff` + `deartifact: 0.5` |
 
 **Defeitos sem correção** (`hiss`, `discontinuity`, `skip`) são **reportados sem correção inventada**. A ausência de correção é informação.
+
+**Detector de cliques, um só:** o MVP calculava cliques duas vezes — o detector `click` do diagnóstico e um módulo separado (`restore-click-detector.js`), cujo resultado ia para `report.clickDetection` e não era lido por nenhum consumidor da UI. A 1.0 mantém **apenas** o detector `click` desta tabela, que já entrega severidade, evidência e correção sugerida no mesmo relatório ([ADR-013 §4](../architecture/adr/ADR-013-vynamp-restore.md#4-correção-das-incoerências-do-mvp)).
 
 **Rejeição de tom musical:** o detector de zumbido não pode acusar zumbido em nota musical. Um pico fundamental dentro de 3 % de uma frequência de nota musical é rejeitado (5 % de tolerância para o fundamental).
 
@@ -274,8 +280,8 @@ O relatório agregado lista: total, concluídos, falhas, cancelados, os defeitos
 | Destino | Arquivo novo por padrão; a **origem nunca é sobrescrita** sem `--overwrite` explícito |
 | Formatos | `flac`, `wav` (PCM 16/24/32 bits), `wav-f32`, `aiff`, `alac` |
 | Escolha do formato | Igual ao contêiner de origem quando suportado; caso contrário, o usuário escolhe |
-| Escrita | Temporário no **meso volume** → `fsync` → `rename` |
-| Validação pós-escrita | O arquivo é relido e decodificado; contêiner, taxa, canais e duração precisam coincidir. Falha remove a saída e reporta a origem intacta |
+| Escrita | Temporário no **mesmo volume** → `fsync` → **validação pós-escrita no temporário** → `rename` sobre o destino |
+| Validação pós-escrita | O arquivo **temporário** é relido e decodificado; contêiner, taxa, canais e duração precisam coincidir. Em caso de falha, o **temporário é removido** e a origem permanece intacta |
 | Limiter | **Opcional**, ligado por padrão: teto de true-peak em `−1.0 dBTP`, lookahead de 5 ms, medição com oversampling 4× e margem de segurança de 0.5 dB |
 | Normalização | **Opcional**, desligada por padrão: ganho único para pico em `−1 dBFS`, com hard-clip em ±1 |
 

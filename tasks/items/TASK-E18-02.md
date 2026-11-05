@@ -32,7 +32,7 @@ Conversão lossy nunca é anunciada como restauração hi-res; degradação de p
 
 ## Verificação e evidência
 
-QA-015, QA-016, QA-023, QA-031 em [QA comum](../../docs/quality/01-test-strategy.md) e [matriz multiplataforma](../../docs/quality/03-multiplatform-matrix.md); conformidade de codec em [matriz de integração](../../docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado.
+QA-015, QA-016, QA-023, QA-024, QA-031 em [QA comum](../../docs/quality/01-test-strategy.md) e [matriz multiplataforma](../../docs/quality/03-multiplatform-matrix.md); conformidade de codec em [matriz de integração](../../docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado.
 
 ## Execução e limites
 

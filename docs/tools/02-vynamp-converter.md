@@ -96,8 +96,8 @@ O produto distingue **lossless** (sem perdas em relação à entrada) de **lossy
 | Workers | Limitados por capacidade da máquina; nunca mais que o número de núcleos menos 1 |
 | Persistência | A fila é **persistida** ([TASK-E08-01](../../tasks/items/TASK-E08-01.md)): uma queda de energia retoma jobs seguros |
 | Cancelamento | Por arquivo e da fila; remove os temporários; **a origem nunca é tocada** |
-| Escrita | Temporário no **meso volume** → `fsync` → `rename` |
-| Validação pós-escrita | O arquivo é relido e decodificado; contêiner, taxa, canais e duração precisam coincidir. Falha remove a saída e reporta a origem intacta |
+| Escrita | Temporário no **mesmo volume** → `fsync` → **validação pós-escrita no temporário** → `rename` sobre o destino |
+| Validação pós-escrita | O arquivo **temporário** é relido e decodificado; contêiner, taxa, canais e duração precisam coincidir. Em caso de falha, o **temporário é removido** e a origem permanece intacta |
 | Colisão de nome | Detectada antes de escrever; **não sobrescreve** por padrão; a ação é do usuário |
 | Idempotência | Reprocessar o mesmo arquivo com os mesmos parâmetros produz o mesmo resultado; jobs duplicados são detectados |
 
