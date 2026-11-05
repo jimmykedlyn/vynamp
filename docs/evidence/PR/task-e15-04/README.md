@@ -4,7 +4,7 @@ Versão 0.7.0 · 2026-10-18/19 · Autor Claude (branch `chore/task-e15-04-claude
 
 ## Ambiente
 
-Notebook Windows 11 Pro 10.0.26300, PowerShell 7.4.20, git 2.47.1.windows.2, Rust 1.99.0 (rustup), Docker Desktop (engine 29.8.1, Compose v5.5.1, WSL2 `docker-desktop`). Woodpecker server/agents 3.19.0, plugin-git 2.10.1, cloudflared 2026.10.1 (global winget, atualizado de 2025.8.1 a pedido do mantenedor; container com digest pinado no túnel). Pins completos em [versions.json](../../../../infra/ci/woodpecker/versions.json). Hostname `https://ci-cd-vynamp.jkca.lat`, túnel nomeado `vynamp-woodpecker` (`c423877c-88bf-4bda-a0a0-a2561cf08c59`); túneis preexistentes da conta não foram alterados.
+Notebook Windows 11 Pro 10.0.26300, PowerShell 7.4.20, git 2.47.1.windows.2, Rust 1.99.0 (rustup), Docker Desktop (engine 29.8.1, Compose v5.5.1, WSL2 `docker-desktop`). Woodpecker server/agents 3.19.0, plugin-git 2.10.1, cloudflared 2026.10.1 (global winget, atualizado de 2025.8.1 a pedido do mantenedor; container com digest pinado no túnel). Pins completos em `infra/ci/woodpecker/versions.json` (removido pela ADR-014; o arquivo segue no histórico Git). Hostname `https://ci-cd-vynamp.jkca.lat`, túnel nomeado `vynamp-woodpecker` (`c423877c-88bf-4bda-a0a0-a2561cf08c59`); túneis preexistentes da conta não foram alterados.
 
 ## Resultados reais (Woodpecker instalado, webhook GitHub)
 
@@ -20,7 +20,7 @@ Notebook Windows 11 Pro 10.0.26300, PowerShell 7.4.20, git 2.47.1.windows.2, Rus
 | 10 | pull_request PR #16, `ref=refs/pull/16/merge`; HEAD testado `71f7086` | success: android, linux, windows e gate | `woodpecker/pr/*` success; `CI Gate` success (link final #10/2, sobrescreveu #9/2); combinado success | `pipeline-10*`, `github-status-71f7086.json` |
 | 11 | push `fda34b023271ba57e432e9d8ac000f7da86b77c8` (branch descartável `chore/e15-04-gate-fail` a partir de `71f7086`, violação rustfmt deliberada em `xtask/src/main.rs`) | failure: linux e windows `tooling` exit 1 (`ci docs`), android success, gate **skipped** (não executou) | `CI Gate` **pending** "Pipeline was skipped" (nunca success); linux/windows failure; combinado failure. Branch removida após a coleta | `pipeline-11*`, `github-status-fda34b0.json` |
 
-Comandos nos steps: ver [.woodpecker/](../../../../.woodpecker/) (`linux`, `windows`, `android`, `gate`, `release`). Pipelines #1–#8 publicavam `woodpecker-pilot/<evento>/<workflow>`; desde #9 o servidor usa `WOODPECKER_STATUS_CONTEXT_FORMAT` e publica o workflow `gate` como `CI Gate` e os demais como `woodpecker/<evento>/<workflow>`. Logs de #9–#11 exportados pela API local do servidor (token só em `cli.env`); log do gate de #11 não existe (step não iniciou). Cada log de tooling imprime `tested sha=<CI_COMMIT_SHA> ref=<CI_COMMIT_REF>` e `git rev-parse HEAD`.
+Comandos nos steps: ver `.woodpecker/` (`linux`, `windows`, `android`, `gate`, `release`; removido pela ADR-014, o conteúdo segue no histórico Git). Pipelines #1–#8 publicavam `woodpecker-pilot/<evento>/<workflow>`; desde #9 o servidor usa `WOODPECKER_STATUS_CONTEXT_FORMAT` e publica o workflow `gate` como `CI Gate` e os demais como `woodpecker/<evento>/<workflow>`. Logs de #9–#11 exportados pela API local do servidor (token só em `cli.env`); log do gate de #11 não existe (step não iniciou). Cada log de tooling imprime `tested sha=<CI_COMMIT_SHA> ref=<CI_COMMIT_REF>` e `git rev-parse HEAD`.
 
 ## Outras verificações
 

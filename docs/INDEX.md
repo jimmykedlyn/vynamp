@@ -635,6 +635,7 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 - [TASK-E19-06 — Abrir os repositórios ao público e proteger as branches](../tasks/items/TASK-E19-06.md) — tasks/items/TASK-E19-06.md
 
 - [TASK-E19-07 — Integrar o módulo DSP vitrola no grafo do player](../tasks/items/TASK-E19-07.md) — tasks/items/TASK-E19-07.md
+- [Evidência TASK-E19-01](evidence/PR/task-e19-01/README.md) — docs/evidence/PR/task-e19-01/README.md; workflows Actions, validador invertido, gates locais e limitações (nenhum workflow executado no remoto).
 
 - [Organização de testes](../tests/README.md) — tests/README.md
 
@@ -670,8 +671,7 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Desenho Woodpecker e Cloudflare Tunnel](superpowers/specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md) — docs/superpowers/specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md
 - [Plano Woodpecker E15-04](superpowers/plans/2026-10-18-e15-04-woodpecker.md) — docs/superpowers/plans/2026-10-18-e15-04-woodpecker.md
-- [Adendo CI/CD somente Woodpecker](superpowers/plans/2026-10-19-e15-04-woodpecker-only-ci.md) — docs/superpowers/plans/2026-10-19-e15-04-woodpecker-only-ci.md
-- [Operação Woodpecker CI/CD](../infra/ci/woodpecker/README.md) — infra/ci/woodpecker/README.md
+- [Adendo CI/CD somente Woodpecker](superpowers/plans/2026-10-19-e15-04-woodpecker-only-ci.md) — docs/superpowers/plans/2026-10-19-e15-04-woodpecker-only-ci.md; substituído pela ADR-014.
 - [Evidência E15-04](evidence/PR/task-e15-04/README.md) — docs/evidence/PR/task-e15-04/README.md
 - [Evidência Woodpecker 3.20.1](evidence/PR/chore-woodpecker-3-20-1/README.md) — docs/evidence/PR/chore-woodpecker-3-20-1/README.md
 

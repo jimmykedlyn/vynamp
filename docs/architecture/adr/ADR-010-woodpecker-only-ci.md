@@ -20,7 +20,7 @@ O GitHub Actions do repositório privado está bloqueado por billing desde o PR1
 
 ## Consequências
 
-- Não há custo de minutos GitHub; a disponibilidade do CI depende do notebook (Docker Desktop + agente Windows ligados, ver [operação](../../../infra/ci/woodpecker/README.md)).
+- Não há custo de minutos GitHub; a disponibilidade do CI depende do notebook (Docker Desktop + agente Windows ligados). A operação do Woodpecker vivia em `infra/ci/woodpecker/README.md`, removido pela ADR-014.
 - Branch protection continua indisponível no plano atual (HTTP 403); `CI Gate` é publicado, mas não obrigatório até o mantenedor resolver o plano.
 - Workflow `gate` pulado (dependência falhou/cancelada) pode deixar o status `CI Gate` em `pending`; isso nunca é success.
 - Reverter para Actions exige novo ADR e alteração de `check-delivery`.
