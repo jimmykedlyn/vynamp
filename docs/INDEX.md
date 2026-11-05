@@ -32,6 +32,8 @@ Versão 0.7.3 · 2026-11-03 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Vynamp — identidade C / Pulso](../assets/branding/README.md) — assets/branding/README.md
 
+- [Vynamp — pacotes de ícones de arquivo (Documento, Disco, Sinal)](../assets/icons/README.md) — assets/icons/README.md
+
 - [Templates de início Windows](../bootstrap/README.md) — bootstrap/README.md
 
 - [Workspace Rust: contrato de implementação](../crates/README.md) — crates/README.md
@@ -63,6 +65,8 @@ Versão 0.7.3 · 2026-11-03 · Markdown de produto, tooling, bootstrap e evidên
 - [ADR-007 — colaboração, Gitflow e formatos de entrega](architecture/adr/ADR-007-development-delivery.md) — docs/architecture/adr/ADR-007-development-delivery.md
 
 - [ADR-008 — Vynamp e identidade C / Pulso](architecture/adr/ADR-008-vynamp-brand.md) — docs/architecture/adr/ADR-008-vynamp-brand.md
+
+- [ADR-012 — integração nativa com o shell, menus de contexto e pacotes de ícones](architecture/adr/ADR-012-shell-integration.md) — docs/architecture/adr/ADR-012-shell-integration.md
 
 - [Engine de áudio e invariantes](audio/01-engine.md) — docs/audio/01-engine.md
 
@@ -134,7 +138,7 @@ Versão 0.7.3 · 2026-11-03 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Android: shell nativo e núcleo Rust](platforms/02-android.md) — docs/platforms/02-android.md
 
-- [Integração nativa, associação de arquivos e Abrir com](platforms/03-system-integration.md) — docs/platforms/03-system-integration.md
+- [Integração nativa, associação de arquivos, menus de contexto e pacotes de ícones](platforms/03-system-integration.md) — docs/platforms/03-system-integration.md
 
 - [Ativação externa, lotes, IPC e ownership de perfil](platforms/04-activation-ownership.md) — docs/platforms/04-activation-ownership.md
 
@@ -665,3 +669,8 @@ Versão 0.7.3 · 2026-11-03 · Markdown de produto, tooling, bootstrap e evidên
 - [Letras — componente resumido sob o VU e fontes (LYR-01..15, LYR-AC-01..12)](library/02-tags-lyrics-tools.md#letras-componente-resumido-sob-o-vu-e-fontes) — docs/library/02-tags-lyrics-tools.md
 - [Decisões de letras D-LYR-01..09](product/05-decisions.md#decisões-de-letras-2026-10-28) — docs/product/05-decisions.md
 - [TASK-E03-09 — Entregar letras, bookmarks e histórico](../tasks/items/TASK-E03-09.md) — tasks/items/TASK-E03-09.md
+
+# Integração com o shell e pacotes de ícones (2026-11-05)
+
+- [Plano de integração com o shell e ícones](superpowers/plans/2026-11-05-specs-shell-integration.md) — docs/superpowers/plans/2026-11-05-specs-shell-integration.md
+- [ADR-012 — integração nativa com o shell, menus de contexto e pacotes de ícones](architecture/adr/ADR-012-shell-integration.md) — docs/architecture/adr/ADR-012-shell-integration.md

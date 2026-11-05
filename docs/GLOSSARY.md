@@ -1,6 +1,6 @@
 # Glossário e convenções
 
-Versão 0.7.5 · 2026-11-03 (termos de controles DSP, grafo modular e VU adicionados; termos de letras adicionados; pilha de áudio própria; MVP rev.38).
+Versão 0.8.0 · 2026-11-05 (termos de integração com o shell, pacotes de ícones e ferramentas auxiliares adicionados; termos de controles DSP, grafo modular e VU; termos de letras; pilha de áudio própria; MVP rev.38).
 
 | Termo | Significado nesta spec |
 |---|---|
@@ -52,5 +52,14 @@ Versão 0.7.5 · 2026-11-03 (termos de controles DSP, grafo modular e VU adicion
 | Fonte de letra | Origem da letra mostrada: LRC local importado, metadados embutidos ou DEMO; a ordem de escolha é LRC importado, depois metadados |
 | Letra desligada × instrumental | Desligada é preferência global de exibição; instrumental/sem letra é marca reversível por faixa, nunca deduzida da ausência de tags |
 | Offset de letra | Deslocamento temporal aplicado à seleção da linha (tag de offset do LRC e ajuste −/+100 ms do painel completo) |
+| Sparse package (pacote esparso) | Identidade de pacote MSIX concedida a um executável Win32 instalado fora do contêiner; habilita o menu de contexto moderno do Windows 11 sem MSIX obrigatório ([ADR-012](architecture/adr/ADR-012-shell-integration.md)) |
+| IExplorerCommand / IExplorerCommandEnumerator | Interfaces COM do shell moderno do Windows 11 que expõem um comando de menu de contexto e seu submenu enumerado |
+| IShellItemArray | Coleção COM de itens selecionados, recebida em lote pelo comando de contexto; base do batching atômico (1/2/20/100 itens em uma única ativação) |
+| ProgID / HKCU | Identificador de classe de arquivo registrada por usuário (`HKEY_CURRENT_USER\Software\Classes`); base do menu clássico "Mostrar mais opções" |
+| ServiceMenu | Extensão de menu de contexto do KDE Dolphin instalada como arquivo `.desktop` em `~/.local/share/kio/servicemenus/` |
+| Desktop Action | Ação de launcher declarada em `vynamp.desktop` (`Exec=... %U`); aparece no menu do launcher, não garante menu de contexto no gerenciador |
+| Quick Actions | Menu de serviços do Finder no macOS, declarado pela chave `NSServices` do `Info.plist` |
+| Pacote de ícones de arquivo | Conjunto de ícones por família (Documento, Disco, Sinal) aplicado aos 17 formatos de áudio; no Windows/Linux altera o shell, no macOS/Android só a UI interna |
+| Vynamp Restore / Vynamp Converter | Ferramentas desktop executáveis separadas (`vynamp-restore`, `vynamp-converter`) para restauração acústica e transcodificação em lote ([ADR-012](architecture/adr/ADR-012-shell-integration.md)) |
 
 IDs são estáveis e não mudam com renomeação de arquivo. “Alvo”, “gate” e “proposta” nunca significam resultado já medido. Dados nos previews são fictícios. O nome Vynamp é provisório.

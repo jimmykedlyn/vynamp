@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vynamp — Catálogo de Ícones de Arquivo e Ferramentas</title>
+  <style>
+    :root {
+      --bg-dark: #11131B;
+      --bg-surface: #181B26;
+      --bg-card: #1F2332;
+      --border-subtle: #2C3246;
+      --text-main: #F0F2F5;
+      --text-muted: #8F97A8;
+      --brand-accent: #FFBF69;
+      --restore-accent: #66D9EF;
+      --converter-accent: #B8F35A;
+      --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-stack);
+      line-height: 1.5;
+      padding: 24px;
+      transition: background-color 0.2s;
+    }
+
+    body.light-theme {
+      --bg-dark: #F0F2F5;
+      --bg-surface: #E1E5ED;
+      --bg-card: #FFFFFF;
+      --border-subtle: #CBD2E0;
+      --text-main: #11131B;
+      --text-muted: #5B6476;
+    }
+
+    header {
+      max-width: 1400px;
+      margin: 0 auto 32px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 24px;
+    }
+
+    .header-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge-version {
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--brand-accent);
+      color: #11131B;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+    }
+
+    .controls-panel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      background: var(--bg-surface);
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-group {
+      display: inline-flex;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-group button {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: none;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border-right: 1px solid var(--border-subtle);
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .btn-group button:last-child {
+      border-right: none;
+    }
+
+    .btn-group button.active {
+      background: var(--brand-accent);
+      color: #11131B;
+      font-weight: 700;
+    }
+
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 24px;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Tools Showcase */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .tool-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .tool-icon-wrapper {
+      width: 72px;
+      height: 72px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tool-info h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .tool-info p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .tool-executable {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--brand-accent);
+      background: rgba(255, 191, 105, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    /* Windows 11 Context Menu Mockup */
+    .context-menu-demo {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 800px) {
+      .context-menu-demo { grid-template-columns: 1fr; }
+    }
+
+    .win11-menu {
+      background: rgba(31, 35, 50, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+      padding: 6px;
+      font-size: 13px;
+    }
+
+    body.light-theme .win11-menu {
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    }
+
+    .menu-header-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      background: rgba(255, 191, 105, 0.15);
+      color: var(--brand-accent);
+      margin-bottom: 4px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 12px;
+      border-radius: 4px;
+      cursor: default;
+      transition: background 0.1s;
+    }
+
+    .menu-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    body.light-theme .menu-item:hover {
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    .menu-item.default-verb {
+      font-weight: 700;
+    }
+
+    .menu-separator {
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 4px 6px;
+    }
+
+    .menu-cli-pill {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Icon Matrix */
+    .icon-matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .icon-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+
+    .icon-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--brand-accent);
+    }
+
+    .icon-view {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      transition: all 0.2s;
+    }
+
+    .format-label {
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .format-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-bottom: 6px;
+    }
+
+    .family-tag {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+    }
+
+    /* Inspector Modal */
+    .inspector-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .inspector-modal {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      max-width: 500px;
+      width: 100%;
+      padding: 24px;
+      position: relative;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .modal-icon-stage {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 32px 0;
+      background: var(--bg-card);
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .detail-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .detail-table td {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .detail-table td:first-child {
+      color: var(--text-muted);
+      font-weight: 600;
+      width: 40%;
+    }
+
+    .detail-table td:last-child {
+      font-family: var(--font-mono);
+      color: var(--text-main);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-title-row">
+      <h1>
+        <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
+          <path d="M15 20L45 80H55L85 20H68L50 60L32 20H15Z" fill="#F0F2F5"/>
+          <polygon points="56,38 72,50 56,62" fill="#FFBF69"/>
+        </svg>
+        Vynamp — Catálogo de Ícones de Áudio e Ferramentas
+        <span class="badge-version">v0.8.0</span>
+      </h1>
+      <div class="btn-group">
+        <button id="themeToggleBtn" onclick="toggleTheme()">Modo Claro / Escuro</button>
+      </div>
+    </div>
+
+    <div class="controls-panel">
+      <div class="control-group">
+        <label>Família:</label>
+        <div class="btn-group" id="familyButtons">
+          <button class="active" onclick="setFamilyFilter('all')">Todas</button>
+          <button onclick="setFamilyFilter('document')">Documento</button>
+          <button onclick="setFamilyFilter('disc')">Disco</button>
+          <button onclick="setFamilyFilter('signal')">Sinal</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label>Categoria:</label>
+        <div class="btn-group" id="categoryButtons">
+          <button class="active" onclick="setCategoryFilter('all')">Todas</button>
+          <button onclick="setCategoryFilter('lossless')">Lossless</button>
+          <button onclick="setCategoryFilter('lossy')">Lossy</button>
+          <button onclick="setCategoryFilter('dsd')">DSD</button>
+          <button onclick="setCategoryFilter('generic')">Genérico</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label>Tamanho:</label>
+        <div class="btn-group" id="sizeButtons">
+          <button onclick="setIconSize(24)">24px</button>
+          <button onclick="setIconSize(32)">32px</button>
+          <button class="active" onclick="setIconSize(48)">48px</button>
+          <button onclick="setIconSize(64)">64px</button>
+          <button onclick="setIconSize(96)">96px</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-container">
+
+    <!-- Seção de Ferramentas -->
+    <section>
+      <h2>Identidade das Ferramentas e Menu de Contexto</h2>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <div class="tool-icon-wrapper">
+            <svg width="64" height="64" viewBox="0 0 100 100">
+              <rect width="100" height="100" rx="20" fill="#11131B"/>
+              <path d="M18 24L46 76H54L82 24H68L50 60L32 24H18Z" fill="#F0F2F5"/>
+              <polygon points="54,40 70,50 54,60" fill="#FFBF69"/>
+            </svg>
+          </div>
+          <div class="tool-info">
+            <h3>Vynamp Media Player</h3>
+            <p>Reprodutor principal de alta fidelidade</p>
+            <span class="tool-executable">vynamp.exe</span>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-icon-wrapper">
+            <svg width="64" height="64" viewBox="0 0 100 100">
+              <rect width="100" height="100" rx="20" fill="#11131B"/>
+              <path d="M18 24L46 76H54L82 24H68L50 60L32 24H18Z" fill="#F0F2F5"/>
+              <polygon points="54,40 70,50 54,60" fill="#FFBF69"/>
+              <!-- Badge Restore: ciano #66D9EF -->
+              <circle cx="75" cy="75" r="18" fill="#11131B" stroke="#66D9EF" stroke-width="3"/>
+              <path d="M68 75L73 70L77 80L82 75" fill="none" stroke="#66D9EF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="tool-info">
+            <h3>Vynamp Restore</h3>
+            <p>Restauração acústica e reparo</p>
+            <span class="tool-executable">vynamp-restore.exe</span>
+          </div>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-icon-wrapper">
+            <svg width="64" height="64" viewBox="0 0 100 100">
+              <rect width="100" height="100" rx="20" fill="#11131B"/>
+              <path d="M18 24L46 76H54L82 24H68L50 60L32 24H18Z" fill="#F0F2F5"/>
+              <polygon points="54,40 70,50 54,60" fill="#FFBF69"/>
+              <!-- Badge Converter: verde-lima #B8F35A -->
+              <circle cx="75" cy="75" r="18" fill="#11131B" stroke="#B8F35A" stroke-width="3"/>
+              <path d="M68 73A7 7 0 0 1 80 71M82 77A7 7 0 0 1 70 79" fill="none" stroke="#B8F35A" stroke-width="2.5" stroke-linecap="round"/>
+              <polygon points="79,68 83,72 78,74" fill="#B8F35A"/>
+              <polygon points="71,82 67,78 72,76" fill="#B8F35A"/>
+            </svg>
+          </div>
+          <div class="tool-info">
+            <h3>Vynamp Converter</h3>
+            <p>Transcodificação em lote</p>
+            <span class="tool-executable">vynamp-converter.exe</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Submenu Explorer Mockup -->
+    <section>
+      <h2>Submenu no Explorador de Arquivos (Windows 11 / Linux)</h2>
+      <div class="context-menu-demo">
+        <div class="win11-menu">
+          <div class="menu-header-item">
+            <span style="display: flex; align-items: center; gap: 8px;">
+              <svg width="16" height="16" viewBox="0 0 100 100">
+                <path d="M15 20L45 80H55L85 20H68L50 60L32 20H15Z" fill="#FFBF69"/>
+              </svg>
+              Vynamp
+            </span>
+            <span style="font-size: 10px; opacity: 0.7;">IExplorerCommand</span>
+          </div>
+
+          <div class="menu-item default-verb">
+            <span>▶</span> Reproduzir
+            <span class="menu-cli-pill">--play</span>
+          </div>
+          <div class="menu-item">
+            <span>📑</span> Abrir em nova lista
+            <span class="menu-cli-pill">--new-playlist</span>
+          </div>
+          <div class="menu-item">
+            <span>➕</span> Adicionar à lista
+            <span class="menu-cli-pill">--add-playlist</span>
+          </div>
+          <div class="menu-item">
+            <span>⏳</span> Adicionar à fila
+            <span class="menu-cli-pill">--enqueue</span>
+          </div>
+          <div class="menu-separator"></div>
+          <div class="menu-item">
+            <span>🏷️</span> Editar etiquetas
+            <span class="menu-cli-pill">--edit-tags</span>
+          </div>
+          <div class="menu-separator"></div>
+          <div class="menu-item">
+            <span style="color: var(--converter-accent);">🔄</span> Converter
+            <span class="menu-cli-pill">vynamp-converter</span>
+          </div>
+          <div class="menu-item">
+            <span style="color: var(--restore-accent);">🩹</span> Restaurar com Vynamp Restore
+            <span class="menu-cli-pill">vynamp-restore</span>
+          </div>
+        </div>
+
+        <div>
+          <h3 style="font-size: 16px; margin-bottom: 8px;">Contrato de Execução e Batching Atômico</h3>
+          <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">
+            Ao selecionar 1, 20 ou 100 arquivos no gerenciador de arquivos, a extensão COM <code>IExplorerCommand</code> extrai o array completo <code>IShellItemArray</code> e envia uma única requisição IPC ao processo primário do Vynamp, garantindo que o lote seja processado em ordem atômica sem abrir múltiplas instâncias paralelas.
+          </p>
+          <ul style="font-size: 13px; color: var(--text-muted); list-style: disc; margin-left: 20px; line-height: 1.8;">
+            <li><strong>Reproduzir:</strong> Ação padrão associada ao duplo clique no Windows Explorer e acionamento no Linux.</li>
+            <li><strong>Ferramentas dedicadas:</strong> Os verbos Converter e Restaurar acionam executáveis independentes, mantendo a estabilidade da thread de reprodução do player.</li>
+            <li><strong>Modo Portátil:</strong> Integração gerenciável via Preferências com desinstalação limpa.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Matriz de Ícones -->
+    <section>
+      <h2>Matriz de Pacotes de Ícones de Arquivo</h2>
+      <div class="icon-matrix-grid" id="matrixGrid">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Modal do Inspetor -->
+  <div class="inspector-overlay" id="inspectorModal" onclick="closeModal(event)">
+    <div class="inspector-modal" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeModal()">✕</button>
+      <h3 id="modalTitle" style="font-size: 18px; margin-bottom: 4px;">Formato</h3>
+      <p id="modalCategory" style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Categoria</p>
+
+      <div class="modal-icon-stage" id="modalStage">
+        <!-- Icon preview -->
+      </div>
+
+      <table class="detail-table">
+        <tr><td>Família</td><td id="modalFamily">Documento</td></tr>
+        <tr><td>Extensões</td><td id="modalExt">.flac</td></tr>
+        <tr><td>Tipo MIME</td><td id="modalMime">audio/flac</td></tr>
+        <tr><td>Cor Semântica</td><td id="modalColor">#FFBF69</td></tr>
+        <tr><td>Resoluções .ico</td><td>16, 24, 32, 48, 64, 128, 256</td></tr>
+        <tr><td>Descrição</td><td id="modalDesc">-</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const FORMATS = [
+      { id: "flac", label: "FLAC", category: "lossless", ext: [".flac"], mime: "audio/flac", color: "#FFBF69", desc: "Free Lossless Audio Codec (IETF 64/64)" },
+      { id: "wav", label: "WAV", category: "lossless", ext: [".wav"], mime: "audio/wav", color: "#FF9F43", desc: "Waveform Audio File Format PCM" },
+      { id: "aiff", label: "AIFF", category: "lossless", ext: [".aif", ".aiff"], mime: "audio/aiff", color: "#EE5253", desc: "Audio Interchange File Format" },
+      { id: "alac", label: "ALAC", category: "lossless", ext: [".m4a", ".alac"], mime: "audio/mp4", color: "#9B59B6", desc: "Apple Lossless Audio Codec" },
+      { id: "ape", label: "APE", category: "lossless", ext: [".ape"], mime: "audio/x-ape", color: "#D35400", desc: "Monkey's Audio Lossless" },
+      { id: "wv", label: "WV", category: "lossless", ext: [".wv"], mime: "audio/x-wavpack", color: "#F39C12", desc: "WavPack Lossless / Hybrid" },
+      { id: "mp3", label: "MP3", category: "lossy", ext: [".mp3"], mime: "audio/mpeg", color: "#0ABDE3", desc: "MPEG-1/2 Audio Layer III" },
+      { id: "aac", label: "AAC", category: "lossy", ext: [".aac"], mime: "audio/aac", color: "#48DBFB", desc: "Advanced Audio Coding" },
+      { id: "m4a", label: "M4A", category: "lossy", ext: [".m4a"], mime: "audio/mp4", color: "#5F27CD", desc: "MPEG-4 Audio Container" },
+      { id: "ogg", label: "OGG", category: "lossy", ext: [".ogg"], mime: "audio/ogg", color: "#1DD1A1", desc: "Ogg Vorbis Audio" },
+      { id: "opus", label: "OPUS", category: "lossy", ext: [".opus"], mime: "audio/opus", color: "#10AC84", desc: "Opus Interactive Audio Codec" },
+      { id: "wma", label: "WMA", category: "lossy", ext: [".wma"], mime: "audio/x-ms-wma", color: "#2E86DE", desc: "Windows Media Audio" },
+      { id: "mp2", label: "MP2", category: "lossy", ext: [".mp2"], mime: "audio/x-mp2", color: "#54A0FF", desc: "MPEG Audio Layer II Broadcast" },
+      { id: "webm", label: "WEBM", category: "lossy", ext: [".webm"], mime: "audio/webm", color: "#FF6B6B", desc: "WebM Audio Container" },
+      { id: "dsf", label: "DSF", category: "dsd", ext: [".dsf"], mime: "audio/x-dsf", color: "#F1C40F", desc: "Direct Stream Digital Sony DSD64/128/256" },
+      { id: "dff", label: "DFF", category: "dsd", ext: [".dff"], mime: "audio/x-dff", color: "#F39C12", desc: "Direct Stream Digital Philips DSDIFF" },
+      { id: "audio", label: "AUDIO", category: "generic", ext: ["*"], mime: "audio/*", color: "#8395A7", desc: "Formato de áudio genérico associado" }
+    ];
+
+    const FAMILIES = [
+      { id: "document", name: "Documento" },
+      { id: "disc", name: "Disco" },
+      { id: "signal", name: "Sinal" }
+    ];
+
+    let currentFamilyFilter = "all";
+    let currentCategoryFilter = "all";
+    let currentIconSize = 48;
+
+    function renderSvg(family, format, size) {
+      if (family === "document") {
+        // Family: Documento (Folder corner + format badge + note glyph)
+        return `
+          <svg width="${size}" height="${size}" viewBox="0 0 48 48" fill="none">
+            <!-- Sheet body with folded top-right corner -->
+            <path d="M10 6C10 4.89543 10.8954 4 12 4H30L38 12V42C38 43.1046 37.1046 44 36 44H12C10.8954 44 10 43.1046 10 42V6Z" fill="#1C202C" stroke="#2D3345" stroke-width="2"/>
+            <!-- Fold triangle -->
+            <path d="M30 4V12H38L30 4Z" fill="#2D3345"/>
+            <!-- Accent Format Banner -->
+            <rect x="12" y="16" width="24" height="11" rx="2" fill="${format.color}"/>
+            <text x="24" y="24" font-family="-apple-system, sans-serif" font-size="8" font-weight="900" fill="#11131B" text-anchor="middle" dominant-baseline="middle">${format.label}</text>
+            <!-- Audio Note Glyph -->
+            <path d="M22 38V31L28 29.5V36.5" stroke="${format.color}" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="20.5" cy="38" r="2" fill="${format.color}"/>
+            <circle cx="26.5" cy="36.5" r="2" fill="${format.color}"/>
+          </svg>
+        `;
+      } else if (family === "disc") {
+        // Family: Disco (Stylized Vinyl record with concentric grooves & center label)
+        return `
+          <svg width="${size}" height="${size}" viewBox="0 0 48 48" fill="none">
+            <!-- Vinyl Outer -->
+            <circle cx="24" cy="24" r="21" fill="#11131B" stroke="#232733" stroke-width="2"/>
+            <!-- Grooves -->
+            <circle cx="24" cy="24" r="17" stroke="#1A1D26" stroke-width="1" stroke-dasharray="2 1"/>
+            <circle cx="24" cy="24" r="14" stroke="#1A1D26" stroke-width="1"/>
+            <circle cx="24" cy="24" r="11" stroke="#1A1D26" stroke-width="1" stroke-dasharray="3 1.5"/>
+            <!-- Center Color Label -->
+            <circle cx="24" cy="24" r="8" fill="${format.color}"/>
+            <!-- Center Spindle Hole -->
+            <circle cx="24" cy="24" r="2.5" fill="#11131B"/>
+            <!-- Format Label curved/centered -->
+            <text x="24" y="15" font-family="-apple-system, sans-serif" font-size="6.5" font-weight="900" fill="${format.color}" text-anchor="middle">${format.label}</text>
+          </svg>
+        `;
+      } else {
+        // Family: Sinal (Chassis with spectrum / waveform bars)
+        return `
+          <svg width="${size}" height="${size}" viewBox="0 0 48 48" fill="none">
+            <!-- Chassis Box -->
+            <rect x="6" y="8" width="36" height="32" rx="4" fill="#151822" stroke="#282D3D" stroke-width="2"/>
+            <!-- Waveform bars -->
+            <line x1="12" y1="24" x2="12" y2="28" stroke="${format.color}" stroke-width="2" stroke-linecap="round"/>
+            <line x1="16" y1="20" x2="16" y2="32" stroke="${format.color}" stroke-width="2" stroke-linecap="round"/>
+            <line x1="20" y1="16" x2="20" y2="36" stroke="${format.color}" stroke-width="2" stroke-linecap="round"/>
+            <line x1="24" y1="18" x2="24" y2="34" stroke="${format.color}" stroke-width="2" stroke-linecap="round"/>
+            <line x1="28" y1="14" x2="28" y2="38" stroke="${format.color}" stroke-width="2" stroke-linecap="round"/>
+            <line x1="32" y1="22" x2="32" y2="30" stroke="${format.color}" stroke-width="2" stroke-linecap="round"/>
+            <line x1="36" y1="23" x2="36" y2="29" stroke="${format.color}" stroke-width="2" stroke-linecap="round"/>
+            <!-- Format Tag Header -->
+            <rect x="6" y="8" width="36" height="7" rx="4 4 0 0" fill="${format.color}"/>
+            <text x="24" y="13" font-family="-apple-system, sans-serif" font-size="5.5" font-weight="900" fill="#11131B" text-anchor="middle">${format.label}</text>
+          </svg>
+        `;
+      }
+    }
+
+    function renderMatrix() {
+      const grid = document.getElementById("matrixGrid");
+      grid.innerHTML = "";
+
+      FAMILIES.forEach(fam => {
+        if (currentFamilyFilter !== "all" && currentFamilyFilter !== fam.id) return;
+
+        FORMATS.forEach(fmt => {
+          if (currentCategoryFilter !== "all" && currentCategoryFilter !== fmt.category) return;
+
+          const card = document.createElement("div");
+          card.className = "icon-card";
+          card.onclick = () => openModal(fam, fmt);
+
+          card.innerHTML = `
+            <div class="icon-view">
+              ${renderSvg(fam.id, fmt, currentIconSize)}
+            </div>
+            <div class="format-label" style="color: ${fmt.color};">${fmt.label}</div>
+            <div class="format-sub">${fmt.ext[0]}</div>
+            <div class="family-tag">${fam.name}</div>
+          `;
+
+          grid.appendChild(card);
+        });
+      });
+    }
+
+    function setFamilyFilter(fam) {
+      currentFamilyFilter = fam;
+      document.querySelectorAll("#familyButtons button").forEach(b => b.classList.remove("active"));
+      event.target.classList.add("active");
+      renderMatrix();
+    }
+
+    function setCategoryFilter(cat) {
+      currentCategoryFilter = cat;
+      document.querySelectorAll("#categoryButtons button").forEach(b => b.classList.remove("active"));
+      event.target.classList.add("active");
+      renderMatrix();
+    }
+
+    function setIconSize(size) {
+      currentIconSize = size;
+      document.querySelectorAll("#sizeButtons button").forEach(b => b.classList.remove("active"));
+      event.target.classList.add("active");
+      renderMatrix();
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("light-theme");
+    }
+
+    function openModal(fam, fmt) {
+      document.getElementById("modalTitle").textContent = `${fmt.label} (${fam.name})`;
+      document.getElementById("modalTitle").style.color = fmt.color;
+      document.getElementById("modalCategory").textContent = fmt.category.toUpperCase();
+      document.getElementById("modalStage").innerHTML = renderSvg(fam.id, fmt, 96);
+      document.getElementById("modalFamily").textContent = fam.name;
+      document.getElementById("modalExt").textContent = fmt.ext.join(", ");
+      document.getElementById("modalMime").textContent = fmt.mime;
+      document.getElementById("modalColor").textContent = fmt.color;
+      document.getElementById("modalDesc").textContent = fmt.desc;
+
+      document.getElementById("inspectorModal").style.display = "flex";
+    }
+
+    function closeModal(e) {
+      document.getElementById("inspectorModal").style.display = "none";
+    }
+
+    // Inicialização
+    renderMatrix();
+  </script>
+</body>
+</html>

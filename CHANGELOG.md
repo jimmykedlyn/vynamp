@@ -1,6 +1,6 @@
 # Histórico da especificação
 
-Versão: 0.7.3 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.8.0 · Data: 2026-11-05 · Estado: especificação proposta, implementação não iniciada.
 
 ## 0.1.0 — 2026-10-14
 
@@ -59,3 +59,7 @@ As specs passam a citar o MVP web rev.38 por URL, SHA fixo e caminho: `vynamp-mv
 ## Não lançado — 2026-11-03 (pilha de áudio própria)
 
 [ADR-011](docs/architecture/adr/ADR-011-own-audio-stack.md): decode, saída, efeitos e tags passam a vir das bibliotecas próprias vynamp-decode, vynamp-output e vitrola (SHAs fixos, estado API real × planejado e tabela de lacunas); o resampler será uma nova lib própria (nome a definir, D-DSP-08 decidido) e a escrita de tags estenderá `vynamp-decode-meta`. ADR-002 marcada como parcialmente substituída; specs de stack, formatos, saídas, backends, catálogo DSP, referências, licenças e TASK-E04-02 reescritas sem os nomes de bibliotecas de terceiros. Somente documentação.
+
+## Não lançado — 2026-11-05 (integração com o shell e pacotes de ícones)
+
+[ADR-012](docs/architecture/adr/ADR-012-shell-integration.md) formaliza a integração nativa com o shell: menu moderno do Windows 11 via pacote esparso MSIX assinado e `IExplorerCommand`, menu clássico HKCU para Windows 10/"Mostrar mais opções", Desktop Actions e extensões de gerenciador (Dolphin KIO ServiceMenu, Nautilus, Thunar/Nemo) no Linux, Quick Actions (`NSServices`) e `CFBundleDocumentTypes` no macOS, e Intent Filters (`ACTION_VIEW`/`ACTION_SEND`/`ACTION_SEND_MULTIPLE`) com SAF no Android. Submenu "Vynamp" com 7 verbos canônicos (Reproduzir, Abrir em nova lista, Adicionar à lista, Adicionar à fila, Editar etiquetas, Converter, Restaurar com Vynamp Restore) e contrato CLI correspondente (`--play`, `--new-playlist`, `--add-playlist`, `--enqueue`, `--edit-tags`, `vynamp-converter`, `vynamp-restore`), com batching atômico via `IShellItemArray`. Vynamp Restore e Vynamp Converter passam a ser executáveis desktop separados. Sistema de pacotes de ícones de arquivo com 3 famílias (Documento, Disco, Sinal) para 17 formatos, `.ico` multi-resolução (16–256px) no Windows, hierarquia `hicolor` no Linux e aplicação in-app no macOS/Android; catálogo em [assets/icons](assets/icons/README.md) com manifesto e preview interativo. [03-system-integration](docs/platforms/03-system-integration.md) reescrito para 0.8.0; TASK-E16-03/04/05/08 e o backlog atualizados; glossário e índice ampliados. Somente documentação e assets; nenhuma integração implementada ou testada.
