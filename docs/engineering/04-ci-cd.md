@@ -18,7 +18,9 @@ Job `docs` valida documentação/schema/backlog/delivery/fmt/clippy dos tooling 
 
 Cobertura de plataforma do `tooling` e do `core`: `windows-2022`, `ubuntu-22.04`, `macos-15-intel` (Intel) e `macos-15` (Apple Silicon); Android em `ubuntu-24.04`. macOS Intel e Apple Silicon passam a ser alvos verificados — a limitação "macOS não verificado" do Woodpecker, que não tinha agente Mac, deixa de existir.
 
-O gate é o job `gate`, publicado como status **`CI Gate`**, o mesmo nome que `config/github.json` exige. Ele usa `if: always()` e depende de `docs`, `tooling`, `core` e `android`; as checagens leem `needs.*.result` em vez de assumir sucesso, então dependência falha, cancelada ou ausente reprova. Nunca há caminho para gate verde sem as dependências reais.
+O gate é o job `gate`, publicado como status **`CI Gate`**, o mesmo nome declarado em `config/github.json` como contexto obrigatório. Ele usa `if: always()` e depende de `docs`, `tooling`, `core` e `android`; as checagens leem `needs.*.result` em vez de assumir sucesso, então dependência falha, cancelada ou ausente reprova. Nunca há caminho para gate verde sem as dependências reais.
+
+**O status ainda não é exigido por nada.** `config/github.json` continua `protection_status: pending_plan`: enquanto o repositório for privado a API de branch protection responde 403, então o `CI Gate` é informativo e não bloqueia merge. Quem fecha essa lacuna é a TASK-E19-06, que abre os repositórios e aplica `cargo xtask repo protect`.
 
 Release em tag `v*`: `cargo xtask tag-version` valida `GITHUB_REF_NAME` e expõe a versão; `cargo xtask release preflight` exige implementation/release flags, Cargo/Gradle/locks/licença/notices/public key, evidência completa dos cinco alvos, digest de source revisado, revisores independentes e `GITHUB_REF == refs/tags/v<versão>`. O job `publish` termina em falha explícita (`exit 1`): builders por plataforma, transporte de artifacts entre agentes, secrets de signing e draft privado ainda não estão migrados. Ao migrar: conjunto completo/não vazio, hashes, manifesto assinado, apenas draft; só mantenedor publica após verificação. Não distribuir chave privada em artifacts/logs.
 
