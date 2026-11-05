@@ -20,7 +20,7 @@ O projeto estava num estado em que `AGENTS.md` proibia criar licença sem decis�
 | D-LIC-02 | A licença cobre só este repositório: não relicencia `crates-copyleft/`, não concede direitos sobre codecs de terceiros e **não equivale a release** |
 | D-GOV-01 | Canal de vulnerabilidade = GitHub Security Advisories do próprio repositório, sem e-mail novo |
 
-`02-privacy-licensing.md` (0.8.0) mantém a exigência real: `LICENSE` não substitui `THIRD_PARTY_NOTICES`, SBOM nem evidência assinada, e o `release preflight` continua exigindo os três.
+`02-privacy-licensing.md` (0.8.0) mantém a exigência real: `LICENSE` não substitui `THIRD_PARTY_NOTICES`, SBOM nem evidência assinada. O `release preflight` exige `THIRD_PARTY_NOTICES`, evidência de hardware real por plataforma e registro de revisores; SBOM e assinatura minisign são do `publish-draft` e da spec de entrega, não do preflight.
 
 ### Escolhas conservadoras
 

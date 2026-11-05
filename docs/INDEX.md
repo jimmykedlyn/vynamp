@@ -24,7 +24,7 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Vynamp — especificação de produto e engenharia](../README.md) — README.md
 
-- [Política de segurança proposta](../SECURITY.md) — SECURITY.md
+- [Política de segurança](../SECURITY.md) — SECURITY.md; canal em Security Advisories, ainda não habilitado (TASK-E19-06).
 
 - [Contrato mestre do produto](../SPEC.md) — SPEC.md
 

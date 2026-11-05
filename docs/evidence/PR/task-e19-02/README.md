@@ -30,7 +30,7 @@ O projeto estava num estado em que `AGENTS.md` proibia *"criar licença final se
 - **D-LIC-02** — a licença cobre só o código deste repositório: não relicencia `crates-copyleft/` das libs de áudio, não concede direitos sobre codecs de terceiros e **não equivale a release**.
 - **D-GOV-01** — canal de vulnerabilidade = GitHub Security Advisories do próprio repositório, sem e-mail novo.
 
-`docs/security/02-privacy-licensing.md` (0.8.0) troca a proibição por uma condição: `LICENSE` existir não substitui `THIRD_PARTY_NOTICES`, SBOM nem evidência assinada, e o `release preflight` continua exigindo os três. `AGENTS.md` (0.9.0) mantém a regra e aponta para D-LIC-01.
+`docs/security/02-privacy-licensing.md` (0.8.0) troca a proibição por uma condição: `LICENSE` existir não substitui `THIRD_PARTY_NOTICES`, SBOM nem evidência assinada. O `release preflight` exige hoje `THIRD_PARTY_NOTICES`, evidência de hardware real por plataforma e o registro de revisores (`xtask/src/release.rs:88-125`); SBOM e assinatura minisign entram no `publish-draft` e na spec de entrega. `AGENTS.md` (0.9.0) mantém a regra e aponta para D-LIC-01.
 
 ## Canal de segurança
 
