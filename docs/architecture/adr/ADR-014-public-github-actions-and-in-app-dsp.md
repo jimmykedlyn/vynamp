@@ -95,7 +95,7 @@ Duplicar a spec em dois repositórios criaria divergência silenciosa entre arqu
 
 ## Consequências
 
-- `.woodpecker/` e `infra/ci/` saem do repositório principal; os pins de toolchain de `infra/ci/versions.json` precisam ser preservados antes da remoção (migram para `config/`).
+- `.woodpecker/` e `infra/ci/` saem do repositório principal. Os pins de **toolchain** já tinham fonte fora delas — `rust-toolchain.toml` (canal `1.99.0`, componentes `rustfmt`/`clippy`) e `config/toolchains.json` —, e continuam intactos. O que sai junto com `infra/ci/woodpecker/versions.json` são os pins das **imagens do servidor Woodpecker**, de `plugin-git` e de `cloudflared`: são operacionais, só fazem sentido enquanto o Woodpecker local existir, e seguem recuperáveis no histórico Git se a desmontagem precisar deles.
 - O `CI Gate` passa a depender da disponibilidade do GitHub, não do notebook do mantenedor — ganho operacional, e perda da possibilidade de rodar CI offline.
 - A matriz de CI fica maior (macOS Intel e Apple Silicon entram), então o tempo de PR cresce; a restrição de gatilho compensa parte disso ao não rodar em push de branch isolada.
 - Abrir os repositórios expõe o **histórico de execuções e logs** do CI ao público. O scan de segredos em todo o histórico dos cinco repositórios existentes não encontrou token, PAT, chave AWS ou chave privada; `release.yml` referencia apenas **nomes** de secrets, nunca valores.

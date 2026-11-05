@@ -29,7 +29,7 @@ Este pacote define o produto completo em fases. Não contém código do Winamp, 
 
 Validar: `cargo xtask check-docs`. Abrir `assets/layout-reference.html` no navegador para conferir os layouts clássico, biblioteca e compacto. A referência é estática, com assets originais e dados fictícios.
 
-Preparação de engenharia0.7.0, com automação Rust implementada: [START-HERE](START-HERE.md), [estrutura](docs/engineering/08-folder-structure.md), [agentes/Superpowers](docs/engineering/01-agents-superpowers.md), [Gitflow](docs/engineering/03-gitflow-github.md), [CI/CD](docs/engineering/04-ci-cd.md), [testes](docs/engineering/05-tests.md), [instaladores](docs/engineering/06-installers.md). GitHub privado escolhido: jimmykedlyn/vynamp-mediaplayer; acesso remoto ainda não confirmado no ambiente.
+Preparação de engenharia 0.7.0, com automação Rust implementada: [START-HERE](START-HERE.md), [estrutura](docs/engineering/08-folder-structure.md), [agentes/Superpowers](docs/engineering/01-agents-superpowers.md), [Gitflow](docs/engineering/03-gitflow-github.md), [CI/CD](docs/engineering/04-ci-cd.md), [testes](docs/engineering/05-tests.md), [instaladores](docs/engineering/06-installers.md). Repositório: `jimmykedlyn/vynamp-mediaplayer`. Hoje **privado**; a abertura está decidida na [ADR-014](docs/architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md) e é executada pela TASK-E19-06.
 
 Identidade aprovada: [guia Vynamp C / Pulso](docs/design/04-brand-identity.md) e [prancha incluída](assets/branding/approved-c-board.png). Exports nativos ainda pendentes, conforme manifest.
 
