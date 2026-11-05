@@ -47,14 +47,14 @@ Ambiente: Windows 11 Pro 10.0.26300, Rust 1.99.0 (rustup), git 2.47.1.windows.2.
 
 ### Execução real no GitHub
 
-O workflow rodou no PR #30, em `36d0e02` (evento `pull_request`), e concluiu com sucesso. Run [42089094392](https://github.com/jimmykedlyn/vynamp-mediaplayer/actions/runs/42089094392).
+O workflow rodou no PR #30, em `7565e12` (evento `pull_request`), e concluiu com sucesso. Run [42096253664](https://github.com/jimmykedlyn/vynamp-mediaplayer/actions/runs/42096253664). A primeira execução verde foi em `36d0e02` (run `42089094392`); o commit seguinte apenas corrigiu esta evidência.
 
 | Check | Resultado | Duração |
 |---|---|---|
-| `docs` | pass | 2m20s |
-| `tooling (windows-2022)` | pass | 1m45s |
-| `tooling (ubuntu-22.04)` | pass | 52s |
-| `tooling (macos-15-intel)` | pass | 1m35s |
+| `docs` | pass | 1m31s |
+| `tooling (windows-2022)` | pass | 1m37s |
+| `tooling (ubuntu-22.04)` | pass | 55s |
+| `tooling (macos-15-intel)` | pass | 1m40s |
 | `tooling (macos-15)` | pass | 22s |
 | **`CI Gate`** | **pass** | 4s |
 | `core` | skipped | — |
