@@ -46,7 +46,7 @@ Comandos, resultados, ambientes/fixtures e limitações:
 
 Executados localmente (Windows 11, Rust 1.99.0):
 
-- `cargo xtask check-docs` → `result: passed`, 0 erros, 327 arquivos Markdown, 182 tarefas, 182 requisitos, 68 entradas de catálogo.
+- `cargo xtask check-docs` → `result: passed`, 0 erros, 329 arquivos Markdown, 182 tarefas, 182 requisitos, 68 entradas de catálogo.
 - `cargo xtask check-delivery` → `result: passed`, 0 erros.
 - `cargo test -p xtask` → 85 testes aprovados, 0 falhas.
 - Hook de pre-push (mesmos checks do CI: `xtask ci docs` + 51 testes de `xtask` + 34 testes de `tests/tooling.rs`) → aprovado.

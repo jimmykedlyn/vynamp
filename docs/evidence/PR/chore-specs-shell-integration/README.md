@@ -13,13 +13,14 @@ Escopo: especificação e assets de integração com o shell dos sistemas operac
 | Worktree | `repo/.worktrees/claude/specs-shell-integration` |
 | Branch | `chore/claude-specs-shell-integration` |
 | Base | `chore/claude-specs-mvp-reference` (37653d3) |
-| Commit revisado | 7ba0635 |
+| Commit revisado | 7ba0635 (conteúdo normativo) |
+| SHA final do PR | e5eec0d (acrescenta esta evidência e as entradas de índice) |
 
 ## Verificações locais
 
 | Comando | Resultado |
 |---|---|
-| `cargo xtask check-docs` | `result: passed`, 0 erros, 327 arquivos Markdown, 182 tarefas, 182 requisitos, 68 entradas de catálogo |
+| `cargo xtask check-docs` | `result: passed`, 0 erros, 329 arquivos Markdown, 182 tarefas, 182 requisitos, 68 entradas de catálogo |
 | `cargo xtask check-delivery` | `result: passed`, 0 erros |
 | `cargo test -p xtask` | 85 aprovados, 0 falhas |
 | Hook de pre-push (`xtask ci docs` + testes de `xtask` e `tests/tooling.rs`) | Aprovado — 51 + 34 testes, 0 falhas |
