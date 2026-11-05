@@ -8,15 +8,29 @@ Versão 0.9.0 · 2026-11-05 · Estado: política vigente para o repositório; o 
 **Não abra issue pública para um problema de segurança.**
 
 Use **GitHub Security Advisories** on this repository. The report is private by
-default: only the maintainer and you can see it, and the repository shows a
-"Report a vulnerability" button in the **Security** tab.
+default: only the maintainer and you can see it.
 
 Use **GitHub Security Advisories** neste repositório. O relatório é privado por
-padrão: só o mantenedor e você o veem, e o repositório exibe o botão
-"Report a vulnerability" na aba **Security**.
+padrão: só o mantenedor e você o veem.
 
 - New advisory / Nova consulta: <https://github.com/jimmykedlyn/vynamp-mediaplayer/security/advisories/new>
 - Existing advisories / Consultas publicadas: <https://github.com/jimmykedlyn/vynamp-mediaplayer/security/advisories>
+
+**Not open yet.** The repository is private and private vulnerability reporting
+is not enabled on it, so this channel goes live in TASK-E19-06, when the
+repository becomes public and the feature is switched on. Until then the
+advisory URLs above return 404 for anyone who is not the maintainer, and the
+"Report a vulnerability" button does not appear. If you have something to report
+before that, open a minimal public issue that asks for a private channel and
+contains no details of the problem.
+
+**Ainda não está aberto.** O repositório é privado e o recurso de relato privado
+de vulnerabilidade não está habilitado nele, então este canal entra no ar na
+TASK-E19-06, quando o repositório ficar público e o recurso for ligado. Até lá
+as URLs de advisory acima retornam 404 para quem não é o mantenedor, e o botão
+"Report a vulnerability" não aparece. Se você tiver algo a relatar antes disso,
+abra uma issue pública mínima pedindo um canal privado, sem nenhum detalhe do
+problema.
 
 This is the only security channel. There is no security e-mail address, and
 none should be invented. It is the channel decided as D-GOV-01 in
@@ -39,17 +53,17 @@ atribui. Não anexe música protegida, dados pessoais nem segredos de terceiros.
 ### What to expect / O que esperar
 
 This is a single-maintainer project with no paid support and **no committed
-response SLA**. Reports are read as capacity allows; the maintainer confirms
-receipt when possible and agrees a disclosure date with you before publishing an
-advisory. A report that requires an unreleased component (most of the player
-today) may stay open without a fix until that component exists.
+response SLA**. Reports are read as capacity allows, and the maintainer confirms
+receipt when possible. No advisory is published without telling the reporter
+first. A report that requires an unreleased component (most of the player today)
+may stay open without a fix until that component exists.
 
 Projeto de mantenedor único, sem suporte pago e **sem SLA de resposta
-comprometido**. Os relatórios são lidos conforme a capacidade; o mantenedor
-confirma o recebimento quando possível e combina com você a data de divulgação
-antes de publicar um advisory. Um relatório que dependa de componente não
-lançado (a maior parte do player hoje) pode ficar aberto sem correção até esse
-componente existir.
+comprometido**. Os relatórios são lidos conforme a capacidade, e o mantenedor
+confirma o recebimento quando possível. Nenhum advisory é publicado sem avisar
+quem relatou antes. Um relatório que dependa de componente não lançado (a maior
+parte do player hoje) pode ficar aberto sem correção até esse componente
+existir.
 
 ## Supported versions / Versões suportadas
 

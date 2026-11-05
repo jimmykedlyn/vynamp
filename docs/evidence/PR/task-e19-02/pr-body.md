@@ -78,6 +78,6 @@ Corrigido junto `tasks/README.md:5`, que afirmava "todos os itens estão planeja
 - [x] Sucesso/erro/cancelamento: validador exercitado no caminho de falha (`Missing index`) e no de sucesso.
 - [x] Docs/contracts/notices atualizados; nenhuma credencial no diff.
 - [x] Revisão técnica independente — cinco achados, todos corrigidos.
-- [ ] CI Gate (GitHub Actions) — aguardando o run do SHA final.
+- [x] CI Gate (GitHub Actions) — verde em `ae10e3b` (run 42125289298): `docs`, `tooling` em ubuntu-22.04, windows-2022, macos-15-intel e macos-15, mais o gate; `core` e `android` pulados por `cargo xtask ci detect`.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)

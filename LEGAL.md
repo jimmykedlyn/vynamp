@@ -16,8 +16,11 @@ Vynamp source is dual licensed under **MIT OR Apache-2.0**, at your option:
 the same dual licence unless stated otherwise.
 
 The licence covers the **source of this repository**. It does not grant rights
-to third-party codecs, content, fonts, trademarks or platform SDKs, and it does
-not relicense anything under `crates-copyleft/` in the audio libraries.
+to third-party codecs, content, fonts, trademarks or platform SDKs. It also does
+not relicense code that the audio libraries keep under a copyleft licence: those
+repositories reserve a `crates-copyleft/` directory for it, a convention
+documented in [`vynamp-decode`](https://github.com/jimmykedlyn/vynamp-decode)'s
+own legal notes and not yet populated in any of them.
 
 ## Notas legais (português)
 
@@ -28,7 +31,11 @@ licenças de patente aplicáveis na sua jurisdição.
 O código deste repositório é licenciado duplamente sob **MIT OR Apache-2.0**,
 à escolha de quem usa. A licença cobre o **código-fonte deste repositório**;
 não concede direitos sobre codecs, conteúdo, fontes, marcas ou SDKs de
-terceiros, nem relicencia nada sob `crates-copyleft/` nas bibliotecas de áudio.
+terceiros. Também não relicencia código que as bibliotecas de áudio mantêm sob
+licença copyleft: elas reservam um diretório `crates-copyleft/` para isso,
+convenção documentada nas notas legais do próprio
+[`vynamp-decode`](https://github.com/jimmykedlyn/vynamp-decode) e ainda não
+preenchida em nenhuma delas.
 
 ## Why the licence exists now, and why it did not before
 
@@ -43,8 +50,10 @@ licence, opening the repositories (TASK-E19-06) would publish source that
 nobody may legally use.
 
 The licence is **not** a release claim. `cargo xtask release preflight` still
-requires `THIRD_PARTY_NOTICES`, an SBOM and signed evidence that do not exist
-yet; a tagged release remains fail-closed.
+requires `THIRD_PARTY_NOTICES`, real-hardware evidence for every supported
+platform and a signed reviewer record — none of which exist yet — and
+`publish-draft` additionally verifies a minisign signature. A tagged release
+remains fail-closed.
 
 ## Format policy
 
@@ -55,14 +64,22 @@ encode and output libraries lives with those libraries, where the code does:
   encumbered and reverse-engineered formats off by default.
 - `vynamp-output` — no third-party code linked; platform components used only
   through their public APIs.
-- `vynamp-encode` — the single source of encoders for the Converter.
+
+`vynamp-encode`, which will be the single source of encoders for the Converter,
+does not exist as a repository yet; its format policy is written when it does.
 
 ## Trademarks and third-party assets
 
 "Vynamp" is the project name chosen by the maintainer. No trademark or domain
-registration was verified. The brand assets under `assets/branding/` are
-original works of this project. No code, artwork or asset from Winamp or any
-other player is included; their absence is a project rule, not a licence claim.
+registration was verified. The brand assets under `assets/branding/` were
+generated for this project and approved by the maintainer; they were copied into
+the repository unedited, and
+[`assets/branding/README.md`](assets/branding/README.md) records that provenance
+along with their hashes. No code, artwork or asset from Winamp or any other
+player is included; their absence is a project rule, not a licence claim.
 
 Third-party test fixtures, fonts and samples enter only with an identified
-licence and an entry in the notices inventory.
+licence and an entry in the notices inventory. That inventory is
+`THIRD_PARTY_NOTICES`, which does not exist yet: no third-party asset has been
+admitted so far, and `release preflight` blocks a release until the file is
+created.
