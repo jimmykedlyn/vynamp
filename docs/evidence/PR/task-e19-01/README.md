@@ -47,20 +47,29 @@ Ambiente: Windows 11 Pro 10.0.26300, Rust 1.99.0 (rustup), git 2.47.1.windows.2.
 
 ### Execução real no GitHub
 
-O workflow rodou no PR #30, em `7565e12` (evento `pull_request`), e concluiu com sucesso. Run [42096253664](https://github.com/jimmykedlyn/vynamp-mediaplayer/actions/runs/42096253664). A primeira execução verde foi em `36d0e02` (run `42089094392`); o commit seguinte apenas corrigiu esta evidência.
+O workflow rodou no PR #30, em `d8fd3ba` (evento `pull_request`), e concluiu com sucesso. Run [42101013430](https://github.com/jimmykedlyn/vynamp-mediaplayer/actions/runs/42101013430). Execuções verdes anteriores: `36d0e02` (run `42089094392`), `a23408f` (`42093428684`), `7565e12` (`42096253664`) — os três últimos commits apenas corrigem esta evidência e a documentação.
 
 | Check | Resultado | Duração |
 |---|---|---|
-| `docs` | pass | 1m31s |
-| `tooling (windows-2022)` | pass | 1m37s |
+| `docs` | pass | 1m29s |
+| `tooling (windows-2022)` | pass | 1m49s |
 | `tooling (ubuntu-22.04)` | pass | 55s |
-| `tooling (macos-15-intel)` | pass | 1m40s |
-| `tooling (macos-15)` | pass | 22s |
-| **`CI Gate`** | **pass** | 4s |
+| `tooling (macos-15-intel)` | pass | 2m14s |
+| `tooling (macos-15)` | pass | 24s |
+| **`CI Gate`** | **pass** | 5s |
 | `core` | skipped | — |
 | `android` | skipped | — |
 
 Isso corrige a afirmação anterior desta evidência de que nenhum workflow teria rodado. O repositório é **privado** e o Actions executou normalmente — o bloqueio de billing registrado em 2026-10-18/23 (runs `39171754196`, `39979729441` etc., que falhavam sem executar nenhum step) não se repete hoje. A razão da mudança não foi determinada: pode ser consumo de cota do plano, ciclo de reset ou configuração da conta. **Não** se deve tratar "repo privado" como suficiente para prever bloqueio, nem como suficiente para prever que roda.
+
+### Provas de comportamento (não só estrutura)
+
+Duas verificações que testam o comportamento em vez de só parsear o YAML:
+
+1. **O validador reprova pin por tag.** Trocar `actions/checkout@11bd7190…` por `actions/checkout@v4` em `ci.yml` faz `cargo xtask check-delivery` sair `"result":"failed"` com `pinned action actions/checkout@v4 in ci`. Restaurar o SHA volta a `"passed"`. A árvore foi conferida limpa depois (`git status --short` vazio).
+2. **A lógica do gate reprova dependência não-verde.** O corpo do step é `bash -e` com `test "$…" = success` em sequência. Reproduzido fora do Actions: `success`+`success` → verde; `failure`+`success` → vermelho; `success`+`cancelled` → vermelho; `skipped`+`success` → vermelho. Só a combinação totalmente verde passa.
+
+O que continua **não** provado: o comportamento real do runner do GitHub para esses casos (só a lógica é exercitada aqui) e qualquer coisa que dependa de `core`/`android` rodarem.
 
 ## Limitações — o que este PR não prova
 
