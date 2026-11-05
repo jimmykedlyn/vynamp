@@ -63,7 +63,9 @@ Aceite da TASK, item por item:
 
 ## Revisão independente
 
-Revisão em contexto limpo (Sonnet 5-5, sem o raciocínio do autor) devolveu cinco achados. Todos foram reconferidos pelo autor, todos eram reais e todos foram corrigidos neste PR:
+Duas passagens em contexto limpo (Sonnet 5-5 / Opus 5-5, sem o raciocínio do autor), oito achados, todos reconferidos pelo autor e todos corrigidos.
+
+**Primeira passagem — cinco achados:**
 
 1. `CONTRIBUTING.md` documentava o padrão de branch `feature|fix|chore/<task>-<slug>`, que o hook real recusa → substituído pelo regex de `xtask/src/repo.rs:225` nos dois idiomas.
 2. `bug_report.yml` apontava para `../blob/develop/SECURITY.md`, caminho relativo que não resolve → `../../SECURITY.md`.
@@ -71,13 +73,21 @@ Revisão em contexto limpo (Sonnet 5-5, sem o raciocínio do autor) devolveu cin
 4. `README.md` listava `vynamp-restore`/`vynamp-converter`/`vynamp-encode` como repositórios existentes → corrigido para "decididos, ainda não criados" nos dois idiomas.
 5. `docs_problem.yml` pedia confirmação de que `check-docs` "não reporta a falha", mas o validador é estrutural e passa num erro semântico → rótulo reescrito.
 
-Corrigido junto `tasks/README.md:5`, que afirmava "todos os itens estão planejados" — já falso antes deste PR.
+**Segunda passagem — três afirmações que o código não sustentava:**
+
+6. Documentos diziam que `release preflight` verifica SBOM e assinatura. Não verifica: `grep -ri sbom xtask/src/` é vazio, e `minisign` só aparece em `release.rs:266,280`, dentro de `publish-draft` → `LEGAL.md`, `05-decisions.md` e `02-privacy-licensing.md` corrigidos.
+7. `SECURITY.md` e `CODE_OF_CONDUCT.md` tratavam o canal de advisories como disponível. `gh api .../private-vulnerability-reporting` → 404, e a URL de advisory respondida a anônimo → 404 → os dois arquivos passam a dizer que o canal entra no ar na TASK-E19-06, que ganhou o `PUT` do PVR como critério de aceite.
+8. `crates-copyleft/` descrito como diretório existente; é convenção do `vynamp-decode`, não populada → corrigido.
+
+Junto: `LICENSE` dizia "both … and" para uma licença **OR**; `xtask/Cargo.toml` ganhou `license = "MIT OR Apache-2.0"`; `LEGAL.md` completou o bilinguismo (era o único arquivo de governança com quatro seções em inglês apenas); `tasks/README.md:5` deixou de afirmar que todos os itens estão planejados.
+
+**Não há terceira passagem.** As duas revisões independentes seguintes morreram por cota do plano esgotada (HTTP 429 em `claude-opus-5-5`, reset em ~76 h), sem emitir relatório. Os oito achados acima estão corrigidos e reconferidos no código, mas este PR não tem revisão independente posterior às correções.
 
 - [x] Worktree e owner próprios.
 - [x] Superpowers carregado; verificação executada.
 - [x] Sucesso/erro/cancelamento: validador exercitado no caminho de falha (`Missing index`) e no de sucesso.
 - [x] Docs/contracts/notices atualizados; nenhuma credencial no diff.
-- [x] Revisão técnica independente — cinco achados, todos corrigidos.
+- [x] Revisão técnica independente — oito achados em duas passagens, todos corrigidos; sem terceira passagem (as seguintes morreram por cota do plano).
 - [x] CI Gate (GitHub Actions) — verde em `ae10e3b` (run 42125289298): `docs`, `tooling` em ubuntu-22.04, windows-2022, macos-15-intel e macos-15, mais o gate; `core` e `android` pulados por `cargo xtask ci detect`.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
