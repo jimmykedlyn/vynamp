@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <!-- Family: Sinal · Format: FLAC · Color: Amber #FFBF69 -->
+  <rect x="6" y="8" width="36" height="32" rx="4" fill="#151822" stroke="#282D3D" stroke-width="2"/>
+  <line x1="12" y1="24" x2="12" y2="28" stroke="#FFBF69" stroke-width="2" stroke-linecap="round"/>
+  <line x1="16" y1="20" x2="16" y2="32" stroke="#FFBF69" stroke-width="2" stroke-linecap="round"/>
+  <line x1="20" y1="16" x2="20" y2="36" stroke="#FFBF69" stroke-width="2" stroke-linecap="round"/>
+  <line x1="24" y1="18" x2="24" y2="34" stroke="#FFBF69" stroke-width="2" stroke-linecap="round"/>
+  <line x1="28" y1="14" x2="28" y2="38" stroke="#FFBF69" stroke-width="2" stroke-linecap="round"/>
+  <line x1="32" y1="22" x2="32" y2="30" stroke="#FFBF69" stroke-width="2" stroke-linecap="round"/>
+  <line x1="36" y1="23" x2="36" y2="29" stroke="#FFBF69" stroke-width="2" stroke-linecap="round"/>
+  <rect x="6" y="8" width="36" height="7" rx="4 4 0 0" fill="#FFBF69"/>
+  <text x="24" y="13" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="5.5" font-weight="900" fill="#11131B" text-anchor="middle">FLAC</text>
+</svg>

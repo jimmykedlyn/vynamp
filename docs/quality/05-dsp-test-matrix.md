@@ -1,6 +1,6 @@
 # Matriz de testes DSP e requisitos não funcionais
 
-Versão: 0.7.2 · Data: 2026-10-28 · Estado: testes **planejados** para o produto nativo; nenhum foi executado aqui. Execuções do protótipo web aparecem só como evidência relatada da referência externa rev. 14/15, não verificada neste repositório. O harness numérico é planejado em TASK-E10-03 (M2) e o relatório de qualidade em TASK-E04-10 (M3).
+Versão: 0.7.3 · Data: 2026-11-03 · Estado: testes **planejados** para o produto nativo; nenhum foi executado aqui. Execuções do protótipo web aparecem só como evidência relatada da referência externa rev. 14/15, não verificada neste repositório. O harness numérico é planejado em TASK-E10-03 (M2) e o relatório de qualidade em TASK-E04-10 (M3).
 
 Os testes por modalidade de EQ estão em [equalizadores §16](../audio/08-equalizers.md#16-testes-e-aceite-por-modalidade) (EQ-T-01..15) e os do vitrola em [vitrola §7](../audio/10-vitrola.md#7-testes-de-integração-planejados) (VIT-T-01..10). Cenários agregados: QA-005, QA-027, QA-028, **QA-032** (EQ) e **QA-033** (vitrola) em [estratégia de testes](01-test-strategy.md).
 
@@ -32,7 +32,7 @@ Os testes por modalidade de EQ estão em [equalizadores §16](../audio/08-equali
 
 Matriz PASS/FAIL/BLOCKED obrigatória para o protótipo (contagem de controles, persistência ao recarregar, troca de tema, teclado, navegação responsiva e rótulos `[DEMO]`). Detalhe em EQ-T-01/02/08/09/13/14. Mockup estático não é aceito; "não verificado" deixa a entrega INCOMPLETA.
 
-Convenção das subseções 2.1 e 2.2: testes **planejados para o nativo** e testes **executados no protótipo** ficam em colunas separadas. A coluna do protótipo é evidência relatada da referência externa (Chrome/Windows, fixtures controladas; os arquivos `*-validation.json` e `interactive/tests/` não existem neste repositório) e não equivale a certificação de acessibilidade, medição de qualidade sonora, nem a teste da engine nativa. Nativo: nenhum teste executado.
+Convenção das subseções 2.1 e 2.2: testes **planejados para o nativo** e testes **executados no protótipo** ficam em colunas separadas. A coluna do protótipo é evidência relatada da referência externa (Chrome/Windows, fixtures controladas; protótipo Codex rev.14/15, histórico; fonte atual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 rev.38; os arquivos `*-validation.json` e `interactive/tests/` não existem neste repositório) e não equivale a certificação de acessibilidade, medição de qualidade sonora, nem a teste da engine nativa. Nativo: nenhum teste executado.
 
 ### 2.1 Aceite de acesso e controles (DSP-UX-AC)
 

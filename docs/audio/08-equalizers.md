@@ -1,6 +1,6 @@
 # Equalizadores — gráfico 10/20/31/64 e paramétrico até 32 filtros
 
-Versão: 0.7.2 · Data: 2026-10-28 · Estado: especificação proposta; **nenhum equalizador está implementado no player nativo**. No protótipo HTML/SVG/JS (referência externa do Codex, fora deste repositório) a rev. 15 relata EQ e PEQ com áudio real dentro do grafo modular (ver §14); esse relato não foi verificado aqui.
+Versão: 0.7.3 · Data: 2026-11-03 · Estado: especificação proposta; **nenhum equalizador está implementado no player nativo**. No protótipo HTML/SVG/JS (referência externa do Codex, fora deste repositório) a rev. 15 relata EQ e PEQ com áudio real dentro do grafo modular (ver §14); esse relato não foi verificado aqui.
 
 Subcapítulo obrigatório do [DSP](03-dsp.md). Consolida o que já estava em [03-dsp](03-dsp.md) (v0.7.0), no [contrato do sinal](07-dsp-signal-contract.md) e nas tarefas [TASK-E04-01](../../tasks/items/TASK-E04-01.md), [TASK-E04-04](../../tasks/items/TASK-E04-04.md), [TASK-E02-07](../../tasks/items/TASK-E02-07.md) e [TASK-E12-10](../../tasks/items/TASK-E12-10.md). Decisões e divergências estão em [decisões DSP](../product/05-decisions.md#decisões-dsp-e-equalizadores-2026-10-25).
 
@@ -193,7 +193,7 @@ Este é um requisito para o GPT/Codex que desenvolve o protótipo ([SKIN-REQUIRE
 
 ### Status da revisão 15 (2026-10-28)
 
-Todos os itens abaixo são **evidência relatada da referência externa rev. 14/15, não verificada neste repositório** (o código `interactive/*` e os `*-validation.json` do protótipo não estão aqui; a validação relatada foi em Chrome/Windows com fixtures controladas). Separação: **especificado** · **implementado no protótipo (relatado)** · **validado no protótipo (relatado)** · **nativo (hoje: nada)**.
+Todos os itens abaixo são **evidência relatada da referência externa rev. 14/15, não verificada neste repositório** (protótipo Codex rev.14/15, histórico; fonte atual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 rev.38; o código `interactive/*` e os `*-validation.json` do protótipo não estão aqui; a validação relatada foi em Chrome/Windows com fixtures controladas). Separação: **especificado** · **implementado no protótipo (relatado)** · **validado no protótipo (relatado)** · **nativo (hoje: nada)**.
 
 | Item | Especificado | Protótipo: implementado (relatado) | Protótipo: validado (relatado) | Nativo |
 |---|---|---|---|---|

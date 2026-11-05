@@ -1,6 +1,6 @@
 # TASK-E13-09 — Entregar tablet/foldable e distribuição Android
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Contrato da tarefa
 
@@ -19,6 +19,8 @@ Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implemen
 - [TASK-E13-07](TASK-E13-07.md) — Entregar recovery de processo e controle de energia
 - [TASK-E13-08](TASK-E13-08.md) — Entregar temas e plugins mobile
 - [TASK-E11-04](TASK-E11-04.md) — Completar CI e supply chain
+
+Referência visual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 (rev.38), caminhos `mvp/...` e `out/...` conforme [referência do MVP](../../docs/design/06-mvp-reference.md). Caminhos relevantes: `mvp/` (layouts) e `out/svg/rendered/`.
 
 ## Entrega concreta
 

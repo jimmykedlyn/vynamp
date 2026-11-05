@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 100 100" fill="none">
+  <!-- Vynamp Restore Dedicated Tool Icon (Symbol C + Acoustic Repair Pulse Badge in Cyan #66D9EF) -->
+  <rect width="100" height="100" rx="20" fill="#11131B"/>
+  <path d="M18 24L46 76H54L82 24H68L50 60L32 24H18Z" fill="#F0F2F5"/>
+  <polygon points="54,40 70,50 54,60" fill="#FFBF69"/>
+  <!-- Restore Badge -->
+  <circle cx="75" cy="75" r="18" fill="#11131B" stroke="#66D9EF" stroke-width="3"/>
+  <path d="M68 75L73 70L77 80L82 75" fill="none" stroke="#66D9EF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,6 +1,6 @@
 # DSP, equalização e presets
 
-Versão: 0.7.2 · Data: 2026-10-28 · Estado: especificação proposta, implementação nativa não iniciada. **Nenhum módulo DSP está implementado no produto nativo.** O protótipo web (referência externa, rev. 15) relata um subconjunto com áudio real, não verificado neste repositório (ver [grafo modular](#grafo-modular-protótipo--nativo)).
+Versão: 0.7.3 · Data: 2026-11-03 · Estado: especificação proposta, implementação nativa não iniciada. **Nenhum módulo DSP está implementado no produto nativo.** O protótipo web (referência externa, rev. 15) relata um subconjunto com áudio real, não verificado neste repositório (ver [grafo modular](#grafo-modular-protótipo--nativo)).
 
 Este documento é a visão funcional e técnica do subsistema DSP. Os detalhes estão em:
 
@@ -93,7 +93,7 @@ Proposto, a fixar em TASK-E04-03. O formato espelha a trait `Processor` do vitro
 
 ## Grafo modular: protótipo × nativo
 
-Complemento da revisão 15 da referência HTML/SVG/JS (2026-10-28). Separação de status: **especificado** (este documento) · **implementado no protótipo** (relatado) · **validado no protótipo** (relatado) · **nativo** (hoje: nada). O protótipo é do Codex, fica fora deste repositório, e os arquivos de evidência dele (`interactive/*`, `*-validation.json`) não existem aqui: tudo abaixo é **evidência relatada da referência externa rev. 14/15, não verificada neste repositório**.
+Complemento da revisão 15 da referência HTML/SVG/JS (2026-10-28). Separação de status: **especificado** (este documento) · **implementado no protótipo** (relatado) · **validado no protótipo** (relatado) · **nativo** (hoje: nada). O protótipo é do Codex, fica fora deste repositório, e os arquivos de evidência dele (`interactive/*`, `*-validation.json`; protótipo Codex rev.14/15, histórico; fonte atual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 rev.38) não existem aqui: tudo abaixo é **evidência relatada da referência externa rev. 14/15, não verificada neste repositório**.
 
 - **Contrato do protótipo.** A visão "Fluxo modular", acessível por Áudio e efeitos, é um grafo editável: nós com parâmetros próprios por instância, portas tipadas (áudio estéreo e controle CV, só saída→entrada do mesmo tipo), sem ciclos, conexões duplicadas ou autoconexões, com nós fixos de entrada e saída, fan-out e soma de rotas paralelas (que exige headroom). A ordem de construção é topológica e determinística; nó desconectado não processa; cadeia habilitada sem caminho de entrada a saída resulta em silêncio, sem rota seca oculta. O grafo é **contrato do protótipo**: define o que a referência web demonstra, não o que o produto nativo promete.
 - **Relação com o editor tradicional.** O catálogo e os editores anteriores continuam disponíveis e não passam a ser DSP real por causa do grafo. "Copiar ajuste do catálogo" é ação explícita. Posição no fluxo do protótipo: entrada após o EQ clássico existente, saída antes do volume digital do player (ver [contrato do sinal](07-dsp-signal-contract.md) para a ordem fixa nativa).

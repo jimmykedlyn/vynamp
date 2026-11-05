@@ -1,6 +1,6 @@
 # TASK-E02-09 — Completar localização e testes visuais
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Contrato da tarefa
 
@@ -21,6 +21,8 @@ Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implemen
 ## Entrega concreta
 
 PT-BR/EN, screenshot suite de temas/DPI e strings pluralizadas.
+
+Referência visual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 (rev.38), caminhos `mvp/...` e `out/...` conforme [referência do MVP](../../docs/design/06-mvp-reference.md).
 
 Documento canônico: [spec](../../docs/design/02-layouts.md). [Matriz normativa](../../docs/product/03-requirements.md).
 

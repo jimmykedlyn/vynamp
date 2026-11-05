@@ -1,8 +1,8 @@
 # Backlog executável e mapa de dependências
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.8.0 · Data: 2026-11-05 · Estado: especificação proposta, implementação não iniciada.
 
-176 tarefas em 17 épicos; todos os itens estão planejados. Cada tarefa tem requisito, fase, prioridade, entregável, dependências, aceite, QA e faixa inicial de esforço. Nenhuma tarefa está concluída por este pacote documental.
+184 tarefas em 18 épicos; todos os itens estão planejados. Cada tarefa tem requisito, fase, prioridade, entregável, dependências, aceite, QA e faixa inicial de esforço. Nenhuma tarefa está concluída por este pacote documental.
 
 O [JSON canônico](backlog.json) é fonte para tooling; os Markdown são a interface de leitura. Alterar ambos ao mudar scope/status. As faixas variam de 2–5 dias para provas a 10–25 dias para expansões; são esforço provisório, não calendário. Antes de execução, decompor itens grandes em subtarefas de 1–3 dias conforme descoberta técnica.
 
@@ -38,9 +38,9 @@ TASK-E12-01/02 foram promovidas paraM3; TASK-E12-03 mantém apenas arquiteturas 
 
 - [E15 — Agentes/Gitflow/CI/instaladores](epics/E15.md)
 
-176 tarefas, 17 épicos. TASK-E11-01/04/09 agora dependem de gates de infraestrutura E15. Superpowers obrigatório para ambos; evidência dos scripts não aprova o aplicativo.
-
+184 tarefas, 18 épicos. TASK-E11-01/04/09 agora dependem de gates de infraestrutura E15. Superpowers obrigatório para ambos; evidência dos scripts não aprova o aplicativo.
 - [E16 — Ativação/associações](epics/E16.md)
 - [E17 — Codecs/DSP/visualizers](epics/E17.md)
+- [E18 — Ferramentas de arquivo: Restore e Converter](epics/E18.md)
 
 TASK-E14-06 exige os gates E16-07/08 e E17-12/20. Condicionais M3 exigem relatório; recursos M5 não bloqueiam o comum M3.

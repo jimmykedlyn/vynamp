@@ -2,7 +2,7 @@
 
 
 
-Versão 0.7.2 · 2026-11-03 · Markdown de produto, tooling, bootstrap e evidências históricas.
+Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidências históricas.
 
 
 
@@ -31,6 +31,8 @@ Versão 0.7.2 · 2026-11-03 · Markdown de produto, tooling, bootstrap e evidên
 - [Plataforma web M4](../apps/web/README.md) — apps/web/README.md
 
 - [Vynamp — identidade C / Pulso](../assets/branding/README.md) — assets/branding/README.md
+
+- [Vynamp — pacotes de ícones de arquivo (Documento, Disco, Sinal)](../assets/icons/README.md) — assets/icons/README.md
 
 - [Templates de início Windows](../bootstrap/README.md) — bootstrap/README.md
 
@@ -63,6 +65,10 @@ Versão 0.7.2 · 2026-11-03 · Markdown de produto, tooling, bootstrap e evidên
 - [ADR-007 — colaboração, Gitflow e formatos de entrega](architecture/adr/ADR-007-development-delivery.md) — docs/architecture/adr/ADR-007-development-delivery.md
 
 - [ADR-008 — Vynamp e identidade C / Pulso](architecture/adr/ADR-008-vynamp-brand.md) — docs/architecture/adr/ADR-008-vynamp-brand.md
+
+- [ADR-012 — integração nativa com o shell, menus de contexto e pacotes de ícones](architecture/adr/ADR-012-shell-integration.md) — docs/architecture/adr/ADR-012-shell-integration.md
+
+- [ADR-013 — Vynamp Restore como ferramenta desktop dedicada](architecture/adr/ADR-013-vynamp-restore.md) — docs/architecture/adr/ADR-013-vynamp-restore.md
 
 - [Engine de áudio e invariantes](audio/01-engine.md) — docs/audio/01-engine.md
 
@@ -134,7 +140,7 @@ Versão 0.7.2 · 2026-11-03 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Android: shell nativo e núcleo Rust](platforms/02-android.md) — docs/platforms/02-android.md
 
-- [Integração nativa, associação de arquivos e Abrir com](platforms/03-system-integration.md) — docs/platforms/03-system-integration.md
+- [Integração nativa, associação de arquivos, menus de contexto e pacotes de ícones](platforms/03-system-integration.md) — docs/platforms/03-system-integration.md
 
 - [Ativação externa, lotes, IPC e ownership de perfil](platforms/04-activation-ownership.md) — docs/platforms/04-activation-ownership.md
 
@@ -175,6 +181,10 @@ Versão 0.7.2 · 2026-11-03 · Markdown de produto, tooling, bootstrap e evidên
 - [Semântica da API da plataforma](streaming/04-api-semantics.md) — docs/streaming/04-api-semantics.md
 
 - [Rede, proxy e bindings de streaming](streaming/05-network-proxy-and-containers.md) — docs/streaming/05-network-proxy-and-containers.md
+
+- [Vynamp Restore — restauração e diagnóstico de defeitos](tools/01-vynamp-restore.md) — docs/tools/01-vynamp-restore.md
+
+- [Vynamp Converter — conversão e transcodificação](tools/02-vynamp-converter.md) — docs/tools/02-vynamp-converter.md
 
 - [Completeness Audit Implementation Plan](superpowers/plans/2026-10-14-completeness-audit.md) — docs/superpowers/plans/2026-10-14-completeness-audit.md
 
@@ -237,6 +247,8 @@ Versão 0.7.2 · 2026-11-03 · Markdown de produto, tooling, bootstrap e evidên
 - [E16 — Ativação nativa, associações e ownership](../tasks/epics/E16.md) — tasks/epics/E16.md
 
 - [E17 — Codecs por perfil, sinal final e visualização](../tasks/epics/E17.md) — tasks/epics/E17.md
+
+- [E18 — Ferramentas de arquivo: Restore e Converter](../tasks/epics/E18.md) — tasks/epics/E18.md
 
 - [TASK-E01-01 — Provar decode, gapless e precisão de samples](../tasks/items/TASK-E01-01.md) — tasks/items/TASK-E01-01.md
 
@@ -602,6 +614,10 @@ Versão 0.7.2 · 2026-11-03 · Markdown de produto, tooling, bootstrap e evidên
 
 - [TASK-E17-20 — Fechar gate combinado de codecs, DSP e visualizers](../tasks/items/TASK-E17-20.md) — tasks/items/TASK-E17-20.md
 
+- [TASK-E18-01 — Entregar Vynamp Restore como ferramenta desktop de restauração](../tasks/items/TASK-E18-01.md) — tasks/items/TASK-E18-01.md
+
+- [TASK-E18-02 — Entregar Vynamp Converter e a lib de encoders](../tasks/items/TASK-E18-02.md) — tasks/items/TASK-E18-02.md
+
 - [Organização de testes](../tests/README.md) — tests/README.md
 
 - [Automação Rust com cargo xtask](../xtask/README.md) — xtask/README.md
@@ -665,3 +681,20 @@ Versão 0.7.2 · 2026-11-03 · Markdown de produto, tooling, bootstrap e evidên
 - [Letras — componente resumido sob o VU e fontes (LYR-01..15, LYR-AC-01..12)](library/02-tags-lyrics-tools.md#letras-componente-resumido-sob-o-vu-e-fontes) — docs/library/02-tags-lyrics-tools.md
 - [Decisões de letras D-LYR-01..09](product/05-decisions.md#decisões-de-letras-2026-10-28) — docs/product/05-decisions.md
 - [TASK-E03-09 — Entregar letras, bookmarks e histórico](../tasks/items/TASK-E03-09.md) — tasks/items/TASK-E03-09.md
+
+# Integração com o shell e pacotes de ícones (2026-11-05)
+
+- [Plano de integração com o shell e ícones](superpowers/plans/2026-11-05-specs-shell-integration.md) — docs/superpowers/plans/2026-11-05-specs-shell-integration.md
+- [ADR-012 — integração nativa com o shell, menus de contexto e pacotes de ícones](architecture/adr/ADR-012-shell-integration.md) — docs/architecture/adr/ADR-012-shell-integration.md
+- [Evidência chore-specs-shell-integration](evidence/PR/chore-specs-shell-integration/README.md) — docs/evidence/PR/chore-specs-shell-integration/README.md; verificações locais, revisão por subagente e limitações declaradas.
+- [Corpo do PR chore-specs-shell-integration](evidence/PR/chore-specs-shell-integration/pr-body.md) — docs/evidence/PR/chore-specs-shell-integration/pr-body.md
+
+# Ferramentas de arquivo: Restore e Converter (2026-11-05)
+
+- [Plano de especificação do Vynamp Restore](superpowers/plans/2026-11-05-specs-vynamp-restore.md) — docs/superpowers/plans/2026-11-05-specs-vynamp-restore.md
+- [ADR-013 — Vynamp Restore como ferramenta desktop dedicada](architecture/adr/ADR-013-vynamp-restore.md) — docs/architecture/adr/ADR-013-vynamp-restore.md
+- [Vynamp Restore — restauração e diagnóstico de defeitos](tools/01-vynamp-restore.md) — docs/tools/01-vynamp-restore.md
+- [Vynamp Converter — conversão e transcodificação](tools/02-vynamp-converter.md) — docs/tools/02-vynamp-converter.md
+- [Evidência chore-specs-vynamp-restore](evidence/PR/chore-specs-vynamp-restore/README.md) — docs/evidence/PR/chore-specs-vynamp-restore/README.md; verificações locais, revisão por subagente e limitações declaradas.
+- [Corpo do PR chore-specs-vynamp-restore](evidence/PR/chore-specs-vynamp-restore/pr-body.md) — docs/evidence/PR/chore-specs-vynamp-restore/pr-body.md
+

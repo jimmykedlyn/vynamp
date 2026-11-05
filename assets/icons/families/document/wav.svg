@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <!-- Family: Documento · Format: WAV · Color: Warm Orange #FF9F43 -->
+  <path d="M10 6C10 4.89543 10.8954 4 12 4H30L38 12V42C38 43.1046 37.1046 44 36 44H12C10.8954 44 10 43.1046 10 42V6Z" fill="#1C202C" stroke="#2D3345" stroke-width="2"/>
+  <path d="M30 4V12H38L30 4Z" fill="#2D3345"/>
+  <rect x="12" y="16" width="24" height="11" rx="2" fill="#FF9F43"/>
+  <text x="24" y="24" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="8" font-weight="900" fill="#11131B" text-anchor="middle" dominant-baseline="middle">WAV</text>
+  <path d="M22 38V31L28 29.5V36.5" stroke="#FF9F43" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="20.5" cy="38" r="2" fill="#FF9F43"/>
+  <circle cx="26.5" cy="36.5" r="2" fill="#FF9F43"/>
+</svg>

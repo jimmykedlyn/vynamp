@@ -1,6 +1,6 @@
 # TASK-E06-06 — Entregar visualizações avançadas
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Contrato da tarefa
 
@@ -16,6 +16,8 @@ Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implemen
 ## Dependências
 
 - [TASK-E06-05](TASK-E06-05.md) — Entregar meters e espectro
+
+Referência visual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 (rev.38), caminhos `mvp/...` e `out/...` conforme [referência do MVP](../../docs/design/06-mvp-reference.md). Caminhos relevantes: `out/svg/meters/` e `out/svg/meters/dynamic.json`.
 
 ## Entrega concreta
 

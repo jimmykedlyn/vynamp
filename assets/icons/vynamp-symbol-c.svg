@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 100 100" fill="none">
+  <!-- Vynamp Brand Symbol Concept C "Pulso" (ADR-008) -->
+  <rect width="100" height="100" rx="20" fill="#11131B"/>
+  <!-- Rounded V shape in light wordmark tone #F0F2F5 -->
+  <path d="M18 24L46 76H54L82 24H68L50 60L32 24H18Z" fill="#F0F2F5"/>
+  <!-- Separated Play triangle in brand accent amber #FFBF69 -->
+  <polygon points="54,40 70,50 54,60" fill="#FFBF69"/>
+</svg>

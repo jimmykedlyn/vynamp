@@ -1,6 +1,6 @@
 # Glossário e convenções
 
-Versão 0.7.4 · 2026-11-03 (termos de controles DSP, grafo modular e VU adicionados; termos de letras adicionados; pilha de áudio própria).
+Versão 0.8.0 · 2026-11-05 (termos de integração com o shell, pacotes de ícones e ferramentas auxiliares adicionados; termos de motor de restauração, defeito, severidade, região e projeto de restauração; termos de controles DSP, grafo modular e VU; termos de letras; pilha de áudio própria; MVP rev.38).
 
 | Termo | Significado nesta spec |
 |---|---|
@@ -40,7 +40,7 @@ Versão 0.7.4 · 2026-11-03 (termos de controles DSP, grafo modular e VU adicion
 | vitrola | Biblioteca própria de simulação de vinil e amplificador valvulado hospedada no DSP ([spec](audio/10-vitrola.md)) |
 | vynamp-decode / vynamp-output | Bibliotecas próprias de decodificação / saída de áudio; a saída nunca aplica ganho, dither ou resampling ([ADR-011](architecture/adr/ADR-011-own-audio-stack.md)) |
 | Lib própria de resampling | Futura biblioteca própria de conversão de taxa de amostragem (nome e repositório a definir); decisão D-DSP-08 |
-| MVP HTML/SVG/JS | Protótipo interativo de UI; `[DEMO]` marca o que não processa áudio; não é a engine nativa |
+| MVP HTML/SVG/JS | Protótipo interativo de UI, rev.38 em `vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452` (repositório privado, fora deste); `[DEMO]` marca o que não processa áudio; não é a engine nativa ([referência do MVP](design/06-mvp-reference.md)) |
 | Knob | Controle circular de parâmetro contínuo, ajustado por gesto vertical; ver [painel DSP](design/05-dsp-panel.md#8-acesso-e-controles-dsp-ux) |
 | Readout | Valor numérico com unidade junto ao knob ou slider; clicável para abrir o editor exato |
 | Grafo modular | Vista de nós e conexões do DSP; no protótipo, referência relatada, no nativo, nada implementado ([painel DSP §9](design/05-dsp-panel.md#9-fluxo-modular-grafo--referência-do-protótipo)) |
@@ -52,5 +52,22 @@ Versão 0.7.4 · 2026-11-03 (termos de controles DSP, grafo modular e VU adicion
 | Fonte de letra | Origem da letra mostrada: LRC local importado, metadados embutidos ou DEMO; a ordem de escolha é LRC importado, depois metadados |
 | Letra desligada × instrumental | Desligada é preferência global de exibição; instrumental/sem letra é marca reversível por faixa, nunca deduzida da ausência de tags |
 | Offset de letra | Deslocamento temporal aplicado à seleção da linha (tag de offset do LRC e ajuste −/+100 ms do painel completo) |
+| Sparse package (pacote esparso) | Identidade de pacote MSIX concedida a um executável Win32 instalado fora do contêiner; habilita o menu de contexto moderno do Windows 11 sem MSIX obrigatório ([ADR-012](architecture/adr/ADR-012-shell-integration.md)) |
+| IExplorerCommand / IExplorerCommandEnumerator | Interfaces COM do shell moderno do Windows 11 que expõem um comando de menu de contexto e seu submenu enumerado |
+| IShellItemArray | Coleção COM de itens selecionados, recebida em lote pelo comando de contexto; base do batching atômico (1/2/20/100 itens em uma única ativação) |
+| ProgID / HKCU | Identificador de classe de arquivo registrada por usuário (`HKEY_CURRENT_USER\Software\Classes`); base do menu clássico "Mostrar mais opções" |
+| ServiceMenu | Extensão de menu de contexto do KDE Dolphin instalada como arquivo `.desktop` em `~/.local/share/kio/servicemenus/` |
+| Desktop Action | Ação de launcher declarada em `vynamp.desktop` (`Exec=... %U`); aparece no menu do launcher, não garante menu de contexto no gerenciador |
+| Quick Actions | Menu de serviços do Finder no macOS, declarado pela chave `NSServices` do `Info.plist` |
+| Pacote de ícones de arquivo | Conjunto de ícones por família (Documento, Disco, Sinal) aplicado aos 17 formatos de áudio; no Windows/Linux altera o shell, no macOS/Android só a UI interna |
+| Vynamp Restore / Vynamp Converter | Ferramentas desktop executáveis separadas (`vynamp-restore`, `vynamp-converter`) para restauração acústica e transcodificação em lote ([ADR-012](architecture/adr/ADR-012-shell-integration.md)) |
+| Motor de restauração | Biblioteca interna que executa a cadeia normativa de DSP de restauração; o app `vynamp-restore` é a casca e o motor é reaproveitável ([ADR-013](architecture/adr/ADR-013-vynamp-restore.md)) |
+| Cadeia de restauração | Sequência fixa e auditável de 11 estágios DSP aplicada ao arquivo de origem; a ordem é normativa e não configurável ([spec do Restore](tools/01-vynamp-restore.md#3-cadeia-de-restauração)) |
+| Defeito | Falha acústica detectada no sinal (clipe, zumbido, chiado, clique, trinca, rumble, offset DC, banda limitada), com severidade, evidência numérica e correção sugerida |
+| Severidade | Classificação `mild` / `moderate` / `severe` de um defeito, atribuída pelo detector a partir da evidência medida |
+| Região | Trecho do arquivo tratado de forma diferente (ganho e fade), com limites `start`/`end`; `kind: between` é o tipo suportado na 1.0 (`overlay` foi placeholder no MVP e está fora de escopo) |
+| Projeto de restauração | Arquivo `.vynamp-restore` (JSON versionado) com cadeia, parâmetros, regiões e presets; guarda as decisões de um projeto, não o áudio processado |
+| Saída restaurada | Arquivo gravado pelo Restore, sempre derivado e nunca substituto da origem; a escrita é atômica e validada após a gravação ([spec do Restore](tools/01-vynamp-restore.md#8-exportação)) |
+| `vynamp-encode` | Biblioteca própria de codificadores, única fonte de encoders do produto; `std`-only, repositório privado, criada no PR5 ([spec do Converter](tools/02-vynamp-converter.md#1-escopo)) |
 
 IDs são estáveis e não mudam com renomeação de arquivo. “Alvo”, “gate” e “proposta” nunca significam resultado já medido. Dados nos previews são fictícios. O nome Vynamp é provisório.

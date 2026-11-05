@@ -1,6 +1,6 @@
 # TASK-E02-12 — Gerar gabarito visual e estratégia de fontes
 
-Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.2 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
 
 ## Contrato da tarefa
 
@@ -20,6 +20,8 @@ Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implemen
 ## Entrega concreta
 
 Capturas por tema, layout, largura e estado com dump de geometria e estilo por elemento e fontes efetivas por nó; estratégia de fontes por plataforma com licenças.
+
+Referência visual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 (rev.38), caminhos `mvp/...` e `out/...` conforme [referência do MVP](../../docs/design/06-mvp-reference.md). Caminhos relevantes: `out/svg/rendered/` (incluindo `click-failures.json`).
 
 Documento canônico: [referência do MVP](../../docs/design/06-mvp-reference.md). [Matriz normativa](../../docs/product/03-requirements.md).
 
