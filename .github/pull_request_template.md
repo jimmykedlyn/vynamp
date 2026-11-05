@@ -18,4 +18,4 @@ Revisão técnica (subagente Sonnet/Opus), commit revisado e achados:
 - [ ] Superpowers carregado; teste útil e verificação executados.
 - [ ] Sucesso/erro/cancelamento e acessibilidade aplicáveis cobertos.
 - [ ] Docs/contracts/notices atualizados; nenhuma credencial no diff.
-- [ ] CI Gate (Woodpecker) aprovado; macOS/hardware não disponível marcado como não verificado.
+- [ ] CI Gate (GitHub Actions) aprovado; hardware e release assinado continuam gates separados.

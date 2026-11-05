@@ -356,102 +356,172 @@ pub fn spec(root: &Path) -> Result<()> {
     ensure!(c.errors.is_empty(), "Specification validation failed");
     Ok(())
 }
-/// CI is Woodpecker-only (ADR-010): GitHub Actions workflows must not return,
-/// Docker steps use digest-pinned images and the Windows Local agent runs pwsh.
-fn woodpecker(root: &Path, c: &mut Checks) -> Result<usize> {
+/// Collect every `uses:` reference in a workflow, at any nesting depth, so a
+/// job or step added later cannot slip in an unpinned action.
+fn action_refs(v: &Value) -> Vec<String> {
+    let mut out = Vec::new();
+    match v {
+        Value::Object(map) => {
+            for (k, child) in map {
+                if k == "uses"
+                    && let Some(s) = child.as_str()
+                {
+                    out.push(s.to_owned());
+                }
+                out.extend(action_refs(child));
+            }
+        }
+        Value::Array(items) => {
+            for child in items {
+                out.extend(action_refs(child));
+            }
+        }
+        _ => {}
+    }
+    out
+}
+/// `on:` may be a mapping, a scalar or a sequence; normalise it to the set of
+/// triggers GitHub would honour.
+fn triggers(v: &Value) -> BTreeSet<String> {
+    match v.get("on") {
+        Some(Value::String(s)) => BTreeSet::from([s.clone()]),
+        Some(Value::Array(items)) => items
+            .iter()
+            .filter_map(Value::as_str)
+            .map(str::to_owned)
+            .collect(),
+        Some(Value::Object(map)) => map.keys().cloned().collect(),
+        _ => BTreeSet::new(),
+    }
+}
+/// CI runs on GitHub Actions (ADR-014). Every action is pinned by full commit
+/// SHA, the aggregate gate fails closed on any non-success dependency, release
+/// only starts from a `v*` tag and stays fail-closed before publishing, and
+/// the five mandatory targets have a hosted runner.
+fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
     c.check(
-        !root.join(".github/workflows").exists(),
-        "GitHub Actions workflows present; CI is Woodpecker-only (ADR-010)",
+        !root.join(".woodpecker").exists(),
+        "Woodpecker pipelines present; CI is GitHub Actions (ADR-014)",
     );
-    let pinned = Regex::new(r"^[^@\s]+:[^@\s]+@sha256:[0-9a-f]{64}$")?;
+    let pinned = Regex::new(r"^[^@\s]+@[0-9a-f]{40}$")?;
+    let dir = root.join(".github/workflows");
+    if !dir.is_dir() {
+        c.check(false, "GitHub Actions workflows absent");
+        return Ok(0);
+    }
     let mut flows = BTreeMap::new();
-    for p in files(&root.join(".woodpecker"))? {
+    for p in files(&dir)? {
         let name = p
             .file_stem()
             .and_then(|s| s.to_str())
             .unwrap_or("")
             .to_owned();
         let v: Value = serde_yaml::from_str(&text(&p)?)?;
+        // A workflow must be reachable: either it validates a pull request or
+        // exposes workflow_dispatch. `release` is the documented exception —
+        // its only valid trigger is a `v*` tag push, checked below.
         c.check(
-            v.get("when").is_some(),
+            name == "release"
+                || triggers(&v).contains("pull_request")
+                || triggers(&v).contains("workflow_dispatch"),
             format!("Workflow triggers absent: {name}"),
         );
-        let windows = v["labels"]["host"] == "vynamp-windows";
-        for step in v["steps"].as_array().into_iter().flatten() {
-            let image = step["image"].as_str().unwrap_or("");
+        for action in action_refs(&v) {
             c.check(
-                if windows {
-                    image == "pwsh"
-                } else {
-                    pinned.is_match(image)
-                },
-                format!("Unpinned image {image} in {name}"),
+                pinned.is_match(&action),
+                format!("Unpinned action {action} in {name}"),
             );
-            for key in ["privileged", "volumes", "network_mode"] {
-                c.check(
-                    step.get(key).is_none(),
-                    format!("Privileged step option {key} in {name}"),
-                );
-            }
         }
         flows.insert(name, v);
     }
-    for (flow, target) in [
-        ("linux", "x86_64-unknown-linux-gnu"),
-        ("windows", "x86_64-pc-windows-msvc"),
+    let ci = flows.get("ci");
+    let jobs = |flow: Option<&Value>| -> BTreeSet<String> {
+        flow.and_then(|v| v["jobs"].as_object())
+            .map(|j| j.keys().cloned().collect())
+            .unwrap_or_default()
+    };
+    let ci_jobs = jobs(ci);
+    for target in [
+        "x86_64-pc-windows-msvc",
+        "x86_64-unknown-linux-gnu",
+        "x86_64-apple-darwin",
+        "aarch64-apple-darwin",
     ] {
         c.check(
-            flows.get(flow).is_some_and(|v| {
-                v.to_string()
-                    .contains(&format!("cargo xtask ci core --target {target}"))
-            }),
+            ci.is_some_and(|v| v.to_string().contains(target)),
             format!("Missing desktop target {target}"),
         );
     }
     c.check(
-        flows
-            .get("android")
-            .is_some_and(|v| v.to_string().contains("cargo xtask ci android")),
+        ci.is_some_and(|v| v.to_string().contains("cargo xtask ci android")),
         "Missing Android CI",
     );
-    let deps = flows
-        .get("gate")
-        .map(|v| strings(&v["depends_on"]))
-        .unwrap_or_default();
+    // The required status check is the job id `gate`; a renamed or narrowed
+    // gate would stop blocking merges without failing anything else.
+    c.check(ci_jobs.contains("gate"), "CI Gate job absent from ci.yml");
     c.check(
-        ["linux", "windows", "android"]
+        ["docs", "tooling", "core", "android"]
             .iter()
-            .all(|d| deps.contains(*d)),
-        "CI Gate workflow must depend on linux, windows and android",
+            .all(|j| ci_jobs.contains(*j)),
+        "CI workflow must keep docs, tooling, core and android jobs",
+    );
+    c.check(
+        ci.is_some_and(|v| {
+            strings(&v["jobs"]["gate"]["needs"])
+                == BTreeSet::from([
+                    "docs".to_owned(),
+                    "tooling".to_owned(),
+                    "core".to_owned(),
+                    "android".to_owned(),
+                ])
+        }),
+        "CI Gate job must depend on docs, tooling, core and android",
+    );
+    // `if: always()` is what makes the gate run after a cancelled or failed
+    // dependency; without it the gate is skipped and never turns red.
+    c.check(
+        ci.is_some_and(|v| {
+            v["jobs"]["gate"]["if"]
+                .as_str()
+                .is_some_and(|s| s.contains("always()"))
+        }),
+        "CI Gate job must run with if: always()",
+    );
+    c.check(
+        ci.is_some_and(|v| {
+            let gate = v["jobs"]["gate"].to_string();
+            ["needs.docs.result", "needs.tooling.result"]
+                .iter()
+                .all(|r| gate.contains(r))
+        }),
+        "CI Gate must read the dependency results, not assume success",
     );
     let release = flows.get("release");
-    let tag_only = release.is_some_and(|v| {
-        let when = v["when"].as_array().cloned().unwrap_or_default();
-        !when.is_empty()
-            && when
-                .iter()
-                .all(|w| w["event"] == "tag" && w["ref"] == "refs/tags/v*")
-    });
+    let release_triggers = release.map(triggers).unwrap_or_default();
     c.check(
-        tag_only,
-        "Release workflow must trigger only on event: tag (refs/tags/v*)",
+        release_triggers == BTreeSet::from(["push".to_owned()])
+            && release.is_some_and(|v| {
+                strings(&v["on"]["push"]["tags"]) == BTreeSet::from(["v*".to_owned()])
+            }),
+        "Release workflow must trigger only on push of tags v*",
     );
     c.check(
         release.is_some_and(|v| v.to_string().contains("release preflight")),
         "Release workflow must run release preflight",
     );
     c.check(
-        release.is_some_and(|v| {
-            v["steps"].as_array().is_some_and(|steps| {
-                steps.iter().any(|s| {
-                    s["name"] == "publish"
-                        && s["commands"]
-                            .as_array()
-                            .is_some_and(|c| c.last().is_some_and(|l| l == "exit 1"))
-                })
-            })
-        }),
+        release.is_some_and(|v| v.to_string().contains("exit 1")),
         "Release workflow must keep a fail-closed publish step (exit 1)",
+    );
+    // Hardware needs real devices: it must stay manual and out of the gate.
+    let quality = flows.get("quality");
+    c.check(
+        quality.is_some_and(|v| triggers(v) == BTreeSet::from(["workflow_dispatch".to_owned()])),
+        "Quality workflow must be manual only (workflow_dispatch)",
+    );
+    c.check(
+        quality.is_some_and(|v| v.to_string().contains("cargo xtask quality-gate")),
+        "Quality workflow must run cargo xtask quality-gate",
     );
     Ok(flows.len())
 }
@@ -466,7 +536,7 @@ pub fn delivery(root: &Path) -> Result<()> {
     let github = read_json(root.join("config/github.json"))?;
     c.check(
         github["repository"] == "jimmykedlyn/vynamp-mediaplayer"
-            && github["expected_visibility"] == "private",
+            && github["expected_visibility"] == "public",
         "Wrong repository/privacy",
     );
     let cfg = read_json(root.join("config/project.json"))?;
@@ -490,7 +560,7 @@ pub fn delivery(root: &Path) -> Result<()> {
     for name in [".worktrees/", ".superpowers/", "*.pfx", "*.jks"] {
         c.check(ignore.contains(name), format!("Missing ignore {name}"));
     }
-    let count = woodpecker(root, &mut c)?;
+    let count = github_actions(root, &mut c)?;
     xml(&root.join("packaging/macos/Info.plist"))?;
     crate::branding::references(root)?;
     c.check(
@@ -524,159 +594,221 @@ mod tests {
     fn invalid_schema_rejected() {
         assert!(schema_example(&json!({"type":42}), &json!({})).is_err());
     }
-    const IMG: &str = "docker.io/library/rust:1.99.0-bookworm@sha256:114c7a4425406451c2866b6aafe69fe29b1b298832db1277d411ac73c82d04d6";
+    const SHA: &str = "11bd71901bbe5b1630ceea73d27597364c9af683";
     fn ci_fixture() -> tempfile::TempDir {
         let tmp = tempfile::tempdir().unwrap();
-        let w = tmp.path().join(".woodpecker");
+        let w = tmp.path().join(".github/workflows");
         std::fs::create_dir_all(&w).unwrap();
-        let linux = format!(
-            "labels:\n  host: vynamp-linux\nwhen:\n  - event: [push]\nsteps:\n  - name: tooling\n    image: {IMG}\n    commands:\n      - cargo xtask ci core --target x86_64-unknown-linux-gnu\n"
-        );
-        let windows = "labels:\n  host: vynamp-windows\nwhen:\n  - event: [push]\nsteps:\n  - name: tooling\n    image: pwsh\n    commands:\n      - cargo xtask ci core --target x86_64-pc-windows-msvc\n";
-        let android = format!(
-            "labels:\n  host: vynamp-linux\nwhen:\n  - event: [push]\nsteps:\n  - name: android\n    image: {IMG}\n    commands:\n      - cargo xtask ci android\n"
-        );
-        let gate = format!(
-            "labels:\n  host: vynamp-linux\nwhen:\n  - event: [push]\ndepends_on: [linux, windows, android]\nsteps:\n  - name: gate\n    image: {IMG}\n    commands:\n      - echo ok\n"
-        );
-        let release = format!(
-            "labels:
-  host: vynamp-linux
-when:
-  - event: tag
-    ref: refs/tags/v*
-steps:
-  - name: preflight
-    image: {IMG}
-    commands:
-      - cargo xtask release preflight --version \"$${{VERSION}}\"
-  - name: publish
-    image: {IMG}
-    commands:
-      - echo blocked
-      - exit 1
+        let ci = format!(
+            "name: CI
+on:
+  pull_request:
+    branches: [develop]
+  push:
+    branches: [develop, main]
+jobs:
+  docs:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@{SHA}
+  tooling:
+    needs: docs
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@{SHA}
+  core:
+    needs: docs
+    runs-on: macos-15-intel
+    steps:
+      - run: cargo xtask ci core --target x86_64-apple-darwin
+  core-win:
+    needs: docs
+    runs-on: windows-2022
+    steps:
+      - run: cargo xtask ci core --target x86_64-pc-windows-msvc
+  core-linux:
+    needs: docs
+    runs-on: ubuntu-22.04
+    steps:
+      - run: cargo xtask ci core --target x86_64-unknown-linux-gnu
+  core-arm:
+    needs: docs
+    runs-on: macos-15
+    steps:
+      - run: cargo xtask ci core --target aarch64-apple-darwin
+  android:
+    needs: docs
+    runs-on: ubuntu-24.04
+    steps:
+      - run: cargo xtask ci android
+  gate:
+    name: CI Gate
+    if: always()
+    needs: [docs, tooling, core, android]
+    runs-on: ubuntu-22.04
+    steps:
+      - run: |
+          test needs.docs=${{{{ needs.docs.result }}}} = success
+          test needs.tooling=${{{{ needs.tooling.result }}}} = success
 "
         );
-        for (n, t) in [
-            ("release", release.as_str()),
-            ("linux", linux.as_str()),
-            ("windows", windows),
-            ("android", android.as_str()),
-            ("gate", gate.as_str()),
-        ] {
-            std::fs::write(w.join(format!("{n}.yaml")), t).unwrap();
-        }
+        let release = format!(
+            "name: Release
+on:
+  push:
+    tags: ['v*']
+jobs:
+  preflight:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@{SHA}
+      - run: cargo xtask release preflight --version ${{{{ steps.version.outputs.version }}}}\"
+  publish:
+    runs-on: ubuntu-22.04
+    steps:
+      - run: |
+          echo 'Release publication is not enabled; see ADR-014'
+          exit 1
+"
+        );
+        std::fs::write(w.join("ci.yml"), ci).unwrap();
+        std::fs::write(w.join("release.yml"), release).unwrap();
+        std::fs::write(
+            w.join("quality.yml"),
+            format!(
+                "name: Quality
+on:
+  workflow_dispatch:
+jobs:
+  trusted-hardware:
+    runs-on: [self-hosted, vynamp-hardware]
+    steps:
+      - uses: actions/checkout@{SHA}
+      - run: cargo xtask quality-gate
+"
+            ),
+        )
+        .unwrap();
         tmp
     }
     fn ci_errors(root: &Path) -> Vec<String> {
         let mut c = Checks::default();
-        woodpecker(root, &mut c).unwrap();
+        github_actions(root, &mut c).unwrap();
         c.errors
     }
     fn edit(root: &Path, name: &str, from: &str, to: &str) {
-        let p = root.join(".woodpecker").join(name);
+        let p = root.join(".github/workflows").join(name);
         let t = std::fs::read_to_string(&p).unwrap();
-        assert!(t.contains(from));
+        assert!(t.contains(from), "fixture lacks {from}");
         std::fs::write(p, t.replace(from, to)).unwrap();
     }
     #[test]
-    fn woodpecker_config_valid_passes() {
+    fn github_actions_config_valid_passes() {
         let f = ci_fixture();
         assert_eq!(ci_errors(f.path()), Vec::<String>::new());
     }
     #[test]
-    fn woodpecker_config_rejects_unpinned_image() {
-        let f = ci_fixture();
-        edit(f.path(), "linux.yaml", IMG, "docker.io/library/rust:latest");
-        assert!(
-            ci_errors(f.path())
-                .iter()
-                .any(|e| e.contains("Unpinned image"))
-        );
-    }
-    #[test]
-    fn woodpecker_config_rejects_pwsh_outside_windows_agent() {
-        let f = ci_fixture();
-        edit(f.path(), "android.yaml", IMG, "pwsh");
-        assert!(
-            ci_errors(f.path())
-                .iter()
-                .any(|e| e.contains("Unpinned image"))
-        );
-    }
-    #[test]
-    fn woodpecker_config_rejects_github_actions() {
-        let f = ci_fixture();
-        let wf = f.path().join(".github/workflows");
-        std::fs::create_dir_all(&wf).unwrap();
-        std::fs::write(wf.join("ci.yml"), "on: push\n").unwrap();
-        assert!(
-            ci_errors(f.path())
-                .iter()
-                .any(|e| e.contains("GitHub Actions"))
-        );
-    }
-    #[test]
-    fn woodpecker_config_rejects_gate_missing_dependency() {
+    fn github_actions_rejects_unpinned_action() {
         let f = ci_fixture();
         edit(
             f.path(),
-            "gate.yaml",
-            "[linux, windows, android]",
-            "[linux, windows]",
+            "ci.yml",
+            &format!("actions/checkout@{SHA}"),
+            "actions/checkout@v6",
+        );
+        assert!(
+            ci_errors(f.path())
+                .iter()
+                .any(|e| e.contains("Unpinned action"))
+        );
+    }
+    #[test]
+    fn github_actions_rejects_short_sha() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "ci.yml",
+            &format!("actions/checkout@{SHA}"),
+            "actions/checkout@11bd719",
+        );
+        assert!(
+            ci_errors(f.path())
+                .iter()
+                .any(|e| e.contains("Unpinned action"))
+        );
+    }
+    #[test]
+    fn github_actions_rejects_woodpecker() {
+        let f = ci_fixture();
+        std::fs::create_dir_all(f.path().join(".woodpecker")).unwrap();
+        std::fs::write(f.path().join(".woodpecker/linux.yaml"), "when: []\n").unwrap();
+        assert!(ci_errors(f.path()).iter().any(|e| e.contains("Woodpecker")));
+    }
+    #[test]
+    fn github_actions_rejects_gate_missing_dependency() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "ci.yml",
+            "needs: [docs, tooling, core, android]",
+            "needs: [docs, tooling, core]",
         );
         assert!(ci_errors(f.path()).iter().any(|e| e.contains("CI Gate")));
     }
     #[test]
-    fn woodpecker_config_rejects_privileged_step() {
+    fn github_actions_rejects_gate_skipping_on_failure() {
         let f = ci_fixture();
-        edit(
-            f.path(),
-            "linux.yaml",
-            "    commands:",
-            "    privileged: true\n    commands:",
-        );
-        assert!(ci_errors(f.path()).iter().any(|e| e.contains("Privileged")));
+        edit(f.path(), "ci.yml", "if: always()", "if: success()");
+        let e = ci_errors(f.path());
+        assert!(e.iter().any(|e| e.contains("always()")), "{e:?}");
     }
     #[test]
-    fn woodpecker_config_requires_platform_workflows() {
+    fn github_actions_rejects_gate_ignoring_results() {
         let f = ci_fixture();
-        std::fs::remove_file(f.path().join(".woodpecker/android.yaml")).unwrap();
-        edit(f.path(), "windows.yaml", "x86_64-pc-windows-msvc", "x");
+        edit(f.path(), "ci.yml", "needs.docs.result", "docs");
+        let e = ci_errors(f.path());
+        assert!(e.iter().any(|e| e.contains("dependency results")), "{e:?}");
+    }
+    #[test]
+    fn github_actions_requires_platform_targets() {
+        let f = ci_fixture();
+        edit(f.path(), "ci.yml", "x86_64-apple-darwin", "x");
+        edit(f.path(), "ci.yml", "cargo xtask ci android", "true");
         let e = ci_errors(f.path());
         assert!(e.iter().any(|e| e.contains("Missing Android CI")));
         assert!(
             e.iter()
-                .any(|e| e.contains("Missing desktop target x86_64-pc-windows-msvc"))
+                .any(|e| e.contains("Missing desktop target x86_64-apple-darwin"))
         );
     }
     #[test]
-    fn woodpecker_config_requires_release_workflow() {
+    fn github_actions_requires_release_workflow() {
         let f = ci_fixture();
-        std::fs::remove_file(f.path().join(".woodpecker/release.yaml")).unwrap();
+        std::fs::remove_file(f.path().join(".github/workflows/release.yml")).unwrap();
         assert!(ci_errors(f.path()).iter().any(|e| e.contains("Release")));
     }
     #[test]
-    fn woodpecker_config_rejects_release_on_push() {
+    fn github_actions_rejects_release_on_branch_push() {
         let f = ci_fixture();
         edit(
             f.path(),
-            "release.yaml",
-            "event: tag\n    ref: refs/tags/v*",
-            "event: push",
+            "release.yml",
+            "tags: ['v*']",
+            "branches: [develop]",
         );
         assert!(ci_errors(f.path()).iter().any(|e| e.contains("Release")));
     }
     #[test]
-    fn woodpecker_config_rejects_release_without_preflight() {
+    fn github_actions_rejects_release_without_preflight() {
         let f = ci_fixture();
-        edit(f.path(), "release.yaml", "release preflight", "version");
+        edit(f.path(), "release.yml", "release preflight", "version");
         assert!(ci_errors(f.path()).iter().any(|e| e.contains("Release")));
     }
     #[test]
-    fn woodpecker_config_rejects_release_publish_not_fail_closed() {
+    fn github_actions_rejects_release_publish_not_fail_closed() {
         let f = ci_fixture();
-        edit(f.path(), "release.yaml", "      - exit 1\n", "");
-        assert!(ci_errors(f.path()).iter().any(|e| e.contains("Release")));
+        edit(f.path(), "release.yml", "          exit 1\n", "");
+        let e = ci_errors(f.path());
+        assert!(e.iter().any(|e| e.contains("fail-closed")), "{e:?}");
     }
 }

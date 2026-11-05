@@ -226,7 +226,7 @@ pub fn guard(root: &Path) -> Result<()> {
     Ok(())
 }
 const PROTECTED: [&str; 2] = ["main", "develop"];
-/// GitHub answers HTTP 403 with this text when a private repository's plan lacks protection.
+/// GitHub answers HTTP 403 with this text when a repository's plan lacks protection.
 fn plan_blocks_protection(error: &str) -> bool {
     error.contains("Upgrade to GitHub Pro")
 }
@@ -258,8 +258,8 @@ fn protection_status(result: &Result<Value, String>) -> String {
 /// Compare the remote state with the Gitflow policy; every gap is listed, never inferred as applied.
 fn audit_report(meta: &Value, protections: &[(&str, Result<Value, String>)]) -> Value {
     let mut pending = Vec::new();
-    if meta["private"] != true {
-        pending.push("repository is not private".to_owned());
+    if meta["private"] != false {
+        pending.push("repository is not public".to_owned());
     }
     if meta["default_branch"] != "develop" {
         pending.push(format!(
@@ -337,8 +337,8 @@ pub fn audit(root: &Path, repo: &str, out: Option<&Path>) -> Result<()> {
 pub fn policy(root: &Path, repo: &str, reviews: u8) -> Result<()> {
     checked_repo(repo)?;
     ensure!(
-        repo_meta(root, repo)?["private"] == true,
-        "Repository not confirmed private; nothing changed"
+        repo_meta(root, repo)?["private"] == false,
+        "Repository not confirmed public; nothing changed"
     );
     run(
         root,
@@ -379,7 +379,7 @@ pub fn policy(root: &Path, repo: &str, reviews: u8) -> Result<()> {
         ) {
             if plan_blocks_protection(&e.to_string()) {
                 bail!(
-                    "PENDING: branch protection unavailable for this private repository plan (HTTP 403). Repository settings were applied (merge commit only, delete branch on merge, default develop); main/develop are NOT protected and CI Gate is NOT required."
+                    "PENDING: branch protection unavailable (HTTP 403) for a repository that is not public yet. Repository settings were applied (merge commit only, delete branch on merge, default develop); main/develop are NOT protected and CI Gate is NOT required. Make the repository public (ADR-014) and run this command again."
                 );
             }
             return Err(e.context(format!(
@@ -396,7 +396,7 @@ mod github_policy_tests {
     use super::*;
     const PLAN_403: &str = "Command failed: gh: gh: Upgrade to GitHub Pro or make this repository public to enable this feature. (HTTP 403)";
     fn meta(default: &str, squash: bool) -> serde_json::Value {
-        json!({"full_name":"o/r","private":true,"default_branch":default,"allow_merge_commit":true,"allow_squash_merge":squash,"allow_rebase_merge":false,"delete_branch_on_merge":true})
+        json!({"full_name":"o/r","private":false,"default_branch":default,"allow_merge_commit":true,"allow_squash_merge":squash,"allow_rebase_merge":false,"delete_branch_on_merge":true})
     }
     fn applied() -> serde_json::Value {
         json!({"required_status_checks":{"strict":true,"contexts":["CI Gate"]},"enforce_admins":{"enabled":true},"required_pull_request_reviews":{"dismiss_stale_reviews":true,"required_approving_review_count":0},"required_conversation_resolution":{"enabled":true},"allow_force_pushes":{"enabled":false},"allow_deletions":{"enabled":false}})
@@ -524,11 +524,11 @@ mod github_policy_tests {
         assert_eq!(r["pending"].as_array().unwrap().len(), 2);
     }
     #[test]
-    fn public_repository_is_pending() {
+    fn private_repository_is_pending() {
         let mut m = meta("develop", false);
-        m["private"] = json!(false);
+        m["private"] = json!(true);
         let r = audit_report(&m, &[("main", Ok(applied())), ("develop", Ok(applied()))]);
-        assert_eq!(r["private"], false);
-        assert!(r["pending"][0].as_str().unwrap().contains("private"));
+        assert_eq!(r["private"], true);
+        assert!(r["pending"][0].as_str().unwrap().contains("public"));
     }
 }

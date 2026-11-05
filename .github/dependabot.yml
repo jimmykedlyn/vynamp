@@ -5,3 +5,10 @@ updates:
     target-branch: develop
     schedule:
       interval: weekly
+  # Workflows pin actions by commit SHA; Dependabot is the only thing that
+  # keeps those SHAs moving without hand-editing a hash.
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: develop
+    schedule:
+      interval: weekly
