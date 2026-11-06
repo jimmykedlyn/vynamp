@@ -56,12 +56,14 @@ O que este PR deliberadamente **não** faz:
 
 Revisão técnica (subagente Sonnet/Opus), commit revisado e achados:
 
-- [ ] Worktree e owner próprios.
-- [ ] Superpowers carregado; teste útil e verificação executados.
-- [ ] Sucesso/erro/cancelamento e acessibilidade aplicáveis cobertos.
-- [ ] Docs/contracts/notices atualizados; nenhuma credencial no diff.
-- [ ] CI Gate (GitHub Actions) aprovado; hardware e release assinado continuam gates separados.
+- [x] Worktree e owner próprios.
+- [x] Superpowers carregado; teste útil e verificação executados.
+- [x] Sucesso/erro/cancelamento e acessibilidade aplicáveis cobertos — não se aplica: PR de documentação, sem comportamento de runtime.
+- [x] Docs/contracts/notices atualizados; nenhuma credencial no diff.
+- [ ] CI Gate (GitHub Actions) aprovado; hardware e release assinado continuam gates separados — CI deste PR em execução.
 
-- [ ] Revisão técnica independente — pendente.
+**Revisão independente: não realizada.** O subagente revisor (Sonnet 5-5) foi interrompido por limite de cota do plano (HTTP 429, reset em ~74 h). As oito afirmações atribuídas ao MVP foram **reverificadas diretamente contra o código** de `vynamp-mvp-reference@0d9860b` por este autor, e foi assim que um erro próprio foi encontrado e corrigido antes de abrir o PR: a §6 do painel DSP dizia que **Shift+V** abre o menu de modelos, mas em `mvp/player.js:224` o modificador de comando é `ctrlKey || metaKey` — **Ctrl+Shift+V** abre o menu, **Shift+V** recua o ciclo de medidores e **Ctrl+V** sozinho não faz nada. Texto corrigido. Não houve, portanto, segundo par de olhos sobre a redação: quem approve conhece o resultado da verificação direta.
+
+Commit revisado: `c38ce84`.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
