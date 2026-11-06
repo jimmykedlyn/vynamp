@@ -1,10 +1,12 @@
+# Pull request — TASK-E19-03
+
 ## O que muda
 
-O `vitrola` deixa de ser biblioteca em repositório próprio e passa a ser **módulo DSP interno do app**, por decisão do mantenedor registrada na [ADR-014](docs/architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md): *"os Tube e Vinil são recursos do DSP dentro da aplicação, não são libs e nem repositórios externos"*.
+O `vitrola` deixa de ser biblioteca em repositório próprio e passa a ser **módulo DSP interno do app**, por decisão do mantenedor registrada na [ADR-014](../../../../docs/architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md): *"os Tube e Vinil são recursos do DSP dentro da aplicação, não são libs e nem repositórios externos"*.
 
-O design aprovado em 2026-10-23 (77 linhas, 9 seções) é preservado por **incorporação**, não por reimplementação: entra em [10-vitrola.md](docs/audio/10-vitrola.md) como §8.1–8.9, e o texto literal de origem fica em [vitrola-design.md](docs/evidence/PR/task-e19-03/vitrola-design.md) para que a alegação seja auditável em vez de uma promessa.
+O design aprovado em 2026-10-23 (77 linhas, 9 seções) é preservado por **incorporação**, não por reimplementação: entra em [10-vitrola.md](../../../../docs/audio/10-vitrola.md) como §8.1–8.9, e o texto literal de origem fica em [vitrola-design.md](../../../../docs/evidence/PR/task-e19-03/vitrola-design.md) para que a alegação seja auditável em vez de uma promessa.
 
-Isto **não implementa** nada: vinil e válvula continuam sem código. A integração no grafo é a [TASK-E19-07](tasks/items/TASK-E19-07.md), que depende de E04-03.
+Isto **não implementa** nada: vinil e válvula continuam sem código. A integração no grafo é a [TASK-E19-07](../../../../tasks/items/TASK-E19-07.md), que depende de E04-03.
 
 ## A descoberta
 
@@ -23,18 +25,18 @@ Um arquivo, três linhas. Arquivar sem preservar o commit local deixaria sobrevi
 
 | Arquivo | Mudança |
 |---|---|
-| [docs/audio/10-vitrola.md](docs/audio/10-vitrola.md) | 0.8.0; passa a ser **fonte única** do design; §1 reescrita; ordens das seções corrigidas; §6 aponta a TASK-E19-07 |
-| [ADR-011](docs/architecture/adr/ADR-011-own-audio-stack.md) | 0.1.1; linha do inventário deixa de ser repositório com SHA |
-| [docs/GLOSSARY.md](docs/GLOSSARY.md) | "biblioteca própria" → módulo DSP interno |
-| [docs/product/05-decisions.md](docs/product/05-decisions.md) | citações `vitrola §N` re-apontadas para §8.x |
-| [tasks/items/TASK-E19-03.md](tasks/items/TASK-E19-03.md) | 0.9.0 com a situação por critério de aceite |
+| [docs/audio/10-vitrola.md](../../../../docs/audio/10-vitrola.md) | 0.8.0; passa a ser **fonte única** do design; §1 reescrita; ordens das seções corrigidas; §6 aponta a TASK-E19-07 |
+| [ADR-011](../../../../docs/architecture/adr/ADR-011-own-audio-stack.md) | 0.1.1; linha do inventário deixa de ser repositório com SHA |
+| [docs/GLOSSARY.md](../../../../docs/GLOSSARY.md) | "biblioteca própria" → módulo DSP interno |
+| [docs/product/05-decisions.md](../../../../docs/product/05-decisions.md) | citações `vitrola §N` re-apontadas para §8.x |
+| [tasks/items/TASK-E19-03.md](../../../../tasks/items/TASK-E19-03.md) | 0.9.0 com a situação por critério de aceite |
 | 13 outros docs | catálogo DSP, contrato de sinal, paridade, licenças, roadmap, riscos, MVP reference, INDEX, CHANGELOG |
 
 Nenhuma alteração de código, dependência, workflow ou backlog.
 
 ## O que não foi feito, e por quê
 
-- **O arquivamento do repositório remoto é do mantenedor.** `gh repo archive jimmykedlyn/vitrola` está prescrito na TASK, mas visibilidade e ciclo de vida de repositório são decisão do mantenedor ([AGENTS.md](AGENTS.md), ADR-014). É reversível por `gh repo unarchive`. **Logo, o critério "repositório arquivado" continua pendente.**
+- **O arquivamento do repositório remoto é do mantenedor.** `gh repo archive jimmykedlyn/vitrola` está prescrito na TASK, mas visibilidade e ciclo de vida de repositório são decisão do mantenedor ([AGENTS.md](../../../../AGENTS.md), ADR-014). É reversível por `gh repo unarchive`. **Logo, o critério "repositório arquivado" continua pendente.**
 - **O clone local não foi removido.** É a única cópia do commit `75c4ca2`; só sai depois que este PR estiver no `develop`.
 - **A matriz VU-INT-06 não foi tocada** — é escopo da E02-07.
 
