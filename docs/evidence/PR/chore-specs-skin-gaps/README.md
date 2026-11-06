@@ -60,7 +60,7 @@ O achado veio da verificação direta do código, já que o subagente de revisã
 
 | Comando | Resultado |
 |---|---|
-| `cargo xtask check-docs` | `result: passed`, `errors: []` — 350 arquivos Markdown, 191 requisitos, 191 tarefas, 19 épicos |
+| `cargo xtask check-docs` | `result: passed`, `errors: []` — 355 arquivos Markdown, 191 requisitos, 191 tarefas, 19 épicos |
 | `cargo xtask check-delivery` | `result: passed`, `errors: []`, 3 arquivos de workflow |
 | `cargo fmt --all --check` | sem diff |
 | `cargo clippy --workspace --all-targets --locked -- -D warnings` | `No issues found` |

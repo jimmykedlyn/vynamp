@@ -13,21 +13,23 @@ Fase M3 / P0 · Owner engineering-delivery · Esforço inicial 1–3 dias úteis
 
 ## Entrega concreta
 
-Sete repositórios Vynamp abertos ao público e branch protection aplicada em develop exigindo o contexto CI Gate, com descriptions e wiki ajustadas.
+Sete repositórios Vynamp abertos ao público com relato privado de vulnerabilidade habilitado, e branch protection aplicada em develop exigindo o contexto CI Gate, com descriptions e wiki ajustadas.
 
 A abertura é **irreversível em origem**: privado→público é gratuito, público→privado exige suporte do GitHub. Por isso a ordem importa: nenhum repo nasce público com conteúdo quebrado. Conteúdo primeiro (TASK-E19-01 a TASK-E19-05), depois a abertura, e **imediatamente depois** a proteção — repositório público sem branch protection aceita PR de qualquer pessoa.
 
 A virada para público desativa push rulesets (consequência documentada pelo GitHub), então a proteção tem de ser **reaplicada depois**, não antes. O 403 "Upgrade to GitHub Pro" que travava a proteção era limite do plano **privado**; em repositório público o plano gratuito suporta `required_status_checks`, então `CI Gate` passa a ser status obrigatório de verdade. O `vitrola` é arquivado, não aberto — ele sai do conjunto.
 
-Escopo: `gh repo edit --visibility public --accept-visibility-change-consequences` para `vynamp-mediaplayer`, `vynamp-decode`, `vynamp-output`, `vynamp-mvp-reference`, `vynamp-encode`, `vynamp-converter`, `vynamp-restore` — um por vez, com verificação entre eles; `gh repo archive jimmykedlyn/vitrola`; `description` sem "(privada; abertura futura)"; `--enable-issues` e `--enable-wiki=false`; `cargo xtask repo protect --repo jimmykedlyn/<repo> --reviews 0` no repo principal e `PUT /repos/{owner}/{repo}/branches/develop/protection` nos que não têm `cargo xtask`; `config/github.json` → `protection_status: applied`.
+O relato privado de vulnerabilidade (PVR) é **exclusivo de repositório público** e não é ligado pela abertura: `gh api repos/<owner>/<repo>/private-vulnerability-reporting` retorna 404 hoje, e o GitHub habilita o recurso por `PUT` em `/repos/{owner}/{repo}/private-vulnerability-reporting` depois que o repo fica público, ou por Settings → Security and quality → Advanced Security → Enable private vulnerability reporting. Sem esse passo, `SECURITY.md` e `CODE_OF_CONDUCT.md` apontam para um canal morto. Ele é exigido aqui porque a D-GOV-01 (TASK-E19-02) escolheu esse canal como único canal de segurança e de conduta.
 
-Boundary: não altera assinatura, plano nem seat count; não faz merge, tag nem release; não apaga repositório; não abre `vitrola`.
+Escopo: `gh repo edit --visibility public --accept-visibility-change-consequences` para `vynamp-mediaplayer`, `vynamp-decode`, `vynamp-output`, `vynamp-mvp-reference`, `vynamp-encode`, `vynamp-converter`, `vynamp-restore` — um por vez, com verificação entre eles; em cada um, `gh api --method PUT repos/jimmykedlyn/<repo>/private-vulnerability-reporting` **depois** da abertura; `gh repo archive jimmykedlyn/vitrola`; `description` sem "(privada; abertura futura)"; `--enable-issues` e `--enable-wiki=false`; `cargo xtask repo protect --repo jimmykedlyn/<repo> --reviews 0` no repo principal e `PUT /repos/{owner}/{repo}/branches/develop/protection` nos que não têm `cargo xtask`; `config/github.json` → `protection_status: applied`.
+
+Boundary: não altera assinatura, plano nem seat count; não faz merge, tag nem release; não apaga repositório; não abre `vitrola` (arquivado, o PVR não se aplica).
 
 ## Critérios de aceite
 
-Os sete repos reportam visibility public; develop exige CI Gate e proíbe force push e exclusão; description não promete abertura futura; repo sem proteção não é considerado pronto.
+Os sete repos reportam visibility public e `private_vulnerability_reporting` habilitado; develop exige CI Gate e proíbe force push e exclusão; description não promete abertura futura; repo sem proteção não é considerado pronto.
 
-Detalhamento: `gh repo view jimmykedlyn/vynamp-mediaplayer --json visibility` retorna `PUBLIC`; `gh api repos/jimmykedlyn/vynamp-mediaplayer/branches/develop/protection` lista `CI Gate` em `required_status_checks.contexts`; `gh repo view jimmykedlyn/vitrola --json isArchived` retorna `true` e `visibility` continua `PRIVATE`; nenhuma `description` contém "privada" ou "private".
+Detalhamento: `gh repo view jimmykedlyn/vynamp-mediaplayer --json visibility` retorna `PUBLIC`; `gh api repos/jimmykedlyn/vynamp-mediaplayer/private-vulnerability-reporting` retorna `{"enabled":true}`; `gh api repos/jimmykedlyn/vynamp-mediaplayer/branches/develop/protection` lista `CI Gate` em `required_status_checks.contexts`; `gh repo view jimmykedlyn/vitrola --json isArchived` retorna `true` e `visibility` continua `PRIVATE`; nenhuma `description` contém "privada" ou "private".
 
 [Spec](../../docs/engineering/03-gitflow-github.md) · REQ-E19-06 em [matriz](../../docs/product/03-requirements.md).
 

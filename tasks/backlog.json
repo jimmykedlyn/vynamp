@@ -5167,7 +5167,7 @@
       "title": "Migrar o CI do repo principal para GitHub Actions",
       "phase": "M1",
       "priority": "P0",
-      "status": "planned",
+      "status": "in_progress",
       "owner_role": "engineering-delivery",
       "requirements": [
         "REQ-E19-01"
@@ -5194,7 +5194,7 @@
       "title": "Higiene, governança e README bilíngue do repo principal",
       "phase": "M1",
       "priority": "P0",
-      "status": "planned",
+      "status": "in_progress",
       "owner_role": "engineering-delivery",
       "requirements": [
         "REQ-E19-02"
@@ -5315,8 +5315,8 @@
         "TASK-E19-05"
       ],
       "spec": "docs/engineering/03-gitflow-github.md",
-      "deliverable": "Sete repositórios Vynamp abertos ao público e branch protection aplicada em develop exigindo o contexto CI Gate, com descriptions e wiki ajustadas.",
-      "acceptance": "Os sete repos reportam visibility public; develop exige CI Gate e proíbe force push e exclusão; description não promete abertura futura; repo sem proteção não é considerado pronto.",
+      "deliverable": "Sete repositórios Vynamp abertos ao público com relato privado de vulnerabilidade habilitado, e branch protection aplicada em develop exigindo o contexto CI Gate, com descriptions e wiki ajustadas.",
+      "acceptance": "Os sete repos reportam visibility public e `private_vulnerability_reporting` habilitado; develop exige CI Gate e proíbe force push e exclusão; description não promete abertura futura; repo sem proteção não é considerado pronto.",
       "qa": [
         "QA-009",
         "QA-030"

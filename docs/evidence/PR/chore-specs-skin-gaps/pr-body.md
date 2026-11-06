@@ -33,7 +33,7 @@ Comandos, resultados, ambientes/fixtures e limitações:
 
 | Comando | Resultado |
 |---|---|
-| `cargo xtask check-docs` | `result: passed`, `errors: []` — 350 arquivos Markdown, 191 requisitos, 191 tarefas, 19 épicos |
+| `cargo xtask check-docs` | `result: passed`, `errors: []` — 355 arquivos Markdown, 191 requisitos, 191 tarefas, 19 épicos |
 | `cargo xtask check-delivery` | `result: passed`, `errors: []` |
 | `cargo fmt --all --check` | sem diff |
 | `cargo clippy --workspace --all-targets --locked -- -D warnings` | `No issues found` |

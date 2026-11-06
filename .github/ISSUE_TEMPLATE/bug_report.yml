@@ -1,0 +1,80 @@
+name: Bug report
+description: Something in the tooling, CI or documentation is wrong.
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is **not** the channel for security problems. Do not describe a
+        vulnerability here — use the private advisory form described in
+        [SECURITY.md](../../SECURITY.md).
+
+        Use this form for the repository's own artefacts: `cargo xtask`,
+        documentation, schemas, CI workflows and the `vynamp-*` libraries.
+        The player itself is not implemented, so "the player crashed" is not a
+        bug you can file yet.
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight
+      options:
+        - label: This is not a security problem, and I did not paste secrets, tokens or personal data.
+          required: true
+        - label: I searched existing issues for the same problem.
+          required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: The observed behaviour, quoted from real output rather than recalled.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected instead
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce
+      description: The exact command, from a clean checkout, and the smallest input that triggers it.
+      render: bash
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Commit
+      description: Full 40-character SHA, or the PR number if it is not merged yet.
+      placeholder: "89fde344c3185d3427626c9933b51ddfcf8c0492"
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      multiple: true
+      options:
+        - Windows x64
+        - Linux x64
+        - macOS Intel
+        - macOS Apple Silicon
+        - Android arm64
+        - Not platform specific
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Versions
+      description: Rust (`rustup show`), git, and the OS build. Paste the output, do not summarise it.
+    validations:
+      required: true
+  - type: textarea
+    id: limitations
+    attributes:
+      label: What you could not verify
+      description: State what you did not test, so the report is not read as broader than it is.

@@ -1,6 +1,6 @@
 # TASK-E19-01 — Migrar o CI do repo principal para GitHub Actions
 
-Versão 0.8.0 · Estado planejado; configurar CI não equivale a player pronto nem a release assinado.
+Versão 0.8.1 · Atualização 2026-11-05 · Estado: em execução; CI em GitHub Actions verde no PR #30 mergeado, sem aceite antecipado — configurar CI não equivale a player pronto nem a release assinado.
 
 Fase M1 / P0 · Owner engineering-delivery · Esforço inicial 3–10 dias úteis; reestimar.
 
