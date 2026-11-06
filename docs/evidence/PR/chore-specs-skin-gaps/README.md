@@ -30,7 +30,13 @@ Re-apontar citação sem evidência trocaria um erro por outro. Oito afirmaçõe
 | "0 VU = −18 dBFS ajustável" | **não existe** | Nenhuma constante de calibração no código; escala vem de `scaleDB`/`scaleAngles` no `meta.json` |
 | "Slot de 28 DIP" | **não existe** | Instrumento fluido: `#meter-stage` com `width:100%`/`height:auto` |
 
-A contagem de VU também divergiu: o contrato VU-INT fala em 12 medidores (número da rev.15) e o pin rev.38 tem **16, todos selecionáveis**.
+A contagem de VU também divergiu: o contrato VU-INT fala em 12 medidores (número da rev.15) e o pin rev.38 tem **16, todos selecionáveis**. O número certo é **16** — os 12 são anteriores aos quatro medidores acrescentados depois. As 12 descrições de `out/themes/themes.json` ainda dizem "12 VUs aprovados"; é texto que ficou para trás, não uma contagem.
+
+### Um erro próprio, corrigido antes do PR
+
+A primeira redação de `docs/design/05-dsp-panel.md` §6 dizia que **Shift+V** abria o menu de modelos. Não é assim: em `mvp/player.js:224`, `command` é `e.ctrlKey || e.metaKey`, e o `keydown` da tecla V (linha 227) só abre o menu quando `command && e.shiftKey`. **Shift+V** sem Ctrl recua o ciclo de medidores; **Ctrl+Shift+V** abre o menu; **Ctrl+V** sozinho não faz nada porque o atalho de edição tem precedência. O texto foi corrigido antes de abrir o PR.
+
+O achado veio da verificação direta do código, já que o subagente de revisão falhou por cota do plano (429).
 
 ## Arquivos
 
@@ -66,5 +72,6 @@ Os dois arquivos de evidência foram indexados em `docs/INDEX.md` (o validador e
 
 - **A verificação do MVP é de código, não de comportamento em execução.** Nenhum navegador foi aberto, nenhuma interação foi exercitada. "Existe" aqui significa "o código do MVP implementa"; "não existe" significa "não há handler, constante nem CSS que o faça".
 - **O workflow de verificação foi interrompido.** Quatro afirmações ficaram sem o estágio adversarial automatizado e foram conferidas diretamente, com o mesmo critério, mas sem o segundo par de olhos.
+- **A revisão independente por subagente não rodou.** O subagente (Sonnet 5-5) foi interrompido por limite de cota do plano (HTTP 429, reset em ~74 h). As oito afirmações foram reverificadas **diretamente contra o código do MVP** por este autor — é assim que o erro do atalho Shift+V foi achado. Não houve, portanto, um segundo par de olhos sobre a redação.
 - **`[DEMO]` vs áudio real no EQ:** o pin declara `[REAL] … uma instância Web Audio` quando o nó está na rota viva. A *medição* de latência, CPU e qualidade continua não executada aqui.
 - Este PR não altera visibilidade, proteções, assinatura nem plano — isso é da TASK-E19-06, por decisão do mantenedor na ADR-014.
