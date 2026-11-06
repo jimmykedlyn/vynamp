@@ -37,7 +37,7 @@ Versão 0.8.0 · 2026-11-05 (termos de integração com o shell, pacotes de íco
 | Nyquist / 0,45×Fs | Metade da taxa de amostragem / limite superior prático do editor de EQ |
 | Oversampling | Processar em taxa multiplicada para reduzir aliasing de não linearidades ou medir true peak |
 | Wow / flutter | Flutuação lenta / rápida de velocidade e afinação simulada pelo vitrola |
-| vitrola | Biblioteca própria de simulação de vinil e amplificador valvulado hospedada no DSP ([spec](audio/10-vitrola.md)) |
+| vitrola | Módulo DSP **interno** do app que simula vinil e amplificador valvulado; não é biblioteca nem repositório próprio ([spec](audio/10-vitrola.md), [ADR-014](architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md)) |
 | vynamp-decode / vynamp-output | Bibliotecas próprias de decodificação / saída de áudio; a saída nunca aplica ganho, dither ou resampling ([ADR-011](architecture/adr/ADR-011-own-audio-stack.md)) |
 | Lib própria de resampling | Futura biblioteca própria de conversão de taxa de amostragem (nome e repositório a definir); decisão D-DSP-08 |
 | MVP HTML/SVG/JS | Protótipo interativo de UI, rev.38 em `vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452` (repositório privado, fora deste); `[DEMO]` marca o que não processa áudio; não é a engine nativa ([referência do MVP](design/06-mvp-reference.md)) |

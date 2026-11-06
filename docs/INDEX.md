@@ -736,3 +736,9 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 - [Decisão: o MVP é a fonte única da UI nativa — D-MVP-01..04](product/05-decisions.md#decisão-o-mvp-é-a-fonte-única-da-ui-2026-11-05) — docs/product/05-decisions.md; os dois arquivos SKIN deixam de ser fonte de requisito.
 - [Evidência chore-specs-skin-gaps](evidence/PR/chore-specs-skin-gaps/README.md) — docs/evidence/PR/chore-specs-skin-gaps/README.md; verificação das oito afirmações contra o código do pin rev.38 e limitações declaradas.
 - [Corpo do PR chore-specs-skin-gaps](evidence/PR/chore-specs-skin-gaps/pr-body.md) — docs/evidence/PR/chore-specs-skin-gaps/pr-body.md
+
+# Vitrola como módulo DSP interno (2026-11-05)
+
+- [Decisão: o vitrola é módulo DSP interno — ADR-014](architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md) — docs/architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md; vinil e válvula não são libs nem repositórios externos.
+- [Evidência TASK-E19-03](evidence/PR/task-e19-03/README.md) — docs/evidence/PR/task-e19-03/README.md; dissolução do repositório vitrola, a descoberta do commit local não publicado e o que ficou pendente.
+- [Design aprovado do vitrola — cópia literal](evidence/PR/task-e19-03/vitrola-design.md) — docs/evidence/PR/task-e19-03/vitrola-design.md; o texto integral de 2026-10-23, preservado porque a incorporação em §8 o reorganizou em subseções e o repositório de origem é arquivado.

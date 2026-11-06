@@ -18,7 +18,7 @@ Versão: 0.7.1 · Data: 2026-10-25 · Estado: especificação proposta, implemen
 | Drivers variam | suporte difícil | capability probes e hardware matrix |
 | UI do MVP confundida com DSP real | claim falso de processamento | rótulo `[DEMO — sem processamento de áudio neste modo]`, EQ-T-14 |
 | EQ-64/PEQ/FIR excedem orçamento de CPU | underrun/dropouts | benchmark antes do aceite M5 (TASK-E12-10), qualidade/limites declarados |
-| Posição do vitrola × resampler final (D-DSP-05) | aliasing ou mudança do contrato 07 | decisão do mantenedor antes de integrar o vitrola |
+| Posição do vitrola × resampler final (D-DSP-05) | aliasing ou mudança do contrato 07 | decisão do mantenedor antes de integrar o módulo (TASK-E19-07) |
 | Emulações colorativas mascaram clipping ou soam "melhores" só por volume | qualidade enganosa | medidores pré/pós, A/B com loudness igualado, proteção final fixa |
 
 ## Pendências reais

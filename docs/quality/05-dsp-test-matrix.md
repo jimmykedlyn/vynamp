@@ -81,7 +81,7 @@ Origem: complemento rev. 15 (28/10/2026). Contratos: [DSP, grafo modular](../aud
 | # | Requisito | Critério | Origem/estado |
 |---|---|---|---|
 | NFR-1 | Qualidade sonora | transparência sample-exact com DSP desligado; filtros ±0,2 dB; sem clipping evitável; coloração do vitrola intencional, controlável e totalmente reversível (VIT-T-01) | planejado |
-| NFR-2 | Performance | callback p99.9 < 25% do período; reprodução estéreo 24/192 ≤ 5% de CPU total na máquina de referência; visualizer ≤ 10%; vitrola < 5% de um núcleo a 96 kHz (meta). Metas de EQ-64/PEQ32/FIR **só depois do benchmark** | [performance](02-performance-observability.md); vitrola §5 |
+| NFR-2 | Performance | callback p99.9 < 25% do período; reprodução estéreo 24/192 ≤ 5% de CPU total na máquina de referência; visualizer ≤ 10%; vitrola < 5% de um núcleo a 96 kHz (meta). Metas de EQ-64/PEQ32/FIR **só depois do benchmark** | [performance](02-performance-observability.md); vitrola §8.5 |
 | NFR-3 | Robustez | DSP-T-04/14/17; perda de dispositivo → pausa e posição preservada | planejado |
 | NFR-4 | Compatibilidade | só formatos, canais e backends suportados ou explicitamente planejados ([saídas](../audio/04-outputs-hires.md), `vynamp-output`) | planejado |
 | NFR-5 | Segurança | presets/IR/plugins com limites de tamanho, schema e JSON pointer de erro; IR decodificada pela `vynamp-decode` com limites; plugins isolados ([ameaças](../security/01-threat-model.md)) | planejado |

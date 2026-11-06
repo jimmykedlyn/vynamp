@@ -8,7 +8,7 @@ Base: [visual](01-visual-system.md), [layouts](02-layouts.md), [marca](04-brand-
 
 O MVP web rev.38 (`vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452`) é a especificação visual e de comportamento da UI nativa (egui/eframe, sem navegador) em Windows, Linux, macOS (Intel e Apple Silicon) e Android; iOS está fora da 1.0 (ver [visão e escopo](../product/01-vision-scope.md)). Nenhum arquivo do MVP é copiado para este repositório: as specs citam URL, SHA fixo e caminho dentro do repositório de referência. A UI nativa reproduz o MVP **sem lacunas**: SVGs, cores, temas, tipografia, animações, medidores, ondas, interações e preferências. O código do MVP não é código de produto.
 
-Só fica fora o que é intrínseco ao navegador (motor DOM/CSS, a API Web Audio em si). O **comportamento observável** dessas APIs é medido e reimplementado; por exemplo, as constantes e a resposta do `AnalyserNode` viram gabarito de TASK-E02-13. Uma biblioteca escrita para fechar uma lacuna ganha repositório git próprio e modular, no padrão de vynamp-decode, vynamp-output e vitrola.
+Só fica fora o que é intrínseco ao navegador (motor DOM/CSS, a API Web Audio em si). O **comportamento observável** dessas APIs é medido e reimplementado; por exemplo, as constantes e a resposta do `AnalyserNode` viram gabarito de TASK-E02-13. Uma biblioteca escrita para fechar uma lacuna ganha repositório git próprio e modular, no padrão de vynamp-decode e vynamp-output. Exceção desde 2026-11-05: o **vitrola** não é biblioteca — virou módulo DSP interno do app ([ADR-014](../architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md)).
 
 ## 2. Fonte congelada e ferramenta
 

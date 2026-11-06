@@ -34,7 +34,7 @@ Colunas do protótipo: **evidência relatada da referência externa rev. 14/15, 
 | **Saturação suave** | Criativos | áudio real (tanh com oversampling 2×, drive e dry/wet). **Não equivale ao Tube Amplifier**; não afirmar que implementa uma válvula |
 | LFO → Ganho | Criativos | controle real (modulação senoidal limitada a ±0,25 do ganho linear); sem ligação a portas de áudio |
 | Spectrum e pico/RMS | área Medidores (fora das famílias; [painel DSP §6](../design/05-dsp-panel.md#6-medidores-e-visualização)) | análise real: FFT de 1024 amostras, pico amostral e RMS em dBFS, antes do volume; não são LUFS nem dBTP |
-| **Vinyl Simulator e Tube Amplifier** (§5) | Vitrola | **configuração completa preservada, sem processamento desses modelos**; dependem de adaptadores e validação acústica próprios ([vitrola](10-vitrola.md)) |
+| **Vinyl Simulator e Tube Amplifier** (§5) | Vitrola | design aprovado em 2026-10-23, incorporado como **módulo DSP interno** do app ([vitrola](10-vitrola.md) §8); nenhuma validação acústica executada |
 
 Regras que valem para o catálogo: se um nó indisponível estiver habilitado na rota ativa do protótipo, a cadeia não é ativada e a razão é exibida; o bypass explícito permite a rota sem alegar o efeito. Os módulos anteriores, fases e prioridades não mudam por causa do protótipo.
 
