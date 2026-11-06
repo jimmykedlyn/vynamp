@@ -4,7 +4,7 @@ Versão: 0.8.0 · Data: 2026-11-05 · Estado: **design incorporado; integração
 
 ## 1. Fonte da verdade e escopo
 
-- A definição acordada está **integralmente neste documento**, em [§8 Design aprovado](#8-design-aprovado-incorporado-em-2026-11-05). **Não existe mais biblioteca nem repositório externo**: o mantenedor decidiu, em 2026-11-05, que vinil e válvula são **módulos DSP internos do app** ([ADR-014](../architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md)). O repositório antigo foi **arquivado**, não aberto.
+- A definição acordada está **integralmente neste documento**, em [§8 Design aprovado](#8-design-aprovado-incorporado-em-2026-11-05). **Não existe mais biblioteca nem repositório externo**: o mantenedor decidiu, em 2026-11-05, que vinil e válvula são **módulos DSP internos do app** ([ADR-014](../architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md)). O arquivamento do repositório antigo está **pendente** e é decisão do mantenedor; não há TASK que o torne biblioteca de novo.
 - Consequência: antes este documento **integrava por referência** um design que vivia fora, e o que valesse lá era a regra. Agora ele é a **fonte única** — decisões, nomes, parâmetros, "inteligência" e restrições valem como estão aqui em §8. As seções 2 a 7 descrevem a integração, a UX hospedeira, os testes e as divergências.
 - Dois efeitos com identidade própria: **Vinyl Simulator** (simulação de um disco real tocando aquela faixa) e **Tube Amplifier Simulator** (amplificador valvulado). Os dois são **opcionais, colorativos e intencionais**, com bypass e intensidade gradual. Não são um equalizador, nem um exciter genérico, nem processamento obrigatório.
 - Anti-objetivos herdados: sem UI visual de toca-discos/prato/braço/válvulas; sem emulação circuito a circuito nem nomes de marcas; sem loop de ruído gravado, padrão perceptível ou exagero caricato no padrão; sem cliques ao ligar/desligar; sem alterar o caminho bit-perfect ou DSD nativo (o efeito se desativa sozinho); sem alocação ou lock na callback.
@@ -51,7 +51,7 @@ O pedido traz parâmetros "candidatos a validar". A regra: o que o design aprova
 | Item do pedido | Situação | Tratamento |
 |---|---|---|
 | Caráter tonal, saturação, separação estéreo | definido (radius, cartridge, crosstalk por raio) | manter |
-| Hiss, crackle, clicks, rumble, desgaste | definido (surface, cartridge, WearState) | manter; controles por tipo no painel avançado (layout deixado ao construtor, §9 da referência) |
+| Hiss, crackle, clicks, rumble, desgaste | definido (surface, cartridge, WearState) | manter; controles por tipo no painel avançado (layout deixado ao construtor, [§8.9](#89-deixado-ao-construtor-original-9)) |
 | "Ruídos desligados ou discretos por padrão" | compatível: o padrão é **sutil** | manter "sutil" |
 | "Evitar ruído em pausa/silêncio" | **conflito**: a referência põe chiado e crackle **nos silêncios entre faixas**, e o sulco final em loop após o fim | **manter a referência**. Pausa → silêncio com fade curto (agulha levantada): **a validar**, porque a referência só lista `pause` como evento. Seek → `reset` sem estalo |
 | Wow & flutter | definido | manter |
@@ -103,7 +103,7 @@ Os testes do próprio módulo (determinismo com semente, espectro de harmônicos
 | VIT-T-05 | Pausa/seek/fim de álbum | pausar, seek rápido, fim do lado e rituais | captura + log de transporte | sem estalo no seek; tail/pre_roll inseridos e contabilizados na duração; comportamento em pausa conforme decisão |
 | VIT-T-06 | Persistência do WearState | tocar, reiniciar o app, "Comprar disco novo" | bytes persistidos por álbum | desgaste preservado; reset só do álbum pedido |
 | VIT-T-07 | Vinil + válvula + EQ +15 dB | combinação extrema | medidores por estágio + QA-027 | clipping cumulativo indicado; teto final respeitado |
-| VIT-T-08 | Aliasing da válvula | senos 1/5/10/15 kHz, níveis −20/−6/0 dBFS, 44,1–192 kHz | espectro | aliasing abaixo do limiar definido na biblioteca |
+| VIT-T-08 | Aliasing da válvula | senos 1/5/10/15 kHz, níveis −20/−6/0 dBFS, 44,1–192 kHz | espectro | aliasing abaixo do limiar definido no módulo |
 | VIT-T-09 | CPU/latência | 96 kHz estéreo com tudo ligado | bench | publicar o número; meta < 5% de um núcleo |
 | VIT-T-10 | A/B com loudness igualado | comparar on/off com a compensação | LUFS integrado das duas versões | diferença dentro da tolerância a definir |
 

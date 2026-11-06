@@ -44,9 +44,9 @@ Nenhuma alteração de código, dependência, workflow ou backlog.
 
 | Comando | Resultado |
 |---|---|
-| `cargo xtask check-docs` | `passed`, `errors: []` — 357 arquivos, 191 requisitos, 191 tarefas, 19 épicos, spec 0.7.0 |
+| `cargo xtask check-docs` | `passed`, `errors: []` — 358 arquivos, 191 requisitos, 191 tarefas, 19 épicos, spec 0.7.0 |
 | `cargo xtask check-delivery` | `passed`, `errors: []`, `workflow_files: 3` |
-| `grep -rn "jimmykedlyn/vitrola" docs/ tasks/ config/ AGENTS.md` | 5 ocorrências, **nenhuma em documento normativo**: 3 na evidência (origem), 1 na cópia literal do design, 2 como o comando de arquivamento a executar |
+| `grep -rn "jimmykedlyn/vitrola" docs/ tasks/ config/ AGENTS.md` | 15 ocorrências, **nenhuma em documento normativo**: 8 em `docs/evidence/` (origem) e 7 nos dois arquivos de TASK como o comando de arquivamento a executar (5 na E19-03, 2 na E19-06) |
 | `gh repo view jimmykedlyn/vitrola --json isArchived` | **não executado** — é do mantenedor; o valor é `false` hoje |
 
 ## Riscos e limites

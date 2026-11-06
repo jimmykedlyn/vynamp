@@ -61,9 +61,9 @@ A incorporação **reorganiza em subseções** (as nove seções originais virar
 
 | Comando | Resultado |
 |---|---|
-| `cargo xtask check-docs` | `result: passed`, `errors: []` — 357 arquivos, 191 requisitos, 191 tarefas, spec 0.7.0 |
+| `cargo xtask check-docs` | `result: passed`, `errors: []` — 358 arquivos, 191 requisitos, 191 tarefas, spec 0.7.0 |
 | `cargo xtask check-delivery` | `result: passed`, `errors: []`, `workflow_files: 3` |
-| `grep -rn "jimmykedlyn/vitrola" docs/ tasks/ config/ AGENTS.md` | 5 ocorrências, nenhuma em documento normativo: 3 nesta evidência (registro de origem), 1 em [vitrola-design.md](vitrola-design.md) (cópia literal do design) e 2 como o **comando de arquivamento** em [TASK-E19-03](../../../../tasks/items/TASK-E19-03.md) e [TASK-E19-06](../../../../tasks/items/TASK-E19-06.md) |
+| `grep -rn "jimmykedlyn/vitrola" docs/ tasks/ config/ AGENTS.md` | 15 ocorrências, nenhuma em documento normativo: 8 em `docs/evidence/` (esta README, `pr-body.md` e a cópia literal do design — registro de origem) e 7 nos dois arquivos de TASK como o **comando de arquivamento** a executar (5 em [TASK-E19-03](../../../../tasks/items/TASK-E19-03.md), 2 em [TASK-E19-06](../../../../tasks/items/TASK-E19-06.md)) |
 | `gh repo view jimmykedlyn/vitrola --json isArchived` | `false` — **pendente, é do mantenedor**; não executado |
 
 ## Limitações

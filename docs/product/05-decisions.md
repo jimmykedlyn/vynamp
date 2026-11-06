@@ -39,7 +39,7 @@ Vêm da revisão documental do DSP (pedido "Documentação DSP — Equalizadores
 | D-DSP-04 | Rótulo canônico do protótipo: `[DEMO — sem processamento de áudio neste modo]` (en: `[DEMO — no audio processing in this mode]`) | Rótulo do pedido v1.3, adotado pelo MVP. Os SKIN tinham variantes; foram descartados em 2026-11-05 (D-MVP-01) e não são mais referência |
 | D-DSP-05 | **Aberto**: o design do vitrola (§8.8, decisão 1) pede "depois do resampler", mas o contrato 07 tem um único resampler final. A decisão vitrola fica preservada e o 07 não muda; opção A (taxa do stream) × B (resampler por stream, emenda do 07) | Precisa de decisão do mantenedor; afeta também mixer com Fs diferentes |
 | D-DSP-06 | **Aberto**: crossfade com o vitrola ligado (candidato: desativar o crossfade com aviso) | A referência pressupõe disco contínuo/gapless |
-| D-DSP-07 | O vitrola é hospedado por referência; os parâmetros "candidatos" do pedido que a referência não define ficam **a validar**; nos conflitos vale a referência; falta uma TASK de integração (M3, após E04-03) | Preservar o acordo anterior; criar a TASK num PR de backlog |
+| D-DSP-07 | O vitrola é **módulo DSP interno** do app ([ADR-014](../architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md)), não biblioteca hospedada por referência; os parâmetros "candidatos" do pedido que a referência não define ficam **a validar**; nos conflitos vale a referência; a TASK de integração existe: [TASK-E19-07](../../tasks/items/TASK-E19-07.md) (M3, após E04-03) | Decisão do mantenedor em 2026-11-05; a TASK foi criada |
 | D-DSP-08 | **Decidido (2026-11-03)**: lib própria de resampling, nome a definir (repositório a criar pelo mantenedor); sem resampler de terceiros ([ADR-011](../architecture/adr/ADR-011-own-audio-stack.md)) | Spike e ADR de qualidade na TASK-E04-02 |
 | D-DSP-09 | Um único modo de EQ processa por vez; os outros ficam guardados. AutoEQ/headphone correction é outro nó, depois do EQ | Pipeline "gráfico OU paramétrico"; correção sem ocupar o EQ do usuário |
 | D-DSP-10 | Ordem proposta no segmento por stream: EQ → correção → vitrola → dinâmica/imagem/criativos; reordenação livre não é prometida | Pedido v1.3 §3.5 compatível com [vitrola](../audio/10-vitrola.md) §8.8 |
@@ -138,9 +138,9 @@ Verificado no pin `vynamp-mvp-reference@0d9860b` (rev.38). Nenhum destes entra n
 |---|---|---|
 | [painel DSP §6](../design/05-dsp-panel.md#6-medidores-e-visualização) | "0 VU = −18 dBFS **ajustável**" | **Não existe.** Nenhuma constante de calibração no código; a escala de cada medidor vem de `scaleDB`/`scaleAngles` no `meta.json` e não é configurável pelo usuário |
 | [painel DSP §6](../design/05-dsp-panel.md#6-medidores-e-visualização) | "slot de 28 DIP" | **Não existe.** O instrumento é fluido: `#meter-stage` com `width:100%`/`height:auto` |
-| [vitrola §3](../audio/10-vitrola.md) | Atalho da Vitrola **no inspector da cadeia** | **Não existe.** Os atalhos são a barra do equalizador e a faixa de áudio junto ao instrumento |
-| [vitrola §3](../audio/10-vitrola.md) | "intensidade 0 por seção = bypass da seção", via API de host | **Não existe** contrato de intensidade nem API de host. O MVP tem bypass por módulo e um botão único da categoria |
-| [vitrola §4](../audio/10-vitrola.md) | Presets "Subtle/Warm/Rustic" `[proposal]` | **Diverge**: os presets são **Sutil/Quente/Rústico**, implementados como presets reais, sem marcação de proposta |
+| [vitrola §5](../audio/10-vitrola.md) | Atalho da Vitrola **no inspector da cadeia** | **Não existe.** Os atalhos são a barra do equalizador e a faixa de áudio junto ao instrumento |
+| [vitrola §5](../audio/10-vitrola.md) | "intensidade 0 por seção = bypass da seção", via API de host | **Não existe** contrato de intensidade nem API de host. O MVP tem bypass por módulo e um botão único da categoria |
+| [vitrola §5](../audio/10-vitrola.md) | Presets "Subtle/Warm/Rustic" `[proposal]` | **Diverge**: os presets são **Sutil/Quente/Rústico**, implementados como presets reais, sem marcação de proposta |
 | [equalizadores §2](../audio/08-equalizers.md) | Passo de teclado de 0,5 dB como requisito "do SKIN" | **Existe no MVP**, mas por comportamento nativo do `input[type=range]` (`step=.5`), não por handler. Shift+seta (±2 dB) só no editor avançado; o clássico não tem |
 
 ### Divergências encerradas por esta decisão
