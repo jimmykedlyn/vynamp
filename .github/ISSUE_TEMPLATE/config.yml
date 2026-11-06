@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/jimmykedlyn/vynamp-mediaplayer/security/advisories/new
+    about: Private report. Never open a public issue for a security problem.
+  - name: How to contribute
+    url: https://github.com/jimmykedlyn/vynamp-mediaplayer/blob/develop/CONTRIBUTING.md
+    about: Read the workflow and the gates a change has to pass before opening an issue.

@@ -1,6 +1,6 @@
 # Decisões, hipóteses e pontos em aberto
 
-Versão: 0.7.6 · Data: 2026-11-05 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.8.0 · Data: 2026-11-05 · Estado: especificação proposta, implementação não iniciada.
 
 ## Decisões fixadas pelo pedido
 
@@ -21,7 +21,7 @@ Produto independente em Rust; inspiração visual clássica com cores especifica
 
 ## Decisões pendentes com dono e prazo
 
-UI final e backend exclusivo: responsável engenharia, M0, provas de acessibilidade/latência. Licença do código e marca: responsável produto, antes publicar M3. Encoder AAC/MP3, ASIO e FFmpeg: engenharia/revisão de distribuição, antes empacotar. Hosting/região/custos/CDN: plataforma, entrada M4. Catálogo próprio, royalties e territórios: produto/plataforma, antes ingest público. DRM e assinatura: nova RFC, não dependência de M1–M3. Datas dependem de equipe/hardware; estimativas por tarefa são faixas, não calendário prometido.
+UI final e backend exclusivo: responsável engenharia, M0, provas de acessibilidade/latência. Licença do **código**: resolvida em 2026-11-05 (D-LIC-01, `MIT OR Apache-2.0`); a **marca** (registro e domínio) segue pendente, responsável produto, antes publicar M3. Encoder AAC/MP3, ASIO e FFmpeg: engenharia/revisão de distribuição, antes empacotar. Hosting/região/custos/CDN: plataforma, entrada M4. Catálogo próprio, royalties e territórios: produto/plataforma, antes ingest público. DRM e assinatura: nova RFC, não dependência de M1–M3. Datas dependem de equipe/hardware; estimativas por tarefa são faixas, não calendário prometido.
 
 ## Gestão de escopo
 
@@ -36,7 +36,7 @@ Vêm da revisão documental do DSP (pedido "Documentação DSP — Equalizadores
 | D-DSP-01 | Marcos do EQ: **PEQ nativo de 32 filtros continua M3** (TASK-E04-04); **gráfico nativo de 64 bandas e qualquer PEQ de 64 filtros continuam M5** (TASK-E12-10) até uma decisão documentada mudar isso; o **MVP HTML/SVG/JS cobre agora** a UI interativa de Gráfico 10/20/31/64 e Paramétrico até 32 | O pedido diz "64 bandas M5 permanece M5", mas em 03-dsp v0.7.0 o item M5 era o **paramétrico** de 64; os dois itens de 64 ficam em M5 e a UI do protótipo não muda o marco nativo |
 | D-DSP-02 | Clássico e Avançado 10 são o mesmo estado (EQ-10); o clássico mostra ±12 dB e marca "fora da escala" quando o avançado passou disso, sem cortar o valor | Coerência entre painéis sem perda silenciosa |
 | D-DSP-03 | Grades: EQ-20 em meia oitava `1000·2^((k−11)/2)` (22 Hz–16 kHz); EQ-31 em 1/3 de oitava ISO 266/IEC 61260-1 base 10; EQ-64 logarítmica `20·1000^(k/63)` (≈1/6,3 oitava, **não** 1/3); peaking de Q constante `Q=√(2^N)/(2^N−1)` | Faltava grade definida para 20 e 64; aprovar em E04-04/E12-10 |
-| D-DSP-04 | Rótulo canônico do protótipo: `[DEMO — sem processamento de áudio neste modo]` (en: `[DEMO — no audio processing in this mode]`) | O SKIN-REQUIREMENTS-GPT v1.2 usava variantes (ver divergências); resolvido em GPT-MVP v1.3 e CODEX v1.2 (2026-10-28), que adotam o rótulo unificado `[DEMO — no audio processing in this mode]` |
+| D-DSP-04 | Rótulo canônico do protótipo: `[DEMO — sem processamento de áudio neste modo]` (en: `[DEMO — no audio processing in this mode]`) | Rótulo do pedido v1.3, adotado pelo MVP. Os SKIN tinham variantes; foram descartados em 2026-11-05 (D-MVP-01) e não são mais referência |
 | D-DSP-05 | **Aberto**: o vitrola §8.1 pede "depois do resampler", mas o contrato 07 tem um único resampler final. A decisão vitrola fica preservada e o 07 não muda; opção A (taxa do stream) × B (resampler por stream, emenda do 07) | Precisa de decisão do mantenedor; afeta também mixer com Fs diferentes |
 | D-DSP-06 | **Aberto**: crossfade com o vitrola ligado (candidato: desativar o crossfade com aviso) | A referência pressupõe disco contínuo/gapless |
 | D-DSP-07 | O vitrola é hospedado por referência; os parâmetros "candidatos" do pedido que a referência não define ficam **a validar**; nos conflitos vale a referência; falta uma TASK de integração (M3, após E04-03) | Preservar o acordo anterior; criar a TASK num PR de backlog |
@@ -60,10 +60,10 @@ Vêm da revisão documental do DSP (pedido "Documentação DSP — Equalizadores
 | `docs/audio/03-dsp.md` v0.7.0 §"EQ gráfico" | editor avançado só com 10/20/31, sem modo gráfico 64 | corrigido em 0.7.1 e [08](../audio/08-equalizers.md) |
 | `tasks/items/TASK-E12-10.md` §Entrega | "EQ64" não diz se é gráfico ou paramétrico | interpretado como os dois (D-DSP-01); texto da TASK não alterado |
 | `schemas/audio-preset.schema.json` v1 | sem `mode`, `enabled`, `slope`, nem modos gráficos | v2 pendente em TASK-E04-04 (este PR é só Markdown) |
-| `SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO-v1.2.md` §13.1 × §13.3.7 | rótulos `[DEMO — no actual audio processing]` e "Prévia interativa — o áudio não está sendo processado por este modo" diferem do rótulo do pedido v1.3 | D-DSP-04; resolvido em SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO v1.3 (2026-10-28), com o rótulo unificado aplicado; histórico mantido (v1.2 não alterado neste PR) |
-| `SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO-v1.2.md` §5.11 | presets vitrola Subtle/Warm/Rustic [proposal] × Clean/Warm/Vintage do pedido | a validar (D-DSP-07) |
-| `SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO-v1.2.md` §12.8 | lista módulos (Dynamic EQ, Bass Enhancer, Exciter, multibanda, declipper, crossfeed, M/S, HRTF…) ausentes do repositório | catalogados como **propostos** em [09](../audio/09-dsp-catalog.md) |
-| `SKIN-REQUIREMENTS-CODEX.md` v1.0 §1.4 item 5, §5.9 (editor avançado e Android) e §6 | 64 bandas gráficas só como "reserved slot"; editor com 10/20/31; sem seletor de 5 modos | contradiz a UI obrigatória; corrigido para v1.1 fora do repositório (ver evidência do PR); atualizado para CODEX v1.2 (2026-10-28), com o rótulo DEMO unificado |
+| `SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO-v1.2.md` §13.1 × §13.3.7 | rótulos `[DEMO — no actual audio processing]` e "Prévia interativa — o áudio não está sendo processado por este modo" diferem do rótulo do pedido v1.3 | **Encerrada** por D-DSP-04: o rótulo canônico é `[DEMO — sem processamento de áudio neste modo]`, e é o que o MVP usa. O histórico dos SKIN não é mais mantido como referência |
+| `SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO-v1.2.md` §5.11 | presets vitrola Subtle/Warm/Rustic [proposal] × Clean/Warm/Vintage do pedido | **Encerrada**: o MVP tem Sutil/Quente/Rústico, presets reais e sem marcação de proposta. Vale o MVP; ver a tabela "Comportamentos que os SKIN atribuíam" |
+| `SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO-v1.2.md` §12.8 | lista módulos (Dynamic EQ, Bass Enhancer, Exciter, multibanda, declipper, crossfeed, M/S, HRTF…) ausentes do repositório | catalogados como **propostos** em [09](../audio/09-dsp-catalog.md); nenhum deles é requisito por ter aparecido no SKIN (D-MVP-03) |
+| `SKIN-REQUIREMENTS-CODEX.md` v1.0 §1.4 item 5, §5.9 (editor avançado e Android) e §6 | 64 bandas gráficas só como "reserved slot"; editor com 10/20/31; sem seletor de 5 modos | **Encerrada**: o MVP tem os cinco modos e 64 `input[type=range]` reais (`mvp/advanced-eq.js`). Vale o MVP, não o documento |
 | Pedido v1.3 §3.5.A "evitar ruído em pausa/silêncio" × vitrola §2 | a referência põe crackle nos silêncios entre faixas e o run-out em loop | vale a referência; pausa = a validar |
 | Pedido v1.3 §3.5.B (Bias, Oversampling/Quality, seed) × vitrola §4/§8.7 | bias dinâmico interno, qualidade automática, semente automática | vale a referência; controles do usuário a validar |
 | vitrola §8.1 × `docs/audio/07-dsp-signal-contract.md` §Caminho | "depois do resampler" × resampler único final | D-DSP-05 |
@@ -78,6 +78,14 @@ Vêm da revisão documental do DSP (pedido "Documentação DSP — Equalizadores
 | Pedido v1.4 §5.1 "referência contém 39 módulos / 198 campos" × catálogo [09](../audio/09-dsp-catalog.md) | contagens do protótipo não coincidem com o catálogo nativo (que também tem módulos propostos sem adaptador) | D-DSP-11: números não congelam o catálogo; evidência relatada |
 | Pedido v1.4 (protótipo Codex rev.14/15, histórico; fonte atual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 rev.38; evidências `interactive/*`, `*-validation.json`, `CONTROLES-DE-AUDIO.md`, `DSP-MODULAR-E-VU.md`) × repositório | os arquivos citados não existem neste repositório | D-DSP-16: citados como relato da referência externa; nenhum caminho linkado; registrar a referência no repositório do produto fica pendente |
 | `docs/audio/07-dsp-signal-contract.md` §Caminho | mixer soma streams antes do resampler final; fontes com Fs diferentes no crossfade não têm conversão definida | dependente de investigação (junto com D-DSP-05) |
+
+## Decisões de licença e governança (2026-11-05)
+
+| ID | Decisão | Razão / revisão |
+|---|---|---|
+| D-LIC-01 | O código deste repositório é **`MIT OR Apache-2.0`**, com `LICENSE`, `LICENSE-MIT` e `LICENSE-APACHE` na raiz, igual às bibliotecas `vynamp-decode` e `vynamp-output` | Decisão do mantenedor em 2026-11-05, registrada aqui porque `AGENTS.md` proíbe criar licença final sem decisão registrada e [02-privacy-licensing](../security/02-privacy-licensing.md) proibia criar `LICENSE` "como se tivesse sido decisão do usuário". Sem licença, abrir os repositórios (TASK-E19-06) publicaria código que ninguém pode usar legalmente. Ver [LEGAL.md](../../LEGAL.md); TASK-E19-02 |
+| D-LIC-02 | A licença cobre **só o código deste repositório**. Não relicencia código que as bibliotecas de áudio reservam para `crates-copyleft/` (convenção ainda vazia nas duas), não concede direitos sobre codecs de terceiros e **não** equivale a release: `release preflight` continua exigindo `THIRD_PARTY_NOTICES`, evidência de hardware real por plataforma e registro de revisores, nenhum dos três existente; `publish-draft` exige ainda assinatura minisign | Evitar que a existência de `LICENSE` seja lida como "produto pronto para distribuir"; TASK-E19-02 |
+| D-GOV-01 | Canal de vulnerabilidade = **GitHub Security Advisories** do próprio repositório (`/security/advisories/new`), privado por padrão, sem endereço de e-mail novo | Decisão do mantenedor em 2026-11-05. Fecha a pendência "URL/email de segurança aprovado" de [SECURITY.md](../../SECURITY.md) sem inventar contato operacional; TASK-E19-02 |
 
 ## Decisões de letras (2026-10-28)
 
@@ -100,7 +108,7 @@ Vêm do adendo "letras integradas ao VU meter" v1.0 (2026-10-25). Estado: **prop
 | Onde | O que diverge | Tratamento |
 |---|---|---|
 | Adendo §2 (seções 5.13, 5.16, 5.18, 8, 9, 12, 13 e MVP-09 da spec web v1.2) × repositório | essas seções e o grupo MVP-09 não existem neste repositório (a spec web v1.2 é externa) | mapeado para os docs do repositório (biblioteca, layouts, acessibilidade, requisitos); nenhuma seção externa editada |
-| Adendo §1 (atualizar `SKIN-REQUIREMENTS-CODEX.md` e `SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO-v1.2.md`) × escopo deste PR | os arquivos de skin estão fora do repositório (hoje GPT-MVP v1.3 e CODEX v1.2) | não alterados neste PR; a parte de letras entra nos SKIN na próxima etapa (Etapa 3), para evitar duas definições do mesmo comportamento (pendente) |
+| Adendo §1 (atualizar `SKIN-REQUIREMENTS-CODEX.md` e `SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO-v1.2.md`) × escopo deste PR | os arquivos de skin estão fora do repositório (hoje GPT-MVP v1.3 e CODEX v1.2) | **Encerrada em 2026-11-05**: os dois arquivos foram descartados como fonte de requisito (D-MVP-01). Não há o que atualizar — as letras valem por este repositório |
 | Adendo §5 (privacidade e persistência) × `docs/security/02-privacy-licensing.md` | o documento de privacidade não cobre persistência de preferência/marca instrumental nem leitura local de letras | não atualizado neste PR; pendente |
 | Adendo §8 (LYR-AC) × `docs/quality` | não há item QA para LYR-AC-01..12 em `01-test-strategy.md` nem `04-integration-codecs-dsp.md` | ausente; pendente (ver TASK-E03-09) |
 | Adendo §3 LYR-01 ("layout estendido aprovado" com VU) × [02-layouts](../design/02-layouts.md) | os layouts em DIP não definem região de VU estendido; o VU é descrito em [painel DSP §6](../design/05-dsp-panel.md#6-medidores-e-visualização) | posição relativa especificada (abaixo do VU); geometria exata pendente |
@@ -129,3 +137,40 @@ Vêm das duas especificações de restauração por aprendizado de máquina que 
 | `AUDIOSR-RUST-CPU.md` e `SOURCE_SEPARATION_MODELS.md` × licença dos pesos | nenhum dos dois confere a licença de redistribuição dos modelos | D-IA-05: bloqueante de release; a verificação é pré-requisito, não resultado |
 | `SKIN-REQUIREMENTS-*` (mencionam reconstrução por IA como recurso do Restore) × escopo da 1.0 | os documentos de skin listam a capacidade entre recursos da ferramenta | tratada como recurso planejado na UI futura, nunca como promessa de 1.0; o rótulo de pendência na UI é decisão da fase que admitir a capacidade |
 | `AUDIOSR-RUST-CPU.md` §5 (alvos de energia em faixa e notas por estrela) × este repositório | métricas subjetivas de qualidade não foram medidas aqui | não entram como critério de aceite normativo; a spec de IA §10 usa paridade, determinismo, recursos, opt-in e A/B cego |
+
+## Decisão: o MVP é a fonte única da UI (2026-11-05)
+
+O mantenedor descartou os dois arquivos de skin como fonte de requisito visual. A UI nativa se baseia **exclusivamente** no MVP web de referência.
+
+| ID | Decisão | Razão / revisão |
+|---|---|---|
+| D-MVP-01 | `SKIN-REQUIREMENTS-CODEX.md` e `SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO-v1.2.md` **não são fonte de requisito** e saem da cadeia documental do produto. A fonte única da UI é o MVP em [referência do MVP](../design/06-mvp-reference.md), pinado por SHA | Decisão do mantenedor em 2026-11-05: "o vynamp se baseará pelo mvp". Os SKIN eram consumidores declarados do repositório, não origem: seus próprios changelogs citavam `DSP-UX`, `VU-INT` e `LYR` como documentos canônicos daqui. Manter duas fontes produzia duas especificações para o mesmo comportamento |
+| D-MVP-02 | Onde um documento deste repositório atribui um comportamento ao SKIN, vale o que o **código do MVP comprova**. Comportamento que os SKIN pediam e o MVP não tem **não entra** por herança de documento descartado: ou é decisão nova registrada aqui, ou não existe | Impede que um documento descartado continue normativo por citação indireta. O MVP é aferível (código + `out/`); o SKIN era prosa |
+| D-MVP-03 | Nenhuma TASK, REQ ou marco nasce dos SKIN. Cobertura do nativo continua sendo a matriz ([03-requirements](../product/03-requirements.md)) e o catálogo de recursos; o MVP **mostra** a UI, não promete fase nativa | Gestão de escopo já fixada: requisito exige ID, fase, critério mensurável e TASK |
+| D-MVP-04 | Onde este repositório e o MVP divergem **em número**, vale o MVP. Hoje: o contrato VU-INT fala em 12 VU meters (número herdado da rev.15), e o pin rev.38 tem **16 medidores, todos selecionáveis**. A contagem certa é **16**; os 12 são anteriores aos quatro medidores acrescentados depois. A matriz VU-INT-06 (144 combinações = 12 skins × 12 VUs) é atualizada quando a TASK-E02-07 tratar a integração visual | Verificado em `vynamp-mvp-reference@0d9860b`: `out/svg/meters/` tem 16 diretórios, os 16 com `selectable: true`, e `mvp/player.js` lista os mesmos 16 em `meterChoices`. **Onde o 12 ainda aparece**: as 12 descrições de `out/themes/themes.json` dizem "encaixe universal para os 12 VUs aprovados". Isso é texto que ficou para trás — os quatro medidores restantes foram um acréscimo posterior, já pedido pelo mantenedor — e **não** é contagem válida: leia-se 16. São 12 **temas**, não 12 medidores |
+
+**Efeito sobre os IDs `MVP-01..18`.** O grupo de rastreabilidade de mesmo nome em `SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO-v1.2.md` §13.2 é local àquele documento e não vira ID deste repositório. As duas menções que existem hoje ([vitrola](../audio/10-vitrola.md) e [letras](../library/02-tags-lyrics-tools.md)) passam a citar o documento de origem como histórico, não como contrato.
+
+**O que isto não muda:** `[DEMO — …]` (D-DSP-04), a separação de status especificado · protótipo · nativo (D-DSP-16), os limites de honestidade do protótipo (D-DSP-17) e a integração visual dos VUs (D-DSP-18) continuam valendo — são decisões deste repositório, não dos SKIN.
+
+### Comportamentos que os SKIN atribuíam ao produto e o MVP não tem
+
+Verificado no pin `vynamp-mvp-reference@0d9860b` (rev.38). Nenhum destes entra na UI nativa por herança de documento; cada um exigiria decisão nova aqui.
+
+| Onde era citado | O que se atribuía | Estado no MVP |
+|---|---|---|
+| [painel DSP §6](../design/05-dsp-panel.md#6-medidores-e-visualização) | "0 VU = −18 dBFS **ajustável**" | **Não existe.** Nenhuma constante de calibração no código; a escala de cada medidor vem de `scaleDB`/`scaleAngles` no `meta.json` e não é configurável pelo usuário |
+| [painel DSP §6](../design/05-dsp-panel.md#6-medidores-e-visualização) | "slot de 28 DIP" | **Não existe.** O instrumento é fluido: `#meter-stage` com `width:100%`/`height:auto` |
+| [vitrola §3](../audio/10-vitrola.md) | Atalho da Vitrola **no inspector da cadeia** | **Não existe.** Os atalhos são a barra do equalizador e a faixa de áudio junto ao instrumento |
+| [vitrola §3](../audio/10-vitrola.md) | "intensidade 0 por seção = bypass da seção", via API de host | **Não existe** contrato de intensidade nem API de host. O MVP tem bypass por módulo e um botão único da categoria |
+| [vitrola §4](../audio/10-vitrola.md) | Presets "Subtle/Warm/Rustic" `[proposal]` | **Diverge**: os presets são **Sutil/Quente/Rústico**, implementados como presets reais, sem marcação de proposta |
+| [equalizadores §2](../audio/08-equalizers.md) | Passo de teclado de 0,5 dB como requisito "do SKIN" | **Existe no MVP**, mas por comportamento nativo do `input[type=range]` (`step=.5`), não por handler. Shift+seta (±2 dB) só no editor avançado; o clássico não tem |
+
+### Divergências encerradas por esta decisão
+
+| Onde | O que divergia | Tratamento agora |
+|---|---|---|
+| Adendo §1 (atualizar os dois arquivos de skin) | `docs/audio/10-vitrola.md:88` e `docs/product/05-decisions.md` §letras registravam a atualização dos SKIN como **pendente** | **Encerrada.** Os arquivos foram descartados; não há o que atualizar. A pendência sai em vez de ficar aberta |
+| `SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO-v1.2.md` §13.1 ("nenhuma dispensa por fase") × gestão de escopo | a regra era correta **para o protótipo** e contraditória se lida como regra do produto | D-MVP-03: a regra morre com o documento; fases M1–M5 continuam governando o nativo |
+| `SKIN-REQUIREMENTS-CODEX.md` §12/§13 ("é o repositório") × [referência do MVP](../design/06-mvp-reference.md) | os SKIN tratavam o protótipo como se fosse deste repositório; o MVP vive em `vynamp-mvp-reference` por SHA | Resolvido pela fonte única: [06-mvp-reference](../design/06-mvp-reference.md) é a regra |
+

@@ -77,7 +77,7 @@ O validador exercitou o caminho de falha de verdade neste PR: `Missing link docs
 - [x] Superpowers carregado; verificação executada.
 - [x] Sucesso/erro/cancelamento: validador exercitado no caminho de falha e no de sucesso.
 - [x] Docs/contracts/notices atualizados; nenhuma credencial no diff.
-- [ ] CI Gate (GitHub Actions) — aguardando o run deste SHA.
+- [x] CI Gate (GitHub Actions) — verde em `204781a112393817ec2f328b3a7c9a708ca6d020`, run [42124296619](https://github.com/jimmykedlyn/vynamp-mediaplayer/actions/runs/42124296619): `docs`, `tooling` (ubuntu-22.04, windows-2022, macos-15-intel, macos-15) e `CI Gate` passaram; `core` e `android` pulados pelo `detect`, como esperado.
 - [ ] Revisão técnica independente — pendente.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)

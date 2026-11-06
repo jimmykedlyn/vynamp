@@ -1,6 +1,6 @@
 # TASK-E19-02 — Higiene, governança e README bilíngue do repo principal
 
-Versão 0.8.0 · Estado planejado; documento e governança não equivalem a release assinado.
+Versão 0.8.1 · Atualização 2026-11-05 · Estado: em execução; PR #33 em revisão, sem aceite antecipado — documento e governança não equivalem a release assinado.
 
 Fase M1 / P0 · Owner engineering-delivery · Esforço inicial 2–5 dias úteis; reestimar.
 

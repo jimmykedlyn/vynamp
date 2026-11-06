@@ -14,11 +14,17 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Claude Code — Vynamp](../CLAUDE.md) — CLAUDE.md
 
+- [Code of Conduct / Código de Conduta](../CODE_OF_CONDUCT.md) — CODE_OF_CONDUCT.md
+
+- [Governance / Governança](../GOVERNANCE.md) — GOVERNANCE.md
+
 - [Contribuições e revisão](../CONTRIBUTING.md) — CONTRIBUTING.md
+
+- [Legal notes](../LEGAL.md) — LEGAL.md
 
 - [Vynamp — especificação de produto e engenharia](../README.md) — README.md
 
-- [Política de segurança proposta](../SECURITY.md) — SECURITY.md
+- [Política de segurança](../SECURITY.md) — SECURITY.md; canal em Security Advisories, ainda não habilitado (TASK-E19-06).
 
 - [Contrato mestre do produto](../SPEC.md) — SPEC.md
 
@@ -638,6 +644,8 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 - [TASK-E19-07 — Integrar o módulo DSP vitrola no grafo do player](../tasks/items/TASK-E19-07.md) — tasks/items/TASK-E19-07.md
 - [Evidência TASK-E19-01](evidence/PR/task-e19-01/README.md) — docs/evidence/PR/task-e19-01/README.md; workflows Actions, validador invertido, gates locais e limitações (nenhum workflow executado no remoto).
+- [Evidência TASK-E19-02](evidence/PR/task-e19-02/README.md) — docs/evidence/PR/task-e19-02/README.md; licença dual, governança, canal de advisory, README bilíngue e limitações (nada aberto, nada assinado).
+- [Corpo do PR task-e19-02](evidence/PR/task-e19-02/pr-body.md) — docs/evidence/PR/task-e19-02/pr-body.md
 
 - [Organização de testes](../tests/README.md) — tests/README.md
 
@@ -719,6 +727,17 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 - [Evidência chore-specs-vynamp-restore](evidence/PR/chore-specs-vynamp-restore/README.md) — docs/evidence/PR/chore-specs-vynamp-restore/README.md; verificações locais, revisão por subagente e limitações declaradas.
 - [Corpo do PR chore-specs-vynamp-restore](evidence/PR/chore-specs-vynamp-restore/pr-body.md) — docs/evidence/PR/chore-specs-vynamp-restore/pr-body.md
 
+
+# MVP como fonte única da UI (2026-11-05)
+
+- [Decisão D-MVP-01..04 — o MVP é a fonte única da UI](product/05-decisions.md#decisão-o-mvp-é-a-fonte-única-da-ui-2026-11-05) — docs/product/05-decisions.md; os dois arquivos de skin deixam de ser fonte de requisito.
+- [Evidência chore-specs-skin-gaps](evidence/PR/chore-specs-skin-gaps/README.md) — docs/evidence/PR/chore-specs-skin-gaps/README.md; oito afirmações conferidas contra o código do pin, verificações locais e limitações declaradas.
+
+# Fonte única da UI: o MVP web (2026-11-05)
+
+- [Decisão: o MVP é a fonte única da UI nativa — D-MVP-01..04](product/05-decisions.md#decisão-o-mvp-é-a-fonte-única-da-ui-2026-11-05) — docs/product/05-decisions.md; os dois arquivos SKIN deixam de ser fonte de requisito.
+- [Evidência chore-specs-skin-gaps](evidence/PR/chore-specs-skin-gaps/README.md) — docs/evidence/PR/chore-specs-skin-gaps/README.md; verificação das oito afirmações contra o código do pin rev.38 e limitações declaradas.
+- [Corpo do PR chore-specs-skin-gaps](evidence/PR/chore-specs-skin-gaps/pr-body.md) — docs/evidence/PR/chore-specs-skin-gaps/pr-body.md
 # Restauração por IA: fase futura (2026-11-05)
 
 - [ADR-015 — Restauração por IA admitida apenas como fase opt-in pós-1.0](architecture/adr/ADR-015-ai-restoration-future-phase.md) — docs/architecture/adr/ADR-015-ai-restoration-future-phase.md

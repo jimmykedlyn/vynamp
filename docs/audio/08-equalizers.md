@@ -1,6 +1,6 @@
 # Equalizadores — gráfico 10/20/31/64 e paramétrico até 32 filtros
 
-Versão: 0.7.3 · Data: 2026-11-03 · Estado: especificação proposta; **nenhum equalizador está implementado no player nativo**. No protótipo HTML/SVG/JS (referência externa do Codex, fora deste repositório) a rev. 15 relata EQ e PEQ com áudio real dentro do grafo modular (ver §14); esse relato não foi verificado aqui.
+Versão: 0.7.4 · Data: 2026-11-05 · Estado: especificação proposta; **nenhum equalizador está implementado no player nativo**. No protótipo HTML/SVG/JS (referência externa do Codex, fora deste repositório) a rev. 15 relata EQ e PEQ com áudio real dentro do grafo modular (ver §14); esse relato não foi verificado aqui.
 
 Subcapítulo obrigatório do [DSP](03-dsp.md). Consolida o que já estava em [03-dsp](03-dsp.md) (v0.7.0), no [contrato do sinal](07-dsp-signal-contract.md) e nas tarefas [TASK-E04-01](../../tasks/items/TASK-E04-01.md), [TASK-E04-04](../../tasks/items/TASK-E04-04.md), [TASK-E02-07](../../tasks/items/TASK-E02-07.md) e [TASK-E12-10](../../tasks/items/TASK-E12-10.md). Decisões e divergências estão em [decisões DSP](../product/05-decisions.md#decisões-dsp-e-equalizadores-2026-10-25).
 
@@ -30,11 +30,13 @@ Regra de aceite do MVP: há cinco seleções alcançáveis (**Gráfico 10, Gráf
 | Ganho de filtro paramétrico | −24..+24 dB, sujeito a validação da engine (estabilidade e headroom) | planejado |
 | On/Off do EQ | bypass real do nó, com crossfade (§13) | planejado |
 | Reset | todas as bandas do modo ativo em 0 dB; o preamp não muda, salvo "Reset total" | proposto |
-| Passo de teclado | ↑/↓ 0,5 dB; Shift+↑/↓ 2 dB; Home/End mínimo/máximo; duplo clique = 0 dB | proposto (vem do SKIN-REQUIREMENTS §5.9) |
+| Passo de teclado | ↑/↓ 0,5 dB; Shift+↑/↓ 2 dB; Home/End mínimo/máximo; duplo clique = 0 dB | **no MVP** (ver abaixo); no nativo: proposto |
 | Leitura | frequência central e ganho em dB sempre visíveis por banda; o separador decimal segue o locale | planejado |
 | Atualização | o valor e a curva mudam no mesmo quadro de UI; o áudio muda em até 10–50 ms (smoothing) | planejado |
 | Headroom | aviso quando o pico da curva combinada passa de 0 dB sem preamp que compense; sugestão de preamp `−máx(0, pico_dB)` aplicada só com ação do usuário | proposto (base no [contrato](07-dsp-signal-contract.md)) |
 | Clipping | indicador por estágio (pós-EQ e final); a proteção final true-peak continua na posição fixa | planejado |
+
+**Passo de teclado no MVP.** O editor avançado ([referência do MVP](../design/06-mvp-reference.md) `mvp/advanced-eq.js`) usa `input[type=range]` com `min=-15`, `max=15`, `step=.5`, então ↑/↓ deslocam 0,5 dB e Home/End vão ao mínimo/máximo pelo comportamento nativo do controle — não há handler próprio para isso. Shift+seta aplica ±2 dB com clamp em ±15 dB, e duplo clique zera a banda em 0 dB. O editor clássico (`mvp/player.js`) também usa `step="0.5"` e duplo clique = 0 dB, mas **não** implementa o passo de 2 dB com Shift. A tabela acima vale como comportamento do MVP; levá-la ao nativo é requisito deste capítulo.
 
 ## 3. Topologia comum dos modos gráficos
 
@@ -183,9 +185,9 @@ EqState {
 
 ## 14. MVP HTML/SVG/JS — contrato documental
 
-Este é um requisito para o GPT/Codex que desenvolve o protótipo ([SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO-v1.2](../product/05-decisions.md#decisões-dsp-e-equalizadores-2026-10-25) §5.9, §12.7, §13.3). Este PR não toca no MVP.
+Contrato do protótipo, hoje cumprido pela [referência do MVP](../design/06-mvp-reference.md) (`vynamp-mvp-reference@0d9860b`, rev.38). Os itens abaixo continuam valendo como critério de aceite: verificam o que o MVP já faz e barram regressão.
 
-1. Cinco seleções alcançáveis por mouse, toque e teclado. Cada uma contém exatamente 10, 20, 31 ou 64 controles gráficos, ou até 32 filtros.
+1. Cinco seleções alcançáveis por mouse, toque e teclado. Cada uma contém exatamente 10, 20, 31 ou 64 controles gráficos, ou até 32 filtros. Verificado no pin: `modes=['10','20','31','64','parametric']` e, para 20 e 64, centros gerados por `20*1000**(i/(n-1))`, com 64 `input[type=range]` reais (`mvp/advanced-eq.js`).
 2. Estado independente por modo, persistido ao recarregar a página e ao trocar de tema ou layout.
 3. Curva SVG calculada com as mesmas fórmulas deste capítulo (ou `BiquadFilterNode.getFrequencyResponse` quando ligado ao Web Audio), determinística.
 4. **Verdade funcional**: o protocolo declara exatamente quais modos processam som (ex.: `BiquadFilterNode` conectado e testado). Os demais exibem o rótulo visível **`[DEMO — sem processamento de áudio neste modo]`** (en: `[DEMO — no audio processing in this mode]`). Um controle manipulável não prova processamento audível. Um gráfico SVG não é chamado de DSP real.
@@ -194,6 +196,8 @@ Este é um requisito para o GPT/Codex que desenvolve o protótipo ([SKIN-REQUIRE
 ### Status da revisão 15 (2026-10-28)
 
 Todos os itens abaixo são **evidência relatada da referência externa rev. 14/15, não verificada neste repositório** (protótipo Codex rev.14/15, histórico; fonte atual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 rev.38; o código `interactive/*` e os `*-validation.json` do protótipo não estão aqui; a validação relatada foi em Chrome/Windows com fixtures controladas). Separação: **especificado** · **implementado no protótipo (relatado)** · **validado no protótipo (relatado)** · **nativo (hoje: nada)**.
+
+O que já foi conferido **neste repositório** sobre o pin: os cinco modos existem; 20 e 64 têm centros logarítmicos `20*1000**(i/(n−1))`; as bandas são `input[type=range]` reais com `step=.5`; Shift+seta aplica ±2 dB com clamp em ±15 dB; duplo clique zera; e o rótulo `[DEMO — sem processamento de áudio neste modo]` está no código (`mvp/advanced-eq.js`, `mvp/dsp-workspace.js`). O percurso de áudio real do EQ principal também está no código: o status declara `[REAL] … uma instância Web Audio` quando o nó está habilitado, a cadeia global ligada e o nó na rota viva (`mvp/eq-registry.js`). **O que continua relatado** é a *medição*: latência, CPU, qualidade e as validações com fixtures não foram executadas aqui.
 
 | Item | Especificado | Protótipo: implementado (relatado) | Protótipo: validado (relatado) | Nativo |
 |---|---|---|---|---|
