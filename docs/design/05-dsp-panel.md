@@ -1,6 +1,6 @@
 # Painel Audio DSP, equalizador e medidores — UI/UX
 
-Versão: 0.7.2 · Data: 2026-10-28 · Estado: especificação proposta. No nativo, nada está implementado. Segundo a referência externa (rev. 14/15), o protótipo HTML/SVG/JS do Codex, fora deste repositório, passou a ter UI DSP; isso é relatado e não foi verificado aqui.
+Versão: 0.7.3 · Data: 2026-11-05 · Estado: especificação proposta. No nativo, nada está implementado. Segundo a referência externa (rev. 14/15), o protótipo HTML/SVG/JS do Codex, fora deste repositório, passou a ter UI DSP; isso é relatado e não foi verificado aqui.
 
 Base: [visual](01-visual-system.md), [layouts](02-layouts.md), [acessibilidade](03-accessibility-i18n.md), [DSP](../audio/03-dsp.md), [equalizadores](../audio/08-equalizers.md), [vitrola](../audio/10-vitrola.md) e [visualizadores](../extensions/04-visualizer-contract.md). A UI nativa da cadeia e do EQ avançado é planejada em TASK-E02-07 (M3).
 
@@ -60,7 +60,11 @@ Fluxos principais: (1) primeira execução com EQ plano e desligado; (2) escolhe
 
 ## 6. Medidores e visualização
 
-Instrumentos de exibição **não são efeitos DSP** e nunca alteram a saída. As convenções dos VU meters existentes (SKIN-REQUIREMENTS §5.13: troca de modo por clique/V, 0 VU = −18 dBFS ajustável, slot de 28 DIP) ficam preservadas. Contrato técnico: [visualizadores](../extensions/04-visualizer-contract.md) (TASK-E06-05/06, E17-09).
+Instrumentos de exibição **não são efeitos DSP** e nunca alteram a saída. O comportamento de interação vem do MVP ([referência](../design/06-mvp-reference.md) `mvp/player.js`): clique no instrumento alterna para o próximo VU, clique com Shift alterna para o anterior, botão direito abre a escolha entre os modelos, e a tecla **V** faz o mesmo ciclo (Shift+V abre o menu; Alt+V desliga o VU). Contrato técnico: [visualizadores](../extensions/04-visualizer-contract.md) (TASK-E06-05/06, E17-09).
+
+**Duas convenções que os arquivos de skin atribuíam a este painel não existem no MVP** e por isso não entram por herança ([D-MVP-02](../product/05-decisions.md#decisão-o-mvp-é-a-fonte-única-da-ui-2026-11-05)): "0 VU = −18 dBFS ajustável" (o MVP não tem constante de calibração nem ajuste; a escala de cada medidor vem de `scaleDB`/`scaleAngles` no `meta.json`) e "slot de 28 DIP" (o instrumento é fluido: `#meter-stage` com `width:100%`/`height:auto`). Se qualquer uma for desejada no nativo, é decisão nova registrada em [05-decisions](../product/05-decisions.md), não requisito herdado.
+
+**Contagem de modelos.** O contrato VU-INT abaixo fala em **12 VU meters aprovados**, número herdado da rev.15. No pin atual (rev.38) o pacote tem **16 medidores e os 16 são selecionáveis** ([§3 da referência](06-mvp-reference.md#3-pacote-de-referência)). A divergência está registrada em [D-MVP-04](../product/05-decisions.md#decisão-o-mvp-é-a-fonte-única-da-ui-2026-11-05); a matriz de aceite VU-INT-06 não é reescrita aqui.
 
 | Medidor | Definição / metodologia | Estado |
 |---|---|---|

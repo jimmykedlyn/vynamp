@@ -1,6 +1,6 @@
 # vitrola — Vinyl Simulator e Tube Amplifier Simulator no DSP
 
-Versão: 0.7.2 · Data: 2026-10-28 · Estado: **planejamento pré-existente preservado**. O design da biblioteca foi aprovado em 2026-10-23. Biblioteca e integração não foram implementadas. No protótipo web (referência externa rev. 15, relatado, não verificado aqui) Vinyl e Tube só têm configuração, sem processamento.
+Versão: 0.7.3 · Data: 2026-11-05 · Estado: **planejamento pré-existente preservado**. O design da biblioteca foi aprovado em 2026-10-23. Biblioteca e integração não foram implementadas. No protótipo web (referência externa rev. 15, relatado, não verificado aqui) Vinyl e Tube só têm configuração, sem processamento.
 
 ## 1. Fonte da verdade e escopo
 
@@ -40,7 +40,7 @@ Versão: 0.7.2 · Data: 2026-10-28 · Estado: **planejamento pré-existente pres
 - **Rituais e transporte**: `pre_roll()`/`tail()` são inseridos pelo host no transporte. A duração apresentada e a posição consideram esse áudio extra. Rituais desligáveis.
 - **WearState**: bytes estáveis e versionados, com migração. O Vynamp persiste **por disco (álbum)** na biblioteca local. "Comprar disco novo" exige confirmação. O WearState não faz parte de presets nem de exportação de preset (proposto).
 - **Bit-perfect / DSD / transparente**: desativação automática com o motivo visível ("desativado: caminho bit-perfect / DSD nativo / transparente").
-- **Uso isolado ou simultâneo**: vinil e válvula podem ser usados juntos ou separados. A referência define um macro único; o **enable separado por seção** é requisito do host para a UI (SKIN-REQUIREMENTS MVP-05/06) e fica **a validar** com a API do vitrola (ex.: intensidade 0 por seção = bypass da seção).
+- **Uso isolado ou simultâneo**: Vinyl e Tube são **módulos separados** dentro da categoria Vitrola, cada um com `intensity` e `bypass` próprios, e o painel DSP expõe o toggle de bypass por módulo ([referência do MVP](../design/06-mvp-reference.md) `mvp/dsp-catalog.js`, `mvp/dsp-workspace.js`). Acima deles há o macro "Intensidade geral (Vinyl + Tube)", que move as duas intensidades juntas e declara que "condição, preset e bypass continuam independentes", e um botão único da categoria. Um módulo só entra na cadeia com o enable do módulo **e** o botão da Vitrola ligados. O MVP **não** tem contrato de "intensidade 0 = bypass da seção" nem API de host para isso: um enable separado por seção na UI nativa seria decisão nova de produto, não herança do MVP ([D-MVP-02](../product/05-decisions.md#decisão-o-mvp-é-a-fonte-única-da-ui-2026-11-05)).
 - **Headroom e picos**: medidores pré e pós-vitrola. Estalos e pops sintéticos têm pico limitado (limite numérico a definir no construtor; teste VIT-T-04) e não escondem clipping, que continua indicado. A proteção final true-peak continua fixa.
 
 ## 4. Itens do pedido v1.3 versus referência
@@ -60,7 +60,7 @@ O pedido traz parâmetros "candidatos a validar". A regra: o que a referência d
 | Controles Amount/Tone/Noise/Crackle/Clicks/Rumble/Wow/Flutter/Stereo Character | Amount = macro de intensidade (definido); os demais correspondem a elementos do painel avançado | nomes finais e layout: construtor/UX, **a validar** |
 | Random seed do usuário | **diverge**: a semente é automática (faixa+reprodução / disco+contagem) e fixa só nos testes | manter automática; seed exposta ao usuário: **a validar** |
 | Ganho de saída compensado | não definido explicitamente | **a validar** (recomendado para A/B justo) |
-| Presets Clean/Warm/Vintage Vinyl (pedido) × Subtle/Warm/Rustic (SKIN-REQUIREMENTS, [proposal]) | a referência não define presets de fábrica | **a validar**: escolher uma nomenclatura; até lá, ambas são propostas |
+| Presets Clean/Warm/Vintage Vinyl (pedido) | **diverge do pedido**: o MVP implementa três presets de fábrica do Vitrola — **Sutil**, **Quente** e **Rústico** — exibidos em "Presets do módulo" quando a categoria é Vitrola e aplicados por "Carregar" (Sutil → Vinyl "Bem conservado" / Tube "Limpo"; Quente → "Usado" / "Quente"; Rústico → "Gasto" / "Saturado") | vale o MVP ([D-MVP-02](../product/05-decisions.md#decisão-o-mvp-é-a-fonte-única-da-ui-2026-11-05)); a nomenclatura em inglês "Subtle/Warm/Rustic" e a marcação `[proposal]` não existem nele |
 | Drive, Warmth/Tone | correspondem a saturação/macro e transformador | **a validar** como controles nomeados |
 | Bias | **diverge**: na referência o bias é **dinâmico/interno** | manter interno; controle de usuário **a validar** |
 | Mix dry/wet | não definido | **a validar** |
@@ -72,7 +72,7 @@ O pedido traz parâmetros "candidatos a validar". A regra: o que a referência d
 
 ## 5. UX hospedeira
 
-- Local: Preferências › DSP › "Vitrola" e atalho no inspector da cadeia (**proposto** no SKIN-REQUIREMENTS). Só componentes padrão do Vynamp. Cards separados para Vinil e Válvula, com bypass próprio, intensidade, indicador "coloração intencional", presets, A/B, restaurar padrões e "guia de som".
+- Local: Preferências › DSP tem o botão "Abrir DSP e Vitrola…", que abre o workspace DSP; lá a Vitrola é **categoria própria** ("Vitrola"), com Vinyl Simulator e Tube Amplifier. Atalhos: "Vitrola…" na barra do equalizador e "Vitrola" na faixa de atalhos de áudio junto ao instrumento. O MVP **não** tem atalho para a Vitrola no inspector da cadeia (Fluxo modular); um atalho ali seria decisão nova ([D-MVP-02](../product/05-decisions.md#decisão-o-mvp-é-a-fonte-única-da-ui-2026-11-05)). Só componentes padrão do Vynamp. Cards separados para Vinil e Válvula, com bypass próprio, intensidade, indicador "coloração intencional", presets, A/B, restaurar padrões e "guia de som".
 - Nível 1: botão principal "Intensidade do vitrola" de 0–100% (padrão sutil), On/Off com crossfade e estado (Ativo / Desativado automaticamente com motivo / Aquecendo… / Pronto).
 - Nível 2: painel avançado por elemento (lado A/B e disco atual em texto, rpm, superfície, rituais com aviso "altera a duração", cápsula, barra de desgaste somente leitura + "Comprar disco novo", perfil da válvula, sag, transformador, "acoplar ao volume").
 - **Proibido**: ilustração de toca-discos, agulha, disco girando, braço ou válvulas animadas. Um ícone genérico pequeno de categoria é permitido.
@@ -85,7 +85,7 @@ Evidência relatada da referência externa rev. 14/15, não verificada neste rep
 
 ## 6. Roadmap (status herdado)
 
-- Ordem acordada (vitrola §6; STATE.md): `vynamp-decode` Camada 1 → **TASK-E04-03** (grafo DSP, M2) → vitrola. A biblioteca pode ser construída e testada offline antes disso. Nas tabelas de inventário do SKIN-REQUIREMENTS, a integração aparece como **M3 (após E04-03)**.
+- Ordem acordada (vitrola §6; STATE.md): `vynamp-decode` Camada 1 → **TASK-E04-03** (grafo DSP, M2) → vitrola. A biblioteca pode ser construída e testada offline antes disso. O marco da integração é **M3, depois de E04-03** ([D-DSP-07](../product/05-decisions.md#decisões-dsp-e-equalizadores-2026-10-25)).
 - O `ROADMAP-rodadas.md` da raiz lista só TASKs e **não** tem uma linha vitrola. Não existe TASK vitrola no backlog. **Pendência**: criar uma TASK de integração (fase M3, depois de E04-03) num PR que altere `tasks/backlog.json` e a matriz de requisitos. Este PR é só de Markdown e não a cria. A prioridade não foi deslocada.
 - CPU: meta < 5% de um núcleo moderno a 96 kHz estéreo com tudo ligado. É meta, não gate; confirmar por benchmark.
 
