@@ -4,7 +4,7 @@
 
 Problema e comportamento final:
 
-O PR #35 (mergeado em `efc3164`) registrou que o MVP web é a fonte única da UI e tirou as citações aos dois arquivos `SKIN-*` da cadeia documental. A revisão pós-merge achou **dois erros factuais** no que ele mergeou, mais três afirmações da mesma família e quatro contradições internas na própria evidência. Este PR corrige os nove — e, na rev. 2, mais dois arquivos onde a mesma afirmação falsa sobrevivia.
+O PR #35 (mergeado em `efc3164`) registrou que o MVP web é a fonte única da UI e tirou as citações aos dois arquivos `SKIN-*` da cadeia documental. A revisão pós-merge achou **dois erros factuais** no que ele mergeou, mais três afirmações da mesma família e quatro contradições internas na própria evidência. Este PR corrige os nove — e, na rev. 2, **a mesma afirmação falsa sobrevivendo em mais quatro arquivos** (`09-dsp-catalog.md`, `03-dsp.md` em dois pontos, `05-decisions.md`).
 
 **Bloqueantes — texto que afirma o oposto do código do pin rev.38:**
 
@@ -61,7 +61,7 @@ Limitações declaradas:
 - **A verificação é de código, não de comportamento em execução.** Nenhum navegador foi aberto. "Existe" aqui significa "o código do pin implementa"; "não existe" significa "não há handler, constante nem CSS que o faça". Processamento existente **não** é processamento validado.
 - **Nenhuma destas afirmações teve segunda leitura independente.** A revisão por subagente não rodou (cota do plano, HTTP 429) e o workflow de verificação foi abortado antes do estágio adversarial. Estes dois erros foram achados por releitura do autor, não por revisão — que é exatamente por que a rev. 1 os mergeou.
 - **Não foi aberto navegador para conferir o selo "CONFIG." × áudio real** nos módulos do grafo. A conclusão vem do código (`real=true` e a montagem do `AudioWorkletNode`), não da UI renderizada.
-- **A rev. 1 deste PR ainda deixava a afirmação falsa em dois arquivos** (`09-dsp-catalog.md` e `03-dsp.md`). Foi encontrada na rev. 2, por varredura de texto sobre toda a árvore — não por revisão. É a segunda vez que o mesmo erro passa por falta de segunda leitura.
+- **A rev. 1 deste PR ainda deixava a afirmação falsa em quatro arquivos** (`09-dsp-catalog.md` em dois pontos, `03-dsp.md` em dois pontos, e `05-decisions.md` na linha D-DSP-17). Foi encontrada na rev. 2, por varredura de texto sobre toda a árvore — não por revisão. É a segunda vez que o mesmo erro passa por falta de segunda leitura.
 - **Este PR conflita com o #38 (E19-03)** em `docs/INDEX.md` e `docs/audio/10-vitrola.md`, confirmado por `git merge-tree`. A resolução não é mecânica: o #38 numera o design como §8.1–8.9 e move a antiga §5 para §8; o #36 aponta para §5. Quem entrar depois reconcilia as duas numerações.
 - Este PR não altera visibilidade, proteções, assinatura nem plano — isso é da TASK-E19-06, por decisão da ADR-014.
 
@@ -75,6 +75,6 @@ Revisão técnica (subagente Sonnet/Opus), commit revisado e achados:
 
 **Revisão independente: não realizada.** Mesma causa da rev. 1 — subagente revisor indisponível por limite de cota do plano. Quem approve está aprovando verificação direta do autor, sem segundo par de olhos. O histórico da rev. 1 mostra que essa é uma limitação real, não formal.
 
-Commit revisado: `703da0c`.
+Commit revisado: `951a3ac` (última alteração de conteúdo; depois dele só o próprio corpo do PR mudou).
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
