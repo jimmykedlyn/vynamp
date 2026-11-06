@@ -28,7 +28,7 @@ O PR #35 (mergeado em `efc3164`) registrou que o MVP web é a fonte única da UI
 9. **`docs/audio/03-dsp.md` listava "Vinyl/Tube só com configuração"** entre as capacidades por módulo, e o cabeçalho também tratava a rev. 15 como estado. Corrigidos.
 10. **`docs/audio/03-dsp.md` §Grafo modular dizia que o protótipo liga áudio "com nós nativos do Web Audio, sem AudioWorklet"**. O pin rev.38 usa AudioWorklet em duas famílias de nó: `vynamp-advanced37` (bandas do EQ-64, limiter, loudness-meter, Vinyl, Tube) e `vynamp-dynamics36` (gate, expander), montados em `mvp/graph-audio.js`; o `registerProcessor` está em `mvp/advanced-dsp.js`. A frase foi corrigida e a rev. 15 marcada como histórico.
 11. **`docs/product/05-decisions.md` mantinha "Vinyl e Tube só com configuração"** na linha D-DSP-17 (Saturação × Tube) — três linhas acima da entrada que o #35 já tinha corrigido. O `merge-tree` confirma que o #38 não toca esse texto.
-12. **`VALIDATION.json` deixou de ser commitado neste PR.** O arquivo é saída de `check-docs`, não fonte; foi revertido com `git checkout --` e não entra no diff. A contagem 356 corresponde à árvore (nenhum `.md` novo nesta rodada).
+12. **`VALIDATION.json` está versionado e entra no diff — por uma linha.** O arquivo é saída de `cargo xtask check-docs`, não fonte, mas o repositório o rastreia desde `cc6665f`; as rev. 1 e 2 deste PR afirmavam que ele "não entra no diff" e isso era falso nas duas. Depois da remoção de dez arquivos a árvore tem 346 Markdown, e o valor commitado passa a ser 346 (era 356). A alternativa — reverter para os 355 de `origin/develop` — deixaria o arquivo commitado contradizendo a árvore por onze arquivos.
 
 **Duas autocontradições introduzidas no #35 e corrigidas aqui:** os cabeçalhos de `03-dsp.md` e `09-dsp-catalog.md` diziam que *tudo* abaixo era "evidência relatada, não verificada neste repositório", enquanto o mesmo documento passou a conter linhas verificadas no código do pin. Agora a regra é explícita: onde a linha cita o pin, é verificada; medição continua não executada.
 
@@ -46,13 +46,13 @@ Comandos, resultados, ambientes/fixtures e limitações:
 
 | Comando | Resultado |
 |---|---|
-| `cargo xtask check-docs` | `result: passed`, `errors: []` — 356 arquivos Markdown, 191 requisitos, 191 tarefas, 19 épicos |
+| `cargo xtask check-docs` | `result: passed`, `errors: []` — 346 arquivos Markdown, 191 requisitos, 191 tarefas, 19 épicos |
 | `cargo xtask check-delivery` | `result: passed`, `errors: []`, 3 arquivos de workflow |
 | `cargo fmt --all --check` | sem diff |
 | `cargo clippy --workspace --all-targets --locked -- -D warnings` | `No issues found` |
 | `cargo test --workspace --locked` | 52 + 34 testes, 0 falhas |
 
-`VALIDATION.json` não entra no diff: é saída de `check-docs`, não fonte. Depois dos checks ele volta a `git checkout -- VALIDATION.json`. A contagem 356 corresponde à árvore; nenhum `.md` novo foi criado nesta rodada.
+`VALIDATION.json` é saída de `check-docs` e está versionado: o diff é de uma linha só, `markdown_files` 355 → 346, acompanhando a remoção dos dez arquivos. Nenhum `.md` novo foi criado nesta rodada; os 356 que as rev. 1 e 2 citavam eram a árvore **antes** da remoção. Esta rodada não reverte o arquivo — revertê-lo deixaria o valor commitado errado.
 
 Base de cada afirmação: leitura direta de `vynamp-mvp-reference@0d9860b` via `git show` — `mvp/advanced-dsp.js`, `mvp/graph-audio.js`, `mvp/graph-model.js`, `mvp/graph-editor.js`, `mvp/player.js`, `mvp/advanced-eq.js` e `out/svg/meters/*/meta.json`.
 
@@ -75,6 +75,6 @@ Revisão técnica (subagente Sonnet/Opus), commit revisado e achados:
 
 **Revisão independente: não realizada.** Mesma causa da rev. 1 — subagente revisor indisponível por limite de cota do plano. Quem approve está aprovando verificação direta do autor, sem segundo par de olhos. O histórico da rev. 1 mostra que essa é uma limitação real, não formal.
 
-Commit revisado: `951a3ac` (última alteração de conteúdo; depois dele só o próprio corpo do PR mudou).
+Commit revisado: `0482f62` (última alteração de conteúdo: remoção dos dez planos e `ARTIFACTS.json` coerente; depois dele só o próprio corpo do PR mudou).
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
