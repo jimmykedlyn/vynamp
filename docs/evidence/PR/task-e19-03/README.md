@@ -68,7 +68,7 @@ A incorporação **reorganiza em subseções** (as nove seções originais virar
 
 ## Limitações
 
-- **Revisão independente por subagente:** o plano semanal esgotou em 2026-11-05 (HTTP 429), então a revisão de contexto limpo não roda; a conferência foi feita pelo próprio autor, critério declarado em vez de escondido.
+- **Revisão independente:** rodou em segundo ciclo por subagente de contexto limpo (Sonnet), **APROVADO COM RESSALVAS** — 9 achados, todos de precisão factual e de link, aplicados em `1352f1f`. No primeiro ciclo ela não rodou: o plano semanal esgotou em 2026-11-05 (HTTP 429).
 - **A cópia literal é um `git show` do clone local**, não uma verificação de que `75c4ca2` está correto como design — o design foi aprovado em 2026-10-23; o commit posterior só renomeia.
 - **Nada foi exercitado em runtime**: não há código para exercitar.
 - Este PR não altera visibilidade, proteções, assinatura nem plano — isso é da TASK-E19-06, por decisão da ADR-014.
