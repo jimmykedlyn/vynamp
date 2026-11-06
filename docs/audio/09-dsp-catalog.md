@@ -1,6 +1,6 @@
 # Catálogo de módulos DSP
 
-Versão: 0.7.3 · Data: 2026-11-03 · Estado: especificação proposta. **Nenhum módulo está implementado no produto nativo.** O protótipo web (referência externa, rev. 15) relata alguns módulos com áudio real; é evidência relatada, não verificada neste repositório (ver [Famílias v1.4](#famílias-v14-e-estado-no-protótipo-rev-15-relatado)).
+Versão: 0.7.4 · Data: 2026-11-05 · Estado: especificação proposta. **Nenhum módulo está implementado no produto nativo.** No MVP web de referência (`vynamp-mvp-reference@0d9860b`, rev.38, fora deste repositório) parte dos módulos tem áudio real — inclusive Vinyl e Tube; é evidência de código, e o que foi verificado está na tabela abaixo (ver [Famílias v1.4](#famílias-v14-e-estado-no-protótipo-rev-15-relatado)).
 
 Cada módulo informa: estado, prioridade/fase, objetivo e uso, parâmetros e faixas, posição na [cadeia real](03-dsp.md#cadeia-real-de-processamento), dependências, bypass, trade-offs, UX e testes. Faixas sem justificativa técnica ficam como **decisão aberta**, sem números inventados. Os testes `DSP-T-xx` estão na [matriz de testes DSP](../quality/05-dsp-test-matrix.md).
 
@@ -12,7 +12,7 @@ Regras comuns: todo nó tem bypass real com crossfade, smoothing de 10–50 ms, 
 
 O painel DSP navega por **oito famílias**: Ganho/EQ, Dinâmica, Acústica, Estéreo, Tempo/formato, Criativos, Vitrola e Saída (DSP-UX-03; [painel DSP §8](../design/05-dsp-panel.md#8-acesso-e-controles-dsp-ux)). As famílias são navegação, **não** switches de processamento nem um limite de oito efeitos, e não alteram a ordem da cadeia. Os capítulos 1 a 6 abaixo continuam sendo a organização textual da v1.3 (cinco blocos de módulos e extensibilidade); a tabela mapeia cada módulo à família de navegação. Medidores (Spectrum, pico/RMS, VU, LUFS, true peak) são uma **área própria, fora das famílias** ([painel DSP §2 e §6](../design/05-dsp-panel.md#6-medidores-e-visualização)). O mapeamento de módulos sem família explícita na fonte é **proposto**, a confirmar com o design do painel.
 
-Colunas do protótipo: **evidência relatada da referência externa rev. 14/15, não verificada neste repositório**. A referência cita 39 módulos e 198 campos verificados; são números do protótipo, não congelam o catálogo nativo nem excluem módulos exigidos aqui. Nativo: **nada implementado** em nenhuma linha; fases e prioridades de cada módulo seguem as seções 1 a 6. Um nó configurável não comprova processamento.
+Colunas do protótipo: **evidência relatada da referência externa rev. 14/15**, salvo onde a linha cita o código do pin rev.38 lido para este documento — nesse caso a afirmação é verificada, e a medição continua não executada. A referência cita 39 módulos e 198 campos verificados; são números do protótipo, não congelam o catálogo nativo nem excluem módulos exigidos aqui. Nativo: **nada implementado** em nenhuma linha; fases e prioridades de cada módulo seguem as seções 1 a 6. Um nó configurável não comprova processamento.
 
 | Módulo (seção) | Família v1.4 | Protótipo rev. 15 (relatado) |
 |---|---|---|
@@ -34,7 +34,7 @@ Colunas do protótipo: **evidência relatada da referência externa rev. 14/15, 
 | **Saturação suave** | Criativos | áudio real (tanh com oversampling 2×, drive e dry/wet). **Não equivale ao Tube Amplifier**; não afirmar que implementa uma válvula |
 | LFO → Ganho | Criativos | controle real (modulação senoidal limitada a ±0,25 do ganho linear); sem ligação a portas de áudio |
 | Spectrum e pico/RMS | área Medidores (fora das famílias; [painel DSP §6](../design/05-dsp-panel.md#6-medidores-e-visualização)) | análise real: FFT de 1024 amostras, pico amostral e RMS em dBFS, antes do volume; não são LUFS nem dBTP |
-| **Vinyl Simulator e Tube Amplifier** (§5) | Vitrola | **configuração completa preservada, sem processamento desses modelos**; dependem de adaptadores e validação acústica próprios ([vitrola](10-vitrola.md)) |
+| **Vinyl Simulator e Tube Amplifier** (§5) | Vitrola | **áudio real** no pin rev.38 — `class Vinyl` e `class Tube` em `mvp/advanced-dsp.js`, montados como `AudioWorkletNode` (`vynamp-advanced37`) por `mvp/graph-audio.js`, com `real=true` em `mvp/graph-model.js`; algoritmos e validação acústica continuam pendentes ([vitrola](10-vitrola.md)) |
 
 Regras que valem para o catálogo: se um nó indisponível estiver habilitado na rota ativa do protótipo, a cadeia não é ativada e a razão é exibida; o bypass explícito permite a rota sem alegar o efeito. Os módulos anteriores, fases e prioridades não mudam por causa do protótipo.
 
@@ -245,7 +245,7 @@ Regras que valem para o catálogo: se um nó indisponível estiver habilitado na
 ## 5. Emulações analógicas já planejadas
 
 ### Vinyl Simulator e Tube Amplifier Simulator (vitrola)
-- **Estado** design aprovado em 2026-10-23; integração depois de E04-03 (M3 nas specs de skin). Protótipo (relatado, rev. 15): só configuração, sem processamento; nativo: nada.
+- **Estado** design aprovado em 2026-10-23; integração depois de E04-03 (M3 nas specs de skin). No pin rev.38 os dois **têm processamento real** num AudioWorklet (verificado no código de `mvp/advanced-dsp.js` e `mvp/graph-audio.js`); a rev. 15, que só tinha configuração, é histórico. Validação acústica: nada. Nativo: nada.
 - **Especificação** [10-vitrola](10-vitrola.md). São dois módulos com identidade própria, opcionais e colorativos, com macro de intensidade e painel avançado.
 - **Testes** VIT-T-01..10.
 

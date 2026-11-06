@@ -1441,34 +1441,9 @@
       "sha256": "a1b7a2d29cd2d7b9de32edd64bc67fbfdbc1ab49151c48b711b20de1b7e2fbf0"
     },
     {
-      "bytes": 3182,
-      "path": "pacote/docs/superpowers/plans/2026-10-14-completeness-audit.md",
-      "sha256": "15a7646862c99e69b544d6f1855c67198c656680dd6af13d8c40d0d6beb98bfd"
-    },
-    {
-      "bytes": 2966,
-      "path": "pacote/docs/superpowers/plans/2026-10-14-project-tooling.md",
-      "sha256": "4d34812c882a952dfe9eb399e0088f3ee39943de3ae2be608248cf8a6ef855b0"
-    },
-    {
-      "bytes": 3527,
-      "path": "pacote/docs/superpowers/plans/2026-10-14-rust-tooling.md",
-      "sha256": "7d648ae9f7ad408c980dd5cfa49fc807da4a0d0ef6a75560b72d370085af220d"
-    },
-    {
-      "bytes": 3488,
-      "path": "pacote/docs/superpowers/plans/2026-10-14-vynamp-branding.md",
-      "sha256": "b0c7661b25b739b22e6a61282f55b6c311d74c5718e9766d63cb4c5cf0206488"
-    },
-    {
       "bytes": 6013,
       "path": "pacote/docs/superpowers/plans/2026-10-15-e15-01-verification.md",
       "sha256": "9105d771439655f7c7096c652380c62a469aae5f9139a2ce6558688b420dc9f5"
-    },
-    {
-      "bytes": 1512,
-      "path": "pacote/docs/superpowers/plans/2026-10-15-windows-restart.md",
-      "sha256": "e8c806f378b586ac1798d7d6aed5730a915ae8b1d93658be218a4a6432b70581"
     },
     {
       "bytes": 7244,
@@ -1486,16 +1461,6 @@
       "sha256": "368666013e1e6f64fe962d286eb3e3f6e476ab31231a375fa1c10ae8a8c08d38"
     },
     {
-      "bytes": 8049,
-      "path": "pacote/docs/superpowers/plans/2026-10-18-e15-04-woodpecker.md",
-      "sha256": "4dabc5749708b86805e302abfbb6744cc0885f581c2feae81f6181d165e1f936"
-    },
-    {
-      "bytes": 4012,
-      "path": "pacote/docs/superpowers/plans/2026-10-19-e15-04-woodpecker-only-ci.md",
-      "sha256": "b45742b7a4d712ffdc447d45a2391dba282194e45f2142009efc20f657b22c32"
-    },
-    {
       "bytes": 5688,
       "path": "pacote/docs/superpowers/plans/2026-11-05-specs-shell-integration.md",
       "sha256": "2eba745369869a5141ef16d75d0f160d82ab6666969e3a572c47afc7a15347e5"
@@ -1504,21 +1469,6 @@
       "bytes": 5886,
       "path": "pacote/docs/superpowers/plans/2026-11-05-specs-vynamp-restore.md",
       "sha256": "1379931795292fee321e39b98535448ac891f3ffe244bda87ce59d584e226bbb"
-    },
-    {
-      "bytes": 2053,
-      "path": "pacote/docs/superpowers/specs/2026-10-14-completeness-audit-design.md",
-      "sha256": "234317faf4f1036b6eacf8d26968c8ee1538193ab18febebfdb89111fda1a72b"
-    },
-    {
-      "bytes": 1828,
-      "path": "pacote/docs/superpowers/specs/2026-10-14-rust-tooling-design.md",
-      "sha256": "214fe511d204cda3007f60d4d6c625fb1662df7a711f0108164011f8b64e3d19"
-    },
-    {
-      "bytes": 8596,
-      "path": "pacote/docs/superpowers/specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md",
-      "sha256": "0f4380313c21d889e796409df27b411748e0e289083d2f8d335a5d8032ac260b"
     },
     {
       "bytes": 26664,
