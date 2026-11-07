@@ -526,9 +526,12 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
     Ok(flows.len())
 }
 pub fn delivery(root: &Path) -> Result<()> {
-    // Packaging belongs to the app that ships it, not to the umbrella: there is no
-    // packaging/ or branding reference asset here anymore (step 30 archived them), and a
-    // repo without a binary has nothing to install. D-CI-2 of step 34.
+    // Packaging belongs to the app that ships it, not to the umbrella, and a repo without
+    // a binary has nothing to install. D-CI-2 of step 34 removed the installer, branding
+    // and packaging checks from this gate. packaging/ and assets/branding/ still exist
+    // here on purpose: they are the source the app repos inherit, not this repo's own
+    // release inputs. The three reference PNGs, however, are in _arquivo/ and the manifest
+    // is checked against them there (branding::references).
     let mut c = Checks::default();
     c.check(read_json(root.join(".claude/settings.json"))?["enabledPlugins"]["superpowers@claude-plugins-official"]==true,"Claude plugin not enabled");
     let lock = read_json(root.join("config/superpowers.lock.json"))?;
