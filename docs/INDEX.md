@@ -196,20 +196,6 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Vynamp Restore — restauração por IA (fase futura)](tools/03-vynamp-restore-ia.md) — docs/tools/03-vynamp-restore-ia.md
 
-- [Completeness Audit Implementation Plan](superpowers/plans/2026-10-14-completeness-audit.md) — docs/superpowers/plans/2026-10-14-completeness-audit.md
-
-- [Project Tooling Implementation Plan](superpowers/plans/2026-10-14-project-tooling.md) — docs/superpowers/plans/2026-10-14-project-tooling.md
-
-- [Rust Tooling Implementation Plan](superpowers/plans/2026-10-14-rust-tooling.md) — docs/superpowers/plans/2026-10-14-rust-tooling.md
-
-- [Vynamp Branding Implementation Plan](superpowers/plans/2026-10-14-vynamp-branding.md) — docs/superpowers/plans/2026-10-14-vynamp-branding.md
-
-- [Reinício Windows consolidado](superpowers/plans/2026-10-15-windows-restart.md) — docs/superpowers/plans/2026-10-15-windows-restart.md
-
-- [Vynamp — revisão de completude da especificação](superpowers/specs/2026-10-14-completeness-audit-design.md) — docs/superpowers/specs/2026-10-14-completeness-audit-design.md
-
-- [Automação Rust — desenho aprovado em conversa](superpowers/specs/2026-10-14-rust-tooling-design.md) — docs/superpowers/specs/2026-10-14-rust-tooling-design.md
-
 - [Packaging e gates](../packaging/README.md) — packaging/README.md
 
 - [Ícones de distribuição — Vynamp](../packaging/icons/README.md) — packaging/icons/README.md
@@ -679,9 +665,6 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 # Preparação E15-04
 
-- [Desenho Woodpecker e Cloudflare Tunnel](superpowers/specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md) — docs/superpowers/specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md
-- [Plano Woodpecker E15-04](superpowers/plans/2026-10-18-e15-04-woodpecker.md) — docs/superpowers/plans/2026-10-18-e15-04-woodpecker.md
-- [Adendo CI/CD somente Woodpecker](superpowers/plans/2026-10-19-e15-04-woodpecker-only-ci.md) — docs/superpowers/plans/2026-10-19-e15-04-woodpecker-only-ci.md; substituído pela ADR-014.
 - [Evidência E15-04](evidence/PR/task-e15-04/README.md) — docs/evidence/PR/task-e15-04/README.md
 - [Evidência Woodpecker 3.20.1](evidence/PR/chore-woodpecker-3-20-1/README.md) — docs/evidence/PR/chore-woodpecker-3-20-1/README.md
 
@@ -732,12 +715,9 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Decisão D-MVP-01..04 — o MVP é a fonte única da UI](product/05-decisions.md#decisão-o-mvp-é-a-fonte-única-da-ui-2026-11-05) — docs/product/05-decisions.md; os dois arquivos de skin deixam de ser fonte de requisito.
 - [Evidência chore-specs-skin-gaps](evidence/PR/chore-specs-skin-gaps/README.md) — docs/evidence/PR/chore-specs-skin-gaps/README.md; oito afirmações conferidas contra o código do pin, verificações locais e limitações declaradas.
-
-# Fonte única da UI: o MVP web (2026-11-05)
-
-- [Decisão: o MVP é a fonte única da UI nativa — D-MVP-01..04](product/05-decisions.md#decisão-o-mvp-é-a-fonte-única-da-ui-2026-11-05) — docs/product/05-decisions.md; os dois arquivos SKIN deixam de ser fonte de requisito.
-- [Evidência chore-specs-skin-gaps](evidence/PR/chore-specs-skin-gaps/README.md) — docs/evidence/PR/chore-specs-skin-gaps/README.md; verificação das oito afirmações contra o código do pin rev.38 e limitações declaradas.
 - [Corpo do PR chore-specs-skin-gaps](evidence/PR/chore-specs-skin-gaps/pr-body.md) — docs/evidence/PR/chore-specs-skin-gaps/pr-body.md
+- [Corpo do PR chore-specs-skin-fixes](evidence/PR/chore-specs-skin-fixes/pr-body.md) — docs/evidence/PR/chore-specs-skin-fixes/pr-body.md; correção pós-merge dos dois erros factuais do #35.
+
 # Restauração por IA: fase futura (2026-11-05)
 
 - [ADR-015 — Restauração por IA admitida apenas como fase opt-in pós-1.0](architecture/adr/ADR-015-ai-restoration-future-phase.md) — docs/architecture/adr/ADR-015-ai-restoration-future-phase.md
