@@ -1,6 +1,6 @@
 # Engine de áudio e invariantes
 
-Versão: 0.7.1 · Data: 2026-10-25 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.2 · Data: 2026-11-07 · Estado: especificação proposta, implementação não iniciada. Contrato do relógio apresentado, do ring SPSC, da drenagem e a limitação conhecida do viés de latência absorvidos do spike da TASK-E01-02 ([evidência](../evidence/PR/task-e01-02/README.md)).
 
 ## Pipeline
 
@@ -12,7 +12,13 @@ Domain types: SampleRate(u32), FrameCount(u64), ChannelLayout, MediaTime em tick
 
 Control thread recebe comandos; workers fazem I/O/demux/decode; audio callback só consome buffers prontos; UI usa snapshots. Nada de mutex bloqueante, heap allocation, filesystem, DNS, HTTP, SQLite, logs síncronos ou extensões WASM dentro do callback. SPSC ring pré-alocado; parâmetros enviados por troca atômica/snapshot. Grafo compilado fora do callback, swap em fronteira de bloco com descarte fora da thread real-time.
 
-Cada reprodução tem generation ID; seek/troca incrementa geração e cancela produtor anterior. Dados de geração velha não entram no ring. EOF só termina após drenar buffers e saída. Underrun zera região restante sem repetir amostras e publica contador; fade de recuperação evita click quando houver espaço seguro.
+O ring SPSC é pré-alocado na construção — a armazenagem de amostras é uma única alocação e o caminho de produção/consumo não aloca mais nada; o produtor publica amostras com store Release do contador de escrita depois de gravá-las, e o consumidor libera slots com store Release do contador de leitura depois de lê-los — cada lado só toca slots que o outro entregou, e nenhum dos dois espera. Contadores monotônicos em `u64`.
+
+O clock apresentado é publicado pela própria callback por seqlock de escritor único: leitores (UI, controle) repetem a leitura enquanto a escrita está em curso, e a callback nunca espera. `presented = max(anterior, conteúdo escrito antes desta callback − latência_reported_do_primeiro_frame_do_buffer)`. A latência informada pelo backend é o atraso até o **primeiro** frame do buffer que está sendo escrito, então ela se mede contra o conteúdo entregue nas callbacks **anteriores** — medi-la contra o conteúdo já acrescentado superestima a posição em um buffer do dispositivo. `presented` é monotônico, nunca ultrapassa `content_frames`, e silêncio de underrun ou drenagem não o avança.
+
+A fórmula supõe que a fila do dispositivo contém **só** conteúdo. Silêncio de underrun ou de drenagem enfileirado também compõe a latência reportada, então `presented` fica subestimado em no máximo `latency_frames`: após um underrun atrasa até a latência inteira e volta a acompanhar quando o conteúdo flui; na drenagem estabiliza em `content_frames − latency_frames` sem alcançar `content_frames`. Nunca superestima e nunca regride. A correção depende do dreno completo da [TASK-E01-05](../../tasks/items/TASK-E01-05.md); medição em [evidência](../evidence/PR/task-e01-02/README.md).
+
+Cada reprodução tem generation ID; seek/troca incrementa geração e cancela produtor anterior. Dados de geração velha não entram no ring. EOF só termina após drenar buffers e saída. Underrun zera região restante sem repetir amostras e publica contador; fade de recuperação evita click quando houver espaço seguro. A callback lê a marca de fim de stream **antes** de medir o disponível no ring: depois que o produtor sinaliza fim, toda amostra já foi publicada, então leitura curta é drenagem e não underrun — sem essa ordem, o fim de toda reprodução viraria underrun.
 
 ## Estados
 

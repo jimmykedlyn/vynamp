@@ -1,7 +1,7 @@
 # Índice completo da especificação
 
 
-Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidências históricas.
+Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidências históricas.
 
 
 - [Pull request — Vynamp](../.github/pull_request_template.md) — .github/pull_request_template.md
@@ -705,3 +705,11 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 - [Evidência TASK-E19-03](evidence/PR/task-e19-03/README.md) — docs/evidence/PR/task-e19-03/README.md; dissolução do repositório vitrola, a descoberta do commit local não publicado e o que ficou pendente.
 - [Design aprovado do vitrola — cópia literal](evidence/PR/task-e19-03/vitrola-design.md) — docs/evidence/PR/task-e19-03/vitrola-design.md; o texto integral de 2026-10-23, preservado porque a incorporação em §8 o reorganizou em subseções e o repositório de origem é arquivado.
 - [Corpo do PR TASK-E19-03](evidence/PR/task-e19-03/pr-body.md) — docs/evidence/PR/task-e19-03/pr-body.md
+
+# Execução E01-02: callback e output clock (2026-11-07)
+
+- [Evidência TASK-E01-02](evidence/PR/task-e01-02/README.md) — docs/evidence/PR/task-e01-02/README.md; medições Windows/WASAPI, o que passou para 01-engine.md, a receita de instrumentação RT e a limitação conhecida do relógio.
+- [Probe sem stall — JSON](evidence/PR/task-e01-02/probe-steady.json) — docs/evidence/PR/task-e01-02/probe-steady.json; 30 s, 0 underruns, 0 eventos de heap, p99.9 ≤ 131,1 µs; SHA-256 a3621cc778aefb278f4d013576cdef808724b1a6b5f4097fbc7ebf022e38931c.
+- [Probe com stall de 300 ms — JSON](evidence/PR/task-e01-02/probe-stall.json) — docs/evidence/PR/task-e01-02/probe-stall.json; 25 underruns, 94 976 frames zerados, 0 eventos de heap, 0 regressões; SHA-256 4844d2fd49fd65ec35188cd154ee44c294d519e55dbddd3207953c124d3b4f01.
+- [Ambiente do probe](evidence/PR/task-e01-02/environment.txt) — docs/evidence/PR/task-e01-02/environment.txt; OS, toolchain, CPU e endpoint WASAPI usados nas medições.
+- [Repetição 50× do teste de clock](evidence/PR/task-e01-02/clock-flaky-50x.txt) — docs/evidence/PR/task-e01-02/clock-flaky-50x.txt; 50 execuções de `cargo test -p vynamp-audio --test clock`, 6 testes cada, 0 falhas; prova que o teste de concorrência deixou de depender do escalonador.
