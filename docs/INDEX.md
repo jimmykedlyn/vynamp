@@ -194,6 +194,8 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Vynamp Converter — conversão e transcodificação](tools/02-vynamp-converter.md) — docs/tools/02-vynamp-converter.md
 
+- [Vynamp Restore — restauração por IA (fase futura)](tools/03-vynamp-restore-ia.md) — docs/tools/03-vynamp-restore-ia.md
+
 - [Packaging e gates](../packaging/README.md) — packaging/README.md
 
 - [Ícones de distribuição — Vynamp](../packaging/icons/README.md) — packaging/icons/README.md
@@ -715,6 +717,13 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 - [Evidência chore-specs-skin-gaps](evidence/PR/chore-specs-skin-gaps/README.md) — docs/evidence/PR/chore-specs-skin-gaps/README.md; oito afirmações conferidas contra o código do pin, verificações locais e limitações declaradas.
 - [Corpo do PR chore-specs-skin-gaps](evidence/PR/chore-specs-skin-gaps/pr-body.md) — docs/evidence/PR/chore-specs-skin-gaps/pr-body.md
 - [Corpo do PR chore-specs-skin-fixes](evidence/PR/chore-specs-skin-fixes/pr-body.md) — docs/evidence/PR/chore-specs-skin-fixes/pr-body.md; correção pós-merge dos dois erros factuais do #35.
+
+# Restauração por IA: fase futura (2026-11-05)
+
+- [ADR-015 — Restauração por IA admitida apenas como fase opt-in pós-1.0](architecture/adr/ADR-015-ai-restoration-future-phase.md) — docs/architecture/adr/ADR-015-ai-restoration-future-phase.md
+- [Vynamp Restore — restauração por IA](tools/03-vynamp-restore-ia.md) — docs/tools/03-vynamp-restore-ia.md; planejada e não prometida, opt-in, CPU primeiro, pesos por download
+- [Evidência chore-specs-ia-futura](evidence/PR/chore-specs-ia-futura/README.md) — docs/evidence/PR/chore-specs-ia-futura/README.md; verificações locais e limitações declaradas.
+- [Corpo do PR chore-specs-ia-futura](evidence/PR/chore-specs-ia-futura/pr-body.md) — docs/evidence/PR/chore-specs-ia-futura/pr-body.md
 
 # Vitrola como módulo DSP interno (2026-11-05)
 

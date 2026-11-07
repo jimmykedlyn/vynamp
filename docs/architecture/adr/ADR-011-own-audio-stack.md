@@ -27,6 +27,8 @@ FFmpeg continua admitido apenas como oráculo de teste e como adapter opcional i
 
 A saída nunca faz resampling, dither nem ganho (design de vynamp-output @e534aad, §3 e §5.6); essas etapas pertencem ao grafo DSP do Vynamp.
 
+**Escopo desta decisão.** Ela governa o caminho de **reprodução** — decodificação, processamento em tempo real, saída — e ali não há terceiros. Um **job offline** de processamento em lote (por exemplo, restauração por IA) é outro contexto: usar runtime de inferência de terceiros ali exige **ADR nova que emende esta**, com a exceção nomeada e datada, e nunca alcança a callback de áudio. Ver [ADR-015](ADR-015-ai-restoration-future-phase.md).
+
 ## Lacunas
 
 | Lacuna | Biblioteca que cobre | Plano / camada |
