@@ -50,7 +50,7 @@ Começar por [NEXT](tasks/NEXT.md). Aceitar tarefas apenas com evidência numér
 
 Plataformas são obrigatórias no mesmo release1.0: [matriz](docs/platforms/01-support-matrix.md), [host Android](docs/platforms/02-android.md), [design phone/tablet](docs/design/04-mobile-tablet.md) e [QA por alvo](docs/quality/03-multiplatform-matrix.md). Android UI/serviço proposta usa Kotlin/Compose e núcleoRust; Mac Intel+Silicon exigem execução nativa em ambos.
 
-Preparação de engenharia0.7.0: [START-HERE](START-HERE.md), [estrutura](docs/engineering/08-folder-structure.md), [agentes/Superpowers](docs/engineering/01-agents-superpowers.md), [Gitflow](docs/engineering/03-gitflow-github.md), [CI/CD](docs/engineering/04-ci-cd.md), [testes](docs/engineering/05-tests.md), [instaladores](docs/engineering/06-installers.md). GitHub privado escolhido: jimmykedlyn/vynamp-mediaplayer; acesso remoto ainda não confirmado no ambiente.
+Preparação de engenharia0.7.0: [estrutura](docs/engineering/09-windows-restart.md), [agentes/Superpowers](docs/engineering/01-agents-superpowers.md), [Gitflow](docs/engineering/03-gitflow-github.md), [CI/CD](docs/engineering/04-ci-cd.md), [testes](docs/engineering/05-tests.md), [instaladores](docs/engineering/06-installers.md). GitHub privado escolhido: jimmykedlyn/vynamp-mediaplayer; acesso remoto ainda não confirmado no ambiente.
 
 ## Identidade Vynamp
 
@@ -58,7 +58,7 @@ Nome Vynamp e conceito C — Pulso aprovados. [Guia de marca](docs/design/04-bra
 
 ## Auditoria de completude 0.6
 
-[Auditoria e cobertura](docs/product/08-completeness-audit.md), [catálogo de 68 bindings](config/format-catalog.json), [ativação/associações](docs/platforms/03-system-integration.md), [ownership](docs/platforms/04-activation-ownership.md), [sinal final](docs/audio/07-dsp-signal-contract.md), [visualizers](docs/extensions/04-visualizer-contract.md) e [novos gates](docs/delivery/04-capability-release-gates.md). São 191 TASK/REQ em 19 épicos; nenhum item de aplicativo está concluído por este pacote.
+[catálogo de 68 bindings](config/format-catalog.json), [ativação/associações](docs/platforms/03-system-integration.md), [ownership](docs/platforms/04-activation-ownership.md), [sinal final](docs/audio/07-dsp-signal-contract.md), [visualizers](docs/extensions/04-visualizer-contract.md) e [novos gates](docs/delivery/04-capability-release-gates.md). São 191 TASK/REQ em 19 épicos; nenhum item de aplicativo está concluído por este pacote.
 
 ## Ferramentas de arquivo 0.8
 

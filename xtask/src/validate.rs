@@ -526,6 +526,9 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
     Ok(flows.len())
 }
 pub fn delivery(root: &Path) -> Result<()> {
+    // Packaging belongs to the app that ships it, not to the umbrella: there is no
+    // packaging/ or branding reference asset here anymore (step 30 archived them), and a
+    // repo without a binary has nothing to install. D-CI-2 of step 34.
     let mut c = Checks::default();
     c.check(read_json(root.join(".claude/settings.json"))?["enabledPlugins"]["superpowers@claude-plugins-official"]==true,"Claude plugin not enabled");
     let lock = read_json(root.join("config/superpowers.lock.json"))?;
@@ -561,12 +564,6 @@ pub fn delivery(root: &Path) -> Result<()> {
         c.check(ignore.contains(name), format!("Missing ignore {name}"));
     }
     let count = github_actions(root, &mut c)?;
-    xml(&root.join("packaging/macos/Info.plist"))?;
-    crate::branding::references(root)?;
-    c.check(
-        text(root.join("packaging/windows/installer.nsi"))?.contains("RequestExecutionLevel user"),
-        "Unexpected Windows elevation",
-    );
     c.check(
         !files(root)?
             .iter()

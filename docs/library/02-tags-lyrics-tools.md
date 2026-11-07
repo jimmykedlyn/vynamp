@@ -18,7 +18,7 @@ Scheduler: play playlist/station, stop, pause, fade, iniciar/parar gravação, a
 
 Origem: adendo de requisitos "letras integradas ao VU meter" v1.0 (2026-10-25), pedido do usuário. Os IDs `LYR-*` e `LYR-AC-*` abaixo são os do adendo e valem como IDs canônicos até um mapeamento oficial. Este é o documento canônico de letras; [layouts](../design/02-layouts.md#letras-sob-o-vu-2026-10-28), [acessibilidade](../design/03-accessibility-i18n.md#letras-acessibilidade-e-localização), [requisitos](../product/03-requirements.md#rastreabilidade-de-letras-lyr), [decisões](../product/05-decisions.md#decisões-de-letras-2026-10-28) e [TASK-E03-09](../../tasks/items/TASK-E03-09.md) referenciam as âncoras daqui.
 
-O componente **acrescenta** a apresentação resumida sob o VU e a prioridade de fontes; **não substitui** o painel completo de letras já previsto (ver [requisitos anteriores](#requisitos-anteriores-que-continuam)). Não refaz o layout aprovado nem substitui os 12 VU meters estéreo originais.
+O componente **acrescenta** a apresentação resumida sob o VU e a prioridade de fontes; **não substitui** o painel completo de letras já previsto (ver [requisitos anteriores](#requisitos-anteriores-que-continuam)). Não refaz o layout aprovado nem substitui os 16 VU meters estéreo originais.
 
 ### Níveis de evidência
 
@@ -116,7 +116,7 @@ Estado de todos: **especificado**; validação nativa pendente.
 | LYR-AC-07 | Desligar persiste na troca de faixa e na reabertura; instrumental afeta só a faixa escolhida e é reversível; ausência de tags não marca instrumental. |
 | LYR-AC-08 | Leitura/importação atrasada artificialmente, seguida de troca de música ou Desligar: nenhum resultado obsoleto altera a música ou a preferência atuais. |
 | LYR-AC-09 | Com redução de movimento: acompanhamento correto sem transição ascendente. Teclado, fechamento do menu e retorno de foco verificados. |
-| LYR-AC-10 | 12 VUs originais e temas, desktop alto/baixo, tela estreita e texto ampliado: sem distorção, corte essencial ou overflow da página; texto longo tem alternativa completa. |
+| LYR-AC-10 | 16 VUs originais e temas, desktop alto/baixo, tela estreita e texto ampliado: sem distorção, corte essencial ou overflow da página; texto longo tem alternativa completa. |
 | LYR-AC-11 | Sem letra, erro e formato não suportado: mensagens distintas, origem honesta, recuperação possível, nenhuma consulta online involuntária. |
 | LYR-AC-12 | Regressão: transporte, áudio local, waveform, troca de VU, biblioteca/fila e DSP continuam operando; a letra não altera processamento nem reprodução. |
 

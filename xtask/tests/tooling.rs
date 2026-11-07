@@ -921,6 +921,8 @@ fn vynamp_zip_uses_new_root_and_contains_approved_branding() {
         b"fixture, not a real image",
     )
     .unwrap();
+    // The wrappers are fixture content, not repository content: reading them from ../bootstrap
+    // made this test fail as soon as the templates were archived (step 30).
     fs::create_dir_all(f.root.join("bootstrap")).unwrap();
     for name in [
         "INICIAR.ps1",
@@ -929,11 +931,9 @@ fn vynamp_zip_uses_new_root_and_contains_approved_branding() {
         "PROMPT-CLAUDE.txt",
         "LEIA-ME.txt",
     ] {
-        fs::copy(
-            Path::new(env!("CARGO_MANIFEST_DIR"))
-                .join("../bootstrap")
-                .join(name),
+        fs::write(
             f.root.join("bootstrap").join(name),
+            format!("fixture {name}"),
         )
         .unwrap();
     }

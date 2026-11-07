@@ -1,9 +1,7 @@
 # Índice completo da especificação
 
 
-
 Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidências históricas.
-
 
 
 - [Pull request — Vynamp](../.github/pull_request_template.md) — .github/pull_request_template.md
@@ -28,21 +26,9 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Contrato mestre do produto](../SPEC.md) — SPEC.md
 
-- [Comece aqui — Vynamp 0.7.0](../START-HERE.md) — START-HERE.md
-
-- [Host Android](../apps/android/README.md) — apps/android/README.md
-
-- [Host desktop](../apps/desktop/README.md) — apps/desktop/README.md
-
-- [Plataforma web M4](../apps/web/README.md) — apps/web/README.md
-
 - [Vynamp — identidade C / Pulso](../assets/branding/README.md) — assets/branding/README.md
 
 - [Vynamp — pacotes de ícones de arquivo (Documento, Disco, Sinal)](../assets/icons/README.md) — assets/icons/README.md
-
-- [Templates de início Windows](../bootstrap/README.md) — bootstrap/README.md
-
-- [Workspace Rust: contrato de implementação](../crates/README.md) — crates/README.md
 
 - [Glossário e convenções](GLOSSARY.md) — docs/GLOSSARY.md
 
@@ -124,7 +110,6 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Ativação externa e segredos](engineering/07-secrets-activation.md) — docs/engineering/07-secrets-activation.md
 
-- [Estrutura da pasta e responsabilidade](engineering/08-folder-structure.md) — docs/engineering/08-folder-structure.md
 
 - [Reinício Windows — passo a passo completo](engineering/09-windows-restart.md) — docs/engineering/09-windows-restart.md
 
@@ -164,7 +149,6 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Catálogo de funcionalidades e destino](product/06-feature-parity.md) — docs/product/06-feature-parity.md
 
-- [Auditoria de cobertura e correções 0.6](product/08-completeness-audit.md) — docs/product/08-completeness-audit.md
 
 - [Estratégia de testes e critérios de qualidade](quality/01-test-strategy.md) — docs/quality/01-test-strategy.md
 
@@ -174,7 +158,6 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 - [QA complementar — integração, codecs, DSP e capacidades](quality/04-integration-codecs-dsp.md) — docs/quality/04-integration-codecs-dsp.md
 
-- [Fontes da auditoria de completude](research/03-completeness-sources.md) — docs/research/03-completeness-sources.md
 
 - [Modelo de ameaças e controles](security/01-threat-model.md) — docs/security/01-threat-model.md
 
@@ -638,35 +621,28 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 - [Automação Rust com cargo xtask](../xtask/README.md) — xtask/README.md
 # Execução E15-03
 
-- [Plano Gitflow E15-03](superpowers/plans/2026-10-18-e15-03-gitflow.md) — docs/superpowers/plans/2026-10-18-e15-03-gitflow.md
 
 - [Evidência E15-03 / QA-012](evidence/PR/task-e15-03/README.md) — docs/evidence/PR/task-e15-03/README.md; privacidade, histórico, configurações aplicadas e proteções pendentes por plano.
 
 # Execução E15-01
 
-- [Plano de integração e verificação E15-01](superpowers/plans/2026-10-15-e15-01-verification.md) — docs/superpowers/plans/2026-10-15-e15-01-verification.md
 
 - [Evidência E15-01 / QA-009](evidence/task-e15-01-qa-009.json) — docs/evidence/task-e15-01-qa-009.json; checks locais e limites de instalação/discovery/revisão.
 
 # Execução E15-02
 
-- [Plano de isolamento E15-02](superpowers/plans/2026-10-16-e15-02-isolation.md) — docs/superpowers/plans/2026-10-16-e15-02-isolation.md
 
 - [Evidência E15-02 / QA-009 / QA-012](evidence/PR/task-e15-02/README.md) — docs/evidence/PR/task-e15-02/README.md; Git real, RED/GREEN, concorrência e preservação de worktrees.
 
 # Execução E11-01
 
-- [Plano de baseline E11-01](superpowers/plans/2026-10-18-e11-01-workspace.md) — docs/superpowers/plans/2026-10-18-e11-01-workspace.md
 - [ADR-009 — workspace mínimo](architecture/adr/ADR-009-engineering-baseline.md) — docs/architecture/adr/ADR-009-engineering-baseline.md
-- [ADR-010 — CI/CD somente Woodpecker](architecture/adr/ADR-010-woodpecker-only-ci.md) — docs/architecture/adr/ADR-010-woodpecker-only-ci.md
 - [ADR-011 — pilha de áudio própria](architecture/adr/ADR-011-own-audio-stack.md) — docs/architecture/adr/ADR-011-own-audio-stack.md
 - [Paths e contrato de fixtures](../tests/fixtures/README.md) — tests/fixtures/README.md
 - [Evidência E11-01](evidence/PR/task-e11-01/README.md) — docs/evidence/PR/task-e11-01/README.md
 
 # Preparação E15-04
 
-- [Evidência E15-04](evidence/PR/task-e15-04/README.md) — docs/evidence/PR/task-e15-04/README.md
-- [Evidência Woodpecker 3.20.1](evidence/PR/chore-woodpecker-3-20-1/README.md) — docs/evidence/PR/chore-woodpecker-3-20-1/README.md
 
 # Documentação DSP e equalizadores (2026-10-25)
 
@@ -696,14 +672,12 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 
 # Integração com o shell e pacotes de ícones (2026-11-05)
 
-- [Plano de integração com o shell e ícones](superpowers/plans/2026-11-05-specs-shell-integration.md) — docs/superpowers/plans/2026-11-05-specs-shell-integration.md
 - [ADR-012 — integração nativa com o shell, menus de contexto e pacotes de ícones](architecture/adr/ADR-012-shell-integration.md) — docs/architecture/adr/ADR-012-shell-integration.md
 - [Evidência chore-specs-shell-integration](evidence/PR/chore-specs-shell-integration/README.md) — docs/evidence/PR/chore-specs-shell-integration/README.md; verificações locais, revisão por subagente e limitações declaradas.
 - [Corpo do PR chore-specs-shell-integration](evidence/PR/chore-specs-shell-integration/pr-body.md) — docs/evidence/PR/chore-specs-shell-integration/pr-body.md
 
 # Ferramentas de arquivo: Restore e Converter (2026-11-05)
 
-- [Plano de especificação do Vynamp Restore](superpowers/plans/2026-11-05-specs-vynamp-restore.md) — docs/superpowers/plans/2026-11-05-specs-vynamp-restore.md
 - [ADR-013 — Vynamp Restore como ferramenta desktop dedicada](architecture/adr/ADR-013-vynamp-restore.md) — docs/architecture/adr/ADR-013-vynamp-restore.md
 - [Vynamp Restore — restauração e diagnóstico de defeitos](tools/01-vynamp-restore.md) — docs/tools/01-vynamp-restore.md
 - [Vynamp Converter — conversão e transcodificação](tools/02-vynamp-converter.md) — docs/tools/02-vynamp-converter.md

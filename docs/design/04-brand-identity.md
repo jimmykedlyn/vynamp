@@ -8,7 +8,7 @@ Vynamp, grafia com V maiúsculo e restante minúsculo. Identificadores técnicos
 
 Marca principal: símbolo âmbar #FFBF69 e wordmark branco #F0F2F5 sobre grafite #11131B. Em fundo claro, wordmark grafite e símbolo âmbar. Variação monocromática usa uma única cor sólida com alpha, preservando os vazios internos. Sem gradientes, sombras, brilho ou metal no master de produção. Pranchas raster são referência visual; o master vetorial ainda deverá ser reconstruído e revisado.
 
-[Prancha aprovada](../../assets/branding/approved-c-board.png), [símbolo transparente](../../assets/branding/reference/symbol-c-transparent.png), [tokens](../../assets/branding/brand-tokens.json), [inventário](../../assets/branding/asset-manifest.json). Conceitos A/B/D ficam somente como histórico, sem instalação como marca alternativa.
+[Prancha aprovada](../../assets/branding/approved-c-board.png), [símbolo transparente](../../_arquivo/repo/assets/branding/reference/symbol-c-transparent.png), [tokens](../../assets/branding/brand-tokens.json), [inventário](../../assets/branding/asset-manifest.json). Conceitos A/B/D ficam somente como histórico, sem instalação como marca alternativa.
 
 ## Sistema de logo
 

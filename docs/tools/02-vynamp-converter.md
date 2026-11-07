@@ -45,7 +45,7 @@ vynamp-converter [opções] <caminhos...>
 
 **Códigos de saída:** `0` sucesso · `1` erro de uso · `2` entrada ilegível ou formato não suportado · `3` falha de escrita · `4` cancelado · `5` erro interno do encoder.
 
-Com caminhos, os arquivos entram na fila de conversão na ordem recebida, preservando a ordem do lote atômico do shell ([ADR-012](../architecture/adr/ADR-012-shell-integration.md#3-preservação-de-lotes-batching-atomic)).
+Com caminhos, os arquivos entram na fila de conversão na ordem recebida, preservando a ordem do lote atômico do shell ([ADR-012](../architecture/adr/ADR-012-shell-integration.md#3-batching-atomico)).
 
 ## 3. Matriz de formatos
 

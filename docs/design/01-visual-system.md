@@ -59,7 +59,7 @@ Sem bordas ou caixas decorativas por parâmetro, sem cores novas competindo com 
 
 ## Acabamento de VU meters
 
-Três acabamentos de apresentação dos 12 VUs estéreo: **Original**, **Metal adaptativo** e **Integrado ao painel** (padrão na referência externa, relatado, e **proposto** como padrão nativo; D-DSP-18). Usam tokens semânticos da superfície da skin (panel-raised, border-light, border-dark) para o gabinete externo; madeira e champagne mantêm seus materiais. Os SVGs aprovados permanecem inalterados e LEDs, escala e ponteiros nunca são recoloridos. Contraste de texto e indicadores segue "Aceite visual". Contrato VU-INT: [painel DSP §6.1](05-dsp-panel.md#61-integração-visual-dos-vu-meters-vu-int). Protótipo: relatado e não verificado aqui; nativo: nada implementado.
+Três acabamentos de apresentação dos 16 VUs estéreo: **Original**, **Metal adaptativo** e **Integrado ao painel** (padrão na referência externa, relatado, e **proposto** como padrão nativo; D-DSP-18). Usam tokens semânticos da superfície da skin (panel-raised, border-light, border-dark) para o gabinete externo; madeira e champagne mantêm seus materiais. Os SVGs aprovados permanecem inalterados e LEDs, escala e ponteiros nunca são recoloridos. Contraste de texto e indicadores segue "Aceite visual". Contrato VU-INT: [painel DSP §6.1](05-dsp-panel.md#61-integração-visual-dos-vu-meters-vu-int). Protótipo: relatado e não verificado aqui; nativo: nada implementado.
 
 ## Marca aprovada
 

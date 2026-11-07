@@ -34,7 +34,7 @@ Contributing: [CONTRIBUTING.md](CONTRIBUTING.md) · Governance: [GOVERNANCE.md](
 
 ## Tooling and verification
 
-Engineering automation is Rust: [START-HERE](START-HERE.md), [repository layout](docs/engineering/08-folder-structure.md), [agents and Superpowers](docs/engineering/01-agents-superpowers.md), [Gitflow](docs/engineering/03-gitflow-github.md), [CI/CD](docs/engineering/04-ci-cd.md), [tests](docs/engineering/05-tests.md), [installers](docs/engineering/06-installers.md).
+Engineering automation is Rust: [repository layout](docs/engineering/09-windows-restart.md), [agents and Superpowers](docs/engineering/01-agents-superpowers.md), [Gitflow](docs/engineering/03-gitflow-github.md), [CI/CD](docs/engineering/04-ci-cd.md), [tests](docs/engineering/05-tests.md), [installers](docs/engineering/06-installers.md).
 
 ```bash
 cargo xtask check-docs
@@ -103,7 +103,7 @@ Contribuições: [CONTRIBUTING.md](CONTRIBUTING.md) · Governança: [GOVERNANCE.
 
 ## Tooling e verificação
 
-A automação de engenharia é Rust: [START-HERE](START-HERE.md), [estrutura](docs/engineering/08-folder-structure.md), [agentes/Superpowers](docs/engineering/01-agents-superpowers.md), [Gitflow](docs/engineering/03-gitflow-github.md), [CI/CD](docs/engineering/04-ci-cd.md), [testes](docs/engineering/05-tests.md), [instaladores](docs/engineering/06-installers.md).
+A automação de engenharia é Rust: [estrutura](docs/engineering/09-windows-restart.md), [agentes/Superpowers](docs/engineering/01-agents-superpowers.md), [Gitflow](docs/engineering/03-gitflow-github.md), [CI/CD](docs/engineering/04-ci-cd.md), [testes](docs/engineering/05-tests.md), [instaladores](docs/engineering/06-installers.md).
 
 ```bash
 cargo xtask check-docs
