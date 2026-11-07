@@ -5231,7 +5231,7 @@
       ],
       "spec": "docs/audio/10-vitrola.md",
       "deliverable": "Design aprovado do vitrola incorporado como módulo DSP interno, referências ao repositório externo removidas e repositório vitrola arquivado de forma reversível.",
-      "acceptance": "Nenhum documento normativo cita jimmykedlyn/vitrola; a spec descreve módulo DSP interno preservando VIT-T-01..10; o design local não se perde; o repositório remoto fica arquivado e reversível.",
+      "acceptance": "Nenhum documento normativo cita o repositório externo do vitrola; a spec descreve módulo DSP interno preservando VIT-T-01..10; o design local não se perde; o repositório remoto fica arquivado e reversível.",
       "qa": [
         "QA-033",
         "QA-005"

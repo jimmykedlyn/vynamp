@@ -6,7 +6,7 @@ Este documento é a visão funcional e técnica do subsistema DSP. Os detalhes e
 
 - [Equalizadores 10/20/31/64 + paramétrico 32](08-equalizers.md): subcapítulo obrigatório.
 - [Catálogo de módulos DSP](09-dsp-catalog.md): parâmetros, posição, prioridade e testes de cada módulo.
-- [vitrola — vinil e amplificador valvulado](10-vitrola.md): módulo hospedado, com design previamente aprovado.
+- [vitrola — vinil e amplificador valvulado](10-vitrola.md): módulo DSP **interno** do app, com design aprovado em 2026-10-23 e incorporado em §8; não é biblioteca nem repositório externo ([ADR-014](../architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md)).
 - [Contrato do sinal e proteção final true-peak](07-dsp-signal-contract.md): fonte normativa da ordem fixa.
 - [Painel DSP e medidores](../design/05-dsp-panel.md), [matriz de testes DSP](../quality/05-dsp-test-matrix.md), [roadmap DSP](../delivery/01-roadmap.md#roadmap-dsp-e-equalizadores) e [decisões](../product/05-decisions.md#decisões-dsp-e-equalizadores-2026-10-25).
 
@@ -63,7 +63,7 @@ flowchart LR
 | ReplayGain/preamp | normalização por metadados e reserva de headroom antes dos boosts | planejado (E04-01) |
 | EQ (um modo) | correção tonal sobre o sinal normalizado; um só modo processa por vez, os outros ficam guardados | planejado (E04-01/04, E12-10) |
 | Correção de fone/FIR | correção do transdutor depois do gosto do usuário; latência declarada | planejado (import E04-09); FIR **proposto** |
-| vitrola | após o EQ e **antes do volume do usuário**: a saturação depende do nível da gravação ([vitrola §8.1](10-vitrola.md)) | design aprovado; integração planejada após E04-03; posição relativa ao resampler: **conflito aberto D-DSP-05** |
+| vitrola (módulo interno) | após o EQ e **antes do volume do usuário**: a saturação depende do nível da gravação ([vitrola §8.8](10-vitrola.md)) | design aprovado; integração em [TASK-E19-07](../../tasks/items/TASK-E19-07.md), após E04-03; posição relativa ao resampler: **conflito aberto D-DSP-05** |
 | Tone/dinâmica/imagem/criativos | depois da coloração; o limiter criativo é reordenável, mas não substitui a proteção final | planejado (E04-07/08); vários **propostos** |
 | Mixer/crossfade | soma de fontes correlacionadas antes da proteção | planejado (E01-05, E04-03) |
 | Ganho master | volume digital do usuário, normalmente 0..1 | planejado |
@@ -82,7 +82,7 @@ Proposto, a fixar em TASK-E04-03. O formato espelha a trait `Processor` do vitro
 - `reset()` limpa o estado (seek, troca de generation).
 - `latency_frames()` e `tail_frames()` são declarados. O grafo soma as latências para o clock apresentado e para a compensação de caminhos paralelos.
 - Metadados: ID estável, versão, parâmetros com unidade, faixa, default e "smoothable", custo estimado e canais suportados.
-- Serialização: estado de parâmetros versionado (preset). O estado interno persistente separado (ex.: `WearState` do vitrola) tem formato e migração próprios.
+- Serialização: estado de parâmetros versionado (preset). O estado interno persistente separado (ex.: `WearState` do módulo vitrola) tem formato e migração próprios.
 - `BlockContext`: posição em frames, generation, eventos de transporte (start/stop/pause/seek/track_changed/fim de álbum) e metadados da faixa quando houver. É opcional (rádio/stream).
 
 **Parâmetros UI → engine.** A UI produz um snapshot imutável. O control thread valida e calcula os coeficientes e publica o snapshot por ponteiro atômico. A callback troca de snapshot na fronteira de bloco e interpola. O snapshot antigo é descartado fora da RT.
@@ -114,7 +114,7 @@ Complemento da revisão 15 da referência HTML/SVG/JS (2026-10-28). Separação 
 
 Regras da `vynamp-output` (design aprovado em 2026-10-25) somadas às de [saídas](04-outputs-hires.md):
 
-- **Bit-perfect/transparente = DSP desligado.** RG, preamp, EQ, efeitos, vitrola, mix, master digital, resampler, dither e limiters ficam fora; volume unity; mesma taxa e mapa de canais. Ligar qualquer DSP pede para sair do modo e retira o selo. Não há fallback silencioso.
+- **Bit-perfect/transparente = DSP desligado.** RG, preamp, EQ, efeitos, vitrola (módulo interno), mix, master digital, resampler, dither e limiters ficam fora; volume unity; mesma taxa e mapa de canais. Ligar qualquer DSP pede para sair do modo e retira o selo. Não há fallback silencioso.
 - **Exclusivo ≠ bit-perfect.** Exclusive event-driven (WASAPI), ALSA `hw:` direto e CoreAudio hog só evitam o mixer do OS. A biblioteca reporta `PathProperties` (`os_mixer_bypassed`, `os_resampling`, `library_conversion`, `endpoint_volume`) e nunca diz "bit-perfect verificado". Esse rótulo exige captura (`capture-verified`/`hardware-verified`).
 - DSP ativo é permitido em shared e em exclusive. Nesses casos, o rótulo é "processado".
 - `ShareMode::Exclusive` indisponível → erro (`on_unavailable: Error` é o padrão). O player oferece shared, sem aplicar sozinho. Conversão de tipo só com `conversion: Allow` e sem dither (o dither é do Vynamp).

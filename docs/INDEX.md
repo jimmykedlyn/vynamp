@@ -724,3 +724,10 @@ Versão 0.8.0 · 2026-11-05 · Markdown de produto, tooling, bootstrap e evidên
 - [Vynamp Restore — restauração por IA](tools/03-vynamp-restore-ia.md) — docs/tools/03-vynamp-restore-ia.md; planejada e não prometida, opt-in, CPU primeiro, pesos por download
 - [Evidência chore-specs-ia-futura](evidence/PR/chore-specs-ia-futura/README.md) — docs/evidence/PR/chore-specs-ia-futura/README.md; verificações locais e limitações declaradas.
 - [Corpo do PR chore-specs-ia-futura](evidence/PR/chore-specs-ia-futura/pr-body.md) — docs/evidence/PR/chore-specs-ia-futura/pr-body.md
+
+# Vitrola como módulo DSP interno (2026-11-05)
+
+- [Decisão: o vitrola é módulo DSP interno — ADR-014](architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md) — docs/architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md; vinil e válvula não são libs nem repositórios externos.
+- [Evidência TASK-E19-03](evidence/PR/task-e19-03/README.md) — docs/evidence/PR/task-e19-03/README.md; dissolução do repositório vitrola, a descoberta do commit local não publicado e o que ficou pendente.
+- [Design aprovado do vitrola — cópia literal](evidence/PR/task-e19-03/vitrola-design.md) — docs/evidence/PR/task-e19-03/vitrola-design.md; o texto integral de 2026-10-23, preservado porque a incorporação em §8 o reorganizou em subseções e o repositório de origem é arquivado.
+- [Corpo do PR TASK-E19-03](evidence/PR/task-e19-03/pr-body.md) — docs/evidence/PR/task-e19-03/pr-body.md

@@ -1,14 +1,15 @@
 # vitrola — Vinyl Simulator e Tube Amplifier Simulator no DSP
 
-Versão: 0.7.4 · Data: 2026-11-05 · Estado: **planejamento pré-existente preservado**. O design da biblioteca foi aprovado em 2026-10-23. Biblioteca e integração não foram implementadas. No MVP web de referência (`vynamp-mvp-reference@0d9860b`, rev.38) Vinyl e Tube **têm processamento real** num AudioWorklet; a rev. 15, que só tinha configuração, é histórico (ver §5).
+Versão: 0.8.1 · Data: 2026-11-06 · Estado: **design incorporado; integração não implementada**. O design aprovado em 2026-10-23 era de uma biblioteca externa; passou a ser **módulo DSP interno do app** e está integralmente em [§8](#8-design-aprovado-incorporado-em-2026-11-05) ([ADR-014](../architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md)). Não há repositório externo e nada foi implementado em nativo. No MVP web de referência (`vynamp-mvp-reference@0d9860b`, rev.38) Vinyl e Tube **têm processamento real** num AudioWorklet; a rev. 15, que só tinha configuração, é histórico (ver §5).
 
 ## 1. Fonte da verdade e escopo
 
-- A definição acordada antes desta atualização é o design aprovado da biblioteca própria **vitrola** (`vitrola/docs/superpowers/specs/2026-10-23-vitrola-design.md`, repositório privado `jimmykedlyn/vitrola`, MIT OR Apache-2.0, Rust só com `std`, `#![forbid(unsafe_code)]`, sem bibliotecas de terceiros). Este documento a **integra por referência**: o DSP do Vynamp hospeda o vitrola como um módulo. Decisões, nomes, parâmetros, "inteligência" e restrições valem como lá estão. Aqui ficam só a integração, a UX hospedeira, os testes de integração e as divergências.
+- A definição acordada está **integralmente neste documento**, em [§8 Design aprovado](#8-design-aprovado-incorporado-em-2026-11-05). **Não existe mais biblioteca nem repositório externo**: o mantenedor decidiu, em 2026-11-05, que vinil e válvula são **módulos DSP internos do app** ([ADR-014](../architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md)). O arquivamento do repositório antigo está **pendente** e é decisão do mantenedor; não há TASK que o torne biblioteca de novo.
+- Consequência: antes este documento **integrava por referência** um design que vivia fora, e o que valesse lá era a regra. Agora ele é a **fonte única** — decisões, nomes, parâmetros, "inteligência" e restrições valem como estão aqui em §8. As seções 2 a 7 descrevem a integração, a UX hospedeira, os testes e as divergências.
 - Dois efeitos com identidade própria: **Vinyl Simulator** (simulação de um disco real tocando aquela faixa) e **Tube Amplifier Simulator** (amplificador valvulado). Os dois são **opcionais, colorativos e intencionais**, com bypass e intensidade gradual. Não são um equalizador, nem um exciter genérico, nem processamento obrigatório.
 - Anti-objetivos herdados: sem UI visual de toca-discos/prato/braço/válvulas; sem emulação circuito a circuito nem nomes de marcas; sem loop de ruído gravado, padrão perceptível ou exagero caricato no padrão; sem cliques ao ligar/desligar; sem alterar o caminho bit-perfect ou DSD nativo (o efeito se desativa sozinho); sem alocação ou lock na callback.
 
-## 2. Comportamentos aprovados (resumo da referência)
+## 2. Comportamentos aprovados (resumo do design)
 
 | Elemento | Comportamento acordado | Módulo vitrola |
 |---|---|---|
@@ -34,7 +35,7 @@ Versão: 0.7.4 · Data: 2026-11-05 · Estado: **planejamento pré-existente pres
 
 - **Adaptador** (planejado após TASK-E04-03): a trait `Processor` do vitrola (`prepare(sample_rate, max_block, channels)` → `process(&mut block, &Context)` → `reset`) é encaixada no contrato de nó do [DSP](03-dsp.md#contrato-conceitual-dos-nós). A fronteira aceita f32 intercalado ou planar; a posição chega em samples.
 - **`Context` por bloco** (fornecido pelo host): posição/duração da faixa, índice da faixa no álbum, total de faixas, duração do álbum, eventos de transporte (start, stop, pause, seek, fim de álbum, `track_changed` gapless no mesmo bloco) e contagem de reproduções. É opcional.
-- **Posição** (decisão vitrola §8.1): depois do EQ e **antes do volume do usuário** (ganho master). Na cadeia real fica no segmento por stream, depois da correção de fone, antes de dinâmica/imagem/criativos e antes de mixer/master/resampler/proteção final ([diagrama](03-dsp.md#cadeia-real-de-processamento)). Ordem dentro do segmento: **proposta**. Reordenação livre não é prometida.
+- **Posição** (design §8.8, decisão 1): depois do EQ e **antes do volume do usuário** (ganho master). Na cadeia real fica no segmento por stream, depois da correção de fone, antes de dinâmica/imagem/criativos e antes de mixer/master/resampler/proteção final ([diagrama](03-dsp.md#cadeia-real-de-processamento)). Ordem dentro do segmento: **proposta**. Reordenação livre não é prometida.
 - **Conflito aberto D-DSP-05**: o vitrola diz "depois do resampler", mas o [contrato do sinal](07-dsp-signal-contract.md) tem um único resampler final, depois do master. A decisão do vitrola fica **preservada** como requisito e o contrato 07 **não** foi alterado. Opções: (A) o vitrola roda na taxa do stream, já suportada de 44,1 a 384 kHz, com o oversampling automático cobrindo o aliasing; (B) um resampler por stream antes dos efeitos, que exige emendar o 07 por decisão. Isso também resolveria a mistura de fontes de taxas diferentes no mixer, outro ponto **dependente de investigação**. Fontes abaixo de 44,1 kHz ficam fora da faixa do vitrola: o efeito fica indisponível com motivo, salvo decisão (B).
 - **Ponto aberto D-DSP-06, crossfade**: a referência pressupõe um "disco" contínuo, com gapless via `track_changed`, e não define o crossfade. Candidato **a validar**: com o vitrola ligado, o crossfade fica desativado (com aviso), ou só a válvula continua por stream.
 - **Rituais e transporte**: `pre_roll()`/`tail()` são inseridos pelo host no transporte. A duração apresentada e a posição consideram esse áudio extra. Rituais desligáveis.
@@ -45,12 +46,12 @@ Versão: 0.7.4 · Data: 2026-11-05 · Estado: **planejamento pré-existente pres
 
 ## 4. Itens do pedido v1.3 versus referência
 
-O pedido traz parâmetros "candidatos a validar". A regra: o que a referência define prevalece; o que ela não define fica **a validar**; conflitos ficam registrados abaixo.
+O pedido traz parâmetros "candidatos a validar". A regra: o que o design aprovado ([§8](#8-design-aprovado-incorporado-em-2026-11-05)) define prevalece; o que ele não define fica **a validar**; conflitos ficam registrados abaixo.
 
 | Item do pedido | Situação | Tratamento |
 |---|---|---|
 | Caráter tonal, saturação, separação estéreo | definido (radius, cartridge, crosstalk por raio) | manter |
-| Hiss, crackle, clicks, rumble, desgaste | definido (surface, cartridge, WearState) | manter; controles por tipo no painel avançado (layout deixado ao construtor, §9 da referência) |
+| Hiss, crackle, clicks, rumble, desgaste | definido (surface, cartridge, WearState) | manter; controles por tipo no painel avançado (layout deixado ao construtor, [§8.9](#89-deixado-ao-construtor-original-9)) |
 | "Ruídos desligados ou discretos por padrão" | compatível: o padrão é **sutil** | manter "sutil" |
 | "Evitar ruído em pausa/silêncio" | **conflito**: a referência põe chiado e crackle **nos silêncios entre faixas**, e o sulco final em loop após o fim | **manter a referência**. Pausa → silêncio com fade curto (agulha levantada): **a validar**, porque a referência só lista `pause` como evento. Seek → `reset` sem estalo |
 | Wow & flutter | definido | manter |
@@ -68,7 +69,7 @@ O pedido traz parâmetros "candidatos a validar". A regra: o que a referência d
 | Hum/noise da válvula | não definido | **a validar**; se existir, fica independente e desligado por padrão |
 | Sag, assimetria, perfis | definidos | manter |
 | Presets Clean/Warm/Driven Tube | não definidos; os perfis acordados são pré quente / push-pull clássico / single-ended | perfis mantidos; presets **a validar** |
-| Ordem "correção tonal → emulação → controle de picos" | compatível com §8.1 | manter (ver D-DSP-05) |
+| Ordem "correção tonal → emulação → controle de picos" | compatível com §8.8 | manter (ver D-DSP-05) |
 
 ## 5. UX hospedeira
 
@@ -99,13 +100,13 @@ O que a rev. 15 relatava — "configuração completa do catálogo, sem processa
 
 ## 6. Roadmap (status herdado)
 
-- Ordem acordada (vitrola §6; STATE.md): `vynamp-decode` Camada 1 → **TASK-E04-03** (grafo DSP, M2) → vitrola. A biblioteca pode ser construída e testada offline antes disso. O marco da integração é **M3, depois de E04-03** ([D-DSP-07](../product/05-decisions.md#decisões-dsp-e-equalizadores-2026-10-25)).
-- O `ROADMAP-rodadas.md` da raiz lista só TASKs e **não** tem uma linha vitrola. Não existe TASK vitrola no backlog. **Pendência**: criar uma TASK de integração (fase M3, depois de E04-03) num PR que altere `tasks/backlog.json` e a matriz de requisitos. Este PR é só de Markdown e não a cria. A prioridade não foi deslocada.
+- Ordem acordada (design §8.6; STATE.md): `vynamp-decode` Camada 1 → **TASK-E04-03** (grafo DSP, M2) → vitrola. O módulo pode ser construído e testado offline antes disso. O marco da integração é **M3, depois de E04-03** ([D-DSP-07](../product/05-decisions.md#decisões-dsp-e-equalizadores-2026-10-25)).
+- O `ROADMAP-rodadas.md` da raiz lista só TASKs e não tem uma linha vitrola. A antiga pendência "criar uma TASK de integração" **está resolvida**: [TASK-E19-07](../../tasks/items/TASK-E19-07.md) integra o módulo no grafo do player (M3, depois de E04-03 e de [TASK-E19-03](../../tasks/items/TASK-E19-03.md)). A prioridade não foi deslocada.
 - CPU: meta < 5% de um núcleo moderno a 96 kHz estéreo com tudo ligado. É meta, não gate; confirmar por benchmark.
 
 ## 7. Testes de integração planejados
 
-Os testes da própria biblioteca (determinismo com semente, espectro de harmônicos, aliasing, densidade de crackle × loudness, período de wow, denormais, alocação zero, crossfade) estão na referência §5. No Vynamp (cenário QA-033, [estratégia](../quality/01-test-strategy.md)):
+Os testes do próprio módulo (determinismo com semente, espectro de harmônicos, aliasing, densidade de crackle × loudness, período de wow, denormais, alocação zero, crossfade) estão no design incorporado, [§8.5](#85-verificação-original-5). No Vynamp (cenário QA-033, [estratégia](../quality/01-test-strategy.md)):
 
 | ID | Objetivo | Método | Evidência | Critério |
 |---|---|---|---|---|
@@ -116,6 +117,89 @@ Os testes da própria biblioteca (determinismo com semente, espectro de harmôni
 | VIT-T-05 | Pausa/seek/fim de álbum | pausar, seek rápido, fim do lado e rituais | captura + log de transporte | sem estalo no seek; tail/pre_roll inseridos e contabilizados na duração; comportamento em pausa conforme decisão |
 | VIT-T-06 | Persistência do WearState | tocar, reiniciar o app, "Comprar disco novo" | bytes persistidos por álbum | desgaste preservado; reset só do álbum pedido |
 | VIT-T-07 | Vinil + válvula + EQ +15 dB | combinação extrema | medidores por estágio + QA-027 | clipping cumulativo indicado; teto final respeitado |
-| VIT-T-08 | Aliasing da válvula | senos 1/5/10/15 kHz, níveis −20/−6/0 dBFS, 44,1–192 kHz | espectro | aliasing abaixo do limiar definido na biblioteca |
+| VIT-T-08 | Aliasing da válvula | senos 1/5/10/15 kHz, níveis −20/−6/0 dBFS, 44,1–192 kHz | espectro | aliasing abaixo do limiar definido no módulo |
 | VIT-T-09 | CPU/latência | 96 kHz estéreo com tudo ligado | bench | publicar o número; meta < 5% de um núcleo |
 | VIT-T-10 | A/B com loudness igualado | comparar on/off com a compensação | LUFS integrado das duas versões | diferença dentro da tolerância a definir |
+
+## 8. Design aprovado (incorporado em 2026-11-05)
+
+**Origem:** documento datado de 2026-10-23, aprovado pelo mantenedor, que delegou a revisão final a Claude. Vivia num repositório próprio; o mantenedor decidiu em 2026-11-05 que vinil e válvula são **recursos do DSP dentro da aplicação**. O texto abaixo é o design **integral, preservado por incorporação** — não reescrito nem reinterpretado. As subseções 8.1 a 8.9 são as seções 1 a 9 originais. Duas alterações, e só duas: os nomes das bibliotecas citadas foram atualizados para `vynamp-decode` (nome atual) e a restrição "repositório privado" em 8.7 foi corrigida, porque não há mais repositório. A cópia literal do original está preservada em [evidência](../evidence/PR/task-e19-03/vitrola-design.md).
+
+### 8.1 Intenção (original §1)
+
+Um efeito "inusitado" para o DSP do Vynamp que encante quem ama vinil: não um ruído colado por cima, mas a **simulação de um disco real tocando aquela música** num **amplificador valvulado**. O efeito deve ter **inteligência** — reagir à música, à posição na faixa/álbum e ao histórico — e **nunca ser estático**. Biblioteca própria, sem terceiros, aberta no futuro, como o `vynamp-decode`. (Nota pós-2026-11-05: a "biblioteca própria" virou módulo interno; a intenção de som, não a embalagem, é o que se preserva.)
+
+"vitrola" (o aparelho inteiro: toca-discos + válvula) — nome escolhido por Claude; trocável.
+
+### 8.2 Comportamentos aprovados pelo mantenedor (original §2)
+
+**Vinil**
+- Posição na faixa → raio do disco: início do lado mais aberto; perto do miolo perda leve de agudos/definição e mais distorção (inner-groove).
+- Chiado/estalos que respeitam a música: aparecem em trechos quietos e silêncios entre faixas, mascarados nas partes altas; nunca padrão repetido.
+- Rotação física: wow ligado à volta do prato (33⅓/45 rpm) + flutter; disco empenado gera oscilação periódica.
+- Rituais: agulha descendo no começo do álbum; sulco final em loop ao acabar; opcional virada lado A→B no ponto certo.
+- Envelhecimento: cada faixa guarda quantas vezes tocou; desgaste cresce devagar; "comprar disco novo" zera.
+
+**Válvula**
+- Aquecimento: alguns segundos até o som ficar cheio.
+- Saturação dependente da dinâmica: suave limpo; picos ganham harmônicos pares e compressão leve.
+- Sag da fonte em batidas/graves fortes.
+- Perfis genéricos: "pré quente", "push-pull clássico", "single-ended" (sem marcas).
+
+**Controles** (decisão de Claude): um botão principal de intensidade que move tudo de forma coerente + painel avançado por elemento. Padrão sutil.
+
+### 8.3 Não-objetivos / anti-objetivos (original §3)
+
+- **Somente simulação de áudio** (decisão do mantenedor): nenhuma interface visual, desenho de toca-discos, animação de prato/braço ou skin. O módulo não tem UI; o Vynamp expõe apenas os controles (botão principal + painel avançado) com os componentes de UI que já usa. "vitrola" é só o nome.
+- Não é emulação circuito-a-circuito de equipamento de marca; sem nomes de marcas.
+- Anti: loop de ruído gravado, padrão perceptível, exagero caricato no padrão, cliques ao ligar/desligar, alterar o caminho bit-perfect ou DSD nativo (efeito desativa automaticamente), alocação ou lock no callback de áudio.
+
+### 8.4 Arquitetura (original §4)
+
+- Rust, só `std`, `#![forbid(unsafe_code)]`. Processamento interno em f64 para estados/filtros, f32/f64 de entrada/saída.
+- Trait neutra própria `Processor` (prepare(sample_rate, max_block, channels) → process(&mut block, &Context) → reset), sem alocação em `process`. O Vynamp escreve um adaptador para o grafo DSP da TASK-E04-03.
+- `Context` vindo do host por bloco: posição/duração da faixa, índice da faixa no álbum, total de faixas e duração do álbum, eventos de transporte (start, stop, pause, seek, fim de álbum), contagem de reproduções da faixa.
+- Estado de envelhecimento: o módulo expõe `WearState` serializável (bytes próprios estáveis/versionados); o Vynamp persiste por faixa.
+- Aleatoriedade: PRNG próprio (PCG/xoshiro) com semente por faixa+reprodução → reprodutível em testes, variado na prática.
+- Não-linearidades com oversampling próprio (polifásico 2×–8× conforme taxa) para evitar aliasing.
+- Suavização de todos os parâmetros; bypass com crossfade (sem cliques).
+- Taxas 44,1 k–384 kHz; mono/estéreo (multicanal: vinil desativado, válvula por canal).
+
+**Módulos**
+- `vinyl::radius` — mapeia posição→raio (lado A/B pelo índice da faixa e duração acumulada), controla perda de HF, distorção de traçado e crosstalk.
+- `vinyl::surface` — ruído de superfície, crackle e pops com densidade guiada por seguidor de loudness (mascaramento), desgaste e intensidade.
+- `vinyl::transport` — wow (frequência da volta do prato, empeno periódico) + flutter, via linha de atraso fracionária interpolada.
+- `vinyl::rituals` — síntese procedural (não samples gravados) de agulha descendo, run-out loop, virada de lado.
+- `vinyl::cartridge` — ressonância/roll-off de cápsula e rumble leve.
+- `tube::warmup`, `tube::preamp` (triodo assimétrico, bias dinâmico → harmônicos pares), `tube::power` (push-pull vs single-ended), `tube::sag`, `tube::transformer` (roll-off LF/HF, saturação leve).
+- `macro` — mapa do botão principal para todos os parâmetros.
+
+### 8.5 Verificação (original §5)
+
+- Determinismo com semente fixa (golden de métricas, não de waveform frágil).
+- Propriedades medidas: espectro de harmônicos (pares dominam em perfis triodo/SE), saturação crescente com nível, aliasing abaixo de limiar, densidade de crackle inversamente proporcional ao loudness, período de wow = 60/rpm s, ausência de denormais, sem alocação em `process` (contador por thread como no E01-02), crossfade sem descontinuidade.
+- Orçamento de CPU: meta < 5% de um núcleo moderno a 96 kHz estéreo com tudo ligado (a confirmar por benchmark).
+- Escuta: renderizar amostras A/B para o mantenedor avaliar (decisão subjetiva dele).
+
+### 8.6 Dependências e ordem (original §6)
+
+Depende do grafo DSP do Vynamp (TASK-E04-03) para integrar; o módulo em si pode ser construído e testado antes, offline. Ordem geral: `vynamp-decode` Camada 1 → E04-03 → o módulo vitrola.
+
+### 8.7 Restrições (original §7)
+
+Licença MIT OR Apache-2.0; mesmas regras de entrega; documentação: README, guia de som (o que cada elemento faz, com exemplos de áudio), rustdoc, CONTRIBUTING, SECURITY, CHANGELOG. **Revisado em 2026-11-05:** o design original exigia "repositório privado". Não há mais repositório: o módulo vive no workspace do app ([ADR-014](../architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md)).
+
+### 8.8 Decisões complementares (original §8)
+
+1. **Contrato com o host**: `prepare` recebe taxa, bloco máximo e canais; fronteira em f32 intercalado ou planar (ambos); posição em samples. Posição no grafo do Vynamp: depois do resampler e do EQ, **antes** do volume do usuário — a saturação depende do nível da gravação, não do volume; opção avançada "acoplar ao volume" para quem quer a válvula "abrindo" com o volume alto. `Context` é opcional por bloco: sem ele (rádio/stream), lado virtual de 20 min pelo tempo de sessão e rituais desligados. Transições gapless chegam como evento `track_changed` no mesmo bloco.
+2. **Lados A/B**: com álbum tocando em ordem, o módulo divide no limite de faixa mais próximo da metade da duração, limitado a ~22 min por lado (como LPs reais; álbuns longos viram 2 discos/4 lados). Em playlist/shuffle/faixa avulsa: cada faixa ocupa um lado virtual próprio (início = borda, fim proporcional à duração).
+3. **Rituais alteram a duração**: agulha descendo (~1,5 s) antes da 1ª faixa do lado e sulco final em loop após a última (até o usuário parar, ou 30 s e fade; configurável). API `pre_roll()`/`tail()` gera esse áudio; o host insere no transporte. Virada de lado: tail do lado A + pre_roll do lado B. Desligável.
+4. **Inteligência**: apenas seguidores em tempo real (loudness com ponderação perceptiva, detector de transientes, energia de graves para o sag); sem pré-análise offline.
+5. **Desgaste**: por disco (álbum). "Comprar disco novo" zera aquele álbum. Cada reprodução desgasta a região do sulco daquela faixa. **Defeitos permanentes** (riscos) têm posição fixa por disco e voltam no mesmo ponto a cada audição, como num disco real; **poeira/crackle** variam a cada reprodução (semente = disco + contagem). Assim há repetição só onde um disco real repetiria.
+6. **Versões**: só os bytes do `WearState` são estáveis e versionados (com migração); o som pode evoluir entre versões; goldens validam métricas, não waveform.
+7. **CPU**: < 5% de um núcleo a 96 kHz estéreo é meta, não gate; nível de qualidade automático reduz oversampling em taxas altas (ex.: 8× a 44,1/48 k, 2× a ≥ 176,4 k).
+8. Toolchain/plataformas iguais ao `vynamp-decode`; harness de benchmark e contador de alocação próprios.
+
+### 8.9 Deixado ao construtor (original §9)
+
+Modelos matemáticos exatos (waveshaper, filtros, geradores de crackle), coeficientes, curvas do macro, layout dos parâmetros avançados, formato interno do WearState.

@@ -10,7 +10,7 @@ Esta é uma cobertura funcional planejada, sem compatibilidade de arquivo/ABI e 
 | Playlist | Várias abas,queue separada,drag/drop,sort/group,search,undo,lock,smart,CUE,imports | M1–M3 E02/E03 |
 | Biblioteca | Pastas,artistas/álbuns,gênero/ano,ratings,histórico,favorites,100k,metadata/covers | M2–M3 E03 |
 | Som clássico | EQ10,preamp,visualizer,VU,waveform,ReplayGain,gapless | M1–M3 E01/E04/E06 |
-| Som avançado | EQ20/31/paramétrico32,compressor/limiter,tone,pitch/tempo,crossfade,channel mapping; vitrola (vinil + válvula, após E04-03, [spec](../audio/10-vitrola.md)) | M2–M3 E04 |
+| Som avançado | EQ20/31/paramétrico32,compressor/limiter,tone,pitch/tempo,crossfade,channel mapping; vitrola (vinil + válvula, módulo DSP interno, após E04-03, [spec](../audio/10-vitrola.md)) | M2–M3 E04 |
 | Hi-res | PCM16/24/32 até384k,exclusive/ASIO opcional,transparent,DACprofiles/diagnostics | M3 E04 |
 | Formatos modernos | FLAC/ALAC/AAC/HE-AAC/Opus/Vorbis/WAV/AIFF/MP3/WebM/MKA e lossless adicionais | M1–M3 E01 |
 | Rádio | URL,ICY,stationbookmarks,retry,metadata,HLSlive,record,timeshift | M2–M3 E05 |

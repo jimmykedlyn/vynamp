@@ -41,7 +41,7 @@ Adiciona ao roadmap acima as fases do pedido DSP v1.3, mapeadas aos marcos reais
 | Fundação | Proteção final true-peak | M3 · E17-07/08 | indicador honesto | planejado |
 | Fundação | Resampler, dither | M0 · E04-02 | config + estados | planejado |
 | Fundação | Modo transparente e diagnósticos | M3 · E04-06 | diálogo "Sair do modo transparente?" | planejado |
-| **Efeitos já planejados** | **Vinyl Simulator + Tube Amplifier Simulator (vitrola)** | após `vynamp-decode` Camada 1 + **E04-03**; M3 nas specs de skin; **TASK a criar** | controles completos, `[DEMO]` sem modelo de sinal | design aprovado 2026-10-23; prioridade preservada |
+| **Efeitos já planejados** | **Vinyl Simulator + Tube Amplifier Simulator (vitrola — módulo DSP interno)** | após `vynamp-decode` Camada 1 + **E04-03**; integração em **TASK-E19-07** | controles completos, `[DEMO]` sem modelo de sinal | design aprovado 2026-10-23, incorporado em 2026-11-05; prioridade preservada |
 | Fase 2 / Hi-Fi | Compressor, limiter criativo, tone, balance/mono | M3 · E04-07 | config `[DEMO]` | planejado |
 | Fase 2 / Hi-Fi | AutoEQ/import, perfis por dispositivo | M3 · E04-09 | import/validação | planejado |
 | Fase 2 / Hi-Fi | Tempo/pitch/criativos | M3 · E04-08 | config | planejado |
@@ -52,4 +52,4 @@ Adiciona ao roadmap acima as fases do pedido DSP v1.3, mapeadas aos marcos reais
 | Fase 4 / Ecossistema | Host VST3 isolado, spike WASM DSP | M5 · E12-07 | prévia `[PLANNED]` | planejado |
 | Fase 4 / Ecossistema | LV2/CLAP, compartilhamento de presets | sem TASK | — | dependente de investigação |
 
-Critérios de avanço: E04-03 aprovado (grafo, swap e crossfade) → EQ-20/31/PEQ32 e vitrola. E04-10 (matriz numérica e de hardware) antes de qualquer item M5. Benchmark de CPU/latência publicado antes de aceitar o EQ-64 nativo. Riscos principais: CPU de cascatas longas e FIR, conflito D-DSP-05 da posição do vitrola, schema de preset v2 e ausência de TASK do vitrola.
+Critérios de avanço: E04-03 aprovado (grafo, swap e crossfade) → EQ-20/31/PEQ32 e vitrola. E04-10 (matriz numérica e de hardware) antes de qualquer item M5. Benchmark de CPU/latência publicado antes de aceitar o EQ-64 nativo. Riscos principais: CPU de cascatas longas e FIR, conflito D-DSP-05 da posição do vitrola, schema de preset v2 e implementação do módulo (TASK-E19-07).
