@@ -1,6 +1,6 @@
 # Vynamp Restore — análise e restauração acústica
 
-Versão: 0.1.0 · Data: 2026-11-05 · Estado: especificação normativa; implementação não iniciada.
+Versão: 0.1.1 · Data: 2026-11-05 · Estado: especificação normativa; implementação não iniciada.
 
 Documento canônico da ferramenta desktop **Vynamp Restore** (`vynamp-restore`). Complementa [ADR-013](../architecture/adr/ADR-013-vynamp-restore.md) (decisão), [ADR-012](../architecture/adr/ADR-012-shell-integration.md) (integração com o shell e identidade), [ADR-011](../architecture/adr/ADR-011-own-audio-stack.md) (pilha de áudio própria) e [spec de plataforma](../platforms/03-system-integration.md) (contratos de CLI e registro). Matriz normativa de requisitos: [03-requirements](../product/03-requirements.md).
 
@@ -14,9 +14,9 @@ Ferramenta desktop que **analisa** um arquivo de áudio, **identifica defeitos**
 
 | Fora de escopo | Motivo |
 |---|---|
-| Separação de voz por IA / remoção de vocal | Declarado no MVP como pendente; capacidade sem evidência ([ADR-013](../architecture/adr/ADR-013-vynamp-restore.md#4-correção-das-incoerências-do-mvp)) |
+| Separação de voz por IA / remoção de vocal | Declarado no MVP como pendente; capacidade sem evidência ([ADR-013](../architecture/adr/ADR-013-vynamp-restore.md#4-correção-das-incoerências-do-mvp)). Registrada como **fase futura planejada e não prometida** em [restauração por IA](03-vynamp-restore-ia.md) e [ADR-015](../architecture/adr/ADR-015-ai-restoration-future-phase.md); nada muda na 1.0 |
 | Reconstrução de master a partir de master degradado | Não é restauração, é remasterização; exige outra decisão |
-| Upscaling de hi-res / aumento real de resolução | Extensão de banda é **síntese**, não recuperação; o resultado é rotulado como tal |
+| Upscaling de hi-res / aumento real de resolução | Extensão de banda é **síntese**, não recuperação; o resultado é rotulado como tal. A super-resolução por IA é fase futura, com o mesmo rótulo obrigatório ([ADR-015](../architecture/adr/ADR-015-ai-restoration-future-phase.md)) |
 | Redução de ruído espectral (Wiener) | Módulo inerte no MVP; fora de escopo na 1.0 ([ADR-013](../architecture/adr/ADR-013-vynamp-restore.md#4-correção-das-incoerências-do-mvp)) |
 | Dublagem, corte de silêncio, normalização destrutiva | Ferramentas distintas, com tarefas próprias |
 | Editar tags de verdade | O Restore **preserva** metadados; a edição é do player ([TASK-E08-04](../../tasks/items/TASK-E08-04.md)) |
@@ -100,7 +100,7 @@ Uma região é um intervalo temporal com **ganho de atenuação** e **fade nas b
 
 **Ganho aplicado:** `ganho = 1 + (alvo − 1) · fade`, com curva de cosseno elevado nas bordas; `alvo = 10^(gainDB/20)` ou `0` quando `gainDB ≤ −80`.
 
-**Nota sobre `kind`:** o MVP oferece um segundo tipo, `overlay`, associado à separação de voz por IA. Esse tipo **não é portado** ([ADR-013](../architecture/adr/ADR-013-vynamp-restore.md#4-correção-das-incoerências-do-mvp)). A 1.0 tem apenas regiões de ganho com fade. Regiões não alteram a **duração** da faixa — não há time-stretching.
+**Nota sobre `kind`:** o MVP oferece um segundo tipo, `overlay`, associado à separação de voz por IA. Esse tipo **não é portado** ([ADR-013](../architecture/adr/ADR-013-vynamp-restore.md#4-correção-das-incoerências-do-mvp)). A 1.0 tem apenas regiões de ganho com fade. Regiões não alteram a **duração** da faixa — não há time-stretching. Reabrir `overlay` é decisão de escopo própria: a separação de fontes é fase futura e depende disso ([restauração por IA §4.2](03-vynamp-restore-ia.md#42-separação-de-fontes)).
 
 ## 3. Cadeia de restauração
 

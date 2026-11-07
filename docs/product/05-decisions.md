@@ -115,6 +115,29 @@ Vêm do adendo "letras integradas ao VU meter" v1.0 (2026-10-25). Estado: **prop
 | Adendo §3 LYR-05 (relógio) × [engine](../audio/01-engine.md) | o protótipo usa o evento de posição de reprodução do navegador; o nativo usa o relógio consumido | vale o relógio consumido no nativo, como o adendo e REQ-E03-09 já preveem |
 | Adendo §7 × painel completo de letras | controles do painel completo não estão no componente do protótipo | mantidos como obrigatórios e pendentes; sem promoção a concluídos (D-LYR-02) |
 
+## Decisões de restauração por IA (2026-11-05)
+
+Vêm das duas especificações de restauração por aprendizado de máquina que existiam fora do repositório (`AUDIOSR-RUST-CPU.md` e `SOURCE_SEPARATION_MODELS.md`). Normativa em [ADR-015](../architecture/adr/ADR-015-ai-restoration-future-phase.md) e [Restore — restauração por IA](../tools/03-vynamp-restore-ia.md). **Nenhuma altera o escopo da 1.0**, o build ou a matriz de requisitos.
+
+| ID | Decisão | Razão / revisão |
+|---|---|---|
+| D-IA-01 | Super-resolução de banda e separação de fontes ficam **planejadas e não prometidas**: fase pós-1.0, sem milestone, sem TASK e sem REQ na matriz. Os IDs `RSAI-01..14` são locais ao documento, como os `LYR-*` (D-LYR-01) | O mantenedor decidiu registrar a capacidade sem promover o escopo; a [ADR-013 §4](../architecture/adr/ADR-013-vynamp-restore.md) continua válida para a 1.0 (`kind: overlay` removido; "decisão futura e não é prometida") |
+| D-IA-02 | Opt-in de ponta a ponta: desligado por padrão, ativar não baixa nada, download só por clique explícito com tamanho/fonte/licença visíveis, checksum SHA-256, sem download automático, remoção explícita. Um build sem as features de IA não tem nenhuma dependência de ML | Os pesos vão de ~30 MB a ~2 GB; embutir é inviável e o download silencioso contradiz a política de rede do produto |
+| D-IA-03 | CPU é o requisito mínimo e o padrão; GPU (CUDA, Metal, e DirectML/Vulkan a avaliar) é aceleração opcional, usada só após teste de memória e paridade, com fallback para CPU que **retoma do bloco** onde parou | Ver CPU como piso evita excluir máquinas sem GPU; reiniciar o job em silêncio perderia horas de processamento |
+| D-IA-04 | A pilha própria da [ADR-011](../architecture/adr/ADR-011-own-audio-stack.md) vale integralmente no caminho de reprodução e **admite** runtime de terceiros (`candle`, `ort`, `tract`) apenas em job offline, atrás de feature Cargo, mediante **ADR nova que emende a ADR-011**. A ADR-015 não é essa emenda | Distinguir tempo real de processamento em lote preserva a decisão da ADR-011 onde ela importa (determinismo e latência) sem fechar a porta a inferência auditável |
+| D-IA-05 | Pesos de modelo são obra de terceiros e **não** são embutidos no instalador. A licença de cada modelo é conferida por escrito antes de ele ser oferecido na UI; sem licença clara, o usuário baixa da fonte oficial e converte localmente. Licença não conferida bloqueia release | Mesma regra que [privacidade e licenças](../security/02-privacy-licensing.md) já aplica a codecs: a licença do código do produto não concede direito sobre obra de terceiros |
+| D-IA-06 | A super-resolução é **síntese** de banda alta, nunca "recuperação" ou "aumento real de resolução", e substitui apenas acima do corte estimado pelo detector `band_limit`, com crossover linear-phase. Saída sempre em arquivo novo | Coerente com a [ADR-013 §4](../architecture/adr/ADR-013-vynamp-restore.md) e com a exclusão de upscaling de hi-res na 1.0; o rótulo é normativo |
+
+### Divergências de restauração por IA
+
+| Onde | O que diverge | Tratamento |
+|---|---|---|
+| `AUDIOSR-RUST-CPU.md` × [ADR-013 §4](../architecture/adr/ADR-013-vynamp-restore.md) e [spec do Restore §1.2](../tools/01-vynamp-restore.md) | a especificação descreve super-resolução de banda com detalhe de implementação, enquanto a ADR-013 declara upscaling de hi-res fora de escopo | não é contradição de mérito: a ADR-013 trata da 1.0 e o documento trata de fase futura. Registrado em D-IA-01 e D-IA-06; nenhum dos dois foi editado para "harmonizar" o outro |
+| `SOURCE_SEPARATION_MODELS.md` × ADR-013 §4 (`kind: overlay` removido) | a separação por região depende do tipo de região que a 1.0 removeu | admitir separação exige reabrir `kind: overlay` por decisão própria; declarado como dependência de escopo na spec de IA §4.2, não como extensão silenciosa |
+| `AUDIOSR-RUST-CPU.md` e `SOURCE_SEPARATION_MODELS.md` × licença dos pesos | nenhum dos dois confere a licença de redistribuição dos modelos | D-IA-05: bloqueante de release; a verificação é pré-requisito, não resultado |
+| `SKIN-REQUIREMENTS-*` (mencionam reconstrução por IA como recurso do Restore) × escopo da 1.0 | os documentos de skin listam a capacidade entre recursos da ferramenta | tratada como recurso planejado na UI futura, nunca como promessa de 1.0; o rótulo de pendência na UI é decisão da fase que admitir a capacidade |
+| `AUDIOSR-RUST-CPU.md` §5 (alvos de energia em faixa e notas por estrela) × este repositório | métricas subjetivas de qualidade não foram medidas aqui | não entram como critério de aceite normativo; a spec de IA §10 usa paridade, determinismo, recursos, opt-in e A/B cego |
+
 ## Decisão: o MVP é a fonte única da UI (2026-11-05)
 
 O mantenedor descartou os dois arquivos de skin como fonte de requisito visual. A UI nativa se baseia **exclusivamente** no MVP web de referência.

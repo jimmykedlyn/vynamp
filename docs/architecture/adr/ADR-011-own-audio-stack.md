@@ -1,6 +1,6 @@
 # ADR-011 — pilha de áudio própria
 
-Versão: 0.1.0 · Data: 2026-11-03 · Estado: decisão do mantenedor; implementação parcial nas bibliotecas (ver estado por componente).
+Versão: 0.1.1 · Data: 2026-11-05 · Estado: decisão do mantenedor; implementação parcial nas bibliotecas (ver estado por componente).
 
 Status: aceito pelo mantenedor em 2026-11-03. Substitui as partes de [ADR-002](ADR-002-audio-core.md) sobre decode, saída, resampling e tags (os "candidatos" Rust de terceiros de decode e saída).
 
@@ -26,6 +26,8 @@ O Vynamp usa uma pilha de áudio própria. O núcleo Rust, a RT callback restrit
 FFmpeg continua admitido apenas como oráculo de teste e como adapter opcional isolado para codecs fora da pilha, conforme [privacidade e licenças](../../security/02-privacy-licensing.md).
 
 A saída nunca faz resampling, dither nem ganho (design de vynamp-output @e534aad, §3 e §5.6); essas etapas pertencem ao grafo DSP do Vynamp.
+
+**Escopo desta decisão.** Ela governa o caminho de **reprodução** — decodificação, processamento em tempo real, saída — e ali não há terceiros. Um **job offline** de processamento em lote (por exemplo, restauração por IA) é outro contexto: usar runtime de inferência de terceiros ali exige **ADR nova que emende esta**, com a exceção nomeada e datada, e nunca alcança a callback de áudio. Ver [ADR-015](ADR-015-ai-restoration-future-phase.md).
 
 ## Lacunas
 
