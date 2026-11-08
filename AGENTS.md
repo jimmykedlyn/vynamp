@@ -45,10 +45,11 @@ apps ──→ engine ──→ { decode, output, encode, dsp }
   decode, output, encode ──→ dsp   (opcional, via feature)
 ```
 
-Regras. As 2 a 6 são checadas pelo job `arch` do CI do umbrella — que **ainda não
-existe**: nasce no passo 34 (`34-ci.md`). Até lá, são revisadas no PR. A 1 não é
-checada pelo `arch` — os apps são repos próprios, fora do build do umbrella, e
-quem a revisa é o PR do app.
+Regras. As 2 a 6 são as que o job `arch` do CI do umbrella vai checar — ele **ainda
+não existe**: nasce no passo 34 (`34-ci.md`), onde as verificações de
+`01-arvore-final.md` §3 viram `cargo tree`, `grep` e `cargo build --manifest-path`.
+Até lá, todas são revisadas no PR. Só a regra 1 fica fora: apps são repos próprios,
+fora do build do umbrella, e quem a revisa é o PR do app.
 
 1. `apps` dependem de `engine` (mais `std`, `dsp` e crates de UI). **Exceção
    aprovada:** `restore` usa `engine` **e** `dsp` direto — é primitivas (§1.4), não
