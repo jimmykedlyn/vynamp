@@ -19,7 +19,7 @@ A exclusao definitiva so acontece no passo 38, sob confirmacao explicita do mant
 | 2026-11-07 | `START-HERE.md` | `_arquivo/repo/START-HERE.md` | descreve bootstrap de ZIP e INICIAR.ps1 inexistentes | 30 | arquivado |
 | 2026-11-07 | `ARTIFACTS.json` | `_arquivo/repo/ARTIFACTS.json` | manifesto de bundle de outro produto | 30 | arquivado |
 | 2026-11-07 | `VALIDATION.json` | `_arquivo/repo/VALIDATION.json` | saida gerada por xtask validate; passa a ser gitignored | 30 | arquivado |
-| 2026-11-07 | `docs/audio/05-platform-backends.md` | `libs/output (spec, passo 35)` | fundida em audio/04-outputs-hires; 9 linhas identicas | 30 | pendente |
+| 2026-11-07 | `docs/audio/05-platform-backends.md` | `libs/output (spec, passo 35)` | nao e duplicata de audio/04: medido em 0 linhas comuns; vira spec de backends do output, agora em reference/audio/ | 30 | pendente |
 | 2026-11-07 | `docs/quality/04-integration-codecs-dsp.md` | `quality/01-estrategia-testes.md` | fundida; QA-022..033 byte-identicas para quality/01 | 30 | pendente |
 | 2026-11-07 | `docs/streaming/04-api-semantics.md` | `architecture/04-contratos.md` | fundida na secao Provider de architecture/04 | 30 | pendente |
 | 2026-11-07 | `docs/engineering/06-installers.md` | `delivery/04-gates.md` | fundida; mesmos instaladores | 30 | pendente |

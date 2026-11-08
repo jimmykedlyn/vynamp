@@ -25,8 +25,6 @@ VALIDATION.json
 *.log
 /target/
 # a negacao precisa vir DEPOIS de *.log: a ultima regra que casa e a que vale,
-# e docs/evidence guarda .log de pipeline versionado de proposito.
-# Restrita a *.log: um !docs/evidence/** solto reabriria .env, *.p12 e *.jks la dentro.
-# Passa a valer em evidence/ no passo 31; as duas formas ficam ate la.
-!docs/evidence/**/*.log
+# e evidence/ guarda .log de pipeline versionado de proposito.
+# Restrita a *.log: um !evidence/** solto reabriria .env, *.p12 e *.jks la dentro.
 !evidence/**/*.log
