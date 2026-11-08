@@ -37,7 +37,10 @@ cargo xtask check-delivery
 ```
 
 `check-docs` requires every Markdown file to have a `# ` title and an entry in
-[`INDEX.md`](INDEX.md). `check-delivery` validates the workflows:
+[`INDEX.md`](INDEX.md). `.claude/` is out of scope: files under it are agent
+definitions that open with a YAML frontmatter block, not prose, and they are
+configuration rather than specification. `check-delivery` validates that frontmatter
+instead — the four keys, and a `model:` from `opus|sonnet|haiku`. `check-delivery` validates the workflows:
 every `uses:` pinned by full commit SHA, the `CI Gate` job present and
 fail-closed.
 
@@ -110,7 +113,10 @@ cargo xtask check-delivery
 ```
 
 `check-docs` exige que todo arquivo Markdown tenha título `# ` e entrada no
-[`INDEX.md`](INDEX.md). `check-delivery` valida os workflows: todo
+[`INDEX.md`](INDEX.md). `.claude/` fica fora: o que está ali são definições de
+agente, que começam com bloco de frontmatter YAML, não prosa, e são configuração,
+não especificação. Quem valida esse frontmatter é o `check-delivery` — as quatro
+chaves, e `model:` de `opus|sonnet|haiku`. `check-delivery` valida os workflows: todo
 `uses:` fixado por SHA completo de commit, o job `CI Gate` presente e
 fail-closed.
 

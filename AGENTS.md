@@ -201,10 +201,21 @@ ou índice Git; dependências podem ser revisadas por subagente em modo leitura.
 Worktree de outra sessão não se toca. Detalhes em
 [engineering/02-worktrees.md](engineering/02-worktrees.md).
 
-1. **Orquestrador (Opus)** lê a spec da TASK e escreve plano curto no bloco do
-   plano do PR (`writing-plans`). O plano é rascunho de execução, não spec: não
-   é versionado, mora no scratch `.superpowers/` (já no `.gitignore`). O que
-   sobrevive é o commit, a evidência em `evidence/PR/<task>/` e o corpo do PR.
+As quatro definições estão em `.claude/agents/` (`orquestrador.md`,
+`implementador.md`, `checador.md` e `revisor.md`), com `model:` explícito em cada uma —
+nenhuma herda o modelo da sessão. Os tiers são a decisão registrada em ADR-007 e
+repetida na lista abaixo: **Opus orquestra, Sonnet implementa e revisa, Haiku checa.**
+TASK de alto risco — áudio/tempo real, concorrência, segurança, release — já está em
+Opus na orquestração e na revisão, e o implementador daquela TASK sobe de Sonnet para
+Opus trocando o `model:` da definição **antes** de chamar. A definição é a versão
+executável do que segue; se as duas divergirem, a definição perde e este contrato é
+corrigido no mesmo PR.
+
+1. **Orquestrador (Opus)** lê a spec da TASK e escreve o plano curto
+   (`writing-plans`). O plano é rascunho de execução, não spec, e **não é versionado**:
+   mora no scratch `.superpowers/` (já no `.gitignore`), nunca no documento da TASK nem
+   em `tasks/`. O que sobrevive é o commit, a evidência em `evidence/PR/<task>/` e o
+   corpo do PR, onde o plano aparece resumido — não como arquivo do repositório.
 2. **Worktree própria**: `cargo xtask repo worktree --agent claude --task
    TASK-E<II>-<NN> --slug <slug>` (com `--kind fix|chore|hotfix` quando não for
    feature). `--task` só aceita id existente em `tasks/backlog.json`.
@@ -213,6 +224,8 @@ Worktree de outra sessão não se toca. Detalhes em
 4. **Checks (Haiku)** devolvem só passou/falhou e o comando exato. Baseline
    obrigatório antes de mexer: `cargo xtask ci docs`.
 5. **Review (contexto limpo, nunca o implementador)**: Sonnet; alto risco, Opus.
+   Ele aponta e não corrige: quem corrige é outra sessão, senão o revisor passa a
+   defender o próprio código.
 6. **PR** com template, `--body-file`, sem duplicar PR existente.
 7. **Entrega ao mantenedor**: URL do PR, SHA revisado, base, status de review e CI.
 
