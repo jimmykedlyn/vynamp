@@ -461,32 +461,42 @@ Dez arquivos de `docs/superpowers/` saem do repositório: `plans/2026-10-14-comp
 **EN** — Step 33 of the phase-3 reorganization. `.claude/agents/` now holds the
 four roles the agent contract described in prose only: `orquestrador`,
 `implementador`, `checador` and `revisor`, each with an explicit `model:` in its
-frontmatter. Sonnet is the default for every role, because Opus on a simple task
-is cost without return; a high-risk TASK — real-time audio, concurrency,
-security, release — raises that definition's `model:` to Opus before the call,
-and no definition inherits the session model. The reviewer never corrects code:
-it reports, another session fixes, otherwise the reviewer ends up defending its
-own work. `cargo xtask check-docs` stops scanning `.claude/`: agent definitions
-open with a YAML frontmatter block, not with the `# ` title the check requires,
-and they are configuration rather than specification — the exclusion covers every
-consumer of `util::files()`, and `check-delivery` still reads
-`.claude/settings.json` directly, which is unaffected. Tooling and configuration
-only: no player code, 191 requirements, 191 tasks, 19 epics.
+frontmatter and no inherited session model. The tiers are the ones already recorded
+in ADR-007: **Opus orchestrates, Sonnet implements and reviews, Haiku runs the
+checks.** A high-risk TASK — real-time audio, concurrency, security, release —
+raises the implementer for that TASK to Opus before the call. The reviewer never
+corrects code: it reports, another session fixes, otherwise the reviewer ends up
+defending its own work. `cargo xtask check-docs` stops scanning `.claude/`: agent definitions
+open with a YAML frontmatter block, not with the `# ` title the check requires, and
+they are configuration rather than specification. The exclusion is scoped to the new
+`util::doc_files()` and leaves `util::files()` untouched: that walker also feeds
+`copy_tree` and the Python-artifact gate, and excluding `.claude/` there would have
+dropped `.claude/settings.json` from the distribution import target and blinded the
+gate. Because no documentation check sees `.claude/` any more, `check-delivery` gains
+the frontmatter gate: opening and closing `---`, the four required keys, an unknown or
+repeated key, and a `model:` outside `opus|sonnet|haiku` are all errors — otherwise a
+typo silently stops the definition from loading. Tooling and configuration only: no
+player code, 191 requirements, 191 tasks, 19 epics.
 
 **PT** — Passo 33 da reorganização da fase 3. O `.claude/agents/` passa a ter os
 quatro papéis que o contrato do agente descrevia só em prosa: `orquestrador`,
 `implementador`, `checador` e `revisor`, cada um com `model:` explícito no
-frontmatter. O padrão é Sonnet em todos, porque Opus em tarefa simples é custo
-sem retorno; TASK de alto risco — áudio/tempo real, concorrência, segurança,
-release — sobe o `model:` daquela definição para Opus antes da chamada, e nenhuma
-definição herda o modelo da sessão. O revisor nunca corrige código: ele aponta,
+frontmatter e nenhuma herança do modelo da sessão. Os tiers são os que a ADR-007 já
+registra: **Opus orquestra, Sonnet implementa e revisa, Haiku executa os checks.**
+TASK de alto risco — áudio/tempo real, concorrência, segurança, release — sobe o
+implementador daquela TASK para Opus antes da chamada. O revisor nunca corrige código: ele aponta,
 outra sessão corrige, senão o revisor acaba defendendo o próprio trabalho. O
 `cargo xtask check-docs` deixa de varrer `.claude/`: definições de agente começam
 com bloco de frontmatter YAML, não com o título `# ` que a checagem exige, e são
-configuração, não especificação — a exclusão vale para todo consumidor de
-`util::files()`, e o `check-delivery` continua lendo `.claude/settings.json`
-direto, sem alteração. Somente ferramentaria e configuração: nenhum código de
-player, 191 requisitos, 191 tarefas, 19 épicos.
+configuração, não especificação. A exclusão fica no novo `util::doc_files()` e não
+toca `util::files()`: aquele walker também alimenta o `copy_tree` e o gate de artefato
+Python, e excluir `.claude/` ali teria tirado `.claude/settings.json` do alvo do
+import de distribuição e cegado o gate. Como nenhuma checagem de documentação vê
+`.claude/` agora, o `check-delivery` ganha o gate do frontmatter: abertura e
+fechamento `---`, as quatro chaves obrigatórias, chave desconhecida ou repetida, e
+`model:` fora de `opus|sonnet|haiku` são erro — sem ele, um erro de digitação para a
+definição de carregar em silêncio. Somente ferramentaria e configuração: nenhum código
+de player, 191 requisitos, 191 tarefas, 19 épicos.
 
 ## Não lançado — 2026-11-07 (passo 30: limpeza do umbrella)
 

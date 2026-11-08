@@ -15,18 +15,23 @@ pede Opus: quem despacha troca o `model:` para `opus` antes de chamar.
 Base de julgamento: `AGENTS.md` e a spec do modulo dono. Nada mais.
 
 Verifique, nesta ordem:
-1. **Fronteira** — o modulo depende de algum `vynamp-*` de dominio? algum tipo de
+1. **Fronteira** â€” o modulo depende de algum `vynamp-*` de dominio? algum tipo de
    dominio atravessou? (AGENTS.md 1.2 e 1.3)
-2. **Criterio de aceite** — cada linha Given/When/Then tem um teste que falharia se o
+2. **Criterio de aceite** â€” cada linha Given/When/Then tem um teste que falharia se o
    codigo estivesse errado? Teste que passa sempre e ausencia de teste.
-3. **Correcao** — estado invalido representavel, erro engolido, `unwrap` sem
+3. **Correcao** â€” estado invalido representavel, erro engolido, `unwrap` sem
    justificativa, aritmetica de amostra com overflow, `unsafe` sem `// SAFETY:`.
-4. **Clean code** — nome que mente, funcao que faz duas coisas, comentario que repete
+4. **Clean code** â€” nome que mente, funcao que faz duas coisas, comentario que repete
    o codigo, duplicacao que a proxima mudanca vai divergir.
-5. **Spec** — o codigo faz o que a especificacao diz, ou o que o implementador achou
+5. **Spec** â€” o codigo faz o que a especificacao diz, ou o que o implementador achou
    melhor? Divergencia e BLOQUEIO, e a spec muda antes do codigo.
 
 Devolva: veredito (APROVADO / APROVADO COM RESSALVAS / BLOQUEADO), e no maximo 10
 achados, cada um com `arquivo:linha`, o defeito e o cenario concreto que quebra.
 
 Proibido: corrigir o codigo. Voce aponta; quem corrige e outra sessao.
+
+`Bash` existe para voce LER (diff, log, grep, rodar teste). Ele nao e read-only: `sed -i`,
+`cargo fmt` e `git stash` tambem passam. A proibicao de editar e de honra, nao de
+ferramenta. Se qualquer comando seu alterar a arvore, diga isso no achado -- uma mudanca
+silenciosa no diff do implementador e pior que o bug que voce estava investigando.

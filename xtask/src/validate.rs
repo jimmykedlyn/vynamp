@@ -4,6 +4,7 @@ use regex::Regex;
 use serde_json::{Value, json};
 use std::{
     collections::{BTreeMap, BTreeSet},
+    fs,
     path::Path,
 };
 #[derive(Default)]
@@ -133,7 +134,7 @@ fn lum(color: &str) -> Result<f64> {
 }
 pub fn spec(root: &Path) -> Result<()> {
     let mut c = Checks::default();
-    let all = files(root)?;
+    let all = doc_files(root)?;
     let md: Vec<_> = all
         .iter()
         .filter(|p| p.extension().is_some_and(|e| e == "md"))
@@ -525,6 +526,92 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
     );
     Ok(flows.len())
 }
+const AGENT_MODELS: [&str; 3] = ["opus", "sonnet", "haiku"];
+const AGENT_KEYS: [&str; 4] = ["name", "description", "model", "tools"];
+
+/// Validates every subagent definition in `.claude/agents/`: an opening `---`, a closing
+/// `---`, the four required keys, a `model:` from the known set, and no repeated key.
+fn agent_definitions(root: &Path, c: &mut Checks) {
+    let dir = root.join(".claude/agents");
+    if !dir.is_dir() {
+        c.check(false, "Missing .claude/agents/");
+        return;
+    }
+    let mut seen = std::collections::BTreeSet::new();
+    let Ok(entries) = fs::read_dir(&dir) else {
+        c.check(false, ".claude/agents/ unreadable");
+        return;
+    };
+    for entry in entries.flatten() {
+        let path = entry.path();
+        if path.extension().is_none_or(|e| e != "md") {
+            continue;
+        }
+        let name = path
+            .file_name()
+            .unwrap_or_default()
+            .to_string_lossy()
+            .to_string();
+        seen.insert(name.clone());
+        let Ok(body) = text(&path) else {
+            c.check(false, format!("Agent definition unreadable: {name}"));
+            continue;
+        };
+        let lines: Vec<&str> = body.lines().collect();
+        if lines.first() != Some(&"---") {
+            c.check(false, format!("Agent without frontmatter: {name}"));
+            continue;
+        }
+        let Some(close) = lines.iter().skip(1).position(|l| *l == "---") else {
+            c.check(false, format!("Agent frontmatter unclosed: {name}"));
+            continue;
+        };
+        let mut found = std::collections::BTreeSet::new();
+        for line in &lines[1..=close] {
+            let Some((key, value)) = line.split_once(':') else {
+                continue;
+            };
+            let key = key.trim();
+            let value = value.trim();
+            // Continuation lines of a folded description start with a space and have no
+            // key; they must not be mistaken for one.
+            if line.starts_with(' ') || key.contains(' ') {
+                continue;
+            }
+            if !AGENT_KEYS.contains(&key) {
+                c.check(false, format!("Agent {name}: unknown key '{key}'"));
+                continue;
+            }
+            if !found.insert(key.to_string()) {
+                c.check(false, format!("Agent {name}: repeated key '{key}'"));
+            }
+            if key == "model" && !AGENT_MODELS.contains(&value) {
+                c.check(false, format!("Agent {name}: invalid model '{value}'"));
+            }
+            if key != "model" && value.is_empty() {
+                c.check(false, format!("Agent {name}: empty '{key}'"));
+            }
+        }
+        for key in AGENT_KEYS {
+            c.check(
+                found.contains(key),
+                format!("Agent {name}: missing '{key}'"),
+            );
+        }
+    }
+    for required in [
+        "orquestrador.md",
+        "implementador.md",
+        "checador.md",
+        "revisor.md",
+    ] {
+        c.check(
+            seen.contains(required),
+            format!("Missing agent definition: {required}"),
+        );
+    }
+}
+
 pub fn delivery(root: &Path) -> Result<()> {
     // Packaging belongs to the app that ships it, not to the umbrella, and a repo without
     // a binary has nothing to install. D-CI-2 of step 34 removed the installer, branding
@@ -567,6 +654,10 @@ pub fn delivery(root: &Path) -> Result<()> {
         c.check(ignore.contains(name), format!("Missing ignore {name}"));
     }
     let count = github_actions(root, &mut c)?;
+    // A malformed `model:` makes a subagent definition silently fail to load, and
+    // check-docs no longer scans .claude/ -- so the gate lives here, where it is the
+    // only thing left watching those files.
+    agent_definitions(root, &mut c);
     c.check(
         !files(root)?
             .iter()
@@ -690,6 +781,83 @@ jobs:
         )
         .unwrap();
         tmp
+    }
+    fn agent_fixture(model: &str, extra: &str) -> (tempfile::TempDir, std::path::PathBuf) {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join(".claude/agents");
+        std::fs::create_dir_all(&dir).unwrap();
+        for name in ["orquestrador", "implementador", "checador", "revisor"] {
+            std::fs::write(
+                dir.join(format!("{name}.md")),
+                format!(
+                    "---
+name: {name}
+description: d
+model: {model}
+tools: Read{extra}
+---
+body
+"
+                ),
+            )
+            .unwrap();
+        }
+        (tmp, dir)
+    }
+    fn agent_errors(root: &Path) -> Vec<String> {
+        let mut c = Checks::default();
+        agent_definitions(root, &mut c);
+        c.errors
+    }
+    #[test]
+    fn agent_definitions_accept_the_four_known_models() {
+        let (tmp, _) = agent_fixture("sonnet", "");
+        assert!(agent_errors(tmp.path()).is_empty());
+    }
+    #[test]
+    fn agent_definitions_reject_invalid_model() {
+        let (tmp, _) = agent_fixture("opuss", "");
+        let e = agent_errors(tmp.path());
+        assert!(
+            e.iter().any(|e| e.contains("invalid model 'opuss'")),
+            "{e:?}"
+        );
+    }
+    #[test]
+    fn agent_definitions_reject_missing_key_and_unclosed_frontmatter() {
+        let (tmp, dir) = agent_fixture("sonnet", "");
+        std::fs::write(
+            dir.join("revisor.md"),
+            "---
+name: revisor
+model: sonnet
+",
+        )
+        .unwrap();
+        let e = agent_errors(tmp.path());
+        assert!(
+            e.iter().any(|e| e.contains("frontmatter unclosed")),
+            "{e:?}"
+        );
+        std::fs::write(
+            dir.join("revisor.md"),
+            "no frontmatter at all
+",
+        )
+        .unwrap();
+        let e = agent_errors(tmp.path());
+        assert!(e.iter().any(|e| e.contains("without frontmatter")), "{e:?}");
+    }
+    #[test]
+    fn agent_definitions_report_a_missing_definition() {
+        let (tmp, dir) = agent_fixture("sonnet", "");
+        std::fs::remove_file(dir.join("checador.md")).unwrap();
+        let e = agent_errors(tmp.path());
+        assert!(
+            e.iter()
+                .any(|e| e.contains("Missing agent definition: checador.md")),
+            "{e:?}"
+        );
     }
     fn ci_errors(root: &Path) -> Vec<String> {
         let mut c = Checks::default();

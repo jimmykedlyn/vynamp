@@ -153,13 +153,29 @@ pub fn files(root: &Path) -> Result<Vec<PathBuf>> {
     out.sort();
     Ok(out)
 }
+/// Markdown that belongs to the specification. `files()` stays generic -- it also feeds
+/// `copy_tree`, the distribution import and the Python-artifact gate -- so the exclusion
+/// of `.claude/` lives here and nowhere else. Agent definitions open with a YAML
+/// frontmatter block instead of the `# ` title `check-docs` requires, and they are
+/// configuration, not specification.
+pub fn doc_files(root: &Path) -> Result<Vec<PathBuf>> {
+    Ok(files(root)?
+        .into_iter()
+        .filter(|p| {
+            p.strip_prefix(root)
+                .ok()
+                .and_then(|rel| rel.components().next())
+                .is_none_or(|c| c.as_os_str() != ".claude")
+        })
+        .collect())
+}
+
 pub fn excluded(name: &str) -> bool {
     let name = name.to_ascii_lowercase();
     matches!(
         name.as_str(),
         ".git"
             | "_arquivo"
-            | ".claude"
             | ".worktrees"
             | ".superpowers"
             | "target"
@@ -343,7 +359,7 @@ mod tests {
         assert_eq!(paths, vec![temp.path().join("update.pub")]);
     }
     #[test]
-    fn distribution_scan_skips_claude_configuration() {
+    fn doc_scan_skips_claude_but_generic_walk_keeps_it() {
         let temp = tempfile::tempdir().unwrap();
         fs::create_dir_all(temp.path().join(".claude/agents")).unwrap();
         fs::write(
@@ -354,9 +370,25 @@ name: revisor
 ",
         )
         .unwrap();
+        fs::write(temp.path().join(".claude/settings.json"), b"{}").unwrap();
         fs::write(temp.path().join("SPEC.md"), b"# Spec").unwrap();
-        let paths = files(temp.path()).unwrap();
-        assert_eq!(paths, vec![temp.path().join("SPEC.md")]);
+        // The documentation scan leaves agent definitions out: they open with YAML
+        // frontmatter, not with the `# ` title check-docs requires.
+        assert_eq!(
+            doc_files(temp.path()).unwrap(),
+            vec![temp.path().join("SPEC.md")]
+        );
+        // `files()` stays generic on purpose. copy_tree feeds the distribution import and
+        // the Python-artifact gate; excluding .claude there dropped .claude/settings.json
+        // from the import target and blinded the gate.
+        assert_eq!(
+            files(temp.path()).unwrap(),
+            vec![
+                temp.path().join(".claude/agents/revisor.md"),
+                temp.path().join(".claude/settings.json"),
+                temp.path().join("SPEC.md"),
+            ]
+        );
     }
     #[cfg(unix)]
     #[test]
