@@ -396,9 +396,12 @@ fn triggers(v: &Value) -> BTreeSet<String> {
     }
 }
 /// CI runs on GitHub Actions (ADR-014). Every action is pinned by full commit
-/// SHA, the aggregate gate fails closed on any non-success dependency, release
-/// only starts from a `v*` tag and stays fail-closed before publishing, and
-/// the five mandatory targets have a hosted runner.
+/// SHA and the aggregate gate fails closed on any non-success dependency.
+///
+/// The umbrella is not an application: it validates the specification, the
+/// tooling and the architecture rules, and builds no desktop or Android
+/// target (D-CI-1). It also carries no release workflow, because it builds no
+/// binary to release (D-CI-3) -- that assertion lives in `archived_release`.
 fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
     c.check(
         !root.join(".woodpecker").exists(),
@@ -442,41 +445,35 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
             .unwrap_or_default()
     };
     let ci_jobs = jobs(ci);
-    for target in [
-        "x86_64-pc-windows-msvc",
-        "x86_64-unknown-linux-gnu",
-        "x86_64-apple-darwin",
-        "aarch64-apple-darwin",
-    ] {
-        c.check(
-            ci.is_some_and(|v| v.to_string().contains(target)),
-            format!("Missing desktop target {target}"),
-        );
-    }
+    // D-CI-1: the umbrella builds no app. A `cargo xtask ci core` or an
+    // Android build here would open a second place where the product proves
+    // itself, for a tree that has no app to build.
     c.check(
-        ci.is_some_and(|v| v.to_string().contains("cargo xtask ci android")),
-        "Missing Android CI",
+        !ci.is_some_and(|v| {
+            let s = v.to_string();
+            s.contains("cargo xtask ci core") || s.contains("cargo xtask ci android")
+        }),
+        "The umbrella CI must not build an app (D-CI-1); module repos own their builds",
+    );
+    // D-CI-3: release belongs to the app that publishes a binary.
+    c.check(
+        !flows.contains_key("release"),
+        "The umbrella must not carry a release workflow (D-CI-3); the app repo publishes",
     );
     // The required status check is the job id `gate`; a renamed or narrowed
     // gate would stop blocking merges without failing anything else.
     c.check(ci_jobs.contains("gate"), "CI Gate job absent from ci.yml");
+    const UMBRELLA_JOBS: [&str; 4] = ["specs", "tooling", "submodules", "arch"];
     c.check(
-        ["docs", "tooling", "core", "android"]
-            .iter()
-            .all(|j| ci_jobs.contains(*j)),
-        "CI workflow must keep docs, tooling, core and android jobs",
+        UMBRELLA_JOBS.iter().all(|j| ci_jobs.contains(*j)),
+        "CI workflow must keep specs, tooling, submodules and arch jobs",
     );
     c.check(
         ci.is_some_and(|v| {
             strings(&v["jobs"]["gate"]["needs"])
-                == BTreeSet::from([
-                    "docs".to_owned(),
-                    "tooling".to_owned(),
-                    "core".to_owned(),
-                    "android".to_owned(),
-                ])
+                == UMBRELLA_JOBS.iter().map(|j| (*j).to_owned()).collect()
         }),
-        "CI Gate job must depend on docs, tooling, core and android",
+        "CI Gate job must depend on specs, tooling, submodules and arch",
     );
     // `if: always()` is what makes the gate run after a cancelled or failed
     // dependency; without it the gate is skipped and never turns red.
@@ -491,28 +488,11 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
     c.check(
         ci.is_some_and(|v| {
             let gate = v["jobs"]["gate"].to_string();
-            ["needs.docs.result", "needs.tooling.result"]
+            ["needs.specs.result", "needs.tooling.result"]
                 .iter()
                 .all(|r| gate.contains(r))
         }),
         "CI Gate must read the dependency results, not assume success",
-    );
-    let release = flows.get("release");
-    let release_triggers = release.map(triggers).unwrap_or_default();
-    c.check(
-        release_triggers == BTreeSet::from(["push".to_owned()])
-            && release.is_some_and(|v| {
-                strings(&v["on"]["push"]["tags"]) == BTreeSet::from(["v*".to_owned()])
-            }),
-        "Release workflow must trigger only on push of tags v*",
-    );
-    c.check(
-        release.is_some_and(|v| v.to_string().contains("release preflight")),
-        "Release workflow must run release preflight",
-    );
-    c.check(
-        release.is_some_and(|v| v.to_string().contains("exit 1")),
-        "Release workflow must keep a fail-closed publish step (exit 1)",
     );
     // Hardware needs real devices: it must stay manual and out of the gate.
     let quality = flows.get("quality");
@@ -525,6 +505,33 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
         "Quality workflow must run cargo xtask quality-gate",
     );
     Ok(flows.len())
+}
+
+/// The umbrella publishes no binary, so its `release.yml` was archived in
+/// `_arquivo/workflows/` (D-CI-3). That archive is the source the application
+/// repos inherit, so it keeps being validated: a release must start only from
+/// a `v*` tag and must stay fail-closed before publishing. Absent is valid --
+/// the archive is scratch that step 38 removes.
+fn archived_release(root: &Path, c: &mut Checks) -> Result<()> {
+    let path = root.join("_arquivo/workflows/release.yml");
+    if !path.is_file() {
+        return Ok(());
+    }
+    let v: Value = serde_yaml::from_str(&text(&path)?)?;
+    c.check(
+        triggers(&v) == BTreeSet::from(["push".to_owned()])
+            && strings(&v["on"]["push"]["tags"]) == BTreeSet::from(["v*".to_owned()]),
+        "Archived release workflow must trigger only on push of tags v*",
+    );
+    c.check(
+        v.to_string().contains("release preflight"),
+        "Archived release workflow must run release preflight",
+    );
+    c.check(
+        v.to_string().contains("exit 1"),
+        "Archived release workflow must keep a fail-closed publish step (exit 1)",
+    );
+    Ok(())
 }
 const AGENT_MODELS: [&str; 3] = ["opus", "sonnet", "haiku"];
 const AGENT_KEYS: [&str; 4] = ["name", "description", "model", "tools"];
@@ -654,6 +661,7 @@ pub fn delivery(root: &Path) -> Result<()> {
         c.check(ignore.contains(name), format!("Missing ignore {name}"));
     }
     let count = github_actions(root, &mut c)?;
+    archived_release(root, &mut c)?;
     // A malformed `model:` makes a subagent definition silently fail to load, and
     // check-docs no longer scans .claude/ -- so the gate lives here, where it is the
     // only thing left watching those files.
@@ -690,6 +698,9 @@ mod tests {
         let tmp = tempfile::tempdir().unwrap();
         let w = tmp.path().join(".github/workflows");
         std::fs::create_dir_all(&w).unwrap();
+        // The umbrella owns no app: it validates specs, the tooling and the
+        // architecture rules, and builds no desktop or Android target. See
+        // D-CI-1 and D-CI-3 in 34-ci.md.
         let ci = format!(
             "name: CI
 on:
@@ -698,72 +709,41 @@ on:
   push:
     branches: [develop, main]
 jobs:
-  docs:
+  specs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@{SHA}
+      - run: cargo xtask check-docs
   tooling:
-    needs: docs
+    needs: specs
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@{SHA}
-  core:
-    needs: docs
-    runs-on: macos-15-intel
-    steps:
-      - run: cargo xtask ci core --target x86_64-apple-darwin
-  core-win:
-    needs: docs
-    runs-on: windows-2022
-    steps:
-      - run: cargo xtask ci core --target x86_64-pc-windows-msvc
-  core-linux:
-    needs: docs
+  submodules:
+    needs: specs
     runs-on: ubuntu-22.04
     steps:
-      - run: cargo xtask ci core --target x86_64-unknown-linux-gnu
-  core-arm:
-    needs: docs
-    runs-on: macos-15
+      - run: git submodule status --recursive
+  arch:
+    needs: specs
+    runs-on: ubuntu-22.04
     steps:
-      - run: cargo xtask ci core --target aarch64-apple-darwin
-  android:
-    needs: docs
-    runs-on: ubuntu-24.04
-    steps:
-      - run: cargo xtask ci android
+      - run: cargo build --manifest-path libs/decode/Cargo.toml
   gate:
     name: CI Gate
     if: always()
-    needs: [docs, tooling, core, android]
+    needs: [specs, tooling, submodules, arch]
     runs-on: ubuntu-22.04
     steps:
       - run: |
-          test needs.docs=${{{{ needs.docs.result }}}} = success
+          test needs.specs=${{{{ needs.specs.result }}}} = success
           test needs.tooling=${{{{ needs.tooling.result }}}} = success
 "
         );
-        let release = format!(
-            "name: Release
-on:
-  push:
-    tags: ['v*']
-jobs:
-  preflight:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@{SHA}
-      - run: cargo xtask release preflight --version ${{{{ steps.version.outputs.version }}}}\"
-  publish:
-    runs-on: ubuntu-22.04
-    steps:
-      - run: |
-          echo 'Release publication is not enabled; see ADR-014'
-          exit 1
-"
-        );
         std::fs::write(w.join("ci.yml"), ci).unwrap();
-        std::fs::write(w.join("release.yml"), release).unwrap();
+        // No `release.yml`: the umbrella publishes no binary (D-CI-3). The
+        // release assertions live in `release_errors`, checked against a
+        // workflow that does not belong to this repository.
         std::fs::write(
             w.join("quality.yml"),
             format!(
@@ -918,8 +898,8 @@ model: sonnet
         edit(
             f.path(),
             "ci.yml",
-            "needs: [docs, tooling, core, android]",
-            "needs: [docs, tooling, core]",
+            "needs: [specs, tooling, submodules, arch]",
+            "needs: [specs, tooling, submodules]",
         );
         assert!(ci_errors(f.path()).iter().any(|e| e.contains("CI Gate")));
     }
@@ -933,50 +913,104 @@ model: sonnet
     #[test]
     fn github_actions_rejects_gate_ignoring_results() {
         let f = ci_fixture();
-        edit(f.path(), "ci.yml", "needs.docs.result", "docs");
+        edit(f.path(), "ci.yml", "needs.specs.result", "specs");
         let e = ci_errors(f.path());
         assert!(e.iter().any(|e| e.contains("dependency results")), "{e:?}");
     }
     #[test]
-    fn github_actions_requires_platform_targets() {
+    fn github_actions_rejects_release_workflow_in_the_umbrella() {
+        // D-CI-3: release belongs to the app that publishes a binary. A
+        // `release.yml` here could only fail at its preflight.
         let f = ci_fixture();
-        edit(f.path(), "ci.yml", "x86_64-apple-darwin", "x");
-        edit(f.path(), "ci.yml", "cargo xtask ci android", "true");
+        std::fs::write(
+            f.path().join(".github/workflows/release.yml"),
+            "name: Release
+on:
+  push:
+    tags: ['v*']
+jobs:
+  publish:
+    runs-on: ubuntu-22.04
+    steps:
+      - run: exit 1
+",
+        )
+        .unwrap();
         let e = ci_errors(f.path());
-        assert!(e.iter().any(|e| e.contains("Missing Android CI")));
         assert!(
             e.iter()
-                .any(|e| e.contains("Missing desktop target x86_64-apple-darwin"))
+                .any(|e| e.contains("must not carry a release workflow")),
+            "{e:?}"
         );
     }
     #[test]
-    fn github_actions_requires_release_workflow() {
-        let f = ci_fixture();
-        std::fs::remove_file(f.path().join(".github/workflows/release.yml")).unwrap();
-        assert!(ci_errors(f.path()).iter().any(|e| e.contains("Release")));
-    }
-    #[test]
-    fn github_actions_rejects_release_on_branch_push() {
+    fn github_actions_rejects_app_builds_in_the_umbrella() {
+        // D-CI-1: an app build here would open a second place where the
+        // product proves itself, and it would consume the module repos'
+        // matrix for a tree that has no app.
         let f = ci_fixture();
         edit(
             f.path(),
-            "release.yml",
-            "tags: ['v*']",
-            "branches: [develop]",
+            "ci.yml",
+            "  arch:",
+            "  core:
+    runs-on: macos-15-intel
+    steps:
+      - run: cargo xtask ci core --target x86_64-apple-darwin
+  arch:",
         );
-        assert!(ci_errors(f.path()).iter().any(|e| e.contains("Release")));
-    }
-    #[test]
-    fn github_actions_rejects_release_without_preflight() {
-        let f = ci_fixture();
-        edit(f.path(), "release.yml", "release preflight", "version");
-        assert!(ci_errors(f.path()).iter().any(|e| e.contains("Release")));
-    }
-    #[test]
-    fn github_actions_rejects_release_publish_not_fail_closed() {
-        let f = ci_fixture();
-        edit(f.path(), "release.yml", "          exit 1\n", "");
         let e = ci_errors(f.path());
+        assert!(
+            e.iter().any(|e| e.contains("must not build an app")),
+            "{e:?}"
+        );
+    }
+    #[test]
+    fn github_actions_requires_the_umbrella_jobs() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "ci.yml",
+            "needs: [specs, tooling, submodules, arch]",
+            "needs: [specs, tooling, submodules]",
+        );
+        let e = ci_errors(f.path());
+        assert!(e.iter().any(|e| e.contains("CI Gate")), "{e:?}");
+    }
+    #[test]
+    fn archived_release_workflow_stays_valid_for_the_app_to_copy() {
+        // D-CI-3 moved release.yml to `_arquivo/workflows/`, where it is the
+        // source the app repos inherit. The rules did not disappear with it:
+        // a mangled archive would poison every app that copies from it.
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("_arquivo/workflows");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("release.yml"),
+            "name: Release
+on:
+  push:
+    branches: [develop]
+jobs:
+  publish:
+    runs-on: ubuntu-22.04
+    steps:
+      - run: |
+          echo 'publishing'
+",
+        )
+        .unwrap();
+        let mut c = Checks::default();
+        archived_release(tmp.path(), &mut c).unwrap();
+        let e = c.errors;
+        assert!(e.iter().any(|e| e.contains("tags v*")), "{e:?}");
         assert!(e.iter().any(|e| e.contains("fail-closed")), "{e:?}");
+    }
+    #[test]
+    fn archived_release_is_optional() {
+        let tmp = tempfile::tempdir().unwrap();
+        let mut c = Checks::default();
+        archived_release(tmp.path(), &mut c).unwrap();
+        assert!(c.errors.is_empty(), "{:?}", c.errors);
     }
 }

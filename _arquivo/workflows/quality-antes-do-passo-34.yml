@@ -1,0 +1,60 @@
+name: Quality
+
+# Hardware acceptance is never part of the CI Gate: it needs real devices and
+# real audio hardware, so it only runs when a maintainer asks for it, from an
+# integrated branch, and only after confirming the self-hosted runners exist.
+# The labels come from TASK-E15-05; until it provisions them, dispatching with
+# the default `confirm_hardware_runners: false` records that fact and skips the
+# matrix instead of leaving a job queued forever. See ADR-014.
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_hardware_runners:
+        description: 'Run on the vynamp-hardware / vynamp-android-device self-hosted runners'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main'
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Confirm hardware runners
+        shell: bash
+        env:
+          CONFIRMED: ${{ inputs.confirm_hardware_runners }}
+        run: |
+          if [ "$CONFIRMED" = "true" ]; then
+            echo 'Hardware runners confirmed by the maintainer; dispatching the matrix.'
+          else
+            echo 'Skipped: hardware runners are not provisioned yet (TASK-E15-05).'
+            echo 'Re-dispatch with confirm_hardware_runners = true once they are online.'
+            echo 'Build CI stays on ci.yml; hardware, soak and bit-perfect are not covered here.'
+          fi
+
+  trusted-hardware:
+    needs: preflight
+    if: inputs.confirm_hardware_runners
+    environment: hardware-validation
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - labels: [self-hosted, Windows, X64, vynamp-hardware]
+          - labels: [self-hosted, Linux, X64, vynamp-hardware]
+          - labels: [self-hosted, macOS, X64, vynamp-hardware]
+          - labels: [self-hosted, macOS, ARM64, vynamp-hardware]
+          - labels: [self-hosted, Linux, X64, vynamp-android-device]
+    runs-on: ${{ matrix.labels }}
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Provision pinned Rust toolchain
+        run: rustup show
+      - run: cargo xtask quality-gate

@@ -125,3 +125,6 @@ A exclusao definitiva so acontece no passo 38, sob confirmacao explicita do mant
 | 2026-11-07 | `raiz/TAREFA-SPECS-LIBS-MVP.md` | `_arquivo/raiz/TAREFA-SPECS-LIBS-MVP.md` | ordem de servico concluida | 30 | arquivado |
 | 2026-11-07 | `raiz/AUDIOSR-RUST-CPU.md` | `_arquivo/raiz/AUDIOSR-RUST-CPU.md` | absorvido por ADR-015 + tools/03 em 2026-11-07 | 30 | arquivado |
 | 2026-11-07 | `raiz/SOURCE_SEPARATION_MODELS.md` | `_arquivo/raiz/SOURCE_SEPARATION_MODELS.md` | absorvido por ADR-015 + tools/03 em 2026-11-07 | 30 | arquivado |
+| 2026-11-08 | `.github/workflows/ci.yml` | `_arquivo/workflows/ci-antes-do-passo-34.yml` | versao anterior guardada antes da reescrita | 34 |
+| 2026-11-08 | `.github/workflows/quality.yml` | `_arquivo/workflows/quality-antes-do-passo-34.yml` | versao anterior guardada antes da reescrita | 34 |
+| 2026-11-08 | `.github/workflows/release.yml` | `_arquivo/workflows/release.yml` | D-CI-3: release e do app que publica; o umbrella nao tem binario | 34 |
