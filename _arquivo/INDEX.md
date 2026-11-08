@@ -24,7 +24,7 @@ A exclusao definitiva so acontece no passo 38, sob confirmacao explicita do mant
 | 2026-11-07 | `docs/streaming/04-api-semantics.md` | `architecture/04-contratos.md` | fundida na secao Provider de architecture/04 | 30 | pendente |
 | 2026-11-07 | `docs/engineering/06-installers.md` | `delivery/04-gates.md` | fundida; mesmos instaladores | 30 | pendente |
 | 2026-11-07 | `docs/extensions/03-visualizations-integrations.md` | `extensions/05-visualizador.md` | fundida; era subconjunto | 30 | pendente |
-| 2026-11-07 | `docs/engineering/01-agents-superpowers.md` | `AGENTS.md secao 5` | absorvida por M5 | 30 | pendente |
+| 2026-11-07 | `docs/engineering/01-agents-superpowers.md` | `_arquivo/repo/docs/engineering/01-agents-superpowers.md` | M5: absorvida no contrato unico | 32 | arquivado |
 | 2026-11-07 | `docs/audio/01-engine.md` | `libs/engine (spec, passo 35)` | absorvida por M3 | 30 | pendente |
 | 2026-11-07 | `docs/audio/02-formats.md` | `libs/decode + libs/encode` | absorvida por M3 | 30 | pendente |
 | 2026-11-07 | `docs/audio/03-dsp.md` | `libs/engine` | absorvida por M3; resampler vai a dsp (M9) | 30 | pendente |
@@ -36,9 +36,9 @@ A exclusao definitiva so acontece no passo 38, sob confirmacao explicita do mant
 | 2026-11-07 | `docs/audio/10-vitrola.md` | `libs/engine` | M10: vinil/tube interno; sem repo vitrola | 30 | pendente |
 | 2026-11-07 | `docs/tools/01-vynamp-restore.md` | `apps/restore` | absorvida por M3 | 30 | pendente |
 | 2026-11-07 | `docs/tools/02-vynamp-converter.md` | `apps/converter` | absorvida por M3 | 30 | pendente |
-| 2026-11-07 | `repo/AGENTS.md` | `AGENTS.md do umbrella` | M5: absorvido no passo 32 | 30 | pendente |
-| 2026-11-07 | `repo/CLAUDE.md` | `CLAUDE.md do umbrella` | M5: absorvido no passo 32 | 30 | pendente |
-| 2026-11-07 | `AGENTS.md (raiz externa)` | `AGENTS.md do umbrella` | M5: absorvido no passo 32 | 30 | pendente |
+| 2026-11-07 | `repo/AGENTS.md` | `_arquivo/repo/AGENTS.md` | M5: absorvido no contrato unico | 32 | arquivado |
+| 2026-11-07 | `repo/CLAUDE.md` | `_arquivo/repo/CLAUDE.md` | M5: CLAUDE.md passa a ser so @AGENTS.md | 32 | arquivado |
+| 2026-11-07 | `AGENTS.md (raiz externa)` | `_arquivo/raiz/AGENTS.md` | M5: segunda autoridade conflitante, absorvida | 32 | arquivado |
 | 2026-11-07 | `LEIA-ME.md (raiz externa)` | `README.md do umbrella` | absorvido no passo 31 | 30 | pendente |
 | 2026-11-07 | `docs/evidence/PR/chore-woodpecker-3-20-1/README.md` | `_arquivo/repo/docs/evidence/PR/chore-woodpecker-3-20-1/README.md` | M6: evidencia de CI morto (Woodpecker) | 30 | arquivado |
 | 2026-11-07 | `docs/evidence/PR/task-e15-04/README.md` | `_arquivo/repo/docs/evidence/PR/task-e15-04/README.md` | M6: evidencia de CI morto (Woodpecker) | 30 | arquivado |
