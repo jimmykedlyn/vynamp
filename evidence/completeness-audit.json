@@ -45,7 +45,7 @@
     "cargo test --package xtask --locked"
   ],
   "result": "passed",
-  "verification_log": "docs/evidence/completeness-verification.log",
+  "verification_log": "evidence/completeness-verification.log",
   "local_os": "Linux x86_64",
   "toolchain": "Rust 1.99.0",
   "not_executed": [
@@ -61,5 +61,5 @@
   "command": "cargo xtask ci docs",
   "verification_result": "38 tests passed, 0 failed; format/clippy/document/config checks passed",
   "historical": true,
-  "superseded_by": "docs/evidence/windows-restart.json"
+  "superseded_by": "evidence/windows-restart.json"
 }

@@ -67,5 +67,5 @@
     "registro de marca/domínio"
   ],
   "historical": true,
-  "current_audit": "docs/evidence/completeness-audit.json"
+  "current_audit": "evidence/completeness-audit.json"
 }

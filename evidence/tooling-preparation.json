@@ -36,5 +36,5 @@
   "review": "Self-review of configuration/scripts; no Claude session review performed.",
   "historical": true,
   "superseded_by": "vynamp-branding.json",
-  "current_audit": "docs/evidence/completeness-audit.json"
+  "current_audit": "evidence/completeness-audit.json"
 }
