@@ -78,12 +78,31 @@ jobs:
           # vynamp-dsp NAO entra nesta lista: AGENTS.md 1.4 o define como
           # primitivas, nao dominio, e 01-arvore-final o permite opcional em
           # decode/encode/output. Lista-lo aqui contradiria a arvore aprovada.
+          #
+          # Antes do passo 35 nenhum lib de modulo existe, e uma regra sobre
+          # diretorio vazio nao reprova nada de verdade -- so quebra o gate por
+          # ausencia. Mas "pular se vazio" seria pior: uma migracao pela metade
+          # (decode presente, output esquecido) passaria calada. Por isso a
+          # condicao e tudo-ou-nada: nenhum presente, nada a verificar; qualquer
+          # um presente, os tres tem de estar.
+          present=0
           for m in decode encode output; do
-            if [ ! -f "libs/$m/Cargo.toml" ]; then
-              echo "libs/$m ausente: submodule ainda nao adicionado (passo 35)."
-              echo "Regra 3 nao verificavel; declarando para o gate nao passar."
-              exit 1
-            fi
+            if [ -f "libs/$m/Cargo.toml" ]; then present=$((present + 1)); fi
+          done
+          if [ "$present" -eq 0 ]; then
+            echo 'Nenhum lib de modulo no umbrella ainda; regras 3 e 4 sem alvo.'
+            echo 'Passam a valer no commit que trouxer o primeiro submodulo.'
+            exit 0
+          fi
+          if [ "$present" -ne 3 ]; then
+            echo "libs/ parcialmente migrado: $present de 3 modulos presentes."
+            echo 'decode, encode e output entram juntos; um sozinho e migracao incompleta.'
+            for m in decode encode output; do
+              [ -f "libs/$m/Cargo.toml" ] || echo "  faltando: libs/$m"
+            done
+            exit 1
+          fi
+          for m in decode encode output; do
             if cargo tree --manifest-path "libs/$m/Cargo.toml" --prefix none 2>/dev/null \
                  | grep -E '^vynamp-(engine|player|converter|restore)( |$)'; then
               echo "libs/$m depende de crate de dominio do projeto; viola AGENTS.md 1.2."
