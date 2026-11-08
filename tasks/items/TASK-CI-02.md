@@ -22,11 +22,7 @@
 
 ## Entrega
 
-Job `check-tasks` no `.github/workflows/ci.yml` do umbrella e o comando
-`cargo xtask check-tasks` que o alimenta: valida que toda TASK de produto tem
-`Module dono` de um único módulo, REQ, critério em Given/When/Then sem `PENDENTE`, e
-que nenhuma TASK está fora de `planned` com `acceptance_ready: false`. Entra em
-`CI Gate`.
+Job `check-tasks` no `.github/workflows/ci.yml` do umbrella e o comando `cargo xtask check-tasks` que o alimenta: valida que toda TASK de produto tem `Module dono` de um único módulo, REQ, critério em Given/When/Then sem `PENDENTE`, e que nenhuma TASK está fora de `planned` com `acceptance_ready: false`. Entra em `CI Gate`.
 
 ## Boundary
 

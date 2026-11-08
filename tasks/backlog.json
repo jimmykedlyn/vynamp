@@ -1,4 +1,6 @@
 {
+  "schema_version": 1,
+  "spec_version": "0.7.0",
   "version": "2.0.0",
   "generated_by": "passo 37 (37-tasks.ps1)",
   "source": "backlog.json anterior, 191 tarefas, com module/repo/acceptance_ready acrescentados",
@@ -5940,7 +5942,7 @@
     {
       "id": "TASK-CI-01",
       "epic": "CI",
-      "title": "Reescrever delivery() e github_actions() para a arvore do umbrella",
+      "title": "Reescrever delivery() e github_actions() para a árvore do umbrella",
       "phase": "M1",
       "priority": "P0",
       "status": "planned",
@@ -5951,8 +5953,8 @@
       "module": "vynamp",
       "repo": "vynamp",
       "acceptance_ready": true,
-      "deliverable": "delivery() e github_actions() validam spec, xtask, pins de submodulo e regras de arquitetura; nada de empacotamento.",
-      "acceptance": "Validam spec, xtask, pins de submodulo e regras de arquitetura; os 3 testes de workflow passam com o ci.yml novo",
+      "deliverable": "validam spec, `xtask`, pins de submódulo e regras de arquitetura",
+      "acceptance": "valida spec, `xtask`, pins de submódulo e regras de arquitetura; nenhuma checagem de empacotamento; os 3 testes de workflow passam com o `ci.yml` do passo 34",
       "qa": [],
       "estimate_days": {
         "min": 2,
@@ -5976,8 +5978,8 @@
       "module": "vynamp",
       "repo": "vynamp",
       "acceptance_ready": true,
-      "deliverable": "Job check-tasks no ci.yml e comando cargo xtask check-tasks, exigidos pelo CI Gate.",
-      "acceptance": "TASK com Given PENDENTE reprova e nomeia o ID; in_progress com acceptance_ready falso reprova e lista; dois modulos donos reprova e nomeia o arquivo",
+      "deliverable": "Job `check-tasks` no `.github/workflows/ci.yml` do umbrella e o comando `cargo xtask check-tasks` que o alimenta",
+      "acceptance": "reprova e imprime o ID da TASK e a coluna que falta; reprova e lista o ID; reprova e nomeia o arquivo",
       "qa": [],
       "estimate_days": {
         "min": 1,
