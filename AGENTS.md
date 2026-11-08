@@ -201,8 +201,16 @@ ou índice Git; dependências podem ser revisadas por subagente em modo leitura.
 Worktree de outra sessão não se toca. Detalhes em
 [engineering/02-worktrees.md](engineering/02-worktrees.md).
 
-1. **Orquestrador (Opus)** lê a spec da TASK e escreve plano curto no bloco do
-   plano do PR (`writing-plans`). O plano é rascunho de execução, não spec: não
+As quatro definições estão em `.claude/agents/` (`orquestrador.md`,
+`implementador.md`, `checador.md`, `revisor.md`), com `model:` explícito em cada uma.
+Padrão: Sonnet, porque Opus em tarefa simples é custo sem retorno. TASK de alto risco
+— áudio/tempo real, concorrência, segurança, release — troca o `model:` da definição
+para Opus **antes** de chamar; nenhuma definição herda o modelo da sessão. Ela é a
+versão executável do que segue; se as duas divergirem, a definição perde e este
+contrato é corrigido no mesmo PR.
+
+1. **Orquestrador (Sonnet; Opus em alto risco)** lê a spec da TASK e escreve plano
+   curto no bloco do plano do PR (`writing-plans`). O plano é rascunho de execução, não spec: não
    é versionado, mora no scratch `.superpowers/` (já no `.gitignore`). O que
    sobrevive é o commit, a evidência em `evidence/PR/<task>/` e o corpo do PR.
 2. **Worktree própria**: `cargo xtask repo worktree --agent claude --task
@@ -213,6 +221,8 @@ Worktree de outra sessão não se toca. Detalhes em
 4. **Checks (Haiku)** devolvem só passou/falhou e o comando exato. Baseline
    obrigatório antes de mexer: `cargo xtask ci docs`.
 5. **Review (contexto limpo, nunca o implementador)**: Sonnet; alto risco, Opus.
+   Ele aponta e não corrige: quem corrige é outra sessão, senão o revisor passa a
+   defender o próprio código.
 6. **PR** com template, `--body-file`, sem duplicar PR existente.
 7. **Entrega ao mantenedor**: URL do PR, SHA revisado, base, status de review e CI.
 

@@ -456,6 +456,38 @@ Dez arquivos de `docs/superpowers/` saem do repositório: `plans/2026-10-14-comp
 
 **PT** — O design do `vitrola` (aprovado em 2026-10-23) deixou de ser biblioteca em repositório próprio: vinil e válvula são **módulos DSP dentro do app**, por decisão do mantenedor registrada na [ADR-014](adr/ADR-014-publico-dsp-interno.md). O design aprovado foi preservado por **incorporação**, não por reimplementação: suas nove seções são agora §8.1–8.9 de [10-vitrola](reference/audio/10-vitrola.md), que passou a ser fonte única — antes esse documento integrava um design externo por referência e se subordinava a ele. Uma cópia literal do texto original fica em `docs/evidence/PR/task-e19-03/vitrola-design.md`, porque é a única cópia sobrevivente depois que o repositório for arquivado. O repositório externo é arquivado, reversível por `gh repo unarchive`, e **não** é aberto ao público. Citações atualizadas na linha de inventário da ADR-011, no glossário, nos docs de DSP e do contrato de sinal, no catálogo DSP, na referência do MVP, na paridade de recursos, em privacidade/licenças e no roadmap. A integração continua na [TASK-E19-07](tasks/items/TASK-E19-07.md), depois da TASK-E04-03. Somente documentação: nenhum código de player, 191 requisitos, 191 tarefas, 19 épicos.
 
+## Unreleased — 2026-11-08 (step 33: agent definitions) / Não lançado — 2026-11-08 (passo 33: definições de agente)
+
+**EN** — Step 33 of the phase-3 reorganization. `.claude/agents/` now holds the
+four roles the agent contract described in prose only: `orquestrador`,
+`implementador`, `checador` and `revisor`, each with an explicit `model:` in its
+frontmatter. Sonnet is the default for every role, because Opus on a simple task
+is cost without return; a high-risk TASK — real-time audio, concurrency,
+security, release — raises that definition's `model:` to Opus before the call,
+and no definition inherits the session model. The reviewer never corrects code:
+it reports, another session fixes, otherwise the reviewer ends up defending its
+own work. `cargo xtask check-docs` stops scanning `.claude/`: agent definitions
+open with a YAML frontmatter block, not with the `# ` title the check requires,
+and they are configuration rather than specification — the exclusion covers every
+consumer of `util::files()`, and `check-delivery` still reads
+`.claude/settings.json` directly, which is unaffected. Tooling and configuration
+only: no player code, 191 requirements, 191 tasks, 19 epics.
+
+**PT** — Passo 33 da reorganização da fase 3. O `.claude/agents/` passa a ter os
+quatro papéis que o contrato do agente descrevia só em prosa: `orquestrador`,
+`implementador`, `checador` e `revisor`, cada um com `model:` explícito no
+frontmatter. O padrão é Sonnet em todos, porque Opus em tarefa simples é custo
+sem retorno; TASK de alto risco — áudio/tempo real, concorrência, segurança,
+release — sobe o `model:` daquela definição para Opus antes da chamada, e nenhuma
+definição herda o modelo da sessão. O revisor nunca corrige código: ele aponta,
+outra sessão corrige, senão o revisor acaba defendendo o próprio trabalho. O
+`cargo xtask check-docs` deixa de varrer `.claude/`: definições de agente começam
+com bloco de frontmatter YAML, não com o título `# ` que a checagem exige, e são
+configuração, não especificação — a exclusão vale para todo consumidor de
+`util::files()`, e o `check-delivery` continua lendo `.claude/settings.json`
+direto, sem alteração. Somente ferramentaria e configuração: nenhum código de
+player, 191 requisitos, 191 tarefas, 19 épicos.
+
 ## Não lançado — 2026-11-07 (passo 30: limpeza do umbrella)
 
 **EN** — Step 30 of the phase-3 reorganization. **M4:** the specification now

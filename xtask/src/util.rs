@@ -159,6 +159,7 @@ pub fn excluded(name: &str) -> bool {
         name.as_str(),
         ".git"
             | "_arquivo"
+            | ".claude"
             | ".worktrees"
             | ".superpowers"
             | "target"
@@ -340,6 +341,22 @@ mod tests {
         fs::write(temp.path().join("update.pub"), b"public fixture").unwrap();
         let paths = files(temp.path()).unwrap();
         assert_eq!(paths, vec![temp.path().join("update.pub")]);
+    }
+    #[test]
+    fn distribution_scan_skips_claude_configuration() {
+        let temp = tempfile::tempdir().unwrap();
+        fs::create_dir_all(temp.path().join(".claude/agents")).unwrap();
+        fs::write(
+            temp.path().join(".claude/agents/revisor.md"),
+            b"---
+name: revisor
+---
+",
+        )
+        .unwrap();
+        fs::write(temp.path().join("SPEC.md"), b"# Spec").unwrap();
+        let paths = files(temp.path()).unwrap();
+        assert_eq!(paths, vec![temp.path().join("SPEC.md")]);
     }
     #[cfg(unix)]
     #[test]
