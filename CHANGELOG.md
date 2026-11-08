@@ -206,7 +206,7 @@ Markdown; nenhum código, schema, backlog ou pipeline alterado.
 LYR-01..15 and LYR-AC-01..12, layout in
 [design/02-layouts.md](design/02-layouts.md), decisions D-LYR-01..09 in
 [product/05-decisions.md](product/05-decisoes.md) and the task criteria in
-[TASK-E03-09](tasks/items/TASK-E03-09.md). The prototype reference is external:
+[TASK-E03-09](apps/player/tasks/items/TASK-E03-09.md). The prototype reference is external:
 reported evidence of the external reference rev. 14, not verified in this
 repository; nothing native implemented. Markdown only; no code, schema, backlog
 or pipeline changed (TASK-E03-09 was updated in text only: deliverable,
@@ -217,7 +217,7 @@ dependencies and criteria).
 LYR-01..15 e LYR-AC-01..12, layout em
 [design/02-layouts.md](design/02-layouts.md), decisões D-LYR-01..09 em
 [product/05-decisions.md](product/05-decisoes.md) e critérios da tarefa em
-[TASK-E03-09](tasks/items/TASK-E03-09.md). A referência do protótipo é externa:
+[TASK-E03-09](apps/player/tasks/items/TASK-E03-09.md). A referência do protótipo é externa:
 evidência relatada da referência externa rev. 14, não verificada neste
 repositório; nada nativo implementado. Só Markdown; nenhum código, schema,
 backlog ou pipeline alterado (TASK-E03-09 foi atualizada apenas em texto:
@@ -452,9 +452,9 @@ Dez arquivos de `docs/superpowers/` saem do repositório: `plans/2026-10-14-comp
 
 ## Não lançado — 2026-11-05 (o vitrola é módulo DSP interno, não biblioteca)
 
-**EN** — The `vitrola` design (approved 2026-10-23) is no longer a library in its own repository: vinyl and tube are **DSP modules inside the app**, by the maintainer's decision, recorded in [ADR-014](adr/ADR-014-publico-dsp-interno.md). The approved design was preserved **by incorporation**, not by reimplementation: its nine sections are now §8.1–8.9 of [10-vitrola](reference/audio/10-vitrola.md), which became the single source — previously that document integrated an external design by reference and deferred to it. A literal copy of the original text is kept at `docs/evidence/PR/task-e19-03/vitrola-design.md`, because it is the only surviving copy once the repository is archived. The external repository is archived, reverts with `gh repo unarchive`, and is **not** opened to the public. Citations updated in the ADR-011 inventory row, the glossary, the DSP and signal-contract docs, the DSP catalog, the MVP reference, feature parity, privacy/licensing and the roadmap. Integration remains [TASK-E19-07](tasks/items/TASK-E19-07.md), after TASK-E04-03. Documentation only: no player code, 191 requirements, 191 tasks, 19 epics.
+**EN** — The `vitrola` design (approved 2026-10-23) is no longer a library in its own repository: vinyl and tube are **DSP modules inside the app**, by the maintainer's decision, recorded in [ADR-014](adr/ADR-014-publico-dsp-interno.md). The approved design was preserved **by incorporation**, not by reimplementation: its nine sections are now §8.1–8.9 of [10-vitrola](reference/audio/10-vitrola.md), which became the single source — previously that document integrated an external design by reference and deferred to it. A literal copy of the original text is kept at `docs/evidence/PR/task-e19-03/vitrola-design.md`, because it is the only surviving copy once the repository is archived. The external repository is archived, reverts with `gh repo unarchive`, and is **not** opened to the public. Citations updated in the ADR-011 inventory row, the glossary, the DSP and signal-contract docs, the DSP catalog, the MVP reference, feature parity, privacy/licensing and the roadmap. Integration remains [TASK-E19-07](libs/engine/tasks/items/TASK-E19-07.md), after TASK-E04-03. Documentation only: no player code, 191 requirements, 191 tasks, 19 epics.
 
-**PT** — O design do `vitrola` (aprovado em 2026-10-23) deixou de ser biblioteca em repositório próprio: vinil e válvula são **módulos DSP dentro do app**, por decisão do mantenedor registrada na [ADR-014](adr/ADR-014-publico-dsp-interno.md). O design aprovado foi preservado por **incorporação**, não por reimplementação: suas nove seções são agora §8.1–8.9 de [10-vitrola](reference/audio/10-vitrola.md), que passou a ser fonte única — antes esse documento integrava um design externo por referência e se subordinava a ele. Uma cópia literal do texto original fica em `docs/evidence/PR/task-e19-03/vitrola-design.md`, porque é a única cópia sobrevivente depois que o repositório for arquivado. O repositório externo é arquivado, reversível por `gh repo unarchive`, e **não** é aberto ao público. Citações atualizadas na linha de inventário da ADR-011, no glossário, nos docs de DSP e do contrato de sinal, no catálogo DSP, na referência do MVP, na paridade de recursos, em privacidade/licenças e no roadmap. A integração continua na [TASK-E19-07](tasks/items/TASK-E19-07.md), depois da TASK-E04-03. Somente documentação: nenhum código de player, 191 requisitos, 191 tarefas, 19 épicos.
+**PT** — O design do `vitrola` (aprovado em 2026-10-23) deixou de ser biblioteca em repositório próprio: vinil e válvula são **módulos DSP dentro do app**, por decisão do mantenedor registrada na [ADR-014](adr/ADR-014-publico-dsp-interno.md). O design aprovado foi preservado por **incorporação**, não por reimplementação: suas nove seções são agora §8.1–8.9 de [10-vitrola](reference/audio/10-vitrola.md), que passou a ser fonte única — antes esse documento integrava um design externo por referência e se subordinava a ele. Uma cópia literal do texto original fica em `docs/evidence/PR/task-e19-03/vitrola-design.md`, porque é a única cópia sobrevivente depois que o repositório for arquivado. O repositório externo é arquivado, reversível por `gh repo unarchive`, e **não** é aberto ao público. Citações atualizadas na linha de inventário da ADR-011, no glossário, nos docs de DSP e do contrato de sinal, no catálogo DSP, na referência do MVP, na paridade de recursos, em privacidade/licenças e no roadmap. A integração continua na [TASK-E19-07](libs/engine/tasks/items/TASK-E19-07.md), depois da TASK-E04-03. Somente documentação: nenhum código de player, 191 requisitos, 191 tarefas, 19 épicos.
 
 ## Unreleased — 2026-11-08 (step 33: agent definitions) / Não lançado — 2026-11-08 (passo 33: definições de agente)
 
@@ -566,7 +566,7 @@ counter also counts other tests' RT sections running in parallel — that is why
 render's), and concurrency tests must not depend on the scheduler. [04-outputs-hires](reference/audio/04-outputs-hires.md)
 records the measured order of magnitude as an expectation reference, not a
 target. The two raw probe JSONs, their SHA-256, the environment and the
-50-run loop of the clock test go to `docs/evidence/PR/task-e01-02/`, and [TASK-E01-02](tasks/items/TASK-E01-02.md)
+50-run loop of the clock test go to `docs/evidence/PR/task-e01-02/`, and [TASK-E01-02](libs/output/tasks/items/TASK-E01-02.md)
 now states each acceptance criterion with what was measured and what is still
 missing. The same section of [01-engine.md](reference/audio/01-engine.md) also
 registers the clock's **known limitation** — queued underrun or drain silence
@@ -598,7 +598,7 @@ render), e teste de concorrência não pode depender do escalonador.
 [04-outputs-hires](reference/audio/04-outputs-hires.md) registra a ordem de grandeza
 medida como referência de expectativa, não como meta. Os dois JSON do probe, o
 SHA-256 deles, o ambiente e a repetição de 50 execuções do teste de clock vão
-para `docs/evidence/PR/task-e01-02/`, e a [TASK-E01-02](tasks/items/TASK-E01-02.md)
+para `docs/evidence/PR/task-e01-02/`, e a [TASK-E01-02](libs/output/tasks/items/TASK-E01-02.md)
 passa a declarar cada critério de aceite com o que foi medido e o que falta. A
 mesma seção de [01-engine.md](reference/audio/01-engine.md) registra também a
 **limitação conhecida** do clock — silêncio de underrun ou de drenagem

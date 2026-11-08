@@ -1,27 +1,65 @@
 # TASK-E15-02 — Validar worktrees, claims e handoff
 
-Versão0.7.0 · Estado planejado; infraestrutura preparada não significa aplicação/ativação externa completa.
+> Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
+> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
+> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
+> não existem.
 
-Fase M0 / P0 · Owner engineering-delivery · Esforço inicial 2–5 dias úteis; reestimar.
+| Campo | Valor |
+|---|---|
+| ID | `TASK-E15-02` |
+| Módulo dono | `vynamp` |
+| Repo | `jimmykedlyn/vynamp` |
+| REQ coberto | `REQ-E15-02` |
+| Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
+| Fase | M0 |
+| Prioridade | P0 |
+| Estado | planned |
+| Depende de | `TASK-E15-01` |
+| Bloqueia | `TASK-E11-01`, `TASK-E15-03` |
+| Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
+| Esforço | 2–5 dias úteis |
+| Risco | alto |
 
-## Dependências
-
-- [TASK-E15-01](TASK-E15-01.md) — Configurar Claude Code e Superpowers obrigatório
-
-## Entrega concreta
+## Entrega
 
 Scripts e regras de isolamento, claim atômico e remoção segura.
 
-[Spec](../../engineering/02-worktrees.md) · REQ-E15-02 em [matriz](../../product/03-requisitos.md).
+## Boundary
+
+<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+
+## Antes de começar
+
+- [ ] Spec do módulo aprovada e o critério de aceite citado já existe nela
+- [ ] Worktree própria criada (`cargo xtask repo worktree task-e15-02-claude-<slug>`)
+- [ ] Fixtures/hardware necessários disponíveis ou limitação registrada
+- [ ] Nenhuma TASK em execução tocando os mesmos arquivos
 
 ## Critérios de aceite
 
-Índices independentes, task exclusiva, paths válidos, worktree suja/unmerged preservada; hotfix só remove após main e develop.
+| ID | Given | When | Then |
+|---|---|---|---|
+| `TASK-E15-02-AC-1` | PENDENTE | PENDENTE | Índices independentes, task exclusiva, paths válidos, worktree suja/unmerged preservada |
+| `TASK-E15-02-AC-2` | PENDENTE | PENDENTE | hotfix só remove após main e develop. |
 
-## Evidência
+## Verificação
 
-QA-009, QA-012; registrar commit/digest, comando, ambiente/OS/ABI, outputs e limitações. Instalação de plugin/repo privado/assinatura requer ambiente real; não substituir por mocks/documentos. Quebrar em slices pequenas antes execução, implementar sucesso/erro/cancelamento, revisar pelo outro agente e preservar resultados no PR/docs/evidence.
+| Item | Comando / fixture | Evidência esperada |
+|---|---|---|
+| Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
+| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
 
-## Execução E15-02
+## DoD — pronto para review
 
-[Plano em slices](../../_arquivo/repo/docs/superpowers/plans/2026-10-16-e15-02-isolation.md) e [evidência do autor](../../evidence/PR/task-e15-02/README.md). A validação local do tooling não constitui aceite da TASK: revisão Claude do SHA exato, CI remoto e integração pelo mantenedor são etapas separadas; produto/hardware/release continuam fora deste aceite.
+- [ ] Todos os critérios de aceite com evidência
+- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
+- [ ] `cargo test` verde; testes ignorados listados com motivo
+- [ ] Spec do módulo atualizada se a implementação revelou algo novo
+- [ ] `backlog.json` com o estado correto
+- [ ] Revisão feita por contexto limpo, não pelo implementador
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+## Notas de execução
+
+Preenchido durante a execução, não antes.

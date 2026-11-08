@@ -1,37 +1,65 @@
 # TASK-E10-03 — Criar harness numérico de áudio
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
-
-## Contrato da tarefa
+> Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
+> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
+> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
+> não existem.
 
 | Campo | Valor |
 |---|---|
-| ID / requisito | TASK-E10-03 / REQ-E10-03 |
-| Fase / prioridade | M2 / P0 |
-| Estado | Planejada; não implementada |
-| Responsável funcional | quality — pessoa a designar |
-| Esforço provisório | 5–12 dias úteis; reestimar após M0 |
+| ID | `TASK-E10-03` |
+| Módulo dono | `vynamp` |
+| Repo | `jimmykedlyn/vynamp` |
+| REQ coberto | `REQ-E10-03` |
+| Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
+| Fase | M2 |
+| Prioridade | P0 |
+| Estado | planned |
+| Depende de | `TASK-E04-03`, `TASK-E10-01` |
+| Bloqueia | `TASK-E10-07`, `TASK-E17-08` |
+| Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
+| Esforço | 5–12 dias úteis |
 | Risco | médio |
 
-## Dependências
-
-- [TASK-E04-03](TASK-E04-03.md) — Construir grafo DSP e transições sem glitches
-- [TASK-E10-01](TASK-E10-01.md) — Criar corpus de testes licenciado
-
-## Entrega concreta
+## Entrega
 
 Oráculos PCM, resposta FFT, delay/padding, crossfade e sample conversion.
 
-Documento canônico: [spec](../../quality/01-estrategia-testes.md). [Matriz normativa](../../product/03-requisitos.md).
+## Boundary
+
+<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+
+## Antes de começar
+
+- [ ] Spec do módulo aprovada e o critério de aceite citado já existe nela
+- [ ] Worktree própria criada (`cargo xtask repo worktree task-e10-03-claude-<slug>`)
+- [ ] Fixtures/hardware necessários disponíveis ou limitação registrada
+- [ ] Nenhuma TASK em execução tocando os mesmos arquivos
 
 ## Critérios de aceite
 
-Detectar frame extra, trim incorreto, mapa de canais errado e NaN; referência independente da implementação sob teste.
+| ID | Given | When | Then |
+|---|---|---|---|
+| `TASK-E10-03-AC-1` | PENDENTE | PENDENTE | Detectar frame extra, trim incorreto, mapa de canais errado e NaN |
+| `TASK-E10-03-AC-2` | PENDENTE | PENDENTE | referência independente da implementação sob teste. |
 
-## Verificação e evidência
+## Verificação
 
-QA-002, QA-004, QA-005 em [QA comum](../../quality/01-estrategia-testes.md) e [matriz multiplataforma](../../quality/03-matriz-multiplataforma.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+| Item | Comando / fixture | Evidência esperada |
+|---|---|---|
+| Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
+| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
 
-## Execução e limites
+## DoD — pronto para review
 
-Confirmar ports/contratos e dependências; decompor itens grandes em slices de 1–3 dias; implementar sucesso e erro/cancelamento; executar os critérios apropriados; atualizar schema/docs/notices; aceitar somente com evidência e revisão. Preservar dados, budgets e acessibilidade. Stubs/botões desabilitados não contam. Esforço é estimativa, não data prometida. Atualizar backlog JSON e requisito junto de qualquer mudança.
+- [ ] Todos os critérios de aceite com evidência
+- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
+- [ ] `cargo test` verde; testes ignorados listados com motivo
+- [ ] Spec do módulo atualizada se a implementação revelou algo novo
+- [ ] `backlog.json` com o estado correto
+- [ ] Revisão feita por contexto limpo, não pelo implementador
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+## Notas de execução
+
+Preenchido durante a execução, não antes.

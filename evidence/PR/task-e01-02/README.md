@@ -1,6 +1,6 @@
 # Evidência — TASK-E01-02 (callback e output clock)
 
-Data: 2026-11-07 · Autor: Claude Opus 5.5 · TASK: [TASK-E01-02](../../../tasks/items/TASK-E01-02.md) · Spike original: 2026-10-18, branch `feature/task-e01-02-claude-callback`, [PR #14](https://github.com/jimmykedlyn/vynamp-mediaplayer/pull/14) (draft, aberto).
+Data: 2026-11-07 · Autor: Claude Opus 5.5 · TASK: [TASK-E01-02](../../../libs/output/tasks/items/TASK-E01-02.md) · Spike original: 2026-10-18, branch `feature/task-e01-02-claude-callback`, [PR #14](https://github.com/jimmykedlyn/vynamp-mediaplayer/pull/14) (draft, aberto).
 
 Registra o que o spike de M0 **provou**, com que números, e o que deste trabalho **passou para as specs canônicas** em 2026-11-07. O spike não é player, não altera flags de prontidão e não aceita a TASK: revisão, integração e os demais hosts continuam pendentes.
 
@@ -41,7 +41,7 @@ Não absorvido, de propósito: o código dos crates. A [ADR-011](../../../adr/AD
 
 Caracterizada por teste, razão registrada aqui porque a correção é da E01-05:
 
-`presented = conteúdo escrito antes da callback − latência` supõe que a fila do dispositivo contém **só** conteúdo. Silêncio de underrun ou de drenagem enfileirado também compõe a latência reportada, então `presented` fica **subestimado** em no máximo `latency_frames` — ≈12 300–12 800 frames no hardware medido. Após um underrun ele atrasa até a latência inteira e volta a acompanhar quando o conteúdo flui; na drenagem estabiliza em `content_frames − latency_frames` sem alcançar `content_frames`. Nunca superestima e nunca regride — os 0 regressões da tabela acima incluem o run com stall. Sem redesenho nesta TASK; a semântica correta depende do dreno completo da E01-05. O mesmo texto está na [TASK-E01-02](../../../tasks/items/TASK-E01-02.md).
+`presented = conteúdo escrito antes da callback − latência` supõe que a fila do dispositivo contém **só** conteúdo. Silêncio de underrun ou de drenagem enfileirado também compõe a latência reportada, então `presented` fica **subestimado** em no máximo `latency_frames` — ≈12 300–12 800 frames no hardware medido. Após um underrun ele atrasa até a latência inteira e volta a acompanhar quando o conteúdo flui; na drenagem estabiliza em `content_frames − latency_frames` sem alcançar `content_frames`. Nunca superestima e nunca regride — os 0 regressões da tabela acima incluem o run com stall. Sem redesenho nesta TASK; a semântica correta depende do dreno completo da E01-05. O mesmo texto está na [TASK-E01-02](../../../libs/output/tasks/items/TASK-E01-02.md).
 
 Os dois JSON confirmam o limite numericamente, e não só qualitativamente: a posição final fica **abaixo** do conteúdo nas duas execuções, pela latência — `probe-steady` termina em 11 507 474 contra 11 520 000 de conteúdo (12 526 de diferença, dentro da faixa de latência medida de 12 393–12 800), e `probe-stall` em 11 507 560 (12 440, dentro de 12 304–12 802). É exatamente o `content_frames − latency_frames` previsto. Quem for consertar o dreno deve ver esses dois números virarem `content_frames`.
 

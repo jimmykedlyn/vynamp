@@ -1,24 +1,67 @@
 # TASK-E15-05 — Integrar testes e evidência operacional
 
-Versão0.7.0 · Estado planejado; infraestrutura preparada não significa aplicação/ativação externa completa.
+> Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
+> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
+> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
+> não existem.
 
-Fase M1 / P0 · Owner engineering-delivery · Esforço inicial 3–10 dias úteis; reestimar.
+| Campo | Valor |
+|---|---|
+| ID | `TASK-E15-05` |
+| Módulo dono | `vynamp` |
+| Repo | `jimmykedlyn/vynamp` |
+| REQ coberto | `REQ-E15-05` |
+| Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
+| Fase | M1 |
+| Prioridade | P0 |
+| Estado | planned |
+| Depende de | `TASK-E11-01`, `TASK-E15-04` |
+| Bloqueia | nenhuma |
+| Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
+| Esforço | 3–10 dias úteis |
+| Risco | alto |
 
-## Dependências
-
-- [TASK-E11-01](TASK-E11-01.md) — Criar workspace e baseline de engenharia
-- [TASK-E15-04](TASK-E15-04.md) — Ativar workflows e CI Gate multiplataforma
-
-## Entrega concreta
+## Entrega
 
 Unit/integration/numerical/stream/UI/hardware/fuzz e protocolo de relatórios.
 
-[Spec](../../engineering/05-testes.md) · REQ-E15-05 em [matriz](../../product/03-requisitos.md).
+## Boundary
+
+<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+
+## Antes de começar
+
+- [ ] Spec do módulo aprovada e o critério de aceite citado já existe nela
+- [ ] Worktree própria criada (`cargo xtask repo worktree task-e15-05-claude-<slug>`)
+- [ ] Fixtures/hardware necessários disponíveis ou limitação registrada
+- [ ] Nenhuma TASK em execução tocando os mesmos arquivos
 
 ## Critérios de aceite
 
-Tests reais/comandos/oráculos por risco; fixture licence/hash; hardware ausente não passa; plugin/installer validations separados de tooling.
+| ID | Given | When | Then |
+|---|---|---|---|
+| `TASK-E15-05-AC-1` | PENDENTE | PENDENTE | Tests reais/comandos/oráculos por risco |
+| `TASK-E15-05-AC-2` | PENDENTE | PENDENTE | fixture licence/hash |
+| `TASK-E15-05-AC-3` | PENDENTE | PENDENTE | hardware ausente não passa |
+| `TASK-E15-05-AC-4` | PENDENTE | PENDENTE | plugin/installer validations separados de tooling. |
 
-## Evidência
+## Verificação
 
-QA-001, QA-002, QA-009, QA-021; registrar commit/digest, comando, ambiente/OS/ABI, outputs e limitações. Instalação de plugin/repo privado/assinatura requer ambiente real; não substituir por mocks/documentos. Quebrar em slices pequenas antes execução, implementar sucesso/erro/cancelamento, revisar pelo outro agente e preservar resultados no PR/docs/evidence.
+| Item | Comando / fixture | Evidência esperada |
+|---|---|---|
+| Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
+| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+
+## DoD — pronto para review
+
+- [ ] Todos os critérios de aceite com evidência
+- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
+- [ ] `cargo test` verde; testes ignorados listados com motivo
+- [ ] Spec do módulo atualizada se a implementação revelou algo novo
+- [ ] `backlog.json` com o estado correto
+- [ ] Revisão feita por contexto limpo, não pelo implementador
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+## Notas de execução
+
+Preenchido durante a execução, não antes.

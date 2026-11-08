@@ -1,26 +1,67 @@
 # TASK-E17-18 — Certificar expansão MIDI, trackers e DSD especial
 
-Versão 0.7.0 · Estado: planejada, não implementada.
+> Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
+> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
+> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
+> não existem.
 
-## Contrato
+| Campo | Valor |
+|---|---|
+| ID | `TASK-E17-18` |
+| Módulo dono | `vynamp` |
+| Repo | `jimmykedlyn/vynamp` |
+| REQ coberto | `REQ-E17-18` |
+| Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
+| Fase | M5 |
+| Prioridade | P1 |
+| Estado | planned |
+| Depende de | `TASK-E12-05`, `TASK-E12-04` |
+| Bloqueia | nenhuma |
+| Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
+| Esforço | 2–5 dias úteis |
+| Risco | alto |
 
-Requisito REQ-E17-18 · M5 · P1 · responsável funcional qa (pessoa a designar). Esforço provisório 2–5 dias úteis por contrato; reestimar e quebrar em slices de 1–3 dias antes execução. Risco alto; estimativa não é prazo.
-
-## Dependências
-
-- [TASK-E12-05](TASK-E12-05.md) — Entregar trackers, MIDI e codecs raros
-- [TASK-E12-04](TASK-E12-04.md) — Entregar DSD nativo/DoP e PCM 768 kHz
-
-## Entrega concreta
+## Entrega
 
 Fixtures de subsongs/loops/SF2/WavPack DSD/DST e native/DoP após implementações E12. Extração SACD ISO legal não protegida, sem handler ISO genérico.
 
-[Spec canônica](../../reference/audio/06-codec-capability-registry.md) · [Matriz normativa](../../product/03-requisitos.md).
+## Boundary
 
-## Aceite
+<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
 
-Rendering MIDI não é decode PCM; SoundFont licenciado explícito; loops/memória bound; DSD raw/DST/PCM/DoP distinguíveis. SACD ISO separa extração raw/DST, perfis e capacidade legal, sem contornar proteção.
+## Antes de começar
 
-## Verificação e evidência
+- [ ] Spec do módulo aprovada e o critério de aceite citado já existe nela
+- [ ] Worktree própria criada (`cargo xtask repo worktree task-e17-18-claude-<slug>`)
+- [ ] Fixtures/hardware necessários disponíveis ou limitação registrada
+- [ ] Nenhuma TASK em execução tocando os mesmos arquivos
 
-QA-025, QA-026 em [QA](../../quality/01-estrategia-testes.md) e [cenários](../../_arquivo/repo/docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.
+## Critérios de aceite
+
+| ID | Given | When | Then |
+|---|---|---|---|
+| `TASK-E17-18-AC-1` | PENDENTE | PENDENTE | Rendering MIDI não é decode PCM |
+| `TASK-E17-18-AC-2` | PENDENTE | PENDENTE | SoundFont licenciado explícito |
+| `TASK-E17-18-AC-3` | PENDENTE | PENDENTE | loops/memória bound |
+| `TASK-E17-18-AC-4` | PENDENTE | PENDENTE | DSD raw/DST/PCM/DoP distinguíveis. SACD ISO separa extração raw/DST, perfis e capacidade legal, sem contornar proteção. |
+
+## Verificação
+
+| Item | Comando / fixture | Evidência esperada |
+|---|---|---|
+| Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
+| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+
+## DoD — pronto para review
+
+- [ ] Todos os critérios de aceite com evidência
+- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
+- [ ] `cargo test` verde; testes ignorados listados com motivo
+- [ ] Spec do módulo atualizada se a implementação revelou algo novo
+- [ ] `backlog.json` com o estado correto
+- [ ] Revisão feita por contexto limpo, não pelo implementador
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+## Notas de execução
+
+Preenchido durante a execução, não antes.
