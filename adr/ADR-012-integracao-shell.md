@@ -2,7 +2,7 @@
 
 Versão: 0.1.0 · Data: 2026-11-05 · Estado: decisão do mantenedor; especificação normativa de integração e assets.
 
-Status: aceito pelo mantenedor em 2026-11-04. Complementa [ADR-006](ADR-006-multiplataforma.md) e [ADR-008](ADR-008-marca.md); orienta as tarefas do épico E16 ([TASK-E16-03](../tasks/items/TASK-E16-03.md), [TASK-E16-04](../tasks/items/TASK-E16-04.md), [TASK-E16-05](../tasks/items/TASK-E16-05.md) e [TASK-E16-08](../tasks/items/TASK-E16-08.md)).
+Status: aceito pelo mantenedor em 2026-11-04. Complementa [ADR-006](ADR-006-multiplataforma.md) e [ADR-008](ADR-008-marca.md); orienta as tarefas do épico E16 ([TASK-E16-03](../apps/player/tasks/items/TASK-E16-03.md), [TASK-E16-04](../apps/player/tasks/items/TASK-E16-04.md), [TASK-E16-05](../apps/player/tasks/items/TASK-E16-05.md) e [TASK-E16-08](../apps/player/tasks/items/TASK-E16-08.md)).
 
 ## Contexto
 
@@ -44,7 +44,7 @@ No Windows 11 (menu moderno), Windows 10 (menu clássico em cascata) e Linux (ge
 ### 3. Preservação de Lotes (Batching Atômico)
 
 Para evitar que a seleção de múltiplos arquivos (10, 50 ou 100 itens) dispare dezenas de instâncias paralelas de processos do player:
-- No Windows 11, o `IExplorerCommand` recebe um `IShellItemArray`, iterando todos os itens em uma única chamada de método `Invoke` e transmitindo o lote completo via IPC para o processo primário único (conforme [TASK-E16-02](../tasks/items/TASK-E16-02.md)).
+- No Windows 11, o `IExplorerCommand` recebe um `IShellItemArray`, iterando todos os itens em uma única chamada de método `Invoke` e transmitindo o lote completo via IPC para o processo primário único (conforme [TASK-E16-02](../apps/player/tasks/items/TASK-E16-02.md)).
 - No Windows 10 clássico, utiliza-se `MultiSelectModel=Player` com verificação de DDE/DropTarget ou pooling com debounce determinístico no dispatcher IPC.
 - No Linux, a linha de comando do `.desktop` utiliza `%U` (sem aspas individuais), repassando todos os URIs em uma única invocação.
 - No macOS, o AppKit entrega o lote completo no método `application(_:openFiles:)`.

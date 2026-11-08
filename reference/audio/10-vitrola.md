@@ -101,7 +101,7 @@ O que a rev. 15 relatava — "configuração completa do catálogo, sem processa
 ## 6. Roadmap (status herdado)
 
 - Ordem acordada (design §8.6; STATE.md): `vynamp-decode` Camada 1 → **TASK-E04-03** (grafo DSP, M2) → vitrola. O módulo pode ser construído e testado offline antes disso. O marco da integração é **M3, depois de E04-03** ([D-DSP-07](../../product/05-decisoes.md#decisões-dsp-e-equalizadores-2026-10-25)).
-- O `ROADMAP-rodadas.md` da raiz lista só TASKs e não tem uma linha vitrola. A antiga pendência "criar uma TASK de integração" **está resolvida**: [TASK-E19-07](../../tasks/items/TASK-E19-07.md) integra o módulo no grafo do player (M3, depois de E04-03 e de [TASK-E19-03](../../tasks/items/TASK-E19-03.md)). A prioridade não foi deslocada.
+- O `ROADMAP-rodadas.md` da raiz lista só TASKs e não tem uma linha vitrola. A antiga pendência "criar uma TASK de integração" **está resolvida**: [TASK-E19-07](../../libs/engine/tasks/items/TASK-E19-07.md) integra o módulo no grafo do player (M3, depois de E04-03 e de [TASK-E19-03](../../libs/engine/tasks/items/TASK-E19-03.md)). A prioridade não foi deslocada.
 - CPU: meta < 5% de um núcleo moderno a 96 kHz estéreo com tudo ligado. É meta, não gate; confirmar por benchmark.
 
 ## 7. Testes de integração planejados

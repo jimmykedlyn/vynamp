@@ -1,6 +1,6 @@
 # Evidência — TASK-E19-03 (dissolver o vitrola no DSP interno)
 
-Data: 2026-11-05 · Autor: Claude Opus 5.5 · TASK: [TASK-E19-03](../../../tasks/items/TASK-E19-03.md)
+Data: 2026-11-05 · Autor: Claude Opus 5.5 · TASK: [TASK-E19-03](../../../libs/engine/tasks/items/TASK-E19-03.md)
 
 Registra **por que** o repositório `vitrola` foi dissolvido, **o que** mudou e **o que ficou pendente** — inclusive uma descoberta que só apareceu ao executar.
 
@@ -40,7 +40,7 @@ Um único arquivo difere, em três linhas. Se o repositório fosse arquivado sem
 | [docs/delivery/03-risks-open-questions.md](../../../delivery/03-riscos.md) | O risco D-DSP-05 aponta a integração em TASK-E19-07 |
 | [docs/product/05-decisions.md](../../../product/05-decisoes.md) | Referências `vitrola §N` re-apontadas para a numeração nova (§8.2/§8.4/§8.6/§8.8) com link; a linha que dizia "TASK de integração pendente" passa a apontar a TASK-E19-07 |
 | [docs/quality/05-dsp-test-matrix.md](../../../quality/04-matriz-dsp.md) | `vitrola §5` → `vitrola §8.5` |
-| [tasks/items/TASK-E19-03.md](../../../tasks/items/TASK-E19-03.md) | 0.9.0, com a situação por critério de aceite e a descoberta do commit não publicado |
+| [tasks/items/TASK-E19-03.md](../../../libs/engine/tasks/items/TASK-E19-03.md) | 0.9.0, com a situação por critério de aceite e a descoberta do commit não publicado |
 | [docs/INDEX.md](../../../INDEX.md) | Nova seção indexando esta evidência e a cópia do design |
 | `CHANGELOG.md` | Entrada bilíngue EN/PT |
 
@@ -50,7 +50,7 @@ Um único arquivo difere, em três linhas. Se o repositório fosse arquivado sem
 
 - **O arquivamento do repositório remoto é do mantenedor.** `gh repo archive jimmykedlyn/vitrola` está prescrito na TASK-E19-06 e na E19-03, mas o agente não executa ação de visibilidade/ciclo de vida de repositório ([AGENTS.md](../../../AGENTS.md), ADR-014). É reversível por `gh repo unarchive`.
 - **O clone local não foi removido.** `D:\Projects\vitrola` é a única cópia do commit `75c4ca2`; só pode sair depois que este PR estiver no `develop` e a cópia em `docs/evidence/` estiver versionada.
-- **Nada foi implementado.** Vinil e válvula continuam sem código: a integração no grafo é a [TASK-E19-07](../../../tasks/items/TASK-E19-07.md), que depende de E04-03.
+- **Nada foi implementado.** Vinil e válvula continuam sem código: a integração no grafo é a [TASK-E19-07](../../../libs/engine/tasks/items/TASK-E19-07.md), que depende de E04-03.
 - **A matriz VU-INT-06 não foi tocada** — não é escopo desta TASK (é da E02-07).
 
 ## Preservação do design
@@ -63,7 +63,7 @@ A incorporação **reorganiza em subseções** (as nove seções originais virar
 |---|---|
 | `cargo xtask check-docs` | `result: passed`, `errors: []` — 358 arquivos, 191 requisitos, 191 tarefas, spec 0.7.0 |
 | `cargo xtask check-delivery` | `result: passed`, `errors: []`, `workflow_files: 3` |
-| `grep -rn "jimmykedlyn/vitrola" docs/ tasks/ config/ AGENTS.md` | 15 ocorrências, nenhuma em documento normativo: 8 em `docs/evidence/` (esta README, `pr-body.md` e a cópia literal do design — registro de origem) e 7 nos dois arquivos de TASK como o **comando de arquivamento** a executar (5 em [TASK-E19-03](../../../tasks/items/TASK-E19-03.md), 2 em [TASK-E19-06](../../../tasks/items/TASK-E19-06.md)) |
+| `grep -rn "jimmykedlyn/vitrola" docs/ tasks/ config/ AGENTS.md` | 15 ocorrências, nenhuma em documento normativo: 8 em `docs/evidence/` (esta README, `pr-body.md` e a cópia literal do design — registro de origem) e 7 nos dois arquivos de TASK como o **comando de arquivamento** a executar (5 em [TASK-E19-03](../../../libs/engine/tasks/items/TASK-E19-03.md), 2 em [TASK-E19-06](../../../tasks/items/TASK-E19-06.md)) |
 | `gh repo view jimmykedlyn/vitrola --json isArchived` | `false` — **pendente, é do mantenedor**; não executado |
 
 ## Limitações

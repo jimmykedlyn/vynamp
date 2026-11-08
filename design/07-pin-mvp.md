@@ -49,12 +49,12 @@ Regras de serialização: atributos animados por script são gravados em repouso
 
 | Fase | Tarefa | Entrega |
 |---|---|---|
-| 0–1 | [TASK-E02-11](../tasks/items/TASK-E02-11.md) | Congelamento, SVGs, ícones, medidores e temas (integrada, histórico: feita sobre a rev.37; a rev.38 é a fonte atual) |
-| 2 | [TASK-E02-12](../tasks/items/TASK-E02-12.md) | Capturas por estado, dump de geometria/estilo, fontes efetivas e estratégia de fontes |
-| 3 | [TASK-E02-13](../tasks/items/TASK-E02-13.md) | Transições, séries rAF sob sinais determinísticos, balística de medidores, ondas |
-| 4 | [TASK-E02-14](../tasks/items/TASK-E02-14.md) | Roteiros de interação e esquema de preferências |
-| 5 | [TASK-E02-15](../tasks/items/TASK-E02-15.md) | Mapa de lacunas web→nativo por plataforma |
-| 6 | [TASK-E02-16](../tasks/items/TASK-E02-16.md) | Harness egui_kittest, executado só localmente na máquina do mantenedor, com o clone de `vynamp-mvp-reference` no SHA fixado; o CI Gate o marca como não executado |
+| 0–1 | [TASK-E02-11](../apps/player/tasks/items/TASK-E02-11.md) | Congelamento, SVGs, ícones, medidores e temas (integrada, histórico: feita sobre a rev.37; a rev.38 é a fonte atual) |
+| 2 | [TASK-E02-12](../apps/player/tasks/items/TASK-E02-12.md) | Capturas por estado, dump de geometria/estilo, fontes efetivas e estratégia de fontes |
+| 3 | [TASK-E02-13](../apps/player/tasks/items/TASK-E02-13.md) | Transições, séries rAF sob sinais determinísticos, balística de medidores, ondas |
+| 4 | [TASK-E02-14](../apps/player/tasks/items/TASK-E02-14.md) | Roteiros de interação e esquema de preferências |
+| 5 | [TASK-E02-15](../apps/player/tasks/items/TASK-E02-15.md) | Mapa de lacunas web→nativo por plataforma |
+| 6 | [TASK-E02-16](../apps/player/tasks/items/TASK-E02-16.md) | Harness egui_kittest, executado só localmente na máquina do mantenedor, com o clone de `vynamp-mvp-reference` no SHA fixado; o CI Gate o marca como não executado |
 
 ## 5. Tolerância de SVG
 

@@ -1,39 +1,66 @@
 # TASK-E14-05 — Validar packaging e update em cada alvo
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
-
-## Contrato da tarefa
+> Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
+> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
+> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
+> não existem.
 
 | Campo | Valor |
 |---|---|
-| ID / requisito | TASK-E14-05 / REQ-E14-05 |
-| Fase / prioridade | M3 / P0 |
-| Estado | Planejada; não implementada |
-| Responsável funcional | release-platform — pessoa a designar |
-| Esforço provisório | 5–15 dias úteis; reestimar após M0 |
+| ID | `TASK-E14-05` |
+| Módulo dono | `vynamp` |
+| Repo | `jimmykedlyn/vynamp` |
+| REQ coberto | `REQ-E14-05` |
+| Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
+| Fase | M3 |
+| Prioridade | P0 |
+| Estado | planned |
+| Depende de | `TASK-E11-07`, `TASK-E12-01`, `TASK-E12-02`, `TASK-E13-09` |
+| Bloqueia | `TASK-E14-06` |
+| Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
+| Esforço | 5–15 dias úteis |
 | Risco | alto |
 
-## Dependências
-
-- [TASK-E11-07](TASK-E11-07.md) — Entregar distribuição nativa por plataforma
-- [TASK-E12-01](TASK-E12-01.md) — Entregar Linux nativo e MPRIS na 1.0
-- [TASK-E12-02](TASK-E12-02.md) — Entregar macOS Intel e Apple Silicon nativos na 1.0
-- [TASK-E13-09](TASK-E13-09.md) — Entregar tablet/foldable e distribuição Android
-
-## Entrega concreta
+## Entrega
 
 Installer/packages/Universal 2/APK-AAB, migrations, dependencies nativas e SBOM.
 
-Documento canônico: [spec](../../platforms/01-matriz-suporte.md). [Matriz normativa](../../product/03-requisitos.md).
+## Boundary
+
+<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+
+## Antes de começar
+
+- [ ] Spec do módulo aprovada e o critério de aceite citado já existe nela
+- [ ] Worktree própria criada (`cargo xtask repo worktree task-e14-05-claude-<slug>`)
+- [ ] Fixtures/hardware necessários disponíveis ou limitação registrada
+- [ ] Nenhuma TASK em execução tocando os mesmos arquivos
 
 ## Critérios de aceite
 
-Artifacts instalam/assinam/atualizam; permissões preservadas; portais Linux, notarização macOS e native pages Android conferidos no release.
+| ID | Given | When | Then |
+|---|---|---|---|
+| `TASK-E14-05-AC-1` | PENDENTE | PENDENTE | Artifacts instalam/assinam/atualizam |
+| `TASK-E14-05-AC-2` | PENDENTE | PENDENTE | permissões preservadas |
+| `TASK-E14-05-AC-3` | PENDENTE | PENDENTE | portais Linux, notarização macOS e native pages Android conferidos no release. |
 
-## Verificação e evidência
+## Verificação
 
-QA-012, QA-021 em [QA comum](../../quality/01-estrategia-testes.md) e [matriz multiplataforma](../../quality/03-matriz-multiplataforma.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+| Item | Comando / fixture | Evidência esperada |
+|---|---|---|
+| Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
+| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
 
-## Execução e limites
+## DoD — pronto para review
 
-Confirmar ports/contratos e dependências; decompor itens grandes em slices de 1–3 dias; implementar sucesso e erro/cancelamento; executar os critérios apropriados; atualizar schema/docs/notices; aceitar somente com evidência e revisão. Preservar dados, budgets e acessibilidade. Stubs/botões desabilitados não contam. Esforço é estimativa, não data prometida. Atualizar backlog JSON e requisito junto de qualquer mudança.
+- [ ] Todos os critérios de aceite com evidência
+- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
+- [ ] `cargo test` verde; testes ignorados listados com motivo
+- [ ] Spec do módulo atualizada se a implementação revelou algo novo
+- [ ] `backlog.json` com o estado correto
+- [ ] Revisão feita por contexto limpo, não pelo implementador
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+## Notas de execução
+
+Preenchido durante a execução, não antes.

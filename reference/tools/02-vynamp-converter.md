@@ -2,7 +2,7 @@
 
 Versão: 0.1.0 · Data: 2026-11-05 · Estado: **escopo preparatório**; implementação não iniciada. A execução completa fica no PR5.
 
-Documento canônico da ferramenta desktop **Vynamp Converter** (`vynamp-converter`). Complementa [ADR-013](../../adr/ADR-013-restore.md) (fronteira de processo e motor compartilhado), [ADR-012](../../adr/ADR-012-integracao-shell.md) (ação de menu de contexto e identidade), [ADR-011](../../adr/ADR-011-pilha-propria.md) (pilha de áudio própria) e [TASK-E08-02](../../tasks/items/TASK-E08-02.md) (conversor e encoder registry). Matriz normativa: [03-requirements](../../product/03-requisitos.md).
+Documento canônico da ferramenta desktop **Vynamp Converter** (`vynamp-converter`). Complementa [ADR-013](../../adr/ADR-013-restore.md) (fronteira de processo e motor compartilhado), [ADR-012](../../adr/ADR-012-integracao-shell.md) (ação de menu de contexto e identidade), [ADR-011](../../adr/ADR-011-pilha-propria.md) (pilha de áudio própria) e [TASK-E08-02](../../apps/converter/tasks/items/TASK-E08-02.md) (conversor e encoder registry). Matriz normativa: [03-requirements](../../product/03-requisitos.md).
 
 > **Estado deste documento.** O escopo, as matrizes de formato, as regras de qualidade e os contratos de arquivo estão fechados aqui. A **execução** — criação da lib `vynamp-encode`, implementação da fila de jobs, artefatos de release e evidência — é o PR5. Onde este documento diz "a 1.0", o escopo fechamento está decidido e não será reaberto sem nova ADR.
 
@@ -16,11 +16,11 @@ Ferramenta desktop de **transcodificação e conversão em lote**, executável s
 | Motor de codificação | **Biblioteca própria `vynamp-encode`**, repositório privado, Rust `std`-only e modular. É a **única** fonte de codificadores do produto |
 | Codecs | Lossless (WAV, AIFF, FLAC, ALAC) e lossy (Opus, MP3, AAC, Vorbis) |
 | AAC | **Sem ressalva.** O risco de patente foi avaliado e **aceito e registrado** pelo mantenedor; a decisão é explícita, não omissa |
-| MP3 | Permitido; a redação de "quando permitido" em [TASK-E08-02](../../tasks/items/TASK-E08-02.md) significa **quando o encoder estiver disponível na build**, não "depende de permissão a cada uso" |
+| MP3 | Permitido; a redação de "quando permitido" em [TASK-E08-02](../../apps/converter/tasks/items/TASK-E08-02.md) significa **quando o encoder estiver disponível na build**, não "depende de permissão a cada uso" |
 | Workers | Fila de workers limitada, com cancelamento que remove temporários e **preserva a origem** |
 | Áudio | Escala de bit e profundidade **não** degradadas por padrão |
 
-**Fora de escopo na 1.0:** edição de tags (é do player), organização de pastas e dedupe ([TASK-E08-04](../../tasks/items/TASK-E08-04.md)), extração de CUE, gravação de fonte autorizada, gravação de disco ([TASK-E08-05](../../tasks/items/TASK-E08-05.md)).
+**Fora de escopo na 1.0:** edição de tags (é do player), organização de pastas e dedupe ([TASK-E08-04](../../apps/player/tasks/items/TASK-E08-04.md)), extração de CUE, gravação de fonte autorizada, gravação de disco ([TASK-E08-05](../../apps/player/tasks/items/TASK-E08-05.md)).
 
 ## 2. Contrato de invocação
 
@@ -77,7 +77,7 @@ Com caminhos, os arquivos entram na fila de conversão na ordem recebida, preser
 
 O produto distingue **lossless** (sem perdas em relação à entrada) de **lossy** (com perdas). A rotulagem é obrigatória em todo relatório e na interface:
 
-- Uma conversão lossy **nunca** é anunciada como "restauração hi-res" nem como "sem perdas" ([TASK-E08-02](../../tasks/items/TASK-E08-02.md)).
+- Uma conversão lossy **nunca** é anunciada como "restauração hi-res" nem como "sem perdas" ([TASK-E08-02](../../apps/converter/tasks/items/TASK-E08-02.md)).
 - O relatório de conversão registra, por arquivo: formato de origem, taxa e profundidade de origem, formato de destino, parâmetros, **ganho aplicado**, e se houve degradação de profundidade ou de taxa.
 - O relatório indica explicitamente a perda esperada: taxa alvo, tipo de encoder e a ressalva de que a qualidade perceptual é **estimativa**, não medida por auscultação.
 
@@ -94,14 +94,14 @@ O produto distingue **lossless** (sem perdas em relação à entrada) de **lossy
 |---|---|
 | Limite de fila | 100 arquivos |
 | Workers | Limitados por capacidade da máquina; nunca mais que o número de núcleos menos 1 |
-| Persistência | A fila é **persistida** ([TASK-E08-01](../../tasks/items/TASK-E08-01.md)): uma queda de energia retoma jobs seguros |
+| Persistência | A fila é **persistida** ([TASK-E08-01](../../libs/engine/tasks/items/TASK-E08-01.md)): uma queda de energia retoma jobs seguros |
 | Cancelamento | Por arquivo e da fila; remove os temporários; **a origem nunca é tocada** |
 | Escrita | Temporário no **mesmo volume** → `fsync` → **validação pós-escrita no temporário** → `rename` sobre o destino |
 | Validação pós-escrita | O arquivo **temporário** é relido e decodificado; contêiner, taxa, canais e duração precisam coincidir. Em caso de falha, o **temporário é removido** e a origem permanece intacta |
 | Colisão de nome | Detectada antes de escrever; **não sobrescreve** por padrão; a ação é do usuário |
 | Idempotência | Reprocessar o mesmo arquivo com os mesmos parâmetros produz o mesmo resultado; jobs duplicados são detectados |
 
-**Nomes de saída:** template com **whitelist** de campos (nome da faixa, artista, álbum, faixa, ano) e sanitização de separadores e nomes reservados, conforme [TASK-E08-04](../../tasks/items/TASK-E08-04.md). O plano completo de nomes é exibido **antes** de escrever.
+**Nomes de saída:** template com **whitelist** de campos (nome da faixa, artista, álbum, faixa, ano) e sanitização de separadores e nomes reservados, conforme [TASK-E08-04](../../apps/player/tasks/items/TASK-E08-04.md). O plano completo de nomes é exibido **antes** de escrever.
 
 ## 7. Identidade
 

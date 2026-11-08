@@ -186,7 +186,7 @@ pub fn doc_files(root: &Path) -> Result<Vec<PathBuf>> {
 }
 /// Paths declared in `.gitmodules`, taken from the file and not from the directory tree:
 /// a submodule that is not checked out has no `.git` marker and would slip through.
-fn submodule_paths(root: &Path) -> Vec<PathBuf> {
+pub fn submodule_paths(root: &Path) -> Vec<PathBuf> {
     let Ok(body) = fs::read_to_string(root.join(".gitmodules")) else {
         return Vec::new();
     };
@@ -194,6 +194,43 @@ fn submodule_paths(root: &Path) -> Vec<PathBuf> {
         .filter_map(|line| line.trim().strip_prefix("path ="))
         .map(|path| PathBuf::from(path.trim()))
         .collect()
+}
+
+/// Directory a submodule is checked out at, resolved by repository name.
+///
+/// The backlog names the owner as `vynamp-decode`, not as `libs/decode`: the name is what
+/// a person reads and what GitHub serves. `.gitmodules` is the only place that holds both
+/// halves of that mapping, so it is the only place this lookup can come from -- deriving
+/// the path from the name would hard-code a tree that `01-arvore-final.md` owns.
+///
+/// Returns `None` when `.gitmodules` has no such repository. The caller decides whether
+/// that is an error: a task whose owner is not a submodule is an umbrella task.
+pub fn submodule_dir(root: &Path, repo: &str) -> Option<PathBuf> {
+    let body = fs::read_to_string(root.join(".gitmodules")).ok()?;
+    let mut found = None;
+    let mut path: Option<PathBuf> = None;
+    let mut named = false;
+    for line in body.lines() {
+        let line = line.trim();
+        // The section header closes the previous block. Its `url` is recorded when seen and
+        // its matching `path` is taken at the end of the block, because the format allows
+        // `url` before `path` and reading `path` mid-block would miss that order.
+        if line.starts_with("[submodule") {
+            if named {
+                found = path.clone();
+            }
+            (path, named) = (None, false);
+        } else if let Some(value) = line.strip_prefix("path =") {
+            path = Some(PathBuf::from(value.trim()));
+        } else if let Some(value) = line.strip_prefix("url =").filter(|_| !named) {
+            let url = value.trim().trim_end_matches('/').trim_end_matches(".git");
+            named = url.rsplit('/').next() == Some(repo);
+        }
+    }
+    if named {
+        found = path.clone();
+    }
+    found
 }
 
 pub fn excluded(name: &str) -> bool {

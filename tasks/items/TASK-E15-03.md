@@ -1,27 +1,67 @@
 # TASK-E15-03 — Importar GitHub privado e ativar Gitflow
 
-Versão0.7.0 · Atualização 2026-10-18 · Estado: em execução; privacidade, histórico e configurações do repositório verificados; proteções de branch pendentes por plano GitHub, sem aceite antecipado.
+> Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
+> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
+> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
+> não existem.
 
-Fase M0 / P0 · Owner engineering-delivery · Esforço inicial 2–5 dias úteis; reestimar.
+| Campo | Valor |
+|---|---|
+| ID | `TASK-E15-03` |
+| Módulo dono | `vynamp` |
+| Repo | `jimmykedlyn/vynamp` |
+| REQ coberto | `REQ-E15-03` |
+| Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
+| Fase | M0 |
+| Prioridade | P0 |
+| Estado | in_progress |
+| Depende de | `TASK-E15-02` |
+| Bloqueia | `TASK-E15-04`, `TASK-E19-01` |
+| Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
+| Esforço | 2–5 dias úteis |
+| Risco | alto |
 
-## Dependências
-
-- [TASK-E15-02](TASK-E15-02.md) — Validar worktrees, claims e handoff
-
-## Entrega concreta
+## Entrega
 
 Importação por branch/PR ou bootstrap vazio, proteções e default develop.
 
-[Spec](../../engineering/03-gitflow.md) · REQ-E15-03 em [matriz](../../product/03-requisitos.md).
+## Boundary
+
+<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+
+## Antes de começar
+
+- [ ] Spec do módulo aprovada e o critério de aceite citado já existe nela
+- [ ] Worktree própria criada (`cargo xtask repo worktree task-e15-03-claude-<slug>`)
+- [ ] Fixtures/hardware necessários disponíveis ou limitação registrada
+- [ ] Nenhuma TASK em execução tocando os mesmos arquivos
 
 ## Critérios de aceite
 
-Privacidade real confirmada; histórico preservado; sem force push; CI Gate/proteções realmente aplicados ou pendência registrada.
+| ID | Given | When | Then |
+|---|---|---|---|
+| `TASK-E15-03-AC-1` | PENDENTE | PENDENTE | Privacidade real confirmada |
+| `TASK-E15-03-AC-2` | PENDENTE | PENDENTE | histórico preservado |
+| `TASK-E15-03-AC-3` | PENDENTE | PENDENTE | sem force push |
+| `TASK-E15-03-AC-4` | PENDENTE | PENDENTE | CI Gate/proteções realmente aplicados ou pendência registrada. |
 
-## Evidência
+## Verificação
 
-QA-012; registrar commit/digest, comando, ambiente/OS/ABI, outputs e limitações. Instalação de plugin/repo privado/assinatura requer ambiente real; não substituir por mocks/documentos. Quebrar em slices pequenas antes execução, implementar sucesso/erro/cancelamento, revisar pelo outro agente e preservar resultados no PR/docs/evidence.
+| Item | Comando / fixture | Evidência esperada |
+|---|---|---|
+| Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
+| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
 
-## Execução E15-03
+## DoD — pronto para review
 
-[Plano](../../_arquivo/repo/docs/superpowers/plans/2026-10-18-e15-03-gitflow.md) e [evidência do autor](../../evidence/PR/task-e15-03/README.md). Histórico importado pela E15-01 preservado, sem reimportação nem force push. Aplicados em 2026-10-18: default `develop`, somente merge commit, exclusão de branch após merge e Dependabot mirando `develop`. Branch protection/rulesets retornam HTTP 403 no plano atual do repositório privado: CI Gate obrigatório e bloqueio de force push/deleção **não** estão aplicados e permanecem pendência do mantenedor. Revisão Codex do SHA exato, CI e merge pelo mantenedor são gates separados.
+- [ ] Todos os critérios de aceite com evidência
+- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
+- [ ] `cargo test` verde; testes ignorados listados com motivo
+- [ ] Spec do módulo atualizada se a implementação revelou algo novo
+- [ ] `backlog.json` com o estado correto
+- [ ] Revisão feita por contexto limpo, não pelo implementador
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+## Notas de execução
+
+Preenchido durante a execução, não antes.

@@ -5,7 +5,7 @@ use serde_json::{Value, json};
 use std::{
     collections::{BTreeMap, BTreeSet},
     fs,
-    path::Path,
+    path::{Path, PathBuf},
 };
 #[derive(Default)]
 struct Checks {
@@ -31,6 +31,107 @@ fn phase(v: &Value) -> Result<u32> {
         .strip_prefix('M')
         .context("Bad phase")?
         .parse()?)
+}
+/// Where a task's Markdown and the backlog stop agreeing, if anywhere.
+///
+/// `title` and `deliverable` are prose that the generator copies verbatim, so the whole
+/// string has to appear. `acceptance` is different: the backlog holds one sentence with
+/// `;`-separated clauses, and the Markdown holds one table row per clause (`37-tasks.ps1`
+/// section 3). The sentence never appears contiguously in the file, so demanding it whole
+/// would fail all 191 product tasks on format rather than on divergence. The clause is
+/// therefore the unit -- which is also what the generator itself verifies ("Then identico
+/// ao acceptance do backlog") -- and it still catches the case the field exists to catch:
+/// a criterion rewritten, dropped or invented.
+///
+/// Returned instead of pushed straight into `Checks` so the comparison can be exercised
+/// without a repository on disk.
+fn markdown_disagreements(id: &str, body: &str, t: &Value) -> Result<Vec<String>> {
+    let mut out = Vec::new();
+    for k in ["title", "deliverable"] {
+        let value = string(t, k)?;
+        if value.is_empty() || !body.contains(value) {
+            out.push(format!("Backlog/MD mismatch {id} {k}"));
+        }
+    }
+    let acceptance = string(t, "acceptance")?;
+    if acceptance.trim().is_empty() {
+        // An empty backlog sentence must not read as "no clauses to check, all present".
+        out.push(format!("Backlog/MD mismatch {id} acceptance"));
+    }
+    for clause in acceptance.split(';').map(str::trim) {
+        if !clause.is_empty() && !body.contains(clause) {
+            out.push(format!("Backlog/MD mismatch {id} acceptance: {clause}"));
+        }
+    }
+    Ok(out)
+}
+/// Directory that owns a repository's tree: the umbrella itself, or a submodule's checkout.
+///
+/// `None` means the backlog names a repository that `.gitmodules` does not declare, which is
+/// a configuration error the caller reports -- never a silent lookup miss.
+fn repo_dir(root: &Path, repo: &str) -> Option<PathBuf> {
+    if repo == "vynamp" {
+        return Some(root.to_path_buf());
+    }
+    submodule_dir(root, repo).map(|d| root.join(d))
+}
+/// The repository that owns a task. Absent means the umbrella, which is what every task was
+/// before step 37 assigned the field; the gate has to read both states, and a missing field
+/// is not a reason to stop recognizing the file that has always been there.
+fn owner(t: &Value) -> &str {
+    t["repo"].as_str().unwrap_or("vynamp")
+}
+/// Where a task's Markdown lives, resolved by the repository the backlog assigns to it.
+///
+/// `01-arvore-final.md` §1 gives each code module its own `tasks/`, and keeps in the
+/// umbrella only the tasks that cross modules -- CI, release, the platform matrix. The gate
+/// therefore cannot assume `tasks/items/`: it asks the backlog who owns the task, then asks
+/// `.gitmodules` where that repository is checked out.
+fn task_path(root: &Path, t: &Value) -> Option<PathBuf> {
+    let id = string(t, "id").ok()?;
+    let dir = repo_dir(root, owner(t))?;
+    Some(dir.join(format!("tasks/items/{id}.md")))
+}
+/// Resolve `.` and `..` without touching the filesystem.
+///
+/// A link target is written relative to the document that holds it, so it routinely climbs
+/// out (`../libs/decode/tasks/items/...`). `Path::starts_with` compares components as they
+/// are written, so it would not recognize that text as living under `libs/decode`; the
+/// question "is this link inside a submodule?" has to be asked of the normalized path.
+///
+/// Only `..` at the start of an already-relative path is left alone -- there is nothing above
+/// the root to climb to, and the caller always passes a path that began at the repository.
+fn normalize(path: &Path) -> PathBuf {
+    let mut out = Vec::new();
+    for c in path.components() {
+        match c {
+            std::path::Component::CurDir => {}
+            std::path::Component::ParentDir => {
+                if matches!(out.last(), Some(std::path::Component::Normal(_))) {
+                    out.pop();
+                } else {
+                    out.push(c);
+                }
+            }
+            other => out.push(other),
+        }
+    }
+    out.iter().collect()
+}
+/// True when `path` sits inside a submodule that is not checked out.
+///
+/// Step 37 rewrote the umbrella's links to the TASKs it moved: with the modules present the
+/// target is a real file, without them it is a directory that does not exist. A strict
+/// `exists()` would make the gate's verdict depend on whether the clone used `--recursive`,
+/// which is the failure `doc_files` was written to avoid -- so the rule is the same one the
+/// task-markdown check uses: verify what can be seen, refuse to invent a verdict about what
+/// cannot. A submodule that IS checked out gets no such mercy: a broken link inside it is
+/// still a broken link.
+fn inside_absent_submodule(root: &Path, path: &Path) -> bool {
+    let path = normalize(path);
+    submodule_paths(root)
+        .iter()
+        .any(|sub| path.starts_with(root.join(sub)) && !root.join(sub).is_dir())
 }
 fn visit(
     id: &str,
@@ -153,8 +254,11 @@ pub fn spec(root: &Path) -> Result<()> {
                 continue;
             }
             let target = link.split('#').next().unwrap();
+            let dest = p.parent().unwrap().join(target);
+            // Inside a submodule that is not checked out there is nothing to look at; inside
+            // one that is, or anywhere in the umbrella, the link is verified as before.
             c.check(
-                p.parent().unwrap().join(target).exists(),
+                dest.exists() || inside_absent_submodule(root, &dest),
                 format!("Missing link {rel}: {target}"),
             );
         }
@@ -198,16 +302,18 @@ pub fn spec(root: &Path) -> Result<()> {
             ),
             format!("Invalid status {id}"),
         );
-        let path = root.join(format!("tasks/items/{id}.md"));
-        c.check(path.is_file(), format!("Task Markdown absent {id}"));
+        let path = task_path(root, t).with_context(|| format!("Unknown repo for {id}"))?;
+        let checked_out = repo_dir(root, owner(t)).is_some_and(|d| d.is_dir());
+        // A module that is not checked out has no task file to find. Reporting it absent
+        // would make the verdict depend on the clone, which is the thing `doc_files` was
+        // narrowed to avoid; the pins job is what proves the module is fetchable.
+        c.check(
+            path.is_file() || !checked_out,
+            format!("Task Markdown absent {id}"),
+        );
         if path.is_file() {
-            let body = text(&path)?;
-            for k in ["title", "deliverable", "acceptance"] {
-                let value = string(t, k)?;
-                c.check(
-                    !value.is_empty() && body.contains(value),
-                    format!("Backlog/MD mismatch {id} {k}"),
-                );
+            for message in markdown_disagreements(id, &text(&path)?, t)? {
+                c.check(false, message);
             }
         }
         c.check(
@@ -715,6 +821,155 @@ mod tests {
     #[test]
     fn invalid_schema_rejected() {
         assert!(schema_example(&json!({"type":42}), &json!({})).is_err());
+    }
+    /// `.gitmodules` is the only file that holds both halves of name -> path.
+    ///
+    /// The block boundary is load-bearing: a `url` written before its own `path` (legal in the
+    /// format, and what `git submodule add` does not stop anyone from producing) would borrow
+    /// the previous block's path. The gate would then report on a file that is not the task's,
+    /// which is worse than not answering at all.
+    #[test]
+    fn submodule_dir_maps_each_url_to_its_own_path() {
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::write(
+            tmp.path().join(".gitmodules"),
+            "[submodule \"libs/decode\"]
+	path = libs/decode
+	url = https://github.com/o/vynamp-decode.git
+             [submodule \"apps/player\"]
+	path = apps/player
+	url = https://github.com/o/vynamp-player.git
+             [submodule \"libs/engine\"]
+	url = https://github.com/o/vynamp-engine.git
+	path = libs/engine
+",
+        )
+        .unwrap();
+        let root = tmp.path();
+        assert_eq!(
+            submodule_dir(root, "vynamp-player"),
+            Some(PathBuf::from("apps/player"))
+        );
+        assert_eq!(
+            submodule_dir(root, "vynamp-decode"),
+            Some(PathBuf::from("libs/decode"))
+        );
+        // `url` before `path`: the answer is the block's own path, not the player's.
+        assert_eq!(
+            submodule_dir(root, "vynamp-engine"),
+            Some(PathBuf::from("libs/engine"))
+        );
+        assert_eq!(submodule_dir(root, "vynamp-absent"), None);
+        // The umbrella is not a submodule; asking for it must not borrow a neighbour's path.
+        assert_eq!(submodule_dir(root, "vynamp"), None);
+    }
+    /// The task file follows the repository the backlog assigns, not a fixed `tasks/items/`.
+    /// Before step 37 every task lived in the umbrella, so the constant worked; after it,
+    /// 134 of 191 live in a module and the constant would report all of them absent.
+    #[test]
+    fn task_path_follows_the_owning_repository() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::write(
+            root.join(".gitmodules"),
+            "[submodule \"apps/player\"]
+	path = apps/player
+	url = https://github.com/o/vynamp-player.git
+",
+        )
+        .unwrap();
+        let umbrella = json!({"id":"TASK-E19-01","repo":"vynamp"});
+        assert_eq!(
+            task_path(root, &umbrella),
+            Some(root.join("tasks/items/TASK-E19-01.md"))
+        );
+        let module = json!({"id":"TASK-E02-01","repo":"vynamp-player"});
+        assert_eq!(
+            task_path(root, &module),
+            Some(root.join("apps/player/tasks/items/TASK-E02-01.md"))
+        );
+        // A repository nobody declared has no knowable path; the caller reports it.
+        assert_eq!(
+            task_path(root, &json!({"id":"X","repo":"vynamp-nope"})),
+            None
+        );
+    }
+    /// A link into a submodule must not make the verdict depend on the clone.
+    ///
+    /// After step 37 the umbrella points at TASKs it moved (`../../libs/decode/tasks/items/`).
+    /// A workstation that cloned with `--recursive` has those files; a plain clone does not.
+    /// If the gate demanded `exists()`, `check-docs` would be green on one and red on the
+    /// other -- and the red one would be the machine that looks correct. The distinction is
+    /// "absent because nobody fetched it" versus "absent though the module is right there":
+    /// only the second is a finding.
+    #[test]
+    fn link_inside_an_unfetched_submodule_is_not_reported() {
+        let tmp = tempfile::tempdir().unwrap();
+        let root = tmp.path();
+        std::fs::write(
+            root.join(".gitmodules"),
+            "[submodule \"libs/decode\"]
+	path = libs/decode
+	url = https://github.com/o/vynamp-decode.git
+",
+        )
+        .unwrap();
+        // Climbing out of the document's own directory is the normal case, and the one a
+        // component-wise `starts_with` would miss.
+        let from_doc = root.join("product/03-requisitos.md");
+        std::fs::create_dir_all(root.join("product")).unwrap();
+        let target = from_doc
+            .parent()
+            .unwrap()
+            .join("../libs/decode/tasks/items/TASK-E01-01.md");
+        assert!(inside_absent_submodule(root, &target));
+        // Outside every submodule there is no such excuse.
+        let elsewhere = from_doc.parent().unwrap().join("../tasks/items/NOPE.md");
+        assert!(!inside_absent_submodule(root, &elsewhere));
+        // Once the module is checked out, its links are ordinary links again.
+        std::fs::create_dir_all(root.join("libs/decode")).unwrap();
+        assert!(!inside_absent_submodule(root, &target));
+    }
+    /// The backlog writes `acceptance` as one sentence; the TASK file writes one table row
+    /// per clause. Demanding the whole sentence would fail all 191 product tasks on format,
+    /// not on divergence -- which is why the clause is the unit of comparison. What the
+    /// check must still catch is a criterion that was rewritten or emptied.
+    #[test]
+    fn acceptance_is_compared_clause_by_clause() {
+        let body = "# TASK-X — W
+
+| ID | Given | When | Then |
+|---|---|---|---|
+                    | `TASK-X-AC-1` | g | w | primeira clausula |
+                    | `TASK-X-AC-2` | g | w | segunda clausula |
+";
+        let task = |acceptance: &str| {
+            json!({
+                "title":"W", "deliverable":"W", "acceptance":acceptance,
+            })
+        };
+        let of = |v: &Value| markdown_disagreements("TASK-X", body, v).unwrap();
+        // The joined sentence is absent from the file; the clauses are not. That is a pass.
+        assert!(!body.contains("primeira clausula; segunda clausula"));
+        assert!(of(&task("primeira clausula; segunda clausula")).is_empty());
+        // Rewritten clause: still a finding, even though the other one matches.
+        assert_eq!(
+            of(&task("primeira clausula; segunda reescrita")),
+            vec!["Backlog/MD mismatch TASK-X acceptance: segunda reescrita"]
+        );
+        // An empty sentence must not read as "no clauses to check, everything present".
+        assert_eq!(
+            of(&task("   ")),
+            vec!["Backlog/MD mismatch TASK-X acceptance"]
+        );
+        // Prose copied verbatim keeps the whole-string comparison.
+        let other = json!({
+            "title":"nao esta no arquivo", "deliverable":"W", "acceptance":"primeira clausula"
+        });
+        assert_eq!(
+            markdown_disagreements("TASK-X", body, &other).unwrap(),
+            vec!["Backlog/MD mismatch TASK-X title"]
+        );
     }
     const SHA: &str = "11bd71901bbe5b1630ceea73d27597364c9af683";
     fn ci_fixture() -> tempfile::TempDir {

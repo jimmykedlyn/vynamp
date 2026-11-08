@@ -25,6 +25,13 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
+          # O passo 37 mudou 134 das 191 TASKs para o repositorio dono de cada uma
+          # (`01-arvore-final.md` secao 1). `check-docs` resolve o Markdown da task pelo
+          # campo `repo` do backlog, e o INDEX/los requisitos apontam para dentro dos
+          # submodulos: sem eles o job validaria uma arvore diferente da da estacao --
+          # exatamente a divergencia que `doc_files()` foi escrito para evitar. Os
+          # arquivos lidos aqui sao Markdown e JSON; nada e compilado.
+          submodules: recursive
       - name: Provision pinned Rust toolchain
         run: rustup show
       - run: cargo xtask check-docs

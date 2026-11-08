@@ -1,8 +1,6 @@
 # Índice completo da especificação
 
-
 Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidências históricas.
-
 
 - [Pull request — Vynamp](.github/pull_request_template.md) — .github/pull_request_template.md
 
@@ -110,7 +108,6 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Ativação externa e segredos](engineering/07-segredos.md) — engineering/07-segredos.md
 
-
 - [Reinício Windows — passo a passo completo](engineering/08-reinicio-windows.md) — engineering/08-reinicio-windows.md
 
 - [Evidências e relatórios](evidence/README.md) — evidence/README.md
@@ -149,7 +146,6 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Catálogo de funcionalidades e destino](product/06-paridade.md) — product/06-paridade.md
 
-
 - [Estratégia de testes e critérios de qualidade](quality/01-estrategia-testes.md) — quality/01-estrategia-testes.md
 
 - [Performance, métricas e diagnósticos](quality/02-performance.md) — quality/02-performance.md
@@ -157,7 +153,6 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [Matriz de validação e release multiplataforma](quality/03-matriz-multiplataforma.md) — quality/03-matriz-multiplataforma.md
 
 - [QA complementar — integração, codecs, DSP e capacidades](_arquivo/repo/docs/quality/04-integration-codecs-dsp.md) — _arquivo/repo/docs/quality/04-integration-codecs-dsp.md
-
 
 - [Modelo de ameaças e controles](security/01-threat-model.md) — security/01-threat-model.md
 
@@ -231,177 +226,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [E19 — Repos públicos, CI público e reorganização](tasks/epics/E19.md) — tasks/epics/E19.md
 
-- [TASK-E01-01 — Provar decode, gapless e precisão de samples](tasks/items/TASK-E01-01.md) — tasks/items/TASK-E01-01.md
-
-- [TASK-E01-02 — Provar callback e output clock](tasks/items/TASK-E01-02.md) — tasks/items/TASK-E01-02.md
-
-- [TASK-E01-03 — Implementar state machine e generation cancellation](tasks/items/TASK-E01-03.md) — tasks/items/TASK-E01-03.md
-
-- [TASK-E01-04 — Entregar fonte local e decoder registry](tasks/items/TASK-E01-04.md) — tasks/items/TASK-E01-04.md
-
-- [TASK-E01-05 — Implementar mixer, drain e transições básicas](tasks/items/TASK-E01-05.md) — tasks/items/TASK-E01-05.md
-
-- [TASK-E01-06 — Implementar gapless sample-accurate](tasks/items/TASK-E01-06.md) — tasks/items/TASK-E01-06.md
-
-- [TASK-E01-07 — Adicionar codecs modernos e capítulos](tasks/items/TASK-E01-07.md) — tasks/items/TASK-E01-07.md
-
-- [TASK-E01-08 — Completar codecs desktop e large files](tasks/items/TASK-E01-08.md) — tasks/items/TASK-E01-08.md
-
-- [TASK-E01-09 — Entregar channel mapping e DSD para PCM](tasks/items/TASK-E01-09.md) — tasks/items/TASK-E01-09.md
-
-- [TASK-E01-10 — Endurecer engine e documentação dos limites](tasks/items/TASK-E01-10.md) — tasks/items/TASK-E01-10.md
-
-- [TASK-E02-01 — Validar toolkit Rust com UI clássica acessível](tasks/items/TASK-E02-01.md) — tasks/items/TASK-E02-01.md
-
-- [TASK-E02-02 — Implementar tokens e componentes semânticos](tasks/items/TASK-E02-02.md) — tasks/items/TASK-E02-02.md
-
-- [TASK-E02-03 — Construir Classic Stack e transporte](tasks/items/TASK-E02-03.md) — tasks/items/TASK-E02-03.md
-
-- [TASK-E02-04 — Entregar playlist UI e keyboard workflow](tasks/items/TASK-E02-04.md) — tasks/items/TASK-E02-04.md
-
-- [TASK-E02-05 — Construir Library Workspace e inspector](tasks/items/TASK-E02-05.md) — tasks/items/TASK-E02-05.md
-
-- [TASK-E02-06 — Entregar Mini, preferências e estados de erro](tasks/items/TASK-E02-06.md) — tasks/items/TASK-E02-06.md
-
-- [TASK-E02-07 — Integrar cadeia de áudio e EQ avançado na UI](tasks/items/TASK-E02-07.md) — tasks/items/TASK-E02-07.md
-
-- [TASK-E02-08 — Entregar docking e persistência multi-monitor](tasks/items/TASK-E02-08.md) — tasks/items/TASK-E02-08.md
-
-- [TASK-E02-09 — Completar localização e testes visuais](tasks/items/TASK-E02-09.md) — tasks/items/TASK-E02-09.md
-
-- [TASK-E02-10 — Validar experiência desktop ponta a ponta](tasks/items/TASK-E02-10.md) — tasks/items/TASK-E02-10.md
-
-- [TASK-E02-11 — Congelar MVP de referência e extrair SVGs, ícones e temas](tasks/items/TASK-E02-11.md) — tasks/items/TASK-E02-11.md
-
-- [TASK-E02-12 — Gerar gabarito visual e estratégia de fontes](tasks/items/TASK-E02-12.md) — tasks/items/TASK-E02-12.md
-
-- [TASK-E02-13 — Gerar gabarito de movimento, medidores e ondas](tasks/items/TASK-E02-13.md) — tasks/items/TASK-E02-13.md
-
-- [TASK-E02-14 — Gerar gabarito de comportamento e preferências](tasks/items/TASK-E02-14.md) — tasks/items/TASK-E02-14.md
-
-- [TASK-E02-15 — Mapear lacunas web para nativo por plataforma](tasks/items/TASK-E02-15.md) — tasks/items/TASK-E02-15.md
-
-- [TASK-E02-16 — Implementar harness de fidelidade com egui_kittest](tasks/items/TASK-E02-16.md) — tasks/items/TASK-E02-16.md
-
-- [TASK-E03-01 — Implementar schema SQLite e migrations seguras](tasks/items/TASK-E03-01.md) — tasks/items/TASK-E03-01.md
-
-- [TASK-E03-02 — Implementar queue independente e shuffle](tasks/items/TASK-E03-02.md) — tasks/items/TASK-E03-02.md
-
-- [TASK-E03-03 — Implementar import incremental e roots offline](tasks/items/TASK-E03-03.md) — tasks/items/TASK-E03-03.md
-
-- [TASK-E03-04 — Implementar leitura de tags e capas segura](tasks/items/TASK-E03-04.md) — tasks/items/TASK-E03-04.md
-
-- [TASK-E03-05 — Entregar FTS, filtros e views de biblioteca](tasks/items/TASK-E03-05.md) — tasks/items/TASK-E03-05.md
-
-- [TASK-E03-06 — Entregar playlists import/export e CUE](tasks/items/TASK-E03-06.md) — tasks/items/TASK-E03-06.md
-
-- [TASK-E03-07 — Implementar smart playlists e templates](tasks/items/TASK-E03-07.md) — tasks/items/TASK-E03-07.md
-
-- [TASK-E03-08 — Implementar escrita de tags e capítulos em lote](tasks/items/TASK-E03-08.md) — tasks/items/TASK-E03-08.md
-
-- [TASK-E03-09 — Entregar letras, bookmarks e histórico](tasks/items/TASK-E03-09.md) — tasks/items/TASK-E03-09.md
-
-- [TASK-E03-10 — Completar recovery, export e large-library gate](tasks/items/TASK-E03-10.md) — tasks/items/TASK-E03-10.md
-
-- [TASK-E04-01 — Implementar EQ10, ganho e ReplayGain playback](tasks/items/TASK-E04-01.md) — tasks/items/TASK-E04-01.md
-
-- [TASK-E04-02 — Provar resampler e sample conversion](tasks/items/TASK-E04-02.md) — tasks/items/TASK-E04-02.md
-
-- [TASK-E04-03 — Construir grafo DSP e transições sem glitches](tasks/items/TASK-E04-03.md) — tasks/items/TASK-E04-03.md
-
-- [TASK-E04-04 — Entregar EQ paramétrico e presets](tasks/items/TASK-E04-04.md) — tasks/items/TASK-E04-04.md
-
-- [TASK-E04-05 — Entregar saída exclusiva e device profiles](tasks/items/TASK-E04-05.md) — tasks/items/TASK-E04-05.md
-
-- [TASK-E04-06 — Entregar modo transparente e diagnósticos hi-res](tasks/items/TASK-E04-06.md) — tasks/items/TASK-E04-06.md
-
-- [TASK-E04-07 — Entregar dynamics, tone e channel controls](tasks/items/TASK-E04-07.md) — tasks/items/TASK-E04-07.md
-
-- [TASK-E04-08 — Entregar tempo, pitch e efeitos criativos](tasks/items/TASK-E04-08.md) — tasks/items/TASK-E04-08.md
-
-- [TASK-E04-09 — Entregar perfis e headphone preset import](tasks/items/TASK-E04-09.md) — tasks/items/TASK-E04-09.md
-
 - [TASK-E04-10 — Validar qualidade numérica e hardware matrix](tasks/items/TASK-E04-10.md) — tasks/items/TASK-E04-10.md
-
-- [TASK-E05-01 — Implementar SourceDescriptor e provider simulado](tasks/items/TASK-E05-01.md) — tasks/items/TASK-E05-01.md
-
-- [TASK-E05-02 — Entregar HTTP Range e reprodução progressiva](tasks/items/TASK-E05-02.md) — tasks/items/TASK-E05-02.md
-
-- [TASK-E05-03 — Entregar rádio Icecast/SHOUTcast e ICY](tasks/items/TASK-E05-03.md) — tasks/items/TASK-E05-03.md
-
-- [TASK-E05-04 — Entregar buffers, cache e downloads](tasks/items/TASK-E05-04.md) — tasks/items/TASK-E05-04.md
-
-- [TASK-E05-05 — Entregar feeds e episódios de podcasts](tasks/items/TASK-E05-05.md) — tasks/items/TASK-E05-05.md
-
-- [TASK-E05-06 — Entregar HLS sob demanda](tasks/items/TASK-E05-06.md) — tasks/items/TASK-E05-06.md
-
-- [TASK-E05-07 — Entregar HLS live, ABR e timeshift](tasks/items/TASK-E05-07.md) — tasks/items/TASK-E05-07.md
-
-- [TASK-E05-08 — Entregar gravação de rádios](tasks/items/TASK-E05-08.md) — tasks/items/TASK-E05-08.md
-
-- [TASK-E05-09 — Endurecer rede e diagnóstico de streaming](tasks/items/TASK-E05-09.md) — tasks/items/TASK-E05-09.md
-
-- [TASK-E05-10 — Integrar provider API, offline e direitos](tasks/items/TASK-E05-10.md) — tasks/items/TASK-E05-10.md
-
-- [TASK-E06-01 — Definir schema e validador de temas](tasks/items/TASK-E06-01.md) — tasks/items/TASK-E06-01.md
-
-- [TASK-E06-02 — Entregar instalação atômica de temas](tasks/items/TASK-E06-02.md) — tasks/items/TASK-E06-02.md
-
-- [TASK-E06-03 — Implementar layouts declarativos e bindings](tasks/items/TASK-E06-03.md) — tasks/items/TASK-E06-03.md
-
-- [TASK-E06-04 — Produzir três temas originais](tasks/items/TASK-E06-04.md) — tasks/items/TASK-E06-04.md
-
-- [TASK-E06-05 — Entregar meters e espectro](tasks/items/TASK-E06-05.md) — tasks/items/TASK-E06-05.md
-
-- [TASK-E06-06 — Entregar visualizações avançadas](tasks/items/TASK-E06-06.md) — tasks/items/TASK-E06-06.md
-
-- [TASK-E06-07 — Entregar editor e preview de temas](tasks/items/TASK-E06-07.md) — tasks/items/TASK-E06-07.md
-
-- [TASK-E06-08 — Entregar galeria local e recovery visual](tasks/items/TASK-E06-08.md) — tasks/items/TASK-E06-08.md
-
-- [TASK-E06-09 — Preparar publicação de temas](tasks/items/TASK-E06-09.md) — tasks/items/TASK-E06-09.md
-
-- [TASK-E06-10 — Validar fidelidade visual dos temas](tasks/items/TASK-E06-10.md) — tasks/items/TASK-E06-10.md
-
-- [TASK-E07-01 — Provar sandbox WASM e capabilities](tasks/items/TASK-E07-01.md) — tasks/items/TASK-E07-01.md
-
-- [TASK-E07-02 — Definir pacote e SDK de plugins v1](tasks/items/TASK-E07-02.md) — tasks/items/TASK-E07-02.md
-
-- [TASK-E07-03 — Implementar broker de permissões](tasks/items/TASK-E07-03.md) — tasks/items/TASK-E07-03.md
-
-- [TASK-E07-04 — Implementar lifecycle e circuit breaker](tasks/items/TASK-E07-04.md) — tasks/items/TASK-E07-04.md
-
-- [TASK-E07-05 — Implementar helper nativo isolado](tasks/items/TASK-E07-05.md) — tasks/items/TASK-E07-05.md
-
-- [TASK-E07-06 — Entregar templates e plugins de exemplo](tasks/items/TASK-E07-06.md) — tasks/items/TASK-E07-06.md
-
-- [TASK-E07-07 — Entregar gerenciador de plugins](tasks/items/TASK-E07-07.md) — tasks/items/TASK-E07-07.md
-
-- [TASK-E07-08 — Entregar documentação e harness do SDK](tasks/items/TASK-E07-08.md) — tasks/items/TASK-E07-08.md
-
-- [TASK-E07-09 — Preparar registry e revogação de plugins](tasks/items/TASK-E07-09.md) — tasks/items/TASK-E07-09.md
-
-- [TASK-E07-10 — Auditar isolamento das extensões](tasks/items/TASK-E07-10.md) — tasks/items/TASK-E07-10.md
-
-- [TASK-E08-01 — Implementar jobs persistidos](tasks/items/TASK-E08-01.md) — tasks/items/TASK-E08-01.md
-
-- [TASK-E08-02 — Entregar conversor e encoder registry](tasks/items/TASK-E08-02.md) — tasks/items/TASK-E08-02.md
-
-- [TASK-E08-03 — Entregar análise de loudness, ReplayGain e BPM](tasks/items/TASK-E08-03.md) — tasks/items/TASK-E08-03.md
-
-- [TASK-E08-04 — Entregar organização de arquivos e dedupe](tasks/items/TASK-E08-04.md) — tasks/items/TASK-E08-04.md
-
-- [TASK-E08-05 — Entregar sleep timer e scheduler](tasks/items/TASK-E08-05.md) — tasks/items/TASK-E08-05.md
-
-- [TASK-E08-06 — Integrar controles do Windows](tasks/items/TASK-E08-06.md) — tasks/items/TASK-E08-06.md
-
-- [TASK-E08-07 — Entregar CLI e IPC de instância única](tasks/items/TASK-E08-07.md) — tasks/items/TASK-E08-07.md
-
-- [TASK-E08-08 — Entregar scrobblers e presence](tasks/items/TASK-E08-08.md) — tasks/items/TASK-E08-08.md
-
-- [TASK-E08-09 — Entregar audiobooks e progresso offline](tasks/items/TASK-E08-09.md) — tasks/items/TASK-E08-09.md
-
-- [TASK-E08-10 — Entregar controle remoto autenticado](tasks/items/TASK-E08-10.md) — tasks/items/TASK-E08-10.md
 
 - [TASK-E09-01 — Definir catálogo, direitos, escala e custos](tasks/items/TASK-E09-01.md) — tasks/items/TASK-E09-01.md
 
@@ -463,45 +288,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [TASK-E11-10 — Preparar operação da plataforma](tasks/items/TASK-E11-10.md) — tasks/items/TASK-E11-10.md
 
-- [TASK-E12-01 — Entregar Linux nativo e MPRIS na 1.0](tasks/items/TASK-E12-01.md) — tasks/items/TASK-E12-01.md
-
-- [TASK-E12-02 — Entregar macOS Intel e Apple Silicon nativos na 1.0](tasks/items/TASK-E12-02.md) — tasks/items/TASK-E12-02.md
-
 - [TASK-E12-03 — Validar ARM64 adicional Windows/Linux e helpers](tasks/items/TASK-E12-03.md) — tasks/items/TASK-E12-03.md
-
-- [TASK-E12-04 — Entregar DSD nativo/DoP e PCM 768 kHz](tasks/items/TASK-E12-04.md) — tasks/items/TASK-E12-04.md
-
-- [TASK-E12-05 — Entregar trackers, MIDI e codecs raros](tasks/items/TASK-E12-05.md) — tasks/items/TASK-E12-05.md
-
-- [TASK-E12-06 — Entregar CD playback e ripping](tasks/items/TASK-E12-06.md) — tasks/items/TASK-E12-06.md
-
-- [TASK-E12-07 — Entregar VST3 e investigar DSP de terceiros](tasks/items/TASK-E12-07.md) — tasks/items/TASK-E12-07.md
-
-- [TASK-E12-08 — Entregar DASH, WebDAV e clouds](tasks/items/TASK-E12-08.md) — tasks/items/TASK-E12-08.md
-
-- [TASK-E12-09 — Entregar casting e companion](tasks/items/TASK-E12-09.md) — tasks/items/TASK-E12-09.md
-
-- [TASK-E12-10 — Completar EQ64 e escala avançada](tasks/items/TASK-E12-10.md) — tasks/items/TASK-E12-10.md
-
-- [TASK-E13-01 — Provar Android arm64, bridge Rust e output](tasks/items/TASK-E13-01.md) — tasks/items/TASK-E13-01.md
-
-- [TASK-E13-02 — Entregar serviço e MediaSession com engine Rust](tasks/items/TASK-E13-02.md) — tasks/items/TASK-E13-02.md
-
-- [TASK-E13-03 — Entregar audio focus e rotas Android](tasks/items/TASK-E13-03.md) — tasks/items/TASK-E13-03.md
-
-- [TASK-E13-04 — Entregar MediaStore, SAF e permissões](tasks/items/TASK-E13-04.md) — tasks/items/TASK-E13-04.md
-
-- [TASK-E13-05 — Entregar interface phone e navegação acessível](tasks/items/TASK-E13-05.md) — tasks/items/TASK-E13-05.md
-
-- [TASK-E13-06 — Integrar streaming, podcasts e downloads Android](tasks/items/TASK-E13-06.md) — tasks/items/TASK-E13-06.md
-
-- [TASK-E13-07 — Entregar recovery de processo e controle de energia](tasks/items/TASK-E13-07.md) — tasks/items/TASK-E13-07.md
-
-- [TASK-E13-08 — Entregar temas e plugins mobile](tasks/items/TASK-E13-08.md) — tasks/items/TASK-E13-08.md
-
-- [TASK-E13-09 — Entregar tablet/foldable e distribuição Android](tasks/items/TASK-E13-09.md) — tasks/items/TASK-E13-09.md
-
-- [TASK-E13-10 — Fechar aceite Android 1.0 em hardware](tasks/items/TASK-E13-10.md) — tasks/items/TASK-E13-10.md
 
 - [TASK-E14-01 — Provar os cinco targets e features portáveis](tasks/items/TASK-E14-01.md) — tasks/items/TASK-E14-01.md
 
@@ -535,75 +322,17 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [TASK-E15-10 — Fechar release assinado e draft privado](tasks/items/TASK-E15-10.md) — tasks/items/TASK-E15-10.md
 
-- [TASK-E16-01 — Provar envelope de ativação e protocolo comum](tasks/items/TASK-E16-01.md) — tasks/items/TASK-E16-01.md
-
-- [TASK-E16-02 — Implementar owner único por perfil e IPC autorizado](tasks/items/TASK-E16-02.md) — tasks/items/TASK-E16-02.md
-
-- [TASK-E16-03 — Entregar associação e Abrir com no Windows](tasks/items/TASK-E16-03.md) — tasks/items/TASK-E16-03.md
-
-- [TASK-E16-04 — Entregar MIME e abertura externa no Linux](tasks/items/TASK-E16-04.md) — tasks/items/TASK-E16-04.md
-
-- [TASK-E16-05 — Entregar document types e Finder nos dois Macs](tasks/items/TASK-E16-05.md) — tasks/items/TASK-E16-05.md
-
-- [TASK-E16-06 — Entregar VIEW e Share seguros no Android](tasks/items/TASK-E16-06.md) — tasks/items/TASK-E16-06.md
-
-- [TASK-E16-07 — Certificar ativação e associações em cinco alvos](tasks/items/TASK-E16-07.md) — tasks/items/TASK-E16-07.md
-
-- [TASK-E16-08 — Validar portable, backup e limpeza de integração](tasks/items/TASK-E16-08.md) — tasks/items/TASK-E16-08.md
-
-- [TASK-E16-09 — Gerar declarações OS a partir do build verificado](tasks/items/TASK-E16-09.md) — tasks/items/TASK-E16-09.md
-
-- [TASK-E16-10 — Entregar deep links e callbacks do provider](tasks/items/TASK-E16-10.md) — tasks/items/TASK-E16-10.md
-
-- [TASK-E17-01 — Fixar catálogo por binding, capacidades e corpus](tasks/items/TASK-E17-01.md) — tasks/items/TASK-E17-01.md
-
-- [TASK-E17-02 — Implementar trim, gain e timeline por codec](tasks/items/TASK-E17-02.md) — tasks/items/TASK-E17-02.md
-
-- [TASK-E17-03 — Completar bindings de containers e seleção de áudio](tasks/items/TASK-E17-03.md) — tasks/items/TASK-E17-03.md
-
-- [TASK-E17-04 — Avaliar e integrar xHE-AAC com capacidade honesta](tasks/items/TASK-E17-04.md) — tasks/items/TASK-E17-04.md
-
-- [TASK-E17-05 — Certificar lossless, híbridos e PCM especiais](tasks/items/TASK-E17-05.md) — tasks/items/TASK-E17-05.md
-
-- [TASK-E17-06 — Certificar tags técnicas, capítulos e sidecars](tasks/items/TASK-E17-06.md) — tasks/items/TASK-E17-06.md
-
-- [TASK-E17-07 — Fixar proteção true-peak depois do processamento](tasks/items/TASK-E17-07.md) — tasks/items/TASK-E17-07.md
-
 - [TASK-E17-08 — Medir teto no PCM final com oráculo independente](tasks/items/TASK-E17-08.md) — tasks/items/TASK-E17-08.md
-
-- [TASK-E17-09 — Entregar presets e taps limitados de visualização](tasks/items/TASK-E17-09.md) — tasks/items/TASK-E17-09.md
-
-- [TASK-E17-10 — Certificar visualizers, fallback e energia mobile](tasks/items/TASK-E17-10.md) — tasks/items/TASK-E17-10.md
-
-- [TASK-E17-11 — Implementar política de proxy e rede isolada](tasks/items/TASK-E17-11.md) — tasks/items/TASK-E17-11.md
 
 - [TASK-E17-12 — Publicar manifest real de capacidades por artefato](tasks/items/TASK-E17-12.md) — tasks/items/TASK-E17-12.md
 
-- [TASK-E17-13 — Expandir MPEG-H com renderer e licença](tasks/items/TASK-E17-13.md) — tasks/items/TASK-E17-13.md
-
-- [TASK-E17-14 — Expandir AC-4 e apresentações de áudio](tasks/items/TASK-E17-14.md) — tasks/items/TASK-E17-14.md
-
-- [TASK-E17-15 — Expandir IAMF como modelo e renderer](tasks/items/TASK-E17-15.md) — tasks/items/TASK-E17-15.md
-
-- [TASK-E17-16 — Certificar áudio cinematográfico e passthrough](tasks/items/TASK-E17-16.md) — tasks/items/TASK-E17-16.md
-
-- [TASK-E17-17 — Expandir speech, AAC low-delay e legados](tasks/items/TASK-E17-17.md) — tasks/items/TASK-E17-17.md
-
 - [TASK-E17-18 — Certificar expansão MIDI, trackers e DSD especial](tasks/items/TASK-E17-18.md) — tasks/items/TASK-E17-18.md
 
-- [TASK-E17-19 — Expor capacidades Bluetooth e headroom por rota](tasks/items/TASK-E17-19.md) — tasks/items/TASK-E17-19.md
-
 - [TASK-E17-20 — Fechar gate combinado de codecs, DSP e visualizers](tasks/items/TASK-E17-20.md) — tasks/items/TASK-E17-20.md
-
-- [TASK-E18-01 — Entregar Vynamp Restore como ferramenta desktop de restauração](tasks/items/TASK-E18-01.md) — tasks/items/TASK-E18-01.md
-
-- [TASK-E18-02 — Entregar Vynamp Converter e a lib de encoders](tasks/items/TASK-E18-02.md) — tasks/items/TASK-E18-02.md
 
 - [TASK-E19-01 — Migrar o CI do repo principal para GitHub Actions](tasks/items/TASK-E19-01.md) — tasks/items/TASK-E19-01.md
 
 - [TASK-E19-02 — Higiene, governança e README bilíngue do repo principal](tasks/items/TASK-E19-02.md) — tasks/items/TASK-E19-02.md
-
-- [TASK-E19-03 — Dissolver o vitrola no DSP interno do app](tasks/items/TASK-E19-03.md) — tasks/items/TASK-E19-03.md
 
 - [TASK-E19-04 — Re-apontar as specs de Restore e Converter e criar os repos próprios](tasks/items/TASK-E19-04.md) — tasks/items/TASK-E19-04.md
 
@@ -611,7 +340,10 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [TASK-E19-06 — Abrir os repositórios ao público e proteger as branches](tasks/items/TASK-E19-06.md) — tasks/items/TASK-E19-06.md
 
-- [TASK-E19-07 — Integrar o módulo DSP vitrola no grafo do player](tasks/items/TASK-E19-07.md) — tasks/items/TASK-E19-07.md
+- [TASK-CI-01 — Reescrever delivery() e github_actions() para a árvore do umbrella](tasks/items/TASK-CI-01.md) — tasks/items/TASK-CI-01.md
+
+- [TASK-CI-02 — Adicionar o job check-tasks ao CI do umbrella](tasks/items/TASK-CI-02.md) — tasks/items/TASK-CI-02.md
+
 - [Evidência TASK-E19-01](evidence/PR/task-e19-01/README.md) — evidence/PR/task-e19-01/README.md; workflows Actions, validador invertido, gates locais e limitações (nenhum workflow executado no remoto).
 - [Evidência TASK-E19-02](evidence/PR/task-e19-02/README.md) — evidence/PR/task-e19-02/README.md; licença dual, governança, canal de advisory, README bilíngue e limitações (nada aberto, nada assinado).
 - [Corpo do PR task-e19-02](evidence/PR/task-e19-02/pr-body.md) — evidence/PR/task-e19-02/pr-body.md
@@ -621,16 +353,13 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [Automação Rust com cargo xtask](xtask/README.md) — xtask/README.md
 # Execução E15-03
 
-
 - [Evidência E15-03 / QA-012](evidence/PR/task-e15-03/README.md) — evidence/PR/task-e15-03/README.md; privacidade, histórico, configurações aplicadas e proteções pendentes por plano.
 
 # Execução E15-01
 
-
 - [Evidência E15-01 / QA-009](evidence/task-e15-01-qa-009.json) — evidence/task-e15-01-qa-009.json; checks locais e limites de instalação/discovery/revisão.
 
 # Execução E15-02
-
 
 - [Evidência E15-02 / QA-009 / QA-012](evidence/PR/task-e15-02/README.md) — evidence/PR/task-e15-02/README.md; Git real, RED/GREEN, concorrência e preservação de worktrees.
 
@@ -642,7 +371,6 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [Evidência E11-01](evidence/PR/task-e11-01/README.md) — evidence/PR/task-e11-01/README.md
 
 # Preparação E15-04
-
 
 # Documentação DSP e equalizadores (2026-10-25)
 
@@ -668,7 +396,6 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Letras — componente resumido sob o VU e fontes (LYR-01..15, LYR-AC-01..12)](library/02-tags-letras.md#letras-componente-resumido-sob-o-vu-e-fontes) — library/02-tags-letras.md
 - [Decisões de letras D-LYR-01..09](product/05-decisoes.md#decisões-de-letras-2026-10-28) — product/05-decisoes.md
-- [TASK-E03-09 — Entregar letras, bookmarks e histórico](tasks/items/TASK-E03-09.md) — tasks/items/TASK-E03-09.md
 
 # Integração com o shell e pacotes de ícones (2026-11-05)
 
@@ -683,7 +410,6 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [Vynamp Converter — conversão e transcodificação](reference/tools/02-vynamp-converter.md) — reference/tools/02-vynamp-converter.md
 - [Evidência chore-specs-vynamp-restore](evidence/PR/chore-specs-vynamp-restore/README.md) — evidence/PR/chore-specs-vynamp-restore/README.md; verificações locais, revisão por subagente e limitações declaradas.
 - [Corpo do PR chore-specs-vynamp-restore](evidence/PR/chore-specs-vynamp-restore/pr-body.md) — evidence/PR/chore-specs-vynamp-restore/pr-body.md
-
 
 # MVP como fonte única da UI (2026-11-05)
 
