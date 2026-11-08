@@ -7,6 +7,9 @@ separa o que ja foi feito do que ainda nao foi:
 - `pendente` — a linha registra a **decisao** de fundir ou absorver, e os dois lados
   continuam vivos. Nada foi movido ainda; a fusao e a remocao acontecem no passo
   anotado em **Passo**, e so o passo 38 apaga de verdade.
+- `excluido` — a origem foi apagada do disco e **nao ha copia** em `_arquivo/`:
+  `Destino = -`. Vale para build, cache e conteudo descartavel do passo 38, cuja
+  unica recuperacao e o historico do Git ou refazer o artefato.
 
 A exclusao definitiva so acontece no passo 38, sob confirmacao explicita do mantenedor.
 
@@ -125,9 +128,9 @@ A exclusao definitiva so acontece no passo 38, sob confirmacao explicita do mant
 | 2026-11-07 | `raiz/TAREFA-SPECS-LIBS-MVP.md` | `_arquivo/raiz/TAREFA-SPECS-LIBS-MVP.md` | ordem de servico concluida | 30 | arquivado |
 | 2026-11-07 | `raiz/AUDIOSR-RUST-CPU.md` | `_arquivo/raiz/AUDIOSR-RUST-CPU.md` | absorvido por ADR-015 + tools/03 em 2026-11-07 | 30 | arquivado |
 | 2026-11-07 | `raiz/SOURCE_SEPARATION_MODELS.md` | `_arquivo/raiz/SOURCE_SEPARATION_MODELS.md` | absorvido por ADR-015 + tools/03 em 2026-11-07 | 30 | arquivado |
-| 2026-11-08 | `.github/workflows/ci.yml` | `_arquivo/workflows/ci-antes-do-passo-34.yml` | versao anterior guardada antes da reescrita | 34 |
-| 2026-11-08 | `.github/workflows/quality.yml` | `_arquivo/workflows/quality-antes-do-passo-34.yml` | versao anterior guardada antes da reescrita | 34 |
-| 2026-11-08 | `.github/workflows/release.yml` | `_arquivo/workflows/release.yml` | D-CI-3: release e do app que publica; o umbrella nao tem binario | 34 |
+| 2026-11-08 | `.github/workflows/ci.yml` | `_arquivo/workflows/ci-antes-do-passo-34.yml` | versao anterior guardada antes da reescrita | 34 | arquivado |
+| 2026-11-08 | `.github/workflows/quality.yml` | `_arquivo/workflows/quality-antes-do-passo-34.yml` | versao anterior guardada antes da reescrita | 34 | arquivado |
+| 2026-11-08 | `.github/workflows/release.yml` | `_arquivo/workflows/release.yml` | D-CI-3: release e do app que publica; o umbrella nao tem binario | 34 | arquivado |
 | 2026-11-08 | `tasks/items/TASK-E01-01.md` | `repo/tasks/items/TASK-E01-01.md` | reescrito no formato padroes/tasks.md e movido para vynamp-decode (passo 37) | 37 | arquivado |
 | 2026-11-08 | `tasks/items/TASK-E01-02.md` | `repo/tasks/items/TASK-E01-02.md` | reescrito no formato padroes/tasks.md e movido para vynamp-output (passo 37) | 37 | arquivado |
 | 2026-11-08 | `tasks/items/TASK-E01-03.md` | `repo/tasks/items/TASK-E01-03.md` | reescrito no formato padroes/tasks.md e movido para vynamp-engine (passo 37) | 37 | arquivado |
@@ -262,3 +265,20 @@ A exclusao definitiva so acontece no passo 38, sob confirmacao explicita do mant
 | 2026-11-08 | `tasks/items/TASK-E18-02.md` | `repo/tasks/items/TASK-E18-02.md` | reescrito no formato padroes/tasks.md e movido para vynamp-converter (passo 37) | 37 | arquivado |
 | 2026-11-08 | `tasks/items/TASK-E19-03.md` | `repo/tasks/items/TASK-E19-03.md` | reescrito no formato padroes/tasks.md e movido para vynamp-engine (passo 37) | 37 | arquivado |
 | 2026-11-08 | `tasks/items/TASK-E19-07.md` | `repo/tasks/items/TASK-E19-07.md` | reescrito no formato padroes/tasks.md e movido para vynamp-engine (passo 37) | 37 | arquivado |
+| 2026-11-08 | `repo\target` | - | build do workspace antigo (3,1 GB) | 38 | excluido |
+| 2026-11-08 | `repo\.worktrees` | - | worktrees das branches ja mergeadas (11 GB) | 38 | excluido |
+| 2026-11-08 | `_smoke37` | - | teste de smoke do passo 37 | 38 | excluido |
+| 2026-11-08 | `repo\archive` | - | historico do fluxo antigo, nao migrado | 38 | excluido |
+| 2026-11-08 | `repo\logs` | - | residuo de log; o AMBIENTE.ps1 recria vazia | 38 | excluido |
+| 2026-11-08 | `vynamp-chatgpt-arquivo` | - | M10: fora das specs novas; nao e git | 38 | excluido |
+| 2026-11-08 | `.cache\tmp` | - | cache descartavel do bootstrap (tmp) | 38 | excluido |
+| 2026-11-08 | `.cache\bootstrap-build` | - | cache descartavel do bootstrap (bootstrap-build) | 38 | excluido |
+| 2026-11-08 | `.cache\e15-01-verification-20261015` | - | cache descartavel do bootstrap (e15-01-verification-20261015) | 38 | excluido |
+| 2026-11-08 | `.cache\task-e15-01-driver` | - | cache descartavel do bootstrap (task-e15-01-driver) | 38 | excluido |
+| 2026-11-08 | `.cache\woodpecker` | - | cache descartavel do bootstrap (woodpecker) | 38 | excluido |
+| 2026-11-08 | `.cache\doctor.txt` | - | cache descartavel do bootstrap (doctor.txt) | 38 | excluido |
+| 2026-11-08 | `.cache\pr-task-e15-01-eac3221.md` | - | cache descartavel do bootstrap (pr-task-e15-01-eac3221.md) | 38 | excluido |
+| 2026-11-08 | `.cache\wpw` | - | cache descartavel do bootstrap (wpw) | 38 | excluido |
+| 2026-11-08 | `.cache\tests` | - | cache descartavel do bootstrap (tests) | 38 | excluido |
+| 2026-11-08 | `.cache\flac-test-files` | - | cache descartavel do bootstrap (flac-test-files) | 38 | excluido |
+| 2026-11-08 | `repo` | - | casca do repo antigo; historico migrado para o umbrella (passo 35) | 38 | excluido |
