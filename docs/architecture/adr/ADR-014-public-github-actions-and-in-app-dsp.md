@@ -2,7 +2,7 @@
 
 Versão: 0.1.0 · Data: 2026-11-05 · Estado: decisão do mantenedor; especificação normativa de CI e de organização dos repositórios.
 
-Status: aceito pelo mantenedor em 2026-11-05. **Substitui a [ADR-010](ADR-010-woodpecker-only-ci.md)** (CI/CD somente pelo Woodpecker) e revisa a linha do `vitrola` na [ADR-011](ADR-011-own-audio-stack.md). Orienta [TASK-E19-01](../../../tasks/items/TASK-E19-01.md) a [TASK-E19-07](../../../tasks/items/TASK-E19-07.md).
+Status: aceito pelo mantenedor em 2026-11-05. **Substitui a [ADR-010](../../../_arquivo/repo/docs/architecture/adr/ADR-010-woodpecker-only-ci.md)** (CI/CD somente pelo Woodpecker) e revisa a linha do `vitrola` na [ADR-011](ADR-011-own-audio-stack.md). Orienta [TASK-E19-01](../../../tasks/items/TASK-E19-01.md) a [TASK-E19-07](../../../tasks/items/TASK-E19-07.md).
 
 ## Contexto
 

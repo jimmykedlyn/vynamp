@@ -1,6 +1,6 @@
 # Glossário e convenções
 
-Versão 0.8.0 · 2026-11-05 (termos de integração com o shell, pacotes de ícones e ferramentas auxiliares adicionados; termos de motor de restauração, defeito, severidade, região e projeto de restauração; termos de controles DSP, grafo modular e VU; termos de letras; pilha de áudio própria; MVP rev.38).
+Versão 0.8.1 · 2026-11-07 (acabamento de VU passa a seis valores, contagem verificada no código do pin rev.38; termos de integração com o shell, pacotes de ícones e ferramentas auxiliares adicionados; termos de motor de restauração, defeito, severidade, região e projeto de restauração; termos de controles DSP, grafo modular e VU; termos de letras; pilha de áudio própria; MVP rev.38).
 
 | Termo | Significado nesta spec |
 |---|---|
@@ -45,7 +45,7 @@ Versão 0.8.0 · 2026-11-05 (termos de integração com o shell, pacotes de íco
 | Readout | Valor numérico com unidade junto ao knob ou slider; clicável para abrir o editor exato |
 | Grafo modular | Vista de nós e conexões do DSP; no protótipo, referência relatada, no nativo, nada implementado ([painel DSP §9](design/05-dsp-panel.md#9-fluxo-modular-grafo--referência-do-protótipo)) |
 | Porta CV | Porta de controle que liga uma saída de modulação (ex.: LFO) à entrada de modulação de um nó; não carrega áudio nem MIDI |
-| Acabamento de VU | Apresentação do gabinete externo dos VU meters (Original, Metal adaptativo, Integrado ao painel); não altera o SVG nem é efeito DSP ([VU-INT](design/05-dsp-panel.md#61-integração-visual-dos-vu-meters-vu-int)) |
+| Acabamento de VU | Apresentação do gabinete externo dos VU meters, em seis valores, na ordem do seletor do MVP: Integrado · gabinete compacto (padrão), Sem moldura externa, Moldura ultrafina, Acabamento adaptativo à skin, Embutido · profundidade discreta e Original completo · sem recorte; não altera o SVG nem é efeito DSP ([VU-INT](design/05-dsp-panel.md#61-integração-visual-dos-vu-meters-vu-int)) |
 | Letra sincronizada | Letra com timestamps (LRC, SYLT em milissegundos) que permite escolher a linha atual pela posição de reprodução; texto sem tempos nunca é tratado assim ([letras](library/02-tags-lyrics-tools.md#letras-componente-resumido-sob-o-vu-e-fontes)) |
 | LRC | Arquivo de letra com timestamps por linha, múltiplos tempos por linha e offset; pode ser importado explicitamente para uma faixa |
 | Componente resumido de letra | Exibição de três linhas (anterior, atual, próxima) imediatamente abaixo do VU; não substitui o painel completo de letras |

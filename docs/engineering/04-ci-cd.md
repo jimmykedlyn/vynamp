@@ -2,7 +2,7 @@
 
 Versão 0.8.0 · 2026-11-05 · Configuração do projeto; player ainda não implementado.
 
-CI/CD somente por GitHub Actions ([ADR-014](../architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md), que substitui a [ADR-010](../architecture/adr/ADR-010-woodpecker-only-ci.md)). Em repositório público os runners hospedados são gratuitos e a branch protection volta a estar disponível no plano gratuito — as duas condições que sustentavam a ADR-010 deixaram de existir. O Woodpecker local, o Cloudflare Tunnel e `infra/ci/` saíram do repositório. Actions fixadas por SHA de commit completo; tag flutuante e `v1`/`v2` reprovam `cargo xtask check-delivery`.
+CI/CD somente por GitHub Actions ([ADR-014](../architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md), que substitui a [ADR-010](../../_arquivo/repo/docs/architecture/adr/ADR-010-woodpecker-only-ci.md)). Em repositório público os runners hospedados são gratuitos e a branch protection volta a estar disponível no plano gratuito — as duas condições que sustentavam a ADR-010 deixaram de existir. O Woodpecker local, o Cloudflare Tunnel e `infra/ci/` saíram do repositório. Actions fixadas por SHA de commit completo; tag flutuante e `v1`/`v2` reprovam `cargo xtask check-delivery`.
 
 Workflows em `.github/workflows/`:
 

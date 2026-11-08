@@ -913,51 +913,6 @@ fn excluded_desktop_package_does_not_activate_core_ci() {
     assert_eq!(v["core"], "false");
 }
 #[test]
-fn vynamp_zip_uses_new_root_and_contains_approved_branding() {
-    let f = Fixture::new();
-    fs::create_dir_all(f.root.join("assets/branding")).unwrap();
-    fs::write(
-        f.root.join("assets/branding/approved-c-board.png"),
-        b"fixture, not a real image",
-    )
-    .unwrap();
-    fs::create_dir_all(f.root.join("bootstrap")).unwrap();
-    for name in [
-        "INICIAR.ps1",
-        "AMBIENTE.ps1",
-        "ABRIR-CLAUDE.ps1",
-        "PROMPT-CLAUDE.txt",
-        "LEIA-ME.txt",
-    ] {
-        fs::copy(
-            Path::new(env!("CARGO_MANIFEST_DIR"))
-                .join("../bootstrap")
-                .join(name),
-            f.root.join("bootstrap").join(name),
-        )
-        .unwrap();
-    }
-    let out = f._temp.path().join("vynamp.zip");
-    ok(f.run(&["bundle-spec", "--output", out.to_str().unwrap()]));
-    let mut archive = zip::ZipArchive::new(fs::File::open(&out).unwrap()).unwrap();
-    assert!(
-        archive
-            .by_name("vynamp-media-player/pacote/assets/branding/approved-c-board.png")
-            .is_ok()
-    );
-    assert!(archive.by_name("vynamp-media-player/INICIAR.ps1").is_ok());
-    assert!(
-        archive
-            .by_name("vynamp-media-player/ABRIR-CLAUDE.ps1")
-            .is_ok()
-    );
-    assert!(
-        archive
-            .by_name("auralis-mediaplayer/config/project.json")
-            .is_err()
-    );
-}
-#[test]
 fn renamed_product_honors_legacy_task_claims() {
     let f = Fixture::new();
     f.init();

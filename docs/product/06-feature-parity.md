@@ -34,7 +34,7 @@ PlataformasM0–M3: Windows/Linux/macOS Intel+Silicon/Android. UI phone/tablet, 
 
 ## Complementos 0.6
 
-[Auditoria](08-completeness-audit.md): E16 fecha associação/Open With/grants/batch/IPC/perfis/backup/deep links. E17 fecha perfis modernos, trim/DRC, guard final, visualizer runtime, proxy, Bluetooth e manifest por artefato. [Catálogo](../../config/format-catalog.json) diferencia required/conditional/optional/unsupported e planejamento de capacidade real.
+[Auditoria](../../_arquivo/repo/docs/product/08-completeness-audit.md): E16 fecha associação/Open With/grants/batch/IPC/perfis/backup/deep links. E17 fecha perfis modernos, trim/DRC, guard final, visualizer runtime, proxy, Bluetooth e manifest por artefato. [Catálogo](../../config/format-catalog.json) diferencia required/conditional/optional/unsupported e planejamento de capacidade real.
 
 ## Complementos 0.8 (2026-11-05)
 

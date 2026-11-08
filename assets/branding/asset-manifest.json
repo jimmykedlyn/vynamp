@@ -16,7 +16,7 @@
       "role": "prancha C multiplataforma"
     },
     {
-      "path": "assets/branding/reference/symbol-c-transparent.png",
+      "path": "_arquivo/repo/assets/branding/reference/symbol-c-transparent.png",
       "sha256": "6f24a76e8d12886a6234162a792caf3237adb7c620382ba465a9c5e50985784f",
       "bytes": 460452,
       "width": 1254,
@@ -27,7 +27,7 @@
       "role": "referência raster transparente do símbolo C"
     },
     {
-      "path": "assets/branding/reference/concepts-a-b-c-d.png",
+      "path": "_arquivo/repo/assets/branding/reference/concepts-a-b-c-d.png",
       "sha256": "2b40c8deb316abe63a8a5b9f149e8e1b71a39a1baab56a218cd095ef4c9bbb9a",
       "bytes": 1369890,
       "width": 1536,

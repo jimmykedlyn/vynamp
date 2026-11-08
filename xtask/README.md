@@ -17,7 +17,6 @@ Requer Rust/rustup 1.99.0 e ferramentas externas por operação. Cargo.lock é r
 | Hardware real | `cargo xtask quality-gate` |
 | Preflight de release | `cargo xtask release preflight --version 0.1.0` |
 | Instaladores assinados | `cargo xtask package --platform windows-x64 --version 0.1.0` |
-| Pacote documental | `cargo xtask bundle-spec --output /caminho/fora-do-projeto/vynamp.zip` |
 
 `cargo xtask --help` expõe subcomandos e argumentos. Usar `--root` somente para escolher projeto explícito, não para contornar isolamento.
 

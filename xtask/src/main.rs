@@ -104,11 +104,6 @@ enum Action {
         #[arg(long)]
         version: String,
     },
-    #[command(name = "bundle-spec")]
-    BundleSpec {
-        #[arg(long)]
-        output: PathBuf,
-    },
 }
 #[derive(Subcommand)]
 enum Repo {
@@ -235,87 +230,7 @@ fn execute() -> Result<()> {
             }
         },
         Action::Package { platform, version } => package::build(&root, &platform, &version),
-        Action::BundleSpec { output } => bundle(&root, &output),
     }
-}
-fn bundle(root: &std::path::Path, output: &std::path::Path) -> Result<()> {
-    use serde_json::json;
-    use std::{fs, io::Write};
-    const DIRECTORY: &str = "vynamp-media-player";
-    let cfg = util::read_json(root.join("config/project.json"))?;
-    let wrappers = [
-        ("INICIAR.ps1", "INICIAR.ps1"),
-        ("AMBIENTE.ps1", "AMBIENTE.ps1"),
-        ("ABRIR-CLAUDE.ps1", "ABRIR-CLAUDE.ps1"),
-        ("PROMPT-CLAUDE.txt", "PROMPT-CLAUDE.txt"),
-        ("LEIA-ME.txt", "LEIA-ME.md"),
-    ];
-    let mut entries = util::files(root)?
-        .into_iter()
-        .filter(|p| p.file_name().is_none_or(|n| n != "ARTIFACTS.json"))
-        .map(|p| {
-            let rel = p
-                .strip_prefix(root)
-                .unwrap()
-                .to_string_lossy()
-                .replace('\\', "/");
-            (format!("pacote/{rel}"), p)
-        })
-        .collect::<Vec<_>>();
-    for (source, name) in wrappers {
-        let path = root.join("bootstrap").join(source);
-        anyhow::ensure!(path.is_file(), "Bootstrap template absent: {source}");
-        entries.push((name.to_owned(), path));
-    }
-    let rows = entries
-        .iter()
-        .map(|(name, path)| {
-            Ok(json!({"path":name,"bytes":fs::metadata(path)?.len(),"sha256":util::sha(path)?}))
-        })
-        .collect::<Result<Vec<_>>>()?;
-    util::write_json(
-        root.join("ARTIFACTS.json"),
-        &json!({"spec_version":cfg["spec_version"],"root_directory":DIRECTORY,"source_directory":"pacote","files":rows}),
-    )?;
-    entries.push((
-        "pacote/ARTIFACTS.json".to_owned(),
-        root.join("ARTIFACTS.json"),
-    ));
-    let out = if output.is_absolute() {
-        output.to_path_buf()
-    } else {
-        root.join(output)
-    };
-    let canonical_root = root.canonicalize()?;
-    let parent = out
-        .parent()
-        .context("Bundle output parent")?
-        .canonicalize()?;
-    anyhow::ensure!(
-        !parent.starts_with(&canonical_root),
-        "Bundle output must be outside the source package; use its parent project directory"
-    );
-    let mut archive = zip::ZipWriter::new(fs::File::create(&out)?);
-    for (name, path) in entries {
-        let mut options = zip::write::SimpleFileOptions::default()
-            .compression_method(zip::CompressionMethod::Deflated);
-        if path.parent() == Some(root.join(".githooks").as_path()) || path.ends_with("AppRun") {
-            options = options.unix_permissions(0o755);
-        }
-        archive.start_file(format!("{DIRECTORY}/{name}"), options)?;
-        archive.write_all(&fs::read(&path)?)?;
-    }
-    archive.finish()?;
-    fs::write(
-        format!("{}.sha256", out.display()),
-        format!(
-            "{}  {}\n",
-            util::sha(&out)?,
-            out.file_name().unwrap().to_string_lossy()
-        ),
-    )?;
-    println!("{}", out.display());
-    Ok(())
 }
 fn main() {
     if let Err(e) = execute() {

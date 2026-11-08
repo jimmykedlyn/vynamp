@@ -24,4 +24,4 @@ QA-009, QA-012; registrar commit/digest, comando, ambiente/OS/ABI, outputs e lim
 
 ## Execução E15-02
 
-[Plano em slices](../../docs/superpowers/plans/2026-10-16-e15-02-isolation.md) e [evidência do autor](../../docs/evidence/PR/task-e15-02/README.md). A validação local do tooling não constitui aceite da TASK: revisão Claude do SHA exato, CI remoto e integração pelo mantenedor são etapas separadas; produto/hardware/release continuam fora deste aceite.
+[Plano em slices](../../_arquivo/repo/docs/superpowers/plans/2026-10-16-e15-02-isolation.md) e [evidência do autor](../../docs/evidence/PR/task-e15-02/README.md). A validação local do tooling não constitui aceite da TASK: revisão Claude do SHA exato, CI remoto e integração pelo mantenedor são etapas separadas; produto/hardware/release continuam fora deste aceite.

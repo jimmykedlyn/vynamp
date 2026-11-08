@@ -1,6 +1,6 @@
 # Painel Audio DSP, equalizador e medidores — UI/UX
 
-Versão: 0.7.3 · Data: 2026-11-05 · Estado: especificação proposta. No nativo, nada está implementado. No MVP web de referência (`vynamp-mvp-reference@0d9860b`, rev.38, fora deste repositório) a UI DSP existe; o código foi conferido onde este documento o cita, com as ressalvas da §6.
+Versão: 0.7.4 · Data: 2026-11-07 · Estado: especificação proposta. No nativo, nada está implementado. No MVP web de referência (`vynamp-mvp-reference@0d9860b`, rev.38, fora deste repositório) a UI DSP existe; o código foi conferido onde este documento o cita, com as ressalvas da §6.
 
 Base: [visual](01-visual-system.md), [layouts](02-layouts.md), [acessibilidade](03-accessibility-i18n.md), [DSP](../audio/03-dsp.md), [equalizadores](../audio/08-equalizers.md), [vitrola](../audio/10-vitrola.md) e [visualizadores](../extensions/04-visualizer-contract.md). A UI nativa da cadeia e do EQ avançado é planejada em TASK-E02-07 (M3).
 
@@ -64,7 +64,7 @@ Instrumentos de exibição **não são efeitos DSP** e nunca alteram a saída. O
 
 **Duas convenções que os arquivos de skin atribuíam a este painel não existem no MVP** e por isso não entram por herança ([D-MVP-02](../product/05-decisions.md#decisão-o-mvp-é-a-fonte-única-da-ui-2026-11-05)): "0 VU = −18 dBFS ajustável" (o MVP não tem constante de calibração nem ajuste; a escala de cada medidor vem de `scaleDB`/`scaleAngles` no `meta.json`) e "slot de 28 DIP" (o instrumento é fluido: `#meter-stage` com `width:100%`/`height:auto`). Se qualquer uma for desejada no nativo, é decisão nova registrada em [05-decisions](../product/05-decisions.md), não requisito herdado.
 
-**Contagem de modelos.** O contrato VU-INT abaixo fala em **12 VU meters aprovados**, número herdado da rev.15. No pin atual (rev.38) o pacote tem **16 medidores e os 16 são selecionáveis** ([§3 da referência](06-mvp-reference.md#3-pacote-de-referência)). A divergência está registrada em [D-MVP-04](../product/05-decisions.md#decisão-o-mvp-é-a-fonte-única-da-ui-2026-11-05); a matriz de aceite VU-INT-06 não é reescrita aqui.
+**Contagem de modelos.** O contrato VU-INT abaixo fala em **16 VU meters aprovados**, número do pin atual ([§3 da referência](06-mvp-reference.md#3-pacote-de-referência)): o pacote tem **16 medidores e os 16 são selecionáveis**. A contagem herdada da rev.15 era 12 e foi corrigida por [D-MVP-04](../product/05-decisions.md#decisão-o-mvp-é-a-fonte-única-da-ui-2026-11-05) em 2026-11-06.
 
 | Medidor | Definição / metodologia | Estado |
 |---|---|---|
@@ -84,21 +84,21 @@ Instrumentos de exibição **não são efeitos DSP** e nunca alteram a saída. O
 
 ### 6.1 Integração visual dos VU meters (VU-INT)
 
-Contrato de apresentação dos 12 VU meters estéreo aprovados, vindo da referência externa rev. 15. Terminologia em [GLOSSARY](../GLOSSARY.md) (acabamento de VU).
+Contrato de apresentação dos 16 VU meters estéreo aprovados, vindo da referência externa rev. 38. Terminologia em [GLOSSARY](../GLOSSARY.md) (acabamento de VU).
 
 | Status | Situação |
 |---|---|
 | Especificado | VU-INT-01..06 abaixo |
-| Implementado no protótipo (relatado) | três acabamentos (Original, Metal adaptativo, Integrado ao painel, este o padrão), preferência persistida em Aparência; evidência relatada da referência externa rev. 15, não verificada neste repositório |
-| Validado no protótipo (relatado) | 144 combinações de 12 skins × 12 VUs, claro/escuro/mobile, reversão ao original; Chrome/Windows, não verificado aqui |
+| Implementado no protótipo (verificado no código) | **seis** acabamentos, em `mvp/meter-finish.js`: `integrated` (o padrão), `frameless`, `ultrafine`, `adaptive`, `recessed` e `original`; geometria em `mvp/instrument-trim.js` e regras de moldura em `mvp/meter-finish.css`. A preferência persiste em `vynamp-instrument-finish-v1` e volta ao padrão no "restaurar aparência". A rev.15 relatava três; a contagem verificada na rev.38 é seis |
+| Validado no protótipo (relatado) | 144 combinações de 12 skins × 12 VUs na rev. 15. A matriz vigente é 12 skins × 16 VUs = **192** (VU-INT-06); o acabamento é eixo separado, com **seis** valores, e multiplica essa matriz para 1152 quando o teste cruza os dois eixos. Claro/escuro/mobile, reversão ao original; Chrome/Windows, não verificado aqui |
 | Nativo | nada implementado |
 
-- **VU-INT-01 — Arquivos aprovados intactos:** preservar byte a byte os 12 SVGs aprovados; não editar escalas, ponteiros, vidro, LEDs, marcações, coordenadas, proporções nem identidade dos mostradores.
+- **VU-INT-01 — Arquivos aprovados intactos:** preservar byte a byte os 16 SVGs aprovados; não editar escalas, ponteiros, vidro, LEDs, marcações, coordenadas, proporções nem identidade dos mostradores.
 - **VU-INT-02 — Só o gabinete externo:** adaptar apenas gabinete, junta/contorno e rótulos externos na cópia exibida; não apagar elementos, recortar instrumentos nem simplificar desenhos. Madeira e champagne preservam seus materiais em todos os acabamentos.
 - **VU-INT-03 — Sem moldura concorrente:** nenhuma moldura, sombra ou fundo de container adicional; o host fornece dimensão, foco e interação, o SVG fornece o instrumento.
 - **VU-INT-04 — Tokens semânticos:** usar tokens da skin ([sistema visual](01-visual-system.md#acabamento-de-vu-meters)); proibido recolorir LEDs, escala ou ponteiros para combinar com o tema.
-- **VU-INT-05 — Interação preservada:** tamanho natural responsivo pelo viewBox, opção Ampliar, clique para alternar e botão direito para escolher entre os 12 modelos; o acabamento não altera ordem nem funcionamento do menu. O espaço dos VUs estéreo originais não é reduzido por controles permanentes do DSP (DSP-UX-20).
-- **VU-INT-06 — Matriz de aceite:** validar as 144 combinações de 12 skins × 12 VUs, temas claros/escuros, mobile e restauração do original; legibilidade de detalhes pequenos vem da ampliação, nunca de distorcer o desenho. A adaptação é de apresentação em tempo de execução e não é embutida nos pacotes de tema.
+- **VU-INT-05 — Interação preservada:** tamanho natural responsivo pelo viewBox, opção Ampliar, clique para alternar e botão direito para escolher entre os 16 modelos; o acabamento não altera ordem nem funcionamento do menu. O espaço dos VUs estéreo originais não é reduzido por controles permanentes do DSP (DSP-UX-20).
+- **VU-INT-06 — Matriz de aceite:** validar as 192 combinações de 12 skins × 16 VUs, temas claros/escuros, mobile e restauração do original; cruzar com os seis acabamentos (`integrated`, `frameless`, `ultrafine`, `adaptive`, `recessed`, `original`, na ordem do seletor do MVP) eleva a matriz a 1152; legibilidade de detalhes pequenos vem da ampliação, nunca de distorcer o desenho. A adaptação é de apresentação em tempo de execução e não é embutida nos pacotes de tema.
 
 Acabamento de VU é apresentação, nunca efeito DSP.
 

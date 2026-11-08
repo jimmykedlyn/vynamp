@@ -1,6 +1,6 @@
 # Changelog / Histórico
 
-Versão: 0.9.0 · Data: 2026-11-05 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.9.1 · Data: 2026-11-07 · Estado: especificação proposta, implementação não iniciada.
 
 Each entry appears in English and Portuguese. The two texts say the same thing;
 where they appear to differ, the Portuguese text of that entry is the original
@@ -396,7 +396,7 @@ implementada ou executada.
 ## Unreleased — 2026-11-05 (GitHub Actions, public repositories and governance) / Não lançado — 2026-11-05 (GitHub Actions, repositórios públicos e governança)
 
 **EN** — CI moved back to GitHub Actions ([ADR-014](docs/architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md),
-which supersedes [ADR-010](docs/architecture/adr/ADR-010-woodpecker-only-ci.md)):
+which supersedes [ADR-010](_arquivo/repo/docs/architecture/adr/ADR-010-woodpecker-only-ci.md)):
 `ci.yml`, `release.yml` and `quality.yml` under `.github/workflows/`, actions
 pinned by full commit SHA, the `gate` job published as `CI Gate`, and the
 Woodpecker server, its Cloudflare tunnel and `infra/ci/` removed from the
@@ -420,7 +420,7 @@ player code.
 
 **PT** — CI voltou para GitHub Actions
 ([ADR-014](docs/architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md),
-que substitui a [ADR-010](docs/architecture/adr/ADR-010-woodpecker-only-ci.md)):
+que substitui a [ADR-010](_arquivo/repo/docs/architecture/adr/ADR-010-woodpecker-only-ci.md)):
 `ci.yml`, `release.yml` e `quality.yml` em `.github/workflows/`, actions fixadas
 por SHA completo de commit, job `gate` publicado como `CI Gate`, e o servidor
 Woodpecker, seu túnel Cloudflare e `infra/ci/` removidos do repositório. O
@@ -448,10 +448,128 @@ Decisão do mantenedor: os dois arquivos de skin da raiz do projeto (`SKIN-REQUI
 
 ## Não lançado — 2026-11-06 (remoção de planos substituídos)
 
-Dez arquivos de `docs/superpowers/` saem do repositório: `plans/2026-10-14-completeness-audit.md`, `specs/2026-10-14-completeness-audit-design.md`, `plans/2026-10-14-project-tooling.md`, `plans/2026-10-14-rust-tooling.md`, `specs/2026-10-14-rust-tooling-design.md`, `plans/2026-10-14-vynamp-branding.md`, `plans/2026-10-15-windows-restart.md`, `plans/2026-10-18-e15-04-woodpecker.md`, `plans/2026-10-19-e15-04-woodpecker-only-ci.md` e `specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md`. Critério aplicado, e não "arquivo sem uso" em geral: plano ou desenho cuja decisão **já vive** num documento normativo posterior — [ADR-008](docs/architecture/adr/ADR-008-vynamp-brand.md) para a marca, [ADR-009](docs/architecture/adr/ADR-009-engineering-baseline.md) para o tooling Rust, [ADR-014](docs/architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md) para o CI, [08-completeness-audit](docs/product/08-completeness-audit.md) para a auditoria e [09-windows-restart](docs/engineering/09-windows-restart.md) para o reinício — e cujo conteúdo nenhum INDEX, backlog ou ROADMAP cita como autoridade. Os seis planos restantes ficam: cada um é citado pela TASK ou pela evidência do PR que o executou ([TASK-E15-01](tasks/items/TASK-E15-01.md), E15-02, E15-03, E11-01, e as evidências dos PRs de shell e Restore). O conteúdo integral continua no histórico Git. `docs/INDEX.md` perde as dez entradas; `check-docs` foi de 356 para 346 arquivos Markdown, com 191 requisitos, 191 tarefas e 19 épicos inalterados. Somente documentação.
+Dez arquivos de `docs/superpowers/` saem do repositório: `plans/2026-10-14-completeness-audit.md`, `specs/2026-10-14-completeness-audit-design.md`, `plans/2026-10-14-project-tooling.md`, `plans/2026-10-14-rust-tooling.md`, `specs/2026-10-14-rust-tooling-design.md`, `plans/2026-10-14-vynamp-branding.md`, `plans/2026-10-15-windows-restart.md`, `plans/2026-10-18-e15-04-woodpecker.md`, `plans/2026-10-19-e15-04-woodpecker-only-ci.md` e `specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md`. Critério aplicado, e não "arquivo sem uso" em geral: plano ou desenho cuja decisão **já vive** num documento normativo posterior — [ADR-008](docs/architecture/adr/ADR-008-vynamp-brand.md) para a marca, [ADR-009](docs/architecture/adr/ADR-009-engineering-baseline.md) para o tooling Rust, [ADR-014](docs/architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md) para o CI, [08-completeness-audit](_arquivo/repo/docs/product/08-completeness-audit.md) para a auditoria e [09-windows-restart](docs/engineering/09-windows-restart.md) para o reinício — e cujo conteúdo nenhum INDEX, backlog ou ROADMAP cita como autoridade. Os seis planos restantes ficam: cada um é citado pela TASK ou pela evidência do PR que o executou ([TASK-E15-01](tasks/items/TASK-E15-01.md), E15-02, E15-03, E11-01, e as evidências dos PRs de shell e Restore). O conteúdo integral continua no histórico Git. `docs/INDEX.md` perde as dez entradas; `check-docs` foi de 356 para 346 arquivos Markdown, com 191 requisitos, 191 tarefas e 19 épicos inalterados. Somente documentação.
 
 ## Não lançado — 2026-11-05 (o vitrola é módulo DSP interno, não biblioteca)
 
 **EN** — The `vitrola` design (approved 2026-10-23) is no longer a library in its own repository: vinyl and tube are **DSP modules inside the app**, by the maintainer's decision, recorded in [ADR-014](docs/architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md). The approved design was preserved **by incorporation**, not by reimplementation: its nine sections are now §8.1–8.9 of [10-vitrola](docs/audio/10-vitrola.md), which became the single source — previously that document integrated an external design by reference and deferred to it. A literal copy of the original text is kept at `docs/evidence/PR/task-e19-03/vitrola-design.md`, because it is the only surviving copy once the repository is archived. The external repository is archived, reverts with `gh repo unarchive`, and is **not** opened to the public. Citations updated in the ADR-011 inventory row, the glossary, the DSP and signal-contract docs, the DSP catalog, the MVP reference, feature parity, privacy/licensing and the roadmap. Integration remains [TASK-E19-07](tasks/items/TASK-E19-07.md), after TASK-E04-03. Documentation only: no player code, 191 requirements, 191 tasks, 19 epics.
 
 **PT** — O design do `vitrola` (aprovado em 2026-10-23) deixou de ser biblioteca em repositório próprio: vinil e válvula são **módulos DSP dentro do app**, por decisão do mantenedor registrada na [ADR-014](docs/architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md). O design aprovado foi preservado por **incorporação**, não por reimplementação: suas nove seções são agora §8.1–8.9 de [10-vitrola](docs/audio/10-vitrola.md), que passou a ser fonte única — antes esse documento integrava um design externo por referência e se subordinava a ele. Uma cópia literal do texto original fica em `docs/evidence/PR/task-e19-03/vitrola-design.md`, porque é a única cópia sobrevivente depois que o repositório for arquivado. O repositório externo é arquivado, reversível por `gh repo unarchive`, e **não** é aberto ao público. Citações atualizadas na linha de inventário da ADR-011, no glossário, nos docs de DSP e do contrato de sinal, no catálogo DSP, na referência do MVP, na paridade de recursos, em privacidade/licenças e no roadmap. A integração continua na [TASK-E19-07](tasks/items/TASK-E19-07.md), depois da TASK-E04-03. Somente documentação: nenhum código de player, 191 requisitos, 191 tarefas, 19 épicos.
+
+## Não lançado — 2026-11-07 (passo 30: limpeza do umbrella)
+
+**EN** — Step 30 of the phase-3 reorganization. **M4:** the specification now
+carries **16** VU meters, not 12 — every count derived from the old number was
+rewritten. **M6:** Woodpecker is removed in full; CI is GitHub Actions only
+([ADR-014](docs/architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md)),
+and `_arquivo/` is created with `INDEX.md`, which records the reason for every
+file it holds. **M11:** the inherited anchor SHA `29e14e6` is recorded. The
+`cargo xtask bundle-spec` subcommand is gone: it packaged the five
+`bootstrap/*` templates, all of which are now archived, so the command could
+only fail; its only job was producing the ZIP package this umbrella no longer
+is. `VALIDATION.json` stops being tracked — it is generated by
+`cargo xtask ci docs` and now listed in `.gitignore`, and the three documents
+that linked to it name the command instead, because a fresh checkout never had
+the file. The `.gitignore` negation that keeps pipeline `.log` files in
+`docs/evidence/` is narrowed to `*.log`, so it no longer reopens `.env`,
+`*.p12` or `*.jks` files placed there. **M4, second count:** the VU finishes go
+from three to **six** — `mvp/meter-finish.js` in the rev.38 pin defines
+`original`, `integrated` (the default), `frameless`, `ultrafine`, `adaptive`
+and `recessed`, and no finish is called "Metal adaptativo"; D-DSP-18 carries a
+dated correction rather than a rewrite. Documentation and tooling only: no
+player code, 191 requirements, 191 tasks, 19 epics.
+
+**PT** — Passo 30 da reorganização da fase 3. **M4:** a especificação passa a
+ter **16** VU meters, não 12 — toda contagem derivada do número antigo foi
+reescrita. **M6:** o Woodpecker é removido por inteiro; o CI é só GitHub
+Actions ([ADR-014](docs/architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md)),
+e `_arquivo/` é criado com `INDEX.md`, que registra o motivo de cada arquivo
+guardado ali. **M11:** o SHA-âncora herdado `29e14e6` fica registrado. O
+subcomando `cargo xtask bundle-spec` sai: ele empacotava os cinco templates de
+`bootstrap/*`, todos agora arquivados, então o comando só podia falhar; seu
+único serviço era produzir o ZIP que este umbrella deixou de ser.
+`VALIDATION.json` deixa de ser versionado — é gerado por
+`cargo xtask ci docs` e passa a constar do `.gitignore`; os três documentos que
+apontavam para ele nomeiam o comando, porque uma cópia nova do repositório
+nunca teve o arquivo. A negação do `.gitignore` que mantém `.log` de pipeline em
+`docs/evidence/` fica restrita a `*.log`, e deixa de reabrir `.env`, `*.p12` ou
+`*.jks` colocados ali. **M4, segunda contagem:** os acabamentos de VU passam de
+três para **seis** — `mvp/meter-finish.js` do pin rev.38 define `original`,
+`integrated` (o padrão), `frameless`, `ultrafine`, `adaptive` e `recessed`, e
+não existe acabamento chamado "Metal adaptativo"; a D-DSP-18 recebe correção
+datada em vez de reescrita. Somente documentação e ferramentaria: nenhum código
+de player, 191 requisitos, 191 tarefas, 19 épicos.
+
+## Não lançado — 2026-11-07 (o que o spike E01-02 provou entra nas specs)
+
+**EN** — Salvage of the TASK-E01-02 spike (PR #14, still a draft) into the
+canonical specification, before the phase-3 move. Four things are absorbed
+into [01-engine.md](docs/audio/01-engine.md): the **SPSC ring protocol**
+(one allocation at construction, monotonic `u64` counters, Release stores of the
+write/read counters after writing/reading, neither side waits), the exact
+**presented clock** contract (`presented = max(previous, content written before this callback −
+latency of the buffer's first frame)`; the backend's latency measures against
+content delivered by *earlier* callbacks, and measuring it against content
+already added overstates position by one device buffer — a real defect of the
+spike, fixed there with tests that failed first), the **single-writer seqlock**
+that publishes it, and the **drain ordering** rule (read the end-of-stream flag
+before measuring the ring, or the end of every playback counts as an
+underrun). Nothing of the crates comes over: [ADR-011](docs/architecture/adr/ADR-011-own-audio-stack.md)
+sends audio output to the `vynamp-output` repository and already records that
+the spike crate collides by name with that library. [02-performance](docs/quality/02-performance-observability.md)
+gains the RT instrumentation recipe that actually worked, including the two
+lessons the spike paid for: count allocations **per thread** (a process-wide
+counter also counts other tests' RT sections running in parallel — that is why
+`render_allocates_nothing` failed in CI with two events that were not the
+render's), and concurrency tests must not depend on the scheduler. [04-outputs-hires](docs/audio/04-outputs-hires.md)
+records the measured order of magnitude as an expectation reference, not a
+target. The two raw probe JSONs, their SHA-256, the environment and the
+50-run loop of the clock test go to `docs/evidence/PR/task-e01-02/`, and [TASK-E01-02](tasks/items/TASK-E01-02.md)
+now states each acceptance criterion with what was measured and what is still
+missing. The same section of [01-engine.md](docs/audio/01-engine.md) also
+registers the clock's **known limitation** — queued underrun or drain silence
+also counts as latency, so `presented` is understated by at most
+`latency_frames`, never overstated and never regressing, until the full drain
+of TASK-E01-05. Documentation only: no player code, 191 requirements, 191
+tasks, 19 epics.
+
+**PT** — Aproveitamento do spike da TASK-E01-02 (PR #14, ainda draft) na
+especificação canônica, antes da mudança da fase 3. Quatro coisas entram em
+[01-engine.md](docs/audio/01-engine.md): o **protocolo do ring SPSC** (uma
+alocação na construção, contadores monotônicos `u64`, store Release dos
+contadores de escrita/leitura depois de gravar/ler, nenhum dos lados espera), o
+contrato exato do **clock apresentado** (`presented = max(anterior, conteúdo escrito antes desta callback
+− latência do primeiro frame do buffer)`; a latência do backend se mede contra
+o conteúdo entregue nas callbacks *anteriores*, e medi-la contra o conteúdo já
+acrescentado superestima a posição em um buffer — defeito real do spike,
+corrigido ali com testes que falharam antes), o **seqlock de escritor único**
+que o publica, e a ordem de **drenagem** (ler a marca de fim de stream antes de
+medir o ring, senão o fim de toda reprodução vira underrun). Nada dos crates
+vem: a [ADR-011](docs/architecture/adr/ADR-011-own-audio-stack.md) manda a
+saída de áudio para o repositório `vynamp-output` e já registra que o crate do
+spike colide de nome com essa biblioteca. [02-performance](docs/quality/02-performance-observability.md)
+recebe a receita de instrumentação RT que de fato funcionou, com as duas lições
+que o spike pagou: contar alocação **por thread** (um contador de processo
+conta também as seções RT de outros testes em paralelo — foi por isso que
+`render_allocates_nothing` falhou no CI com dois eventos que não eram do
+render), e teste de concorrência não pode depender do escalonador.
+[04-outputs-hires](docs/audio/04-outputs-hires.md) registra a ordem de grandeza
+medida como referência de expectativa, não como meta. Os dois JSON do probe, o
+SHA-256 deles, o ambiente e a repetição de 50 execuções do teste de clock vão
+para `docs/evidence/PR/task-e01-02/`, e a [TASK-E01-02](tasks/items/TASK-E01-02.md)
+passa a declarar cada critério de aceite com o que foi medido e o que falta. A
+mesma seção de [01-engine.md](docs/audio/01-engine.md) registra também a
+**limitação conhecida** do clock — silêncio de underrun ou de drenagem
+enfileirado conta como latência, então `presented` fica subestimado em no
+máximo `latency_frames`, nunca superestimado e nunca regredindo, até o dreno
+completo da TASK-E01-05. Somente documentação: nenhum código de player, 191
+requisitos, 191 tarefas, 19 épicos.
+
+## Estado herdado — reorganizacao em um repo por modulo
+
+Data: 2026-11-07
+
+Este repositorio substitui `jimmykedlyn/vynamp-mediaplayer`, que passa a ser
+arquivado (somente leitura). O ultimo commit herdado foi `29e14e6` em `develop`.
+Os 109 commits anteriores e os PRs #1-#39 permanecem legiveis no repositorio
+arquivado; citacoes a PR nas specs usam o nome completo quando ambiguas.

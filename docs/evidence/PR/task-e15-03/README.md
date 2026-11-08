@@ -2,7 +2,7 @@
 
 Versão 0.7.0 · 2026-10-18 · Autor Claude · Branch `chore/task-e15-03-claude-gitflow` · Base `edfb1ade703f9cee2029d88bd5e26f39d12902a7`. Resultados do autor; a revisão do Codex é registrada à parte. Capturas feitas antes do commit (HEAD = base) não contêm o SHA final.
 
-[Plano](../../../superpowers/plans/2026-10-18-e15-03-gitflow.md) · [Spec Gitflow](../../../engineering/03-gitflow-github.md) · [TASK](../../../../tasks/items/TASK-E15-03.md)
+[Plano](../../../../_arquivo/repo/docs/superpowers/plans/2026-10-18-e15-03-gitflow.md) · [Spec Gitflow](../../../engineering/03-gitflow-github.md) · [TASK](../../../../tasks/items/TASK-E15-03.md)
 
 ## Aceite
 

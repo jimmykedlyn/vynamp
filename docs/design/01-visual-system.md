@@ -1,6 +1,6 @@
 # Identidade visual, cores e componentes
 
-Versão: 0.7.1 · Data: 2026-10-28 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.7.2 · Data: 2026-11-07 · Estado: especificação proposta, implementação não iniciada.
 
 ## Direção visual
 
@@ -59,7 +59,7 @@ Sem bordas ou caixas decorativas por parâmetro, sem cores novas competindo com 
 
 ## Acabamento de VU meters
 
-Três acabamentos de apresentação dos 12 VUs estéreo: **Original**, **Metal adaptativo** e **Integrado ao painel** (padrão na referência externa, relatado, e **proposto** como padrão nativo; D-DSP-18). Usam tokens semânticos da superfície da skin (panel-raised, border-light, border-dark) para o gabinete externo; madeira e champagne mantêm seus materiais. Os SVGs aprovados permanecem inalterados e LEDs, escala e ponteiros nunca são recoloridos. Contraste de texto e indicadores segue "Aceite visual". Contrato VU-INT: [painel DSP §6.1](05-dsp-panel.md#61-integração-visual-dos-vu-meters-vu-int). Protótipo: relatado e não verificado aqui; nativo: nada implementado.
+**Seis** acabamentos de apresentação dos 16 VUs estéreo, verificados no código do pin rev.38 (`mvp/meter-finish.js`, `mvp/instrument-trim.js`, `mvp/meter-finish.css`), na ordem em que o seletor os apresenta — `integrated` (**Integrado · gabinete compacto**, o padrão), `frameless` (**Sem moldura externa**), `ultrafine` (**Moldura ultrafina**), `adaptive` (**Acabamento adaptativo à skin**), `recessed` (**Embutido · profundidade discreta**) e `original` (**Original completo · sem recorte**, SVG intacto). O primeiro valor entre parênteses é o id persistido em `vynamp-instrument-finish-v1`; o segundo, o rótulo exato da interface. D-DSP-18 registrava três, por herança da rev.15 relatada; a contagem correta é seis. No código do MVP o gabinete externo vem de `--chassis`, `--line`, `--border-dark` e `--text-secondary` da skin (`meter-finish.css`), com `--instrument-native-fill` preservando o material original dos modelos retrô em madeira e champagne; no nativo, a proposta é usar os tokens semânticos equivalentes desta spec (`panel-raised`, `border-light`, `border-dark`). Os SVGs aprovados permanecem inalterados e LEDs, escala e ponteiros nunca são recoloridos. Contraste de texto e indicadores segue "Aceite visual". Contrato VU-INT: [painel DSP §6.1](05-dsp-panel.md#61-integração-visual-dos-vu-meters-vu-int). Protótipo: contagem e nomes verificados no código do pin rev.38 conforme acima; aparência em tela, claro/escuro e mobile seguem relatados, não verificados aqui. Nativo: nada implementado.
 
 ## Marca aprovada
 
