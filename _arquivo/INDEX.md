@@ -262,3 +262,20 @@ A exclusao definitiva so acontece no passo 38, sob confirmacao explicita do mant
 | 2026-11-08 | `tasks/items/TASK-E18-02.md` | `repo/tasks/items/TASK-E18-02.md` | reescrito no formato padroes/tasks.md e movido para vynamp-converter (passo 37) | 37 | arquivado |
 | 2026-11-08 | `tasks/items/TASK-E19-03.md` | `repo/tasks/items/TASK-E19-03.md` | reescrito no formato padroes/tasks.md e movido para vynamp-engine (passo 37) | 37 | arquivado |
 | 2026-11-08 | `tasks/items/TASK-E19-07.md` | `repo/tasks/items/TASK-E19-07.md` | reescrito no formato padroes/tasks.md e movido para vynamp-engine (passo 37) | 37 | arquivado |
+| 2026-11-08 | `repo\target` | - | build do workspace antigo (3,1 GB) | 38 |
+| 2026-11-08 | `repo\.worktrees` | - | worktrees das branches ja mergeadas (11 GB) | 38 |
+| 2026-11-08 | `_smoke37` | - | teste de smoke do passo 37 | 38 |
+| 2026-11-08 | `repo\archive` | - | historico do fluxo antigo, nao migrado | 38 |
+| 2026-11-08 | `repo\logs` | - | residuo de log; o AMBIENTE.ps1 recria vazia | 38 |
+| 2026-11-08 | `vynamp-chatgpt-arquivo` | - | M10: fora das specs novas; nao e git | 38 |
+| 2026-11-08 | `.cache\tmp` | - | cache descartavel do bootstrap (tmp) | 38 |
+| 2026-11-08 | `.cache\bootstrap-build` | - | cache descartavel do bootstrap (bootstrap-build) | 38 |
+| 2026-11-08 | `.cache\e15-01-verification-20261015` | - | cache descartavel do bootstrap (e15-01-verification-20261015) | 38 |
+| 2026-11-08 | `.cache\task-e15-01-driver` | - | cache descartavel do bootstrap (task-e15-01-driver) | 38 |
+| 2026-11-08 | `.cache\woodpecker` | - | cache descartavel do bootstrap (woodpecker) | 38 |
+| 2026-11-08 | `.cache\doctor.txt` | - | cache descartavel do bootstrap (doctor.txt) | 38 |
+| 2026-11-08 | `.cache\pr-task-e15-01-eac3221.md` | - | cache descartavel do bootstrap (pr-task-e15-01-eac3221.md) | 38 |
+| 2026-11-08 | `.cache\wpw` | - | cache descartavel do bootstrap (wpw) | 38 |
+| 2026-11-08 | `.cache\tests` | - | cache descartavel do bootstrap (tests) | 38 |
+| 2026-11-08 | `.cache\flac-test-files` | - | cache descartavel do bootstrap (flac-test-files) | 38 |
+| 2026-11-08 | `repo` | - | casca do repo antigo; historico migrado para o umbrella (passo 35) | 38 |
