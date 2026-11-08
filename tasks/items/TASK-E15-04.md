@@ -10,9 +10,9 @@ Fase M1 / P0 · Owner engineering-delivery · Esforço inicial 3–10 dias útei
 
 ## Entrega concreta
 
-CI docs/tooling e matriz Cargo/Android, required aggregate context. Entregue em Woodpecker ([ADR-010](../../_arquivo/repo/docs/architecture/adr/ADR-010-woodpecker-only-ci.md)), substituído pela [ADR-014](../../docs/architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md): a TASK-E19-01 devolveu o CI ao GitHub Actions, onde macOS Intel e Apple Silicon passam a ser alvos verificados. A entrega histórica não aprovou macOS nem hardware.
+CI docs/tooling e matriz Cargo/Android, required aggregate context. Entregue em Woodpecker ([ADR-010](../../_arquivo/repo/docs/architecture/adr/ADR-010-woodpecker-only-ci.md)), substituído pela [ADR-014](../../adr/ADR-014-publico-dsp-interno.md): a TASK-E19-01 devolveu o CI ao GitHub Actions, onde macOS Intel e Apple Silicon passam a ser alvos verificados. A entrega histórica não aprovou macOS nem hardware.
 
-[Spec](../../docs/engineering/04-ci-cd.md) · REQ-E15-04 em [matriz](../../docs/product/03-requirements.md).
+[Spec](../../engineering/04-ci.md) · REQ-E15-04 em [matriz](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 

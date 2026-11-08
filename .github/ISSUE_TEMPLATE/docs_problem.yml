@@ -13,7 +13,7 @@ body:
     id: document
     attributes:
       label: Document
-      description: Path, e.g. `docs/engineering/04-ci-cd.md`.
+      description: Path, e.g. `engineering/04-ci.md`.
     validations:
       required: true
   - type: dropdown

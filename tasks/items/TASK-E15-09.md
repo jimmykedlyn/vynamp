@@ -13,7 +13,7 @@ Fase M3 / P0 · Owner engineering-delivery · Esforço inicial 3–10 dias útei
 
 Android release signing, native dependencies/page-size e Play readiness.
 
-[Spec](../../docs/engineering/06-installers.md) · REQ-E15-09 em [matriz](../../docs/product/03-requirements.md).
+[Spec](../../_arquivo/repo/docs/engineering/06-installers.md) · REQ-E15-09 em [matriz](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 
@@ -25,4 +25,4 @@ QA-019, QA-020, QA-021; registrar commit/digest, comando, ambiente/OS/ABI, outpu
 
 ## Identidade aprovada Vynamp C
 
-Exportar foreground/background/monochrome, launchers round/default v26/v33, fallbacks por densidade e notificação. Validar safe circle 66dp, OEM masks, themed/loja e acessibilidade. [Guia canônico](../../docs/design/04-brand-identity.md). Este requisito complementar não altera IDs/estado nem dispensa o contrato acima.
+Exportar foreground/background/monochrome, launchers round/default v26/v33, fallbacks por densidade e notificação. Validar safe circle 66dp, OEM masks, themed/loja e acessibilidade. [Guia canônico](../../design/04-marca.md). Este requisito complementar não altera IDs/estado nem dispensa o contrato acima.

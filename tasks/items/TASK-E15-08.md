@@ -13,7 +13,7 @@ Fase M3 / P0 · Owner engineering-delivery · Esforço inicial 3–10 dias útei
 
 Slices Intel/Silicon, runtime inside-out signing e notary/staple.
 
-[Spec](../../docs/engineering/06-installers.md) · REQ-E15-08 em [matriz](../../docs/product/03-requirements.md).
+[Spec](../../_arquivo/repo/docs/engineering/06-installers.md) · REQ-E15-08 em [matriz](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 
@@ -25,4 +25,4 @@ QA-012, QA-018, QA-021; registrar commit/digest, comando, ambiente/OS/ABI, outpu
 
 ## Identidade aprovada Vynamp C
 
-Usar Vynamp.icns único para Intel/Silicon/Universal2, todos os papéis 1x/2x; Info.plist e Resources corretos, template menu bar e validação em ambas arquiteturas. [Guia canônico](../../docs/design/04-brand-identity.md). Este requisito complementar não altera IDs/estado nem dispensa o contrato acima.
+Usar Vynamp.icns único para Intel/Silicon/Universal2, todos os papéis 1x/2x; Info.plist e Resources corretos, template menu bar e validação em ambas arquiteturas. [Guia canônico](../../design/04-marca.md). Este requisito complementar não altera IDs/estado nem dispensa o contrato acima.

@@ -14,7 +14,7 @@ Requisito REQ-E17-11 · M2 · P0 · responsável funcional streaming (pessoa a d
 
 Adapters system/manual/direct, vault, CONNECT/TLS e fixtures 407/DNS/redirect.
 
-[Spec canônica](../../docs/streaming/05-network-proxy-and-containers.md) · [Matriz normativa](../../docs/product/03-requirements.md).
+[Spec canônica](../../streaming/04-rede-proxy.md) · [Matriz normativa](../../product/03-requisitos.md).
 
 ## Aceite
 
@@ -22,4 +22,4 @@ Proxy failure não cai direto; credenciais origin/proxy/provider separadas; redi
 
 ## Verificação e evidência
 
-QA-029 em [QA](../../docs/quality/01-test-strategy.md) e [cenários](../../docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.
+QA-029 em [QA](../../quality/01-estrategia-testes.md) e [cenários](../../_arquivo/repo/docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.

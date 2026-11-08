@@ -140,7 +140,7 @@ pub fn spec(root: &Path) -> Result<()> {
         .collect();
     let links = Regex::new(r"\[[^\]]*\]\(([^)]+)\)")?;
     let url = Regex::new(r"^[a-zA-Z][a-zA-Z0-9+.-]*://")?;
-    let index = text(root.join("docs/INDEX.md"))?;
+    let index = text(root.join("INDEX.md"))?;
     for p in &md {
         let body = text(p)?;
         let rel = p.strip_prefix(root)?.to_string_lossy().replace('\\', "/");
@@ -171,7 +171,7 @@ pub fn spec(root: &Path) -> Result<()> {
         .collect();
     let reqset: BTreeSet<_> = reqs.iter().cloned().collect();
     c.check(reqset.len() == reqs.len(), "Duplicate REQ IDs");
-    let matrix = text(root.join("docs/product/03-requirements.md"))?;
+    let matrix = text(root.join("product/03-requisitos.md"))?;
     let matrixids: Vec<String> = Regex::new(r"(?m)^\| (REQ-E\d{2}-\d{2}) \|")?
         .captures_iter(&matrix)
         .map(|m| m[1].into())
@@ -181,7 +181,7 @@ pub fn spec(root: &Path) -> Result<()> {
         matrixset == reqset && matrixset.len() == matrixids.len(),
         "Requirement matrix mismatch/duplicates",
     );
-    let qa = text(root.join("docs/quality/01-test-strategy.md"))?;
+    let qa = text(root.join("quality/01-estrategia-testes.md"))?;
     let qaset: BTreeSet<_> = Regex::new(r"QA-\d{3}")?
         .find_iter(&qa)
         .map(|m| m.as_str().to_owned())
@@ -333,7 +333,7 @@ pub fn spec(root: &Path) -> Result<()> {
         }
     }
     let tokens = read_json(root.join("assets/design-tokens.json"))?;
-    let design = text(root.join("docs/design/01-visual-system.md"))?;
+    let design = text(root.join("design/01-sistema-visual.md"))?;
     for (name, color) in tokens["colors"].as_object().context("Colors")? {
         c.check(
             design.contains(color.as_str().context("Color value")?),

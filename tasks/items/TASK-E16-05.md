@@ -1,6 +1,6 @@
 # TASK-E16-05 — Entregar document types, Quick Actions e Finder nos dois Macs
 
-Versão 0.8.0 · Estado: planejada, não implementada (conforme [ADR-012](../../docs/architecture/adr/ADR-012-shell-integration.md)).
+Versão 0.8.0 · Estado: planejada, não implementada (conforme [ADR-012](../../adr/ADR-012-integracao-shell.md)).
 
 ## Contrato
 
@@ -16,7 +16,7 @@ Requisito REQ-E16-05 · M2 · P0 · responsável funcional platform (pessoa a de
 
 UTTypes/document types, Quick Actions (NSServices) no Finder, callbacks LaunchServices e pacotes de ícones in-app. Detalhe: o `Info.plist` declara `CFBundleDocumentTypes`, os serviços do Finder (`NSServices`) expõem Reproduzir, Enfileirar, Converter e Restaurar, os callbacks de `NSApplicationDelegate` (`application(_:openFiles:)`) recebem o lote com grants e bootstrap seguro, e os pacotes de ícones são renderizados na interface interna (seletor, playlist e metadados).
 
-[Spec canônica](../../docs/platforms/03-system-integration.md) · [Matriz normativa](../../docs/product/03-requirements.md) · [ADR-012](../../docs/architecture/adr/ADR-012-shell-integration.md).
+[Spec canônica](../../platforms/03-integracao-sistema.md) · [Matriz normativa](../../product/03-requisitos.md) · [ADR-012](../../adr/ADR-012-integracao-shell.md).
 
 ## Aceite
 
@@ -24,4 +24,4 @@ Intel e Silicon recebem cold/warm batches via application(_:openFiles:); Quick A
 
 ## Verificação e evidência
 
-QA-022, QA-023, QA-031 em [QA](../../docs/quality/01-test-strategy.md) e [cenários](../../docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.
+QA-022, QA-023, QA-031 em [QA](../../quality/01-estrategia-testes.md) e [cenários](../../_arquivo/repo/docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.

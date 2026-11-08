@@ -8,7 +8,7 @@ Versão: 0.7.1 · Data: 2026-11-07 · Estado: em execução; spike medido em Win
 |---|---|
 | ID / requisito | TASK-E01-02 / REQ-E01-02 |
 | Fase / prioridade | M0 / P0 |
-| Estado | Em execução — critérios provados só em Windows/WASAPI; [evidência](../../docs/evidence/PR/task-e01-02/README.md) |
+| Estado | Em execução — critérios provados só em Windows/WASAPI; [evidência](../../evidence/PR/task-e01-02/README.md) |
 | Responsável funcional | audio — pessoa a designar |
 | Esforço provisório | 2–5 dias úteis; reestimar após M0 |
 | Risco | alto |
@@ -21,7 +21,7 @@ Versão: 0.7.1 · Data: 2026-11-07 · Estado: em execução; spike medido em Win
 
 Spike shared output, ring SPSC e harness de callback com instrumentation.
 
-Documento canônico: [spec](../../docs/audio/01-engine.md). [Matriz normativa](../../docs/product/03-requirements.md).
+Documento canônico: [spec](../../reference/audio/01-engine.md). [Matriz normativa](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 
@@ -37,9 +37,9 @@ Estado de cada critério em 2026-11-07, todos ainda **só em Windows/WASAPI shar
 
 ## Verificação e evidência
 
-QA-001, QA-003 em [QA comum](../../docs/quality/01-test-strategy.md) e [matriz multiplataforma](../../docs/quality/03-multiplatform-matrix.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+QA-001, QA-003 em [QA comum](../../quality/01-estrategia-testes.md) e [matriz multiplataforma](../../quality/03-matriz-multiplataforma.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
 
-Evidência desta TASK: [docs/evidence/PR/task-e01-02](../../docs/evidence/PR/task-e01-02/README.md) — os dois JSON do probe com SHA-256, o ambiente e a lista do que passou para [01-engine.md](../../docs/audio/01-engine.md).
+Evidência desta TASK: [evidence/PR/task-e01-02](../../evidence/PR/task-e01-02/README.md) — os dois JSON do probe com SHA-256, o ambiente e a lista do que passou para [01-engine.md](../../reference/audio/01-engine.md).
 
 ## Execução e limites
 
@@ -47,4 +47,4 @@ Confirmar ports/contratos e dependências; decompor itens grandes em slices de 1
 
 ## Limitação conhecida
 
-O relógio apresentado supõe que a fila do dispositivo contém só conteúdo. Silêncio de underrun ou drenagem enfileirado também entra na latência reportada, então `presented` fica subestimado em no máximo `latency_frames` — ≈12 300–12 800 frames no hardware medido. Após um underrun atrasa até a latência inteira; na drenagem estabiliza em `content_frames − latency_frames`. Nunca superestima nem regride. Correção pertence ao dreno completo da [TASK-E01-05](TASK-E01-05.md); sem redesenho nesta TASK. Detalhe em [01-engine.md](../../docs/audio/01-engine.md) §Threads e na [evidência](../../docs/evidence/PR/task-e01-02/README.md).
+O relógio apresentado supõe que a fila do dispositivo contém só conteúdo. Silêncio de underrun ou drenagem enfileirado também entra na latência reportada, então `presented` fica subestimado em no máximo `latency_frames` — ≈12 300–12 800 frames no hardware medido. Após um underrun atrasa até a latência inteira; na drenagem estabiliza em `content_frames − latency_frames`. Nunca superestima nem regride. Correção pertence ao dreno completo da [TASK-E01-05](TASK-E01-05.md); sem redesenho nesta TASK. Detalhe em [01-engine.md](../../reference/audio/01-engine.md) §Threads e na [evidência](../../evidence/PR/task-e01-02/README.md).

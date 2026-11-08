@@ -13,7 +13,7 @@ Fase M1 / P0 · Owner engineering-delivery · Esforço inicial 3–10 dias útei
 
 Unit/integration/numerical/stream/UI/hardware/fuzz e protocolo de relatórios.
 
-[Spec](../../docs/engineering/05-tests.md) · REQ-E15-05 em [matriz](../../docs/product/03-requirements.md).
+[Spec](../../engineering/05-testes.md) · REQ-E15-05 em [matriz](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 

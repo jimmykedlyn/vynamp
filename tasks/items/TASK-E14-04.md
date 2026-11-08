@@ -24,7 +24,7 @@ Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implemen
 
 Fixtures e hardware por OS/ABI, com clock/seek/drain/gapless dos backends.
 
-Documento canônico: [spec](../../docs/audio/05-platform-backends.md). [Matriz normativa](../../docs/product/03-requirements.md).
+Documento canônico: [spec](../../reference/audio/05-platform-backends.md). [Matriz normativa](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 
@@ -32,7 +32,7 @@ Mac Intel e arm64 testados separadamente; Linux nativo e Android real; nenhum fi
 
 ## Verificação e evidência
 
-QA-003, QA-004, QA-018, QA-019 em [QA comum](../../docs/quality/01-test-strategy.md) e [matriz multiplataforma](../../docs/quality/03-multiplatform-matrix.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+QA-003, QA-004, QA-018, QA-019 em [QA comum](../../quality/01-estrategia-testes.md) e [matriz multiplataforma](../../quality/03-matriz-multiplataforma.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
 
 ## Execução e limites
 

@@ -11,13 +11,13 @@ Requisito REQ-E17-09 · M3 · P0 · responsável funcional design (pessoa a desi
 - [TASK-E06-06](TASK-E06-06.md) — Entregar visualizações avançadas
 - [TASK-E07-01](TASK-E07-01.md) — Provar sandbox WASM e capabilities
 
-Referência visual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 (rev.38), caminhos `mvp/...` e `out/...` conforme [referência do MVP](../../docs/design/06-mvp-reference.md). Caminhos relevantes: `out/svg/meters/` e `out/svg/meters/dynamic.json`.
+Referência visual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 (rev.38), caminhos `mvp/...` e `out/...` conforme [referência do MVP](../../design/07-pin-mvp.md). Caminhos relevantes: `out/svg/meters/` e `out/svg/meters/dynamic.json`.
 
 ## Entrega concreta
 
 Scenes declarativas, ring/taps e famílias FFT/phase/spectrogram/particles.
 
-[Spec canônica](../../docs/extensions/04-visualizer-contract.md) · [Matriz normativa](../../docs/product/03-requirements.md).
+[Spec canônica](../../extensions/05-visualizador.md) · [Matriz normativa](../../product/03-requisitos.md).
 
 ## Aceite
 
@@ -25,4 +25,4 @@ Preset inválido/código arbitrário rejeitado; orçamento agregado e overflow d
 
 ## Verificação e evidência
 
-QA-028 em [QA](../../docs/quality/01-test-strategy.md) e [cenários](../../docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.
+QA-028 em [QA](../../quality/01-estrategia-testes.md) e [cenários](../../_arquivo/repo/docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.

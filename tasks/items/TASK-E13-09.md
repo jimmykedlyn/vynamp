@@ -20,13 +20,13 @@ Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implemen
 - [TASK-E13-08](TASK-E13-08.md) — Entregar temas e plugins mobile
 - [TASK-E11-04](TASK-E11-04.md) — Completar CI e supply chain
 
-Referência visual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 (rev.38), caminhos `mvp/...` e `out/...` conforme [referência do MVP](../../docs/design/06-mvp-reference.md). Caminhos relevantes: `mvp/` (layouts) e `out/svg/rendered/`.
+Referência visual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 (rev.38), caminhos `mvp/...` e `out/...` conforme [referência do MVP](../../design/07-pin-mvp.md). Caminhos relevantes: `mvp/` (layouts) e `out/svg/rendered/`.
 
 ## Entrega concreta
 
 UI adaptativa, APK/AAB assinado, ABIs/NDK/page size e requisitos de publicação.
 
-Documento canônico: [spec](../../docs/design/04-mobile-tablet.md). [Matriz normativa](../../docs/product/03-requirements.md).
+Documento canônico: [spec](../../design/05-mobile-tablet.md). [Matriz normativa](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 
@@ -34,7 +34,7 @@ Phone/tablet/landscape/hinge/fonte passam; update preserva dados; target SDK e p
 
 ## Verificação e evidência
 
-QA-020, QA-021 em [QA comum](../../docs/quality/01-test-strategy.md) e [matriz multiplataforma](../../docs/quality/03-multiplatform-matrix.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+QA-020, QA-021 em [QA comum](../../quality/01-estrategia-testes.md) e [matriz multiplataforma](../../quality/03-matriz-multiplataforma.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
 
 ## Execução e limites
 

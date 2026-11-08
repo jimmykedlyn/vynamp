@@ -31,7 +31,7 @@ Os sete repos reportam visibility public e `private_vulnerability_reporting` hab
 
 Detalhamento: `gh repo view jimmykedlyn/vynamp-mediaplayer --json visibility` retorna `PUBLIC`; `gh api repos/jimmykedlyn/vynamp-mediaplayer/private-vulnerability-reporting` retorna `{"enabled":true}`; `gh api repos/jimmykedlyn/vynamp-mediaplayer/branches/develop/protection` lista `CI Gate` em `required_status_checks.contexts`; `gh repo view jimmykedlyn/vitrola --json isArchived` retorna `true` e `visibility` continua `PRIVATE`; nenhuma `description` contém "privada" ou "private".
 
-[Spec](../../docs/engineering/03-gitflow-github.md) · REQ-E19-06 em [matriz](../../docs/product/03-requirements.md).
+[Spec](../../engineering/03-gitflow.md) · REQ-E19-06 em [matriz](../../product/03-requisitos.md).
 
 ## Evidência
 

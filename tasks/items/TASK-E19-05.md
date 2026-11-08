@@ -26,7 +26,7 @@ Cada repo publica o contexto CI Gate e reprova falha ou cancelamento; o CI do MV
 
 Detalhamento: `grep -rn "woodpecker" .github/` retorna vazio nos três repos; `gh workflow list --repo jimmykedlyn/vynamp-decode` mostra `ci.yml`; o job `gate` do MVP encadeia o servidor antes do `verify` e falha se o `verify` falhar; `README.md` de cada repo tem seção English e seção Português; nenhum README diz "private repository" nem "(privada; abertura futura)".
 
-[Spec](../../docs/engineering/04-ci-cd.md) · REQ-E19-05 em [matriz](../../docs/product/03-requirements.md).
+[Spec](../../engineering/04-ci.md) · REQ-E19-05 em [matriz](../../product/03-requisitos.md).
 
 ## Evidência
 

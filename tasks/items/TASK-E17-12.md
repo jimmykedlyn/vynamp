@@ -16,7 +16,7 @@ Requisito REQ-E17-12 · M3 · P0 · responsável funcional delivery (pessoa a de
 
 Manifest gerado com backend/features/licenças/hashes/evidência e validação do pacote.
 
-[Spec canônica](../../docs/delivery/04-capability-release-gates.md) · [Matriz normativa](../../docs/product/03-requirements.md).
+[Spec canônica](../../delivery/04-gates.md) · [Matriz normativa](../../product/03-requisitos.md).
 
 ## Aceite
 
@@ -24,4 +24,4 @@ Catálogo planned não é disponibilidade; required comum comprovado nos cinco a
 
 ## Verificação e evidência
 
-QA-030 em [QA](../../docs/quality/01-test-strategy.md) e [cenários](../../docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.
+QA-030 em [QA](../../quality/01-estrategia-testes.md) e [cenários](../../_arquivo/repo/docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.

@@ -16,7 +16,7 @@
       "dependencies": [
         "TASK-E11-01"
       ],
-      "spec": "docs/audio/01-engine.md",
+      "spec": "reference/audio/01-engine.md",
       "deliverable": "Spike de decoder registry, corpus básico e ADR-002 com versões/features propostas.",
       "acceptance": "FLAC/MP3/WAV decodificam contra referência; delay/padding e PCM24/32 preservados quando perfil permite.",
       "qa": [
@@ -44,7 +44,7 @@
       "dependencies": [
         "TASK-E11-01"
       ],
-      "spec": "docs/audio/01-engine.md",
+      "spec": "reference/audio/01-engine.md",
       "deliverable": "Spike shared output, ring SPSC e harness de callback com instrumentation.",
       "acceptance": "Nenhum lock/alloc/I/O na callback; clock deriva consumo e device latency; underrun gera zeros sem replay.",
       "qa": [
@@ -72,7 +72,7 @@
         "TASK-E01-01",
         "TASK-E01-02"
       ],
-      "spec": "docs/audio/01-engine.md",
+      "spec": "reference/audio/01-engine.md",
       "deliverable": "Domain playback states, commands/events e cancellation tokens.",
       "acceptance": "Stop durante Opening cancela tudo; seek/troca descarta buffers antigos; repeated stop é idempotente.",
       "qa": [
@@ -99,7 +99,7 @@
       "dependencies": [
         "TASK-E01-03"
       ],
-      "spec": "docs/audio/01-engine.md",
+      "spec": "reference/audio/01-engine.md",
       "deliverable": "Adapters local source/probe/decode para WAV/AIFF/FLAC/MP3.",
       "acceptance": "Extensão incorreta permite sniff; corrupt/oversized falham com erro tipado; decoder lista perfis reais.",
       "qa": [
@@ -126,7 +126,7 @@
       "dependencies": [
         "TASK-E01-04"
       ],
-      "spec": "docs/audio/01-engine.md",
+      "spec": "reference/audio/01-engine.md",
       "deliverable": "Mixer PCM, EOF drain, ramp play/stop e relógio de saída.",
       "acceptance": "Fim não corta frames; pause/stop não deixam áudio antigo em próximo play; volumes default não amplificam. A/B usa ticks/frames válidos sem drift e encerra ao trocar fonte.",
       "qa": [
@@ -153,7 +153,7 @@
       "dependencies": [
         "TASK-E01-05"
       ],
-      "spec": "docs/audio/01-engine.md",
+      "spec": "reference/audio/01-engine.md",
       "deliverable": "Predecode next e trim validado de encoder delay/padding.",
       "acceptance": "Pair FLAC/MP3/AAC válido concatena sem frames extras/perdidos; missing trim metadata não usa silêncio heurístico.",
       "qa": [
@@ -179,7 +179,7 @@
       "dependencies": [
         "TASK-E01-04"
       ],
-      "spec": "docs/audio/01-engine.md",
+      "spec": "reference/audio/01-engine.md",
       "deliverable": "Adapters AAC-LC/HE-AAC/ALAC/Vorbis/Opus e M4B conforme prova/licença.",
       "acceptance": "Fixture por perfil suporta duration/seek/metadata quando aplicável; HE-AAC não é anunciado por decode AAC-LC.",
       "qa": [
@@ -205,7 +205,7 @@
       "dependencies": [
         "TASK-E01-07"
       ],
-      "spec": "docs/audio/01-engine.md",
+      "spec": "reference/audio/01-engine.md",
       "deliverable": "WMA/APE/WV/TTA/MPC/MP1/MP2/WebM/MKA/RF64 adapters com isolation quando nativos.",
       "acceptance": "Arquivos >4GiB usam offsets64; cada perfil tem fixture e lista runtime; unsupported sem crash.",
       "qa": [
@@ -232,7 +232,7 @@
         "TASK-E01-08",
         "TASK-E04-02"
       ],
-      "spec": "docs/audio/01-engine.md",
+      "spec": "reference/audio/01-engine.md",
       "deliverable": "Mapas mono/stereo/5.1/7.1 e DSF/DFF decimator com diagnóstico.",
       "acceptance": "Canal mapeado corretamente, headroom aplicado em downmix; DSD64/128/256 fixture não é rotulado native.",
       "qa": [
@@ -261,7 +261,7 @@
         "TASK-E01-09",
         "TASK-E04-06"
       ],
-      "spec": "docs/audio/01-engine.md",
+      "spec": "reference/audio/01-engine.md",
       "deliverable": "Soak/recovery de engine e relatório de suporte por perfil.",
       "acceptance": "8h24/192 controladas sem underrun causado pelo app; decoder hang pode ser cancelado; limitações publicadas.",
       "qa": [
@@ -289,7 +289,7 @@
       "dependencies": [
         "TASK-E11-01"
       ],
-      "spec": "docs/design/02-layouts.md",
+      "spec": "design/02-layouts.md",
       "deliverable": "Spike desktop egui/AccessKit em Windows/Linux/macOS Intel+Silicon, com Classic e ADR-003.",
       "acceptance": "Narrator/NVDA/Orca/VoiceOver workflow de transporte funciona; DPI/zoom200% sem esconder ações; falhas mudam toolkit com ADR. Android tem gate E13-01/05.",
       "qa": [
@@ -316,7 +316,7 @@
         "TASK-E02-01",
         "TASK-E02-11"
       ],
-      "spec": "docs/design/02-layouts.md",
+      "spec": "design/02-layouts.md",
       "deliverable": "Theme token loader builtin, buttons/sliders/list rows com estados completos.",
       "acceptance": "Usar tokens canônicos; focus/hover/pressed/disabled diferem; contraste medido e nome acessível em cada controle.",
       "qa": [
@@ -343,7 +343,7 @@
         "TASK-E02-02",
         "TASK-E01-03"
       ],
-      "spec": "docs/design/02-layouts.md",
+      "spec": "design/02-layouts.md",
       "deliverable": "Painéis clássicos nas geometrias da spec e ligação de commands/events.",
       "acceptance": "Abrir/play/pause/stop/seek/volume/shuffle/repeat operam; resizing mínimo mantém targets e pipeline status.",
       "qa": [
@@ -371,7 +371,7 @@
         "TASK-E02-03",
         "TASK-E03-02"
       ],
-      "spec": "docs/design/02-layouts.md",
+      "spec": "design/02-layouts.md",
       "deliverable": "Lista virtualizada, drag insert, seleção, context menu e queue actions.",
       "acceptance": "Tocar/agendar/adicionar têm comportamentos distintos; teclado completo e faixa atual separada da seleção.",
       "qa": [
@@ -399,7 +399,7 @@
         "TASK-E02-04",
         "TASK-E03-05"
       ],
-      "spec": "docs/design/02-layouts.md",
+      "spec": "design/02-layouts.md",
       "deliverable": "Sidebar/search/album grid/track list/inspector/now playing.",
       "acceptance": "100k rows sem widget por item; inspector vira drawer abaixo1152DIP; search cancelável não altera fila.",
       "qa": [
@@ -426,7 +426,7 @@
       "dependencies": [
         "TASK-E02-05"
       ],
-      "spec": "docs/design/02-layouts.md",
+      "spec": "design/02-layouts.md",
       "deliverable": "Mini420×112, navegação preferences e empty/loading/offline/recovery.",
       "acceptance": "Trocar modo mantém áudio; Escape/focus return corretos; erros mostram ações úteis sem stacktrace no fluxo.",
       "qa": [
@@ -455,7 +455,7 @@
         "TASK-E04-04",
         "TASK-E04-06"
       ],
-      "spec": "docs/design/02-layouts.md",
+      "spec": "design/02-layouts.md",
       "deliverable": "Audio-chain inspector, editor de curva/bandas e device profiles UI.",
       "acceptance": "Origem/transformações/saída real visíveis; EQ em transparente pede saída do modo; curvas refletem filtros reais.",
       "qa": [
@@ -482,7 +482,7 @@
       "dependencies": [
         "TASK-E02-06"
       ],
-      "spec": "docs/design/02-layouts.md",
+      "spec": "design/02-layouts.md",
       "deliverable": "Painéis destacáveis, snap12DIP, saved geometry e retorno ao monitor disponível.",
       "acceptance": "Monitor removido não deixa janela inacessível; Alt ignora snap; resize/dock não trava reprodução.",
       "qa": [
@@ -510,7 +510,7 @@
         "TASK-E02-07",
         "TASK-E02-08"
       ],
-      "spec": "docs/design/02-layouts.md",
+      "spec": "design/02-layouts.md",
       "deliverable": "PT-BR/EN, screenshot suite de temas/DPI e strings pluralizadas.",
       "acceptance": "Textos longos/CJK/emoji e dados RTL não quebram UI; estilos passam contraste e reduced motion.",
       "qa": [
@@ -538,7 +538,7 @@
         "TASK-E06-07",
         "TASK-E07-07"
       ],
-      "spec": "docs/design/02-layouts.md",
+      "spec": "design/02-layouts.md",
       "deliverable": "Relatório de jornadas, usability/a11y e ajustes de interação.",
       "acceptance": "Sem mouse: abrir→tocar→seek→fila→saída→tema; todas telas têm loading/empty/erro/permission state verificável.",
       "qa": [
@@ -563,7 +563,7 @@
         "REQ-E02-11"
       ],
       "dependencies": [],
-      "spec": "docs/design/06-mvp-reference.md",
+      "spec": "design/07-pin-mvp.md",
       "deliverable": "Pacote assets/reference/mvp com MVP rev.37 congelado por hash, 12 temas resolvidos, 91 ícones, 16 medidores e SVGs renderizados, extraídos por ferramenta reprodutível.",
       "acceptance": "Cada SVG renderiza em resvg sem pixel de geometria divergente do Chrome (delta>48 fora do antialiasing de 1 px; texto registrado e resolvido em E02-12; recurso sem suporte no resvg vira requisito do carregador nativo); cada tema traz resolvidos todos os tokens --* que define em :root, e toda variável referenciada que o tema não define em :root consta de unsetVars com fallback, origem e temas afetados (valor por estado em E02-12); reextração reproduz os mesmos hashes.",
       "qa": [
@@ -589,7 +589,7 @@
       "dependencies": [
         "TASK-E02-11"
       ],
-      "spec": "docs/design/06-mvp-reference.md",
+      "spec": "design/07-pin-mvp.md",
       "deliverable": "Capturas por tema, layout, largura e estado com dump de geometria e estilo por elemento e fontes efetivas por nó; estratégia de fontes por plataforma com licenças.",
       "acceptance": "Todo estado alcançável do MVP tem captura e dump (geometria, estilo computado e custom properties --* por elemento, inclusive as de unsetVars), incluindo os estados cujo clique expira na varredura de TASK-E02-11 (`rendered/click-failures.json`: link de salto com foco, fila limpa), acionados por teclado ou script; cada família de fonte usada tem fonte nativa ou substituta licenciada com métricas comparadas; armazenamento dos PNG decidido.",
       "qa": [
@@ -615,7 +615,7 @@
       "dependencies": [
         "TASK-E02-11"
       ],
-      "spec": "docs/design/06-mvp-reference.md",
+      "spec": "design/07-pin-mvp.md",
       "deliverable": "Transições CSS, séries rAF sob sinais determinísticos, constantes de AnalyserNode e balística e estilos de onda em formato consumível pelo Rust.",
       "acceptance": "Cada animação do MVP tem duração, easing e keyframes ou série temporal; medidores e ondas respondem a degrau, seno e rajada com tolerância documentada; Web Audio entra só como comportamento reimplementável.",
       "qa": [
@@ -641,7 +641,7 @@
       "dependencies": [
         "TASK-E02-11"
       ],
-      "spec": "docs/design/06-mvp-reference.md",
+      "spec": "design/07-pin-mvp.md",
       "deliverable": "Roteiros de interação por teclado, ponteiro e toque com estado esperado e esquema das preferências persistidas com defaults e migração.",
       "acceptance": "Cada controle do MVP tem roteiro com resultado verificável; o esquema cobre todas as chaves lidas ou escritas; nenhuma ação fica sem roteiro.",
       "qa": [
@@ -669,7 +669,7 @@
         "TASK-E02-13",
         "TASK-E02-14"
       ],
-      "spec": "docs/design/06-mvp-reference.md",
+      "spec": "design/07-pin-mvp.md",
       "deliverable": "Mapa de cada recurso web usado pelo MVP para o equivalente nativo em Windows, Linux, macOS e Android (iOS fora da 1.0), com biblioteca própria planejada onde faltar.",
       "acceptance": "Zero lacunas sem plano; exceções só para APIs intrínsecas do navegador com comportamento reimplementado; toda biblioteca nova tem repositório git próprio e modular.",
       "qa": [
@@ -696,7 +696,7 @@
         "TASK-E02-15",
         "TASK-E02-01"
       ],
-      "spec": "docs/design/06-mvp-reference.md",
+      "spec": "design/07-pin-mvp.md",
       "deliverable": "Crate de testes que renderiza telas nativas e as compara com os gabaritos visual, de movimento e de comportamento do MVP, executada localmente.",
       "acceptance": "O harness falha quando uma tela ou estado excede a tolerância e aponta o elemento divergente; roda apenas localmente, na máquina do mantenedor, com o clone de vynamp-mvp-reference no SHA 0d9860b901510021bcca4c31a25014373ea7c452; o CI Gate o marca como não executado.",
       "qa": [
@@ -722,7 +722,7 @@
       "dependencies": [
         "TASK-E11-01"
       ],
-      "spec": "docs/library/01-library-playlists.md",
+      "spec": "library/01-biblioteca-playlists.md",
       "deliverable": "Schema inicial, WAL, backup e write actor com migrations.",
       "acceptance": "Kill no migrate/save preserva DB ou backup; FTS reconstruível; schema unknown não é apagado.",
       "qa": [
@@ -750,7 +750,7 @@
         "TASK-E03-01",
         "TASK-E01-03"
       ],
-      "spec": "docs/library/01-library-playlists.md",
+      "spec": "library/01-biblioteca-playlists.md",
       "deliverable": "Queue snapshot/revisions/seed/history/repeat/stop-after.",
       "acceptance": "Reorder playlist não muda queue; shuffle sem reposição, Previous usa histórico; explicit next vence repeat.",
       "qa": [
@@ -778,7 +778,7 @@
         "TASK-E03-01",
         "TASK-E01-07"
       ],
-      "spec": "docs/library/01-library-playlists.md",
+      "spec": "library/01-biblioteca-playlists.md",
       "deliverable": "Scan jobs, root watcher/debounce, availability e locator identity.",
       "acceptance": "NAS indisponível não deleta item; symlink loop limitado; cancel mantém itens já indexados; move preserva ratings.",
       "qa": [
@@ -804,7 +804,7 @@
       "dependencies": [
         "TASK-E03-03"
       ],
-      "spec": "docs/library/01-library-playlists.md",
+      "spec": "library/01-biblioteca-playlists.md",
       "deliverable": "Tag adapters, multivalue metadata, thumbnails/cache e cover precedence.",
       "acceptance": "Unknown fields preservados para futuro write; image bomb limitada; metadata Unicode mantém representação original.",
       "qa": [
@@ -831,7 +831,7 @@
       "dependencies": [
         "TASK-E03-04"
       ],
-      "spec": "docs/library/01-library-playlists.md",
+      "spec": "library/01-biblioteca-playlists.md",
       "deliverable": "Query port indexado, albums/artists/genres/folders e pagination.",
       "acceptance": "Search100k warmp95≤100ms; filtros combinados não executam SQL do usuário; ordering estável.",
       "qa": [
@@ -858,7 +858,7 @@
         "TASK-E03-02",
         "TASK-E03-04"
       ],
-      "spec": "docs/library/01-library-playlists.md",
+      "spec": "library/01-biblioteca-playlists.md",
       "deliverable": "M3U/M3U8/PLS/XSPF/CUE, relative locators e virtual ranges.",
       "acceptance": "Loop de playlists bloqueado; CUE75fps preserva offsets; export sem token; undo/redo100 ops da sessão.",
       "qa": [
@@ -886,7 +886,7 @@
         "TASK-E03-05",
         "TASK-E03-06"
       ],
-      "spec": "docs/library/01-library-playlists.md",
+      "spec": "library/01-biblioteca-playlists.md",
       "deliverable": "AST allowlisted, folders rules, sort/group/lock e refresh.",
       "acceptance": "Query invalid rejeitada; atualização cancelável; playlist lock não bloqueia playback; snapshots consistentes.",
       "qa": [
@@ -913,7 +913,7 @@
         "TASK-E03-04",
         "TASK-E08-01"
       ],
-      "spec": "docs/library/01-library-playlists.md",
+      "spec": "library/01-biblioteca-playlists.md",
       "deliverable": "Batch preview/write atomic, preserve unknown tags e backup.",
       "acceptance": "Fields mistos não são apagados sem escolha; kill/locked file mantém mídia; capítulo inválido não é gravado.",
       "qa": [
@@ -941,7 +941,7 @@
         "TASK-E03-04",
         "TASK-E03-02"
       ],
-      "spec": "docs/library/01-library-playlists.md",
+      "spec": "library/01-biblioteca-playlists.md",
       "deliverable": "LRC/plain lyrics, progress/bookmarks, local play history e opt-in providers.",
       "acceptance": "Synced lyrics seguem clock consumido; rescan preserva bookmark; seek não conta como consumo; sem rede involuntária.",
       "qa": [
@@ -970,7 +970,7 @@
         "TASK-E03-08",
         "TASK-E03-09"
       ],
-      "spec": "docs/library/01-library-playlists.md",
+      "spec": "library/01-biblioteca-playlists.md",
       "deliverable": "Crash restore/backup/export e relatório dataset100k.",
       "acceptance": "Fila restaura sem autoplay; missing files têm erro agrupado; ratings/bookmarks sobrevivem upgrade e rollback seguro.",
       "qa": [
@@ -998,7 +998,7 @@
       "dependencies": [
         "TASK-E01-05"
       ],
-      "spec": "docs/audio/04-outputs-hires.md",
+      "spec": "reference/audio/04-outputs-hires.md",
       "deliverable": "EQ gráfico clássico, preamp, volume/pan e RG track/album.",
       "acceptance": "On/off/flat coerentes; metadata absent usa ganho configurado; coefficient swap sem zipper e sem allocRT.",
       "qa": [
@@ -1025,7 +1025,7 @@
         "TASK-E01-01",
         "TASK-E01-02"
       ],
-      "spec": "docs/audio/04-outputs-hires.md",
+      "spec": "reference/audio/04-outputs-hires.md",
       "deliverable": "Spike da lib própria de resampling (ADR-011), PCM24/32 packing e ADR de qualidade.",
       "acceptance": "Impulse/sweep e alias/CPU/latência registrados; integer bypass sample-exact e dither só ao reduzir precisão.",
       "qa": [
@@ -1054,7 +1054,7 @@
         "TASK-E04-01",
         "TASK-E04-02"
       ],
-      "spec": "docs/audio/04-outputs-hires.md",
+      "spec": "reference/audio/04-outputs-hires.md",
       "deliverable": "Compiled graph, parameter interpolation, latency annotation e crossfade.",
       "acceptance": "Graph swap foraRT; no cycles/NaN; equal-power crossfade preserva duração, desligado não altera gapless.",
       "qa": [
@@ -1081,7 +1081,7 @@
       "dependencies": [
         "TASK-E04-03"
       ],
-      "spec": "docs/audio/04-outputs-hires.md",
+      "spec": "reference/audio/04-outputs-hires.md",
       "deliverable": "32bands/tipos/Q/canal, EQ20/31 e preset schema/precedence.",
       "acceptance": "Curva±0.2dB da referência; frequências válidas porNyquist; import inválido mantém preset anterior.",
       "qa": [
@@ -1108,7 +1108,7 @@
         "TASK-E01-02",
         "TASK-E04-02"
       ],
-      "spec": "docs/audio/04-outputs-hires.md",
+      "spec": "reference/audio/04-outputs-hires.md",
       "deliverable": "WASAPI event-exclusive, stable IDs, capabilities e ASIO adapter opcional.",
       "acceptance": "24/96 e24/192 negociados emDAC; busy/unplug/sleep recuperam com pausa; sem fallback speaker automático.",
       "qa": [
@@ -1136,7 +1136,7 @@
         "TASK-E04-05",
         "TASK-E04-03"
       ],
-      "spec": "docs/audio/04-outputs-hires.md",
+      "spec": "reference/audio/04-outputs-hires.md",
       "deliverable": "Integer direct path, active conditions, source/output labels e validated combinations.",
       "acceptance": "PCM24/32 capture exata em hardware validado; EQ/RG/volume digital desligados; fonte lossy não recebe selo errado.",
       "qa": [
@@ -1163,7 +1163,7 @@
       "dependencies": [
         "TASK-E04-04"
       ],
-      "spec": "docs/audio/04-outputs-hires.md",
+      "spec": "reference/audio/04-outputs-hires.md",
       "deliverable": "Limiter/compressor/bass/treble/mono/routing com meters.",
       "acceptance": "True-peak fixture±0.1dB, latency publicada e bypass; multichannel downmix com headroom e clipping explicitado.",
       "qa": [
@@ -1190,7 +1190,7 @@
         "TASK-E04-03",
         "TASK-E04-07"
       ],
-      "spec": "docs/audio/04-outputs-hires.md",
+      "spec": "reference/audio/04-outputs-hires.md",
       "deliverable": "Tempo0.5–2x/pitch±12/speed, reverb/echo/chorus/flanger/silence trim.",
       "acceptance": "Música não herda velocidade podcast; parameters validos; cancel/bypass não produz NaN e latência indicada.",
       "qa": [
@@ -1218,7 +1218,7 @@
         "TASK-E04-04",
         "TASK-E04-05"
       ],
-      "spec": "docs/audio/04-outputs-hires.md",
+      "spec": "reference/audio/04-outputs-hires.md",
       "deliverable": "Per-device profiles e import manual com origem/licença.",
       "acceptance": "Manual→track→genre→device→global aplicado; device change não aumenta volume automaticamente; fonte identificada.",
       "qa": [
@@ -1248,7 +1248,7 @@
         "TASK-E04-08",
         "TASK-E04-09"
       ],
-      "spec": "docs/audio/04-outputs-hires.md",
+      "spec": "reference/audio/04-outputs-hires.md",
       "deliverable": "Relatório DSP/output com fixtures, driver versions e combinations.",
       "acceptance": "Testes100/192k/rate switch/channel mismatches; callback budget e8hsoak; claims limitados a combinations comprovadas.",
       "qa": [
@@ -1277,7 +1277,7 @@
       "dependencies": [
         "TASK-E01-03"
       ],
-      "spec": "docs/streaming/01-client.md",
+      "spec": "streaming/01-cliente.md",
       "deliverable": "Porta de resolução, descritor versionado e provider de teste sem dependência externa.",
       "acceptance": "Distinguir capacidades de arquivo, live e VOD; nenhum token em playlist/log; transporte desconhecido retorna erro de suporte.",
       "qa": [
@@ -1305,7 +1305,7 @@
         "TASK-E05-01",
         "TASK-E01-07"
       ],
-      "spec": "docs/streaming/01-client.md",
+      "spec": "streaming/01-cliente.md",
       "deliverable": "Adapter HTTP com redirects, autenticação, cancelamento, timeouts e seek negociado.",
       "acceptance": "Testar respostas 206/200/416; não encaminhar auth para outra origem; Stop cancela rede e decode e descarta buffers antigos.",
       "qa": [
@@ -1332,7 +1332,7 @@
         "TASK-E05-02",
         "TASK-E02-06"
       ],
-      "spec": "docs/streaming/01-client.md",
+      "spec": "streaming/01-cliente.md",
       "deliverable": "Parser ICY, metadados, estações favoritas, entrada de URL e indicador LIVE.",
       "acceptance": "Separar metadados fragmentados dos bytes de áudio; limitar tags inválidas; reconexão limitada e cancelável; não inventar duração.",
       "qa": [
@@ -1358,7 +1358,7 @@
       "dependencies": [
         "TASK-E05-02"
       ],
-      "spec": "docs/streaming/01-client.md",
+      "spec": "streaming/01-cliente.md",
       "deliverable": "Buffers com limites de tempo/bytes, cache LRU em disco e isolamento por conta.",
       "acceptance": "Rede lenta pode recuperar sem repetir amostras; respeitar limites de 32/16 MiB; logout limpa cache privado sem apagar mídia local.",
       "qa": [
@@ -1385,7 +1385,7 @@
         "TASK-E05-04",
         "TASK-E03-04"
       ],
-      "spec": "docs/streaming/01-client.md",
+      "spec": "streaming/01-cliente.md",
       "deliverable": "RSS/Atom, assinaturas, polling condicional, downloads e progresso por episódio.",
       "acceptance": "Desabilitar entidades XML externas; GUID por feed; cancelar download preserva parcial válido; eventos de progresso são idempotentes.",
       "qa": [
@@ -1412,7 +1412,7 @@
         "TASK-E05-04",
         "TASK-E01-07"
       ],
-      "spec": "docs/streaming/01-client.md",
+      "spec": "streaming/01-cliente.md",
       "deliverable": "Parser master/media, segmentos, discontinuity, byte ranges e AES-128 autorizado.",
       "acceptance": "Limitar manifests inválidos/aninhados; tratar segmentos ausentes; seek preserva timeline; não registrar chaves ou URLs secretas.",
       "qa": [
@@ -1438,7 +1438,7 @@
       "dependencies": [
         "TASK-E05-06"
       ],
-      "spec": "docs/streaming/01-client.md",
+      "spec": "streaming/01-cliente.md",
       "deliverable": "Janela live, escolha de qualidade por throughput e buffer DVR limitado.",
       "acceptance": "Mudança de sequência não duplica áudio; seleção manual de qualidade é respeitada; seek só na janela disponível; voltar ao live edge funciona.",
       "qa": [
@@ -1465,7 +1465,7 @@
         "TASK-E05-03",
         "TASK-E08-02"
       ],
-      "spec": "docs/streaming/01-client.md",
+      "spec": "streaming/01-cliente.md",
       "deliverable": "Gravação passthrough ou encoding escolhido, divisão de arquivos/CUE e monitor de espaço.",
       "acceptance": "Proibição explícita do provider bloqueia gravação; disco cheio encerra arquivo válido; título ICY não é tratado como fronteira exata de samples.",
       "qa": [
@@ -1492,7 +1492,7 @@
         "TASK-E05-07",
         "TASK-E05-08"
       ],
-      "spec": "docs/streaming/01-client.md",
+      "spec": "streaming/01-cliente.md",
       "deliverable": "Política para cada URL filha, corpus de falhas e painel de saúde sanitizado.",
       "acceptance": "Revalidar SSRF/DNS/redirects conforme origem; esconder segredos; reconexão, cancelamento e stall não travam a interface.",
       "qa": [
@@ -1520,7 +1520,7 @@
         "TASK-E05-09",
         "TASK-E09-02"
       ],
-      "spec": "docs/streaming/01-client.md",
+      "spec": "streaming/01-cliente.md",
       "deliverable": "Adapter da plataforma, renovação de URLs, restrições e progresso de conteúdo longo.",
       "acceptance": "Renovar token sem reiniciar indevidamente; download só se permitido; arquivos locais continuam após logout ou ausência de rede.",
       "qa": [
@@ -1547,7 +1547,7 @@
       "dependencies": [
         "TASK-E02-02"
       ],
-      "spec": "docs/extensions/01-themes.md",
+      "spec": "extensions/01-temas.md",
       "deliverable": "Schemas de manifest/tokens/layout, parser e erros por JSON Pointer.",
       "acceptance": "Rejeitar schema major desconhecido; avisar campos opcionais desconhecidos; detectar ciclos e ações essenciais ausentes.",
       "qa": [
@@ -1575,7 +1575,7 @@
         "TASK-E06-01",
         "TASK-E11-02"
       ],
-      "spec": "docs/extensions/01-themes.md",
+      "spec": "extensions/01-temas.md",
       "deliverable": "Validador de ZIP, staging, limites, checksums, instalação por versão e rollback.",
       "acceptance": "Rejeitar traversal, paths absolutos, symlinks e zip bombs; update inválido mantém tema atual; limite de 20 MiB extraídos.",
       "qa": [
@@ -1602,7 +1602,7 @@
         "TASK-E06-01",
         "TASK-E02-06"
       ],
-      "spec": "docs/extensions/01-themes.md",
+      "spec": "extensions/01-temas.md",
       "deliverable": "Renderer de nós/ações permitidos com fallback para cada modo de interface.",
       "acceptance": "Nenhum código ou acesso de rede arbitrário; controles essenciais e semântica acessível permanecem; constraints de geometria são aplicadas.",
       "qa": [
@@ -1630,7 +1630,7 @@
         "TASK-E06-03",
         "TASK-E06-02"
       ],
-      "spec": "docs/extensions/01-themes.md",
+      "spec": "extensions/01-temas.md",
       "deliverable": "Classic Graphite, Midnight Modern e Copper, com assets e licenças próprios.",
       "acceptance": "Os três oferecem Classic/Library/Mini; tokens, cores e estados conferidos em snapshots; nenhum asset copiado.",
       "qa": [
@@ -1657,7 +1657,7 @@
         "TASK-E01-05",
         "TASK-E02-03"
       ],
-      "spec": "docs/extensions/01-themes.md",
+      "spec": "extensions/01-temas.md",
       "deliverable": "Canal de observação de áudio independente, FFT, VU, espectro e osciloscópio.",
       "acceptance": "Renderer lento não causa underrun; escalas de FFT correspondem à taxa; minimizar e reduzir movimento diminuem processamento.",
       "qa": [
@@ -1683,7 +1683,7 @@
       "dependencies": [
         "TASK-E06-05"
       ],
-      "spec": "docs/extensions/01-themes.md",
+      "spec": "extensions/01-temas.md",
       "deliverable": "Espectrograma, partículas, fullscreen, presets e fallback de CPU.",
       "acceptance": "GPU indisponível não interrompe áudio; Escape sai do fullscreen; presets não executam shaders arbitrários.",
       "qa": [
@@ -1710,7 +1710,7 @@
         "TASK-E06-04",
         "TASK-E06-06"
       ],
-      "spec": "docs/extensions/01-themes.md",
+      "spec": "extensions/01-temas.md",
       "deliverable": "Editor de tokens/layout, undo, preview por DPI/estado e exportação.",
       "acceptance": "Exportar e importar preserva configuração; avisar problemas de contraste/constraints; preview não altera tema ativo nem áudio.",
       "qa": [
@@ -1737,7 +1737,7 @@
       "dependencies": [
         "TASK-E06-07"
       ],
-      "spec": "docs/extensions/01-themes.md",
+      "spec": "extensions/01-temas.md",
       "deliverable": "Galeria, armazenamento por usuário e safe mode com tema builtin.",
       "acceptance": "Falha no renderer reverte ao builtin; safe mode ignora pacotes do usuário; monitor/zoom restaurados mantêm controles acessíveis.",
       "qa": [
@@ -1765,7 +1765,7 @@
         "TASK-E06-08",
         "TASK-E09-09"
       ],
-      "spec": "docs/extensions/01-themes.md",
+      "spec": "extensions/01-temas.md",
       "deliverable": "Metadados assinados, autoria, licença e imagens de preview para registry.",
       "acceptance": "Versão publicada é imutável; revogação e rollback funcionam; instalação manual continua disponível sem conta ou rede.",
       "qa": [
@@ -1793,7 +1793,7 @@
         "TASK-E06-08",
         "TASK-E02-09"
       ],
-      "spec": "docs/extensions/01-themes.md",
+      "spec": "extensions/01-temas.md",
       "deliverable": "Relatório de cores, medidas, estados e telas comparado à referência própria.",
       "acceptance": "Conferir todos os modos/DPI e hierarchy clássica; falhas de acessibilidade não são ocultadas por aprovação de screenshots.",
       "qa": [
@@ -1819,7 +1819,7 @@
       "dependencies": [
         "TASK-E11-01"
       ],
-      "spec": "docs/extensions/02-plugins.md",
+      "spec": "extensions/02-plugins.md",
       "deliverable": "Spike Wasmtime/WIT com limites de memória, fuel, interruption e ADR-004.",
       "acceptance": "Interromper loops e crescimento de memória; nenhum acesso ambiente a arquivos/rede; medir consumo com runtime não carregado.",
       "qa": [
@@ -1846,7 +1846,7 @@
         "TASK-E07-01",
         "TASK-E06-02"
       ],
-      "spec": "docs/extensions/02-plugins.md",
+      "spec": "extensions/02-plugins.md",
       "deliverable": "Manifest/schema, interfaces WIT, lifecycle e regras de compatibilidade major.",
       "acceptance": "Validar tipo, plataformas e permissões; major incompatível não carrega; assinatura não permite ignorar políticas de acesso.",
       "qa": [
@@ -1873,7 +1873,7 @@
         "TASK-E07-02",
         "TASK-E05-02"
       ],
-      "spec": "docs/extensions/02-plugins.md",
+      "spec": "extensions/02-plugins.md",
       "deliverable": "Acesso mediado a rede, roots selecionadas e biblioteca, com grants persistidos.",
       "acceptance": "Negar e revogar bloqueia requests/handles; redirect revalida domínio; plugin não recebe shell, env vars ou filesystem completo.",
       "qa": [
@@ -1899,7 +1899,7 @@
       "dependencies": [
         "TASK-E07-03"
       ],
-      "spec": "docs/extensions/02-plugins.md",
+      "spec": "extensions/02-plugins.md",
       "deliverable": "Init/start/event/stop/unload, quotas, timeouts e estado do plugin.",
       "acceptance": "Três falhas em 60 s isolam plugin; cleanup é idempotente; floods são limitados; playback local continua.",
       "qa": [
@@ -1926,7 +1926,7 @@
         "TASK-E07-02",
         "TASK-E11-02"
       ],
-      "spec": "docs/extensions/02-plugins.md",
+      "spec": "extensions/02-plugins.md",
       "deliverable": "Sandbox OS, RPC autenticado, memória compartilhada limitada e consentimento de plugin nativo.",
       "acceptance": "Crash ou RPC inválido do child não derruba main; handles mínimos; sandbox testado; nenhuma DLL arbitrária carregada no main.",
       "qa": [
@@ -1952,7 +1952,7 @@
       "dependencies": [
         "TASK-E07-04"
       ],
-      "spec": "docs/extensions/02-plugins.md",
+      "spec": "extensions/02-plugins.md",
       "deliverable": "Templates Rust para WASM: letras locais, espectro e provider simulado.",
       "acceptance": "Exemplos funcionam no harness offline com permissões mínimas; documentação de lifecycle acompanha a versão do SDK.",
       "qa": [
@@ -1981,7 +1981,7 @@
         "TASK-E07-05",
         "TASK-E02-06"
       ],
-      "spec": "docs/extensions/02-plugins.md",
+      "spec": "extensions/02-plugins.md",
       "deliverable": "Interface de instalação, atualização, disable, revoke, rollback e safe mode.",
       "acceptance": "Novas permissões exigem intenção; rollback restaura estado compatível; falha mostra ação segura e ID de diagnóstico.",
       "qa": [
@@ -2009,7 +2009,7 @@
         "TASK-E07-06",
         "TASK-E07-07"
       ],
-      "spec": "docs/extensions/02-plugins.md",
+      "spec": "extensions/02-plugins.md",
       "deliverable": "Docs de API/lifecycle/budgets, CLI de pack/sign/validate e relatório de compatibilidade.",
       "acceptance": "Host simulado cobre erros e grants; corpus adversarial aprovado; versão minor aditiva não quebra exemplos.",
       "qa": [
@@ -2036,7 +2036,7 @@
         "TASK-E07-08",
         "TASK-E09-09"
       ],
-      "spec": "docs/extensions/02-plugins.md",
+      "spec": "extensions/02-plugins.md",
       "deliverable": "Registry assinado, versões imutáveis e identificação de publisher.",
       "acceptance": "Build revogado não instala/atualiza; pacote manual ainda exige consentimento; hashes de download são verificados.",
       "qa": [
@@ -2064,7 +2064,7 @@
         "TASK-E07-08",
         "TASK-E10-05"
       ],
-      "spec": "docs/extensions/02-plugins.md",
+      "spec": "extensions/02-plugins.md",
       "deliverable": "Revisão de segurança focada e testes de falhas durante reprodução.",
       "acceptance": "Traps, loops, crash de helper e revoke durante I/O não interrompem áudio local; permissões negadas impedem exfiltração; críticos resolvidos.",
       "qa": [
@@ -2090,7 +2090,7 @@
       "dependencies": [
         "TASK-E03-01"
       ],
-      "spec": "docs/library/02-tags-lyrics-tools.md",
+      "spec": "library/02-tags-letras.md",
       "deliverable": "Scheduler de jobs com checkpoints, leases, progresso e pools limitados.",
       "acceptance": "Crash retoma jobs seguros; cancelar remove temporários sem apagar source; erros parciais são visíveis e progresso é consistente.",
       "qa": [
@@ -2118,7 +2118,7 @@
         "TASK-E01-07",
         "TASK-E11-03"
       ],
-      "spec": "docs/library/02-tags-lyrics-tools.md",
+      "spec": "library/02-tags-letras.md",
       "deliverable": "Conversão batch para FLAC/WAV/Opus/Vorbis e MP3 quando permitido, com preview.",
       "acceptance": "Validar output após escrita; cancelamento/disco cheio preservam source; conversão lossy não é anunciada como restauração hi-res.",
       "qa": [
@@ -2146,7 +2146,7 @@
         "TASK-E08-01",
         "TASK-E04-01"
       ],
-      "spec": "docs/library/02-tags-lyrics-tools.md",
+      "spec": "library/02-tags-letras.md",
       "deliverable": "Jobs com padrão/versão de análise, grouping de álbum e escrita opcional de tags.",
       "acceptance": "Loudness conferido contra fixtures; agrupamento correto; BPM inclui confiança; scan não interfere callback; write requer preview.",
       "qa": [
@@ -2174,7 +2174,7 @@
         "TASK-E08-01",
         "TASK-E03-05"
       ],
-      "spec": "docs/library/02-tags-lyrics-tools.md",
+      "spec": "library/02-tags-letras.md",
       "deliverable": "Templates seguros, plano de renomeação, detecção de colisão e dedupe com preview.",
       "acceptance": "Bloquear escape e nomes reservados; não sobrescrever por padrão; mover preserva identidade/bookmark; duplicatas não são apagadas automaticamente.",
       "qa": [
@@ -2203,7 +2203,7 @@
         "TASK-E08-01",
         "TASK-E01-03"
       ],
-      "spec": "docs/library/02-tags-lyrics-tools.md",
+      "spec": "library/02-tags-letras.md",
       "deliverable": "Timers, alarmes, regras de horário/DST, quiet hours e persistência.",
       "acceptance": "Parar ao fim de faixa funciona; DST definido; desligar OS só se habilitado; alarmes respeitam teto de volume.",
       "qa": [
@@ -2230,7 +2230,7 @@
         "TASK-E02-06",
         "TASK-E01-03"
       ],
-      "spec": "docs/library/02-tags-lyrics-tools.md",
+      "spec": "library/02-tags-letras.md",
       "deliverable": "SMTC, media keys, tray/taskbar, hotkeys globais configuráveis e associações consentidas.",
       "acceptance": "Controlar sessão correta; close-to-tray explícito; sem admin/associação involuntária; detectar conflitos de hotkeys.",
       "qa": [
@@ -2257,7 +2257,7 @@
         "TASK-E01-03",
         "TASK-E08-06"
       ],
-      "spec": "docs/library/02-tags-lyrics-tools.md",
+      "spec": "library/02-tags-letras.md",
       "deliverable": "Comandos open/enqueue/diagnostics/validate e named pipe com validação de peer.",
       "acceptance": "Segundo launch não executa comando arbitrário; Unicode preservado; CLI retorna exit codes; IPC não expõe filesystem geral.",
       "qa": [
@@ -2285,7 +2285,7 @@
         "TASK-E03-09",
         "TASK-E07-03"
       ],
-      "spec": "docs/library/02-tags-lyrics-tools.md",
+      "spec": "library/02-tags-letras.md",
       "deliverable": "Adapters autorizados de Last.fm/ListenBrainz/Libre.fm/Discord, opt-in e revogáveis.",
       "acceptance": "Sem requests antes de opt-in; tokens no keychain; retries idempotentes; revoke impede novos envios.",
       "qa": [
@@ -2313,7 +2313,7 @@
         "TASK-E05-10",
         "TASK-E03-09"
       ],
-      "spec": "docs/library/02-tags-lyrics-tools.md",
+      "spec": "library/02-tags-letras.md",
       "deliverable": "Agrupamento de livros, capítulos, bookmarks e adapter de sync de progresso.",
       "acceptance": "Velocidade por categoria; retomada explícita; conflito de retrocesso não usa máximo sempre; sem rede continua reproduzindo.",
       "qa": [
@@ -2342,7 +2342,7 @@
         "TASK-E08-07",
         "TASK-E09-03"
       ],
-      "spec": "docs/library/02-tags-lyrics-tools.md",
+      "spec": "library/02-tags-letras.md",
       "deliverable": "API local desligada por padrão, pairing e opção LAN com TLS/rate limits.",
       "acceptance": "Cliente sem pairing não controla; nenhum endpoint de shell/filesystem; rotação e revogação de token funcionam.",
       "qa": [
@@ -2370,7 +2370,7 @@
         "TASK-E05-09",
         "TASK-E11-09"
       ],
-      "spec": "docs/streaming/03-platform.md",
+      "spec": "streaming/03-plataforma.md",
       "deliverable": "RFC de plataforma com regiões, rights, renditions, limites e orçamento de bandwidth.",
       "acceptance": "Fixtures autorizadas; roles/territórios/janela de disponibilidade definidos; custo por ouvinte-hora estimado com dados.",
       "qa": [
@@ -2398,7 +2398,7 @@
         "TASK-E09-01",
         "TASK-E05-01"
       ],
-      "spec": "docs/streaming/03-platform.md",
+      "spec": "streaming/03-plataforma.md",
       "deliverable": "OpenAPI de catálogo/resolve/sync/stations, erros e testkit do provider.",
       "acceptance": "Exemplos validam; mock e real compartilham contrato; cursor/idempotência/escopos e enums desconhecidos são definidos.",
       "qa": [
@@ -2424,7 +2424,7 @@
       "dependencies": [
         "TASK-E09-02"
       ],
-      "spec": "docs/streaming/03-platform.md",
+      "spec": "streaming/03-plataforma.md",
       "deliverable": "OIDC/PKCE, keychain do cliente, roles, isolamento por conta e revogação.",
       "acceptance": "Negar IDOR/acesso entre contas; login pelo browser; não enviar bearer à CDN; logout limpa apenas dados privados.",
       "qa": [
@@ -2450,7 +2450,7 @@
       "dependencies": [
         "TASK-E09-03"
       ],
-      "spec": "docs/streaming/03-platform.md",
+      "spec": "streaming/03-plataforma.md",
       "deliverable": "API Axum/PostgreSQL, busca, estações, publicação e UI admin auditável.",
       "acceptance": "Paginação estável; conteúdo não publicado invisível ao ouvinte; roles distintas; operações editoriais têm audit trail.",
       "qa": [
@@ -2477,7 +2477,7 @@
         "TASK-E09-04",
         "TASK-E11-03"
       ],
-      "spec": "docs/streaming/03-platform.md",
+      "spec": "streaming/03-plataforma.md",
       "deliverable": "Upload assinado, quarantine/probe/rights, outbox e workers de renditions.",
       "acceptance": "Jobs duplicados idempotentes; limites de mídia e SSRF aplicados; master privado; ready somente após validações.",
       "qa": [
@@ -2504,7 +2504,7 @@
       "dependencies": [
         "TASK-E09-05"
       ],
-      "spec": "docs/streaming/03-platform.md",
+      "spec": "streaming/03-plataforma.md",
       "deliverable": "Resolve assinado para FLAC/Opus progressivo e HLS AAC com direitos e expiração.",
       "acceptance": "Range/qualidade negociados; token renovável; rights negados bloqueiam resolve; não forçar lossless HLS sem prova.",
       "qa": [
@@ -2532,7 +2532,7 @@
       "dependencies": [
         "TASK-E09-06"
       ],
-      "spec": "docs/streaming/03-platform.md",
+      "spec": "streaming/03-plataforma.md",
       "deliverable": "Ingest autenticado, packager HLS, grade, now-playing e failover.",
       "acceptance": "Cliente HLS interoperável; falha de source gera alerta/filler autorizado; grade considera DST; timeline não duplica áudio.",
       "qa": [
@@ -2561,7 +2561,7 @@
         "TASK-E09-04",
         "TASK-E03-10"
       ],
-      "spec": "docs/streaming/03-platform.md",
+      "spec": "streaming/03-plataforma.md",
       "deliverable": "Outbox, changelog, cursores, revisões, tombstones e UI de conflitos.",
       "acceptance": "Merge offline de reorder/remove preserva intenção; 409 preserva edição; operação repetida idempotente; paths locais não sobem por padrão.",
       "qa": [
@@ -2589,7 +2589,7 @@
         "TASK-E07-08",
         "TASK-E06-08"
       ],
-      "spec": "docs/streaming/03-platform.md",
+      "spec": "streaming/03-plataforma.md",
       "deliverable": "Admin de publisher, validação de pacotes, assinatura, versão imutável e revogação.",
       "acceptance": "Rejeitar pacotes adversariais; conferir hash por artifact; não expor chaves privadas; instalação manual continua sem conta.",
       "qa": [
@@ -2620,7 +2620,7 @@
         "TASK-E09-09",
         "TASK-E11-10"
       ],
-      "spec": "docs/streaming/03-platform.md",
+      "spec": "streaming/03-plataforma.md",
       "deliverable": "Teste de 1.000 sessões, custos, restore drill, alertas e runbooks.",
       "acceptance": "API p95 ≤250 ms no ambiente de referência; CDN medida separadamente; demonstrar RPO/RTO; rollback mantém contratos.",
       "qa": [
@@ -2646,7 +2646,7 @@
       "dependencies": [
         "TASK-E11-01"
       ],
-      "spec": "docs/quality/01-test-strategy.md",
+      "spec": "quality/01-estrategia-testes.md",
       "deliverable": "Fixtures geradas de tons/sweep/gapless e corrupções, com manifests de hashes e licenças.",
       "acceptance": "CI valida hashes; oráculos de frames/tags/ranges definidos; testes não dependem de rádios públicas instáveis.",
       "qa": [
@@ -2675,7 +2675,7 @@
         "TASK-E03-02",
         "TASK-E10-01"
       ],
-      "spec": "docs/quality/01-test-strategy.md",
+      "spec": "quality/01-estrategia-testes.md",
       "deliverable": "Suite de state machine, comandos aleatórios, ordering e queue invariants.",
       "acceptance": "Sequências aleatórias preservam generation e invariantes; shuffle/history/repeat/stop-after são exercitados.",
       "qa": [
@@ -2703,7 +2703,7 @@
         "TASK-E04-03",
         "TASK-E10-01"
       ],
-      "spec": "docs/quality/01-test-strategy.md",
+      "spec": "quality/01-estrategia-testes.md",
       "deliverable": "Oráculos PCM, resposta FFT, delay/padding, crossfade e sample conversion.",
       "acceptance": "Detectar frame extra, trim incorreto, mapa de canais errado e NaN; referência independente da implementação sob teste.",
       "qa": [
@@ -2732,7 +2732,7 @@
         "TASK-E05-03",
         "TASK-E10-01"
       ],
-      "spec": "docs/quality/01-test-strategy.md",
+      "spec": "quality/01-estrategia-testes.md",
       "deliverable": "Fixtures HTTP Range/ICY fragmentado/stall/redirect e scripts de timeline.",
       "acceptance": "CI cobre cancel/retry/resume/generation; 401/TLS não entram em retry cego; resultados são reproduzíveis.",
       "qa": [
@@ -2760,7 +2760,7 @@
         "TASK-E07-03",
         "TASK-E10-01"
       ],
-      "spec": "docs/quality/01-test-strategy.md",
+      "spec": "quality/01-estrategia-testes.md",
       "deliverable": "Fuzz targets, corpus adversarial, testes de limites e cobertura do threat model.",
       "acceptance": "Mídia/imagem/HLS/ZIP/RPC inválidos não causam OOM/hang; permissões negativas e URLs filhas cobertas.",
       "qa": [
@@ -2788,7 +2788,7 @@
         "TASK-E02-06",
         "TASK-E06-04"
       ],
-      "spec": "docs/quality/01-test-strategy.md",
+      "spec": "quality/01-estrategia-testes.md",
       "deliverable": "Workflows de teclado, screenshots por DPI e checklist de leitores de tela.",
       "acceptance": "Nenhum controle crítico ausente; validar DPI, PT-BR/EN e reduced motion; evidência manual de screen reader registrada.",
       "qa": [
@@ -2816,7 +2816,7 @@
         "TASK-E03-05",
         "TASK-E10-03"
       ],
-      "spec": "docs/quality/01-test-strategy.md",
+      "spec": "quality/01-estrategia-testes.md",
       "deliverable": "Métricas sanitizadas, callback histogram, launch/search benchmarks e baseline.",
       "acceptance": "Instrumentação não faz I/O na callback; reportar hardware, versões e runs; metas são medidas e não presumidas.",
       "qa": [
@@ -2846,7 +2846,7 @@
         "TASK-E10-07",
         "TASK-E14-04"
       ],
-      "spec": "docs/quality/01-test-strategy.md",
+      "spec": "quality/01-estrategia-testes.md",
       "deliverable": "8 h em 24/192, DAC unplug, taxa, busy/sleep e stress de CPU.",
       "acceptance": "Zero underruns causados pelo app no ambiente de referência; pausar ao unplug; captura transparente real; limites declarados.",
       "qa": [
@@ -2876,7 +2876,7 @@
         "TASK-E11-06",
         "TASK-E10-05"
       ],
-      "spec": "docs/quality/01-test-strategy.md",
+      "spec": "quality/01-estrategia-testes.md",
       "deliverable": "Drills de kill/migration/update rollback e testes de vazamento em export/log.",
       "acceptance": "Dados irreproduzíveis preservados; update adulterado/replay rejeitado; token de teste não aparece em logs/diagnósticos.",
       "qa": [
@@ -2908,7 +2908,7 @@
         "TASK-E07-10",
         "TASK-E14-06"
       ],
-      "spec": "docs/quality/01-test-strategy.md",
+      "spec": "quality/01-estrategia-testes.md",
       "deliverable": "Matriz de evidência REQ/TASK/QA e relatório de problemas conhecidos.",
       "acceptance": "Aceitar todos os requisitos M1–M3 ou registrar mudança explícita de escopo; zero P0/P1; ausência de hardware não vira teste aprovado.",
       "qa": [
@@ -2948,7 +2948,7 @@
       "dependencies": [
         "TASK-E15-02"
       ],
-      "spec": "docs/delivery/02-release-devops.md",
+      "spec": "delivery/02-release-devops.md",
       "deliverable": "Repositório independente, Cargo workspace mínimo, toolchain pin, ADRs e CI inicial.",
       "acceptance": "Nenhum código/asset Winamp; build real com lockfile resolvido; validador de docs passa; fixtures têm paths definidos.",
       "qa": [
@@ -2974,7 +2974,7 @@
       "dependencies": [
         "TASK-E11-01"
       ],
-      "spec": "docs/delivery/02-release-devops.md",
+      "spec": "delivery/02-release-devops.md",
       "deliverable": "Threat model aplicado, defaults de limites, regras de IPC/pacotes e prova de sandbox.",
       "acceptance": "Cada entrada tem controle e teste mapeados; segredos protegidos; isolamento de helper documentado com evidência.",
       "qa": [
@@ -3000,7 +3000,7 @@
       "dependencies": [
         "TASK-E11-01"
       ],
-      "spec": "docs/delivery/02-release-devops.md",
+      "spec": "delivery/02-release-devops.md",
       "deliverable": "Inventário de codecs, fontes, assets e políticas de build/distribuição.",
       "acceptance": "Verificar features FFmpeg/ASIO/encoders e licenças de fontes; decisões de marca/licença final explícitas, sem alegar autorização inexistente.",
       "qa": [
@@ -3029,7 +3029,7 @@
         "TASK-E14-01",
         "TASK-E15-04"
       ],
-      "spec": "docs/delivery/02-release-devops.md",
+      "spec": "delivery/02-release-devops.md",
       "deliverable": "CI Rust e hosts Windows x64/Linux x64/macOS x64+arm64/Android arm64, native dependencies, audits, SBOM e artifacts.",
       "acceptance": "Todos os targets obrigatórios compilam e executam smoke apropriado; cross-build não substitui hardware; features/hashes/NDK/Gradle travados e secrets isolados.",
       "qa": [
@@ -3057,7 +3057,7 @@
         "TASK-E11-02",
         "TASK-E03-01"
       ],
-      "spec": "docs/delivery/02-release-devops.md",
+      "spec": "delivery/02-release-devops.md",
       "deliverable": "Schema/migrations de configuração, escrita atômica, redaction e retenção.",
       "acceptance": "Fixtures de token/URL/path redacted; portable não grava secrets plaintext; crash permite recovery; telemetria desligada por padrão.",
       "qa": [
@@ -3085,7 +3085,7 @@
         "TASK-E11-04",
         "TASK-E11-05"
       ],
-      "spec": "docs/delivery/02-release-devops.md",
+      "spec": "delivery/02-release-devops.md",
       "deliverable": "Verificação de metadados/artefatos, canais, expiry, rotação e rollback.",
       "acceptance": "Rejeitar tamper/stale/replay; staging antes aplicar; não interromper playback/gravação automaticamente; DB preservado.",
       "qa": [
@@ -3113,7 +3113,7 @@
         "TASK-E07-05",
         "TASK-E11-06"
       ],
-      "spec": "docs/delivery/02-release-devops.md",
+      "spec": "delivery/02-release-devops.md",
       "deliverable": "Windowsinstaller/ZIP, Linuxpackages, MacUniversal2 ou packages x64/arm64 e AndroidAPK/AAB, com signing/symbols.",
       "acceptance": "Instalar/update/remove em cada alvo; preservar dados/grants; Mac slices nativas/notarização e Androidnative/targetSDK/page size checks; interfaces de distribuição específicas do host.",
       "qa": [
@@ -3142,7 +3142,7 @@
         "TASK-E06-08",
         "TASK-E07-08"
       ],
-      "spec": "docs/delivery/02-release-devops.md",
+      "spec": "delivery/02-release-devops.md",
       "deliverable": "Guia de usuário/SDK, notices, privacidade, contato real de segurança e release notes.",
       "acceptance": "Guia corresponde a features reais; SBOM/notices coerentes; canal de disclosure aprovado; limitações e claims corretos.",
       "qa": [
@@ -3171,7 +3171,7 @@
         "TASK-E10-10",
         "TASK-E15-10"
       ],
-      "spec": "docs/delivery/02-release-devops.md",
+      "spec": "delivery/02-release-devops.md",
       "deliverable": "Release candidate, artifacts assinados, relatório de evidência e plano canary.",
       "acceptance": "Gates M3 passam; problemas conhecidos visíveis; checksums/assinaturas conferidos; zero P0/P1; feedback beta tratado.",
       "qa": [
@@ -3197,7 +3197,7 @@
       "dependencies": [
         "TASK-E09-01"
       ],
-      "spec": "docs/delivery/02-release-devops.md",
+      "spec": "delivery/02-release-devops.md",
       "deliverable": "IaC, secrets, DB/PITR, métricas de CDN/custo e runbooks de restore/rollback.",
       "acceptance": "Drill avalia RPO 15 min/RTO 4 h; métricas sem PII; rollback compatível; responsável operacional designado.",
       "qa": [
@@ -3224,7 +3224,7 @@
         "TASK-E14-02",
         "TASK-E02-05"
       ],
-      "spec": "docs/platforms/01-support-matrix.md",
+      "spec": "platforms/01-matriz-suporte.md",
       "deliverable": "Porta Linux x86_64, PipeWire/PulseAudio, MPRIS, Orca, Secret Service e packaging testado.",
       "acceptance": "Passar corpus comum e gates M1–M3 no Linux nativo; Wayland/X11 e portas/saída testados; não usar Wine como substituto; instalar pacote real.",
       "qa": [
@@ -3253,7 +3253,7 @@
         "TASK-E14-02",
         "TASK-E02-05"
       ],
-      "spec": "docs/platforms/01-support-matrix.md",
+      "spec": "platforms/01-matriz-suporte.md",
       "deliverable": "CoreAudio, UI/acessibilidade, Now Playing, Keychain e distribuição x86_64+arm64 nativas.",
       "acceptance": "Fixtures, VoiceOver, device/rate changes e instalação passam em Mac Intel e Silicon reais; Universal2/helpers contêm ambas slices nativas nos DMG/ZIP Universal2 obrigatórios; sem exigir Rosetta.",
       "qa": [
@@ -3282,7 +3282,7 @@
         "TASK-E12-01",
         "TASK-E12-02"
       ],
-      "spec": "docs/delivery/01-roadmap.md",
+      "spec": "delivery/01-roadmap.md",
       "deliverable": "Matriz opcional ARM64 Windows/Linux; Android arm64 e macOSarm64 já são obrigatórios emM3.",
       "acceptance": "Arquiteturas adicionais têm build/hardware/output próprios; nenhum fallback oculto; a expansão não posterga Android/Mac arm64 obrigatórios.",
       "qa": [
@@ -3310,7 +3310,7 @@
         "TASK-E04-10",
         "TASK-E01-09"
       ],
-      "spec": "docs/delivery/01-roadmap.md",
+      "spec": "delivery/01-roadmap.md",
       "deliverable": "Backends condicionados ao DAC, packing DoP e capabilities de taxa/DSD.",
       "acceptance": "DSP desligado em DSD nativo; markers/bytes validados; equipamento sem suporte falha sem conversão oculta.",
       "qa": [
@@ -3339,7 +3339,7 @@
         "TASK-E01-08",
         "TASK-E07-05"
       ],
-      "spec": "docs/delivery/01-roadmap.md",
+      "spec": "delivery/01-roadmap.md",
       "deliverable": "Adapters libopenmpt, synth com SF2 do usuário e codecs opcionais testados.",
       "acceptance": "Matriz por perfil e licença; loops limitados; fonte SF2 explicitada; helpers nativos isolados; sem suporte fictício.",
       "qa": [
@@ -3366,7 +3366,7 @@
         "TASK-E08-02",
         "TASK-E03-08"
       ],
-      "spec": "docs/delivery/01-roadmap.md",
+      "spec": "delivery/01-roadmap.md",
       "deliverable": "Adapter de drive, secure mode/offset, metadados e relatório de checksums.",
       "acceptance": "Erros de leitura identificados; cancelamento seguro; rip verificado apenas com checksum real; licenças de providers atendidas.",
       "qa": [
@@ -3394,7 +3394,7 @@
         "TASK-E07-10",
         "TASK-E04-10"
       ],
-      "spec": "docs/delivery/01-roadmap.md",
+      "spec": "delivery/01-roadmap.md",
       "deliverable": "Scanner/worker VST3 isolado, compensação de latência e spike WASM DSP separado.",
       "acceptance": "Plugin travado bloqueado; crash não derruba player; não executar WASM na callback sem prova de deadline; revisar SDK license.",
       "qa": [
@@ -3422,7 +3422,7 @@
         "TASK-E05-10",
         "TASK-E09-10"
       ],
-      "spec": "docs/delivery/01-roadmap.md",
+      "spec": "delivery/01-roadmap.md",
       "deliverable": "Providers autorizados, DASH áudio, locators WebDAV e capability discovery.",
       "acceptance": "Negociar auth/seek/codec/qualidade; DRM desconhecido gera erro explícito; roots privadas só com permissão.",
       "qa": [
@@ -3450,7 +3450,7 @@
         "TASK-E08-10",
         "TASK-E09-10"
       ],
-      "spec": "docs/delivery/01-roadmap.md",
+      "spec": "delivery/01-roadmap.md",
       "deliverable": "Bridges Chromecast/UPnP/AirPlay conforme APIs e controles pareados.",
       "acceptance": "Capacidade real do destino; limites de clock/transferência visíveis; negar cliente não pareado; sem claims hi-res não verificados.",
       "qa": [
@@ -3479,7 +3479,7 @@
         "TASK-E03-10",
         "TASK-E12-03"
       ],
-      "spec": "docs/delivery/01-roadmap.md",
+      "spec": "delivery/01-roadmap.md",
       "deliverable": "EQ64, bandas por canal, surround opcional, biblioteca de 1 milhão e RTL completo.",
       "acceptance": "Medir CPU/latência e biblioteca; emulação surround rotulada; RTL/a11y validados; voice remover experimental explicitado.",
       "qa": [
@@ -3509,7 +3509,7 @@
         "TASK-E01-01",
         "TASK-E01-02"
       ],
-      "spec": "docs/platforms/02-android.md",
+      "spec": "platforms/02-android.md",
       "deliverable": "Spike NDK/ABI Rust, ownership de buffers, AAudio direto (vynamp-output) e adapter Media3, com decisões de UI/runtime.",
       "acceptance": "Tocar WAV/FLAC em aparelho arm64 real; callback sem JNI/alloc; native build compatível com requisitos de páginas; comparar lifecycle e runtime antes congelar.",
       "qa": [
@@ -3537,7 +3537,7 @@
         "TASK-E13-01",
         "TASK-E01-03"
       ],
-      "spec": "docs/platforms/02-android.md",
+      "spec": "platforms/02-android.md",
       "deliverable": "Serviço foreground proprietário da reprodução, Player adapter, notificação/controles e bridge lifetime.",
       "acceptance": "Activity não é owner do áudio; lockscreen/play/pause usam fila única Rust; cleanup idempotente; serviço segue restrições do SDK.",
       "qa": [
@@ -3564,7 +3564,7 @@
         "TASK-E13-02",
         "TASK-E01-05"
       ],
-      "spec": "docs/platforms/02-android.md",
+      "spec": "platforms/02-android.md",
       "deliverable": "AudioManager, foco/noisy/Bluetooth e output clock com formato negociado.",
       "acceptance": "Definir loss/transient/duck; unplug pausa sem tocar speaker; desconexão recupera fora da callback; taxa e sharing reais visíveis.",
       "qa": [
@@ -3592,7 +3592,7 @@
         "TASK-E13-02",
         "TASK-E03-03"
       ],
-      "spec": "docs/platforms/02-android.md",
+      "spec": "platforms/02-android.md",
       "deliverable": "Adapters de document URI/FD, grants persistidos, indexação e capabilities de escrita de tags.",
       "acceptance": "Deny/revoke preserva biblioteca e rádio; não exigir acesso irrestrito a arquivos; Content URI não vira path fictício; backup/limites de escrita explícitos.",
       "qa": [
@@ -3620,7 +3620,7 @@
         "TASK-E13-02",
         "TASK-E02-02"
       ],
-      "spec": "docs/design/04-mobile-tablet.md",
+      "spec": "design/05-mobile-tablet.md",
       "deliverable": "Shell Compose com tokens compartilhados, transporte/fila/EQ básico e TalkBack.",
       "acceptance": "Targets de 48 dp; fonte 200% faz reflow; nenhuma fila duplicada; back/rotation não reiniciam áudio; paleta e geometria phone conferidas.",
       "qa": [
@@ -3650,7 +3650,7 @@
         "TASK-E05-03",
         "TASK-E05-05"
       ],
-      "spec": "docs/platforms/02-android.md",
+      "spec": "platforms/02-android.md",
       "deliverable": "Adapters do core para HTTP/ICY, podcasts e jobs de download respeitando condições do sistema.",
       "acceptance": "Cancel/retry e rádio screen-off funcionam; permissões, rede e jobs respeitados; não iniciar dois decoders produzindo áudio simultaneamente.",
       "qa": [
@@ -3679,7 +3679,7 @@
         "TASK-E13-03",
         "TASK-E03-02"
       ],
-      "spec": "docs/platforms/02-android.md",
+      "spec": "platforms/02-android.md",
       "deliverable": "Checkpoint, reconexão ao serviço, WorkManager, quotas de cache e wake locks limitados.",
       "acceptance": "Process death permite restore sem autostart proibido; rotation mantém sessão; screen-off 2 h sem underrun causado pelo app; wake locks liberados e visualizer desativado no background.",
       "qa": [
@@ -3708,7 +3708,7 @@
         "TASK-E06-04",
         "TASK-E07-08"
       ],
-      "spec": "docs/platforms/02-android.md",
+      "spec": "platforms/02-android.md",
       "deliverable": "Perfis phone/tablet, manager mobile e runtime de extensões validado para Android.",
       "acceptance": "Fallback acessível; budgets e permissões funcionam; nenhum helper nativo externo; runtime e distribuição compatíveis documentados, sem promessa de JIT não provado.",
       "qa": [
@@ -3739,7 +3739,7 @@
         "TASK-E13-08",
         "TASK-E11-04"
       ],
-      "spec": "docs/design/04-mobile-tablet.md",
+      "spec": "design/05-mobile-tablet.md",
       "deliverable": "UI adaptativa, APK/AAB assinado, ABIs/NDK/page size e requisitos de publicação.",
       "acceptance": "Phone/tablet/landscape/hinge/fonte passam; update preserva dados; target SDK e políticas revisados; aparelho arm64 real além do emulador.",
       "qa": [
@@ -3768,7 +3768,7 @@
         "TASK-E04-10",
         "TASK-E05-09"
       ],
-      "spec": "docs/quality/03-multiplatform-matrix.md",
+      "spec": "quality/03-matriz-multiplataforma.md",
       "deliverable": "Relatório de formatos comuns/DSP/HLS, lifecycle/focus/storage/TalkBack e energia.",
       "acceptance": "Gates comuns e Android aprovados no aparelho real; saída hi-res apenas quando negociada; flag AAudio não é prova de bit-perfect.",
       "qa": [
@@ -3797,7 +3797,7 @@
       "dependencies": [
         "TASK-E11-01"
       ],
-      "spec": "docs/platforms/01-support-matrix.md",
+      "spec": "platforms/01-matriz-suporte.md",
       "deliverable": "Matriz de toolchains/ABIs Windows/Linux/macOS Intel/macOS Silicon/Android e dependencies.",
       "acceptance": "Core e codecs nativos resolvem em cada ABI; outputs/files/keychain provados; baselines e licenças suportam todos os alvos antes freeze.",
       "qa": [
@@ -3825,7 +3825,7 @@
         "TASK-E14-01",
         "TASK-E01-03"
       ],
-      "spec": "docs/platforms/01-support-matrix.md",
+      "spec": "platforms/01-matriz-suporte.md",
       "deliverable": "Traits/adapters para Path/FD/Content URI, clocks/media controls/config/keychain por host.",
       "acceptance": "Domain não depende de Win32; grants/focus encapsulados; nenhum fallback plaintext; callback não chama UI ou operação bloqueante de OS. A slice M1 abre arquivo e executa play/pause/seek/stop nativamente em Windows, Linux, Mac Intel, Mac Silicon e Android.",
       "qa": [
@@ -3854,7 +3854,7 @@
         "TASK-E14-02",
         "TASK-E06-01"
       ],
-      "spec": "docs/platforms/01-support-matrix.md",
+      "spec": "platforms/01-matriz-suporte.md",
       "deliverable": "Registry de capabilities por OS e perfis desktop/phone/tablet de tema e preset.",
       "acceptance": "Tema carrega com fallback em todos; registry mostra formatos reais; preset compartilhado tem resposta numérica equivalente; ações não aplicáveis explícitas.",
       "qa": [
@@ -3885,7 +3885,7 @@
         "TASK-E13-07",
         "TASK-E04-06"
       ],
-      "spec": "docs/audio/05-platform-backends.md",
+      "spec": "reference/audio/05-platform-backends.md",
       "deliverable": "Fixtures e hardware por OS/ABI, com clock/seek/drain/gapless dos backends.",
       "acceptance": "Mac Intel e arm64 testados separadamente; Linux nativo e Android real; nenhum fim cortado/buffer antigo; exclusive não presumido.",
       "qa": [
@@ -3917,7 +3917,7 @@
         "TASK-E12-02",
         "TASK-E13-09"
       ],
-      "spec": "docs/platforms/01-support-matrix.md",
+      "spec": "platforms/01-matriz-suporte.md",
       "deliverable": "Installer/packages/Universal 2/APK-AAB, migrations, dependencies nativas e SBOM.",
       "acceptance": "Artifacts instalam/assinam/atualizam; permissões preservadas; portais Linux, notarização macOS e native pages Android conferidos no release.",
       "qa": [
@@ -3951,7 +3951,7 @@
         "TASK-E17-12",
         "TASK-E17-20"
       ],
-      "spec": "docs/quality/03-multiplatform-matrix.md",
+      "spec": "quality/03-matriz-multiplataforma.md",
       "deliverable": "Matriz de evidência agregada para Windows/Linux/macOS Intel/macOS Silicon/Android.",
       "acceptance": "Todos os alvos M1–M3 aprovados com hardware e acessibilidade; alvo ausente bloqueia stable multiplataforma; zero bugs P0/P1 e exceções por capability explícitas.",
       "qa": [
@@ -3978,7 +3978,7 @@
         "REQ-E15-01"
       ],
       "dependencies": [],
-      "spec": "docs/engineering/01-agents-superpowers.md",
+      "spec": "_arquivo/repo/docs/engineering/01-agents-superpowers.md",
       "deliverable": "Entrypoints, settings, plugin lock e bootstrap/doctor nativos.",
       "acceptance": "Ambos agentes confirmam plugin ativo e skill discovery em máquina compatível; configuração sozinha não conta como instalação.",
       "qa": [
@@ -4004,7 +4004,7 @@
       "dependencies": [
         "TASK-E15-01"
       ],
-      "spec": "docs/engineering/02-worktrees.md",
+      "spec": "engineering/02-worktrees.md",
       "deliverable": "Scripts e regras de isolamento, claim atômico e remoção segura.",
       "acceptance": "Índices independentes, task exclusiva, paths válidos, worktree suja/unmerged preservada; hotfix só remove após main e develop.",
       "qa": [
@@ -4031,7 +4031,7 @@
       "dependencies": [
         "TASK-E15-02"
       ],
-      "spec": "docs/engineering/03-gitflow-github.md",
+      "spec": "engineering/03-gitflow.md",
       "deliverable": "Importação por branch/PR ou bootstrap vazio, proteções e default develop.",
       "acceptance": "Privacidade real confirmada; histórico preservado; sem force push; CI Gate/proteções realmente aplicados ou pendência registrada.",
       "qa": [
@@ -4057,7 +4057,7 @@
       "dependencies": [
         "TASK-E15-03"
       ],
-      "spec": "docs/engineering/04-ci-cd.md",
+      "spec": "engineering/04-ci.md",
       "deliverable": "CI docs/tooling e matriz Cargo/Android, required aggregate context.",
       "acceptance": "Jobs ativos não mascaram falha; pins/actions/read permissions; skips sem fontes não aprovam player; cinco alvos cobertos.",
       "qa": [
@@ -4085,7 +4085,7 @@
         "TASK-E11-01",
         "TASK-E15-04"
       ],
-      "spec": "docs/engineering/05-tests.md",
+      "spec": "engineering/05-testes.md",
       "deliverable": "Unit/integration/numerical/stream/UI/hardware/fuzz e protocolo de relatórios.",
       "acceptance": "Tests reais/comandos/oráculos por risco; fixture licence/hash; hardware ausente não passa; plugin/installer validations separados de tooling.",
       "qa": [
@@ -4115,7 +4115,7 @@
         "TASK-E01-10",
         "TASK-E11-04"
       ],
-      "spec": "docs/engineering/06-installers.md",
+      "spec": "_arquivo/repo/docs/engineering/06-installers.md",
       "deliverable": "EXE user scope + ZIP, runtime inventory e SignTool.",
       "acceptance": "Install/upgrade/uninstall sem admin para playback; dados preservados; binaries/installer assinados, manifesto/hash correto.",
       "qa": [
@@ -4143,7 +4143,7 @@
         "TASK-E12-01",
         "TASK-E11-04"
       ],
-      "spec": "docs/engineering/06-installers.md",
+      "spec": "_arquivo/repo/docs/engineering/06-installers.md",
       "deliverable": "AppDir/DEB, tool hash, libs/notices e manifesto assinado.",
       "acceptance": "Rodar em distro baseline limpa sem libs ausentes; licenças/SBOM auditados; manifesto assinado e instalação/upgrade preservam dados.",
       "qa": [
@@ -4172,7 +4172,7 @@
         "TASK-E12-02",
         "TASK-E11-04"
       ],
-      "spec": "docs/engineering/06-installers.md",
+      "spec": "_arquivo/repo/docs/engineering/06-installers.md",
       "deliverable": "Slices Intel/Silicon, runtime inside-out signing e notary/staple.",
       "acceptance": "Executar nativamente em ambos Macs; Gatekeeper/notary/staple/upgrade testados; helpers/libs suportam arquitetura prometida.",
       "qa": [
@@ -4201,7 +4201,7 @@
         "TASK-E13-09",
         "TASK-E11-04"
       ],
-      "spec": "docs/engineering/06-installers.md",
+      "spec": "_arquivo/repo/docs/engineering/06-installers.md",
       "deliverable": "Android release signing, native dependencies/page-size e Play readiness.",
       "acceptance": "APK/AAB signer corresponde ao keystore; target SDK/NDK/ABIs validados, grants/data sobrevivem update; testar aparelho arm64.",
       "qa": [
@@ -4233,7 +4233,7 @@
         "TASK-E15-09",
         "TASK-E10-10"
       ],
-      "spec": "docs/engineering/07-secrets-activation.md",
+      "spec": "engineering/07-segredos.md",
       "deliverable": "Evidence digest, gates, manifest minisign, secrets/environments e draft.",
       "acceptance": "Conjunto completo de artifacts reais/assinados; source digest e relatórios revisados; nunca publicar stubs/unsigned stable; mantenedor aprova publicação.",
       "qa": [
@@ -4260,7 +4260,7 @@
       "dependencies": [
         "TASK-E11-01"
       ],
-      "spec": "docs/platforms/04-activation-ownership.md",
+      "spec": "platforms/04-ativacao-ownership.md",
       "deliverable": "Contrato OpenRequest, limites e spikes de entrega nativa em cinco alvos.",
       "acceptance": "Cold/warm e lotes 1/2/20/100 preservam ordem; nomes especiais são dados; limites e ACK/generation definidos.",
       "qa": [
@@ -4287,7 +4287,7 @@
         "TASK-E16-01",
         "TASK-E01-03"
       ],
-      "spec": "docs/platforms/04-activation-ownership.md",
+      "spec": "platforms/04-ativacao-ownership.md",
       "deliverable": "Lock OS, encaminhamento IPC, idempotência e isolamento de perfis.",
       "acceptance": "Vinte launches elegem um owner; installed/portable não escrevem o mesmo perfil simultaneamente; stale PID não libera lock; ACK e Conflict testados.",
       "qa": [
@@ -4316,7 +4316,7 @@
         "TASK-E16-09",
         "TASK-E08-06"
       ],
-      "spec": "docs/platforms/03-system-integration.md",
+      "spec": "platforms/03-integracao-sistema.md",
       "deliverable": "Registro HKCU, pacote esparso MSIX com IExplorerCommand, verbos completos e pacotes de ícones .ico multi-res.",
       "acceptance": "Explorer moderno (Win11) e clássico (Win10) abrem lote ordenado por IShellItemArray; pacote esparso registrado via PackageManager; remoção limpa; suporte às 3 famílias de ícones.",
       "qa": [
@@ -4346,7 +4346,7 @@
         "TASK-E16-09",
         "TASK-E14-02"
       ],
-      "spec": "docs/platforms/03-system-integration.md",
+      "spec": "platforms/03-integracao-sistema.md",
       "deliverable": "Desktop Entry com Desktop Actions, extensões/ServiceMenus (Dolphin, Nautilus, Thunar), MIME hicolor e MPRIS.",
       "acceptance": "Gerenciadores (Dolphin, Nautilus, Thunar) exibem submenu Vynamp com verbos canônicos; %U repassa lote sem shell; ícones hicolor por família instalados.",
       "qa": [
@@ -4376,7 +4376,7 @@
         "TASK-E16-09",
         "TASK-E14-02"
       ],
-      "spec": "docs/platforms/03-system-integration.md",
+      "spec": "platforms/03-integracao-sistema.md",
       "deliverable": "UTTypes/document types, Quick Actions (NSServices) no Finder, callbacks LaunchServices e pacotes de ícones in-app.",
       "acceptance": "Intel e Silicon recebem cold/warm batches via application(_:openFiles:); Quick Actions no Finder ativas; pacotes de ícones aplicados na UI interna; defaults preservados.",
       "qa": [
@@ -4407,7 +4407,7 @@
         "TASK-E13-04",
         "TASK-E13-05"
       ],
-      "spec": "docs/platforms/03-system-integration.md",
+      "spec": "platforms/03-integracao-sistema.md",
       "deliverable": "Manifest específico, ContentResolver/FD e encaminhamento ao serviço de sessão.",
       "acceptance": "VIEW/SEND/MULTIPLE e onNewIntent preservam grants/ordem; rotation não duplica; Share pede ação; sem persistência de grant não oferecido.",
       "qa": [
@@ -4437,7 +4437,7 @@
         "TASK-E16-05",
         "TASK-E16-06"
       ],
-      "spec": "docs/platforms/03-system-integration.md",
+      "spec": "platforms/03-integracao-sistema.md",
       "deliverable": "Relatórios por OS/ABI de instalação, defaults, lote, erros e concorrência.",
       "acceptance": "QA-022/023/024 passam nos cenários aplicáveis M1–M3 dos cinco alvos; deep links/OAuth só em M4; terceiros preservados; ausência de hardware não vira aprovação.",
       "qa": [
@@ -4468,7 +4468,7 @@
         "TASK-E15-07",
         "TASK-E15-08"
       ],
-      "spec": "docs/platforms/04-activation-ownership.md",
+      "spec": "platforms/04-ativacao-ownership.md",
       "deliverable": "Backup/restore consistente, portable relocável e uninstall de registros próprios (ProgIDs e pacote esparso).",
       "acceptance": "Restore por staging e rollback preserva mídia; desinstalação remove pacote esparso e HKCU sem sobras; portable permite ativar/desativar integração com confirmação; update respeita owner.",
       "qa": [
@@ -4496,7 +4496,7 @@
         "TASK-E17-01",
         "TASK-E16-01"
       ],
-      "spec": "docs/delivery/04-capability-release-gates.md",
+      "spec": "delivery/04-gates.md",
       "deliverable": "Gerador de handlers por container/parser e capabilities reais de cada artefato.",
       "acceptance": "planned/experimental/sem backend ou licença não gera handler; MIME genérico/video/BT não é associado; manifest e pacote têm mesmos hashes.",
       "qa": [
@@ -4523,7 +4523,7 @@
         "TASK-E16-01",
         "TASK-E09-03"
       ],
-      "spec": "docs/platforms/04-activation-ownership.md",
+      "spec": "platforms/04-ativacao-ownership.md",
       "deliverable": "Rotas próprias e HTTPS verificadas, OAuth state/PKCE e preview de ação.",
       "acceptance": "Links rejeitam path/shell/plugin/autoplay e callbacks falsos; não registram HTTP global; intent concedida não amplia filesystem grants.",
       "qa": [
@@ -4550,7 +4550,7 @@
         "TASK-E11-01",
         "TASK-E14-01"
       ],
-      "spec": "docs/audio/06-codec-capability-registry.md",
+      "spec": "reference/audio/06-codec-capability-registry.md",
       "deliverable": "Catálogo versionado, spikes de backends/licenças e modelo de capability por alvo. Spike M0 fixa algoritmo/oversampling/latência do guard true-peak e estimador independente com fixtures.",
       "acceptance": "Cada perfil tem fase/política/operação; codecs NGA têm decisão de viabilidade; não inferir HE/USAC por AAC-LC nem renderer por decoder. Prova true-peak e pin do oráculo M0 rastreados; implementação permanece M3.",
       "qa": [
@@ -4578,7 +4578,7 @@
       "dependencies": [
         "TASK-E01-07"
       ],
-      "spec": "docs/audio/06-codec-capability-registry.md",
+      "spec": "reference/audio/06-codec-capability-registry.md",
       "deliverable": "Contratos de priming, preskip, gain/DRC e samples por demux/decoder.",
       "acceptance": "Opus/MP3/MP4/Matroska/Ogg fixtures não perdem ou duplicam frames; ganho/DRC/RG aplicados uma vez e caminho neutro documentado.",
       "qa": [
@@ -4605,7 +4605,7 @@
       "dependencies": [
         "TASK-E01-08"
       ],
-      "spec": "docs/audio/06-codec-capability-registry.md",
+      "spec": "reference/audio/06-codec-capability-registry.md",
       "deliverable": "CAF/AIFF-C/AU/Ogg FLAC, MP4 e Matroska/TS com seleção de faixas de áudio.",
       "acceptance": "Bindings exigidos passam duration/seek/cancel; WebM não anuncia FLAC; seleção language/default é determinística sem decodificar vídeo.",
       "qa": [
@@ -4632,7 +4632,7 @@
         "TASK-E17-01",
         "TASK-E01-07"
       ],
-      "spec": "docs/audio/06-codec-capability-registry.md",
+      "spec": "reference/audio/06-codec-capability-registry.md",
       "deliverable": "Adapter USAC/AOT42 quando viável, ou relatório de indisponibilidade por build/licença.",
       "acceptance": "Fixtures DRC/seek/trim por alvo ou motivo unsupported auditado; sem fallback LC nem declaração universal; spike M0 registrado.",
       "qa": [
@@ -4659,7 +4659,7 @@
       "dependencies": [
         "TASK-E01-08"
       ],
-      "spec": "docs/audio/06-codec-capability-registry.md",
+      "spec": "reference/audio/06-codec-capability-registry.md",
       "deliverable": "Corpus WavPack/WVC/float, APE/TTA/MPC/WMA e PCM de containers adicionais.",
       "acceptance": "Lossless inteiro sample-exact; WV sem correção não recebe selo lossless; níveis/versões/endianness/validbits/u64 são verificados.",
       "qa": [
@@ -4685,7 +4685,7 @@
       "dependencies": [
         "TASK-E03-08"
       ],
-      "spec": "docs/audio/06-codec-capability-registry.md",
+      "spec": "reference/audio/06-codec-capability-registry.md",
       "deliverable": "Matriz read/write de ID3/MP4/Matroska/CAF/AIFF/BWF e LRC/WebVTT.",
       "acceptance": "Roundtrip preserva desconhecidos; capítulos/ratings e WVC não somem no rename; grant de sidecar não amplia acesso nem baixa URLs.",
       "qa": [
@@ -4713,7 +4713,7 @@
         "TASK-E04-03",
         "TASK-E04-07"
       ],
-      "spec": "docs/audio/07-dsp-signal-contract.md",
+      "spec": "reference/audio/07-dsp-signal-contract.md",
       "deliverable": "Guard final após mix/master/resampler e antes da quantização, separado do limiter criativo.",
       "acceptance": "Nenhum boost/processamento posterior; ceiling padrão -1 dBTP; latency/reset/generation e modo transparente coerentes.",
       "qa": [
@@ -4740,7 +4740,7 @@
         "TASK-E17-07",
         "TASK-E10-03"
       ],
-      "spec": "docs/audio/07-dsp-signal-contract.md",
+      "spec": "reference/audio/07-dsp-signal-contract.md",
       "deliverable": "Harness no buffer do backend, estimador referência e casos adversariais multichannel.",
       "acceptance": "Crossfade/EQ/gain/resample/dither finais não excedem ceiling +0.1 dBTP; taxas/bit-depths/NaN e latência documentados.",
       "qa": [
@@ -4767,7 +4767,7 @@
         "TASK-E06-06",
         "TASK-E07-01"
       ],
-      "spec": "docs/extensions/04-visualizer-contract.md",
+      "spec": "extensions/05-visualizador.md",
       "deliverable": "Scenes declarativas, ring/taps e famílias FFT/phase/spectrogram/particles.",
       "acceptance": "Preset inválido/código arbitrário rejeitado; orçamento agregado e overflow descartam visuais; nunca bloqueiam callback/clock.",
       "qa": [
@@ -4795,7 +4795,7 @@
         "TASK-E13-05",
         "TASK-E14-04"
       ],
-      "spec": "docs/extensions/04-visualizer-contract.md",
+      "spec": "extensions/05-visualizador.md",
       "deliverable": "Testes CPU/GPU/device-loss, acessibilidade, fullscreen e background Android.",
       "acceptance": "GPU perdida mantém áudio; zero rendering Android screen-off/background; reduced motion, foco e FPS/budgets medidos.",
       "qa": [
@@ -4821,7 +4821,7 @@
       "dependencies": [
         "TASK-E05-01"
       ],
-      "spec": "docs/streaming/05-network-proxy-and-containers.md",
+      "spec": "streaming/04-rede-proxy.md",
       "deliverable": "Adapters system/manual/direct, vault, CONNECT/TLS e fixtures 407/DNS/redirect.",
       "acceptance": "Proxy failure não cai direto; credenciais origin/proxy/provider separadas; redirects/filhos respeitam política; cancel/reconnect bounded.",
       "qa": [
@@ -4849,7 +4849,7 @@
         "TASK-E16-09",
         "TASK-E15-04"
       ],
-      "spec": "docs/delivery/04-capability-release-gates.md",
+      "spec": "delivery/04-gates.md",
       "deliverable": "Manifest gerado com backend/features/licenças/hashes/evidência e validação do pacote.",
       "acceptance": "Catálogo planned não é disponibilidade; required comum comprovado nos cinco alvos; adapter ausente não gera associação nem encode.",
       "qa": [
@@ -4876,7 +4876,7 @@
         "TASK-E17-01",
         "TASK-E17-03"
       ],
-      "spec": "docs/audio/06-codec-capability-registry.md",
+      "spec": "reference/audio/06-codec-capability-registry.md",
       "deliverable": "MHAS/mha1/mhm1 com perfil/level, apresentações e renderer certificado.",
       "acceptance": "Decoder e renderer têm provas separadas; objetos/downmix e saída testados ou unavailable explícito; licença de software não implica patentes.",
       "qa": [
@@ -4903,7 +4903,7 @@
         "TASK-E17-01",
         "TASK-E17-03"
       ],
-      "spec": "docs/audio/06-codec-capability-registry.md",
+      "spec": "reference/audio/06-codec-capability-registry.md",
       "deliverable": "Adapter AC-4 condicionado, seleção de apresentação/DRC e capacidades.",
       "acceptance": "Apresentação/canais/loudness batem referência por build; não inferir disponibilidade por container MP4.",
       "qa": [
@@ -4930,7 +4930,7 @@
         "TASK-E17-01",
         "TASK-E17-03"
       ],
-      "spec": "docs/audio/06-codec-capability-registry.md",
+      "spec": "reference/audio/06-codec-capability-registry.md",
       "deliverable": "Demux IAMF, codecs subjacentes e mix presentations com rendering por layout.",
       "acceptance": "Opus/AAC-LC/FLAC/LPCM isolados não aprovam modelo; loudness/layout/DRC e renderer por referência com licenças.",
       "qa": [
@@ -4957,7 +4957,7 @@
         "TASK-E17-03",
         "TASK-E04-10"
       ],
-      "spec": "docs/audio/06-codec-capability-registry.md",
+      "spec": "reference/audio/06-codec-capability-registry.md",
       "deliverable": "AC3/EAC3/TrueHD/MLP/DTS Core/HD, downmix e saída codificada condicionada.",
       "acceptance": "Atmos/DTS:X não anunciados como renderer genérico; receiver/rota/licença e DSP incompatível comprovados ou recusados.",
       "qa": [
@@ -4984,7 +4984,7 @@
         "TASK-E01-08",
         "TASK-E12-05"
       ],
-      "spec": "docs/audio/06-codec-capability-registry.md",
+      "spec": "reference/audio/06-codec-capability-registry.md",
       "deliverable": "Certificação AMR/3GP/Speex/LD/ELD/WMA Voice e bindings legacy opcionais.",
       "acceptance": "Fixture por perfil, cancel/seek limites e helper/licença publicados; não associar vídeo em lote nem prometer todos codecs.",
       "qa": [
@@ -5011,7 +5011,7 @@
         "TASK-E12-05",
         "TASK-E12-04"
       ],
-      "spec": "docs/audio/06-codec-capability-registry.md",
+      "spec": "reference/audio/06-codec-capability-registry.md",
       "deliverable": "Fixtures de subsongs/loops/SF2/WavPack DSD/DST e native/DoP após implementações E12. Extração SACD ISO legal não protegida, sem handler ISO genérico.",
       "acceptance": "Rendering MIDI não é decode PCM; SoundFont licenciado explícito; loops/memória bound; DSD raw/DST/PCM/DoP distinguíveis. SACD ISO separa extração raw/DST, perfis e capacidade legal, sem contornar proteção.",
       "qa": [
@@ -5040,7 +5040,7 @@
         "TASK-E14-02",
         "TASK-E04-08"
       ],
-      "spec": "docs/audio/06-codec-capability-registry.md",
+      "spec": "reference/audio/06-codec-capability-registry.md",
       "deliverable": "Diagnóstico de rota OS, codec negociado quando exposto e volume/headroom por dispositivo.",
       "acceptance": "SBC/AAC/aptX/LDAC/LC3 não geram associações; API ausente mostra desconhecido; troca de rota não aumenta volume nem garante hi-res.",
       "qa": [
@@ -5077,7 +5077,7 @@
         "TASK-E17-19",
         "TASK-E16-07"
       ],
-      "spec": "docs/delivery/04-capability-release-gates.md",
+      "spec": "delivery/04-gates.md",
       "deliverable": "Evidência por build/alvo do corpus comum, condicionais, cadeia final e visualização.",
       "acceptance": "Cinco alvos passam required M3; conditional reportado honestamente; nenhum gate depende de features M4/M5; QA e limites publicados.",
       "qa": [
@@ -5112,7 +5112,7 @@
         "TASK-E16-04",
         "TASK-E16-05"
       ],
-      "spec": "docs/tools/01-vynamp-restore.md",
+      "spec": "reference/tools/01-vynamp-restore.md",
       "deliverable": "Ferramenta desktop `vynamp-restore` com motor de restauração próprio, diagnóstico de defeitos e exportação preservando metadados.",
       "acceptance": "A fonte nunca é sobrescrita sem confirmação; escrita atômica com validação pós-escrita preserva origem e metadados; defeitos reportados têm severidade e evidência; correção nunca é aplicada sem previsualização; saída registra versão do motor e parâmetros usados.",
       "qa": [
@@ -5145,7 +5145,7 @@
         "TASK-E08-02",
         "TASK-E11-03"
       ],
-      "spec": "docs/tools/02-vynamp-converter.md",
+      "spec": "reference/tools/02-vynamp-converter.md",
       "deliverable": "Ferramenta desktop `vynamp-converter` com fila de jobs persistida, apoiada na lib própria `vynamp-encode` como única fonte de codificadores.",
       "acceptance": "Conversão lossy nunca é anunciada como restauração hi-res; degradação de profundidade ou taxa exige confirmação e aparece no relatório; cancelamento e disco cheio preservam a source; saída é validada após escrita; colisão de nome não sobrescreve.",
       "qa": [
@@ -5175,7 +5175,7 @@
       "dependencies": [
         "TASK-E15-03"
       ],
-      "spec": "docs/engineering/04-ci-cd.md",
+      "spec": "engineering/04-ci.md",
       "deliverable": "ADR-014, workflows ci/release/quality em GitHub Actions com actions fixadas por SHA e gate único CI Gate, xtask de validação e release reescrito para Actions e remoção do Woodpecker.",
       "acceptance": "Actions fixadas por SHA; gate reprova dependência falha, cancelada ou ausente; release só em tag v* e falha fechado; macOS Intel e Apple Silicon viram alvos verificados; nenhum segredo no histórico.",
       "qa": [
@@ -5202,7 +5202,7 @@
       "dependencies": [
         "TASK-E19-01"
       ],
-      "spec": "docs/security/01-threat-model.md",
+      "spec": "security/01-threat-model.md",
       "deliverable": "LICENSE dual, LEGAL, CODE_OF_CONDUCT, GOVERNANCE, templates de issue, SECURITY.md com canal de advisory e README bilíngue EN/PT, com docs de CI e Gitflow reescritos para o repo público.",
       "acceptance": "README bilíngue EN/PT na raiz; SECURITY.md aponta para GitHub Security Advisories e não inventa contato; LICENSE dual presente; docs não afirmam capacidade ou alvo não verificado.",
       "qa": [
@@ -5229,7 +5229,7 @@
       "dependencies": [
         "TASK-E04-03"
       ],
-      "spec": "docs/audio/10-vitrola.md",
+      "spec": "reference/audio/10-vitrola.md",
       "deliverable": "Design aprovado do vitrola incorporado como módulo DSP interno, referências ao repositório externo removidas e repositório vitrola arquivado de forma reversível.",
       "acceptance": "Nenhum documento normativo cita o repositório externo do vitrola; a spec descreve módulo DSP interno preservando VIT-T-01..10; o design local não se perde; o repositório remoto fica arquivado e reversível.",
       "qa": [
@@ -5257,7 +5257,7 @@
         "TASK-E18-01",
         "TASK-E18-02"
       ],
-      "spec": "docs/tools/02-vynamp-converter.md",
+      "spec": "reference/tools/02-vynamp-converter.md",
       "deliverable": "Specs de Restore e Converter re-apontadas para repositórios próprios, com a fonte normativa mantida no repo principal e os repos vynamp-encode, vynamp-converter e vynamp-restore criados públicos.",
       "acceptance": "As specs apontam para URLs reais dos repos novos; a fonte normativa continua única no repo principal; os três repos existem, públicos, com README bilíngue, LICENSE e SECURITY.md.",
       "qa": [
@@ -5284,7 +5284,7 @@
       "dependencies": [
         "TASK-E19-01"
       ],
-      "spec": "docs/engineering/04-ci-cd.md",
+      "spec": "engineering/04-ci.md",
       "deliverable": "GitHub Actions com gate CI Gate em vynamp-decode e vynamp-output, CI próprio em Node no vynamp-mvp-reference, e README bilíngue EN/PT nos três repos, com Woodpecker removido.",
       "acceptance": "Cada repo publica o contexto CI Gate e reprova falha ou cancelamento; o CI do MVP roda serve e verify encadeados; os READMEs são bilíngues; nenhum workflow referencia Woodpecker.",
       "qa": [
@@ -5314,7 +5314,7 @@
         "TASK-E19-04",
         "TASK-E19-05"
       ],
-      "spec": "docs/engineering/03-gitflow-github.md",
+      "spec": "engineering/03-gitflow.md",
       "deliverable": "Sete repositórios Vynamp abertos ao público com relato privado de vulnerabilidade habilitado, e branch protection aplicada em develop exigindo o contexto CI Gate, com descriptions e wiki ajustadas.",
       "acceptance": "Os sete repos reportam visibility public e `private_vulnerability_reporting` habilitado; develop exige CI Gate e proíbe force push e exclusão; description não promete abertura futura; repo sem proteção não é considerado pronto.",
       "qa": [
@@ -5342,7 +5342,7 @@
         "TASK-E19-03",
         "TASK-E04-03"
       ],
-      "spec": "docs/audio/03-dsp.md",
+      "spec": "reference/audio/03-dsp.md",
       "deliverable": "Módulo DSP interno de vinil e válvula integrado ao grafo do player, com bypass, desativação automática, persistência de WearState e os testes VIT-T-01..10 executáveis.",
       "acceptance": "Bypass transparente após o crossfade; desativação automática em bit-perfect e DSD com motivo visível; WearState persistido por álbum; os testes VIT-T-01..10 rodam com oráculo independente.",
       "qa": [

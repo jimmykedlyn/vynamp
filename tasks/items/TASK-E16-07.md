@@ -17,7 +17,7 @@ Requisito REQ-E16-07 · M3 · P0 · responsável funcional qa (pessoa a designar
 
 Relatórios por OS/ABI de instalação, defaults, lote, erros e concorrência.
 
-[Spec canônica](../../docs/platforms/03-system-integration.md) · [Matriz normativa](../../docs/product/03-requirements.md).
+[Spec canônica](../../platforms/03-integracao-sistema.md) · [Matriz normativa](../../product/03-requisitos.md).
 
 ## Aceite
 
@@ -25,4 +25,4 @@ QA-022/023/024 passam nos cenários aplicáveis M1–M3 dos cinco alvos; deep li
 
 ## Verificação e evidência
 
-QA-022, QA-023, QA-024 em [QA](../../docs/quality/01-test-strategy.md) e [cenários](../../docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.
+QA-022, QA-023, QA-024 em [QA](../../quality/01-estrategia-testes.md) e [cenários](../../_arquivo/repo/docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.

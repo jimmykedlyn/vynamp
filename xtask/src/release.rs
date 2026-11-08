@@ -100,7 +100,7 @@ pub fn preflight(root: &Path, version: &str) -> Result<Value> {
             "Missing release prerequisite: {name}"
         );
     }
-    let e = read_json(root.join(format!("docs/evidence/release/{version}.json")))?;
+    let e = read_json(root.join(format!("evidence/release/{version}.json")))?;
     ensure!(
         e["source_digest"] == source_digest(root)?,
         "Evidence source digest mismatch"

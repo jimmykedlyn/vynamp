@@ -1,6 +1,6 @@
 # Ícones de distribuição — Vynamp
 
-Fonte visual aprovada: [identidade C](../../assets/branding/approved-c-board.png). [Guia de exports](../../docs/design/04-brand-identity.md) define formatos/tamanhos/safe zones.
+Fonte visual aprovada: [identidade C](../../assets/branding/approved-c-board.png). [Guia de exports](../../design/04-marca.md) define formatos/tamanhos/safe zones.
 
 O antigo ícone de anéis foi removido. Não existe aqui um SVG/ICO/ICNS fictício nem PNG apenas renomeado de extensão. Vetor, ícones nativos e recursos Android ainda serão exportados/inspecionados nas tarefas apropriadas.
 

@@ -14,7 +14,7 @@ LICENSE dual, LEGAL, CODE_OF_CONDUCT, GOVERNANCE, templates de issue, SECURITY.m
 
 O repo principal não tinha LICENSE alguma, enquanto as libs já têm `LICENSE-MIT` + `LICENSE-APACHE` + `LEGAL.md`. Abrir ao público sem licença e sem política de segurança torna o repositório inapto a uso externo. O canal de vulnerabilidade é **GitHub Security Advisories** (decisão do mantenedor em 2026-11-05): privado por padrão, visível só ao mantenedor e ao reportante, sem criar endereço de e-mail novo — o GitHub exibe o aviso "Report a vulnerability" no próprio repo. `SECURITY.md` e `CHANGELOG.md` ficam **bilíngues** junto com o README, para não haver dois regimes de idioma no mesmo repositório.
 
-Escopo: `LICENSE` (MIT OR Apache-2.0), `LICENSE-MIT`, `LICENSE-APACHE`, `LEGAL.md`, `CODE_OF_CONDUCT.md`, `GOVERNANCE.md`, `.github/ISSUE_TEMPLATE/`, `SECURITY.md` (reescrito), `README.md` (EN+PT no mesmo arquivo); `docs/engineering/03-gitflow-github.md` e `04-ci-cd.md` reescritos (removem "Tornar o repositório público não é alternativa aceita" e a nota "macOS não verificado"); `docs/architecture/adr/ADR-010-woodpecker-only-ci.md` marcado como substituído, sem apagar o histórico; `AGENTS.md` e `repo/AGENTS.md` atualizados.
+Escopo: `LICENSE` (MIT OR Apache-2.0), `LICENSE-MIT`, `LICENSE-APACHE`, `LEGAL.md`, `CODE_OF_CONDUCT.md`, `GOVERNANCE.md`, `.github/ISSUE_TEMPLATE/`, `SECURITY.md` (reescrito), `README.md` (EN+PT no mesmo arquivo); `engineering/03-gitflow.md` e `04-ci-cd.md` reescritos (removem "Tornar o repositório público não é alternativa aceita" e a nota "macOS não verificado"); `_arquivo/repo/docs/architecture/adr/ADR-010-woodpecker-only-ci.md` marcado como substituído, sem apagar o histórico; `AGENTS.md` e `repo/AGENTS.md` atualizados.
 
 Boundary: não altera assinatura, plano nem proteções; não cria identidade legal nova; não abre os repositórios — a abertura é TASK-E19-06.
 
@@ -22,9 +22,9 @@ Boundary: não altera assinatura, plano nem proteções; não cria identidade le
 
 README bilíngue EN/PT na raiz; SECURITY.md aponta para GitHub Security Advisories e não inventa contato; LICENSE dual presente; docs não afirmam capacidade ou alvo não verificado.
 
-Detalhamento: `README.md` tem seção English e seção Português com o mesmo conteúdo essencial; `SECURITY.md` contém o link `https://github.com/jimmykedlyn/vynamp-mediaplayer/security/advisories/new` e nenhuma frase de "URL ou e-mail de segurança ainda não aprovado"; `LICENSE`, `LICENSE-MIT` e `LICENSE-APACHE` existem e a escolha MIT OR Apache-2.0 é declarada em `LEGAL.md`; `docs/engineering/04-ci-cd.md` descreve GitHub Actions e declara macOS Intel e Apple Silicon como alvos verificados, sem a linha "NOT VERIFIED"; `ADR-010` está marcado "Substituída pela ADR-014" e permanece no repositório.
+Detalhamento: `README.md` tem seção English e seção Português com o mesmo conteúdo essencial; `SECURITY.md` contém o link `https://github.com/jimmykedlyn/vynamp-mediaplayer/security/advisories/new` e nenhuma frase de "URL ou e-mail de segurança ainda não aprovado"; `LICENSE`, `LICENSE-MIT` e `LICENSE-APACHE` existem e a escolha MIT OR Apache-2.0 é declarada em `LEGAL.md`; `engineering/04-ci.md` descreve GitHub Actions e declara macOS Intel e Apple Silicon como alvos verificados, sem a linha "NOT VERIFIED"; `ADR-010` está marcado "Substituída pela ADR-014" e permanece no repositório.
 
-[Spec](../../docs/security/01-threat-model.md) · REQ-E19-02 em [matriz](../../docs/product/03-requirements.md).
+[Spec](../../security/01-threat-model.md) · REQ-E19-02 em [matriz](../../product/03-requisitos.md).
 
 ## Evidência
 

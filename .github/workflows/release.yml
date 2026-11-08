@@ -54,5 +54,5 @@ jobs:
         run: |
           echo "Preflight passed for v${VERSION}, but release publication is not enabled."
           echo 'Signed installers require cross-agent artifacts, validated signing and maintainer approval.'
-          echo 'See ADR-014 and docs/delivery/02-release-devops.md.'
+          echo 'See ADR-014 and delivery/02-release-devops.md.'
           exit 1

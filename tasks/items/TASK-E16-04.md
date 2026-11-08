@@ -1,6 +1,6 @@
 # TASK-E16-04 — Entregar MIME, extensões de shell e abertura externa no Linux
 
-Versão 0.8.0 · Estado: planejada, não implementada (conforme [ADR-012](../../docs/architecture/adr/ADR-012-shell-integration.md)).
+Versão 0.8.0 · Estado: planejada, não implementada (conforme [ADR-012](../../adr/ADR-012-integracao-shell.md)).
 
 ## Contrato
 
@@ -16,7 +16,7 @@ Requisito REQ-E16-04 · M2 · P0 · responsável funcional platform (pessoa a de
 
 Desktop Entry com Desktop Actions, extensões/ServiceMenus (Dolphin, Nautilus, Thunar), MIME hicolor e MPRIS. Detalhe: as Desktop Actions cobrem NewPlaylist, AddPlaylist, Enqueue, Convert e Restore; as extensões de shell são o ServiceMenu KIO para Dolphin, o plugin Python/C para Nautilus e as Custom Actions para Thunar/Nemo; o registro MIME usa `shared-mime-info`, os ícones são instalados na hierarquia `hicolor` por família e o MPRIS fica ligado ao mesmo owner.
 
-[Spec canônica](../../docs/platforms/03-system-integration.md) · [Matriz normativa](../../docs/product/03-requirements.md) · [ADR-012](../../docs/architecture/adr/ADR-012-shell-integration.md).
+[Spec canônica](../../platforms/03-integracao-sistema.md) · [Matriz normativa](../../product/03-requisitos.md) · [ADR-012](../../adr/ADR-012-integracao-shell.md).
 
 ## Aceite
 
@@ -24,4 +24,4 @@ Gerenciadores (Dolphin, Nautilus, Thunar) exibem submenu Vynamp com verbos canô
 
 ## Verificação e evidência
 
-QA-022, QA-023, QA-031 em [QA](../../docs/quality/01-test-strategy.md) e [cenários](../../docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.
+QA-022, QA-023, QA-031 em [QA](../../quality/01-estrategia-testes.md) e [cenários](../../_arquivo/repo/docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.

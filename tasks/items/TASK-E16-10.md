@@ -15,7 +15,7 @@ Requisito REQ-E16-10 · M4 · P0 · responsável funcional streaming (pessoa a d
 
 Rotas próprias e HTTPS verificadas, OAuth state/PKCE e preview de ação.
 
-[Spec canônica](../../docs/platforms/04-activation-ownership.md) · [Matriz normativa](../../docs/product/03-requirements.md).
+[Spec canônica](../../platforms/04-ativacao-ownership.md) · [Matriz normativa](../../product/03-requisitos.md).
 
 ## Aceite
 
@@ -23,4 +23,4 @@ Links rejeitam path/shell/plugin/autoplay e callbacks falsos; não registram HTT
 
 ## Verificação e evidência
 
-QA-023 em [QA](../../docs/quality/01-test-strategy.md) e [cenários](../../docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.
+QA-023 em [QA](../../quality/01-estrategia-testes.md) e [cenários](../../_arquivo/repo/docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.
