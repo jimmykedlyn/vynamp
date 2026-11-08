@@ -74,7 +74,11 @@ jobs:
         run: rustup show
       - name: Rule 3-4 dependency direction
         run: |
-          set -eu
+          # `pipefail` nao e detalhe: sem ele o status da pipeline e o do ultimo
+          # comando (`grep`), e `cargo tree` falhando -- manifest que nao carrega,
+          # workspace confuso -- leria como "nenhuma violacao encontrada". A
+          # regra passaria a declarar verificado o que nao conseguiu ler.
+          set -euo pipefail
           # vynamp-dsp NAO entra nesta lista: AGENTS.md 1.4 o define como
           # primitivas, nao dominio, e 01-arvore-final o permite opcional em
           # decode/encode/output. Lista-lo aqui contradiria a arvore aprovada.
@@ -102,15 +106,21 @@ jobs:
             done
             exit 1
           fi
+          # `cargo tree` roda fora do pipe, com o stderr visivel e o status checado
+          # pelo `set -e`. O `2>/dev/null` que havia aqui era o mesmo buraco do
+          # `pipefail`: um manifest que nao carrega virava arvore vazia, e arvore
+          # vazia nao tem dependencia proibida.
           for m in decode encode output; do
-            if cargo tree --manifest-path "libs/$m/Cargo.toml" --prefix none 2>/dev/null \
+            tree=$(cargo tree --manifest-path "libs/$m/Cargo.toml" --prefix none)
+            if printf '%s\n' "$tree" \
                  | grep -E '^vynamp-(engine|player|converter|restore)( |$)'; then
               echo "libs/$m depende de crate de dominio do projeto; viola AGENTS.md 1.2."
               exit 1
             fi
           done
           if [ -f libs/dsp/Cargo.toml ]; then
-            if cargo tree --manifest-path libs/dsp/Cargo.toml --prefix none 2>/dev/null \
+            tree=$(cargo tree --manifest-path libs/dsp/Cargo.toml --prefix none)
+            if printf '%s\n' "$tree" \
                  | grep -E '^vynamp-(engine|player|converter|restore|decode|encode|output)( |$)'; then
               echo 'libs/dsp depende de outra lib do projeto; viola AGENTS.md 1.4.'
               exit 1

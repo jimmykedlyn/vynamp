@@ -1,7 +1,7 @@
 {
-  "repository": "jimmykedlyn/vynamp-mediaplayer",
-  "url": "https://github.com/jimmykedlyn/vynamp-mediaplayer.git",
-  "expected_visibility": "public",
+  "repository": "jimmykedlyn/vynamp",
+  "url": "https://github.com/jimmykedlyn/vynamp.git",
+  "expected_visibility": "private",
   "integration_branch": "develop",
   "stable_branch": "main",
   "required_contexts": [
@@ -10,7 +10,7 @@
   "merge_method": "merge",
   "review_count": 1,
   "remote_verified": true,
-  "verified_at": "2026-10-18",
+  "verified_at": "2026-11-08",
   "protection_status": "pending_plan",
-  "reason": "TASK-E19-01 (ADR-014): o CI é publicado por GitHub Actions (.github/workflows/ci.yml, job `gate` = status `CI Gate`); os runners hospedados são gratuitos em repositório público. A abertura para público é TASK-E19-06 e, até ela, a branch protection continua indisponível (HTTP 403 no plano privado) — `protection_status` vira `applied` só depois de abrir e rodar `cargo xtask repo protect`."
+  "reason": "Passo 35 (D-GH-1): o umbrella passa a ser jimmykedlyn/vynamp, criado privado. A visibilidade e decisao do mantenedor (ADR-014 + TASK-E19-06) e um repo publico sem a varredura de segredos e o que a regra proibe. `protection_status` vira `applied` so depois de abrir o repo e rodar `cargo xtask repo protect`."
 }

@@ -154,20 +154,46 @@ pub fn files(root: &Path) -> Result<Vec<PathBuf>> {
     Ok(out)
 }
 /// Markdown that belongs to the specification. `files()` stays generic -- it also feeds
-/// `copy_tree`, the distribution import and the Python-artifact gate -- so the exclusion
-/// of `.claude/` lives here and nowhere else. Agent definitions open with a YAML
-/// frontmatter block instead of the `# ` title `check-docs` requires, and they are
-/// configuration, not specification.
+/// `copy_tree`, the distribution import and the Python-artifact gate -- so the narrowing
+/// lives here and nowhere else.
+///
+/// Two exclusions, for two different reasons:
+///
+/// - `.claude/` holds agent definitions, which open with a YAML frontmatter block instead
+///   of the `# ` title `check-docs` requires. They are configuration, not specification.
+/// - Submodules hold other repositories. Their Markdown belongs to their own INDEX and
+///   their own CI; requiring the umbrella's INDEX to list it would mean the gate passes
+///   on a workstation where the modules are checked out and fails on the CI runner, which
+///   checks the umbrella out without `submodules:` on purpose (the `specs` job). A gate
+///   whose verdict depends on which directories happen to be populated is not a gate.
 pub fn doc_files(root: &Path) -> Result<Vec<PathBuf>> {
+    let submodules = submodule_paths(root);
     Ok(files(root)?
         .into_iter()
         .filter(|p| {
-            p.strip_prefix(root)
-                .ok()
-                .and_then(|rel| rel.components().next())
-                .is_none_or(|c| c.as_os_str() != ".claude")
+            let Ok(rel) = p.strip_prefix(root) else {
+                return true;
+            };
+            let first = rel.components().next();
+            if first.is_some_and(|c| c.as_os_str() == ".claude") {
+                return false;
+            }
+            !submodules
+                .iter()
+                .any(|prefix| rel == prefix.as_path() || rel.starts_with(prefix))
         })
         .collect())
+}
+/// Paths declared in `.gitmodules`, taken from the file and not from the directory tree:
+/// a submodule that is not checked out has no `.git` marker and would slip through.
+fn submodule_paths(root: &Path) -> Vec<PathBuf> {
+    let Ok(body) = fs::read_to_string(root.join(".gitmodules")) else {
+        return Vec::new();
+    };
+    body.lines()
+        .filter_map(|line| line.trim().strip_prefix("path ="))
+        .map(|path| PathBuf::from(path.trim()))
+        .collect()
 }
 
 pub fn excluded(name: &str) -> bool {
@@ -388,6 +414,55 @@ name: revisor
                 temp.path().join(".claude/settings.json"),
                 temp.path().join("SPEC.md"),
             ]
+        );
+    }
+    #[test]
+    fn doc_scan_skips_submodule_content_but_generic_walk_keeps_it() {
+        let temp = tempfile::tempdir().unwrap();
+        fs::create_dir_all(temp.path().join("libs/dsp/src")).unwrap();
+        fs::create_dir_all(temp.path().join("libs/dsproto")).unwrap();
+        fs::write(
+            temp.path().join(".gitmodules"),
+            b"[submodule \"libs/dsp\"]\n\tpath = libs/dsp\n\turl = https://example.invalid/dsp.git\n",
+        )
+        .unwrap();
+        fs::write(temp.path().join("libs/dsp/README.md"), b"# dsp").unwrap();
+        fs::write(temp.path().join("libs/dsp/src/notes.md"), b"# notes").unwrap();
+        // A sibling whose name merely starts with the submodule's must survive: the
+        // prefix test is per path component, not per string.
+        fs::write(temp.path().join("libs/dsproto/README.md"), b"# dsproto").unwrap();
+        fs::write(temp.path().join("SPEC.md"), b"# Spec").unwrap();
+        // The umbrella's INDEX cannot list files it does not check out: the `specs` job
+        // fetches no submodules. Excluding them is what makes the gate's verdict the same
+        // on a workstation with the modules populated and on the runner without them.
+        assert_eq!(
+            doc_files(temp.path()).unwrap(),
+            vec![
+                temp.path().join(".gitmodules"),
+                temp.path().join("SPEC.md"),
+                temp.path().join("libs").join("dsproto").join("README.md"),
+            ]
+        );
+        assert!(
+            files(temp.path())
+                .unwrap()
+                .contains(&temp.path().join("libs/dsp/README.md"))
+        );
+    }
+    #[test]
+    fn doc_scan_skips_declared_submodule_even_when_absent() {
+        let temp = tempfile::tempdir().unwrap();
+        // Declared in .gitmodules but not checked out: no `.git` marker exists to detect
+        // it, so the declaration is the only source of truth.
+        fs::write(
+            temp.path().join(".gitmodules"),
+            b"[submodule \"apps/player\"]\n\tpath = apps/player\n\turl = https://example.invalid/player.git\n",
+        )
+        .unwrap();
+        fs::write(temp.path().join("SPEC.md"), b"# Spec").unwrap();
+        assert_eq!(
+            doc_files(temp.path()).unwrap(),
+            vec![temp.path().join(".gitmodules"), temp.path().join("SPEC.md"),]
         );
     }
     #[cfg(unix)]

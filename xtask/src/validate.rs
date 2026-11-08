@@ -634,11 +634,34 @@ pub fn delivery(root: &Path) -> Result<()> {
         "Superpowers lock missing",
     );
     let github = read_json(root.join("config/github.json"))?;
+    // O nome vem do arquivo, e nao de um literal aqui: o passo 35 trocou o umbrella
+    // de `vynamp-mediaplayer` para `vynamp`, e um `==` com o nome antigo seria uma
+    // segunda copia da mesma constante, que ninguem lembra de atualizar. O que se
+    // verifica e a coerencia interna do arquivo e dele com o `origin` do git.
+    //
+    // A visibilidade real (`private` na API) nao e verificada aqui: este gate e
+    // estrutural e roda offline no CI, e uma requisicao de rede que falha passaria
+    // como aprovada ou reprovaria por instabilidade. Quem confere e
+    // `cargo xtask repo`, que fala com a API de proposito.
+    let repo = string(&github, "repository")?;
+    let url = string(&github, "url")?;
     c.check(
-        github["repository"] == "jimmykedlyn/vynamp-mediaplayer"
-            && github["expected_visibility"] == "public",
-        "Wrong repository/privacy",
+        url == format!("https://github.com/{repo}.git"),
+        "github.json url does not match repository",
     );
+    c.check(
+        matches!(
+            string(&github, "expected_visibility")?,
+            "private" | "public"
+        ),
+        "Unknown visibility",
+    );
+    if let Ok(origin) = git(root, &["remote", "get-url", "origin"]) {
+        c.check(
+            origin == url,
+            format!("origin is {origin}, github.json says {url}"),
+        );
+    }
     let cfg = read_json(root.join("config/project.json"))?;
     let keys: BTreeSet<_> = cfg["targets"]
         .as_object()
