@@ -1,9 +1,8 @@
 name: CI
 
-# Runs only when it proves something: a pull request against develop, or a push
-# to a branch that is actually integrated (develop/main). A push to a feature
-# branch does not trigger it — its pull request already covers the change.
-# See ADR-014.
+# Gate do umbrella. Nao constroi app: os apps sao repos proprios com CI propria.
+# O gate valida o que o umbrella e dono: specs, ferramental, pins de submodule
+# e as regras de arquitetura. Ver AGENTS.md secao 1.2.
 on:
   pull_request:
     branches: [develop]
@@ -19,92 +18,125 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  docs:
+  specs:
+    name: Specs
     runs-on: ubuntu-22.04
-    outputs:
-      core: ${{ steps.detect.outputs.core }}
-      android: ${{ steps.detect.outputs.android }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
-      # rust-toolchain.toml is the single source for the pinned version and
-      # components; `rustup show` materialises it instead of repeating the
-      # version in every job.
       - name: Provision pinned Rust toolchain
         run: rustup show
-      - run: cargo xtask ci docs
-      - id: detect
-        run: cargo xtask ci detect
+      - run: cargo xtask check-docs
 
   tooling:
-    needs: docs
-    strategy:
-      fail-fast: false
-      matrix:
-        runner: [windows-2022, ubuntu-22.04, macos-15-intel, macos-15]
-    runs-on: ${{ matrix.runner }}
+    name: Tooling
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
       - name: Provision pinned Rust toolchain
         run: rustup show
+      - run: cargo fmt --all -- --check
       - run: cargo clippy --package xtask --all-targets --locked -- -D warnings
+      - run: cargo test --package xtask --locked
 
-  core:
-    needs: docs
-    if: needs.docs.outputs.core == 'true'
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - runner: windows-2022
-            target: x86_64-pc-windows-msvc
-          - runner: ubuntu-22.04
-            target: x86_64-unknown-linux-gnu
-          - runner: macos-15-intel
-            target: x86_64-apple-darwin
-          - runner: macos-15
-            target: aarch64-apple-darwin
-    runs-on: ${{ matrix.runner }}
+  submodules:
+    name: Submodules fixados
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
       - name: Provision pinned Rust toolchain
         run: rustup show
-      - if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y libasound2-dev libudev-dev pkg-config
-      - run: cargo xtask ci core --target ${{ matrix.target }}
+      - name: Submodule must be pinned to a tag, never to a branch
+        run: |
+          set -eu
+          git submodule status --recursive
+          if git config --file .gitmodules --get-regexp '^submodule\..*\.branch$' > /dev/null 2>&1; then
+            echo 'Submodule tracking a branch is forbidden; pin to a tag.'
+            exit 1
+          fi
 
-  android:
-    needs: docs
-    if: needs.docs.outputs.android == 'true'
-    runs-on: ubuntu-24.04
+  arch:
+    name: Regras de arquitetura
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
+          # Sem isto o job le libs/*/Cargo.toml de diretorios vazios e falha
+          # no primeiro run com "submodule ainda nao adicionado".
+          submodules: recursive
           persist-credentials: false
       - name: Provision pinned Rust toolchain
         run: rustup show
-      - run: cargo xtask ci android
+      - name: Rule 3-4 dependency direction
+        run: |
+          set -eu
+          # vynamp-dsp NAO entra nesta lista: AGENTS.md 1.4 o define como
+          # primitivas, nao dominio, e 01-arvore-final o permite opcional em
+          # decode/encode/output. Lista-lo aqui contradiria a arvore aprovada.
+          #
+          # Antes do passo 35 nenhum lib de modulo existe, e uma regra sobre
+          # diretorio vazio nao reprova nada de verdade -- so quebra o gate por
+          # ausencia. Mas "pular se vazio" seria pior: uma migracao pela metade
+          # (decode presente, output esquecido) passaria calada. Por isso a
+          # condicao e tudo-ou-nada: nenhum presente, nada a verificar; qualquer
+          # um presente, os tres tem de estar.
+          present=0
+          for m in decode encode output; do
+            if [ -f "libs/$m/Cargo.toml" ]; then present=$((present + 1)); fi
+          done
+          if [ "$present" -eq 0 ]; then
+            echo 'Nenhum lib de modulo no umbrella ainda; regras 3 e 4 sem alvo.'
+            echo 'Passam a valer no commit que trouxer o primeiro submodulo.'
+            exit 0
+          fi
+          if [ "$present" -ne 3 ]; then
+            echo "libs/ parcialmente migrado: $present de 3 modulos presentes."
+            echo 'decode, encode e output entram juntos; um sozinho e migracao incompleta.'
+            for m in decode encode output; do
+              [ -f "libs/$m/Cargo.toml" ] || echo "  faltando: libs/$m"
+            done
+            exit 1
+          fi
+          for m in decode encode output; do
+            if cargo tree --manifest-path "libs/$m/Cargo.toml" --prefix none 2>/dev/null \
+                 | grep -E '^vynamp-(engine|player|converter|restore)( |$)'; then
+              echo "libs/$m depende de crate de dominio do projeto; viola AGENTS.md 1.2."
+              exit 1
+            fi
+          done
+          if [ -f libs/dsp/Cargo.toml ]; then
+            if cargo tree --manifest-path libs/dsp/Cargo.toml --prefix none 2>/dev/null \
+                 | grep -E '^vynamp-(engine|player|converter|restore|decode|encode|output)( |$)'; then
+              echo 'libs/dsp depende de outra lib do projeto; viola AGENTS.md 1.4.'
+              exit 1
+            fi
+          fi
+          echo 'Regras 3 e 4 verificadas.'
+      - name: Rule 5, each lib builds alone
+        run: |
+          set -eu
+          for d in libs/*; do
+            [ -f "$d/Cargo.toml" ] || continue
+            cargo build --manifest-path "$d/Cargo.toml"
+          done
 
-  # The required status check is this job. `if: always()` makes it run even
-  # after a failed or cancelled dependency, and the assertions below turn any
-  # non-success into a red gate: a skipped job must never read as green.
   gate:
     name: CI Gate
     if: always()
-    needs: [docs, tooling, core, android]
+    needs: [specs, tooling, submodules, arch]
     runs-on: ubuntu-22.04
     steps:
       - name: Aggregate
         shell: bash
         run: |
-          test "${{ needs.docs.result }}" = success
+          test "${{ needs.specs.result }}" = success
           test "${{ needs.tooling.result }}" = success
-          if [ "${{ needs.docs.outputs.core }}" = true ]; then test "${{ needs.core.result }}" = success; fi
-          if [ "${{ needs.docs.outputs.android }}" = true ]; then test "${{ needs.android.result }}" = success; fi
-          echo 'CI Gate passed on Windows, Linux, macOS Intel, macOS Apple Silicon, and Android when present.'
+          test "${{ needs.submodules.result }}" = success
+          test "${{ needs.arch.result }}" = success
+          echo 'CI Gate passed: specs, tooling, submodules and architecture rules.'
           echo 'Hardware, signing and release acceptance remain separate gates.'

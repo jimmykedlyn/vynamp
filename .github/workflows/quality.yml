@@ -3,9 +3,7 @@ name: Quality
 # Hardware acceptance is never part of the CI Gate: it needs real devices and
 # real audio hardware, so it only runs when a maintainer asks for it, from an
 # integrated branch, and only after confirming the self-hosted runners exist.
-# The labels come from TASK-E15-05; until it provisions them, dispatching with
-# the default `confirm_hardware_runners: false` records that fact and skips the
-# matrix instead of leaving a job queued forever. See ADR-014.
+# See ADR-014.
 on:
   workflow_dispatch:
     inputs:
