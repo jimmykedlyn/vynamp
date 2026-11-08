@@ -30,4 +30,4 @@ O scanner de distribuição exclui caches e nomes/extensões conhecidos de crede
 
 Revisão 0.6 valida também o catálogo de formatos, IDs/targets/fases, WebM/FLAC, IAMF, Bluetooth e limites UTF-8/envelope dos exemplos de ativação. Esses checks não são servidor IPC nem decoder do player.
 
-Windows: docs clippy/test usam target/xtask-ci ou alternativa resolvida fora do executable atual. Caminhos de arquivos em argumentos Git/gh usam representação ordinária Windows. Bundle inclui raiz vynamp-media-player/pacote e wrappers externos; [bootstrap](../docs/engineering/09-windows-restart.md) mantém tudo numa raiz, sem alterar perfil/trust global.
+Windows: docs clippy/test usam target/xtask-ci ou alternativa resolvida fora do executable atual. Caminhos de arquivos em argumentos Git/gh usam representação ordinária Windows. Bundle inclui raiz vynamp-media-player/pacote e wrappers externos; [bootstrap](../engineering/08-reinicio-windows.md) mantém tudo numa raiz, sem alterar perfil/trust global.

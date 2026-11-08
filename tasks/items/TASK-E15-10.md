@@ -16,7 +16,7 @@ Fase M3 / P0 · Owner engineering-delivery · Esforço inicial 3–10 dias útei
 
 Evidence digest, gates, manifest minisign, secrets/environments e draft.
 
-[Spec](../../docs/engineering/07-secrets-activation.md) · REQ-E15-10 em [matriz](../../docs/product/03-requirements.md).
+[Spec](../../engineering/07-segredos.md) · REQ-E15-10 em [matriz](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 

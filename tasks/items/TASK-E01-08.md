@@ -21,7 +21,7 @@ Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implemen
 
 WMA/APE/WV/TTA/MPC/MP1/MP2/WebM/MKA/RF64 adapters com isolation quando nativos.
 
-Documento canônico: [spec](../../docs/audio/01-engine.md). [Matriz normativa](../../docs/product/03-requirements.md).
+Documento canônico: [spec](../../reference/audio/01-engine.md). [Matriz normativa](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 
@@ -29,7 +29,7 @@ Arquivos >4GiB usam offsets64; cada perfil tem fixture e lista runtime; unsuppor
 
 ## Verificação e evidência
 
-QA-015 em [QA comum](../../docs/quality/01-test-strategy.md) e [matriz multiplataforma](../../docs/quality/03-multiplatform-matrix.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+QA-015 em [QA comum](../../quality/01-estrategia-testes.md) e [matriz multiplataforma](../../quality/03-matriz-multiplataforma.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
 
 ## Execução e limites
 

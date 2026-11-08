@@ -13,7 +13,7 @@ Fase M3 / P0 · Owner engineering-delivery · Esforço inicial 3–10 dias útei
 
 EXE user scope + ZIP, runtime inventory e SignTool.
 
-[Spec](../../docs/engineering/06-installers.md) · REQ-E15-06 em [matriz](../../docs/product/03-requirements.md).
+[Spec](../../_arquivo/repo/docs/engineering/06-installers.md) · REQ-E15-06 em [matriz](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 
@@ -25,4 +25,4 @@ QA-012, QA-021; registrar commit/digest, comando, ambiente/OS/ABI, outputs e lim
 
 ## Identidade aprovada Vynamp C
 
-Exportar/inspecionar ICO multi-size C, embutir no executável e NSIS, shortcuts/taskbar/tray e DPI; assinar executável/installer reais. branding_exports_ready exige exports/report/hash verificados. [Guia canônico](../../docs/design/04-brand-identity.md). Este requisito complementar não altera IDs/estado nem dispensa o contrato acima.
+Exportar/inspecionar ICO multi-size C, embutir no executável e NSIS, shortcuts/taskbar/tray e DPI; assinar executável/installer reais. branding_exports_ready exige exports/report/hash verificados. [Guia canônico](../../design/04-marca.md). Este requisito complementar não altera IDs/estado nem dispensa o contrato acima.

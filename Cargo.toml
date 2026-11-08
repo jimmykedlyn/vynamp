@@ -1,4 +1,13 @@
 [workspace]
+resolver = "3"
 members = ["xtask"]
 default-members = ["xtask"]
-resolver = "3"
+
+# libs/* e apps/* NAO sao membros: sao repositorios independentes em submodulos.
+# Cada um tem seu proprio Cargo.toml e compila sozinho (ver AGENTS.md secao 1.2).
+exclude = ["libs/*", "apps/*", "reference/*"]
+
+# Sem [workspace.package] e sem [workspace.lints]: o xtask/Cargo.toml declara
+# edition, rust-version, license e as dependencias por extenso, sem nenhum
+# `.workspace = true`. Hipotese de workspace que ninguem herda e configuracao
+# morta: passa no cargo metadata e nao faz nada.

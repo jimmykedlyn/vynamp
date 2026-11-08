@@ -23,7 +23,7 @@ Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implemen
 
 Spike NDK/ABI Rust, ownership de buffers, AAudio direto (vynamp-output) e adapter Media3, com decisões de UI/runtime.
 
-Documento canônico: [spec](../../docs/platforms/02-android.md). [Matriz normativa](../../docs/product/03-requirements.md).
+Documento canônico: [spec](../../platforms/02-android.md). [Matriz normativa](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 
@@ -31,7 +31,7 @@ Tocar WAV/FLAC em aparelho arm64 real; callback sem JNI/alloc; native build comp
 
 ## Verificação e evidência
 
-QA-019, QA-021 em [QA comum](../../docs/quality/01-test-strategy.md) e [matriz multiplataforma](../../docs/quality/03-multiplatform-matrix.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+QA-019, QA-021 em [QA comum](../../quality/01-estrategia-testes.md) e [matriz multiplataforma](../../quality/03-matriz-multiplataforma.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
 
 ## Execução e limites
 

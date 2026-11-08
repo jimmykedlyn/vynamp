@@ -21,7 +21,7 @@ Versão: 0.7.1 · Data: 2026-11-03 · Estado: em execução; PR em revisão, sem
 
 Pacote assets/reference/mvp com MVP rev.37 congelado por hash, 12 temas resolvidos, 91 ícones, 16 medidores e SVGs renderizados, extraídos por ferramenta reprodutível.
 
-Documento canônico: [referência do MVP](../../docs/design/06-mvp-reference.md). [Matriz normativa](../../docs/product/03-requirements.md).
+Documento canônico: [referência do MVP](../../design/07-pin-mvp.md). [Matriz normativa](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 
@@ -29,7 +29,7 @@ Cada SVG renderiza em resvg sem pixel de geometria divergente do Chrome (delta>4
 
 ## Verificação e evidência
 
-QA-034 em [QA comum](../../docs/quality/01-test-strategy.md). Registrar commit, comando, versão do Chrome e do resvg, hashes da fonte congelada e dos artefatos. Diferença acima da tolerância é falha, não limitação, salvo exceção de navegador registrada no [mapa de lacunas](../../docs/design/06-mvp-reference.md).
+QA-034 em [QA comum](../../quality/01-estrategia-testes.md). Registrar commit, comando, versão do Chrome e do resvg, hashes da fonte congelada e dos artefatos. Diferença acima da tolerância é falha, não limitação, salvo exceção de navegador registrada no [mapa de lacunas](../../design/07-pin-mvp.md).
 
 ## Execução e limites
 

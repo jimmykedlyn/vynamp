@@ -6,13 +6,13 @@ Fluxo de agente único: Claude Code é o único autor e revisor. Subagentes: Opu
 
 ## Antes da tarefa
 
-Superpowers é obrigatório. Ler START-HERE, SPEC, docs/engineering, TASK/REQ/QA e ADRs; instalar/confirmar o native plugin e a skill discovery. Configurações não equivalem a plugin instalado. Não alegar usar skill inexistente nem fabricar testes/assinaturas.
+Superpowers é obrigatório. Ler START-HERE, SPEC, engineering, TASK/REQ/QA e ADRs; instalar/confirmar o native plugin e a skill discovery. Configurações não equivalem a plugin instalado. Não alegar usar skill inexistente nem fabricar testes/assinaturas.
 
 ## Trabalho
 
 Um owner por TASK, worktree/branch/index próprios. `.worktrees/claude/<task>-<slug>` é o padrão do script; worktree nativa existente é reutilizada. Root/main/develop são para sincronização, não feature edits. Claims no common Git dir evitam sessões concorrentes na mesma TASK. Nunca reset --hard, clean -fdx ou force push.
 
-Superpowers: using-superpowers → spec/brainstorming se decisão nova → writing-plans → using-git-worktrees → TDD para comportamento → verification-before-completion → revisão técnica por subagente em contexto limpo (Sonnet; Opus para alto risco) → finishing-a-development-branch. Planos em docs/superpowers/plans; evidência permanente em docs/evidence/PR; scratch .superpowers ignored. Decisões já dadas pelo usuário não requerem aprovação repetida. Escopo explícito/autorizações do usuário prevalecem sobre skills.
+Superpowers: using-superpowers → spec/brainstorming se decisão nova → writing-plans → using-git-worktrees → TDD para comportamento → verification-before-completion → revisão técnica por subagente em contexto limpo (Sonnet; Opus para alto risco) → finishing-a-development-branch. Planos em docs/superpowers/plans; evidência permanente em evidence/PR; scratch .superpowers ignored. Decisões já dadas pelo usuário não requerem aprovação repetida. Escopo explícito/autorizações do usuário prevalecem sobre skills.
 
 Branch feature/fix/chore por TASK de develop; hotfix de main; PR e merge commit. CI Gate (GitHub Actions, ADR-014) é obrigatório como critério de merge e roda em todo PR para develop — mas, enquanto o repositório for privado, a API de branch protection responde 403 e o status **não está tecnicamente exigido**: vale como disciplina revisada à mão, não como bloqueio do GitHub. main/develop passam a estar protegidas quando a TASK-E19-06 abrir os repositórios e aplicar `cargo xtask repo protect`. Merge/publicação pelo mantenedor. PR template documenta fonte/task/command/result/limitações e a revisão técnica.
 
@@ -28,4 +28,4 @@ Produto ainda não implementado; stages/release flags distinguem tooling de app.
 
 ## Identidade Vynamp
 
-Nome Vynamp e conceito C — Pulso aprovados. [Guia de marca](docs/design/04-brand-identity.md) e [PNGs incluídos](assets/branding/README.md). Preserve geometria e cores da marca e paleta semântica da UI. Não usar PNG de referência como ícone nativo já verificado. Repo informado renomeado: jimmykedlyn/vynamp-mediaplayer.
+Nome Vynamp e conceito C — Pulso aprovados. [Guia de marca](design/04-marca.md) e [PNGs incluídos](assets/branding/README.md). Preserve geometria e cores da marca e paleta semântica da UI. Não usar PNG de referência como ícone nativo já verificado. Repo informado renomeado: jimmykedlyn/vynamp-mediaplayer.

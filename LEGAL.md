@@ -54,12 +54,12 @@ não preenchida em nenhuma delas.
 ## Why the licence exists now, and why it did not before
 
 Until 2026-11-05 this repository had **no** licence file, by decision rather
-than by oversight: `docs/security/02-privacy-licensing.md` said not to create a
+than by oversight: `security/02-privacidade-licencas.md` said not to create a
 `LICENSE` "as if it had been the user's decision", and `AGENTS.md` forbade
 creating a final licence without a recorded decision. The maintainer made that
 decision on 2026-11-05 — MIT OR Apache-2.0, matching `vynamp-decode` and
 `vynamp-output` — and it is recorded as D-LIC-01 in
-[`docs/product/05-decisions.md`](docs/product/05-decisions.md). Without a
+[`product/05-decisoes.md`](product/05-decisoes.md). Without a
 licence, opening the repositories (TASK-E19-06) would publish source that
 nobody may legally use.
 
@@ -72,12 +72,12 @@ remains fail-closed.
 ### Por que a licença existe agora, e por que não antes
 
 Até 2026-11-05 este repositório **não** tinha arquivo de licença, por decisão e
-não por descuido: `docs/security/02-privacy-licensing.md` mandava não criar
+não por descuido: `security/02-privacidade-licencas.md` mandava não criar
 `LICENSE` "como se tivesse sido decisão do usuário", e `AGENTS.md` proibia criar
 licença final sem decisão registrada. O mantenedor tomou essa decisão em
 2026-11-05 — MIT OR Apache-2.0, igual a `vynamp-decode` e `vynamp-output` — e ela
 está registrada como D-LIC-01 em
-[`docs/product/05-decisions.md`](docs/product/05-decisions.md). Sem licença,
+[`product/05-decisoes.md`](product/05-decisoes.md). Sem licença,
 abrir os repositórios (TASK-E19-06) publicaria código que ninguém pode usar
 legalmente.
 

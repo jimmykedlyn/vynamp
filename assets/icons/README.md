@@ -1,6 +1,6 @@
 # Sistema de pacotes de ícones de arquivo do Vynamp
 
-Versão 0.8.0 · Especificação de assets e catálogo normativo (conforme [ADR-012](../../docs/architecture/adr/ADR-012-shell-integration.md) e [ADR-008](../../docs/architecture/adr/ADR-008-vynamp-brand.md)).
+Versão 0.8.0 · Especificação de assets e catálogo normativo (conforme [ADR-012](../../adr/ADR-012-integracao-shell.md) e [ADR-008](../../adr/ADR-008-marca.md)).
 
 ## Visão geral
 

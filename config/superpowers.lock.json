@@ -9,7 +9,7 @@
   "version_checked_on": {
     "claude": "2026-10-16"
   },
-  "claude_version_evidence": "docs/evidence/task-e15-01-claude-manager-7.0.0.json",
+  "claude_version_evidence": "evidence/task-e15-01-claude-manager-7.0.0.json",
   "claude_install": [
     "claude",
     "plugin",

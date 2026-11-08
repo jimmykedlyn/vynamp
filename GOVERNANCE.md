@@ -28,9 +28,9 @@ um merge.
 
 | Kind / Tipo | Where it is recorded / Onde fica registrado |
 |---|---|
-| Architecture, technology, irreversible choice / Arquitetura, tecnologia, escolha irreversível | ADR in [`docs/architecture/adr/`](docs/architecture/adr/) |
-| Product or policy decision, including licence and security channel / Decisão de produto ou política | [Decisions register](docs/product/05-decisions.md) (D-* IDs) |
-| What will be built, in what order / O que será construído e em que ordem | Backlog [`tasks/backlog.json`](tasks/backlog.json) and [requirement matrix](docs/product/03-requirements.md) |
+| Architecture, technology, irreversible choice / Arquitetura, tecnologia, escolha irreversível | ADR in [`adr`](adr) |
+| Product or policy decision, including licence and security channel / Decisão de produto ou política | [Decisions register](product/05-decisoes.md) (D-* IDs) |
+| What will be built, in what order / O que será construído e em que ordem | Backlog [`tasks/backlog.json`](tasks/backlog.json) and [requirement matrix](product/03-requisitos.md) |
 | A single unit of work / Uma unidade de trabalho | TASK in [`tasks/items/`](tasks/items/) |
 | Day-to-day rule for whoever writes code / Regra do dia a dia de quem escreve | [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md) |
 

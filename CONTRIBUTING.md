@@ -8,12 +8,12 @@ Versão 0.9.0 · 2026-11-05 · Estado: contrato vigente; o player ainda não est
 
 Pick a `TASK-*` from [`tasks/backlog.json`](tasks/backlog.json) and open its spec
 in [`tasks/items/`](tasks/items/). Read the requirement it traces to in the
-[matrix](docs/product/03-requirements.md), and any ADR that constrains it. If the
+[matrix](product/03-requisitos.md), and any ADR that constrains it. If the
 task does not exist, the change is not ready to be written — the backlog is the
 unit of work, not the diff.
 
-Read [`AGENTS.md`](AGENTS.md) (the working contract), [Gitflow](docs/engineering/03-gitflow-github.md)
-and [CI and gates](docs/engineering/04-ci-cd.md).
+Read [`AGENTS.md`](AGENTS.md) (the working contract), [Gitflow](engineering/03-gitflow.md)
+and [CI and gates](engineering/04-ci.md).
 
 ### The change
 
@@ -37,7 +37,7 @@ cargo xtask check-delivery
 ```
 
 `check-docs` requires every Markdown file to have a `# ` title and an entry in
-[`docs/INDEX.md`](docs/INDEX.md). `check-delivery` validates the workflows:
+[`INDEX.md`](INDEX.md). `check-delivery` validates the workflows:
 every `uses:` pinned by full commit SHA, the `CI Gate` job present and
 fail-closed.
 
@@ -80,13 +80,13 @@ See [LEGAL.md](LEGAL.md). Security problems go to
 
 Escolha uma `TASK-*` em [`tasks/backlog.json`](tasks/backlog.json) e abra a spec
 em [`tasks/items/`](tasks/items/). Leia o requisito correspondente na
-[matriz](docs/product/03-requirements.md) e qualquer ADR que restrinja a
+[matriz](product/03-requisitos.md) e qualquer ADR que restrinja a
 mudança. Se a tarefa não existe, a mudança não está pronta para ser escrita — a
 unidade de trabalho é o backlog, não o diff.
 
 Leia [`AGENTS.md`](AGENTS.md) (o contrato de trabalho), o
-[Gitflow](docs/engineering/03-gitflow-github.md) e o
-[CI e gates](docs/engineering/04-ci-cd.md).
+[Gitflow](engineering/03-gitflow.md) e o
+[CI e gates](engineering/04-ci.md).
 
 ### A mudança
 
@@ -110,7 +110,7 @@ cargo xtask check-delivery
 ```
 
 `check-docs` exige que todo arquivo Markdown tenha título `# ` e entrada no
-[`docs/INDEX.md`](docs/INDEX.md). `check-delivery` valida os workflows: todo
+[`INDEX.md`](INDEX.md). `check-delivery` valida os workflows: todo
 `uses:` fixado por SHA completo de commit, o job `CI Gate` presente e
 fail-closed.
 

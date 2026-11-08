@@ -13,7 +13,7 @@ Fase M3 / P0 · Owner engineering-delivery · Esforço inicial 3–10 dias útei
 
 AppDir/DEB, tool hash, libs/notices e manifesto assinado.
 
-[Spec](../../docs/engineering/06-installers.md) · REQ-E15-07 em [matriz](../../docs/product/03-requirements.md).
+[Spec](../../_arquivo/repo/docs/engineering/06-installers.md) · REQ-E15-07 em [matriz](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 
@@ -25,4 +25,4 @@ QA-012, QA-018, QA-021; registrar commit/digest, comando, ambiente/OS/ABI, outpu
 
 ## Identidade aprovada Vynamp C
 
-Exportar SVG C de paths sanitizado e PNGs hicolor nos tamanhos normativos; desktop Icon=vynamp, AppImage/DEB não devem incluir o antigo template Auralis. [Guia canônico](../../docs/design/04-brand-identity.md). Este requisito complementar não altera IDs/estado nem dispensa o contrato acima.
+Exportar SVG C de paths sanitizado e PNGs hicolor nos tamanhos normativos; desktop Icon=vynamp, AppImage/DEB não devem incluir o antigo template Auralis. [Guia canônico](../../design/04-marca.md). Este requisito complementar não altera IDs/estado nem dispensa o contrato acima.

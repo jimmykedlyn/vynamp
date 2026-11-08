@@ -25,7 +25,7 @@ Versão: 0.8.0 · Data: 2026-11-05 · Estado: especificação proposta, implemen
 
 Ferramenta desktop `vynamp-restore` com motor de restauração próprio, diagnóstico de defeitos e exportação preservando metadados.
 
-Documento canônico: [spec](../../docs/tools/01-vynamp-restore.md). [ADR](../../docs/architecture/adr/ADR-013-vynamp-restore.md). [Matriz normativa](../../docs/product/03-requirements.md).
+Documento canônico: [spec](../../reference/tools/01-vynamp-restore.md). [ADR](../../adr/ADR-013-restore.md). [Matriz normativa](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 
@@ -33,7 +33,7 @@ A fonte nunca é sobrescrita sem confirmação; escrita atômica com validação
 
 ## Verificação e evidência
 
-QA-015, QA-016, QA-023, QA-024, QA-031 em [QA comum](../../docs/quality/01-test-strategy.md) e [matriz multiplataforma](../../docs/quality/03-multiplatform-matrix.md); fixtures por defeito em [matriz DSP](../../docs/quality/05-dsp-test-matrix.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+QA-015, QA-016, QA-023, QA-024, QA-031 em [QA comum](../../quality/01-estrategia-testes.md) e [matriz multiplataforma](../../quality/03-matriz-multiplataforma.md); fixtures por defeito em [matriz DSP](../../quality/04-matriz-dsp.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
 
 ## Execução e limites
 

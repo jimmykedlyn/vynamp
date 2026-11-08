@@ -12,7 +12,7 @@ Fase M0 / P0 · Owner engineering-delivery · Esforço inicial 2–5 dias úteis
 
 Scripts e regras de isolamento, claim atômico e remoção segura.
 
-[Spec](../../docs/engineering/02-worktrees.md) · REQ-E15-02 em [matriz](../../docs/product/03-requirements.md).
+[Spec](../../engineering/02-worktrees.md) · REQ-E15-02 em [matriz](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 
@@ -24,4 +24,4 @@ QA-009, QA-012; registrar commit/digest, comando, ambiente/OS/ABI, outputs e lim
 
 ## Execução E15-02
 
-[Plano em slices](../../_arquivo/repo/docs/superpowers/plans/2026-10-16-e15-02-isolation.md) e [evidência do autor](../../docs/evidence/PR/task-e15-02/README.md). A validação local do tooling não constitui aceite da TASK: revisão Claude do SHA exato, CI remoto e integração pelo mantenedor são etapas separadas; produto/hardware/release continuam fora deste aceite.
+[Plano em slices](../../_arquivo/repo/docs/superpowers/plans/2026-10-16-e15-02-isolation.md) e [evidência do autor](../../evidence/PR/task-e15-02/README.md). A validação local do tooling não constitui aceite da TASK: revisão Claude do SHA exato, CI remoto e integração pelo mantenedor são etapas separadas; produto/hardware/release continuam fora deste aceite.

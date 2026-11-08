@@ -23,7 +23,7 @@ Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implemen
 
 Relatório de formatos comuns/DSP/HLS, lifecycle/focus/storage/TalkBack e energia.
 
-Documento canônico: [spec](../../docs/quality/03-multiplatform-matrix.md). [Matriz normativa](../../docs/product/03-requirements.md).
+Documento canônico: [spec](../../quality/03-matriz-multiplataforma.md). [Matriz normativa](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 
@@ -31,7 +31,7 @@ Gates comuns e Android aprovados no aparelho real; saída hi-res apenas quando n
 
 ## Verificação e evidência
 
-QA-019, QA-020, QA-021, QA-003 em [QA comum](../../docs/quality/01-test-strategy.md) e [matriz multiplataforma](../../docs/quality/03-multiplatform-matrix.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+QA-019, QA-020, QA-021, QA-003 em [QA comum](../../quality/01-estrategia-testes.md) e [matriz multiplataforma](../../quality/03-matriz-multiplataforma.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
 
 ## Execução e limites
 

@@ -17,7 +17,7 @@ Decisão do mantenedor (2026-11-05): *"vynamp converter e restore devem ter seus
 
 Fronteira de conteúdo: `vynamp-encode` é a **biblioteca** de codificadores, única fonte de encoders do produto; `vynamp-converter` é o **aplicativo desktop** (CLI, fila de jobs, workers, relatório, escrita atômica), que consome `vynamp-decode` e `vynamp-encode`; `vynamp-restore` é o **aplicativo desktop** de restauração (CLI, motor, diagnóstico, presets, comparação, exportação), que consome `vynamp-decode`. Nenhum dos três contém o player nem o DSP do player.
 
-Escopo: `docs/tools/01-vynamp-restore.md` e `docs/tools/02-vynamp-converter.md` (cabeçalho de origem), `docs/architecture/adr/ADR-012-shell-integration.md` §3, `docs/architecture/adr/ADR-013-vynamp-restore.md`, `docs/GLOSSARY.md`, `tasks/epics/E18.md`, `docs/engineering/08-folder-structure.md` (layout `D:\Projects\vynamp-{encode,converter,restore}`); criação dos três repositórios GitHub e dos clones locais.
+Escopo: `reference/tools/01-vynamp-restore.md` e `reference/tools/02-vynamp-converter.md` (cabeçalho de origem), `adr/ADR-012-integracao-shell.md` §3, `adr/ADR-013-restore.md`, `architecture/GLOSSARY.md`, `tasks/epics/E18.md`, `_arquivo/repo/docs/engineering/08-folder-structure.md` (layout `D:\Projects\vynamp-{encode,converter,restore}`); criação dos três repositórios GitHub e dos clones locais.
 
 Boundary: não implementa as ferramentas; não move a fonte normativa para fora do repo principal; não abre os repositórios ao público — a abertura é TASK-E19-06.
 
@@ -25,9 +25,9 @@ Boundary: não implementa as ferramentas; não move a fonte normativa para fora 
 
 As specs apontam para URLs reais dos repos novos; a fonte normativa continua única no repo principal; os três repos existem, públicos, com README bilíngue, LICENSE e SECURITY.md.
 
-Detalhamento: `docs/tools/01-vynamp-restore.md` cita `https://github.com/jimmykedlyn/vynamp-restore`; `docs/tools/02-vynamp-converter.md` cita `https://github.com/jimmykedlyn/vynamp-converter` e `https://github.com/jimmykedlyn/vynamp-encode`; `gh repo view jimmykedlyn/vynamp-restore --json visibility` retorna `PUBLIC`; cada repos novo tem `README.md` bilíngue, `LICENSE`, `LICENSE-MIT`, `LICENSE-APACHE`, `SECURITY.md` e `CONTRIBUTING.md`; `D:\Projects\vynamp-restore`, `D:\Projects\vynamp-converter` e `D:\Projects\vynamp-encode` existem com clone do remoto.
+Detalhamento: `reference/tools/01-vynamp-restore.md` cita `https://github.com/jimmykedlyn/vynamp-restore`; `reference/tools/02-vynamp-converter.md` cita `https://github.com/jimmykedlyn/vynamp-converter` e `https://github.com/jimmykedlyn/vynamp-encode`; `gh repo view jimmykedlyn/vynamp-restore --json visibility` retorna `PUBLIC`; cada repos novo tem `README.md` bilíngue, `LICENSE`, `LICENSE-MIT`, `LICENSE-APACHE`, `SECURITY.md` e `CONTRIBUTING.md`; `D:\Projects\vynamp-restore`, `D:\Projects\vynamp-converter` e `D:\Projects\vynamp-encode` existem com clone do remoto.
 
-[Spec](../../docs/tools/02-vynamp-converter.md) · REQ-E19-04 em [matriz](../../docs/product/03-requirements.md).
+[Spec](../../reference/tools/02-vynamp-converter.md) · REQ-E19-04 em [matriz](../../product/03-requisitos.md).
 
 ## Evidência
 

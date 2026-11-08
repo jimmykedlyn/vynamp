@@ -12,7 +12,7 @@ Fase M0 / P0 · Owner engineering-delivery · Esforço inicial 2–5 dias úteis
 
 Importação por branch/PR ou bootstrap vazio, proteções e default develop.
 
-[Spec](../../docs/engineering/03-gitflow-github.md) · REQ-E15-03 em [matriz](../../docs/product/03-requirements.md).
+[Spec](../../engineering/03-gitflow.md) · REQ-E15-03 em [matriz](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 
@@ -24,4 +24,4 @@ QA-012; registrar commit/digest, comando, ambiente/OS/ABI, outputs e limitaçõe
 
 ## Execução E15-03
 
-[Plano](../../_arquivo/repo/docs/superpowers/plans/2026-10-18-e15-03-gitflow.md) e [evidência do autor](../../docs/evidence/PR/task-e15-03/README.md). Histórico importado pela E15-01 preservado, sem reimportação nem force push. Aplicados em 2026-10-18: default `develop`, somente merge commit, exclusão de branch após merge e Dependabot mirando `develop`. Branch protection/rulesets retornam HTTP 403 no plano atual do repositório privado: CI Gate obrigatório e bloqueio de force push/deleção **não** estão aplicados e permanecem pendência do mantenedor. Revisão Codex do SHA exato, CI e merge pelo mantenedor são gates separados.
+[Plano](../../_arquivo/repo/docs/superpowers/plans/2026-10-18-e15-03-gitflow.md) e [evidência do autor](../../evidence/PR/task-e15-03/README.md). Histórico importado pela E15-01 preservado, sem reimportação nem force push. Aplicados em 2026-10-18: default `develop`, somente merge commit, exclusão de branch após merge e Dependabot mirando `develop`. Branch protection/rulesets retornam HTTP 403 no plano atual do repositório privado: CI Gate obrigatório e bloqueio de force push/deleção **não** estão aplicados e permanecem pendência do mantenedor. Revisão Codex do SHA exato, CI e merge pelo mantenedor são gates separados.

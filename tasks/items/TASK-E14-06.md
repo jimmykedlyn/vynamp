@@ -29,7 +29,7 @@ Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implemen
 
 Matriz de evidência agregada para Windows/Linux/macOS Intel/macOS Silicon/Android.
 
-Documento canônico: [spec](../../docs/quality/03-multiplatform-matrix.md). [Matriz normativa](../../docs/product/03-requirements.md).
+Documento canônico: [spec](../../quality/03-matriz-multiplataforma.md). [Matriz normativa](../../product/03-requisitos.md).
 
 ## Critérios de aceite
 
@@ -37,7 +37,7 @@ Todos os alvos M1–M3 aprovados com hardware e acessibilidade; alvo ausente blo
 
 ## Verificação e evidência
 
-QA-018, QA-019, QA-020, QA-021 em [QA comum](../../docs/quality/01-test-strategy.md) e [matriz multiplataforma](../../docs/quality/03-multiplatform-matrix.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+QA-018, QA-019, QA-020, QA-021 em [QA comum](../../quality/01-estrategia-testes.md) e [matriz multiplataforma](../../quality/03-matriz-multiplataforma.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
 
 ## Execução e limites
 
@@ -45,4 +45,4 @@ Confirmar ports/contratos e dependências; decompor itens grandes em slices de 1
 
 ## Identidade aprovada Vynamp C
 
-Incluir QA da identidade Vynamp C nos cinco alvos: legibilidade em tamanhos pequenos, alpha/DPI/máscaras/temas, launchers/shortcuts/tray; report por hardware e hashes. [Guia canônico](../../docs/design/04-brand-identity.md). Este requisito complementar não altera IDs/estado nem dispensa o contrato acima.
+Incluir QA da identidade Vynamp C nos cinco alvos: legibilidade em tamanhos pequenos, alpha/DPI/máscaras/temas, launchers/shortcuts/tray; report por hardware e hashes. [Guia canônico](../../design/04-marca.md). Este requisito complementar não altera IDs/estado nem dispensa o contrato acima.

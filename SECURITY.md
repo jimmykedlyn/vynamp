@@ -34,11 +34,11 @@ problema.
 
 This is the only security channel. There is no security e-mail address, and
 none should be invented. It is the channel decided as D-GOV-01 in
-[`docs/product/05-decisions.md`](docs/product/05-decisions.md).
+[`product/05-decisoes.md`](product/05-decisoes.md).
 
 Este é o único canal de segurança. Não existe e-mail de segurança, e nenhum
 deve ser inventado. É o canal decidido como D-GOV-01 em
-[`docs/product/05-decisions.md`](docs/product/05-decisions.md).
+[`product/05-decisoes.md`](product/05-decisoes.md).
 
 ### What to include / O que incluir
 
@@ -109,10 +109,10 @@ especificação exige.
 
 ## See also / Ver também
 
-- [Threat model / Modelo de ameaças](docs/security/01-threat-model.md)
-- [Privacy and licensing / Privacidade e licenciamento](docs/security/02-privacy-licensing.md)
+- [Threat model / Modelo de ameaças](security/01-threat-model.md)
+- [Privacy and licensing / Privacidade e licenciamento](security/02-privacidade-licencas.md)
 - [Legal notes / Notas legais](LEGAL.md)
-- [CI and gates / CI e gates](docs/engineering/04-ci-cd.md)
+- [CI and gates / CI e gates](engineering/04-ci.md)
 
 Nothing is declared "secure" merely because it is written in Rust.
 Nada é declarado "seguro" só por ser escrito em Rust.

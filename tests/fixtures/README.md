@@ -23,6 +23,6 @@ Não incluir corpus sem permissão, dados pessoais, tokens, código/assets Winam
 
 `xtask/tests/tooling.rs` usa `tempfile` e repositórios Git reais em caminhos com espaços. No Windows preparado, `AMBIENTE.ps1` direciona TMP/TEMP para `D:\Projects\vynamp-media-player\.cache\tmp`; cada teste recebe diretório único e remove o contexto Git herdado nos subprocessos. Esses repositórios gerados não são corpus versionado e não dependem de nomes temporários fixos.
 
-Builds usam `<worktree>/target/xtask-driver` e `<worktree>/target/xtask-ci`; scratch em `.superpowers` é ignored. Resultados permanentes ficam em `docs/evidence/PR/<task>/`, com comando/ambiente/SHA/hashes reais. Capturas de hardware incluem device/driver/ABI; nenhum path ou teste de tooling substitui execução do player em hardware.
+Builds usam `<worktree>/target/xtask-driver` e `<worktree>/target/xtask-ci`; scratch em `.superpowers` é ignored. Resultados permanentes ficam em `evidence/PR/<task>/`, com comando/ambiente/SHA/hashes reais. Capturas de hardware incluem device/driver/ABI; nenhum path ou teste de tooling substitui execução do player em hardware.
 
-Referências: [estratégia QA](../../docs/quality/01-test-strategy.md), [contrato de testes](../../docs/engineering/05-tests.md), [ADR-009](../../docs/architecture/adr/ADR-009-engineering-baseline.md).
+Referências: [estratégia QA](../../quality/01-estrategia-testes.md), [contrato de testes](../../engineering/05-testes.md), [ADR-009](../../adr/ADR-009-baseline.md).

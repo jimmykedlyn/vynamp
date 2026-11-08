@@ -1,6 +1,6 @@
 # TASK-E16-08 — Validar portable, backup e limpeza de integração
 
-Versão 0.8.0 · Estado: planejada, não implementada (conforme [ADR-012](../../docs/architecture/adr/ADR-012-shell-integration.md)).
+Versão 0.8.0 · Estado: planejada, não implementada (conforme [ADR-012](../../adr/ADR-012-integracao-shell.md)).
 
 ## Contrato
 
@@ -17,7 +17,7 @@ Requisito REQ-E16-08 · M3 · P0 · responsável funcional delivery (pessoa a de
 
 Backup/restore consistente, portable relocável e uninstall de registros próprios (ProgIDs e pacote esparso). Detalhe: cobre o backup e restore da base de dados e configurações, a relocação da pasta no modo portátil e a desinstalação completa de registros próprios (ProgIDs HKCU e pacote esparso MSIX no Windows; desktop entries, ServiceMenus e MIME no Linux).
 
-[Spec canônica](../../docs/platforms/04-activation-ownership.md) · [Spec de integração](../../docs/platforms/03-system-integration.md) · [Matriz normativa](../../docs/product/03-requirements.md) · [ADR-012](../../docs/architecture/adr/ADR-012-shell-integration.md).
+[Spec canônica](../../platforms/04-ativacao-ownership.md) · [Spec de integração](../../platforms/03-integracao-sistema.md) · [Matriz normativa](../../product/03-requisitos.md) · [ADR-012](../../adr/ADR-012-integracao-shell.md).
 
 ## Aceite
 
@@ -25,4 +25,4 @@ Restore por staging e rollback preserva mídia; desinstalação remove pacote es
 
 ## Verificação e evidência
 
-QA-024, QA-031 em [QA](../../docs/quality/01-test-strategy.md) e [cenários](../../docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.
+QA-024, QA-031 em [QA](../../quality/01-estrategia-testes.md) e [cenários](../../_arquivo/repo/docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.
