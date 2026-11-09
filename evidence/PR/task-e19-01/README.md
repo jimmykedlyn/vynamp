@@ -88,8 +88,63 @@ O que continua **não** provado: o comportamento real do runner do GitHub para e
 - O validador recusa `.woodpecker/` e qualquer `uses:` sem SHA completo, para que a inversão da ADR-010 não reabra a porta a tag flutuante.
 - `git log --all -p` do repositório não revela token, PAT, chave AWS ou chave privada (scan de 2026-11-05, sem achado além de um falso positivo no próprio detector em `infra/ci/`, agora removido).
 
+## AC-4 e AC-5 — implementados em 2026-11-09
+
+Os dois critérios existiam na TASK desde a geração do passo 37 e nada os verificava.
+
+### AC-4 — macOS Intel e Apple Silicon como alvos verificados
+
+O job `tooling` passou a rodar numa matriz `[ubuntu-22.04, macos-15-intel, macos-15]`.
+`macos-latest` é recusado de propósito: ele troca de arquitetura quando o GitHub
+rotaciona a imagem, e alvo que se move não é alvo fixado. `check-delivery` reprova se
+qualquer um dos dois Macs sair da matriz **e** se `macos-latest` aparecer nela — um
+gate e não uma preferência, porque tirar uma linha da matriz devolve o macOS a "não
+verificado" com todo o resto verde, que é exatamente o estado que a ADR-014 encerra.
+
+### AC-5 — varredura de segredo no histórico
+
+`cargo xtask check-secrets` (`xtask/src/secrets.rs`) lê **todo blob alcançável de toda
+ref**, não a árvore de trabalho. Segredo apagado no commit seguinte continua no clone
+e a árvore de trabalho diria que está limpo — é o caso para o qual o critério existe.
+
+Cobre forma sem ambiguidade à vista: token de forge e de nuvem com prefixo, chave
+privada PEM. Não faz heurística de entropia: ela exigiria um arquivo de baseline para
+ser usável, e baseline é onde achado real vai para ser esquecido.
+
+O achado informa blob, caminho e linha e **nunca** o texto casado — log de CI é retido
+e um scanner que imprime o segredo o publicou.
+
+Resultado real neste repositório (2026-11-09): `No credential shape found in the
+reachable history.`, 3.184 blobs, 4,2 s.
+
+### Dois defeitos encontrados só porque a varredura precisava rodar
+
+| Defeito | Medição |
+|---|---|
+| um `git cat-file -p` por blob, um processo cada | 330 s numa execução, mais de 600 s em outra; **9,5 s** com um `cat-file --batch` só |
+| `object_types` escrevia todo id antes de ler saída | 330 s em sequência; **9,5 s** com o escritor em thread própria |
+
+O segundo foi descrito primeiro como deadlock e **não é**: a versão sequencial
+termina, e o teste de tempo passa nas duas versões. Fica registrado o que foi medido,
+não um mecanismo que nunca se confirmou — a mesma regra que este repositório aplica a
+"parece certo" em qualquer outro lugar.
+
+O passo está no job `tooling`, precedido de `git fetch --unshallow` (o
+`actions/checkout` busca um commit só, e um clone raso varreria a árvore de trabalho).
+`check-delivery` reprova se qualquer um dos dois passos sumir: um scanner que o CI não
+roda é ferramenta que ninguém usa.
+
+### JWT do Woodpecker
+
+Removido por completo por decisão do mantenedor em 2026-11-09. Os dois hooks saíram na
+TASK-E19-06, mas o valor sobrevivia num backup não versionado em
+`.claude/settings.local.json.bak-30`; o arquivo não existe mais e nenhuma cópia resta na
+árvore. Revogar no serviço não é possível deste lado — o servidor já estava morto.
+
 ## Pendente
 
-- Abertura dos repositórios e reaplicação de branch protection: TASK-E19-06.
+- Abertura dos repositórios e reaplicação de branch protection: TASK-E19-06 (feito).
 - Licença, governança, SECURITY.md e README bilíngue: TASK-E19-02.
-- Remoção do Woodpecker local (Docker Desktop, agente Windows, Cloudflare Tunnel) fora do repositório: operacional, do mantenedor.
+- Remoção do Woodpecker local (Docker Desktop, agente Windows, Cloudflare Tunnel) fora
+  do repositório: operacional, do mantenedor. O JWT não está mais na árvore; o servidor
+  e o agente continuam instalados na máquina.

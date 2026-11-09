@@ -456,6 +456,74 @@ Dez arquivos de `docs/superpowers/` saem do repositório: `plans/2026-10-14-comp
 
 **PT** — O design do `vitrola` (aprovado em 2026-10-23) deixou de ser biblioteca em repositório próprio: vinil e válvula são **módulos DSP dentro do app**, por decisão do mantenedor registrada na [ADR-014](adr/ADR-014-publico-dsp-interno.md). O design aprovado foi preservado por **incorporação**, não por reimplementação: suas nove seções são agora §8.1–8.9 de [10-vitrola](reference/audio/10-vitrola.md), que passou a ser fonte única — antes esse documento integrava um design externo por referência e se subordinava a ele. Uma cópia literal do texto original fica em `docs/evidence/PR/task-e19-03/vitrola-design.md`, porque é a única cópia sobrevivente depois que o repositório for arquivado. O repositório externo é arquivado, reversível por `gh repo unarchive`, e **não** é aberto ao público. Citações atualizadas na linha de inventário da ADR-011, no glossário, nos docs de DSP e do contrato de sinal, no catálogo DSP, na referência do MVP, na paridade de recursos, em privacidade/licenças e no roadmap. A integração continua na [TASK-E19-07](libs/engine/tasks/items/TASK-E19-07.md), depois da TASK-E04-03. Somente documentação: nenhum código de player, 191 requisitos, 191 tarefas, 19 épicos.
 
+## Unreleased — 2026-11-09 (TASK-E19-01 AC-5, READMEs bilíngues, JWT do Woodpecker) / Não lançado — 2026-11-09 (TASK-E19-01 AC-5, READMEs bilíngues, JWT do Woodpecker)
+
+**EN** — Three pendencies closed, and in each the finding was the gap between the
+claim and what anything checked. **AC-5 of TASK-E19-01** requires that no credential
+sits in the history. Nothing checked it: the Woodpecker preflight that looked for
+token shapes lived in `infra/ci/`, left with ADR-014, and no replacement was written.
+`cargo xtask check-secrets` now reads every blob reachable from every ref — a secret
+deleted in the next commit is still in the clone, and the working tree would call it
+clean — and reports the blob, the path and the line without ever printing the matched
+text, because CI logs are retained and a scanner that prints the secret has published
+it. It runs in the `tooling` job, and `check-delivery` fails if that step or the
+`git fetch --unshallow` it needs goes missing.
+
+Writing it surfaced two defects, both measured on this repository's own ~3,300
+objects. One `git cat-file -p` per blob costs a process start each: 330 s in one run
+and past 600 s in another, against 9.5 s batched. And `object_types` wrote every id
+before reading any output: 330 s sequentially against 9.5 s with the writer on its own
+thread. The second one was first described here as a deadlock; it is not — the
+sequential version terminates, and the timing test passes on both versions. What is
+recorded is the measurement, not a mechanism that was never confirmed.
+
+**The Woodpecker JWT was removed completely**, by the maintainer's decision on
+2026-11-09. The two hooks had gone in TASK-E19-06, but the token itself survived in an
+untracked backup at `.claude/settings.local.json.bak-30`; that file is gone and no
+copy remains in the tree. Revoking it at the service is not something this repository
+can do — the server was already dead — so the value simply no longer exists here.
+
+Five module READMEs became bilingual EN/PT with the status block, licence, security
+channel and scope that a public repository needs (`vynamp-dsp`, `vynamp-decode`,
+`vynamp-engine`, `vynamp-output`, `vynamp-player`), and the MVP reference README was
+repointed from the archived `vynamp-mediaplayer` and a `06-mvp-reference.md` that no
+longer exists to `jimmykedlyn/vynamp` and `design/07-pin-mvp.md`. Two places still
+called `vynamp-dsp` a private repository; the glossary now says public.
+
+**PT** — Três pendências fechadas, e em cada uma o achado foi a distância entre a
+afirmação e o que alguma coisa verificava. O **AC-5 da TASK-E19-01** exige que nenhum
+segredo esteja no histórico. Nada verificava: o preflight do Woodpecker que procurava
+forma de token morava em `infra/ci/`, saiu com a ADR-014, e nada o substituiu. O
+`cargo xtask check-secrets` lê agora todo blob alcançável de toda ref — segredo
+apagado no commit seguinte continua no clone, e a árvore de trabalho diria que está
+limpo — e informa o blob, o caminho e a linha sem nunca imprimir o texto casado,
+porque log de CI é retido e um scanner que imprime o segredo o publicou. Roda no job
+`tooling`, e o `check-delivery` reprova se esse passo ou o `git fetch --unshallow` de
+que ele depende sumir.
+
+Escrevê-lo revelou dois defeitos, os dois medidos nos ~3.300 objetos deste
+repositório. Um `git cat-file -p` por blob custa um processo por blob: 330 s numa
+execução e mais de 600 s em outra, contra 9,5 s em lote. E o `object_types` escrevia
+todo id antes de ler qualquer saída: 330 s em sequência contra 9,5 s com o escritor em
+thread própria. O segundo chegou a ser descrito aqui como deadlock; não é — a versão
+sequencial termina, e o teste de tempo passa nas duas. O que fica registrado é a
+medição, não um mecanismo que nunca foi confirmado.
+
+**O JWT do Woodpecker foi removido por completo**, por decisão do mantenedor em
+2026-11-09. Os dois hooks já tinham saído na TASK-E19-06, mas o token sobrevivia num
+backup não versionado em `.claude/settings.local.json.bak-30`; esse arquivo não existe
+mais e nenhuma cópia resta na árvore. Revogá-lo no serviço não é algo que este
+repositório possa fazer — o servidor já estava morto — então o valor simplesmente não
+existe mais aqui.
+
+Cinco READMEs de módulo passaram a ser bilíngues EN/PT com o bloco de estado, licença,
+canal de segurança e escopo que um repositório público precisa (`vynamp-dsp`,
+`vynamp-decode`, `vynamp-engine`, `vynamp-output`, `vynamp-player`), e o README da
+referência do MVP foi reapontado do `vynamp-mediaplayer` arquivado e de um
+`06-mvp-reference.md` que não existe mais para `jimmykedlyn/vynamp` e
+`design/07-pin-mvp.md`. Dois lugares ainda chamavam `vynamp-dsp` de repositório
+privado; o glossário agora diz público.
+
 ## Unreleased — 2026-11-09 (dependencies: six Dependabot PRs, two of them broken) / Não lançado — 2026-11-09 (dependências: seis PRs do Dependabot, dois deles quebrados)
 
 **EN** — Six Dependabot PRs were open and four were safe. The other two did not
