@@ -40,7 +40,7 @@ Versão 0.8.1 · 2026-11-07 (acabamento de VU passa a seis valores, contagem ver
 | vitrola | Módulo DSP **interno** do app que simula vinil e amplificador valvulado; não é biblioteca nem repositório próprio ([spec](../reference/audio/10-vitrola.md), [ADR-014](../adr/ADR-014-publico-dsp-interno.md)) |
 | vynamp-decode / vynamp-output | Bibliotecas próprias de decodificação / saída de áudio; a saída nunca aplica ganho, dither ou resampling ([ADR-011](../adr/ADR-011-pilha-propria.md)) |
 | Lib própria de resampling | Futura biblioteca própria de conversão de taxa de amostragem (nome e repositório a definir); decisão D-DSP-08 |
-| MVP HTML/SVG/JS | Protótipo interativo de UI, rev.38 em `vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452` (repositório privado, fora deste); `[DEMO]` marca o que não processa áudio; não é a engine nativa ([referência do MVP](../design/07-pin-mvp.md)) |
+| MVP HTML/SVG/JS | Protótipo interativo de UI, rev.38 em `vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452` (repositório público, fora deste); `[DEMO]` marca o que não processa áudio; não é a engine nativa ([referência do MVP](../design/07-pin-mvp.md)) |
 | Knob | Controle circular de parâmetro contínuo, ajustado por gesto vertical; ver [painel DSP](../design/06-painel-dsp.md#8-acesso-e-controles-dsp-ux) |
 | Readout | Valor numérico com unidade junto ao knob ou slider; clicável para abrir o editor exato |
 | Grafo modular | Vista de nós e conexões do DSP; no protótipo, referência relatada, no nativo, nada implementado ([painel DSP §9](../design/06-painel-dsp.md#9-fluxo-modular-grafo--referência-do-protótipo)) |
@@ -68,6 +68,6 @@ Versão 0.8.1 · 2026-11-07 (acabamento de VU passa a seis valores, contagem ver
 | Região | Trecho do arquivo tratado de forma diferente (ganho e fade), com limites `start`/`end`; `kind: between` é o tipo suportado na 1.0 (`overlay` foi placeholder no MVP e está fora de escopo) |
 | Projeto de restauração | Arquivo `.vynamp-restore` (JSON versionado) com cadeia, parâmetros, regiões e presets; guarda as decisões de um projeto, não o áudio processado |
 | Saída restaurada | Arquivo gravado pelo Restore, sempre derivado e nunca substituto da origem; a escrita é atômica e validada após a gravação ([spec do Restore](../reference/tools/01-vynamp-restore.md#8-exportação)) |
-| `vynamp-encode` | Biblioteca própria de codificadores, única fonte de encoders do produto; `std`-only, repositório privado, criada no PR5 ([spec do Converter](../reference/tools/02-vynamp-converter.md#1-escopo)) |
+| `vynamp-encode` | Biblioteca própria de codificadores, única fonte de encoders do produto; `std`-only, repositório público, criada no PR5 ([spec do Converter](../reference/tools/02-vynamp-converter.md#1-escopo)) |
 
 IDs são estáveis e não mudam com renomeação de arquivo. “Alvo”, “gate” e “proposta” nunca significam resultado já medido. Dados nos previews são fictícios. O nome Vynamp é provisório.

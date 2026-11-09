@@ -38,7 +38,20 @@ jobs:
 
   tooling:
     name: Tooling
-    runs-on: ubuntu-22.04
+    # macOS Intel and Apple Silicon are mandatory targets (REQ-E19-01), and a
+    # target nothing runs on is not verified. This is the cheapest job that can
+    # carry them: fmt, clippy and the xtask tests are fast and host-agnostic,
+    # and the umbrella owns no application build to put on a Mac runner
+    # instead (D-CI-1 still forbids `ci core` and `ci android` here).
+    #
+    # `macos-15-intel` is the Intel image and `macos-15` the Apple Silicon one;
+    # `macos-latest` is deliberately not used, because it silently changes
+    # architecture as GitHub rotates it and a target that moves is not pinned.
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-22.04, macos-15-intel, macos-15]
+    runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -48,6 +61,16 @@ jobs:
       - run: cargo fmt --all -- --check
       - run: cargo clippy --package xtask --all-targets --locked -- -D warnings
       - run: cargo test --package xtask --locked
+      # AC-5 of TASK-E19-01 requires that no credential sits in the history. The
+      # Woodpecker preflight that used to look for one left with ADR-014, and the
+      # claim went unverified until `check-secrets` was written -- so the scan has
+      # to run somewhere, or it is a tool nothing uses. It reads every blob
+      # reachable from every ref, which needs full history: a shallow checkout
+      # would scan the working tree and report a repository clean whose history
+      # still holds the token.
+      - name: Full history for the secret scan
+        run: git fetch --unshallow || true
+      - run: cargo xtask check-secrets
 
   submodules:
     name: Submodules fixados

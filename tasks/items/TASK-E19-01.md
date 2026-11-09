@@ -51,6 +51,8 @@ ADR-014, workflows ci/release/quality em GitHub Actions com actions fixadas por 
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| AC-5, varredura de segredo | `cargo xtask check-secrets` | `No credential shape found in the reachable history.` sobre todo blob de toda ref |
+| AC-4, matriz macOS | `cargo xtask check-delivery` | reprova se `macos-15-intel` ou `macos-15` sair da matriz do `tooling`, ou se `macos-latest` entrar |
 | Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
 | Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
 

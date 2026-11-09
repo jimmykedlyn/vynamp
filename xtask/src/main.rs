@@ -6,6 +6,7 @@ mod github;
 mod package;
 mod release;
 mod repo;
+mod secrets;
 mod signing;
 mod util;
 mod validate;
@@ -86,6 +87,8 @@ enum Action {
     },
     #[command(name = "quality-gate")]
     QualityGate,
+    #[command(name = "check-secrets")]
+    CheckSecrets,
     #[command(name = "tag-version")]
     TagVersion,
     Repo {
@@ -197,6 +200,7 @@ fn execute() -> Result<()> {
         Action::GuardBranch => repo::guard(&root),
         Action::GithubImport { destination, push } => github::import(&root, &destination, push),
         Action::QualityGate => ci::quality(&root),
+        Action::CheckSecrets => secrets::check(&root),
         Action::TagVersion => release::tag_version(),
         Action::Repo { command } => match command {
             Repo::Init => repo::init(&root),
