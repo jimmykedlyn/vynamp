@@ -1,0 +1,27 @@
+[submodule "libs/dsp"]
+	path = libs/dsp
+	url = https://github.com/jimmykedlyn/vynamp-dsp.git
+[submodule "libs/encode"]
+	path = libs/encode
+	url = https://github.com/jimmykedlyn/vynamp-encode.git
+[submodule "libs/engine"]
+	path = libs/engine
+	url = https://github.com/jimmykedlyn/vynamp-engine.git
+[submodule "apps/player"]
+	path = apps/player
+	url = https://github.com/jimmykedlyn/vynamp-player.git
+[submodule "apps/converter"]
+	path = apps/converter
+	url = https://github.com/jimmykedlyn/vynamp-converter.git
+[submodule "apps/restore"]
+	path = apps/restore
+	url = https://github.com/jimmykedlyn/vynamp-restore.git
+[submodule "libs/decode"]
+	path = libs/decode
+	url = https://github.com/jimmykedlyn/vynamp-decode.git
+[submodule "libs/output"]
+	path = libs/output
+	url = https://github.com/jimmykedlyn/vynamp-output.git
+[submodule "reference/vynamp-mvp"]
+	path = reference/vynamp-mvp
+	url = https://github.com/jimmykedlyn/vynamp-mvp-reference.git

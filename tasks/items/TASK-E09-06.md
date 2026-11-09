@@ -1,36 +1,67 @@
 # TASK-E09-06 — Entregar streaming VOD e CDN
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
-
-## Contrato da tarefa
+> Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
+> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
+> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
+> não existem.
 
 | Campo | Valor |
 |---|---|
-| ID / requisito | TASK-E09-06 / REQ-E09-06 |
-| Fase / prioridade | M4 / P1 |
-| Estado | Planejada; não implementada |
-| Responsável funcional | streaming — pessoa a designar |
-| Esforço provisório | 8–20 dias úteis; reestimar após M0 |
+| ID | `TASK-E09-06` |
+| Módulo dono | `vynamp` |
+| Repo | `jimmykedlyn/vynamp` |
+| REQ coberto | `REQ-E09-06` |
+| Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
+| Fase | M4 |
+| Prioridade | P1 |
+| Estado | planned |
+| Depende de | `TASK-E09-05` |
+| Bloqueia | `TASK-E09-07`, `TASK-E09-10` |
+| Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
+| Esforço | 8–20 dias úteis |
 | Risco | alto |
 
-## Dependências
-
-- [TASK-E09-05](TASK-E09-05.md) — Implementar ingest e transcode isolados
-
-## Entrega concreta
+## Entrega
 
 Resolve assinado para FLAC/Opus progressivo e HLS AAC com direitos e expiração.
 
-Documento canônico: [spec](../../streaming/03-plataforma.md). [Matriz normativa](../../product/03-requisitos.md).
+## Boundary
+
+<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+
+## Antes de começar
+
+- [ ] Spec do módulo aprovada e o critério de aceite citado já existe nela
+- [ ] Worktree própria criada (`cargo xtask repo worktree task-e09-06-claude-<slug>`)
+- [ ] Fixtures/hardware necessários disponíveis ou limitação registrada
+- [ ] Nenhuma TASK em execução tocando os mesmos arquivos
 
 ## Critérios de aceite
 
-Range/qualidade negociados; token renovável; rights negados bloqueiam resolve; não forçar lossless HLS sem prova.
+| ID | Given | When | Then |
+|---|---|---|---|
+| `TASK-E09-06-AC-1` | PENDENTE | PENDENTE | Range/qualidade negociados |
+| `TASK-E09-06-AC-2` | PENDENTE | PENDENTE | token renovável |
+| `TASK-E09-06-AC-3` | PENDENTE | PENDENTE | rights negados bloqueiam resolve |
+| `TASK-E09-06-AC-4` | PENDENTE | PENDENTE | não forçar lossless HLS sem prova. |
 
-## Verificação e evidência
+## Verificação
 
-QA-008, QA-013, QA-014 em [QA comum](../../quality/01-estrategia-testes.md) e [matriz multiplataforma](../../quality/03-matriz-multiplataforma.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+| Item | Comando / fixture | Evidência esperada |
+|---|---|---|
+| Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
+| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
 
-## Execução e limites
+## DoD — pronto para review
 
-Confirmar ports/contratos e dependências; decompor itens grandes em slices de 1–3 dias; implementar sucesso e erro/cancelamento; executar os critérios apropriados; atualizar schema/docs/notices; aceitar somente com evidência e revisão. Preservar dados, budgets e acessibilidade. Stubs/botões desabilitados não contam. Esforço é estimativa, não data prometida. Atualizar backlog JSON e requisito junto de qualquer mudança.
+- [ ] Todos os critérios de aceite com evidência
+- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
+- [ ] `cargo test` verde; testes ignorados listados com motivo
+- [ ] Spec do módulo atualizada se a implementação revelou algo novo
+- [ ] `backlog.json` com o estado correto
+- [ ] Revisão feita por contexto limpo, não pelo implementador
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+## Notas de execução
+
+Preenchido durante a execução, não antes.

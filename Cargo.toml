@@ -3,9 +3,26 @@ resolver = "3"
 members = ["xtask"]
 default-members = ["xtask"]
 
-# libs/* e apps/* NAO sao membros: sao repositorios independentes em submodulos.
-# Cada um tem seu proprio Cargo.toml e compila sozinho (ver AGENTS.md secao 1.2).
-exclude = ["libs/*", "apps/*", "reference/*"]
+# Nenhum dir de modulo e membro: cada um e repositorio independente em submodulo,
+# com Cargo.toml proprio, e compila sozinho (ver AGENTS.md secao 1.2).
+#
+# Os caminhos sao listados um a um, e nao por glob. `exclude = ["libs/*"]` NAO
+# basta: quando o cargo sobe a arvore a partir de `libs/dsp/Cargo.toml`, a busca
+# do workspace ignora o glob e responde "current package believes it's in a
+# workspace when it's not" -- o job `arch` (Rule 5, cada lib compila sozinha)
+# reprovava com exit 101. Medido com os dois manifests, nao suposto: com o
+# caminho literal compila; com o glob, nao. Um submodulo novo entra aqui.
+exclude = [
+    "libs/decode",
+    "libs/dsp",
+    "libs/encode",
+    "libs/engine",
+    "libs/output",
+    "apps/converter",
+    "apps/player",
+    "apps/restore",
+    "reference/vynamp-mvp",
+]
 
 # Sem [workspace.package] e sem [workspace.lints]: o xtask/Cargo.toml declara
 # edition, rust-version, license e as dependencias por extenso, sem nenhum

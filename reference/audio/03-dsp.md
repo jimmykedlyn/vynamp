@@ -63,7 +63,7 @@ flowchart LR
 | ReplayGain/preamp | normalização por metadados e reserva de headroom antes dos boosts | planejado (E04-01) |
 | EQ (um modo) | correção tonal sobre o sinal normalizado; um só modo processa por vez, os outros ficam guardados | planejado (E04-01/04, E12-10) |
 | Correção de fone/FIR | correção do transdutor depois do gosto do usuário; latência declarada | planejado (import E04-09); FIR **proposto** |
-| vitrola (módulo interno) | após o EQ e **antes do volume do usuário**: a saturação depende do nível da gravação ([vitrola §8.8](10-vitrola.md)) | design aprovado; integração em [TASK-E19-07](../../tasks/items/TASK-E19-07.md), após E04-03; posição relativa ao resampler: **conflito aberto D-DSP-05** |
+| vitrola (módulo interno) | após o EQ e **antes do volume do usuário**: a saturação depende do nível da gravação ([vitrola §8.8](10-vitrola.md)) | design aprovado; integração em [TASK-E19-07](../../libs/engine/tasks/items/TASK-E19-07.md), após E04-03; posição relativa ao resampler: **conflito aberto D-DSP-05** |
 | Tone/dinâmica/imagem/criativos | depois da coloração; o limiter criativo é reordenável, mas não substitui a proteção final | planejado (E04-07/08); vários **propostos** |
 | Mixer/crossfade | soma de fontes correlacionadas antes da proteção | planejado (E01-05, E04-03) |
 | Ganho master | volume digital do usuário, normalmente 0..1 | planejado |
