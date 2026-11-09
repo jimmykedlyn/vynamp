@@ -13,7 +13,7 @@
 | Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
 | Fase | M1 |
 | Prioridade | P1 |
-| Estado | planned |
+| Estado | implemented |
 | Depende de | `TASK-E19-01` |
 | Bloqueia | `TASK-E19-06` |
 | Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
@@ -70,13 +70,34 @@ GitHub Actions com gate CI Gate em vynamp-decode e vynamp-output, CI próprio em
 
 ## DoD — pronto para review
 
-- [ ] Todos os critérios de aceite com evidência
-- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
-- [ ] `cargo test` verde; testes ignorados listados com motivo
-- [ ] Spec do módulo atualizada se a implementação revelou algo novo
-- [ ] `backlog.json` com o estado correto
-- [ ] Revisão feita por contexto limpo, não pelo implementador
-- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+- [x] Todos os critérios de aceite com evidência (evidência em `evidence/PR/task-e19-05/`)
+- [x] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos (verde no CI Gate do umbrella e dos módulos)
+- [x] `cargo test` verde; testes ignorados listados com motivo (nenhum ignorado nesta entrega)
+- [x] Spec do módulo atualizada se a implementação revelou algo novo (`engineering/04-ci.md` não precisou mudar: já descrevia o mecanismo; o que esta TASK revelou virou evidência e comentário no workflow)
+- [x] `backlog.json` com o estado correto (`implemented`, `acceptance_ready: true`)
+- [x] Revisão feita por contexto limpo, não pelo implementador
+- [x] PR aberto com template preenchido; CI Gate verde no SHA final
 ## Notas de execução
 
-Preenchido durante a execução, não antes.
+- Os READMEs de decode e output já eram bilíngues; o que faltava era dizer que o
+  CI existe. A seção `CI` foi escrita nas duas línguas nos três repos.
+- O `verify` do MVP reprovava de forma determinística no `ubuntu-22.04` em cinco
+  arquivos (`#graph-minimap` em dois estados mais `index.json`) porque `out/` é
+  artefato de geometria medida: `drawMini()` deriva visibilidade e conteúdo do
+  rect medido de `#graph-viewport`, que é `flex:1` sob cabeçalho dimensionado por
+  texto. Trocar a família de fonte move esse rect em um pixel, o que basta para
+  virar `overflow` em outro ponto da varredura de cliques. O runner virou
+  `windows-2022`, a família que congelou `out/` — medir a spec, não o runner.
+- `chrome.exe --version` nunca terminava: no Windows o Chrome é binário de
+  subsistema GUI e não retorna. O run `42654628242` ficou 30 minutos no passo
+  `Chrome` sem uma linha de saída. O passo passou a ler
+  `VersionInfo.ProductVersion` com `pwsh`.
+- A prova do AC-1 de cancelamento foi observada no decode (run `42650469273`:
+  `test`/`machete` cancelados, `CI Gate` `failure`). O `vynamp-output` publica o
+  mesmo arquivo, byte a byte; um evento de cancelamento observado nele ficou
+  registrado como limitação na evidência.
+- O commit `62f09ce` do extrator (`ready()` esperando o CSS entrar no cascade e
+  as fontes assentarem) não era a causa do vermelho do Linux, mas ficou: tira a
+  corrida de 500 ms fixos e endurece o portão.
+- Re-pins: `libs/decode` → `da812d7`, `libs/output` → `3607f0d` (PR #20) e
+  `reference/vynamp-mvp` → `e689d90` (PR #21). Todos merge commits.

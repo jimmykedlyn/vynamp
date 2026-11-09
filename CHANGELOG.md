@@ -1,6 +1,6 @@
 # Changelog / Histórico
 
-Versão: 0.9.3 · Data: 2026-11-09 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.9.4 · Data: 2026-11-09 · Estado: especificação proposta, implementação não iniciada.
 
 Each entry appears in English and Portuguese. The two texts say the same thing;
 where they appear to differ, the Portuguese text of that entry is the original
@@ -455,6 +455,83 @@ Dez arquivos de `docs/superpowers/` saem do repositório: `plans/2026-10-14-comp
 **EN** — The `vitrola` design (approved 2026-10-23) is no longer a library in its own repository: vinyl and tube are **DSP modules inside the app**, by the maintainer's decision, recorded in [ADR-014](adr/ADR-014-publico-dsp-interno.md). The approved design was preserved **by incorporation**, not by reimplementation: its nine sections are now §8.1–8.9 of [10-vitrola](reference/audio/10-vitrola.md), which became the single source — previously that document integrated an external design by reference and deferred to it. A literal copy of the original text is kept at `docs/evidence/PR/task-e19-03/vitrola-design.md`, because it is the only surviving copy once the repository is archived. The external repository is archived, reverts with `gh repo unarchive`, and is **not** opened to the public. Citations updated in the ADR-011 inventory row, the glossary, the DSP and signal-contract docs, the DSP catalog, the MVP reference, feature parity, privacy/licensing and the roadmap. Integration remains [TASK-E19-07](libs/engine/tasks/items/TASK-E19-07.md), after TASK-E04-03. Documentation only: no player code, 191 requirements, 191 tasks, 19 epics.
 
 **PT** — O design do `vitrola` (aprovado em 2026-10-23) deixou de ser biblioteca em repositório próprio: vinil e válvula são **módulos DSP dentro do app**, por decisão do mantenedor registrada na [ADR-014](adr/ADR-014-publico-dsp-interno.md). O design aprovado foi preservado por **incorporação**, não por reimplementação: suas nove seções são agora §8.1–8.9 de [10-vitrola](reference/audio/10-vitrola.md), que passou a ser fonte única — antes esse documento integrava um design externo por referência e se subordinava a ele. Uma cópia literal do texto original fica em `docs/evidence/PR/task-e19-03/vitrola-design.md`, porque é a única cópia sobrevivente depois que o repositório for arquivado. O repositório externo é arquivado, reversível por `gh repo unarchive`, e **não** é aberto ao público. Citações atualizadas na linha de inventário da ADR-011, no glossário, nos docs de DSP e do contrato de sinal, no catálogo DSP, na referência do MVP, na paridade de recursos, em privacidade/licenças e no roadmap. A integração continua na [TASK-E19-07](libs/engine/tasks/items/TASK-E19-07.md), depois da TASK-E04-03. Somente documentação: nenhum código de player, 191 requisitos, 191 tarefas, 19 épicos.
+
+## Unreleased — 2026-11-09 (TASK-E19-05: CI Gate nos módulos, CI do MVP e READMEs) / Não lançado — 2026-11-09 (TASK-E19-05: CI Gate nos módulos, CI do MVP e READMEs)
+
+**EN** — `vynamp-decode` and `vynamp-output` had no workflow at all: the seed that
+created repositories in step 35 only wrote `.github/workflows/ci.yml` into an empty
+directory, and these two existed before it. Both now run `fmt`, `clippy`, `test` and
+`machete`, and publish the required status **`CI Gate`** from a `gate` job with
+`if: always()` reading `needs.*.result` — so a dependency that fails, is cancelled or
+never reports fails the gate. A job without `if: always()` is skipped when a
+dependency fails, and a skipped check is not a red one: the pull request sits
+`blocked` waiting for a status that will never arrive. The proof is an interrupted
+run, not a reading of the YAML: decode run `42650469273` had `test` and `machete`
+cancelled and `CI Gate` concluded `failure`.
+
+The MVP reference got its own CI in Node, running `serve` and `verify` chained in
+one step — a verification that does not re-extract through the server proves
+nothing — and the job was red on `ubuntu-22.04` for a reason worth writing down.
+`out/` is an artifact of *measured* geometry: `drawMini()` derives the minimap's
+visibility and content from the measured rect of `#graph-viewport`, which is `flex:1`
+under a text-sized header. Swapping the font family moves that rect by one pixel,
+which is enough to flip `overflow` at a different point in the click sweep, and
+`drawMini` leaves the previous state's children in place when it hides the element.
+Measured here: 499 files compared with 0 differing across four local runs; five files
+differing deterministically on the Linux runner. The runner is `windows-2022`, the
+family that froze `out/` — matching the platform is the fix, and re-freezing `out/`
+on another one is a different decision, for a maintainer.
+
+Two steps were also dead weight. `cargo install resvg` bought 33 seconds and nothing
+else, because `check-svg` is not a CI step (`out/check/report.json` lists 6 files
+that fail on renderer gaps awaiting the font and loader tasks). And the `Chrome` step
+used `chrome.exe --version`, which never returned: on Windows Chrome is a
+GUI-subsystem binary that neither writes to the console nor exits, so run
+`42654628242` sat in that step for 30 minutes with no output. It now reads
+`VersionInfo.ProductVersion` with `pwsh`.
+
+The three READMEs were already bilingual; what they did not say was that a CI exists,
+so the `CI` section was added in both languages to `vynamp-decode`, `vynamp-output`
+and `vynamp-mvp-reference`. No workflow in any of the ten repositories references
+Woodpecker as a CI system, and no `.woodpecker/` path survives in any of them.
+
+**PT** — `vynamp-decode` e `vynamp-output` não tinham workflow nenhum: o seed que
+criou repositórios no passo 35 só escrevia `.github/workflows/ci.yml` em diretório
+vazio, e esses dois existiam antes dele. Os dois passam a rodar `fmt`, `clippy`,
+`test` e `machete`, e a publicar o status exigido **`CI Gate`** a partir de um job
+`gate` com `if: always()` lendo `needs.*.result` — então dependência que falha, é
+cancelada ou nunca reporta reprova o gate. Um job sem `if: always()` é pulado quando
+uma dependência falha, e check pulado não é vermelho: o pull request fica `blocked`
+esperando um status que nunca vem. A prova é uma execução interrompida, não a leitura
+do YAML: o run `42650469273` do decode teve `test` e `machete` cancelados e o
+`CI Gate` concluiu `failure`.
+
+A referência do MVP ganhou CI próprio em Node, rodando `serve` e `verify` encadeados
+num passo só — uma verificação que não reextrai pelo servidor não prova nada —, e o
+job estava vermelho no `ubuntu-22.04` por um motivo que vale registrar. `out/` é
+artefato de geometria *medida*: `drawMini()` deriva a visibilidade e o conteúdo do
+minimapa do rect medido de `#graph-viewport`, que é `flex:1` sob um cabeçalho
+dimensionado por texto. Trocar a família de fonte move esse rect em um pixel, o que
+basta para virar `overflow` em outro ponto da varredura de cliques, e o `drawMini`
+deixa os filhos do estado anterior no lugar quando esconde o elemento. Medido aqui:
+499 arquivos comparados, 0 divergência, em quatro execuções locais; cinco arquivos
+divergindo de forma determinística no runner Linux. O runner é `windows-2022`, a
+família que congelou `out/` — igualar a plataforma é a correção, e recongelar `out/`
+em outra é decisão diferente, do mantenedor.
+
+Dois passos também eram peso morto. `cargo install resvg` comprava 33 segundos e nada
+mais, porque `check-svg` não é passo de CI (`out/check/report.json` lista 6 arquivos
+que reprovam por lacuna de renderizador, à espera das tasks de fonte e de carregador).
+E o passo `Chrome` usava `chrome.exe --version`, que nunca retornava: no Windows o
+Chrome é binário de subsistema GUI que não escreve no console nem termina, então o run
+`42654628242` ficou 30 minutos nesse passo sem saída. Agora ele lê
+`VersionInfo.ProductVersion` com `pwsh`.
+
+Os três READMEs já eram bilíngues; o que não diziam era que existe CI, então a seção
+`CI` foi acrescentada nas duas línguas em `vynamp-decode`, `vynamp-output` e
+`vynamp-mvp-reference`. Nenhum workflow de nenhum dos dez repositórios referencia
+Woodpecker como sistema de CI, e nenhum caminho `.woodpecker/` sobrevive em nenhum
+deles.
 
 ## Unreleased — 2026-11-09 (TASK-E19-01 AC-5, READMEs bilíngues, JWT do Woodpecker) / Não lançado — 2026-11-09 (TASK-E19-01 AC-5, READMEs bilíngues, JWT do Woodpecker)
 
