@@ -349,6 +349,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [Corpo do PR task-e19-02](evidence/PR/task-e19-02/pr-body.md) — evidence/PR/task-e19-02/pr-body.md
 - [Evidência TASK-E19-06](evidence/PR/task-e19-06/README.md) — evidence/PR/task-e19-06/README.md; dez repositorios publicos, protecao lida da API, PVR habilitado e o que ficou pendente (licenca nos seis repos sem LICENSE).
 - [Evidência TASK-E19-04](evidence/PR/task-e19-04/README.md) — evidence/PR/task-e19-04/README.md; specs de Restore e Converter apontadas para os repos próprios, fonte normativa mantida única e governança dos três repos (LICENSE, SECURITY, CONTRIBUTING).
+- [Evidência TASK-E19-05](evidence/PR/task-e19-05/README.md) — evidence/PR/task-e19-05/README.md; CI Gate em decode e output (prova de cancelamento no run 42650469273), serve e verify encadeados no MVP, READMEs bilíngues e nenhum caminho Woodpecker nos dez repos.
 - [Evidência TASK-CI-01](evidence/PR/task-ci-01/README.md) — evidence/PR/task-ci-01/README.md; `delivery()`/`github_actions()` na árvore do umbrella, e o AC-4 que faltava (arquivo e linha do `uses:` sem SHA).
 - [Evidência TASK-CI-02](evidence/PR/task-ci-02/README.md) — evidence/PR/task-ci-02/README.md; job `check-tasks`, as seis regras, a contradição AC-4×AC-5 e as sete autorias que levaram ao verde.
 
