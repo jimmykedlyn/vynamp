@@ -40,10 +40,10 @@ Sete repositórios Vynamp abertos ao público com relato privado de vulnerabilid
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E19-06-AC-1` | PENDENTE | PENDENTE | Os sete repos reportam visibility public e `private_vulnerability_reporting` habilitado |
-| `TASK-E19-06-AC-2` | PENDENTE | PENDENTE | develop exige CI Gate e proíbe force push e exclusão |
-| `TASK-E19-06-AC-3` | PENDENTE | PENDENTE | description não promete abertura futura |
-| `TASK-E19-06-AC-4` | PENDENTE | PENDENTE | repo sem proteção não é considerado pronto. |
+| `TASK-E19-06-AC-1` | os nove repositórios públicos e o histórico | a API do GitHub é lida em cada um | Os sete repos reportam visibility public e `private_vulnerability_reporting` habilitado |
+| `TASK-E19-06-AC-2` | `main` e `develop` de cada repositório protegido | `gh api repos/<owner>/<name>/branches/<branch>/protection` é lido | develop exige CI Gate e proíbe force push e exclusão |
+| `TASK-E19-06-AC-3` | a description de cada um dos dez repositórios | ela é comparada com o README do módulo | description não promete abertura futura |
+| `TASK-E19-06-AC-4` | um repositório cuja proteção não pôde ser aplicada | `cargo xtask repo audit --repo <owner/name>` roda | repo sem proteção não é considerado pronto. |
 
 ## Verificação
 

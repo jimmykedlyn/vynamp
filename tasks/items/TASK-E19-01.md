@@ -40,11 +40,11 @@ ADR-014, workflows ci/release/quality em GitHub Actions com actions fixadas por 
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E19-01-AC-1` | PENDENTE | PENDENTE | Actions fixadas por SHA |
-| `TASK-E19-01-AC-2` | PENDENTE | PENDENTE | gate reprova dependência falha, cancelada ou ausente |
-| `TASK-E19-01-AC-3` | PENDENTE | PENDENTE | release só em tag v* e falha fechado |
-| `TASK-E19-01-AC-4` | PENDENTE | PENDENTE | macOS Intel e Apple Silicon viram alvos verificados |
-| `TASK-E19-01-AC-5` | PENDENTE | PENDENTE | nenhum segredo no histórico. |
+| `TASK-E19-01-AC-1` | qualquer workflow em `.github/workflows/` | `cargo xtask check-delivery` lê cada `uses:` | Actions fixadas por SHA |
+| `TASK-E19-01-AC-2` | o job `gate` agregando `specs`, `tooling`, `submodules` e `arch` | uma dependência falha, é cancelada ou não existe | gate reprova dependência falha, cancelada ou ausente |
+| `TASK-E19-01-AC-3` | o workflow de release | o ref do push não é uma tag `v*`, ou o preflight não passa | release só em tag v* e falha fechado |
+| `TASK-E19-01-AC-4` | a matriz do job `tooling` | o CI roda em `macos-15-intel` e `macos-15` | macOS Intel e Apple Silicon viram alvos verificados |
+| `TASK-E19-01-AC-5` | o histórico completo do repositório | uma varredura por padrões de segredo roda sobre todos os commits | nenhum segredo no histórico. |
 
 ## Verificação
 

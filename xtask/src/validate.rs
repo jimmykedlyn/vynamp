@@ -463,29 +463,56 @@ pub fn spec(root: &Path) -> Result<()> {
     ensure!(c.errors.is_empty(), "Specification validation failed");
     Ok(())
 }
-/// Collect every `uses:` reference in a workflow, at any nesting depth, so a
-/// job or step added later cannot slip in an unpinned action.
-fn action_refs(v: &Value) -> Vec<String> {
+/// Collect every `uses:` reference in a workflow, at any nesting depth, so a job
+/// or step added later cannot slip in an unpinned action. Each reference keeps the
+/// YAML key path it was found at (`jobs.build.steps.0.uses`): a file name alone does
+/// not tell the reader where the unpinned action is, and the path is what a person
+/// can act on.
+fn action_ref_locations(v: &Value, path: &[String]) -> Vec<(String, String)> {
     let mut out = Vec::new();
     match v {
         Value::Object(map) => {
             for (k, child) in map {
+                let mut here = path.to_vec();
+                here.push(k.clone());
                 if k == "uses"
                     && let Some(s) = child.as_str()
                 {
-                    out.push(s.to_owned());
+                    out.push((here.join("."), s.to_owned()));
                 }
-                out.extend(action_refs(child));
+                out.extend(action_ref_locations(child, &here));
             }
         }
         Value::Array(items) => {
-            for child in items {
-                out.extend(action_refs(child));
+            for (i, child) in items.iter().enumerate() {
+                let mut here = path.to_vec();
+                here.push(i.to_string());
+                out.extend(action_ref_locations(child, &here));
             }
         }
         _ => {}
     }
     out
+}
+
+/// The 1-based lines that hold a `uses:` key in `body`.
+///
+/// A `uses:` is either a mapping key (`        uses: …`) or the first key of a
+/// sequence item (`      - uses: …`), and both spellings appear in real
+/// workflows. The parser reports references in document order and so does this
+/// scan, so the n-th reference pairs with the n-th line. Searching by the action
+/// text instead would give every repeated `uses:` the line of the first one --
+/// wrong exactly where the name-and-line report matters, a workflow that repeats
+/// `checkout` in several jobs.
+fn uses_lines(body: &str) -> Vec<usize> {
+    body.lines()
+        .enumerate()
+        .filter(|(_, l)| {
+            let t = l.trim_start();
+            t.strip_prefix("- ").unwrap_or(t).starts_with("uses:")
+        })
+        .map(|(i, _)| i + 1)
+        .collect()
 }
 /// `on:` may be a mapping, a scalar or a sequence; normalise it to the set of
 /// triggers GitHub would honour.
@@ -536,10 +563,19 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
                 || triggers(&v).contains("workflow_dispatch"),
             format!("Workflow triggers absent: {name}"),
         );
-        for action in action_refs(&v) {
+        let file = p
+            .file_name()
+            .and_then(|s| s.to_str())
+            .unwrap_or("")
+            .to_owned();
+        let lines = uses_lines(&text(&p)?);
+        for (i, (path, action)) in action_ref_locations(&v, &[]).into_iter().enumerate() {
             c.check(
                 pinned.is_match(&action),
-                format!("Unpinned action {action} in {name}"),
+                format!(
+                    "Unpinned action {action} at {file}:{} ({path})",
+                    lines.get(i).copied().unwrap_or(0)
+                ),
             );
         }
         flows.insert(name, v);
@@ -569,17 +605,17 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
     // The required status check is the job id `gate`; a renamed or narrowed
     // gate would stop blocking merges without failing anything else.
     c.check(ci_jobs.contains("gate"), "CI Gate job absent from ci.yml");
-    const UMBRELLA_JOBS: [&str; 4] = ["specs", "tooling", "submodules", "arch"];
+    const UMBRELLA_JOBS: [&str; 5] = ["specs", "tooling", "submodules", "arch", "tasks"];
     c.check(
         UMBRELLA_JOBS.iter().all(|j| ci_jobs.contains(*j)),
-        "CI workflow must keep specs, tooling, submodules and arch jobs",
+        "CI workflow must keep specs, tooling, submodules, arch and tasks jobs",
     );
     c.check(
         ci.is_some_and(|v| {
             strings(&v["jobs"]["gate"]["needs"])
                 == UMBRELLA_JOBS.iter().map(|j| (*j).to_owned()).collect()
         }),
-        "CI Gate job must depend on specs, tooling, submodules and arch",
+        "CI Gate job must depend on specs, tooling, submodules, arch and tasks",
     );
     // `if: always()` is what makes the gate run after a cancelled or failed
     // dependency; without it the gate is skipped and never turns red.
@@ -808,6 +844,224 @@ pub fn delivery(root: &Path) -> Result<()> {
     ensure!(c.errors.is_empty(), "Delivery validation failed");
     Ok(())
 }
+/// Rows of the acceptance-criteria table: `| id | Given | When | Then |`.
+///
+/// Split on unescaped pipes only up to the fourth cell, so a `Then` that itself contains
+/// a pipe does not shear the row. The `Given`/`When`/`Then` columns are what this gate
+/// exists to read, and no task file has a literal `|` in them today -- but a criterion
+/// whose text quotes a shell pipe is exactly the kind of thing nobody notices until the
+/// gate misreads a green row.
+fn acceptance_rows(body: &str) -> Vec<(String, String, String, String)> {
+    let mut out = Vec::new();
+    let mut in_table = false;
+    for line in body.lines() {
+        let line = line.trim();
+        if !line.starts_with('|') {
+            in_table = false;
+            continue;
+        }
+        let cells: Vec<&str> = line.trim_matches('|').split('|').map(str::trim).collect();
+        if cells.len() < 4 {
+            continue;
+        }
+        if cells[0] == "ID" && cells[1] == "Given" {
+            in_table = true;
+            continue;
+        }
+        if !in_table || cells[0].chars().all(|c| c == '-' || c == ':') {
+            continue;
+        }
+        // `Then` is the authoritative column and the only one prose is copied into, so it
+        // takes everything past the third pipe: a criterion that quotes `a | b` would
+        // otherwise be read truncated and pass a comparison it should fail.
+        out.push((
+            cells[0].trim_matches('`').to_owned(),
+            cells[1].to_owned(),
+            cells[2].to_owned(),
+            cells[3..].join(" | "),
+        ));
+    }
+    out
+}
+/// The `Módulo dono` cell, split into the repositories it names.
+///
+/// The rule is "exactly one module owner". Everything the cell can say that is not one
+/// repository -- empty, the `PENDENTE` placeholder, two names, prose -- is a violation,
+/// and the gate has to be able to tell them apart well enough to name the file.
+pub fn module_owners(body: &str) -> Vec<String> {
+    let Some(line) = body
+        .lines()
+        .map(str::trim)
+        .find(|l| l.starts_with("| Módulo dono |"))
+    else {
+        return Vec::new();
+    };
+    let cell = line
+        .trim_matches('|')
+        .split('|')
+        .nth(1)
+        .unwrap_or("")
+        .trim();
+    cell.split([',', '/', ' '])
+        .map(|s| s.trim().trim_matches('`').trim())
+        .filter(|s| !s.is_empty())
+        .map(str::to_owned)
+        .collect()
+}
+/// The rules `check-tasks` enforces, as a function of a backlog and a reader for the
+/// task Markdown. Split out from `tasks()` so the four adversarial cases its acceptance
+/// criteria name can be exercised without a repository on disk.
+///
+/// What it deliberately does *not* do: rewrite a criterion, pick an owner, or decide that
+/// a missing one is acceptable. `TASK-CI-02`'s boundary says the gate names the violation
+/// and the author fixes it -- the red is the product, not an obstacle to route around.
+fn task_disagreements(backlog: &Value, read: impl Fn(&str) -> Option<String>) -> Vec<String> {
+    let mut out = Vec::new();
+    let Some(tasks) = backlog["tasks"].as_array() else {
+        return vec!["Backlog tasks".to_owned()];
+    };
+    // Known repositories, taken from the backlog itself: the owner cell has to name one of
+    // these, and nothing else. Reading the set from the data is what lets a new module
+    // appear without editing the gate, and what makes a word like `PENDENTE` fail on its
+    // own rather than pass as an uncontested single owner.
+    let known: BTreeSet<&str> = tasks.iter().filter_map(|t| t["module"].as_str()).collect();
+    // The engineering tasks carry no REQ on purpose (they are not product requirements);
+    // every other TASK is a product task and must name at least one.
+    for t in tasks {
+        let Ok(id) = string(t, "id") else {
+            out.push("Task without ID".to_owned());
+            continue;
+        };
+        let product = !id.starts_with("TASK-CI-");
+        if product {
+            let reqs = strings(&t["requirements"]);
+            if reqs.is_empty() {
+                out.push(format!("{id} has no REQ"));
+            }
+            if reqs.iter().any(|r| !r.starts_with("REQ-")) {
+                out.push(format!("{id} has a REQ that is not REQ-*"));
+            }
+        }
+        if !t["acceptance_ready"].is_boolean() {
+            out.push(format!("{id} acceptance_ready missing or not a boolean"));
+        }
+        // A task may only leave `planned` once its criteria are written. This is the
+        // point of the field: without the check it is decoration.
+        if string(t, "status").unwrap_or("") != "planned" && t["acceptance_ready"] != true {
+            out.push(format!(
+                "{id} is {} with acceptance_ready: false",
+                string(t, "status").unwrap_or("?")
+            ));
+        }
+        if product {
+            match read(id) {
+                None => out.push(format!("{id} task file absent")),
+                Some(body) => {
+                    let owners = module_owners(&body);
+                    if owners.len() != 1 {
+                        out.push(format!("{id} has {} module owners", owners.len()));
+                    } else if let Some(unknown) =
+                        owners.iter().find(|o| !known.contains(o.as_str()))
+                    {
+                        // An unknown name is already the whole story; also comparing it
+                        // with the backlog would print a second line about a repository
+                        // the file never claimed.
+                        out.push(format!("{id} has unknown module owner {unknown}"));
+                    } else if let Ok(backlog_owner) = string(t, "module")
+                        && owners[0] != backlog_owner
+                    {
+                        // The Markdown and the backlog are two records of the same fact;
+                        // a task whose file claims an owner the backlog does not agree
+                        // with would be executed against the wrong repository.
+                        out.push(format!(
+                            "{id} owner is {} in Markdown, {backlog_owner} in backlog",
+                            owners[0]
+                        ));
+                    }
+                    let rows = acceptance_rows(&body);
+                    if rows.is_empty() {
+                        out.push(format!("{id} has no acceptance criteria"));
+                    }
+                    // Authoring `Given`/`When` is a separate, per-module task (step 37,
+                    // D-37-3 and pendency P3): every `planned` task is expected to still
+                    // carry `PENDENTE`, and demanding otherwise here would paint all 191
+                    // red for work no rule has asked for yet. The placeholder stops being
+                    // acceptable at the moment the task leaves `planned` -- which is the
+                    // same threshold as `acceptance_ready`, and the reason both are read
+                    // off the same state instead of being two independent switches.
+                    let planned = string(t, "status").unwrap_or("") == "planned";
+                    for (ac, given, when, then) in rows {
+                        let cells = [("Given", &given), ("When", &when), ("Then", &then)];
+                        if planned {
+                            // Even a planned task may not have an empty authoritative
+                            // column: `Then` is copied from the backlog and must exist.
+                            if then.trim().is_empty() {
+                                out.push(format!("{id} {ac}: Then not written"));
+                            }
+                            continue;
+                        }
+                        for (column, value) in cells {
+                            if value.trim().is_empty() || value.contains("PENDENTE") {
+                                out.push(format!("{id} {ac}: {column} not written"));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    out
+}
+/// `cargo xtask check-tasks` (TASK-CI-02): the gate that gives `acceptance_ready: false`
+/// mechanical consequence.
+///
+/// TASK-CI-02 AC-4 and AC-5 contradict each other on the repository's own state: AC-4
+/// demands a red naming *exactly* the five `in_progress` tasks, and AC-5 demands green
+/// once those five are written. Both cannot hold at the same commit -- the run is either
+/// red or green. The resolution here is the one that makes the gate useful in both
+/// directions: the rule is enforced on its merits, so the verdict depends only on whether
+/// the criteria are actually written. Today six tasks are outside `planned` without
+/// written criteria -- the five `in_progress` plus `TASK-E19-06`, which this repository
+/// closed on 2026-11-08 by executing it, and whose Markdown still carries the authored
+/// `Then` with `Given`/`When` unset. The gate therefore goes red naming those six, and
+/// goes green the moment they are authored, with no rule relaxed in between.
+pub fn tasks(root: &Path) -> Result<()> {
+    let data = read_json(root.join("tasks/backlog.json"))?;
+    // Resolution goes through the same `task_path` `check-docs` uses, so a task moved to
+    // another repository cannot be found under a stale path here and read as compliant.
+    let by: BTreeMap<String, &Value> = {
+        let mut m = BTreeMap::new();
+        for t in data["tasks"].as_array().context("Backlog tasks")? {
+            if let Ok(id) = string(t, "id") {
+                m.insert(id.to_owned(), t);
+            }
+        }
+        m
+    };
+    let mut c = Checks::default();
+    for message in task_disagreements(&data, |id| {
+        let path = task_path(root, by.get(id)?)?;
+        // A module that is not checked out has no file to read. Treating absence there as a
+        // violation would make the verdict depend on the clone, which is the same mistake
+        // `doc_files` was narrowed to avoid; `check-docs` already reports absence only for a
+        // repository that *is* present.
+        if !path.is_file() {
+            let repo = owner(by[id]);
+            if repo != "vynamp" && repo_dir(root, repo).is_some_and(|d| !d.is_dir()) {
+                return None;
+            }
+        }
+        fs::read_to_string(&path).ok()
+    }) {
+        c.check(false, message);
+    }
+    println!(
+        "{}",
+        json!({"scope":"Backlog and TASK Markdown only; no build, no hardware","tasks":by.len(),"errors":c.errors,"result":if c.errors.is_empty(){"passed"}else{"failed"}})
+    );
+    ensure!(c.errors.is_empty(), "Task validation failed");
+    Ok(())
+}
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1007,10 +1261,15 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - run: cargo build --manifest-path libs/decode/Cargo.toml
+  tasks:
+    needs: specs
+    runs-on: ubuntu-22.04
+    steps:
+      - run: cargo xtask check-tasks
   gate:
     name: CI Gate
     if: always()
-    needs: [specs, tooling, submodules, arch]
+    needs: [specs, tooling, submodules, arch, tasks]
     runs-on: ubuntu-22.04
     steps:
       - run: |
@@ -1148,6 +1407,60 @@ model: sonnet
                 .any(|e| e.contains("Unpinned action"))
         );
     }
+    /// AC-4 of TASK-CI-01: the red names the file **and** the line. A bare file
+    /// name sends the reader hunting through a workflow that repeats the same
+    /// `uses:` in several jobs.
+    #[test]
+    fn github_actions_names_the_file_and_the_line_of_the_unpinned_action() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "ci.yml",
+            &format!("actions/checkout@{SHA}"),
+            "actions/checkout@v6",
+        );
+        let body = std::fs::read_to_string(f.path().join(".github/workflows/ci.yml")).unwrap();
+        // Every unpinned occurrence is reported, and each with its own line --
+        // the fixture repeats `checkout` once per job, so a report that gives
+        // them all the same line would still satisfy a "names the file" check.
+        let expected: Vec<String> = body
+            .lines()
+            .enumerate()
+            .filter(|(_, l)| l.contains("actions/checkout@v6"))
+            .map(|(i, _)| format!("ci.yml:{}", i + 1))
+            .collect();
+        assert!(expected.len() > 1, "fixture must repeat the action");
+        let errors = ci_errors(f.path());
+        let reported: Vec<&String> = errors
+            .iter()
+            .filter(|e| e.contains("actions/checkout@v6"))
+            .collect();
+        assert_eq!(reported.len(), expected.len(), "{errors:?}");
+        for (e, line) in reported.iter().zip(&expected) {
+            assert!(e.contains(line), "expected {line} in {e:?}");
+        }
+    }
+    /// The location is the YAML path, not a guess: it must point at the `uses:`
+    /// key that holds the reference and not merely at a line that happens to
+    /// repeat the same text.
+    #[test]
+    fn action_ref_locations_report_the_key_path() {
+        let v: Value = serde_yaml::from_str(
+            "jobs:
+  build:
+    steps:
+      - uses: actions/checkout@v6
+",
+        )
+        .unwrap();
+        assert_eq!(
+            action_ref_locations(&v, &[]),
+            vec![(
+                "jobs.build.steps.0.uses".to_owned(),
+                "actions/checkout@v6".to_owned()
+            )]
+        );
+    }
     #[test]
     fn github_actions_rejects_short_sha() {
         let f = ci_fixture();
@@ -1176,7 +1489,7 @@ model: sonnet
         edit(
             f.path(),
             "ci.yml",
-            "needs: [specs, tooling, submodules, arch]",
+            "needs: [specs, tooling, submodules, arch, tasks]",
             "needs: [specs, tooling, submodules]",
         );
         assert!(ci_errors(f.path()).iter().any(|e| e.contains("CI Gate")));
@@ -1249,7 +1562,7 @@ jobs:
         edit(
             f.path(),
             "ci.yml",
-            "needs: [specs, tooling, submodules, arch]",
+            "needs: [specs, tooling, submodules, arch, tasks]",
             "needs: [specs, tooling, submodules]",
         );
         let e = ci_errors(f.path());
@@ -1290,5 +1603,127 @@ jobs:
         let mut c = Checks::default();
         archived_release(tmp.path(), &mut c).unwrap();
         assert!(c.errors.is_empty(), "{:?}", c.errors);
+    }
+    /// A backlog entry good enough to pass, so each adversarial case can break exactly one
+    /// thing and be attributable to it.
+    fn task_entry(id: &str, status: &str, ready: bool) -> Value {
+        json!({
+            "id": id, "epic": "E99", "title": "T", "phase": "M0", "priority": "P0",
+            "status": status, "requirements": ["REQ-E99-01"], "dependencies": [],
+            "module": "vynamp", "repo": "vynamp", "acceptance_ready": ready,
+            "deliverable": "D", "acceptance": "A", "qa": [], "estimate_days": {"min":1,"max":2},
+            "risk": "baixo",
+        })
+    }
+    fn task_md(owners: &str, given: &str, when: &str, then: &str) -> String {
+        format!(
+            "# TASK — t\n\n| Campo | Valor |\n|---|---|\n| ID | `TASK-E99-01` |\n| Módulo dono | {owners} |\n\n## Critérios de aceite\n\n| ID | Given | When | Then |\n|---|---|---|---|\n| `TASK-E99-01-AC-1` | {given} | {when} | {then} |\n"
+        )
+    }
+    fn run(backlog: Value, body: String) -> Vec<String> {
+        task_disagreements(&backlog, move |_| Some(body.clone()))
+    }
+    #[test]
+    fn check_tasks_ac1_names_the_task_and_the_missing_column() {
+        // AC-1: a product TASK whose `Given` is still the placeholder is rejected, and the
+        // message carries both the ID and which column is unwritten.
+        let e = run(
+            json!({"tasks":[task_entry("TASK-E99-01","planned",true)]}),
+            task_md("`vynamp`", "PENDENTE", "w", "t"),
+        );
+        // A `planned` task is allowed to still hold the placeholder, so move it out first.
+        assert!(e.is_empty(), "{e:?}");
+        let e = run(
+            json!({"tasks":[task_entry("TASK-E99-01","in_progress",true)]}),
+            task_md("`vynamp`", "PENDENTE", "w", "t"),
+        );
+        assert_eq!(e, vec!["TASK-E99-01 TASK-E99-01-AC-1: Given not written"]);
+    }
+    #[test]
+    fn check_tasks_ac2_rejects_advanced_status_without_written_criteria() {
+        // AC-2: `in_progress` plus `acceptance_ready: false` is the combination the field
+        // exists to catch, and the message lists the ID.
+        let e = run(
+            json!({"tasks":[task_entry("TASK-E99-01","in_progress",false)]}),
+            task_md("`vynamp`", "g", "w", "t"),
+        );
+        assert_eq!(
+            e,
+            vec!["TASK-E99-01 is in_progress with acceptance_ready: false"]
+        );
+    }
+    #[test]
+    fn check_tasks_ac3_rejects_two_owners_or_an_unknown_one() {
+        // AC-3: the owner cell has to name exactly one repository -- two is ambiguous, and
+        // a module the backlog does not know is a task with no home.
+        let e = run(
+            json!({"tasks":[task_entry("TASK-E99-01","planned",true)]}),
+            task_md("`vynamp-decode` / `vynamp-output`", "g", "w", "t"),
+        );
+        assert_eq!(e, vec!["TASK-E99-01 has 2 module owners"]);
+        // A placeholder reads as one word and would otherwise pass as an uncontested
+        // single owner; the known-repository check is what catches it.
+        let e = run(
+            json!({"tasks":[task_entry("TASK-E99-01","planned",true)]}),
+            task_md("PENDENTE", "g", "w", "t"),
+        );
+        assert_eq!(e, vec!["TASK-E99-01 has unknown module owner PENDENTE"]);
+    }
+    #[test]
+    fn check_tasks_ac4_names_every_offender_and_only_those() {
+        // AC-4: red lists the tasks that broke the rule and nothing else -- a gate that
+        // also complains about the compliant ones is a gate nobody can act on.
+        let ready = task_md("`vynamp`", "g", "w", "t");
+        let e = run(
+            json!({"tasks":[
+                task_entry("TASK-E99-01","planned",true),
+                task_entry("TASK-E99-02","in_progress",false),
+                task_entry("TASK-E99-03","implemented",false),
+                task_entry("TASK-E99-04","planned",true),
+            ]}),
+            ready,
+        );
+        assert_eq!(
+            e,
+            vec![
+                "TASK-E99-02 is in_progress with acceptance_ready: false",
+                "TASK-E99-03 is implemented with acceptance_ready: false",
+            ]
+        );
+    }
+    #[test]
+    fn check_tasks_ac5_passes_once_the_criteria_are_written() {
+        // AC-5: the same written criteria that make a task acceptable are what turn the
+        // gate green -- no rule is relaxed between the red and the green.
+        let e = run(
+            json!({"tasks":[task_entry("TASK-E99-01","implemented",true)]}),
+            task_md("`vynamp`", "o repo", "o gate roda", "passa"),
+        );
+        assert!(e.is_empty(), "{e:?}");
+    }
+    #[test]
+    fn check_tasks_requires_a_req_from_product_tasks_only() {
+        // The two engineering tasks have no REQ by design (they are not product
+        // requirements); demanding one would make the rule wrong for the only two files
+        // that legitimately lack it.
+        let mut engineering = task_entry("TASK-CI-09", "planned", true);
+        engineering["requirements"] = json!([]);
+        let mut product = task_entry("TASK-E99-01", "planned", true);
+        product["requirements"] = json!([]);
+        let e = run(
+            json!({"tasks":[engineering, product]}),
+            task_md("`vynamp`", "g", "w", "t"),
+        );
+        assert_eq!(e, vec!["TASK-E99-01 has no REQ"]);
+    }
+    #[test]
+    fn acceptance_rows_keeps_a_then_that_contains_a_pipe() {
+        // `Then` is the authoritative column and is copied from the backlog verbatim; a
+        // criterion quoting a shell pipe must not be read truncated, or the gate would
+        // compare against a fragment.
+        let body = "| ID | Given | When | Then |\n|---|---|---|---|\n| `X` | g | w | a | b |\n";
+        let rows = acceptance_rows(body);
+        assert_eq!(rows.len(), 1);
+        assert_eq!(rows[0].3, "a | b");
     }
 }

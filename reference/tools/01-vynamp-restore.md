@@ -4,6 +4,10 @@ Versão: 0.1.1 · Data: 2026-11-05 · Estado: especificação normativa; impleme
 
 Documento canônico da ferramenta desktop **Vynamp Restore** (`vynamp-restore`). Complementa [ADR-013](../../adr/ADR-013-restore.md) (decisão), [ADR-012](../../adr/ADR-012-integracao-shell.md) (integração com o shell e identidade), [ADR-011](../../adr/ADR-011-pilha-propria.md) (pilha de áudio própria) e [spec de plataforma](../../platforms/03-integracao-sistema.md) (contratos de CLI e registro). Matriz normativa de requisitos: [03-requirements](../../product/03-requisitos.md).
 
+> **Código-fonte:** [`jimmykedlyn/vynamp-restore`](https://github.com/jimmykedlyn/vynamp-restore).
+> Este documento continua sendo a fonte normativa; o repo do módulo guarda o código e o
+> esqueleto de `specs/`, não uma segunda cópia do texto normativo.
+
 ## 1. Escopo e fronteiras
 
 ### 1.1 O que é

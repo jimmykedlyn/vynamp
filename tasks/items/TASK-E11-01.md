@@ -40,10 +40,10 @@ Repositório independente, Cargo workspace mínimo, toolchain pin, ADRs e CI ini
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E11-01-AC-1` | PENDENTE | PENDENTE | Nenhum código/asset Winamp |
-| `TASK-E11-01-AC-2` | PENDENTE | PENDENTE | build real com lockfile resolvido |
-| `TASK-E11-01-AC-3` | PENDENTE | PENDENTE | validador de docs passa |
-| `TASK-E11-01-AC-4` | PENDENTE | PENDENTE | fixtures têm paths definidos. |
+| `TASK-E11-01-AC-1` | o repositório inteiro, incluindo histórico e assets binários | uma varredura por código, mídia ou artefato do Winamp roda | Nenhum código/asset Winamp |
+| `TASK-E11-01-AC-2` | um clone sem `target/` e com a toolchain de `rust-toolchain.toml` | `cargo build --workspace --locked` roda | build real com lockfile resolvido |
+| `TASK-E11-01-AC-3` | o `INDEX.md` e o backlog no estado do commit | `cargo xtask check-docs` roda | validador de docs passa |
+| `TASK-E11-01-AC-4` | cada script de fixture que referencia um arquivo de áudio | o caminho é resolvido a partir da raiz do repositório | fixtures têm paths definidos. |
 
 ## Verificação
 

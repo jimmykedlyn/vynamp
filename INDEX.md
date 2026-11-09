@@ -348,6 +348,9 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [Evidência TASK-E19-02](evidence/PR/task-e19-02/README.md) — evidence/PR/task-e19-02/README.md; licença dual, governança, canal de advisory, README bilíngue e limitações (nada aberto, nada assinado).
 - [Corpo do PR task-e19-02](evidence/PR/task-e19-02/pr-body.md) — evidence/PR/task-e19-02/pr-body.md
 - [Evidência TASK-E19-06](evidence/PR/task-e19-06/README.md) — evidence/PR/task-e19-06/README.md; dez repositorios publicos, protecao lida da API, PVR habilitado e o que ficou pendente (licenca nos seis repos sem LICENSE).
+- [Evidência TASK-E19-04](evidence/PR/task-e19-04/README.md) — evidence/PR/task-e19-04/README.md; specs de Restore e Converter apontadas para os repos próprios, fonte normativa mantida única e governança dos três repos (LICENSE, SECURITY, CONTRIBUTING).
+- [Evidência TASK-CI-01](evidence/PR/task-ci-01/README.md) — evidence/PR/task-ci-01/README.md; `delivery()`/`github_actions()` na árvore do umbrella, e o AC-4 que faltava (arquivo e linha do `uses:` sem SHA).
+- [Evidência TASK-CI-02](evidence/PR/task-ci-02/README.md) — evidence/PR/task-ci-02/README.md; job `check-tasks`, as seis regras, a contradição AC-4×AC-5 e as sete autorias que levaram ao verde.
 
 - [Organização de testes](tests/README.md) — tests/README.md
 
