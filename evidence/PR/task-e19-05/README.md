@@ -13,6 +13,7 @@ Este documento não muda código de produto e não declara capacidade implementa
 | `.github/workflows/ci.yml` de `vynamp-output` | ausente: nenhum workflow | idem, bloco `gate` idêntico ao do decode |
 | `.github/workflows/ci.yml` do `vynamp-mvp-reference` | `ubuntu-22.04`, `cargo install resvg` e `ready()` com `waitForTimeout` fixo | `windows-2022`, sem resvg, e `ready()` esperando o CSS entrar no cascade e as fontes assentarem |
 | `README.md` de decode e output | bilíngue, sem uma linha sobre CI | bilíngue, com seção `CI` nas duas línguas |
+| `README.md` de dsp, encode, engine, player, converter e restore | bilíngue, sem uma linha sobre CI | bilíngue, com seção `CI` nas duas línguas, descrevendo os jobs que o `ci.yml` de cada repo roda |
 | `README.md` do MVP | bilíngue, sem uma palavra sobre CI nem sobre a plataforma do runner | bilíngue, com a seção `CI` e o mecanismo que obriga `windows-2022` |
 
 ## AC-1 — cada repo publica o contexto CI Gate e reprova falha ou cancelamento
@@ -156,6 +157,17 @@ portuguesa dele até o fim, com âncoras cruzadas no topo de cada metade:
 | `libs/output/README.md` | `# vynamp-output` | linha 46 | Documentação/Documentation, CI, Licença/Licence |
 | `reference/vynamp-mvp/README.md` | `# vynamp-mvp-reference` | linha 83 | Estrutura/Layout, Execução/Run, CI, Fixação/Pinning, Saída/Output |
 
+Os outros seis repositórios fecham a mesma lacuna: `dsp`, `encode`, `engine`,
+`player`, `converter` e `restore` publicavam `CI Gate` desde o passo 36 e nenhum
+deles dizia isso. A seção não é copiada de um para o outro — cada um descreve os
+jobs que o próprio `ci.yml` tem, e os três formatos são diferentes:
+
+| Repositórios | Jobs |
+|---|---|
+| `dsp`, `encode` | `fmt`, `clippy`, `test`, `machete` e o `gate` |
+| `engine` | o mesmo mais `arch`, que pergunta ao `cargo tree` se algo abaixo do engine cita um app |
+| `player`, `converter`, `restore` | `fmt`, `clippy`, `test` e uma matriz `build` de quatro alvos; sem `machete`, porque `[dependencies]` ainda está vazio |
+
 A metade portuguesa não é tradução decorativa: as duas dizem o mesmo, e o
 `vynamp-decode` recusa traduzir a tabela de formatos porque ela é a saída de
 `cargo run --example support_matrix` e uma tradução divergiria da geração — a
@@ -202,6 +214,7 @@ e exige a mensagem de erro.
 | `cargo xtask check-docs` | `"result": "passed"`, `tasks: 193`, `spec_version: 0.7.0` |
 | `npm run verify` no MVP (local, 3×) | `compared 499 files, 0 differ`, exit 0 |
 | `npm run check-svg --check` no MVP | 6 arquivos reprovados — conhecido, ver Boundary |
+| `cargo xtask check-docs` (após os seis READMEs) | `"result": "passed"`, `tasks: 193` |
 
 ## Execuções
 

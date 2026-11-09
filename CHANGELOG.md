@@ -1,6 +1,6 @@
 # Changelog / Histórico
 
-Versão: 0.9.4 · Data: 2026-11-09 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.9.5 · Data: 2026-11-09 · Estado: especificação proposta, implementação não iniciada.
 
 Each entry appears in English and Portuguese. The two texts say the same thing;
 where they appear to differ, the Portuguese text of that entry is the original
@@ -455,6 +455,40 @@ Dez arquivos de `docs/superpowers/` saem do repositório: `plans/2026-10-14-comp
 **EN** — The `vitrola` design (approved 2026-10-23) is no longer a library in its own repository: vinyl and tube are **DSP modules inside the app**, by the maintainer's decision, recorded in [ADR-014](adr/ADR-014-publico-dsp-interno.md). The approved design was preserved **by incorporation**, not by reimplementation: its nine sections are now §8.1–8.9 of [10-vitrola](reference/audio/10-vitrola.md), which became the single source — previously that document integrated an external design by reference and deferred to it. A literal copy of the original text is kept at `docs/evidence/PR/task-e19-03/vitrola-design.md`, because it is the only surviving copy once the repository is archived. The external repository is archived, reverts with `gh repo unarchive`, and is **not** opened to the public. Citations updated in the ADR-011 inventory row, the glossary, the DSP and signal-contract docs, the DSP catalog, the MVP reference, feature parity, privacy/licensing and the roadmap. Integration remains [TASK-E19-07](libs/engine/tasks/items/TASK-E19-07.md), after TASK-E04-03. Documentation only: no player code, 191 requirements, 191 tasks, 19 epics.
 
 **PT** — O design do `vitrola` (aprovado em 2026-10-23) deixou de ser biblioteca em repositório próprio: vinil e válvula são **módulos DSP dentro do app**, por decisão do mantenedor registrada na [ADR-014](adr/ADR-014-publico-dsp-interno.md). O design aprovado foi preservado por **incorporação**, não por reimplementação: suas nove seções são agora §8.1–8.9 de [10-vitrola](reference/audio/10-vitrola.md), que passou a ser fonte única — antes esse documento integrava um design externo por referência e se subordinava a ele. Uma cópia literal do texto original fica em `docs/evidence/PR/task-e19-03/vitrola-design.md`, porque é a única cópia sobrevivente depois que o repositório for arquivado. O repositório externo é arquivado, reversível por `gh repo unarchive`, e **não** é aberto ao público. Citações atualizadas na linha de inventário da ADR-011, no glossário, nos docs de DSP e do contrato de sinal, no catálogo DSP, na referência do MVP, na paridade de recursos, em privacidade/licenças e no roadmap. A integração continua na [TASK-E19-07](libs/engine/tasks/items/TASK-E19-07.md), depois da TASK-E04-03. Somente documentação: nenhum código de player, 191 requisitos, 191 tarefas, 19 épicos.
+
+## Unreleased — 2026-11-09 (READMEs de CI nos seis módulos restantes) / Não lançado — 2026-11-09 (READMEs de CI nos seis módulos restantes)
+
+### Português
+
+Os READMEs de `vynamp-dsp`, `vynamp-encode`, `vynamp-engine`, `vynamp-player`,
+`vynamp-converter` e `vynamp-restore` já eram bilíngues, mas nenhum dizia que o
+repositório tem CI — os seis publicam `CI Gate` desde o passo 36. A seção `CI`
+entrou em inglês e português em cada um, sem texto copiado de um para o outro:
+cada README descreve os jobs do seu próprio `ci.yml`. São três formatos.
+`dsp` e `encode` rodam `fmt`, `clippy`, `test` e `machete`; `engine` acrescenta
+`arch`, a regra que pergunta ao `cargo tree` se algo abaixo dele cita um app —
+invariante daquele crate, não da família. Os três apps rodam `fmt`, `clippy`,
+`test` e uma matriz `build` de quatro alvos (Windows MSVC, Linux GNU, macOS
+Intel, macOS Apple Silicon), e não têm job `machete`: `[dependencies]` do
+`Cargo.toml` deles ainda está vazio, então a verificação de dependência não
+usada não teria em que se apoiar. A matriz é portão de compilação, não release —
+nada é enviado nem assinado.
+
+### English
+
+The READMEs of `vynamp-dsp`, `vynamp-encode`, `vynamp-engine`, `vynamp-player`,
+`vynamp-converter` and `vynamp-restore` were already bilingual, but none of them
+said the repository has CI — all six have published `CI Gate` since step 36.
+A `CI` section went into each in English and Portuguese, with no text copied
+between them: every README describes the jobs of its own `ci.yml`. There are
+three shapes. `dsp` and `encode` run `fmt`, `clippy`, `test` and `machete`;
+`engine` adds `arch`, the rule that asks `cargo tree` whether anything under it
+names an app — an invariant of that crate, not of the family. The three apps run
+`fmt`, `clippy`, `test` and a `build` matrix of four targets (Windows MSVC,
+Linux GNU, macOS Intel, macOS Apple Silicon), and have no `machete` job: their
+`Cargo.toml` `[dependencies]` is still empty, so the unused-dependency check
+would have nothing to stand on. The matrix is a compile gate, not a release —
+nothing is uploaded or signed.
 
 ## Unreleased — 2026-11-09 (TASK-E19-05: CI Gate nos módulos, CI do MVP e READMEs) / Não lançado — 2026-11-09 (TASK-E19-05: CI Gate nos módulos, CI do MVP e READMEs)
 
