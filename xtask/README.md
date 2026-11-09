@@ -11,8 +11,8 @@ Requer Rust/rustup 1.99.0 e ferramentas externas por operação. Cargo.lock é r
 | Verificar plugins nativos | `cargo xtask doctor` |
 | Worktree | `cargo xtask repo worktree --agent claude --task TASK-E11-01 --slug foundation` |
 | Importar GitHub privado | `cargo xtask github-import --destination ../vynamp-git --push` |
-| Proteções | `cargo xtask repo protect --repo jimmykedlyn/vynamp-mediaplayer --reviews 0` |
-| Auditoria remota (somente leitura) | `cargo xtask repo audit --repo jimmykedlyn/vynamp-mediaplayer --out <arquivo.json>`; falha enquanto houver pendência Gitflow |
+| Proteções | `cargo xtask repo protect --repo jimmykedlyn/vynamp --reviews 0` |
+| Auditoria remota (somente leitura) | `cargo xtask repo audit --repo jimmykedlyn/vynamp --out <arquivo.json>`; falha enquanto houver pendência Gitflow |
 | Detectar fontes reais | `cargo xtask ci detect` |
 | Hardware real | `cargo xtask quality-gate` |
 | Preflight de release | `cargo xtask release preflight --version 0.1.0` |

@@ -1,6 +1,6 @@
 # Code of Conduct / Código de Conduta
 
-Versão 0.9.0 · 2026-11-05 · Adaptado do Contributor Covenant, versão 2.1.
+Versão 0.10.0 · 2026-11-08 · Adaptado do Contributor Covenant, versão 2.1.
 
 ## Our pledge / Nosso compromisso
 
@@ -82,12 +82,10 @@ Do not open a public issue to report a conduct problem. Use the private
 a conduct matter; it is the only private channel this project operates and it
 does not publish the report.
 
-<https://github.com/jimmykedlyn/vynamp-mediaplayer/security/advisories/new>
+<https://github.com/jimmykedlyn/vynamp/security/advisories/new>
 
-That channel is not live yet: the repository is private and private
-vulnerability reporting is enabled in TASK-E19-06, when it becomes public. Until
-then, open a minimal public issue asking for a private channel and say nothing
-about the incident in it.
+That channel is live: the repository is public and private vulnerability
+reporting is enabled on it since TASK-E19-06 (2026-11-08).
 
 All complaints will be reviewed and investigated promptly and fairly. The
 maintainer is obligated to respect the privacy and security of the reporter.
@@ -97,10 +95,8 @@ de **GitHub Security Advisories** deste repositório e marque o relato como
 questão de conduta; é o único canal privado que o projeto opera e ele não
 publica o relato.
 
-Esse canal ainda não está no ar: o repositório é privado e o relato privado de
-vulnerabilidade é habilitado na TASK-E19-06, quando ele ficar público. Até lá,
-abra uma issue pública mínima pedindo um canal privado e não diga nada sobre o
-incidente nela.
+Esse canal está no ar: o repositório é público e o relato privado de
+vulnerabilidade está habilitado nele desde a TASK-E19-06 (2026-11-08).
 
 Todas as reclamações serão revisadas e investigadas com presteza e
 imparcialidade. O mantenedor é obrigado a respeitar a privacidade e a segurança

@@ -1,6 +1,6 @@
 # Security Policy / Política de Segurança
 
-Versão 0.9.0 · 2026-11-05 · Estado: política vigente para o repositório; o player ainda não está implementado.
+Versão 0.10.0 · 2026-11-08 · Estado: política vigente para o repositório; o player ainda não está implementado.
 
 ## Reporting a vulnerability / Reportar uma vulnerabilidade
 
@@ -13,24 +13,21 @@ default: only the maintainer and you can see it.
 Use **GitHub Security Advisories** neste repositório. O relatório é privado por
 padrão: só o mantenedor e você o veem.
 
-- New advisory / Nova consulta: <https://github.com/jimmykedlyn/vynamp-mediaplayer/security/advisories/new>
-- Existing advisories / Consultas publicadas: <https://github.com/jimmykedlyn/vynamp-mediaplayer/security/advisories>
+- New advisory / Nova consulta: <https://github.com/jimmykedlyn/vynamp/security/advisories/new>
+- Existing advisories / Consultas publicadas: <https://github.com/jimmykedlyn/vynamp/security/advisories>
 
-**Not open yet.** The repository is private and private vulnerability reporting
-is not enabled on it, so this channel goes live in TASK-E19-06, when the
-repository becomes public and the feature is switched on. Until then the
-advisory URLs above return 404 for anyone who is not the maintainer, and the
-"Report a vulnerability" button does not appear. If you have something to report
-before that, open a minimal public issue that asks for a private channel and
-contains no details of the problem.
+**Live.** The repository is public and private vulnerability reporting is
+enabled on it (TASK-E19-06, 2026-11-08), so the "Report a vulnerability" button
+appears and this is the working channel. Every Vynamp repository is public with
+the feature enabled; before the reorganization this policy lived in
+`vynamp-mediaplayer`, which is archived and takes no new reports.
 
-**Ainda não está aberto.** O repositório é privado e o recurso de relato privado
-de vulnerabilidade não está habilitado nele, então este canal entra no ar na
-TASK-E19-06, quando o repositório ficar público e o recurso for ligado. Até lá
-as URLs de advisory acima retornam 404 para quem não é o mantenedor, e o botão
-"Report a vulnerability" não aparece. Se você tiver algo a relatar antes disso,
-abra uma issue pública mínima pedindo um canal privado, sem nenhum detalhe do
-problema.
+**No ar.** O repositório é público e o recurso de relato privado de
+vulnerabilidade está habilitado nele (TASK-E19-06, 2026-11-08), então o botão
+"Report a vulnerability" aparece e este é o canal em funcionamento. Todos os
+repositórios Vynamp são públicos com o recurso ligado; antes da reorganização
+esta política morava em `vynamp-mediaplayer`, que está arquivado e não recebe
+relato novo.
 
 This is the only security channel. There is no security e-mail address, and
 none should be invented. It is the channel decided as D-GOV-01 in

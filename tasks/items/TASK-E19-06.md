@@ -14,7 +14,7 @@
 | Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
 | Fase | M3 |
 | Prioridade | P0 |
-| Estado | planned |
+| Estado | implemented |
 | Depende de | `TASK-E19-01`, `TASK-E19-02`, `TASK-E19-04`, `TASK-E19-05` |
 | Bloqueia | nenhuma |
 | Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
@@ -64,4 +64,23 @@ Sete repositórios Vynamp abertos ao público com relato privado de vulnerabilid
 - [ ] PR aberto com template preenchido; CI Gate verde no SHA final
 ## Notas de execução
 
-Preenchido durante a execução, não antes.
+Executada em 2026-11-08; evidência em
+[`evidence/PR/task-e19-06/`](../../evidence/PR/task-e19-06/README.md).
+
+- **Escopo real: dez repositórios, não sete.** O `Entrega` e o `AC-1` foram
+  escritos antes do passo 35, quando existiam sete repositórios. Hoje são nove
+  públicos (um umbrella, cinco bibliotecas, três aplicações) mais
+  `vynamp-mediaplayer`, o repositório histórico. A TASK foi executada nos dez;
+  `vynamp-mvp-reference` ficou de fora da proteção porque não tem `develop` nem
+  workflow, e exigir `CI Gate` ali bloquearia todo pull request.
+- **`AC-1` não estava atendido antes desta execução.** O relato privado de
+  vulnerabilidade respondia `enabled=false` nos nove; foi habilitado com `PUT
+  repos/<owner>/<name>/private-vulnerability-reporting`.
+- **`AC-3` estava violado.** `vynamp-output` tinha a descrição
+  `"... sem dependências de terceiros (privada; abertura futura)"` — a única das
+  dez preenchida, e a única que prometia abertura futura.
+- **`--reviews 0`, não 1.** Existe uma única conta colaboradora; com
+  `enforce_admins=true`, `--reviews 1` deixaria todo PR sem merge possível.
+- **Pendência que esta TASK não fecha:** os seis repositórios de módulo sem
+  `LICENSE`, `SECURITY.md` e `CONTRIBUTING.md` estão públicos. É a TASK-E19-04
+  (D-GH-13), e é a única parte da ADR-014 §2 que a abertura fez na ordem errada.
