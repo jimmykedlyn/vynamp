@@ -40,9 +40,9 @@ Fixtures geradas de tons/sweep/gapless e corrupções, com manifests de hashes e
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E10-01-AC-1` | PENDENTE | PENDENTE | CI valida hashes |
-| `TASK-E10-01-AC-2` | PENDENTE | PENDENTE | oráculos de frames/tags/ranges definidos |
-| `TASK-E10-01-AC-3` | PENDENTE | PENDENTE | testes não dependem de rádios públicas instáveis. |
+| `TASK-E10-01-AC-1` | as fixtures geradas e o manifesto com o hash de cada arquivo | o job de CI confere o manifesto contra os arquivos versionados | CI valida hashes |
+| `TASK-E10-01-AC-2` | cada fixture do corpus com sua entrada no manifesto | o oráculo de frames, tags e ranges é escrito por fixture | oráculos de frames/tags/ranges definidos |
+| `TASK-E10-01-AC-3` | a suíte que consome o corpus | todo stream remoto é procurado na suíte e o CI roda sem rede | testes não dependem de rádios públicas instáveis. |
 
 ## Verificação
 

@@ -40,8 +40,8 @@ Scripts e regras de isolamento, claim atômico e remoção segura.
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E15-02-AC-1` | PENDENTE | PENDENTE | Índices independentes, task exclusiva, paths válidos, worktree suja/unmerged preservada |
-| `TASK-E15-02-AC-2` | PENDENTE | PENDENTE | hotfix só remove após main e develop. |
+| `TASK-E15-02-AC-1` | duas worktrees do mesmo repo, com um claim já tomado por uma TASK e a segunda worktree apontando para o mesmo diretório | a segunda worktree tenta tomar a mesma TASK e depois a remoção da worktree suja é pedida | Índices independentes, task exclusiva, paths válidos, worktree suja/unmerged preservada |
+| `TASK-E15-02-AC-2` | uma worktree de hotfix com o merge feito apenas em main | a remoção da worktree é pedida | hotfix só remove após main e develop. |
 
 ## Verificação
 

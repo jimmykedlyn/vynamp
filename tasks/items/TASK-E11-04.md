@@ -40,9 +40,9 @@ CI Rust e hosts Windows x64/Linux x64/macOS x64+arm64/Android arm64, native depe
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E11-04-AC-1` | PENDENTE | PENDENTE | Todos os targets obrigatórios compilam e executam smoke apropriado |
-| `TASK-E11-04-AC-2` | PENDENTE | PENDENTE | cross-build não substitui hardware |
-| `TASK-E11-04-AC-3` | PENDENTE | PENDENTE | features/hashes/NDK/Gradle travados e secrets isolados. |
+| `TASK-E11-04-AC-1` | a matriz de targets da spec de plataformas e o workspace com lockfile | o CI compila e roda o smoke de cada target | Todos os targets obrigatórios compilam e executam smoke apropriado |
+| `TASK-E11-04-AC-2` | um target compilado por cross-build sem hardware correspondente disponível | o resultado do job é publicado no relatório de evidência | cross-build não substitui hardware |
+| `TASK-E11-04-AC-3` | o workflow e o lockfile no estado do commit | as versões de NDK, Gradle e actions, os hashes e o inventário de secrets são conferidos | features/hashes/NDK/Gradle travados e secrets isolados. |
 
 ## Verificação
 

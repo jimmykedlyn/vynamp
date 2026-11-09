@@ -40,8 +40,8 @@ Inventário de codecs, fontes, assets e políticas de build/distribuição.
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E11-03-AC-1` | PENDENTE | PENDENTE | Verificar features FFmpeg/ASIO/encoders e licenças de fontes |
-| `TASK-E11-03-AC-2` | PENDENTE | PENDENTE | decisões de marca/licença final explícitas, sem alegar autorização inexistente. |
+| `TASK-E11-03-AC-1` | o inventário de codecs, fontes e assets do projeto | cada item tem a feature de build e a licença verificadas na fonte oficial | Verificar features FFmpeg/ASIO/encoders e licenças de fontes |
+| `TASK-E11-03-AC-2` | os itens cuja licença não permite distribuição sem autorização | a decisão de marca e de distribuição é registrada | decisões de marca/licença final explícitas, sem alegar autorização inexistente. |
 
 ## Verificação
 

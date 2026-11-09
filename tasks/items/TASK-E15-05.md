@@ -40,10 +40,10 @@ Unit/integration/numerical/stream/UI/hardware/fuzz e protocolo de relatórios.
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E15-05-AC-1` | PENDENTE | PENDENTE | Tests reais/comandos/oráculos por risco |
-| `TASK-E15-05-AC-2` | PENDENTE | PENDENTE | fixture licence/hash |
-| `TASK-E15-05-AC-3` | PENDENTE | PENDENTE | hardware ausente não passa |
-| `TASK-E15-05-AC-4` | PENDENTE | PENDENTE | plugin/installer validations separados de tooling. |
+| `TASK-E15-05-AC-1` | cada TASK executada e o risco que ela declara | o protocolo de relatório de testes é preenchido | Tests reais/comandos/oráculos por risco |
+| `TASK-E15-05-AC-2` | cada fixture usada por um teste | o manifesto é conferido quanto a licença e hash | fixture licence/hash |
+| `TASK-E15-05-AC-3` | um teste que exige hardware indisponível no CI | o resultado é publicado | hardware ausente não passa |
+| `TASK-E15-05-AC-4` | as validações de plugin e as de instalador | os jobs são separados por tipo | plugin/installer validations separados de tooling. |
 
 ## Verificação
 

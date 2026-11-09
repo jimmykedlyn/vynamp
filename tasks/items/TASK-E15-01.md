@@ -40,8 +40,8 @@ Entrypoints, settings, plugin lock e bootstrap/doctor nativos.
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E15-01-AC-1` | PENDENTE | PENDENTE | Ambos agentes confirmam plugin ativo e skill discovery em máquina compatível |
-| `TASK-E15-01-AC-2` | PENDENTE | PENDENTE | configuração sozinha não conta como instalação. |
+| `TASK-E15-01-AC-1` | uma máquina compatível com o entrypoint do projeto instalado | o bootstrap e o doctor do projeto rodam | Ambos agentes confirmam plugin ativo e skill discovery em máquina compatível |
+| `TASK-E15-01-AC-2` | os arquivos de configuração versionados e um diretório de plugins vazio | o doctor roda sem o plugin instalado | configuração sozinha não conta como instalação. |
 
 ## Verificação
 
