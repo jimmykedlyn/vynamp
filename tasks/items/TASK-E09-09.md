@@ -1,38 +1,67 @@
 # TASK-E09-09 — Entregar registry de temas e plugins
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
-
-## Contrato da tarefa
+> Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
+> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
+> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
+> não existem.
 
 | Campo | Valor |
 |---|---|
-| ID / requisito | TASK-E09-09 / REQ-E09-09 |
-| Fase / prioridade | M4 / P1 |
-| Estado | Planejada; não implementada |
-| Responsável funcional | streaming — pessoa a designar |
-| Esforço provisório | 8–20 dias úteis; reestimar após M0 |
+| ID | `TASK-E09-09` |
+| Módulo dono | `vynamp` |
+| Repo | `jimmykedlyn/vynamp` |
+| REQ coberto | `REQ-E09-09` |
+| Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
+| Fase | M4 |
+| Prioridade | P1 |
+| Estado | planned |
+| Depende de | `TASK-E09-04`, `TASK-E07-08`, `TASK-E06-08` |
+| Bloqueia | `TASK-E06-09`, `TASK-E07-09`, `TASK-E09-10` |
+| Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
+| Esforço | 8–20 dias úteis |
 | Risco | alto |
 
-## Dependências
-
-- [TASK-E09-04](TASK-E09-04.md) — Implementar catálogo e administração editorial
-- [TASK-E07-08](TASK-E07-08.md) — Entregar documentação e harness do SDK
-- [TASK-E06-08](TASK-E06-08.md) — Entregar galeria local e recovery visual
-
-## Entrega concreta
+## Entrega
 
 Admin de publisher, validação de pacotes, assinatura, versão imutável e revogação.
 
-Documento canônico: [spec](../../streaming/03-plataforma.md). [Matriz normativa](../../product/03-requisitos.md).
+## Boundary
+
+<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+
+## Antes de começar
+
+- [ ] Spec do módulo aprovada e o critério de aceite citado já existe nela
+- [ ] Worktree própria criada (`cargo xtask repo worktree task-e09-09-claude-<slug>`)
+- [ ] Fixtures/hardware necessários disponíveis ou limitação registrada
+- [ ] Nenhuma TASK em execução tocando os mesmos arquivos
 
 ## Critérios de aceite
 
-Rejeitar pacotes adversariais; conferir hash por artifact; não expor chaves privadas; instalação manual continua sem conta.
+| ID | Given | When | Then |
+|---|---|---|---|
+| `TASK-E09-09-AC-1` | PENDENTE | PENDENTE | Rejeitar pacotes adversariais |
+| `TASK-E09-09-AC-2` | PENDENTE | PENDENTE | conferir hash por artifact |
+| `TASK-E09-09-AC-3` | PENDENTE | PENDENTE | não expor chaves privadas |
+| `TASK-E09-09-AC-4` | PENDENTE | PENDENTE | instalação manual continua sem conta. |
 
-## Verificação e evidência
+## Verificação
 
-QA-009, QA-013 em [QA comum](../../quality/01-estrategia-testes.md) e [matriz multiplataforma](../../quality/03-matriz-multiplataforma.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+| Item | Comando / fixture | Evidência esperada |
+|---|---|---|
+| Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
+| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
 
-## Execução e limites
+## DoD — pronto para review
 
-Confirmar ports/contratos e dependências; decompor itens grandes em slices de 1–3 dias; implementar sucesso e erro/cancelamento; executar os critérios apropriados; atualizar schema/docs/notices; aceitar somente com evidência e revisão. Preservar dados, budgets e acessibilidade. Stubs/botões desabilitados não contam. Esforço é estimativa, não data prometida. Atualizar backlog JSON e requisito junto de qualquer mudança.
+- [ ] Todos os critérios de aceite com evidência
+- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
+- [ ] `cargo test` verde; testes ignorados listados com motivo
+- [ ] Spec do módulo atualizada se a implementação revelou algo novo
+- [ ] `backlog.json` com o estado correto
+- [ ] Revisão feita por contexto limpo, não pelo implementador
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+## Notas de execução
+
+Preenchido durante a execução, não antes.

@@ -22,9 +22,16 @@ jobs:
     name: Specs
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+          # O passo 37 mudou 134 das 191 TASKs para o repositorio dono de cada uma
+          # (`01-arvore-final.md` secao 1). `check-docs` resolve o Markdown da task pelo
+          # campo `repo` do backlog, e o INDEX/los requisitos apontam para dentro dos
+          # submodulos: sem eles o job validaria uma arvore diferente da da estacao --
+          # exatamente a divergencia que `doc_files()` foi escrito para evitar. Os
+          # arquivos lidos aqui sao Markdown e JSON; nada e compilado.
+          submodules: recursive
       - name: Provision pinned Rust toolchain
         run: rustup show
       - run: cargo xtask check-docs
@@ -33,7 +40,7 @@ jobs:
     name: Tooling
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
       - name: Provision pinned Rust toolchain
@@ -46,17 +53,17 @@ jobs:
     name: Submodules fixados
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
       - name: Provision pinned Rust toolchain
         run: rustup show
-      - name: Submodule must be pinned to a tag, never to a branch
+      - name: Submodule must be pinned to a commit, never to a branch
         run: |
           set -eu
           git submodule status --recursive
           if git config --file .gitmodules --get-regexp '^submodule\..*\.branch$' > /dev/null 2>&1; then
-            echo 'Submodule tracking a branch is forbidden; pin to a tag.'
+            echo 'Submodule tracking a branch is forbidden; pin to a commit.'
             exit 1
           fi
 
@@ -64,7 +71,7 @@ jobs:
     name: Regras de arquitetura
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           # Sem isto o job le libs/*/Cargo.toml de diretorios vazios e falha
           # no primeiro run com "submodule ainda nao adicionado".
@@ -135,10 +142,25 @@ jobs:
             cargo build --manifest-path "$d/Cargo.toml"
           done
 
+  tasks:
+    name: TASKs
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          # O backlog aponta a TASK para o repositorio dono, e a maioria mora nos
+          # submodulos: sem eles o gate leria a arvore do runner -- vazia de tasks --
+          # e aprovaria por ausencia.
+          submodules: recursive
+          persist-credentials: false
+      - name: Provision pinned Rust toolchain
+        run: rustup show
+      - run: cargo xtask check-tasks
+
   gate:
     name: CI Gate
     if: always()
-    needs: [specs, tooling, submodules, arch]
+    needs: [specs, tooling, submodules, arch, tasks]
     runs-on: ubuntu-22.04
     steps:
       - name: Aggregate
@@ -148,5 +170,6 @@ jobs:
           test "${{ needs.tooling.result }}" = success
           test "${{ needs.submodules.result }}" = success
           test "${{ needs.arch.result }}" = success
-          echo 'CI Gate passed: specs, tooling, submodules and architecture rules.'
+          test "${{ needs.tasks.result }}" = success
+          echo 'CI Gate passed: specs, tooling, submodules, architecture rules and tasks.'
           echo 'Hardware, signing and release acceptance remain separate gates.'

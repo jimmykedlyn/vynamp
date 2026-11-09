@@ -16,7 +16,7 @@ Scheduler: play playlist/station, stop, pause, fade, iniciar/parar gravação, a
 
 ## Letras: componente resumido sob o VU e fontes
 
-Origem: adendo de requisitos "letras integradas ao VU meter" v1.0 (2026-10-25), pedido do usuário. Os IDs `LYR-*` e `LYR-AC-*` abaixo são os do adendo e valem como IDs canônicos até um mapeamento oficial. Este é o documento canônico de letras; [layouts](../design/02-layouts.md#letras-sob-o-vu-2026-10-28), [acessibilidade](../design/03-acessibilidade.md#letras-acessibilidade-e-localização), [requisitos](../product/03-requisitos.md#rastreabilidade-de-letras-lyr), [decisões](../product/05-decisoes.md#decisões-de-letras-2026-10-28) e [TASK-E03-09](../tasks/items/TASK-E03-09.md) referenciam as âncoras daqui.
+Origem: adendo de requisitos "letras integradas ao VU meter" v1.0 (2026-10-25), pedido do usuário. Os IDs `LYR-*` e `LYR-AC-*` abaixo são os do adendo e valem como IDs canônicos até um mapeamento oficial. Este é o documento canônico de letras; [layouts](../design/02-layouts.md#letras-sob-o-vu-2026-10-28), [acessibilidade](../design/03-acessibilidade.md#letras-acessibilidade-e-localização), [requisitos](../product/03-requisitos.md#rastreabilidade-de-letras-lyr), [decisões](../product/05-decisoes.md#decisões-de-letras-2026-10-28) e [TASK-E03-09](../apps/player/tasks/items/TASK-E03-09.md) referenciam as âncoras daqui.
 
 O componente **acrescenta** a apresentação resumida sob o VU e a prioridade de fontes; **não substitui** o painel completo de letras já previsto (ver [requisitos anteriores](#requisitos-anteriores-que-continuam)). Não refaz o layout aprovado nem substitui os 16 VU meters estéreo originais.
 
@@ -59,7 +59,7 @@ Valores iniciais da revisão 14 do protótipo (relatados): linha de 26 DIP no de
 
 Ordem de escolha: **LRC explicitamente importado para a faixa na sessão, depois metadados embutidos, depois estado informativo sem letra utilizável**. A leitura inicial usa os metadados; importar um LRC é escolha explícita que os sobrepõe; "Usar letra dos metadados" remove a substituição e tenta de novo a fonte embutida. Descobrir arquivos auxiliares ou consultar provedores silenciosamente exige requisito separado (a busca online segue opt-in, conforme a seção de capas e letras acima).
 
-A tabela abaixo é a **baseline relatada da referência do protótipo**, não suporte nativo. O nativo depende de [TASK-E03-04](../tasks/items/TASK-E03-04.md) e do plano 04 (metadados e CUE) da biblioteca própria `vynamp-decode` (repositório privado externo, não verificado neste repositório).
+A tabela abaixo é a **baseline relatada da referência do protótipo**, não suporte nativo. O nativo depende de [TASK-E03-04](../apps/player/tasks/items/TASK-E03-04.md) e do plano 04 (metadados e CUE) da biblioteca própria `vynamp-decode` (repositório privado externo, não verificado neste repositório).
 
 | Família | Cobertura relatada da referência / ressalva |
 |---|---|

@@ -6,7 +6,7 @@ O `vitrola` deixa de ser biblioteca em repositório próprio e passa a ser **mó
 
 O design aprovado em 2026-10-23 (77 linhas, 9 seções) é preservado por **incorporação**, não por reimplementação: entra em [10-vitrola.md](../../../reference/audio/10-vitrola.md) como §8.1–8.9, e o texto literal de origem fica em [vitrola-design.md](vitrola-design.md) para que a alegação seja auditável em vez de uma promessa.
 
-Isto **não implementa** nada: vinil e válvula continuam sem código. A integração no grafo é a [TASK-E19-07](../../../tasks/items/TASK-E19-07.md), que depende de E04-03.
+Isto **não implementa** nada: vinil e válvula continuam sem código. A integração no grafo é a [TASK-E19-07](../../../libs/engine/tasks/items/TASK-E19-07.md), que depende de E04-03.
 
 ## A descoberta
 
@@ -29,7 +29,7 @@ Um arquivo, três linhas. Arquivar sem preservar o commit local deixaria sobrevi
 | [ADR-011](../../../adr/ADR-011-pilha-propria.md) | 0.1.1; linha do inventário deixa de ser repositório com SHA |
 | [docs/GLOSSARY.md](../../../architecture/GLOSSARY.md) | "biblioteca própria" → módulo DSP interno |
 | [docs/product/05-decisions.md](../../../product/05-decisoes.md) | citações `vitrola §N` re-apontadas para §8.x |
-| [tasks/items/TASK-E19-03.md](../../../tasks/items/TASK-E19-03.md) | 0.9.0 com a situação por critério de aceite |
+| [tasks/items/TASK-E19-03.md](../../../libs/engine/tasks/items/TASK-E19-03.md) | 0.9.0 com a situação por critério de aceite |
 | 13 outros docs | catálogo DSP, contrato de sinal, paridade, licenças, roadmap, riscos, MVP reference, INDEX, CHANGELOG |
 
 Nenhuma alteração de código, dependência, workflow ou backlog.
