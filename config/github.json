@@ -8,9 +8,9 @@
     "CI Gate"
   ],
   "merge_method": "merge",
-  "review_count": 1,
+  "review_count": 0,
   "remote_verified": true,
   "verified_at": "2026-11-08",
-  "protection_status": "pending_plan",
-  "reason": "Passo 35: o umbrella passa a ser jimmykedlyn/vynamp, publico desde a criacao. D-GH-1 dizia privado e contradizia a ADR-014, que e a spec normativa e manda os repositorios nascerem publicos; o mantenedor confirmou a regra em 2026-11-08. `xtask/src/repo.rs` ja exigia `private == false`, entao este arquivo era a unica coisa fora da regra. `protection_status` vira `applied` so depois de rodar `cargo xtask repo protect`."
+  "protection_status": "applied",
+  "reason": "Passo 35: o umbrella passa a ser jimmykedlyn/vynamp, publico desde a criacao. D-GH-1 dizia privado e contradizia a ADR-014, que e a spec normativa e manda os repositorios nascerem publicos; o mantenedor confirmou a regra em 2026-11-08. `xtask/src/repo.rs` ja exigia `private == false`, entao este arquivo era a unica coisa fora da regra. `protection_status` virou `applied` depois de `cargo xtask repo protect --reviews 0` em 2026-11-08, aplicado nos 10 repositorios e conferido por `cargo xtask repo audit`. `review_count` e 0, nao 1: com uma unica conta, `--reviews 1` somado a `enforce_admins` impediria o proprio mantenedor de integrar, e `engineering/03-gitflow.md` manda usar 0 nesse caso."
 }

@@ -5880,7 +5880,7 @@
       "title": "Abrir os repositórios ao público e proteger as branches",
       "phase": "M3",
       "priority": "P0",
-      "status": "planned",
+      "status": "implemented",
       "owner_role": "engineering-delivery",
       "requirements": [
         "REQ-E19-06"

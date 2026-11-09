@@ -20,7 +20,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Vynamp — especificação de produto e engenharia](README.md) — README.md
 
-- [Política de segurança](SECURITY.md) — SECURITY.md; canal em Security Advisories, ainda não habilitado (TASK-E19-06).
+- [Política de segurança](SECURITY.md) — SECURITY.md; canal em Security Advisories, habilitado desde a TASK-E19-06 (2026-11-08).
 
 - [Contrato mestre do produto](SPEC.md) — SPEC.md
 
@@ -347,6 +347,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [Evidência TASK-E19-01](evidence/PR/task-e19-01/README.md) — evidence/PR/task-e19-01/README.md; workflows Actions, validador invertido, gates locais e limitações (nenhum workflow executado no remoto).
 - [Evidência TASK-E19-02](evidence/PR/task-e19-02/README.md) — evidence/PR/task-e19-02/README.md; licença dual, governança, canal de advisory, README bilíngue e limitações (nada aberto, nada assinado).
 - [Corpo do PR task-e19-02](evidence/PR/task-e19-02/pr-body.md) — evidence/PR/task-e19-02/pr-body.md
+- [Evidência TASK-E19-06](evidence/PR/task-e19-06/README.md) — evidence/PR/task-e19-06/README.md; dez repositorios publicos, protecao lida da API, PVR habilitado e o que ficou pendente (licenca nos seis repos sem LICENSE).
 
 - [Organização de testes](tests/README.md) — tests/README.md
 

@@ -1,6 +1,6 @@
 # Contributing / Contribuições
 
-Versão 0.9.0 · 2026-11-05 · Estado: contrato vigente; o player ainda não está implementado.
+Versão 0.10.0 · 2026-11-08 · Estado: contrato vigente; o player ainda não está implementado.
 
 ## English
 
@@ -74,7 +74,7 @@ technical review is not approval of a GitHub identity, and vice versa.
 
 Contributions are accepted under `MIT OR Apache-2.0` unless you state otherwise.
 See [LEGAL.md](LEGAL.md). Security problems go to
-[GitHub Security Advisories](https://github.com/jimmykedlyn/vynamp-mediaplayer/security/advisories/new)
+[GitHub Security Advisories](https://github.com/jimmykedlyn/vynamp/security/advisories/new)
 — never to a public issue. See [SECURITY.md](SECURITY.md).
 
 ## Português
@@ -149,5 +149,5 @@ técnica não equivale à aprovação de uma identidade GitHub, e vice-versa.
 
 Contribuições são aceitas sob `MIT OR Apache-2.0` salvo declaração em contrário.
 Ver [LEGAL.md](LEGAL.md). Problemas de segurança vão para
-[GitHub Security Advisories](https://github.com/jimmykedlyn/vynamp-mediaplayer/security/advisories/new)
+[GitHub Security Advisories](https://github.com/jimmykedlyn/vynamp/security/advisories/new)
 — nunca para issue pública. Ver [SECURITY.md](SECURITY.md).

@@ -1,6 +1,6 @@
 # Changelog / Histórico
 
-Versão: 0.9.1 · Data: 2026-11-07 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.9.2 · Data: 2026-11-08 · Estado: especificação proposta, implementação não iniciada.
 
 Each entry appears in English and Portuguese. The two texts say the same thing;
 where they appear to differ, the Portuguese text of that entry is the original
@@ -455,6 +455,53 @@ Dez arquivos de `docs/superpowers/` saem do repositório: `plans/2026-10-14-comp
 **EN** — The `vitrola` design (approved 2026-10-23) is no longer a library in its own repository: vinyl and tube are **DSP modules inside the app**, by the maintainer's decision, recorded in [ADR-014](adr/ADR-014-publico-dsp-interno.md). The approved design was preserved **by incorporation**, not by reimplementation: its nine sections are now §8.1–8.9 of [10-vitrola](reference/audio/10-vitrola.md), which became the single source — previously that document integrated an external design by reference and deferred to it. A literal copy of the original text is kept at `docs/evidence/PR/task-e19-03/vitrola-design.md`, because it is the only surviving copy once the repository is archived. The external repository is archived, reverts with `gh repo unarchive`, and is **not** opened to the public. Citations updated in the ADR-011 inventory row, the glossary, the DSP and signal-contract docs, the DSP catalog, the MVP reference, feature parity, privacy/licensing and the roadmap. Integration remains [TASK-E19-07](libs/engine/tasks/items/TASK-E19-07.md), after TASK-E04-03. Documentation only: no player code, 191 requirements, 191 tasks, 19 epics.
 
 **PT** — O design do `vitrola` (aprovado em 2026-10-23) deixou de ser biblioteca em repositório próprio: vinil e válvula são **módulos DSP dentro do app**, por decisão do mantenedor registrada na [ADR-014](adr/ADR-014-publico-dsp-interno.md). O design aprovado foi preservado por **incorporação**, não por reimplementação: suas nove seções são agora §8.1–8.9 de [10-vitrola](reference/audio/10-vitrola.md), que passou a ser fonte única — antes esse documento integrava um design externo por referência e se subordinava a ele. Uma cópia literal do texto original fica em `docs/evidence/PR/task-e19-03/vitrola-design.md`, porque é a única cópia sobrevivente depois que o repositório for arquivado. O repositório externo é arquivado, reversível por `gh repo unarchive`, e **não** é aberto ao público. Citações atualizadas na linha de inventário da ADR-011, no glossário, nos docs de DSP e do contrato de sinal, no catálogo DSP, na referência do MVP, na paridade de recursos, em privacidade/licenças e no roadmap. A integração continua na [TASK-E19-07](libs/engine/tasks/items/TASK-E19-07.md), depois da TASK-E04-03. Somente documentação: nenhum código de player, 191 requisitos, 191 tarefas, 19 épicos.
+
+## Unreleased — 2026-11-08 (TASK-E19-06: repositórios públicos e branches protegidas) / Não lançado — 2026-11-08 (TASK-E19-06: repositórios públicos e branches protegidas)
+
+**EN** — TASK-E19-06 executed. The ten repositories are public with `main` and
+`develop` protected: `CI Gate` required in strict mode, required pull request with
+stale-review dismissal, conversation resolution, admins subject to the rules, and
+force push and deletion blocked. `cargo xtask repo protect --repo <owner/name>
+--reviews 0` applied it and `cargo xtask repo audit` reads it back with no pending
+item. `--reviews 0` is not a shortcut: with a single collaborator account and
+`enforce_admins=true`, `--reviews 1` would leave every pull request unmergeable,
+including the maintainer's. Three defects were found and fixed on the way: private
+vulnerability reporting was off in all nine public repositories, so `AC-1` was not
+met; `vynamp-output`'s description ended in "(private; opening later)", exactly what
+`AC-3` forbids, and was the only one of the ten filled in; and `SECURITY.md`,
+`CODE_OF_CONDUCT.md`, `CONTRIBUTING.md` and `README.md` told readers to open a
+public issue because the channel "goes live in TASK-E19-06" while pointing at
+`vynamp-mediaplayer`, now archived. The advisory URLs move to `jimmykedlyn/vynamp`.
+`vynamp-mvp-reference` is deliberately excluded from branch protection: it has no
+`develop` and no workflow, so requiring `CI Gate` there would block every pull
+request instead of guarding one; it stays public with reporting enabled. Two
+Woodpecker webhooks were deleted (decode, output) and `vynamp-mediaplayer` and
+`vitrola` were archived. Still open: the six module repositories without `LICENSE`
+are public, which is TASK-E19-04. Documentation and remote configuration only: no
+player code, 191 requirements, 191 tasks, 19 epics.
+
+**PT** — TASK-E19-06 executada. Os dez repositórios são públicos com `main` e
+`develop` protegidas: `CI Gate` exigido em modo strict, pull request obrigatório
+com dismiss de revisão obsoleta, conversações resolvidas, administradores sujeitos
+às regras, e force push e exclusão bloqueados. `cargo xtask repo protect --repo
+<owner/name> --reviews 0` aplicou, e `cargo xtask repo audit` lê de volta sem
+pendência. `--reviews 0` não é atalho: com uma única conta colaboradora e
+`enforce_admins=true`, `--reviews 1` deixaria todo pull request sem merge possível,
+inclusive o do mantenedor. Três defeitos foram encontrados e corrigidos no caminho:
+o relato privado de vulnerabilidade estava desligado nos nove repositórios
+públicos, então `AC-1` não estava atendido; a descrição de `vynamp-output` terminava
+em "(privada; abertura futura)", exatamente o que `AC-3` proíbe, e era a única das
+dez preenchida; e `SECURITY.md`, `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md` e
+`README.md` mandavam abrir issue pública porque o canal "entra no ar na
+TASK-E19-06", apontando para `vynamp-mediaplayer`, agora arquivado. As URLs de
+advisory passam para `jimmykedlyn/vynamp`. `vynamp-mvp-reference` fica de fora da
+proteção de propósito: não tem `develop` nem workflow, então exigir `CI Gate` ali
+bloquearia todo pull request em vez de guardar um; segue público com o relato
+habilitado. Dois webhooks do Woodpecker foram apagados (decode, output) e
+`vynamp-mediaplayer` e `vitrola` foram arquivados. Continua aberto: os seis
+repositórios de módulo sem `LICENSE` estão públicos, o que é a TASK-E19-04.
+Somente documentação e configuração remota: nenhum código de player, 191
+requisitos, 191 tarefas, 19 épicos.
 
 ## Unreleased — 2026-11-08 (step 33: agent definitions) / Não lançado — 2026-11-08 (passo 33: definições de agente)
 
