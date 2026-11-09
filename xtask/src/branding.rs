@@ -256,7 +256,7 @@ fn native_format(path: &Path, bytes: &[u8]) -> Result<()> {
                 let empty = matches!(&event, quick_xml::events::Event::Empty(_));
                 match event {
                     quick_xml::events::Event::Start(e) | quick_xml::events::Event::Empty(e) => {
-                        let name = std::str::from_utf8(e.name().as_ref())?.to_owned();
+                        let name = e.name().as_ref().to_owned();
                         if depth == 0 {
                             roots += 1;
                             root = name.clone();
@@ -271,8 +271,14 @@ fn native_format(path: &Path, bytes: &[u8]) -> Result<()> {
                             );
                             for attr in e.attributes() {
                                 let a = attr?;
-                                let key = std::str::from_utf8(a.key.as_ref())?;
-                                let value = a.unescape_value()?;
+                                let key = a.key.as_ref();
+                                // quick-xml 0.42 deprecou `unescape_value` em favor de
+                                // `normalized_value`, que alem de desescapar entidades
+                                // normaliza espaco em branco literal conforme a spec XML. Para
+                                // um gate que procura `url(` o resultado e' igual ou mais
+                                // restritivo -- nunca mais permissivo.
+                                let value =
+                                    a.normalized_value(quick_xml::XmlVersion::Implicit1_0)?;
                                 ensure!(
                                     matches!(
                                         key,
@@ -404,6 +410,24 @@ mod tests {
             )
             .is_err()
         );
+    }
+    /// O gate procura `url(` no valor **desescapado**: um `url(` escrito com
+    /// entidades (`&#117;rl(`) e' a mesma referencia externa que o literal, e um
+    /// valor lido cru passaria. quick-xml 0.42 trocou `unescape_value` por
+    /// `normalized_value`, que desescapa e ainda normaliza espaco em branco --
+    /// entao o teste tambem fixa que a normalizacao nao esconde o `url(`.
+    #[test]
+    fn native_svg_rejects_external_reference_hidden_behind_entities() {
+        for body in [
+            br##"<svg><path fill="&#117;rl(#x)"/></svg>"##.as_slice(),
+            br##"<svg><path fill="URL(&#40;data:x)"/></svg>"##.as_slice(),
+        ] {
+            assert!(
+                native_format(Path::new("vynamp.svg"), body).is_err(),
+                "{} should be rejected",
+                String::from_utf8_lossy(body)
+            );
+        }
     }
     #[test]
     fn icns_requires_retina_roles_in_addition_to_pixel_sizes() {

@@ -67,7 +67,7 @@ pub fn source_digest(root: &Path) -> Result<String> {
     obj.remove("application_ready");
     obj.remove("branding_exports_ready");
     digest.update(serde_json::to_vec(&cfg)?);
-    Ok(format!("{:x}", digest.finalize()))
+    Ok(hex(&digest.finalize()))
 }
 pub fn preflight(root: &Path, version: &str) -> Result<Value> {
     let cfg = read_json(root.join("config/project.json"))?;
