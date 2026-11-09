@@ -13,7 +13,7 @@
 | Critérios da spec | n/a — TASK transversal do umbrella |
 | Fase | M1 |
 | Prioridade | P0 |
-| Estado | planned |
+| Estado | implemented |
 | Depende de | passo 37 (esta TASK é emitida por ele) |
 | Bloqueia | nenhuma |
 | Modelo executor | Sonnet |
@@ -65,4 +65,26 @@ não satisfaz a regra e **nomeia** cada infração.
 
 ## Notas de execução
 
-Preenchido durante a execução, não antes.
+Executada em 2026-11-09; evidência em
+[`evidence/PR/task-ci-02/`](../../evidence/PR/task-ci-02/README.md).
+
+- **`AC-1` a `AC-3`:** cobertos por `check_tasks_ac1_*` a `check_tasks_ac3_*` em
+  `validate.rs`, mais `check_tasks_ac4_names_every_offender_and_only_those`, que
+  exige que o vermelho nomeie todos os infratores e nenhum outro.
+- **`AC-4` e `AC-5` contradizem-se como escritas, e a contradição é real.** Elas
+  pedem, no mesmo commit, um vermelho nomeando **exatamente** as cinco `in_progress`
+  e um verde assim que essas cinco ganham critério. Se o juiz fosse "a lista fixa de
+  cinco IDs", o verde de `AC-5` exigiria que a lista encolhesse; se fosse "toda
+  TASK fora de `planned`", o vermelho de `AC-4` teria de citar mais que cinco.
+  Resolvido pela regra que as duas descrevem de fato: o gate reprova **toda** TASK
+  fora de `planned` cujo critério não esteja escrito. Aplicada ao estado do passo 37,
+  ela nomeia as cinco de `AC-4` **e** `TASK-E19-06` — que saiu de `planned` sem
+  critério escrito. Nenhuma regra foi afrouxada entre o vermelho e o verde: os seis
+  receberam critério, o que é `AC-5` aplicada honestamente.
+- **O vermelho por ausência é o defeito que esta TASK existe para impedir.** Tarefas
+  `planned` sem `Given`/`When` não reprovam: o passo 37 decidiu (`D-37-3`, `P3`) que
+  autoria de critério é trabalho por módulo, e exigir 191 autorias de uma vez
+  pintaria o gate de vermelho por trabalho que nenhuma regra pediu.
+- **Ação tomada além do gate:** as sete TASKs que estavam fora de `planned` sem
+  critério escrito receberam `Given`/`When` autorados, e `acceptance_ready` passou a
+  `true` para elas. Foi assim que o vermelho virou verde sem exceção.

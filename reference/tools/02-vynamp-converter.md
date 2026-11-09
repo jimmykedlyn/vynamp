@@ -4,6 +4,11 @@ Versão: 0.1.0 · Data: 2026-11-05 · Estado: **escopo preparatório**; implemen
 
 Documento canônico da ferramenta desktop **Vynamp Converter** (`vynamp-converter`). Complementa [ADR-013](../../adr/ADR-013-restore.md) (fronteira de processo e motor compartilhado), [ADR-012](../../adr/ADR-012-integracao-shell.md) (ação de menu de contexto e identidade), [ADR-011](../../adr/ADR-011-pilha-propria.md) (pilha de áudio própria) e [TASK-E08-02](../../apps/converter/tasks/items/TASK-E08-02.md) (conversor e encoder registry). Matriz normativa: [03-requirements](../../product/03-requisitos.md).
 
+> **Código-fonte:** [`jimmykedlyn/vynamp-converter`](https://github.com/jimmykedlyn/vynamp-converter)
+> e a lib de codificadores em [`jimmykedlyn/vynamp-encode`](https://github.com/jimmykedlyn/vynamp-encode).
+> Este documento continua sendo a fonte normativa; os repos dos módulos guardam o código e o
+> esqueleto de `specs/`, não uma segunda cópia do texto normativo.
+
 > **Estado deste documento.** O escopo, as matrizes de formato, as regras de qualidade e os contratos de arquivo estão fechados aqui. A **execução** — criação da lib `vynamp-encode`, implementação da fila de jobs, artefatos de release e evidência — é o PR5. Onde este documento diz "a 1.0", o escopo fechamento está decidido e não será reaberto sem nova ADR.
 
 ## 1. Escopo
@@ -13,7 +18,7 @@ Ferramenta desktop de **transcodificação e conversão em lote**, executável s
 | Item | Decisão |
 |---|---|
 | Processo | Executável próprio, uma instância por usuário, mesma fronteira que o Restore ([ADR-013](../../adr/ADR-013-restore.md#1-processo-separado-motor-compartilhado)) |
-| Motor de codificação | **Biblioteca própria `vynamp-encode`**, repositório privado, Rust `std`-only e modular. É a **única** fonte de codificadores do produto |
+| Motor de codificação | **Biblioteca própria `vynamp-encode`**, repositório público [`jimmykedlyn/vynamp-encode`](https://github.com/jimmykedlyn/vynamp-encode), Rust `std`-only e modular. É a **única** fonte de codificadores do produto |
 | Codecs | Lossless (WAV, AIFF, FLAC, ALAC) e lossy (Opus, MP3, AAC, Vorbis) |
 | AAC | **Sem ressalva.** O risco de patente foi avaliado e **aceito e registrado** pelo mantenedor; a decisão é explícita, não omissa |
 | MP3 | Permitido; a redação de "quando permitido" em [TASK-E08-02](../../apps/converter/tasks/items/TASK-E08-02.md) significa **quando o encoder estiver disponível na build**, não "depende de permissão a cada uso" |

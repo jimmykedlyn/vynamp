@@ -40,10 +40,10 @@ Importação por branch/PR ou bootstrap vazio, proteções e default develop.
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E15-03-AC-1` | PENDENTE | PENDENTE | Privacidade real confirmada |
-| `TASK-E15-03-AC-2` | PENDENTE | PENDENTE | histórico preservado |
-| `TASK-E15-03-AC-3` | PENDENTE | PENDENTE | sem force push |
-| `TASK-E15-03-AC-4` | PENDENTE | PENDENTE | CI Gate/proteções realmente aplicados ou pendência registrada. |
+| `TASK-E15-03-AC-1` | o repositório publicado em `jimmykedlyn/vynamp` | a API do GitHub responde a visibilidade | Privacidade real confirmada |
+| `TASK-E15-03-AC-2` | o repositório importado de `vynamp-mediaplayer` | o histórico é comparado com a origem | histórico preservado |
+| `TASK-E15-03-AC-3` | `main` e `develop` protegidas | alguém tenta force push | sem force push |
+| `TASK-E15-03-AC-4` | os dez repositórios, depois da abertura ao público | `cargo xtask repo audit --repo <owner/name>` roda em cada um | CI Gate/proteções realmente aplicados ou pendência registrada. |
 
 ## Verificação
 

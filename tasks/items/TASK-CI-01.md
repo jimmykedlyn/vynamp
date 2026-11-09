@@ -12,7 +12,7 @@
 | Critérios da spec | n/a — TASK transversal do umbrella |
 | Fase | M1 |
 | Prioridade | P0 |
-| Estado | planned |
+| Estado | implemented |
 | Depende de | passo 34 (concluído) |
 | Bloqueia | nenhuma |
 | Modelo executor | Sonnet |
@@ -65,4 +65,22 @@ Não toca `check-docs`, que já foi corrigido no passo 34.
 
 ## Notas de execução
 
-Preenchido durante a execução, não antes.
+Executada em 2026-11-09; evidência em
+[`evidence/PR/task-ci-01/`](../../evidence/PR/task-ci-01/README.md).
+
+- **`AC-1`, `AC-2` e `AC-3` já estavam atendidos pelo passo 34.** Esta TASK ficou
+  `planned` no backlog enquanto o código já estava em `develop`. Verificado contra o
+  código, não presumido: `check-delivery` verde, 11 testes `github_actions_*` e
+  nenhuma checagem de empacotamento no caminho.
+- **`AC-4` não estava atendido, e a diferença é material.** A mensagem era
+  `Unpinned action <ref> in <stem>`: o *file stem* (`ci`, não `ci.yml`) e **sem
+  linha** — o AC pede arquivo e linha. Corrigido com `action_ref_locations()`, que
+  carrega o caminho YAML de cada `uses:`, e `uses_lines()`, que casa a n-ésima
+  referência com a n-ésima linha do documento.
+- **Por que a linha não pode vir da busca pelo texto da ação.** O `ci.yml` repete
+  `actions/checkout@<sha>` em cinco jobs; procurar por texto dá a todas as
+  ocorrências a linha da primeira, que é o oposto do que o AC pede. Um teste exige
+  que cada ocorrência repetida receba a sua própria linha.
+- **`uses:` também aparece como primeiro item de lista** (`- uses: …`), não só como
+  chave de mapeamento. A varredura de linhas cobre as duas formas, e foi um teste
+  vermelho que expôs isso.

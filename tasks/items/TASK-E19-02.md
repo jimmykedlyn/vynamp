@@ -40,10 +40,10 @@ LICENSE dual, LEGAL, CODE_OF_CONDUCT, GOVERNANCE, templates de issue, SECURITY.m
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E19-02-AC-1` | PENDENTE | PENDENTE | README bilíngue EN/PT na raiz |
-| `TASK-E19-02-AC-2` | PENDENTE | PENDENTE | SECURITY.md aponta para GitHub Security Advisories e não inventa contato |
-| `TASK-E19-02-AC-3` | PENDENTE | PENDENTE | LICENSE dual presente |
-| `TASK-E19-02-AC-4` | PENDENTE | PENDENTE | docs não afirmam capacidade ou alvo não verificado. |
+| `TASK-E19-02-AC-1` | a raiz do repositório | o `README.md` é aberto | README bilíngue EN/PT na raiz |
+| `TASK-E19-02-AC-2` | o `SECURITY.md` e o recurso de relato privado do repositório | os dois são comparados | SECURITY.md aponta para GitHub Security Advisories e não inventa contato |
+| `TASK-E19-02-AC-3` | a raiz do repositório | os arquivos de licença são lidos | LICENSE dual presente |
+| `TASK-E19-02-AC-4` | os documentos de governança e as specs | cada afirmação de capacidade ou de alvo é confrontada com a evidência | docs não afirmam capacidade ou alvo não verificado. |
 
 ## Verificação
 

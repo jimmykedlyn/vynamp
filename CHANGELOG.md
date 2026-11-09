@@ -456,6 +456,71 @@ Dez arquivos de `docs/superpowers/` saem do repositório: `plans/2026-10-14-comp
 
 **PT** — O design do `vitrola` (aprovado em 2026-10-23) deixou de ser biblioteca em repositório próprio: vinil e válvula são **módulos DSP dentro do app**, por decisão do mantenedor registrada na [ADR-014](adr/ADR-014-publico-dsp-interno.md). O design aprovado foi preservado por **incorporação**, não por reimplementação: suas nove seções são agora §8.1–8.9 de [10-vitrola](reference/audio/10-vitrola.md), que passou a ser fonte única — antes esse documento integrava um design externo por referência e se subordinava a ele. Uma cópia literal do texto original fica em `docs/evidence/PR/task-e19-03/vitrola-design.md`, porque é a única cópia sobrevivente depois que o repositório for arquivado. O repositório externo é arquivado, reversível por `gh repo unarchive`, e **não** é aberto ao público. Citações atualizadas na linha de inventário da ADR-011, no glossário, nos docs de DSP e do contrato de sinal, no catálogo DSP, na referência do MVP, na paridade de recursos, em privacidade/licenças e no roadmap. A integração continua na [TASK-E19-07](libs/engine/tasks/items/TASK-E19-07.md), depois da TASK-E04-03. Somente documentação: nenhum código de player, 191 requisitos, 191 tarefas, 19 épicos.
 
+## Unreleased — 2026-11-09 (TASK-E19-04, TASK-CI-01 and TASK-CI-02: own repos, tasks gate) / Não lançado — 2026-11-09 (TASK-E19-04, TASK-CI-01 e TASK-CI-02: repos próprios, gate de TASKs)
+
+**EN** — Three tasks closed, and the interesting part of each is what was wrong
+before. `TASK-E19-04`: `02-vynamp-converter.md` still described `vynamp-encode` as a
+*private* repository, false since the repositories went public, and neither canonical
+tool spec cited a repository URL at all; both now do, read back from the REST API. The
+three module `specs/README.md` files opened with "Normative: the code follows the spec",
+which puts the module repository itself as the source — they now state that the
+normative text lives in the main repository and point at the canonical document, and
+each `specs/*.md` header repeats it. `vynamp-encode` has no canonical document of its
+own: its norm is §1 of the converter spec, and that is where its skeleton points
+rather than inventing a fourth document. `vynamp-fases` is not a repository
+(`GET` returns 404), so the reference to `01-arvore-final.md` is plain text, not a
+link. The three repositories now carry `LICENSE`, `LICENSE-MIT`, `LICENSE-APACHE`,
+`SECURITY.md` and `CONTRIBUTING.md` in addition to the bilingual READMEs, and
+`visibility=public` was read from the API rather than assumed. `TASK-CI-02`: a new
+`cargo xtask check-tasks` and a `tasks` job in `ci.yml`, required by the gate. It
+enforces six rules over the backlog and the TASK Markdown, and its `AC-4`/`AC-5`
+contradict each other as written — a red naming *exactly five* tasks and a green once
+those five are written cannot both hold at one commit, because six tasks were outside
+`planned` without written criteria. The rule applied is the one both describe: every
+task outside `planned` whose criteria are not written fails the gate. No exception was
+added between the red and the green; the seven tasks were authored instead, and
+`TASK-E19-06`'s `Then` column was left untouched even where it says "seven repos"
+where there are ten, because that column is the approved requirement. `TASK-CI-01`
+was already met except for `AC-4`: the unpinned-action error named the file *stem* and
+no line. It now reports `Unpinned action <ref> at ci.yml:<line> (<yaml path>)`, pairing
+each reference with its own line in document order — searching by the action text
+would give every repeated `uses:` the first one's line, which is the case the
+criterion exists for. `engineering/04-ci.md` described the four pre-step-34 jobs and
+an `apps/desktop` that does not exist; corrected to the five real jobs. Documentation,
+tooling and repository governance only: no player code, 191 requirements, 193 tasks,
+19 epics.
+
+**PT** — Três TASKs fechadas, e a parte interessante de cada uma é o que estava
+errado antes. `TASK-E19-04`: `02-vynamp-converter.md` ainda descrevia `vynamp-encode`
+como repositório *privado*, falso desde a abertura, e nenhuma das specs canônicas
+citava URL de repositório; ambas citam agora, lidas de volta da API REST. As três
+`specs/README.md` de módulo abriam com "Normativas: o código segue a spec", o que põe
+o repo de módulo como fonte — passam a declarar que o texto normativo vive no
+repositório principal e apontam o documento canônico, e o cabeçalho de cada
+`specs/*.md` repete isso. `vynamp-encode` não tem documento canônico próprio: sua
+norma é §1 da spec do converter, e é para lá que o esqueleto aponta em vez de inventar
+um quarto documento. `vynamp-fases` não é repositório (`GET` devolve 404), então a
+referência a `01-arvore-final.md` é texto, não link. Os três repositórios passam a ter
+`LICENSE`, `LICENSE-MIT`, `LICENSE-APACHE`, `SECURITY.md` e `CONTRIBUTING.md` além dos
+READMEs bilíngues, e `visibility=public` foi lido da API, não presumido. `TASK-CI-02`:
+novo `cargo xtask check-tasks` e job `tasks` no `ci.yml`, exigido pelo gate. Aplica
+seis regras sobre o backlog e o Markdown das TASKs, e seus `AC-4`/`AC-5` contradizem-se
+como escritos — um vermelho nomeando *exatamente cinco* TASKs e um verde quando essas
+cinco estiverem escritas não cabem no mesmo commit, porque seis estavam fora de
+`planned` sem critério escrito. A regra aplicada é a que os dois descrevem: toda TASK
+fora de `planned` sem critério escrito reprova. Nenhuma exceção foi introduzida entre
+o vermelho e o verde; as sete TASKs foram autoradas. A coluna `Then` da `TASK-E19-06`
+ficou intacta mesmo dizendo "sete repos" onde são dez, porque aquela coluna é o
+requisito aprovado. `TASK-CI-01` já estava atendida exceto no `AC-4`: o erro de ação
+sem SHA nomeava o *file stem* e nenhuma linha. Agora reporta `Unpinned action <ref> at
+ci.yml:<linha> (<caminho yaml>)`, casando cada referência com a sua própria linha na
+ordem do documento — buscar pelo texto da ação daria a todas as ocorrências repetidas
+de `uses:` a linha da primeira, que é justamente o caso que o critério existe para
+cobrir. `engineering/04-ci.md` descrevia os quatro jobs de antes do passo 34 e um
+`apps/desktop` que não existe; corrigido para os cinco jobs reais. Somente
+documentação, ferramental e governança de repositório: nenhum código de player, 191
+requisitos, 193 tarefas, 19 épicos.
+
 ## Unreleased — 2026-11-08 (TASK-E19-06: repositórios públicos e branches protegidas) / Não lançado — 2026-11-08 (TASK-E19-06: repositórios públicos e branches protegidas)
 
 **EN** — TASK-E19-06 executed. The ten repositories are public with `main` and

@@ -58,12 +58,12 @@ jobs:
           persist-credentials: false
       - name: Provision pinned Rust toolchain
         run: rustup show
-      - name: Submodule must be pinned to a tag, never to a branch
+      - name: Submodule must be pinned to a commit, never to a branch
         run: |
           set -eu
           git submodule status --recursive
           if git config --file .gitmodules --get-regexp '^submodule\..*\.branch$' > /dev/null 2>&1; then
-            echo 'Submodule tracking a branch is forbidden; pin to a tag.'
+            echo 'Submodule tracking a branch is forbidden; pin to a commit.'
             exit 1
           fi
 
@@ -142,10 +142,25 @@ jobs:
             cargo build --manifest-path "$d/Cargo.toml"
           done
 
+  tasks:
+    name: TASKs
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          # O backlog aponta a TASK para o repositorio dono, e a maioria mora nos
+          # submodulos: sem eles o gate leria a arvore do runner -- vazia de tasks --
+          # e aprovaria por ausencia.
+          submodules: recursive
+          persist-credentials: false
+      - name: Provision pinned Rust toolchain
+        run: rustup show
+      - run: cargo xtask check-tasks
+
   gate:
     name: CI Gate
     if: always()
-    needs: [specs, tooling, submodules, arch]
+    needs: [specs, tooling, submodules, arch, tasks]
     runs-on: ubuntu-22.04
     steps:
       - name: Aggregate
@@ -155,5 +170,6 @@ jobs:
           test "${{ needs.tooling.result }}" = success
           test "${{ needs.submodules.result }}" = success
           test "${{ needs.arch.result }}" = success
-          echo 'CI Gate passed: specs, tooling, submodules and architecture rules.'
+          test "${{ needs.tasks.result }}" = success
+          echo 'CI Gate passed: specs, tooling, submodules, architecture rules and tasks.'
           echo 'Hardware, signing and release acceptance remain separate gates.'

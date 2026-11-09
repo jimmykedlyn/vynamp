@@ -60,7 +60,7 @@
       "spec": "reference/audio/01-engine.md",
       "module": "vynamp-output",
       "repo": "vynamp-output",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Spike shared output, ring SPSC e harness de callback com instrumentation.",
       "acceptance": "Nenhum lock/alloc/I/O na callback; clock deriva consumo e device latency; underrun gera zeros sem replay.",
       "qa": [
@@ -636,7 +636,7 @@
       "spec": "design/07-pin-mvp.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Pacote assets/reference/mvp com MVP rev.37 congelado por hash, 12 temas resolvidos, 91 ícones, 16 medidores e SVGs renderizados, extraídos por ferramenta reprodutível.",
       "acceptance": "Cada SVG renderiza em resvg sem pixel de geometria divergente do Chrome (delta>48 fora do antialiasing de 1 px; texto registrado e resolvido em E02-12; recurso sem suporte no resvg vira requisito do carregador nativo); cada tema traz resolvidos todos os tokens --* que define em :root, e toda variável referenciada que o tema não define em :root consta de unsetVars com fallback, origem e temas afetados (valor por estado em E02-12); reextração reproduz os mesmos hashes.",
       "qa": [
@@ -3279,7 +3279,7 @@
       "spec": "delivery/02-release-devops.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Repositório independente, Cargo workspace mínimo, toolchain pin, ADRs e CI inicial.",
       "acceptance": "Nenhum código/asset Winamp; build real com lockfile resolvido; validador de docs passa; fixtures têm paths definidos.",
       "qa": [
@@ -4476,7 +4476,7 @@
       "spec": "engineering/03-gitflow.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Importação por branch/PR ou bootstrap vazio, proteções e default develop.",
       "acceptance": "Privacidade real confirmada; histórico preservado; sem force push; CI Gate/proteções realmente aplicados ou pendência registrada.",
       "qa": [
@@ -5740,7 +5740,7 @@
       "spec": "engineering/04-ci.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "ADR-014, workflows ci/release/quality em GitHub Actions com actions fixadas por SHA e gate único CI Gate, xtask de validação e release reescrito para Actions e remoção do Woodpecker.",
       "acceptance": "Actions fixadas por SHA; gate reprova dependência falha, cancelada ou ausente; release só em tag v* e falha fechado; macOS Intel e Apple Silicon viram alvos verificados; nenhum segredo no histórico.",
       "qa": [
@@ -5770,7 +5770,7 @@
       "spec": "security/01-threat-model.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "LICENSE dual, LEGAL, CODE_OF_CONDUCT, GOVERNANCE, templates de issue, SECURITY.md com canal de advisory e README bilíngue EN/PT, com docs de CI e Gitflow reescritos para o repo público.",
       "acceptance": "README bilíngue EN/PT na raiz; SECURITY.md aponta para GitHub Security Advisories e não inventa contato; LICENSE dual presente; docs não afirmam capacidade ou alvo não verificado.",
       "qa": [
@@ -5819,7 +5819,7 @@
       "title": "Re-apontar as specs de Restore e Converter e criar os repos próprios",
       "phase": "M3",
       "priority": "P0",
-      "status": "planned",
+      "status": "implemented",
       "owner_role": "engineering-delivery",
       "requirements": [
         "REQ-E19-04"
@@ -5831,7 +5831,7 @@
       "spec": "reference/tools/02-vynamp-converter.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Specs de Restore e Converter re-apontadas para repositórios próprios, com a fonte normativa mantida no repo principal e os repos vynamp-encode, vynamp-converter e vynamp-restore criados públicos.",
       "acceptance": "As specs apontam para URLs reais dos repos novos; a fonte normativa continua única no repo principal; os três repos existem, públicos, com README bilíngue, LICENSE e SECURITY.md.",
       "qa": [
@@ -5894,7 +5894,7 @@
       "spec": "engineering/03-gitflow.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Sete repositórios Vynamp abertos ao público com relato privado de vulnerabilidade habilitado, e branch protection aplicada em develop exigindo o contexto CI Gate, com descriptions e wiki ajustadas.",
       "acceptance": "Os sete repos reportam visibility public e `private_vulnerability_reporting` habilitado; develop exige CI Gate e proíbe force push e exclusão; description não promete abertura futura; repo sem proteção não é considerado pronto.",
       "qa": [
@@ -5945,7 +5945,7 @@
       "title": "Reescrever delivery() e github_actions() para a árvore do umbrella",
       "phase": "M1",
       "priority": "P0",
-      "status": "planned",
+      "status": "implemented",
       "owner_role": "engineering-delivery",
       "requirements": [],
       "dependencies": [],
@@ -5968,7 +5968,7 @@
       "title": "Adicionar o job check-tasks ao CI do umbrella",
       "phase": "M1",
       "priority": "P0",
-      "status": "planned",
+      "status": "implemented",
       "owner_role": "engineering-delivery",
       "requirements": [],
       "dependencies": [
