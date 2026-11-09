@@ -646,6 +646,41 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
         quality.is_some_and(|v| v.to_string().contains("cargo xtask quality-gate")),
         "Quality workflow must run cargo xtask quality-gate",
     );
+    // macOS Intel and Apple Silicon are mandatory targets (REQ-E19-01), and a
+    // target no job runs on is not verified. This has to be a gate and not a
+    // preference: dropping a Mac image from the matrix is a one-line edit
+    // that returns macOS to "not verified" -- exactly the state ADR-014
+    // exists to end -- while every other check stays green. The tooling job
+    // is the only umbrella job that can carry them: the quality job needs
+    // hardware that does not exist yet, and `ci core` is forbidden here.
+    c.check(
+        ci.is_some_and(|v| {
+            let runners = v["jobs"]["tooling"]["strategy"]["matrix"]["runner"].clone();
+            let runners = strings(&runners);
+            runners.contains("macos-15-intel") && runners.contains("macos-15")
+        }),
+        "Tooling job must run on macos-15-intel and macos-15 (REQ-E19-01)",
+    );
+    c.check(
+        ci.is_some_and(|v| {
+            let runners = v["jobs"]["tooling"]["strategy"]["matrix"]["runner"].clone();
+            !strings(&runners).contains("macos-latest")
+        }),
+        "Tooling matrix must not use macos-latest; it changes architecture as GitHub rotates it",
+    );
+    // AC-5 of TASK-E19-01 is a claim about the *history*, and the scanner that
+    // proves it is worthless unless CI runs it. Removing the step is silent:
+    // the gate stays green, the claim stays in the task, and nothing reads the
+    // commits again. The unshallow step is part of the same check because
+    // `actions/checkout` fetches a single commit by default, and a shallow clone
+    // would scan a working tree it calls clean.
+    c.check(
+        ci.is_some_and(|v| {
+            let steps = v["jobs"]["tooling"]["steps"].to_string();
+            steps.contains("cargo xtask check-secrets") && steps.contains("fetch --unshallow")
+        }),
+        "Tooling job must run cargo xtask check-secrets on full history (TASK-E19-01 AC-5)",
+    );
     Ok(flows.len())
 }
 
@@ -1248,9 +1283,14 @@ jobs:
       - run: cargo xtask check-docs
   tooling:
     needs: specs
-    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        runner: [ubuntu-22.04, macos-15-intel, macos-15]
+    runs-on: ${{{{ matrix.runner }}}}
     steps:
       - uses: actions/checkout@{SHA}
+      - run: git fetch --unshallow || true
+      - run: cargo xtask check-secrets
   submodules:
     needs: specs
     runs-on: ubuntu-22.04
@@ -1507,6 +1547,62 @@ model: sonnet
         edit(f.path(), "ci.yml", "needs.specs.result", "specs");
         let e = ci_errors(f.path());
         assert!(e.iter().any(|e| e.contains("dependency results")), "{e:?}");
+    }
+    /// REQ-E19-01 makes macOS Intel and Apple Silicon mandatory targets, and a
+    /// target no job runs on is not verified. The quality job that names them
+    /// needs hardware that does not exist yet, and `ci core` is forbidden in
+    /// the umbrella (D-CI-1), so the tooling matrix is the only place they can
+    /// be covered. Dropping either image is a one-line edit that keeps every
+    /// other check green while returning macOS to "not verified".
+    #[test]
+    fn github_actions_requires_the_macos_matrix_in_tooling() {
+        const FULL: &str = "ubuntu-22.04, macos-15-intel, macos-15";
+        for (dropped, without) in [
+            ("macos-15-intel", "ubuntu-22.04, macos-15"),
+            ("macos-15", "ubuntu-22.04, macos-15-intel"),
+        ] {
+            let f = ci_fixture();
+            edit(f.path(), "ci.yml", FULL, without);
+            let e = ci_errors(f.path());
+            assert!(
+                e.iter().any(|e| e.contains("macos-15-intel and macos-15")),
+                "dropping {dropped} must fail the gate, got {e:?}"
+            );
+        }
+    }
+    /// `macos-latest` moves between architectures as GitHub rotates the image,
+    /// so a matrix that names it claims to verify a target whose identity the
+    /// repository does not control.
+    #[test]
+    fn github_actions_rejects_macos_latest_in_the_matrix() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "ci.yml",
+            "ubuntu-22.04, macos-15-intel, macos-15",
+            "ubuntu-22.04, macos-latest",
+        );
+        let e = ci_errors(f.path());
+        assert!(e.iter().any(|e| e.contains("macos-latest")), "{e:?}");
+    }
+    /// AC-5 is a claim about history, and a scanner CI never runs proves nothing.
+    #[test]
+    fn github_actions_requires_the_secret_scan_on_full_history() {
+        for (removed, needle) in [
+            ("      - run: cargo xtask check-secrets\n", "check-secrets"),
+            (
+                "      - run: git fetch --unshallow || true\n",
+                "fetch --unshallow",
+            ),
+        ] {
+            let f = ci_fixture();
+            edit(f.path(), "ci.yml", removed, "");
+            let e = ci_errors(f.path());
+            assert!(
+                e.iter().any(|e| e.contains("TASK-E19-01 AC-5")),
+                "dropping {needle} must fail the gate, got {e:?}"
+            );
+        }
     }
     #[test]
     fn github_actions_rejects_release_workflow_in_the_umbrella() {
