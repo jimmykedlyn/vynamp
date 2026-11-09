@@ -14,7 +14,7 @@
 | Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
 | Fase | M0 |
 | Prioridade | P0 |
-| Estado | in_progress |
+| Estado | implemented |
 | Depende de | `TASK-E15-02` |
 | Bloqueia | `TASK-E01-01`, `TASK-E01-02`, `TASK-E02-01`, `TASK-E03-01`, `TASK-E07-01`, `TASK-E10-01`, `TASK-E11-02`, `TASK-E11-03`, `TASK-E11-04`, `TASK-E13-01`, `TASK-E14-01`, `TASK-E15-05`, `TASK-E16-01`, `TASK-E17-01` |
 | Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
@@ -64,4 +64,21 @@ Repositório independente, Cargo workspace mínimo, toolchain pin, ADRs e CI ini
 - [ ] PR aberto com template preenchido; CI Gate verde no SHA final
 ## Notas de execução
 
-Preenchido durante a execução, não antes.
+Fechada em 2026-11-09 por verificação cláusula a cláusula contra o estado atual do
+repositório, não por leitura da evidência original (Codex, 2026-10-18). O que a
+evidência dizia continua no arquivo; o que segue foi medido agora.
+
+| AC | Verificação executada | Resultado |
+|---|---|---|
+| AC-1 | `git grep -In -i -E "winamp|nullsoft"` na árvore rastreada (fora de `_arquivo/`) | 0 arquivos; nenhum asset binário Winamp |
+| AC-2 | `cargo build --workspace --locked` | `Finished dev profile … in 10.41s`, exit 0 |
+| AC-3 | `cargo xtask check-docs` | `"result": "passed"`, 193 TASKs, `spec_version 0.7.0` |
+| AC-4 | `libs/decode/tools/fixtures/generate.ps1:14` | raiz resolvida por `Split-Path -Parent (Split-Path -Parent $PSScriptRoot)`; saídas em `tests/fixtures/{pcm,flac,mpeg}` |
+
+AC-4 não é a mesma coisa que "existe fixture": o que o critério pede é que o
+caminho seja resolvido a partir da raiz do repositório, e ele é — nenhum script
+depende do diretório de onde foi chamado.
+
+O que esta TASK **não** provou, e continua fora dela: nenhum áudio real foi
+decodificado, nenhum hardware foi tocado, e as flags `application_ready`,
+`release_enabled` e `branding_exports_ready` seguem `false`.

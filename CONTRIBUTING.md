@@ -53,8 +53,9 @@ that claims more than it demonstrated is a defect in this project, not a
 marketing choice.
 
 The required status is `CI Gate`. A green gate does not mean the player works:
-with the workspace holding only `xtask`, the `core` and `android` jobs are
-skipped by `cargo xtask ci detect`.
+this repository has no application to build (D-CI-1), so the gate proves the
+specs, the task records, the `xtask` tooling, the submodule pins and the
+dependency-direction rules — nothing about audio, UI or a binary.
 
 ### Rules of evidence
 
@@ -127,9 +128,10 @@ ADR), **o que mudou**, **comandos e a saída real** e **limitações** — o que
 não rodou, o que segue não verificado e qualquer check pulado. Um PR que afirma
 mais do que demonstrou é defeito neste projeto, não escolha de marketing.
 
-O status exigido é `CI Gate`. Gate verde não significa que o player funciona: com
-o workspace contendo só `xtask`, os jobs `core` e `android` ficam pulados por
-`cargo xtask ci detect`.
+O status exigido é `CI Gate`. Gate verde não significa que o player funciona:
+este repositório não tem aplicação para construir (D-CI-1), então o gate prova
+as specs, os registros de tarefa, o tooling do `xtask`, os pins dos submódulos e
+as regras de direção de dependência — nada sobre áudio, UI ou binário.
 
 ### Regras de evidência
 

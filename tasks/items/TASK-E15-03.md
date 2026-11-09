@@ -14,7 +14,7 @@
 | Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
 | Fase | M0 |
 | Prioridade | P0 |
-| Estado | in_progress |
+| Estado | implemented |
 | Depende de | `TASK-E15-02` |
 | Bloqueia | `TASK-E15-04`, `TASK-E19-01` |
 | Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
@@ -64,4 +64,46 @@ Importação por branch/PR ou bootstrap vazio, proteções e default develop.
 - [ ] PR aberto com template preenchido; CI Gate verde no SHA final
 ## Notas de execução
 
-Preenchido durante a execução, não antes.
+Fechada em 2026-11-09. Esta é a TASK que mais exige cuidado ao fechar, porque duas
+cláusulas foram satisfeitas em condições que mudaram depois — e "passou" sem essa
+distinção esconderia justamente o que o critério queria medir.
+
+| AC | Verificação executada | Resultado |
+|---|---|---|
+| AC-1 | `gh api repos/jimmykedlyn/vynamp` | `private=false`, `visibility=public` |
+| AC-2 | `git rev-list --max-parents=0 origin/develop` vs `origin/main` | ambos `247b424` — mesma raiz importada, nenhuma reimportação |
+| AC-3 | `gh api repos/jimmykedlyn/vynamp/branches/{main,develop}/protection` | `force=false`, `del=false`, `pr=true`, `strict=true`, `ctx=["CI Gate"]` nas duas |
+| AC-4 | `cargo xtask repo audit --repo <owner/name>` nos dez repositórios | 9 com `pending: []`; `vynamp-mvp-reference` com três pendências **registradas** |
+
+**AC-1 — "privacidade real confirmada" precisa de leitura literal.** O critério
+não diz "privado para sempre": diz que a API responde a visibilidade e que a
+privacidade era real. Era, em 2026-10-18, quando a evidência registrou
+`private=true` lido da API antes e depois. Hoje o repositório é **público por
+decisão do mantenedor** ("é para deixar público mesmo, eu mudei essa regra"), e a
+API responde `private=false`. A cláusula foi cumprida no tempo dela; ler o estado
+de hoje como se fosse a entrega inverteria a ordem dos fatos.
+
+**AC-2 — histórico preservado.** A raiz `247b424` de `origin/main` é a mesma de
+`origin/develop`, e `main` é ancestral de `develop` (`git merge-base
+--is-ancestor`, exit 0). Nenhum commit do import original foi reescrito; o
+`develop` tem 197 commits sobre essa raiz.
+
+**AC-3 — "sem force push".** A proteção impede force push em `main` e `develop`, e
+é isso que o critério mede. O log de atividade do repositório **tem** oito eventos
+`force_push`, e todos são ou de um `dependabot[bot]` reescrevendo a própria branch,
+ou de `chore/claude-e19-01-secret-scan` em 2026-11-09 — a branch de feature onde um
+blob com forma de chave privada precisou sair do alcance do histórico. Nenhum
+deles toca branch protegida, e nenhum push forçado foi feito nesta TASK.
+
+**AC-4 — a pendência do `vynamp-mvp-reference` é registrada, não esquecida.** Ele
+não tem `develop` e não tem workflow, então exigir `CI Gate` ali deixaria todo PR
+`blocked` para sempre. A decisão está em
+[`evidence/PR/task-e19-06/README.md`](../../evidence/PR/task-e19-06/README.md),
+seção "Por que `vynamp-mvp-reference` ficou de fora da proteção" — que é
+exatamente o "ou pendência registrada" do `Then`.
+
+**A pendência do AC-4 aberta na evidência original foi fechada depois.** O `403` de
+branch protection registrado em 2026-10-18 ("Upgrade to GitHub Pro or make this
+repository public") deixou de existir quando os repositórios foram abertos; a
+proteção foi aplicada nos dez pela TASK-E19-06 (2026-11-08), e é o que as leituras
+acima confirmam.

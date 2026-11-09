@@ -26,19 +26,22 @@ Em paralelo, o mantenedor corrigiu um erro de modelagem sobre os efeitos de vini
 
 ### 1. CI/CD em GitHub Actions, e só quando necessário
 
-Os três workflows são **restaurados** do histórico Git (commit `247b424`, "configure Vynamp Rust tooling and delivery"), não escritos do zero, e então adaptados. O commit `e7562fd` (TASK-E15-04) apagou exatamente esses arquivos; a restauração preserva o desenho já validado — actions fixadas por SHA completo, toolchain pinado por `rustup`, gate agregado.
+Os workflows são **restaurados** do histórico Git (commit `247b424`, "configure Vynamp Rust tooling and delivery"), não escritos do zero, e então adaptados. O commit `e7562fd` (TASK-E15-04) apagou exatamente esses arquivos; a restauração preserva o desenho já validado — actions fixadas por SHA completo, toolchain pinado por `rustup`, gate agregado.
+
+O passo 34 (D-CI-1 e D-CI-3, PR #45 `438b212`) enxugou o conjunto: o umbrella **valida, não constrói**, e o release saiu junto com a árvore de app que ele empacotava. Restaram dois arquivos, e `check-delivery` reprova o retorno de qualquer um dos que saíram.
 
 | Arquivo | Trigger | Papel |
 |---|---|---|
-| `.github/workflows/ci.yml` | `pull_request` → `develop`; `push` em `develop`/`main`; `workflow_dispatch` | jobs `docs`, `tooling`, `core`, `android`, e o job agregado `gate` |
-| `.github/workflows/release.yml` | `push` em tag `v*` | preflight → installers → draft; **falha fechado** antes de publicar |
+| `.github/workflows/ci.yml` | `pull_request` → `develop`; `push` em `develop`/`main`; `workflow_dispatch` | jobs `specs`, `tasks`, `tooling` (matriz `ubuntu-22.04`, `macos-15-intel`, `macos-15`), `submodules`, `arch` e o job agregado `gate` |
 | `.github/workflows/quality.yml` | `workflow_dispatch` | qualidade em hardware; permanece desabilitado até existirem runners de hardware |
+
+**`release.yml` não mora mais aqui.** O umbrella não tem binário; um workflow de release neste repositório só existiria para falhar no próprio preflight. O release pertence ao app que publica, e `cargo xtask release` continua no `xtask` como a ferramenta que esse app vai chamar. O arquivo está em `_arquivo/workflows/release.yml`, fora da árvore que o CI lê.
 
 **"Só quando realmente necessário"** é honrado pela restrição de gatilho: push em branch de feature **não** dispara workflow — o PR já cobre a mudança. Não há cron, não há workflow de branch isolada.
 
 O contexto exigido continua se chamando **`CI Gate`**, agora publicado por um job do Actions em vez do servidor Woodpecker. `config/github.json` mantém `required_contexts: ["CI Gate"]` sem alteração, e `xtask ci gate` continua lendo `DOCS`/`CORE`/`HAS_CORE`/`ANDROID`/`HAS_ANDROID` do ambiente — os mesmos nomes que o workflow histórico exporta.
 
-**Fail-closed é regra, não preferência.** O job `gate` roda com `if: always()` e falha se qualquer dependência estiver `failure` ou `cancelled`. Release só dispara em tag e termina em falha explícita antes de qualquer artefato assinado — o comportamento que `release.yaml` do Woodpecker já tinha (`exit 1`), preservado.
+**Fail-closed é regra, não preferência.** O job `gate` roda com `if: always()` e falha se qualquer dependência estiver `failure`, `cancelled` ou `skipped`. O `release.yml` arquivado preserva a mesma regra: dispara só em tag `v*` e termina em `exit 1` antes de qualquer artefato assinado — o comportamento que `release.yaml` do Woodpecker já tinha.
 
 **macOS entra na matriz** (`macos-15-intel`, `macos-15`), removendo a limitação registrada na ADR-010. A documentação de CI não pode continuar declarando "macOS não verificado" depois desta ADR.
 
@@ -98,8 +101,8 @@ Duplicar a spec em dois repositórios criaria divergência silenciosa entre arqu
 - `.woodpecker/` e `infra/ci/` saem do repositório principal. Os pins de **toolchain** já tinham fonte fora delas — `rust-toolchain.toml` (canal `1.99.0`, componentes `rustfmt`/`clippy`) e `config/toolchains.json` —, e continuam intactos. O que sai junto com `infra/ci/woodpecker/versions.json` são os pins das **imagens do servidor Woodpecker**, de `plugin-git` e de `cloudflared`: são operacionais, só fazem sentido enquanto o Woodpecker local existir, e seguem recuperáveis no histórico Git se a desmontagem precisar deles.
 - O `CI Gate` passa a depender da disponibilidade do GitHub, não do notebook do mantenedor — ganho operacional, e perda da possibilidade de rodar CI offline.
 - A matriz de CI fica maior (macOS Intel e Apple Silicon entram), então o tempo de PR cresce; a restrição de gatilho compensa parte disso ao não rodar em push de branch isolada.
-- Abrir os repositórios expõe o **histórico de execuções e logs** do CI ao público. O scan de segredos em todo o histórico dos cinco repositórios existentes não encontrou token, PAT, chave AWS ou chave privada; `release.yml` referencia apenas **nomes** de secrets, nunca valores.
+- Abrir os repositórios expõe o **histórico de execuções e logs** do CI ao público. O scan de segredos em todo o histórico dos cinco repositórios existentes não encontrou token, PAT, chave AWS ou chave privada; o `release.yml` então na árvore referenciava apenas **nomes** de secrets, nunca valores.
 - A branch protection passa a ser exigível e obrigatória; `protection_status` em `config/github.json` deixa de ser `pending_plan`.
 - Os efeitos de vinil e válvula passam a ser código interno: sem versão pública própria, sem API externa, sem repositório. O custo de manutenção cai; a reutilização fora do app deixa de ser possível — o que é o desenho pretendido.
-- `release.yml` restaurado **não** habilita publicação de release: build/assinatura distribuída continua bloqueada e falha fechado, conforme AGENTS.md.
+- O `release.yml` restaurado **não** habilitou publicação de release, e agora nem está na árvore: build/assinatura distribuída continua bloqueada e falha fechado, conforme AGENTS.md. Quem publicar um app terá de trazer o workflow para o repo do app.
 - A ADR-010 permanece no repositório marcada como substituída; o histórico da decisão não é apagado.
