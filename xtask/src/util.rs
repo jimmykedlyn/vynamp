@@ -135,8 +135,17 @@ pub fn secret_call(
 pub fn git(root: &Path, args: &[&str]) -> Result<String> {
     capture(root, "git", args)
 }
+/// Lowercase hex of a byte slice.
+///
+/// sha2 0.11 returns its digest as a `hybrid_array::Array`, which no longer
+/// implements `LowerHex`: `format!("{:x}", …)` stopped compiling. Encoding the
+/// bytes here keeps callers on one spelling and keeps the digest format the
+/// same -- lowercase, no separators, one byte per two characters.
+pub fn hex(bytes: &[u8]) -> String {
+    bytes.iter().map(|b| format!("{b:02x}")).collect()
+}
 pub fn sha(path: &Path) -> Result<String> {
-    Ok(format!("{:x}", Sha256::digest(fs::read(path)?)))
+    Ok(hex(&Sha256::digest(fs::read(path)?)))
 }
 pub fn files(root: &Path) -> Result<Vec<PathBuf>> {
     let mut out = Vec::new();
@@ -398,6 +407,24 @@ mod tests {
             None
         );
         assert_eq!(find_program("sometool", Some(&path), "", false), None);
+    }
+    /// sha2 0.11 parou de implementar `LowerHex` no digest, e a troca de
+    /// `format!("{:x}", …)` por uma codificacao propria e' justamente onde o
+    /// formato pode escorregar. O digest de source e' comparado com o publicado
+    /// na evidencia de release: maiuscula, separador ou zero a esquerda perdido
+    /// quebrariam a comparacao sem quebrar nenhum build. O SHA-256 do arquivo
+    /// vazio e' constante conhecida, entao o teste fixa o formato inteiro.
+    #[test]
+    fn sha_is_the_lowercase_hex_sha256_of_the_file() {
+        let temp = tempfile::tempdir().unwrap();
+        let file = temp.path().join("empty.bin");
+        fs::write(&file, b"").unwrap();
+        assert_eq!(
+            sha(&file).unwrap(),
+            "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        );
+        assert_eq!(hex(&[0x00, 0x0f, 0xff]), "000fff");
+        assert_eq!(hex(&[]), "");
     }
     #[test]
     fn distribution_scan_excludes_synthetic_credentials() {
