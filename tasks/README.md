@@ -62,7 +62,7 @@ presentes no backlog de produto.
 | `TASK-E19-01` | Migrar o CI do repo principal para GitHub Actions | vynamp | in_progress |
 | `TASK-E19-02` | Higiene, governança e README bilíngue do repo principal | vynamp | in_progress |
 | `TASK-E19-04` | Re-apontar as specs de Restore e Converter e criar os repos próprios | vynamp | implemented |
-| `TASK-E19-05` | CI e README bilíngue nas libs Rust e no MVP de referência | vynamp | planned |
+| `TASK-E19-05` | CI e README bilíngue nas libs Rust e no MVP de referência | vynamp | implemented |
 | `TASK-E19-06` | Abrir os repositórios ao público e proteger as branches | vynamp | implemented |
 | `TASK-CI-01` | Reescrever delivery() e github_actions() para a árvore do umbrella | `vynamp` | implemented |
 | `TASK-CI-02` | Adicionar o job check-tasks ao CI do umbrella | `vynamp` | planned |
