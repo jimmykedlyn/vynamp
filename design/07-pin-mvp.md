@@ -27,6 +27,8 @@ Só fica fora o que é intrínseco ao navegador (motor DOM/CSS, a API Web Audio 
 
 Ferramenta de pin: no pin `0d9860b`, `tools/package.cjs` e o README de `vynamp-mvp-reference` ainda copiavam `out/` para `assets/reference/mvp/` e escreviam `SOURCE.json`. Isso foi removido em `vynamp-mvp-reference@741316f` (PR #1), que troca `package.cjs` por `tools/pin.cjs` (`npm run pin -- <commit>`): lê os blobs do commit e imprime os valores desta tabela. `mvp/` e `out/` não mudaram, então o pin do conteúdo continua `0d9860b`. Este repositório não aceita o pacote antigo.
 
+O fixo que este repositório carrega (gitlink do submódulo) avançou para `e689d90`, o merge do PR #3, que trouxe o CI do MVP: `serve` e `verify` encadeados num `windows-2022`, o host cuja família de fontes congelou `out/`. O commit de conteúdo não mudou — `mvp/` continua `f00f766…` e os dois tree ids são os mesmos —, porque o que mudou foram `tools/`, `.github/` e o README. É por isso que a tabela acima segue citando `0d9860b`: ela registra o pin do **conteúdo** da referência, e o gitlink registra a ferramenta que o extrai.
+
 A ferramenta roda num navegador real porque a fonte é web. Ela não entra no produto nem no build Rust.
 
 ## 3. Pacote de referência

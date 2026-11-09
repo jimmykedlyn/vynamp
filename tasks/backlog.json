@@ -5850,7 +5850,7 @@
       "title": "CI e README bilíngue nas libs Rust e no MVP de referência",
       "phase": "M1",
       "priority": "P1",
-      "status": "planned",
+      "status": "implemented",
       "owner_role": "engineering-delivery",
       "requirements": [
         "REQ-E19-05"
@@ -5861,7 +5861,7 @@
       "spec": "engineering/04-ci.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "GitHub Actions com gate CI Gate em vynamp-decode e vynamp-output, CI próprio em Node no vynamp-mvp-reference, e README bilíngue EN/PT nos três repos, com Woodpecker removido.",
       "acceptance": "Cada repo publica o contexto CI Gate e reprova falha ou cancelamento; o CI do MVP roda serve e verify encadeados; os READMEs são bilíngues; nenhum workflow referencia Woodpecker.",
       "qa": [

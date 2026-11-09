@@ -120,10 +120,30 @@ depois de 60 segundos.
 Localmente, três execuções completas de `npm run verify` compararam 499 arquivos
 com 0 divergência e saíram com 0.
 
-**Limitação registrada:** o resultado da execução de CI do head final
-(`89c0059`) está registrado na seção *Execuções* abaixo, preenchida quando o run
-termina. O AC-2 fala do encadeamento no workflow, e isso o arquivo mostra; o
-verde hospedado é a confirmação do mesmo fato medida no runner.
+A confirmação hospedada, run `42660165287` em `eb78028`:
+
+```
+$ gh api repos/jimmykedlyn/vynamp-mvp-reference/actions/runs/42660165287 \
+    --jq '.status+" "+.conclusion'
+completed success
+
+$ gh api repos/jimmykedlyn/vynamp-mvp-reference/actions/runs/42660165287/jobs \
+    --jq '.jobs[0].steps[]|select(.status!="pending")|"\(.number) \(.name): \(.conclusion)"'
+1 Set up job: success
+2 Run actions/checkout@...: success
+3 Run actions/setup-node@...: success
+4 Run npm ci: success
+5 Chrome: success
+6 Serve and verify, chained: success
+```
+
+Duas execuções anteriores do mesmo job foram canceladas **dentro do passo
+`Chrome`**, que não terminava: `chrome.exe` no Windows é binário de subsistema
+GUI, não escreve no console e não retorna, então `chrome.exe --version` deixou
+o run `42654628242` parado 30 minutos sem uma linha de saída. O passo passou a
+ler `VersionInfo.ProductVersion` com `pwsh` (`eb78028`), que prova a presença do
+navegador em um segundo. Sem esse conserto o AC-2 nunca teria como ficar verde —
+o job morria antes de rodar `serve` e `verify`.
 
 ## AC-3 — os READMEs são bilíngues
 
@@ -192,4 +212,5 @@ e exige a mensagem de erro.
 | `vynamp-decode` | `42654357542` | `cb3b477` | `success` |
 | `vynamp-output` | `42651593985` | `a667d1c` | `success` |
 | `vynamp-output` | `42654453366` | `5c910aa` | `success` |
-| `vynamp-mvp-reference` | `42654628242` | `89c0059` | ver a nota de limitação do AC-2 |
+| `vynamp-mvp-reference` | `42654628242` | `89c0059` | `cancelled` no passo `Chrome`, que não terminava |
+| `vynamp-mvp-reference` | `42660165287` | `eb78028` | `success`, os seis passos |
