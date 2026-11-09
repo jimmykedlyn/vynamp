@@ -4,6 +4,10 @@ Versão: 0.1.1 · Data: 2026-11-05 · Estado: especificação normativa; impleme
 
 Documento canônico da ferramenta desktop **Vynamp Restore** (`vynamp-restore`). Complementa [ADR-013](../../adr/ADR-013-restore.md) (decisão), [ADR-012](../../adr/ADR-012-integracao-shell.md) (integração com o shell e identidade), [ADR-011](../../adr/ADR-011-pilha-propria.md) (pilha de áudio própria) e [spec de plataforma](../../platforms/03-integracao-sistema.md) (contratos de CLI e registro). Matriz normativa de requisitos: [03-requirements](../../product/03-requisitos.md).
 
+> **Código-fonte:** [`jimmykedlyn/vynamp-restore`](https://github.com/jimmykedlyn/vynamp-restore).
+> Este documento continua sendo a fonte normativa; o repo do módulo guarda o código e o
+> esqueleto de `specs/`, não uma segunda cópia do texto normativo.
+
 ## 1. Escopo e fronteiras
 
 ### 1.1 O que é
@@ -19,7 +23,7 @@ Ferramenta desktop que **analisa** um arquivo de áudio, **identifica defeitos**
 | Upscaling de hi-res / aumento real de resolução | Extensão de banda é **síntese**, não recuperação; o resultado é rotulado como tal. A super-resolução por IA é fase futura, com o mesmo rótulo obrigatório ([ADR-015](../../adr/ADR-015-restauracao-ia.md)) |
 | Redução de ruído espectral (Wiener) | Módulo inerte no MVP; fora de escopo na 1.0 ([ADR-013](../../adr/ADR-013-restore.md#4-correção-das-incoerências-do-mvp)) |
 | Dublagem, corte de silêncio, normalização destrutiva | Ferramentas distintas, com tarefas próprias |
-| Editar tags de verdade | O Restore **preserva** metadados; a edição é do player ([TASK-E08-04](../../tasks/items/TASK-E08-04.md)) |
+| Editar tags de verdade | O Restore **preserva** metadados; a edição é do player ([TASK-E08-04](../../apps/player/tasks/items/TASK-E08-04.md)) |
 
 ### 1.3 Fronteira do aplicativo
 
@@ -45,7 +49,7 @@ vynamp-restore [opções] <caminhos...>
 
 **Comportamento com caminhos:** os arquivos entram na **fila de análise** na ordem recebida. Chamado pelo shell, o lote chega atômico ([ADR-012](../../adr/ADR-012-integracao-shell.md#3-preservação-de-lotes-batching-atômico)); o Restore não reordena nem descarta silenciosamente.
 
-**Instância única:** uma instância do app por usuário ([TASK-E16-02](../../tasks/items/TASK-E16-02.md)). Uma segunda chamada entrega os arquivos à janela aberta via IPC local autenticado, em vez de abrir outra janela.
+**Instância única:** uma instância do app por usuário ([TASK-E16-02](../../apps/player/tasks/items/TASK-E16-02.md)). Uma segunda chamada entrega os arquivos à janela aberta via IPC local autenticado, em vez de abrir outra janela.
 
 ## 2. Motor de restauração
 

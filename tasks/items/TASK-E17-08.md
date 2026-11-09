@@ -1,26 +1,65 @@
 # TASK-E17-08 — Medir teto no PCM final com oráculo independente
 
-Versão 0.7.0 · Estado: planejada, não implementada.
+> Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
+> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
+> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
+> não existem.
 
-## Contrato
+| Campo | Valor |
+|---|---|
+| ID | `TASK-E17-08` |
+| Módulo dono | `vynamp` |
+| Repo | `jimmykedlyn/vynamp` |
+| REQ coberto | `REQ-E17-08` |
+| Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
+| Fase | M3 |
+| Prioridade | P0 |
+| Estado | planned |
+| Depende de | `TASK-E17-07`, `TASK-E10-03` |
+| Bloqueia | `TASK-E17-20` |
+| Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
+| Esforço | 2–5 dias úteis |
+| Risco | alto |
 
-Requisito REQ-E17-08 · M3 · P0 · responsável funcional qa (pessoa a designar). Esforço provisório 2–5 dias úteis por contrato; reestimar e quebrar em slices de 1–3 dias antes execução. Risco alto; estimativa não é prazo.
-
-## Dependências
-
-- [TASK-E17-07](TASK-E17-07.md) — Fixar proteção true-peak depois do processamento
-- [TASK-E10-03](TASK-E10-03.md) — Criar harness numérico de áudio
-
-## Entrega concreta
+## Entrega
 
 Harness no buffer do backend, estimador referência e casos adversariais multichannel.
 
-[Spec canônica](../../reference/audio/07-dsp-signal-contract.md) · [Matriz normativa](../../product/03-requisitos.md).
+## Boundary
 
-## Aceite
+<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
 
-Crossfade/EQ/gain/resample/dither finais não excedem ceiling +0.1 dBTP; taxas/bit-depths/NaN e latência documentados.
+## Antes de começar
 
-## Verificação e evidência
+- [ ] Spec do módulo aprovada e o critério de aceite citado já existe nela
+- [ ] Worktree própria criada (`cargo xtask repo worktree task-e17-08-claude-<slug>`)
+- [ ] Fixtures/hardware necessários disponíveis ou limitação registrada
+- [ ] Nenhuma TASK em execução tocando os mesmos arquivos
 
-QA-027 em [QA](../../quality/01-estrategia-testes.md) e [cenários](../../_arquivo/repo/docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.
+## Critérios de aceite
+
+| ID | Given | When | Then |
+|---|---|---|---|
+| `TASK-E17-08-AC-1` | PENDENTE | PENDENTE | Crossfade/EQ/gain/resample/dither finais não excedem ceiling +0.1 dBTP |
+| `TASK-E17-08-AC-2` | PENDENTE | PENDENTE | taxas/bit-depths/NaN e latência documentados. |
+
+## Verificação
+
+| Item | Comando / fixture | Evidência esperada |
+|---|---|---|
+| Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
+| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+
+## DoD — pronto para review
+
+- [ ] Todos os critérios de aceite com evidência
+- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
+- [ ] `cargo test` verde; testes ignorados listados com motivo
+- [ ] Spec do módulo atualizada se a implementação revelou algo novo
+- [ ] `backlog.json` com o estado correto
+- [ ] Revisão feita por contexto limpo, não pelo implementador
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+## Notas de execução
+
+Preenchido durante a execução, não antes.

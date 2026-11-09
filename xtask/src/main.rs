@@ -73,6 +73,8 @@ enum Action {
     CheckDocs,
     #[command(name = "check-delivery")]
     CheckDelivery,
+    #[command(name = "check-tasks")]
+    CheckTasks,
     #[command(name = "guard-branch")]
     GuardBranch,
     #[command(name = "github-import")]
@@ -191,6 +193,7 @@ fn execute() -> Result<()> {
         Action::Install { agent } => agents::install(&root, agent.as_str()),
         Action::CheckDocs => validate::spec(&root),
         Action::CheckDelivery => validate::delivery(&root),
+        Action::CheckTasks => validate::tasks(&root),
         Action::GuardBranch => repo::guard(&root),
         Action::GithubImport { destination, push } => github::import(&root, &destination, push),
         Action::QualityGate => ci::quality(&root),

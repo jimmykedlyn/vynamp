@@ -2,7 +2,7 @@
 
 Versão: 0.1.1 · Data: 2026-11-05 · Estado: decisão do mantenedor; especificação normativa da ferramenta de restauração.
 
-Status: aceito pelo mantenedor em 2026-11-05. Complementa [ADR-012](ADR-012-integracao-shell.md) §3 e §5 (ferramentas auxiliares), [ADR-011](ADR-011-pilha-propria.md) (pilha de áudio própria) e [ADR-008](ADR-008-marca.md) (identidade). Orienta [TASK-E18-01](../tasks/items/TASK-E18-01.md).
+Status: aceito pelo mantenedor em 2026-11-05. Complementa [ADR-012](ADR-012-integracao-shell.md) §3 e §5 (ferramentas auxiliares), [ADR-011](ADR-011-pilha-propria.md) (pilha de áudio própria) e [ADR-008](ADR-008-marca.md) (identidade). Orienta [TASK-E18-01](../apps/restore/tasks/items/TASK-E18-01.md).
 
 ## Contexto
 
@@ -35,7 +35,7 @@ vynamp-restore [opções] <caminhos...>
 - Sem caminhos: abre vazio, aguardando arrastar ou o seletor de arquivos.
 - Com caminhos: os arquivos entram na fila de análise, na ordem recebida, preservando a ordem do lote atômico entregado pelo shell ([ADR-012](ADR-012-integracao-shell.md) §3).
 - Chamado a partir do menu de contexto (`vynamp-restore <paths...>`) ou do atalho de aplicação: mesmo contrato, mesmo comportamento.
-- **Uma instância por usuário** para o app, com IPC local autenticado, para que uma segunda chamada traga arquivos para a janela aberta em vez de abrir outra. O requisito de unicidade de owner por perfil já é normativo em [TASK-E16-02](../tasks/items/TASK-E16-02.md).
+- **Uma instância por usuário** para o app, com IPC local autenticado, para que uma segunda chamada traga arquivos para a janela aberta em vez de abrir outra. O requisito de unicidade de owner por perfil já é normativo em [TASK-E16-02](../apps/player/tasks/items/TASK-E16-02.md).
 
 Ver o contrato completo em [spec da ferramenta](../reference/tools/01-vynamp-restore.md).
 

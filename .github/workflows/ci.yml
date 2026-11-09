@@ -22,9 +22,16 @@ jobs:
     name: Specs
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+          # O passo 37 mudou 134 das 191 TASKs para o repositorio dono de cada uma
+          # (`01-arvore-final.md` secao 1). `check-docs` resolve o Markdown da task pelo
+          # campo `repo` do backlog, e o INDEX/los requisitos apontam para dentro dos
+          # submodulos: sem eles o job validaria uma arvore diferente da da estacao --
+          # exatamente a divergencia que `doc_files()` foi escrito para evitar. Os
+          # arquivos lidos aqui sao Markdown e JSON; nada e compilado.
+          submodules: recursive
       - name: Provision pinned Rust toolchain
         run: rustup show
       - run: cargo xtask check-docs
@@ -33,7 +40,7 @@ jobs:
     name: Tooling
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
       - name: Provision pinned Rust toolchain
@@ -46,17 +53,17 @@ jobs:
     name: Submodules fixados
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
       - name: Provision pinned Rust toolchain
         run: rustup show
-      - name: Submodule must be pinned to a tag, never to a branch
+      - name: Submodule must be pinned to a commit, never to a branch
         run: |
           set -eu
           git submodule status --recursive
           if git config --file .gitmodules --get-regexp '^submodule\..*\.branch$' > /dev/null 2>&1; then
-            echo 'Submodule tracking a branch is forbidden; pin to a tag.'
+            echo 'Submodule tracking a branch is forbidden; pin to a commit.'
             exit 1
           fi
 
@@ -64,7 +71,7 @@ jobs:
     name: Regras de arquitetura
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           # Sem isto o job le libs/*/Cargo.toml de diretorios vazios e falha
           # no primeiro run com "submodule ainda nao adicionado".
@@ -74,7 +81,11 @@ jobs:
         run: rustup show
       - name: Rule 3-4 dependency direction
         run: |
-          set -eu
+          # `pipefail` nao e detalhe: sem ele o status da pipeline e o do ultimo
+          # comando (`grep`), e `cargo tree` falhando -- manifest que nao carrega,
+          # workspace confuso -- leria como "nenhuma violacao encontrada". A
+          # regra passaria a declarar verificado o que nao conseguiu ler.
+          set -euo pipefail
           # vynamp-dsp NAO entra nesta lista: AGENTS.md 1.4 o define como
           # primitivas, nao dominio, e 01-arvore-final o permite opcional em
           # decode/encode/output. Lista-lo aqui contradiria a arvore aprovada.
@@ -102,15 +113,21 @@ jobs:
             done
             exit 1
           fi
+          # `cargo tree` roda fora do pipe, com o stderr visivel e o status checado
+          # pelo `set -e`. O `2>/dev/null` que havia aqui era o mesmo buraco do
+          # `pipefail`: um manifest que nao carrega virava arvore vazia, e arvore
+          # vazia nao tem dependencia proibida.
           for m in decode encode output; do
-            if cargo tree --manifest-path "libs/$m/Cargo.toml" --prefix none 2>/dev/null \
+            tree=$(cargo tree --manifest-path "libs/$m/Cargo.toml" --prefix none)
+            if printf '%s\n' "$tree" \
                  | grep -E '^vynamp-(engine|player|converter|restore)( |$)'; then
               echo "libs/$m depende de crate de dominio do projeto; viola AGENTS.md 1.2."
               exit 1
             fi
           done
           if [ -f libs/dsp/Cargo.toml ]; then
-            if cargo tree --manifest-path libs/dsp/Cargo.toml --prefix none 2>/dev/null \
+            tree=$(cargo tree --manifest-path libs/dsp/Cargo.toml --prefix none)
+            if printf '%s\n' "$tree" \
                  | grep -E '^vynamp-(engine|player|converter|restore|decode|encode|output)( |$)'; then
               echo 'libs/dsp depende de outra lib do projeto; viola AGENTS.md 1.4.'
               exit 1
@@ -125,10 +142,25 @@ jobs:
             cargo build --manifest-path "$d/Cargo.toml"
           done
 
+  tasks:
+    name: TASKs
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          # O backlog aponta a TASK para o repositorio dono, e a maioria mora nos
+          # submodulos: sem eles o gate leria a arvore do runner -- vazia de tasks --
+          # e aprovaria por ausencia.
+          submodules: recursive
+          persist-credentials: false
+      - name: Provision pinned Rust toolchain
+        run: rustup show
+      - run: cargo xtask check-tasks
+
   gate:
     name: CI Gate
     if: always()
-    needs: [specs, tooling, submodules, arch]
+    needs: [specs, tooling, submodules, arch, tasks]
     runs-on: ubuntu-22.04
     steps:
       - name: Aggregate
@@ -138,5 +170,6 @@ jobs:
           test "${{ needs.tooling.result }}" = success
           test "${{ needs.submodules.result }}" = success
           test "${{ needs.arch.result }}" = success
-          echo 'CI Gate passed: specs, tooling, submodules and architecture rules.'
+          test "${{ needs.tasks.result }}" = success
+          echo 'CI Gate passed: specs, tooling, submodules, architecture rules and tasks.'
           echo 'Hardware, signing and release acceptance remain separate gates.'

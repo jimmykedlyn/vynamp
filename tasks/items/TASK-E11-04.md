@@ -1,39 +1,66 @@
 # TASK-E11-04 — Completar CI e supply chain
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
-
-## Contrato da tarefa
+> Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
+> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
+> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
+> não existem.
 
 | Campo | Valor |
 |---|---|
-| ID / requisito | TASK-E11-04 / REQ-E11-04 |
-| Fase / prioridade | M1 / P1 |
-| Estado | Planejada; não implementada |
-| Responsável funcional | delivery — pessoa a designar |
-| Esforço provisório | 3–8 dias úteis; reestimar após M0 |
+| ID | `TASK-E11-04` |
+| Módulo dono | `vynamp` |
+| Repo | `jimmykedlyn/vynamp` |
+| REQ coberto | `REQ-E11-04` |
+| Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
+| Fase | M1 |
+| Prioridade | P1 |
+| Estado | planned |
+| Depende de | `TASK-E11-01`, `TASK-E11-03`, `TASK-E14-01`, `TASK-E15-04` |
+| Bloqueia | `TASK-E11-06`, `TASK-E11-07`, `TASK-E13-09`, `TASK-E15-06`, `TASK-E15-07`, `TASK-E15-08`, `TASK-E15-09` |
+| Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
+| Esforço | 3–8 dias úteis |
 | Risco | médio |
 
-## Dependências
-
-- [TASK-E11-01](TASK-E11-01.md) — Criar workspace e baseline de engenharia
-- [TASK-E11-03](TASK-E11-03.md) — Resolver licenças e inventário de dependências
-- [TASK-E14-01](TASK-E14-01.md) — Provar os cinco targets e features portáveis
-- [TASK-E15-04](TASK-E15-04.md) — Ativar workflows e CI Gate multiplataforma
-
-## Entrega concreta
+## Entrega
 
 CI Rust e hosts Windows x64/Linux x64/macOS x64+arm64/Android arm64, native dependencies, audits, SBOM e artifacts.
 
-Documento canônico: [spec](../../delivery/02-release-devops.md). [Matriz normativa](../../product/03-requisitos.md).
+## Boundary
+
+<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+
+## Antes de começar
+
+- [ ] Spec do módulo aprovada e o critério de aceite citado já existe nela
+- [ ] Worktree própria criada (`cargo xtask repo worktree task-e11-04-claude-<slug>`)
+- [ ] Fixtures/hardware necessários disponíveis ou limitação registrada
+- [ ] Nenhuma TASK em execução tocando os mesmos arquivos
 
 ## Critérios de aceite
 
-Todos os targets obrigatórios compilam e executam smoke apropriado; cross-build não substitui hardware; features/hashes/NDK/Gradle travados e secrets isolados.
+| ID | Given | When | Then |
+|---|---|---|---|
+| `TASK-E11-04-AC-1` | PENDENTE | PENDENTE | Todos os targets obrigatórios compilam e executam smoke apropriado |
+| `TASK-E11-04-AC-2` | PENDENTE | PENDENTE | cross-build não substitui hardware |
+| `TASK-E11-04-AC-3` | PENDENTE | PENDENTE | features/hashes/NDK/Gradle travados e secrets isolados. |
 
-## Verificação e evidência
+## Verificação
 
-QA-012, QA-015 em [QA comum](../../quality/01-estrategia-testes.md) e [matriz multiplataforma](../../quality/03-matriz-multiplataforma.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+| Item | Comando / fixture | Evidência esperada |
+|---|---|---|
+| Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
+| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
 
-## Execução e limites
+## DoD — pronto para review
 
-Confirmar ports/contratos e dependências; decompor itens grandes em slices de 1–3 dias; implementar sucesso e erro/cancelamento; executar os critérios apropriados; atualizar schema/docs/notices; aceitar somente com evidência e revisão. Preservar dados, budgets e acessibilidade. Stubs/botões desabilitados não contam. Esforço é estimativa, não data prometida. Atualizar backlog JSON e requisito junto de qualquer mudança.
+- [ ] Todos os critérios de aceite com evidência
+- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
+- [ ] `cargo test` verde; testes ignorados listados com motivo
+- [ ] Spec do módulo atualizada se a implementação revelou algo novo
+- [ ] `backlog.json` com o estado correto
+- [ ] Revisão feita por contexto limpo, não pelo implementador
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+## Notas de execução
+
+Preenchido durante a execução, não antes.

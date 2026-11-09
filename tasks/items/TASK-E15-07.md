@@ -1,28 +1,66 @@
 # TASK-E15-07 — Validar AppImage/DEB e dependências Linux
 
-Versão0.7.0 · Estado planejado; infraestrutura preparada não significa aplicação/ativação externa completa.
+> Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
+> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
+> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
+> não existem.
 
-Fase M3 / P0 · Owner engineering-delivery · Esforço inicial 3–10 dias úteis; reestimar.
+| Campo | Valor |
+|---|---|
+| ID | `TASK-E15-07` |
+| Módulo dono | `vynamp` |
+| Repo | `jimmykedlyn/vynamp` |
+| REQ coberto | `REQ-E15-07` |
+| Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
+| Fase | M3 |
+| Prioridade | P0 |
+| Estado | planned |
+| Depende de | `TASK-E12-01`, `TASK-E11-04` |
+| Bloqueia | `TASK-E15-10`, `TASK-E16-08` |
+| Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
+| Esforço | 3–10 dias úteis |
+| Risco | alto |
 
-## Dependências
-
-- [TASK-E12-01](TASK-E12-01.md) — Entregar Linux nativo e MPRIS na 1.0
-- [TASK-E11-04](TASK-E11-04.md) — Completar CI e supply chain
-
-## Entrega concreta
+## Entrega
 
 AppDir/DEB, tool hash, libs/notices e manifesto assinado.
 
-[Spec](../../_arquivo/repo/docs/engineering/06-installers.md) · REQ-E15-07 em [matriz](../../product/03-requisitos.md).
+## Boundary
+
+<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+
+## Antes de começar
+
+- [ ] Spec do módulo aprovada e o critério de aceite citado já existe nela
+- [ ] Worktree própria criada (`cargo xtask repo worktree task-e15-07-claude-<slug>`)
+- [ ] Fixtures/hardware necessários disponíveis ou limitação registrada
+- [ ] Nenhuma TASK em execução tocando os mesmos arquivos
 
 ## Critérios de aceite
 
-Rodar em distro baseline limpa sem libs ausentes; licenças/SBOM auditados; manifesto assinado e instalação/upgrade preservam dados.
+| ID | Given | When | Then |
+|---|---|---|---|
+| `TASK-E15-07-AC-1` | PENDENTE | PENDENTE | Rodar em distro baseline limpa sem libs ausentes |
+| `TASK-E15-07-AC-2` | PENDENTE | PENDENTE | licenças/SBOM auditados |
+| `TASK-E15-07-AC-3` | PENDENTE | PENDENTE | manifesto assinado e instalação/upgrade preservam dados. |
 
-## Evidência
+## Verificação
 
-QA-012, QA-018, QA-021; registrar commit/digest, comando, ambiente/OS/ABI, outputs e limitações. Instalação de plugin/repo privado/assinatura requer ambiente real; não substituir por mocks/documentos. Quebrar em slices pequenas antes execução, implementar sucesso/erro/cancelamento, revisar pelo outro agente e preservar resultados no PR/docs/evidence.
+| Item | Comando / fixture | Evidência esperada |
+|---|---|---|
+| Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
+| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
 
-## Identidade aprovada Vynamp C
+## DoD — pronto para review
 
-Exportar SVG C de paths sanitizado e PNGs hicolor nos tamanhos normativos; desktop Icon=vynamp, AppImage/DEB não devem incluir o antigo template Auralis. [Guia canônico](../../design/04-marca.md). Este requisito complementar não altera IDs/estado nem dispensa o contrato acima.
+- [ ] Todos os critérios de aceite com evidência
+- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
+- [ ] `cargo test` verde; testes ignorados listados com motivo
+- [ ] Spec do módulo atualizada se a implementação revelou algo novo
+- [ ] `backlog.json` com o estado correto
+- [ ] Revisão feita por contexto limpo, não pelo implementador
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+## Notas de execução
+
+Preenchido durante a execução, não antes.

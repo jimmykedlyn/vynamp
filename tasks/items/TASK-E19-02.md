@@ -1,31 +1,67 @@
 # TASK-E19-02 — Higiene, governança e README bilíngue do repo principal
 
-Versão 0.8.1 · Atualização 2026-11-05 · Estado: em execução; PR #33 em revisão, sem aceite antecipado — documento e governança não equivalem a release assinado.
+> Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
+> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
+> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
+> não existem.
 
-Fase M1 / P0 · Owner engineering-delivery · Esforço inicial 2–5 dias úteis; reestimar.
+| Campo | Valor |
+|---|---|
+| ID | `TASK-E19-02` |
+| Módulo dono | `vynamp` |
+| Repo | `jimmykedlyn/vynamp` |
+| REQ coberto | `REQ-E19-02` |
+| Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
+| Fase | M1 |
+| Prioridade | P0 |
+| Estado | in_progress |
+| Depende de | `TASK-E19-01` |
+| Bloqueia | `TASK-E19-06` |
+| Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
+| Esforço | 2–5 dias úteis |
+| Risco | médio |
 
-## Dependências
-
-- [TASK-E19-01](TASK-E19-01.md) — Migrar o CI do repo principal para GitHub Actions
-
-## Entrega concreta
+## Entrega
 
 LICENSE dual, LEGAL, CODE_OF_CONDUCT, GOVERNANCE, templates de issue, SECURITY.md com canal de advisory e README bilíngue EN/PT, com docs de CI e Gitflow reescritos para o repo público.
 
-O repo principal não tinha LICENSE alguma, enquanto as libs já têm `LICENSE-MIT` + `LICENSE-APACHE` + `LEGAL.md`. Abrir ao público sem licença e sem política de segurança torna o repositório inapto a uso externo. O canal de vulnerabilidade é **GitHub Security Advisories** (decisão do mantenedor em 2026-11-05): privado por padrão, visível só ao mantenedor e ao reportante, sem criar endereço de e-mail novo — o GitHub exibe o aviso "Report a vulnerability" no próprio repo. `SECURITY.md` e `CHANGELOG.md` ficam **bilíngues** junto com o README, para não haver dois regimes de idioma no mesmo repositório.
+## Boundary
 
-Escopo: `LICENSE` (MIT OR Apache-2.0), `LICENSE-MIT`, `LICENSE-APACHE`, `LEGAL.md`, `CODE_OF_CONDUCT.md`, `GOVERNANCE.md`, `.github/ISSUE_TEMPLATE/`, `SECURITY.md` (reescrito), `README.md` (EN+PT no mesmo arquivo); `engineering/03-gitflow.md` e `04-ci-cd.md` reescritos (removem "Tornar o repositório público não é alternativa aceita" e a nota "macOS não verificado"); `_arquivo/repo/docs/architecture/adr/ADR-010-woodpecker-only-ci.md` marcado como substituído, sem apagar o histórico; `AGENTS.md` e `repo/AGENTS.md` atualizados.
+<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
 
-Boundary: não altera assinatura, plano nem proteções; não cria identidade legal nova; não abre os repositórios — a abertura é TASK-E19-06.
+## Antes de começar
+
+- [ ] Spec do módulo aprovada e o critério de aceite citado já existe nela
+- [ ] Worktree própria criada (`cargo xtask repo worktree task-e19-02-claude-<slug>`)
+- [ ] Fixtures/hardware necessários disponíveis ou limitação registrada
+- [ ] Nenhuma TASK em execução tocando os mesmos arquivos
 
 ## Critérios de aceite
 
-README bilíngue EN/PT na raiz; SECURITY.md aponta para GitHub Security Advisories e não inventa contato; LICENSE dual presente; docs não afirmam capacidade ou alvo não verificado.
+| ID | Given | When | Then |
+|---|---|---|---|
+| `TASK-E19-02-AC-1` | a raiz do repositório | o `README.md` é aberto | README bilíngue EN/PT na raiz |
+| `TASK-E19-02-AC-2` | o `SECURITY.md` e o recurso de relato privado do repositório | os dois são comparados | SECURITY.md aponta para GitHub Security Advisories e não inventa contato |
+| `TASK-E19-02-AC-3` | a raiz do repositório | os arquivos de licença são lidos | LICENSE dual presente |
+| `TASK-E19-02-AC-4` | os documentos de governança e as specs | cada afirmação de capacidade ou de alvo é confrontada com a evidência | docs não afirmam capacidade ou alvo não verificado. |
 
-Detalhamento: `README.md` tem seção English e seção Português com o mesmo conteúdo essencial; `SECURITY.md` contém o link `https://github.com/jimmykedlyn/vynamp-mediaplayer/security/advisories/new` e nenhuma frase de "URL ou e-mail de segurança ainda não aprovado"; `LICENSE`, `LICENSE-MIT` e `LICENSE-APACHE` existem e a escolha MIT OR Apache-2.0 é declarada em `LEGAL.md`; `engineering/04-ci.md` descreve GitHub Actions e declara macOS Intel e Apple Silicon como alvos verificados, sem a linha "NOT VERIFIED"; `ADR-010` está marcado "Substituída pela ADR-014" e permanece no repositório.
+## Verificação
 
-[Spec](../../security/01-threat-model.md) · REQ-E19-02 em [matriz](../../product/03-requisitos.md).
+| Item | Comando / fixture | Evidência esperada |
+|---|---|---|
+| Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
+| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
 
-## Evidência
+## DoD — pronto para review
 
-QA-018, QA-030; registrar commit/digest, comando, ambiente/OS/ABI, outputs e limitações. Quebrar em slices pequenas antes execução, implementar sucesso/erro/cancelamento, revisar pelo outro agente e preservar resultados no PR/docs/evidence.
+- [ ] Todos os critérios de aceite com evidência
+- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
+- [ ] `cargo test` verde; testes ignorados listados com motivo
+- [ ] Spec do módulo atualizada se a implementação revelou algo novo
+- [ ] `backlog.json` com o estado correto
+- [ ] Revisão feita por contexto limpo, não pelo implementador
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+## Notas de execução
+
+Preenchido durante a execução, não antes.

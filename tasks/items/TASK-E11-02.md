@@ -1,36 +1,66 @@
 # TASK-E11-02 — Definir fronteiras de segurança
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
-
-## Contrato da tarefa
+> Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
+> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
+> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
+> não existem.
 
 | Campo | Valor |
 |---|---|
-| ID / requisito | TASK-E11-02 / REQ-E11-02 |
-| Fase / prioridade | M0 / P0 |
-| Estado | Planejada; não implementada |
-| Responsável funcional | delivery — pessoa a designar |
-| Esforço provisório | 2–5 dias úteis; reestimar após M0 |
+| ID | `TASK-E11-02` |
+| Módulo dono | `vynamp` |
+| Repo | `jimmykedlyn/vynamp` |
+| REQ coberto | `REQ-E11-02` |
+| Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
+| Fase | M0 |
+| Prioridade | P0 |
+| Estado | planned |
+| Depende de | `TASK-E11-01` |
+| Bloqueia | `TASK-E06-02`, `TASK-E07-05`, `TASK-E11-05` |
+| Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
+| Esforço | 2–5 dias úteis |
 | Risco | alto |
 
-## Dependências
-
-- [TASK-E11-01](TASK-E11-01.md) — Criar workspace e baseline de engenharia
-
-## Entrega concreta
+## Entrega
 
 Threat model aplicado, defaults de limites, regras de IPC/pacotes e prova de sandbox.
 
-Documento canônico: [spec](../../delivery/02-release-devops.md). [Matriz normativa](../../product/03-requisitos.md).
+## Boundary
+
+<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+
+## Antes de começar
+
+- [ ] Spec do módulo aprovada e o critério de aceite citado já existe nela
+- [ ] Worktree própria criada (`cargo xtask repo worktree task-e11-02-claude-<slug>`)
+- [ ] Fixtures/hardware necessários disponíveis ou limitação registrada
+- [ ] Nenhuma TASK em execução tocando os mesmos arquivos
 
 ## Critérios de aceite
 
-Cada entrada tem controle e teste mapeados; segredos protegidos; isolamento de helper documentado com evidência.
+| ID | Given | When | Then |
+|---|---|---|---|
+| `TASK-E11-02-AC-1` | PENDENTE | PENDENTE | Cada entrada tem controle e teste mapeados |
+| `TASK-E11-02-AC-2` | PENDENTE | PENDENTE | segredos protegidos |
+| `TASK-E11-02-AC-3` | PENDENTE | PENDENTE | isolamento de helper documentado com evidência. |
 
-## Verificação e evidência
+## Verificação
 
-QA-009 em [QA comum](../../quality/01-estrategia-testes.md) e [matriz multiplataforma](../../quality/03-matriz-multiplataforma.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+| Item | Comando / fixture | Evidência esperada |
+|---|---|---|
+| Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
+| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
 
-## Execução e limites
+## DoD — pronto para review
 
-Confirmar ports/contratos e dependências; decompor itens grandes em slices de 1–3 dias; implementar sucesso e erro/cancelamento; executar os critérios apropriados; atualizar schema/docs/notices; aceitar somente com evidência e revisão. Preservar dados, budgets e acessibilidade. Stubs/botões desabilitados não contam. Esforço é estimativa, não data prometida. Atualizar backlog JSON e requisito junto de qualquer mudança.
+- [ ] Todos os critérios de aceite com evidência
+- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
+- [ ] `cargo test` verde; testes ignorados listados com motivo
+- [ ] Spec do módulo atualizada se a implementação revelou algo novo
+- [ ] `backlog.json` com o estado correto
+- [ ] Revisão feita por contexto limpo, não pelo implementador
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+## Notas de execução
+
+Preenchido durante a execução, não antes.

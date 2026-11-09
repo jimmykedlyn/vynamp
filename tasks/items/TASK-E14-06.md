@@ -1,48 +1,66 @@
 # TASK-E14-06 — Fechar release 1.0 multiplataforma
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
-
-## Contrato da tarefa
+> Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
+> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
+> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
+> não existem.
 
 | Campo | Valor |
 |---|---|
-| ID / requisito | TASK-E14-06 / REQ-E14-06 |
-| Fase / prioridade | M3 / P0 |
-| Estado | Planejada; não implementada |
-| Responsável funcional | qa-platform — pessoa a designar |
-| Esforço provisório | 5–15 dias úteis; reestimar após M0 |
+| ID | `TASK-E14-06` |
+| Módulo dono | `vynamp` |
+| Repo | `jimmykedlyn/vynamp` |
+| REQ coberto | `REQ-E14-06` |
+| Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
+| Fase | M3 |
+| Prioridade | P0 |
+| Estado | planned |
+| Depende de | `TASK-E14-04`, `TASK-E14-05`, `TASK-E13-10`, `TASK-E10-08`, `TASK-E16-07`, `TASK-E16-08`, `TASK-E17-12`, `TASK-E17-20` |
+| Bloqueia | `TASK-E10-10` |
+| Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
+| Esforço | 5–15 dias úteis |
 | Risco | alto |
 
-## Dependências
-
-- [TASK-E14-04](TASK-E14-04.md) — Executar corpus e outputs por alvo
-- [TASK-E14-05](TASK-E14-05.md) — Validar packaging e update em cada alvo
-- [TASK-E13-10](TASK-E13-10.md) — Fechar aceite Android 1.0 em hardware
-- [TASK-E10-08](TASK-E10-08.md) — Executar soak e matriz de hardware
-
-- [TASK-E16-07](TASK-E16-07.md) — Certificar ativação e associações em cinco alvos
-- [TASK-E16-08](TASK-E16-08.md) — Validar portable, backup e limpeza de integração
-- [TASK-E17-12](TASK-E17-12.md) — Publicar manifest real de capacidades por artefato
-- [TASK-E17-20](TASK-E17-20.md) — Fechar gate combinado de codecs, DSP e visualizers
-
-## Entrega concreta
+## Entrega
 
 Matriz de evidência agregada para Windows/Linux/macOS Intel/macOS Silicon/Android.
 
-Documento canônico: [spec](../../quality/03-matriz-multiplataforma.md). [Matriz normativa](../../product/03-requisitos.md).
+## Boundary
+
+<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+
+## Antes de começar
+
+- [ ] Spec do módulo aprovada e o critério de aceite citado já existe nela
+- [ ] Worktree própria criada (`cargo xtask repo worktree task-e14-06-claude-<slug>`)
+- [ ] Fixtures/hardware necessários disponíveis ou limitação registrada
+- [ ] Nenhuma TASK em execução tocando os mesmos arquivos
 
 ## Critérios de aceite
 
-Todos os alvos M1–M3 aprovados com hardware e acessibilidade; alvo ausente bloqueia stable multiplataforma; zero bugs P0/P1 e exceções por capability explícitas.
+| ID | Given | When | Then |
+|---|---|---|---|
+| `TASK-E14-06-AC-1` | PENDENTE | PENDENTE | Todos os alvos M1–M3 aprovados com hardware e acessibilidade |
+| `TASK-E14-06-AC-2` | PENDENTE | PENDENTE | alvo ausente bloqueia stable multiplataforma |
+| `TASK-E14-06-AC-3` | PENDENTE | PENDENTE | zero bugs P0/P1 e exceções por capability explícitas. |
 
-## Verificação e evidência
+## Verificação
 
-QA-018, QA-019, QA-020, QA-021 em [QA comum](../../quality/01-estrategia-testes.md) e [matriz multiplataforma](../../quality/03-matriz-multiplataforma.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+| Item | Comando / fixture | Evidência esperada |
+|---|---|---|
+| Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
+| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
 
-## Execução e limites
+## DoD — pronto para review
 
-Confirmar ports/contratos e dependências; decompor itens grandes em slices de 1–3 dias; implementar sucesso e erro/cancelamento; executar os critérios apropriados; atualizar schema/docs/notices; aceitar somente com evidência e revisão. Preservar dados, budgets e acessibilidade. Stubs/botões desabilitados não contam. Esforço é estimativa, não data prometida. Atualizar backlog JSON e requisito junto de qualquer mudança.
+- [ ] Todos os critérios de aceite com evidência
+- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
+- [ ] `cargo test` verde; testes ignorados listados com motivo
+- [ ] Spec do módulo atualizada se a implementação revelou algo novo
+- [ ] `backlog.json` com o estado correto
+- [ ] Revisão feita por contexto limpo, não pelo implementador
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+## Notas de execução
 
-## Identidade aprovada Vynamp C
-
-Incluir QA da identidade Vynamp C nos cinco alvos: legibilidade em tamanhos pequenos, alpha/DPI/máscaras/temas, launchers/shortcuts/tray; report por hardware e hashes. [Guia canônico](../../design/04-marca.md). Este requisito complementar não altera IDs/estado nem dispensa o contrato acima.
+Preenchido durante a execução, não antes.

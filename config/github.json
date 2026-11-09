@@ -1,6 +1,6 @@
 {
-  "repository": "jimmykedlyn/vynamp-mediaplayer",
-  "url": "https://github.com/jimmykedlyn/vynamp-mediaplayer.git",
+  "repository": "jimmykedlyn/vynamp",
+  "url": "https://github.com/jimmykedlyn/vynamp.git",
   "expected_visibility": "public",
   "integration_branch": "develop",
   "stable_branch": "main",
@@ -8,9 +8,9 @@
     "CI Gate"
   ],
   "merge_method": "merge",
-  "review_count": 1,
+  "review_count": 0,
   "remote_verified": true,
-  "verified_at": "2026-10-18",
-  "protection_status": "pending_plan",
-  "reason": "TASK-E19-01 (ADR-014): o CI é publicado por GitHub Actions (.github/workflows/ci.yml, job `gate` = status `CI Gate`); os runners hospedados são gratuitos em repositório público. A abertura para público é TASK-E19-06 e, até ela, a branch protection continua indisponível (HTTP 403 no plano privado) — `protection_status` vira `applied` só depois de abrir e rodar `cargo xtask repo protect`."
+  "verified_at": "2026-11-08",
+  "protection_status": "applied",
+  "reason": "Passo 35: o umbrella passa a ser jimmykedlyn/vynamp, publico desde a criacao. D-GH-1 dizia privado e contradizia a ADR-014, que e a spec normativa e manda os repositorios nascerem publicos; o mantenedor confirmou a regra em 2026-11-08. `xtask/src/repo.rs` ja exigia `private == false`, entao este arquivo era a unica coisa fora da regra. `protection_status` virou `applied` depois de `cargo xtask repo protect --reviews 0` em 2026-11-08, aplicado nos 10 repositorios e conferido por `cargo xtask repo audit`. `review_count` e 0, nao 1: com uma unica conta, `--reviews 1` somado a `enforce_admins` impediria o proprio mantenedor de integrar, e `engineering/03-gitflow.md` manda usar 0 nesse caso."
 }

@@ -1,6 +1,6 @@
 # Changelog / Histórico
 
-Versão: 0.9.1 · Data: 2026-11-07 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.9.2 · Data: 2026-11-08 · Estado: especificação proposta, implementação não iniciada.
 
 Each entry appears in English and Portuguese. The two texts say the same thing;
 where they appear to differ, the Portuguese text of that entry is the original
@@ -206,7 +206,7 @@ Markdown; nenhum código, schema, backlog ou pipeline alterado.
 LYR-01..15 and LYR-AC-01..12, layout in
 [design/02-layouts.md](design/02-layouts.md), decisions D-LYR-01..09 in
 [product/05-decisions.md](product/05-decisoes.md) and the task criteria in
-[TASK-E03-09](tasks/items/TASK-E03-09.md). The prototype reference is external:
+[TASK-E03-09](apps/player/tasks/items/TASK-E03-09.md). The prototype reference is external:
 reported evidence of the external reference rev. 14, not verified in this
 repository; nothing native implemented. Markdown only; no code, schema, backlog
 or pipeline changed (TASK-E03-09 was updated in text only: deliverable,
@@ -217,7 +217,7 @@ dependencies and criteria).
 LYR-01..15 e LYR-AC-01..12, layout em
 [design/02-layouts.md](design/02-layouts.md), decisões D-LYR-01..09 em
 [product/05-decisions.md](product/05-decisoes.md) e critérios da tarefa em
-[TASK-E03-09](tasks/items/TASK-E03-09.md). A referência do protótipo é externa:
+[TASK-E03-09](apps/player/tasks/items/TASK-E03-09.md). A referência do protótipo é externa:
 evidência relatada da referência externa rev. 14, não verificada neste
 repositório; nada nativo implementado. Só Markdown; nenhum código, schema,
 backlog ou pipeline alterado (TASK-E03-09 foi atualizada apenas em texto:
@@ -452,9 +452,121 @@ Dez arquivos de `docs/superpowers/` saem do repositório: `plans/2026-10-14-comp
 
 ## Não lançado — 2026-11-05 (o vitrola é módulo DSP interno, não biblioteca)
 
-**EN** — The `vitrola` design (approved 2026-10-23) is no longer a library in its own repository: vinyl and tube are **DSP modules inside the app**, by the maintainer's decision, recorded in [ADR-014](adr/ADR-014-publico-dsp-interno.md). The approved design was preserved **by incorporation**, not by reimplementation: its nine sections are now §8.1–8.9 of [10-vitrola](reference/audio/10-vitrola.md), which became the single source — previously that document integrated an external design by reference and deferred to it. A literal copy of the original text is kept at `docs/evidence/PR/task-e19-03/vitrola-design.md`, because it is the only surviving copy once the repository is archived. The external repository is archived, reverts with `gh repo unarchive`, and is **not** opened to the public. Citations updated in the ADR-011 inventory row, the glossary, the DSP and signal-contract docs, the DSP catalog, the MVP reference, feature parity, privacy/licensing and the roadmap. Integration remains [TASK-E19-07](tasks/items/TASK-E19-07.md), after TASK-E04-03. Documentation only: no player code, 191 requirements, 191 tasks, 19 epics.
+**EN** — The `vitrola` design (approved 2026-10-23) is no longer a library in its own repository: vinyl and tube are **DSP modules inside the app**, by the maintainer's decision, recorded in [ADR-014](adr/ADR-014-publico-dsp-interno.md). The approved design was preserved **by incorporation**, not by reimplementation: its nine sections are now §8.1–8.9 of [10-vitrola](reference/audio/10-vitrola.md), which became the single source — previously that document integrated an external design by reference and deferred to it. A literal copy of the original text is kept at `docs/evidence/PR/task-e19-03/vitrola-design.md`, because it is the only surviving copy once the repository is archived. The external repository is archived, reverts with `gh repo unarchive`, and is **not** opened to the public. Citations updated in the ADR-011 inventory row, the glossary, the DSP and signal-contract docs, the DSP catalog, the MVP reference, feature parity, privacy/licensing and the roadmap. Integration remains [TASK-E19-07](libs/engine/tasks/items/TASK-E19-07.md), after TASK-E04-03. Documentation only: no player code, 191 requirements, 191 tasks, 19 epics.
 
-**PT** — O design do `vitrola` (aprovado em 2026-10-23) deixou de ser biblioteca em repositório próprio: vinil e válvula são **módulos DSP dentro do app**, por decisão do mantenedor registrada na [ADR-014](adr/ADR-014-publico-dsp-interno.md). O design aprovado foi preservado por **incorporação**, não por reimplementação: suas nove seções são agora §8.1–8.9 de [10-vitrola](reference/audio/10-vitrola.md), que passou a ser fonte única — antes esse documento integrava um design externo por referência e se subordinava a ele. Uma cópia literal do texto original fica em `docs/evidence/PR/task-e19-03/vitrola-design.md`, porque é a única cópia sobrevivente depois que o repositório for arquivado. O repositório externo é arquivado, reversível por `gh repo unarchive`, e **não** é aberto ao público. Citações atualizadas na linha de inventário da ADR-011, no glossário, nos docs de DSP e do contrato de sinal, no catálogo DSP, na referência do MVP, na paridade de recursos, em privacidade/licenças e no roadmap. A integração continua na [TASK-E19-07](tasks/items/TASK-E19-07.md), depois da TASK-E04-03. Somente documentação: nenhum código de player, 191 requisitos, 191 tarefas, 19 épicos.
+**PT** — O design do `vitrola` (aprovado em 2026-10-23) deixou de ser biblioteca em repositório próprio: vinil e válvula são **módulos DSP dentro do app**, por decisão do mantenedor registrada na [ADR-014](adr/ADR-014-publico-dsp-interno.md). O design aprovado foi preservado por **incorporação**, não por reimplementação: suas nove seções são agora §8.1–8.9 de [10-vitrola](reference/audio/10-vitrola.md), que passou a ser fonte única — antes esse documento integrava um design externo por referência e se subordinava a ele. Uma cópia literal do texto original fica em `docs/evidence/PR/task-e19-03/vitrola-design.md`, porque é a única cópia sobrevivente depois que o repositório for arquivado. O repositório externo é arquivado, reversível por `gh repo unarchive`, e **não** é aberto ao público. Citações atualizadas na linha de inventário da ADR-011, no glossário, nos docs de DSP e do contrato de sinal, no catálogo DSP, na referência do MVP, na paridade de recursos, em privacidade/licenças e no roadmap. A integração continua na [TASK-E19-07](libs/engine/tasks/items/TASK-E19-07.md), depois da TASK-E04-03. Somente documentação: nenhum código de player, 191 requisitos, 191 tarefas, 19 épicos.
+
+## Unreleased — 2026-11-09 (TASK-E19-04, TASK-CI-01 and TASK-CI-02: own repos, tasks gate) / Não lançado — 2026-11-09 (TASK-E19-04, TASK-CI-01 e TASK-CI-02: repos próprios, gate de TASKs)
+
+**EN** — Three tasks closed, and the interesting part of each is what was wrong
+before. `TASK-E19-04`: `02-vynamp-converter.md` still described `vynamp-encode` as a
+*private* repository, false since the repositories went public, and neither canonical
+tool spec cited a repository URL at all; both now do, read back from the REST API. The
+three module `specs/README.md` files opened with "Normative: the code follows the spec",
+which puts the module repository itself as the source — they now state that the
+normative text lives in the main repository and point at the canonical document, and
+each `specs/*.md` header repeats it. `vynamp-encode` has no canonical document of its
+own: its norm is §1 of the converter spec, and that is where its skeleton points
+rather than inventing a fourth document. `vynamp-fases` is not a repository
+(`GET` returns 404), so the reference to `01-arvore-final.md` is plain text, not a
+link. The three repositories now carry `LICENSE`, `LICENSE-MIT`, `LICENSE-APACHE`,
+`SECURITY.md` and `CONTRIBUTING.md` in addition to the bilingual READMEs, and
+`visibility=public` was read from the API rather than assumed. `TASK-CI-02`: a new
+`cargo xtask check-tasks` and a `tasks` job in `ci.yml`, required by the gate. It
+enforces six rules over the backlog and the TASK Markdown, and its `AC-4`/`AC-5`
+contradict each other as written — a red naming *exactly five* tasks and a green once
+those five are written cannot both hold at one commit, because six tasks were outside
+`planned` without written criteria. The rule applied is the one both describe: every
+task outside `planned` whose criteria are not written fails the gate. No exception was
+added between the red and the green; the seven tasks were authored instead, and
+`TASK-E19-06`'s `Then` column was left untouched even where it says "seven repos"
+where there are ten, because that column is the approved requirement. `TASK-CI-01`
+was already met except for `AC-4`: the unpinned-action error named the file *stem* and
+no line. It now reports `Unpinned action <ref> at ci.yml:<line> (<yaml path>)`, pairing
+each reference with its own line in document order — searching by the action text
+would give every repeated `uses:` the first one's line, which is the case the
+criterion exists for. `engineering/04-ci.md` described the four pre-step-34 jobs and
+an `apps/desktop` that does not exist; corrected to the five real jobs. Documentation,
+tooling and repository governance only: no player code, 191 requirements, 193 tasks,
+19 epics.
+
+**PT** — Três TASKs fechadas, e a parte interessante de cada uma é o que estava
+errado antes. `TASK-E19-04`: `02-vynamp-converter.md` ainda descrevia `vynamp-encode`
+como repositório *privado*, falso desde a abertura, e nenhuma das specs canônicas
+citava URL de repositório; ambas citam agora, lidas de volta da API REST. As três
+`specs/README.md` de módulo abriam com "Normativas: o código segue a spec", o que põe
+o repo de módulo como fonte — passam a declarar que o texto normativo vive no
+repositório principal e apontam o documento canônico, e o cabeçalho de cada
+`specs/*.md` repete isso. `vynamp-encode` não tem documento canônico próprio: sua
+norma é §1 da spec do converter, e é para lá que o esqueleto aponta em vez de inventar
+um quarto documento. `vynamp-fases` não é repositório (`GET` devolve 404), então a
+referência a `01-arvore-final.md` é texto, não link. Os três repositórios passam a ter
+`LICENSE`, `LICENSE-MIT`, `LICENSE-APACHE`, `SECURITY.md` e `CONTRIBUTING.md` além dos
+READMEs bilíngues, e `visibility=public` foi lido da API, não presumido. `TASK-CI-02`:
+novo `cargo xtask check-tasks` e job `tasks` no `ci.yml`, exigido pelo gate. Aplica
+seis regras sobre o backlog e o Markdown das TASKs, e seus `AC-4`/`AC-5` contradizem-se
+como escritos — um vermelho nomeando *exatamente cinco* TASKs e um verde quando essas
+cinco estiverem escritas não cabem no mesmo commit, porque seis estavam fora de
+`planned` sem critério escrito. A regra aplicada é a que os dois descrevem: toda TASK
+fora de `planned` sem critério escrito reprova. Nenhuma exceção foi introduzida entre
+o vermelho e o verde; as sete TASKs foram autoradas. A coluna `Then` da `TASK-E19-06`
+ficou intacta mesmo dizendo "sete repos" onde são dez, porque aquela coluna é o
+requisito aprovado. `TASK-CI-01` já estava atendida exceto no `AC-4`: o erro de ação
+sem SHA nomeava o *file stem* e nenhuma linha. Agora reporta `Unpinned action <ref> at
+ci.yml:<linha> (<caminho yaml>)`, casando cada referência com a sua própria linha na
+ordem do documento — buscar pelo texto da ação daria a todas as ocorrências repetidas
+de `uses:` a linha da primeira, que é justamente o caso que o critério existe para
+cobrir. `engineering/04-ci.md` descrevia os quatro jobs de antes do passo 34 e um
+`apps/desktop` que não existe; corrigido para os cinco jobs reais. Somente
+documentação, ferramental e governança de repositório: nenhum código de player, 191
+requisitos, 193 tarefas, 19 épicos.
+
+## Unreleased — 2026-11-08 (TASK-E19-06: repositórios públicos e branches protegidas) / Não lançado — 2026-11-08 (TASK-E19-06: repositórios públicos e branches protegidas)
+
+**EN** — TASK-E19-06 executed. The ten repositories are public with `main` and
+`develop` protected: `CI Gate` required in strict mode, required pull request with
+stale-review dismissal, conversation resolution, admins subject to the rules, and
+force push and deletion blocked. `cargo xtask repo protect --repo <owner/name>
+--reviews 0` applied it and `cargo xtask repo audit` reads it back with no pending
+item. `--reviews 0` is not a shortcut: with a single collaborator account and
+`enforce_admins=true`, `--reviews 1` would leave every pull request unmergeable,
+including the maintainer's. Three defects were found and fixed on the way: private
+vulnerability reporting was off in all nine public repositories, so `AC-1` was not
+met; `vynamp-output`'s description ended in "(private; opening later)", exactly what
+`AC-3` forbids, and was the only one of the ten filled in; and `SECURITY.md`,
+`CODE_OF_CONDUCT.md`, `CONTRIBUTING.md` and `README.md` told readers to open a
+public issue because the channel "goes live in TASK-E19-06" while pointing at
+`vynamp-mediaplayer`, now archived. The advisory URLs move to `jimmykedlyn/vynamp`.
+`vynamp-mvp-reference` is deliberately excluded from branch protection: it has no
+`develop` and no workflow, so requiring `CI Gate` there would block every pull
+request instead of guarding one; it stays public with reporting enabled. Two
+Woodpecker webhooks were deleted (decode, output) and `vynamp-mediaplayer` and
+`vitrola` were archived. Still open: the six module repositories without `LICENSE`
+are public, which is TASK-E19-04. Documentation and remote configuration only: no
+player code, 191 requirements, 191 tasks, 19 epics.
+
+**PT** — TASK-E19-06 executada. Os dez repositórios são públicos com `main` e
+`develop` protegidas: `CI Gate` exigido em modo strict, pull request obrigatório
+com dismiss de revisão obsoleta, conversações resolvidas, administradores sujeitos
+às regras, e force push e exclusão bloqueados. `cargo xtask repo protect --repo
+<owner/name> --reviews 0` aplicou, e `cargo xtask repo audit` lê de volta sem
+pendência. `--reviews 0` não é atalho: com uma única conta colaboradora e
+`enforce_admins=true`, `--reviews 1` deixaria todo pull request sem merge possível,
+inclusive o do mantenedor. Três defeitos foram encontrados e corrigidos no caminho:
+o relato privado de vulnerabilidade estava desligado nos nove repositórios
+públicos, então `AC-1` não estava atendido; a descrição de `vynamp-output` terminava
+em "(privada; abertura futura)", exatamente o que `AC-3` proíbe, e era a única das
+dez preenchida; e `SECURITY.md`, `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md` e
+`README.md` mandavam abrir issue pública porque o canal "entra no ar na
+TASK-E19-06", apontando para `vynamp-mediaplayer`, agora arquivado. As URLs de
+advisory passam para `jimmykedlyn/vynamp`. `vynamp-mvp-reference` fica de fora da
+proteção de propósito: não tem `develop` nem workflow, então exigir `CI Gate` ali
+bloquearia todo pull request em vez de guardar um; segue público com o relato
+habilitado. Dois webhooks do Woodpecker foram apagados (decode, output) e
+`vynamp-mediaplayer` e `vitrola` foram arquivados. Continua aberto: os seis
+repositórios de módulo sem `LICENSE` estão públicos, o que é a TASK-E19-04.
+Somente documentação e configuração remota: nenhum código de player, 191
+requisitos, 191 tarefas, 19 épicos.
 
 ## Unreleased — 2026-11-08 (step 33: agent definitions) / Não lançado — 2026-11-08 (passo 33: definições de agente)
 
@@ -566,7 +678,7 @@ counter also counts other tests' RT sections running in parallel — that is why
 render's), and concurrency tests must not depend on the scheduler. [04-outputs-hires](reference/audio/04-outputs-hires.md)
 records the measured order of magnitude as an expectation reference, not a
 target. The two raw probe JSONs, their SHA-256, the environment and the
-50-run loop of the clock test go to `docs/evidence/PR/task-e01-02/`, and [TASK-E01-02](tasks/items/TASK-E01-02.md)
+50-run loop of the clock test go to `docs/evidence/PR/task-e01-02/`, and [TASK-E01-02](libs/output/tasks/items/TASK-E01-02.md)
 now states each acceptance criterion with what was measured and what is still
 missing. The same section of [01-engine.md](reference/audio/01-engine.md) also
 registers the clock's **known limitation** — queued underrun or drain silence
@@ -598,7 +710,7 @@ render), e teste de concorrência não pode depender do escalonador.
 [04-outputs-hires](reference/audio/04-outputs-hires.md) registra a ordem de grandeza
 medida como referência de expectativa, não como meta. Os dois JSON do probe, o
 SHA-256 deles, o ambiente e a repetição de 50 execuções do teste de clock vão
-para `docs/evidence/PR/task-e01-02/`, e a [TASK-E01-02](tasks/items/TASK-E01-02.md)
+para `docs/evidence/PR/task-e01-02/`, e a [TASK-E01-02](libs/output/tasks/items/TASK-E01-02.md)
 passa a declarar cada critério de aceite com o que foi medido e o que falta. A
 mesma seção de [01-engine.md](reference/audio/01-engine.md) registra também a
 **limitação conhecida** do clock — silêncio de underrun ou de drenagem

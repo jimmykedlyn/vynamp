@@ -1,27 +1,66 @@
 # TASK-E17-12 — Publicar manifest real de capacidades por artefato
 
-Versão 0.7.0 · Estado: planejada, não implementada.
+> Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
+> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
+> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
+> não existem.
 
-## Contrato
+| Campo | Valor |
+|---|---|
+| ID | `TASK-E17-12` |
+| Módulo dono | `vynamp` |
+| Repo | `jimmykedlyn/vynamp` |
+| REQ coberto | `REQ-E17-12` |
+| Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
+| Fase | M3 |
+| Prioridade | P0 |
+| Estado | planned |
+| Depende de | `TASK-E17-01`, `TASK-E16-09`, `TASK-E15-04` |
+| Bloqueia | `TASK-E14-06`, `TASK-E17-20` |
+| Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
+| Esforço | 2–5 dias úteis |
+| Risco | alto |
 
-Requisito REQ-E17-12 · M3 · P0 · responsável funcional delivery (pessoa a designar). Esforço provisório 2–5 dias úteis por contrato; reestimar e quebrar em slices de 1–3 dias antes execução. Risco alto; estimativa não é prazo.
-
-## Dependências
-
-- [TASK-E17-01](TASK-E17-01.md) — Fixar catálogo por binding, capacidades e corpus
-- [TASK-E16-09](TASK-E16-09.md) — Gerar declarações OS a partir do build verificado
-- [TASK-E15-04](TASK-E15-04.md) — Ativar workflows e CI Gate multiplataforma
-
-## Entrega concreta
+## Entrega
 
 Manifest gerado com backend/features/licenças/hashes/evidência e validação do pacote.
 
-[Spec canônica](../../delivery/04-gates.md) · [Matriz normativa](../../product/03-requisitos.md).
+## Boundary
 
-## Aceite
+<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
 
-Catálogo planned não é disponibilidade; required comum comprovado nos cinco alvos; adapter ausente não gera associação nem encode.
+## Antes de começar
 
-## Verificação e evidência
+- [ ] Spec do módulo aprovada e o critério de aceite citado já existe nela
+- [ ] Worktree própria criada (`cargo xtask repo worktree task-e17-12-claude-<slug>`)
+- [ ] Fixtures/hardware necessários disponíveis ou limitação registrada
+- [ ] Nenhuma TASK em execução tocando os mesmos arquivos
 
-QA-030 em [QA](../../quality/01-estrategia-testes.md) e [cenários](../../_arquivo/repo/docs/quality/04-integration-codecs-dsp.md). Registrar commit, comando, fixtures/hashes/licenças, OS/ABI/hardware, esperado/observado e limitações. Documento/schema não aprova app. Aplicar Superpowers, owner/worktree exclusivos, TDD de comportamento e revisão do outro agente. Atualizar JSON/MD/REQ e capabilities juntos; somente aceitar com evidência.
+## Critérios de aceite
+
+| ID | Given | When | Then |
+|---|---|---|---|
+| `TASK-E17-12-AC-1` | PENDENTE | PENDENTE | Catálogo planned não é disponibilidade |
+| `TASK-E17-12-AC-2` | PENDENTE | PENDENTE | required comum comprovado nos cinco alvos |
+| `TASK-E17-12-AC-3` | PENDENTE | PENDENTE | adapter ausente não gera associação nem encode. |
+
+## Verificação
+
+| Item | Comando / fixture | Evidência esperada |
+|---|---|---|
+| Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
+| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+
+## DoD — pronto para review
+
+- [ ] Todos os critérios de aceite com evidência
+- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
+- [ ] `cargo test` verde; testes ignorados listados com motivo
+- [ ] Spec do módulo atualizada se a implementação revelou algo novo
+- [ ] `backlog.json` com o estado correto
+- [ ] Revisão feita por contexto limpo, não pelo implementador
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+## Notas de execução
+
+Preenchido durante a execução, não antes.

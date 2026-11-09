@@ -1,38 +1,68 @@
 # TASK-E11-09 — Preparar stable 1.0 e rollout beta
 
-Versão: 0.7.0 · Data: 2026-10-14 · Estado: especificação proposta, implementação não iniciada.
-
-## Contrato da tarefa
+> Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
+> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
+> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
+> não existem.
 
 | Campo | Valor |
 |---|---|
-| ID / requisito | TASK-E11-09 / REQ-E11-09 |
-| Fase / prioridade | M3 / P1 |
-| Estado | Planejada; não implementada |
-| Responsável funcional | delivery — pessoa a designar |
-| Esforço provisório | 5–15 dias úteis; reestimar após M0 |
+| ID | `TASK-E11-09` |
+| Módulo dono | `vynamp` |
+| Repo | `jimmykedlyn/vynamp` |
+| REQ coberto | `REQ-E11-09` |
+| Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
+| Fase | M3 |
+| Prioridade | P1 |
+| Estado | planned |
+| Depende de | `TASK-E11-08`, `TASK-E10-10`, `TASK-E15-10` |
+| Bloqueia | `TASK-E09-01` |
+| Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
+| Esforço | 5–15 dias úteis |
 | Risco | médio |
 
-## Dependências
-
-- [TASK-E11-08](TASK-E11-08.md) — Preparar documentação de lançamento
-- [TASK-E10-10](TASK-E10-10.md) — Fechar gates e cobertura desktop
-- [TASK-E15-10](TASK-E15-10.md) — Fechar release assinado e draft privado
-
-## Entrega concreta
+## Entrega
 
 Release candidate, artifacts assinados, relatório de evidência e plano canary.
 
-Documento canônico: [spec](../../delivery/02-release-devops.md). [Matriz normativa](../../product/03-requisitos.md).
+## Boundary
+
+<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+
+## Antes de começar
+
+- [ ] Spec do módulo aprovada e o critério de aceite citado já existe nela
+- [ ] Worktree própria criada (`cargo xtask repo worktree task-e11-09-claude-<slug>`)
+- [ ] Fixtures/hardware necessários disponíveis ou limitação registrada
+- [ ] Nenhuma TASK em execução tocando os mesmos arquivos
 
 ## Critérios de aceite
 
-Gates M3 passam; problemas conhecidos visíveis; checksums/assinaturas conferidos; zero P0/P1; feedback beta tratado.
+| ID | Given | When | Then |
+|---|---|---|---|
+| `TASK-E11-09-AC-1` | PENDENTE | PENDENTE | Gates M3 passam |
+| `TASK-E11-09-AC-2` | PENDENTE | PENDENTE | problemas conhecidos visíveis |
+| `TASK-E11-09-AC-3` | PENDENTE | PENDENTE | checksums/assinaturas conferidos |
+| `TASK-E11-09-AC-4` | PENDENTE | PENDENTE | zero P0/P1 |
+| `TASK-E11-09-AC-5` | PENDENTE | PENDENTE | feedback beta tratado. |
 
-## Verificação e evidência
+## Verificação
 
-QA-012 em [QA comum](../../quality/01-estrategia-testes.md) e [matriz multiplataforma](../../quality/03-matriz-multiplataforma.md). Registrar commit, comando, hardware/ABI/OS e hashes de fixtures. Ausência de hardware é limitação, não resultado aprovado; emulator/cross-build não substitui Mac Intel/Silicon ou Android físico.
+| Item | Comando / fixture | Evidência esperada |
+|---|---|---|
+| Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
+| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
+| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
 
-## Execução e limites
+## DoD — pronto para review
 
-Confirmar ports/contratos e dependências; decompor itens grandes em slices de 1–3 dias; implementar sucesso e erro/cancelamento; executar os critérios apropriados; atualizar schema/docs/notices; aceitar somente com evidência e revisão. Preservar dados, budgets e acessibilidade. Stubs/botões desabilitados não contam. Esforço é estimativa, não data prometida. Atualizar backlog JSON e requisito junto de qualquer mudança.
+- [ ] Todos os critérios de aceite com evidência
+- [ ] `cargo fmt --check` e `cargo clippy --all-targets -- -D warnings` limpos
+- [ ] `cargo test` verde; testes ignorados listados com motivo
+- [ ] Spec do módulo atualizada se a implementação revelou algo novo
+- [ ] `backlog.json` com o estado correto
+- [ ] Revisão feita por contexto limpo, não pelo implementador
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+## Notas de execução
+
+Preenchido durante a execução, não antes.

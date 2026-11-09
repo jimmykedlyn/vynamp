@@ -8,7 +8,7 @@ Branch `chore/claude-dsp-eq-docs`, três commits (dd22d48 DSP v1.3, abf7274 DSP 
 
 - **(a) DSP v1.3** — entrada de 2026-10-25 em [CHANGELOG](../../../CHANGELOG.md).
 - **(b) DSP v1.4** — DSP-UX-01..21, DSP-UX-AC-01..12, VU-INT-01..06, grafo modular e decisões D-DSP-11..18 ([product/05](../../../product/05-decisoes.md)).
-- **(c) Letras** — LYR-01..15, LYR-AC-01..12, D-LYR-01..09, seção [library/02](../../../library/02-tags-letras.md#letras-componente-resumido-sob-o-vu-e-fontes) e [TASK-E03-09](../../../tasks/items/TASK-E03-09.md).
+- **(c) Letras** — LYR-01..15, LYR-AC-01..12, D-LYR-01..09, seção [library/02](../../../library/02-tags-letras.md#letras-componente-resumido-sob-o-vu-e-fontes) e [TASK-E03-09](../../../apps/player/tasks/items/TASK-E03-09.md).
 
 Fora do git, na raiz do projeto: SKIN-REQUIREMENTS-GPT-MVP 1.3 e CODEX 1.2.
 
