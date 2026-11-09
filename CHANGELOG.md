@@ -1,6 +1,6 @@
 # Changelog / Histórico
 
-Versão: 0.9.2 · Data: 2026-11-08 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.9.3 · Data: 2026-11-09 · Estado: especificação proposta, implementação não iniciada.
 
 Each entry appears in English and Portuguese. The two texts say the same thing;
 where they appear to differ, the Portuguese text of that entry is the original
@@ -455,6 +455,42 @@ Dez arquivos de `docs/superpowers/` saem do repositório: `plans/2026-10-14-comp
 **EN** — The `vitrola` design (approved 2026-10-23) is no longer a library in its own repository: vinyl and tube are **DSP modules inside the app**, by the maintainer's decision, recorded in [ADR-014](adr/ADR-014-publico-dsp-interno.md). The approved design was preserved **by incorporation**, not by reimplementation: its nine sections are now §8.1–8.9 of [10-vitrola](reference/audio/10-vitrola.md), which became the single source — previously that document integrated an external design by reference and deferred to it. A literal copy of the original text is kept at `docs/evidence/PR/task-e19-03/vitrola-design.md`, because it is the only surviving copy once the repository is archived. The external repository is archived, reverts with `gh repo unarchive`, and is **not** opened to the public. Citations updated in the ADR-011 inventory row, the glossary, the DSP and signal-contract docs, the DSP catalog, the MVP reference, feature parity, privacy/licensing and the roadmap. Integration remains [TASK-E19-07](libs/engine/tasks/items/TASK-E19-07.md), after TASK-E04-03. Documentation only: no player code, 191 requirements, 191 tasks, 19 epics.
 
 **PT** — O design do `vitrola` (aprovado em 2026-10-23) deixou de ser biblioteca em repositório próprio: vinil e válvula são **módulos DSP dentro do app**, por decisão do mantenedor registrada na [ADR-014](adr/ADR-014-publico-dsp-interno.md). O design aprovado foi preservado por **incorporação**, não por reimplementação: suas nove seções são agora §8.1–8.9 de [10-vitrola](reference/audio/10-vitrola.md), que passou a ser fonte única — antes esse documento integrava um design externo por referência e se subordinava a ele. Uma cópia literal do texto original fica em `docs/evidence/PR/task-e19-03/vitrola-design.md`, porque é a única cópia sobrevivente depois que o repositório for arquivado. O repositório externo é arquivado, reversível por `gh repo unarchive`, e **não** é aberto ao público. Citações atualizadas na linha de inventário da ADR-011, no glossário, nos docs de DSP e do contrato de sinal, no catálogo DSP, na referência do MVP, na paridade de recursos, em privacidade/licenças e no roadmap. A integração continua na [TASK-E19-07](libs/engine/tasks/items/TASK-E19-07.md), depois da TASK-E04-03. Somente documentação: nenhum código de player, 191 requisitos, 191 tarefas, 19 épicos.
+
+## Unreleased — 2026-11-09 (dependencies: six Dependabot PRs, two of them broken) / Não lançado — 2026-11-09 (dependências: seis PRs do Dependabot, dois deles quebrados)
+
+**EN** — Six Dependabot PRs were open and four were safe. The other two did not
+compile, and neither did their descriptions say so: `sha2` 0.11 stopped implementing
+`LowerHex` on the digest — `format!("{:x}", …)` fails with `E0277` in `util::sha` and
+`release::source_digest` — and `quick-xml` 0.42 changed `QName::as_ref` to return
+`&str`, breaking two `from_utf8` calls in the icon gate, and deprecated
+`unescape_value` in favour of `normalized_value(XmlVersion)`. Both bumps were redone
+in one PR (`#16`) with the API work: a `util::hex` that encodes the digest bytes, and
+a `normalized_value` read. Both fixes carry tests, because both could regress
+silently — the source digest is compared against the one recorded in the release
+evidence, so a different hex spelling (uppercase, separators, a dropped leading zero)
+would break the comparison without breaking any build; and the SVG gate depends on
+reading the *unescaped* attribute, so a `fill="&#117;rl(#x)"` would be the same
+external reference as a literal `url(#x)` and would pass. The SVG test was verified
+red with a raw-value read before the fix. `vynamp-decode` and `vynamp-output` also
+had their README `Status` line corrected from "private repository" to "public
+repository", false since the repositories were opened.
+
+**PT** — Seis PRs do Dependabot estavam abertos e quatro eram seguros. Os outros dois
+não compilavam, e nem a descrição deles dizia isso: `sha2` 0.11 deixou de implementar
+`LowerHex` no digest — `format!("{:x}", …)` falha com `E0277` em `util::sha` e
+`release::source_digest` — e `quick-xml` 0.42 mudou `QName::as_ref` para devolver
+`&str`, quebrando dois `from_utf8` no gate de ícone, e depreciou `unescape_value` em
+favor de `normalized_value(XmlVersion)`. Os dois bumps foram refeitos num PR só
+(`#16`) com o trabalho de API: um `util::hex` que codifica os bytes do digest, e uma
+leitura por `normalized_value`. Os dois consertos têm teste, porque os dois
+regrediriam calados — o digest de source é comparado com o gravado na evidência de
+release, então outra grafia de hex (maiúscula, separador, zero à esquerda perdido)
+quebraria a comparação sem quebrar build nenhum; e o gate de SVG depende de ler o
+atributo **desescapado**, então um `fill="&#117;rl(#x)"` seria a mesma referência
+externa que um `url(#x)` literal e passaria. O teste de SVG foi verificado vermelho
+com a leitura crua antes do conserto. `vynamp-decode` e `vynamp-output` também
+tiveram a linha `Status` do README corrigida de "private repository" para "public
+repository", falsa desde que os repositórios foram abertos.
 
 ## Unreleased — 2026-11-09 (TASK-E19-04, TASK-CI-01 and TASK-CI-02: own repos, tasks gate) / Não lançado — 2026-11-09 (TASK-E19-04, TASK-CI-01 e TASK-CI-02: repos próprios, gate de TASKs)
 
