@@ -40,10 +40,10 @@ CI docs/tooling e matriz Cargo/Android, required aggregate context.
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E15-04-AC-1` | PENDENTE | PENDENTE | Jobs ativos não mascaram falha |
-| `TASK-E15-04-AC-2` | PENDENTE | PENDENTE | pins/actions/read permissions |
-| `TASK-E15-04-AC-3` | PENDENTE | PENDENTE | skips sem fontes não aprovam player |
-| `TASK-E15-04-AC-4` | PENDENTE | PENDENTE | cinco alvos cobertos. |
+| `TASK-E15-04-AC-1` | um job que falha e o agregado CI Gate que depende dele | a matriz roda até o fim | Jobs ativos não mascaram falha |
+| `TASK-E15-04-AC-2` | todos os workflows no estado do commit | as actions, os pins por SHA e as permissões de token são conferidos | pins/actions/read permissions |
+| `TASK-E15-04-AC-3` | um job do player que pula por falta de hardware ou de fonte | o agregado publica o estado final | skips sem fontes não aprovam player |
+| `TASK-E15-04-AC-4` | a matriz de alvos obrigatórios da spec de plataformas | os workflows são confrontados com a matriz | cinco alvos cobertos. |
 
 ## Verificação
 

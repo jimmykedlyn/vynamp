@@ -40,9 +40,9 @@ Threat model aplicado, defaults de limites, regras de IPC/pacotes e prova de san
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E11-02-AC-1` | PENDENTE | PENDENTE | Cada entrada tem controle e teste mapeados |
-| `TASK-E11-02-AC-2` | PENDENTE | PENDENTE | segredos protegidos |
-| `TASK-E11-02-AC-3` | PENDENTE | PENDENTE | isolamento de helper documentado com evidência. |
+| `TASK-E11-02-AC-1` | o threat model com cada entrada de ameaça catalogada | cada entrada é confrontada com o controle e o teste que a cobre | Cada entrada tem controle e teste mapeados |
+| `TASK-E11-02-AC-2` | o repositório e o CI no estado do commit | a varredura de segredos e a política de permissões de token rodam | segredos protegidos |
+| `TASK-E11-02-AC-3` | o helper de privilégio e o host que o invoca | a prova de sandbox roda e o resultado é anexado à documentação do isolamento | isolamento de helper documentado com evidência. |
 
 ## Verificação
 

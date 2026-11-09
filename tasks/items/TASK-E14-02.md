@@ -40,10 +40,10 @@ Traits/adapters para Path/FD/Content URI, clocks/media controls/config/keychain 
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E14-02-AC-1` | PENDENTE | PENDENTE | Domain não depende de Win32 |
-| `TASK-E14-02-AC-2` | PENDENTE | PENDENTE | grants/focus encapsulados |
-| `TASK-E14-02-AC-3` | PENDENTE | PENDENTE | nenhum fallback plaintext |
-| `TASK-E14-02-AC-4` | PENDENTE | PENDENTE | callback não chama UI ou operação bloqueante de OS. A slice M1 abre arquivo e executa play/pause/seek/stop nativamente em Windows, Linux, Mac Intel, Mac Silicon e Android. |
+| `TASK-E14-02-AC-1` | o crate de domínio e a árvore de dependências do workspace | a árvore é inspecionada à procura de windows, winapi ou chamada direta de plataforma | Domain não depende de Win32 |
+| `TASK-E14-02-AC-2` | os adapters de permissão de arquivo, de foco de áudio e de credenciais | o domínio pede acesso por trait e o teste confere que nenhum tipo de plataforma atravessa a fronteira | grants/focus encapsulados |
+| `TASK-E14-02-AC-3` | o caminho de credenciais com o keychain indisponível | o adapter falha ao obter o segredo | nenhum fallback plaintext |
+| `TASK-E14-02-AC-4` | o engine na slice M1 com os adapters de cada host ligados | a mesma reprodução, com abrir, play, pause, seek e stop, roda nos cinco targets | callback não chama UI ou operação bloqueante de OS. A slice M1 abre arquivo e executa play/pause/seek/stop nativamente em Windows, Linux, Mac Intel, Mac Silicon e Android. |
 
 ## Verificação
 

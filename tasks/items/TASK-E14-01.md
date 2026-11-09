@@ -40,9 +40,9 @@ Matriz de toolchains/ABIs Windows/Linux/macOS Intel/macOS Silicon/Android e depe
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E14-01-AC-1` | PENDENTE | PENDENTE | Core e codecs nativos resolvem em cada ABI |
-| `TASK-E14-01-AC-2` | PENDENTE | PENDENTE | outputs/files/keychain provados |
-| `TASK-E14-01-AC-3` | PENDENTE | PENDENTE | baselines e licenças suportam todos os alvos antes freeze. |
+| `TASK-E14-01-AC-1` | a matriz de toolchains e ABIs de Windows, Linux, macOS Intel, macOS Silicon e Android | cada ABI é compilada com os codecs nativos e o artefato resultante é inspecionado | Core e codecs nativos resolvem em cada ABI |
+| `TASK-E14-01-AC-2` | os adapters de output, de arquivos e de credenciais de cada host | o smoke de cada adapter roda no target correspondente | outputs/files/keychain provados |
+| `TASK-E14-01-AC-3` | as baselines de cada target e o inventário de licenças de E11-03 | o freeze é avaliado target a target | baselines e licenças suportam todos os alvos antes freeze. |
 
 ## Verificação
 

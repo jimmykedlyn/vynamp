@@ -40,8 +40,8 @@ Suite de state machine, comandos aleatórios, ordering e queue invariants.
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E10-02-AC-1` | PENDENTE | PENDENTE | Sequências aleatórias preservam generation e invariantes |
-| `TASK-E10-02-AC-2` | PENDENTE | PENDENTE | shuffle/history/repeat/stop-after são exercitados. |
+| `TASK-E10-02-AC-1` | um gerador de comandos aleatórios sobre a state machine, com a seed registrada | sequências longas rodam e cada evento observado carrega a geração que o produziu | Sequências aleatórias preservam generation e invariantes |
+| `TASK-E10-02-AC-2` | as propriedades de fila e o gerador de comandos de AC-1 | as sequências aleatórias cobrem shuffle, history, repeat e stop-after | shuffle/history/repeat/stop-after são exercitados. |
 
 ## Verificação
 
