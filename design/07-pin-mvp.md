@@ -14,7 +14,7 @@ Só fica fora o que é intrínseco ao navegador (motor DOM/CSS, a API Web Audio 
 
 | Item | Valor |
 |---|---|
-| Repositório | https://github.com/jimmykedlyn/vynamp-mvp-reference (privado), branch `main` |
+| Repositório | https://github.com/jimmykedlyn/vynamp-mvp-reference (público desde 2026-11-08), branch `main` |
 | Pin | `vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452` |
 | Congelamento | rev.38 congelada no commit `0a6342c` ("Freeze MVP rev.38: all 16 meters selectable"); `0d9860b` ("Make mvp/ the only, editable copy of the MVP") é o pin |
 | Fonte | `mvp/`: 203 arquivos, 2.118.012 bytes (~2,1 MB) |
