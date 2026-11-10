@@ -10,6 +10,7 @@ Versão: 0.7.2 · Data: 2026-10-28 · Estado: especificação proposta, implemen
 | M3 | Versão1.0 Windows/Linux/macOS Intel+Silicon/Android: DSP/hi-res/HLS/tools/plugins por capability | Hardware/soak/security/distribuição/a11y em cada alvo, gate TASK-E14-06 e matriz M1–M3 completa |
 | M4 | Provider platform: catálogo/VOD/live/auth/sync/registry | rights/authz/cost/load/restore e mock contract parity |
 | M5 | ARM adicional Windows/Linux, DSD nativo/768k, casting/VST/CD/legados | Gates de expansão por capability; não posterga Linux/macOS/Android obrigatórios. Specs Android fechadas em M0/M1 e consolidadas. |
+| Fase 6 / iOS | Suporte iOS (arm64, Apple Silicon) | Especificação iOS (platforms/05-ios.md), shell SwiftUI, CoreAudio/AVAudioEngine, ADR-016-ios. |
 
 ## Ordem crítica
 
