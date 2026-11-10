@@ -28,7 +28,7 @@ Schema/migrations de configuração, escrita atômica, redaction e retenção.
 
 - **Não** implementa o schema SQLite da biblioteca: WAL, write actor e migrations de DB são `TASK-E03-01`, e o config daqui é arquivo versionado separado do banco.
 - **Não** implementa os adapters de keychain por host (Windows Credential Manager, Linux Secret Service, macOS Keychain, Android Keystore): o contrato e a falha fechada quando o vault não existe são `TASK-E14-02`.
-- **Não** define o contrato de perfil portable e de owner único entre instalado e portable: lock de perfil e identidade canônica do armazenamento são `TASK-E16-08`, e aqui só se consome o caminho de perfil que ele define.
+- **Não** implementa o owner único por perfil nem o lock de SO entre instalado e portable: a eleição de dono e a identidade canônica do armazenamento são `TASK-E16-02`, e aqui só se consome o caminho de perfil que ela define. Validar portable relocável e backup é `TASK-E16-08`, que também não cabe aqui.
 - **Não** implementa a tela de preferências que expõe retenção e telemetria ao usuário: a UI e os estados de erro são `TASK-E02-06`.
 - **Não** confunde telemetria com analytics de produto: aqui só se prova o valor inicial do flag de envio, conforme a política de `security/02-privacidade-licencas.md`. A finalidade dos dados e o texto de privacidade publicados são `TASK-E11-08`, e a prova de que nada vaza em export ou log é `TASK-E10-09`; nenhuma das duas cabe neste schema.
 
@@ -54,7 +54,7 @@ Schema/migrations de configuração, escrita atômica, redaction e retenção.
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
 | Oráculo independente | uma fixture nova em tests/fixtures/config/ com três entradas (token em header, URL com credencial na query, path dentro de %APPDATA%) e um teste de integração no crate de config do app; hoje o umbrella tem 168 arquivos .rs e nenhum crate de config — só o xtask —, então a fixture e o teste ainda não existem | cada linha do diagnóstico exportado traz <redacted> no lugar do token, da query e do path, e a busca pelo literal do token no config portable devolve 0 ocorrências; a config sobrevivente ao kill é a última consistente, não o temporário, e a retenção fica em 20 MiB e 7 dias conforme security/02-privacidade-licencas.md, com telemetria em estado off em instalação nova |
-| Hardware | nenhum: config, log e redaction são exercitados em processo de usuário, sem abrir dispositivo de áudio; o vault OS é o Windows Credential Manager nesta máquina e a ausência dele — Linux Secret Service e macOS Keychain não existem aqui — é justamente o caso portable que a AC-2 cobre | ausência é limitação registrada, não aprovação |
+| Hardware | parcial: config, log e redaction rodam em processo de usuário e não abrem dispositivo de áudio, mas a AC-2 pede o vault OS indisponível e nesta máquina o Windows Credential Manager existe e responde; o caso sem vault só ocorre em Linux Secret Service e macOS Keychain, que não há aqui, então a AC-2 se prova com o adapter de `TASK-E14-02` stubado para falhar em vez de com o vault real desligado | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 
