@@ -9,7 +9,7 @@
     "product": 197,
     "engineering": 2,
     "total": 199,
-    "acceptance_ready": 8
+    "acceptance_ready": 199
   },
   "tasks": [
     {
@@ -181,7 +181,7 @@
       "spec": "reference/audio/01-engine.md",
       "module": "vynamp-engine",
       "repo": "vynamp-engine",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Predecode next e trim validado de encoder delay/padding.",
       "acceptance": "Pair FLAC/MP3/AAC válido concatena sem frames extras/perdidos; missing trim metadata não usa silêncio heurístico.",
       "qa": [
@@ -210,7 +210,7 @@
       "spec": "reference/audio/01-engine.md",
       "module": "vynamp-decode",
       "repo": "vynamp-decode",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Adapters AAC-LC/HE-AAC/ALAC/Vorbis/Opus e M4B conforme prova/licença.",
       "acceptance": "Fixture por perfil suporta duration/seek/metadata quando aplicável; HE-AAC não é anunciado por decode AAC-LC.",
       "qa": [
@@ -239,7 +239,7 @@
       "spec": "reference/audio/01-engine.md",
       "module": "vynamp-decode",
       "repo": "vynamp-decode",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "WMA/APE/WV/TTA/MPC/MP1/MP2/WebM/MKA/RF64 adapters com isolation quando nativos.",
       "acceptance": "Arquivos >4GiB usam offsets64; cada perfil tem fixture e lista runtime; unsupported sem crash.",
       "qa": [
@@ -269,7 +269,7 @@
       "spec": "reference/audio/01-engine.md",
       "module": "vynamp-decode",
       "repo": "vynamp-decode",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Mapas mono/stereo/5.1/7.1 e DSF/DFF decimator com diagnóstico.",
       "acceptance": "Canal mapeado corretamente, headroom aplicado em downmix; DSD64/128/256 fixture não é rotulado native.",
       "qa": [
@@ -301,7 +301,7 @@
       "spec": "reference/audio/01-engine.md",
       "module": "vynamp-engine",
       "repo": "vynamp-engine",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Soak/recovery de engine e relatório de suporte por perfil.",
       "acceptance": "8h24/192 controladas sem underrun causado pelo app; decoder hang pode ser cancelado; limitações publicadas.",
       "qa": [
@@ -454,7 +454,7 @@
       "spec": "design/02-layouts.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Sidebar/search/album grid/track list/inspector/now playing.",
       "acceptance": "100k rows sem widget por item; inspector vira drawer abaixo1152DIP; search cancelável não altera fila.",
       "qa": [
@@ -484,7 +484,7 @@
       "spec": "design/02-layouts.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Mini420×112, navegação preferences e empty/loading/offline/recovery.",
       "acceptance": "Trocar modo mantém áudio; Escape/focus return corretos; erros mostram ações úteis sem stacktrace no fluxo.",
       "qa": [
@@ -516,7 +516,7 @@
       "spec": "design/02-layouts.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Audio-chain inspector, editor de curva/bandas e device profiles UI.",
       "acceptance": "Origem/transformações/saída real visíveis; EQ em transparente pede saída do modo; curvas refletem filtros reais.",
       "qa": [
@@ -546,7 +546,7 @@
       "spec": "design/02-layouts.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Painéis destacáveis, snap12DIP, saved geometry e retorno ao monitor disponível.",
       "acceptance": "Monitor removido não deixa janela inacessível; Alt ignora snap; resize/dock não trava reprodução.",
       "qa": [
@@ -577,7 +577,7 @@
       "spec": "design/02-layouts.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "PT-BR/EN, screenshot suite de temas/DPI e strings pluralizadas.",
       "acceptance": "Textos longos/CJK/emoji e dados RTL não quebram UI; estilos passam contraste e reduced motion.",
       "qa": [
@@ -608,7 +608,7 @@
       "spec": "design/02-layouts.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Relatório de jornadas, usability/a11y e ajustes de interação.",
       "acceptance": "Sem mouse: abrir→tocar→seek→fila→saída→tema; todas telas têm loading/empty/erro/permission state verificável.",
       "qa": [
@@ -875,7 +875,7 @@
       "spec": "library/01-biblioteca-playlists.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Scan jobs, root watcher/debounce, availability e locator identity.",
       "acceptance": "NAS indisponível não deleta item; symlink loop limitado; cancel mantém itens já indexados; move preserva ratings.",
       "qa": [
@@ -904,7 +904,7 @@
       "spec": "library/01-biblioteca-playlists.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Tag adapters, multivalue metadata, thumbnails/cache e cover precedence.",
       "acceptance": "Unknown fields preservados para futuro write; image bomb limitada; metadata Unicode mantém representação original.",
       "qa": [
@@ -934,7 +934,7 @@
       "spec": "library/01-biblioteca-playlists.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Query port indexado, albums/artists/genres/folders e pagination.",
       "acceptance": "Search100k warmp95≤100ms; filtros combinados não executam SQL do usuário; ordering estável.",
       "qa": [
@@ -964,7 +964,7 @@
       "spec": "library/01-biblioteca-playlists.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "M3U/M3U8/PLS/XSPF/CUE, relative locators e virtual ranges.",
       "acceptance": "Loop de playlists bloqueado; CUE75fps preserva offsets; export sem token; undo/redo100 ops da sessão.",
       "qa": [
@@ -995,7 +995,7 @@
       "spec": "library/01-biblioteca-playlists.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "AST allowlisted, folders rules, sort/group/lock e refresh.",
       "acceptance": "Query invalid rejeitada; atualização cancelável; playlist lock não bloqueia playback; snapshots consistentes.",
       "qa": [
@@ -1025,7 +1025,7 @@
       "spec": "library/01-biblioteca-playlists.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Batch preview/write atomic, preserve unknown tags e backup.",
       "acceptance": "Fields mistos não são apagados sem escolha; kill/locked file mantém mídia; capítulo inválido não é gravado.",
       "qa": [
@@ -1056,7 +1056,7 @@
       "spec": "library/01-biblioteca-playlists.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "LRC/plain lyrics, progress/bookmarks, local play history e opt-in providers.",
       "acceptance": "Synced lyrics seguem clock consumido; rescan preserva bookmark; seek não conta como consumo; sem rede involuntária.",
       "qa": [
@@ -1088,7 +1088,7 @@
       "spec": "library/01-biblioteca-playlists.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Crash restore/backup/export e relatório dataset100k.",
       "acceptance": "Fila restaura sem autoplay; missing files têm erro agrupado; ratings/bookmarks sobrevivem upgrade e rollback seguro.",
       "qa": [
@@ -1181,7 +1181,7 @@
       "spec": "reference/audio/04-outputs-hires.md",
       "module": "vynamp-engine",
       "repo": "vynamp-engine",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Compiled graph, parameter interpolation, latency annotation e crossfade.",
       "acceptance": "Graph swap foraRT; no cycles/NaN; equal-power crossfade preserva duração, desligado não altera gapless.",
       "qa": [
@@ -1211,7 +1211,7 @@
       "spec": "reference/audio/04-outputs-hires.md",
       "module": "vynamp-engine",
       "repo": "vynamp-engine",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "32bands/tipos/Q/canal, EQ20/31 e preset schema/precedence.",
       "acceptance": "Curva±0.2dB da referência; frequências válidas porNyquist; import inválido mantém preset anterior.",
       "qa": [
@@ -1241,7 +1241,7 @@
       "spec": "reference/audio/04-outputs-hires.md",
       "module": "vynamp-output",
       "repo": "vynamp-output",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "WASAPI event-exclusive, stable IDs, capabilities e ASIO adapter opcional.",
       "acceptance": "24/96 e24/192 negociados emDAC; busy/unplug/sleep recuperam com pausa; sem fallback speaker automático.",
       "qa": [
@@ -1272,7 +1272,7 @@
       "spec": "reference/audio/04-outputs-hires.md",
       "module": "vynamp-output",
       "repo": "vynamp-output",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Integer direct path, active conditions, source/output labels e validated combinations.",
       "acceptance": "PCM24/32 capture exata em hardware validado; EQ/RG/volume digital desligados; fonte lossy não recebe selo errado.",
       "qa": [
@@ -1302,7 +1302,7 @@
       "spec": "reference/audio/04-outputs-hires.md",
       "module": "vynamp-engine",
       "repo": "vynamp-engine",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Limiter/compressor/bass/treble/mono/routing com meters.",
       "acceptance": "True-peak fixture±0.1dB, latency publicada e bypass; multichannel downmix com headroom e clipping explicitado.",
       "qa": [
@@ -1332,7 +1332,7 @@
       "spec": "reference/audio/04-outputs-hires.md",
       "module": "vynamp-engine",
       "repo": "vynamp-engine",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Tempo0.5–2x/pitch±12/speed, reverb/echo/chorus/flanger/silence trim.",
       "acceptance": "Música não herda velocidade podcast; parameters validos; cancel/bypass não produz NaN e latência indicada.",
       "qa": [
@@ -1363,7 +1363,7 @@
       "spec": "reference/audio/04-outputs-hires.md",
       "module": "vynamp-output",
       "repo": "vynamp-output",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Per-device profiles e import manual com origem/licença.",
       "acceptance": "Manual→track→genre→device→global aplicado; device change não aumenta volume automaticamente; fonte identificada.",
       "qa": [
@@ -1396,7 +1396,7 @@
       "spec": "reference/audio/04-outputs-hires.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Relatório DSP/output com fixtures, driver versions e combinations.",
       "acceptance": "Testes100/192k/rate switch/channel mismatches; callback budget e8hsoak; claims limitados a combinations comprovadas.",
       "qa": [
@@ -1428,7 +1428,7 @@
       "spec": "streaming/01-cliente.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Porta de resolução, descritor versionado e provider de teste sem dependência externa.",
       "acceptance": "Distinguir capacidades de arquivo, live e VOD; nenhum token em playlist/log; transporte desconhecido retorna erro de suporte.",
       "qa": [
@@ -1459,7 +1459,7 @@
       "spec": "streaming/01-cliente.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Adapter HTTP com redirects, autenticação, cancelamento, timeouts e seek negociado.",
       "acceptance": "Testar respostas 206/200/416; não encaminhar auth para outra origem; Stop cancela rede e decode e descarta buffers antigos.",
       "qa": [
@@ -1489,7 +1489,7 @@
       "spec": "streaming/01-cliente.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Parser ICY, metadados, estações favoritas, entrada de URL e indicador LIVE.",
       "acceptance": "Separar metadados fragmentados dos bytes de áudio; limitar tags inválidas; reconexão limitada e cancelável; não inventar duração.",
       "qa": [
@@ -1518,7 +1518,7 @@
       "spec": "streaming/01-cliente.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Buffers com limites de tempo/bytes, cache LRU em disco e isolamento por conta.",
       "acceptance": "Rede lenta pode recuperar sem repetir amostras; respeitar limites de 32/16 MiB; logout limpa cache privado sem apagar mídia local.",
       "qa": [
@@ -1548,7 +1548,7 @@
       "spec": "streaming/01-cliente.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "RSS/Atom, assinaturas, polling condicional, downloads e progresso por episódio.",
       "acceptance": "Desabilitar entidades XML externas; GUID por feed; cancelar download preserva parcial válido; eventos de progresso são idempotentes.",
       "qa": [
@@ -1578,7 +1578,7 @@
       "spec": "streaming/01-cliente.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Parser master/media, segmentos, discontinuity, byte ranges e AES-128 autorizado.",
       "acceptance": "Limitar manifests inválidos/aninhados; tratar segmentos ausentes; seek preserva timeline; não registrar chaves ou URLs secretas.",
       "qa": [
@@ -1607,7 +1607,7 @@
       "spec": "streaming/01-cliente.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Janela live, escolha de qualidade por throughput e buffer DVR limitado.",
       "acceptance": "Mudança de sequência não duplica áudio; seleção manual de qualidade é respeitada; seek só na janela disponível; voltar ao live edge funciona.",
       "qa": [
@@ -1637,7 +1637,7 @@
       "spec": "streaming/01-cliente.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Gravação passthrough ou encoding escolhido, divisão de arquivos/CUE e monitor de espaço.",
       "acceptance": "Proibição explícita do provider bloqueia gravação; disco cheio encerra arquivo válido; título ICY não é tratado como fronteira exata de samples.",
       "qa": [
@@ -1667,7 +1667,7 @@
       "spec": "streaming/01-cliente.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Política para cada URL filha, corpus de falhas e painel de saúde sanitizado.",
       "acceptance": "Revalidar SSRF/DNS/redirects conforme origem; esconder segredos; reconexão, cancelamento e stall não travam a interface.",
       "qa": [
@@ -1698,7 +1698,7 @@
       "spec": "streaming/01-cliente.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Adapter da plataforma, renovação de URLs, restrições e progresso de conteúdo longo.",
       "acceptance": "Renovar token sem reiniciar indevidamente; download só se permitido; arquivos locais continuam após logout ou ausência de rede.",
       "qa": [
@@ -1728,7 +1728,7 @@
       "spec": "extensions/01-temas.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Schemas de manifest/tokens/layout, parser e erros por JSON Pointer.",
       "acceptance": "Rejeitar schema major desconhecido; avisar campos opcionais desconhecidos; detectar ciclos e ações essenciais ausentes.",
       "qa": [
@@ -1759,7 +1759,7 @@
       "spec": "extensions/01-temas.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Validador de ZIP, staging, limites, checksums, instalação por versão e rollback.",
       "acceptance": "Rejeitar traversal, paths absolutos, symlinks e zip bombs; update inválido mantém tema atual; limite de 20 MiB extraídos.",
       "qa": [
@@ -1789,7 +1789,7 @@
       "spec": "extensions/01-temas.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Renderer de nós/ações permitidos com fallback para cada modo de interface.",
       "acceptance": "Nenhum código ou acesso de rede arbitrário; controles essenciais e semântica acessível permanecem; constraints de geometria são aplicadas.",
       "qa": [
@@ -1820,7 +1820,7 @@
       "spec": "extensions/01-temas.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Classic Graphite, Midnight Modern e Copper, com assets e licenças próprios.",
       "acceptance": "Os três oferecem Classic/Library/Mini; tokens, cores e estados conferidos em snapshots; nenhum asset copiado.",
       "qa": [
@@ -1850,7 +1850,7 @@
       "spec": "extensions/01-temas.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Canal de observação de áudio independente, FFT, VU, espectro e osciloscópio.",
       "acceptance": "Renderer lento não causa underrun; escalas de FFT correspondem à taxa; minimizar e reduzir movimento diminuem processamento.",
       "qa": [
@@ -1879,7 +1879,7 @@
       "spec": "extensions/01-temas.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Espectrograma, partículas, fullscreen, presets e fallback de CPU.",
       "acceptance": "GPU indisponível não interrompe áudio; Escape sai do fullscreen; presets não executam shaders arbitrários.",
       "qa": [
@@ -1909,7 +1909,7 @@
       "spec": "extensions/01-temas.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Editor de tokens/layout, undo, preview por DPI/estado e exportação.",
       "acceptance": "Exportar e importar preserva configuração; avisar problemas de contraste/constraints; preview não altera tema ativo nem áudio.",
       "qa": [
@@ -1939,7 +1939,7 @@
       "spec": "extensions/01-temas.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Galeria, armazenamento por usuário e safe mode com tema builtin.",
       "acceptance": "Falha no renderer reverte ao builtin; safe mode ignora pacotes do usuário; monitor/zoom restaurados mantêm controles acessíveis.",
       "qa": [
@@ -1970,7 +1970,7 @@
       "spec": "extensions/01-temas.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Metadados assinados, autoria, licença e imagens de preview para registry.",
       "acceptance": "Versão publicada é imutável; revogação e rollback funcionam; instalação manual continua disponível sem conta ou rede.",
       "qa": [
@@ -2001,7 +2001,7 @@
       "spec": "extensions/01-temas.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Relatório de cores, medidas, estados e telas comparado à referência própria.",
       "acceptance": "Conferir todos os modos/DPI e hierarchy clássica; falhas de acessibilidade não são ocultadas por aprovação de screenshots.",
       "qa": [
@@ -2060,7 +2060,7 @@
       "spec": "extensions/02-plugins.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Manifest/schema, interfaces WIT, lifecycle e regras de compatibilidade major.",
       "acceptance": "Validar tipo, plataformas e permissões; major incompatível não carrega; assinatura não permite ignorar políticas de acesso.",
       "qa": [
@@ -2090,7 +2090,7 @@
       "spec": "extensions/02-plugins.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Acesso mediado a rede, roots selecionadas e biblioteca, com grants persistidos.",
       "acceptance": "Negar e revogar bloqueia requests/handles; redirect revalida domínio; plugin não recebe shell, env vars ou filesystem completo.",
       "qa": [
@@ -2119,7 +2119,7 @@
       "spec": "extensions/02-plugins.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Init/start/event/stop/unload, quotas, timeouts e estado do plugin.",
       "acceptance": "Três falhas em 60 s isolam plugin; cleanup é idempotente; floods são limitados; playback local continua.",
       "qa": [
@@ -2149,7 +2149,7 @@
       "spec": "extensions/02-plugins.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Sandbox OS, RPC autenticado, memória compartilhada limitada e consentimento de plugin nativo.",
       "acceptance": "Crash ou RPC inválido do child não derruba main; handles mínimos; sandbox testado; nenhuma DLL arbitrária carregada no main.",
       "qa": [
@@ -2178,7 +2178,7 @@
       "spec": "extensions/02-plugins.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Templates Rust para WASM: letras locais, espectro e provider simulado.",
       "acceptance": "Exemplos funcionam no harness offline com permissões mínimas; documentação de lifecycle acompanha a versão do SDK.",
       "qa": [
@@ -2210,7 +2210,7 @@
       "spec": "extensions/02-plugins.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Interface de instalação, atualização, disable, revoke, rollback e safe mode.",
       "acceptance": "Novas permissões exigem intenção; rollback restaura estado compatível; falha mostra ação segura e ID de diagnóstico.",
       "qa": [
@@ -2241,7 +2241,7 @@
       "spec": "extensions/02-plugins.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Docs de API/lifecycle/budgets, CLI de pack/sign/validate e relatório de compatibilidade.",
       "acceptance": "Host simulado cobre erros e grants; corpus adversarial aprovado; versão minor aditiva não quebra exemplos.",
       "qa": [
@@ -2271,7 +2271,7 @@
       "spec": "extensions/02-plugins.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Registry assinado, versões imutáveis e identificação de publisher.",
       "acceptance": "Build revogado não instala/atualiza; pacote manual ainda exige consentimento; hashes de download são verificados.",
       "qa": [
@@ -2302,7 +2302,7 @@
       "spec": "extensions/02-plugins.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Revisão de segurança focada e testes de falhas durante reprodução.",
       "acceptance": "Traps, loops, crash de helper e revoke durante I/O não interrompem áudio local; permissões negadas impedem exfiltração; críticos resolvidos.",
       "qa": [
@@ -2331,7 +2331,7 @@
       "spec": "library/02-tags-letras.md",
       "module": "vynamp-engine",
       "repo": "vynamp-engine",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Scheduler de jobs com checkpoints, leases, progresso e pools limitados.",
       "acceptance": "Crash retoma jobs seguros; cancelar remove temporários sem apagar source; erros parciais são visíveis e progresso é consistente.",
       "qa": [
@@ -2362,7 +2362,7 @@
       "spec": "library/02-tags-letras.md",
       "module": "vynamp-converter",
       "repo": "vynamp-converter",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Conversão batch para FLAC/WAV/Opus/Vorbis e MP3 quando permitido, com preview.",
       "acceptance": "Validar output após escrita; cancelamento/disco cheio preservam source; conversão lossy não é anunciada como restauração hi-res.",
       "qa": [
@@ -2393,7 +2393,7 @@
       "spec": "library/02-tags-letras.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Jobs com padrão/versão de análise, grouping de álbum e escrita opcional de tags.",
       "acceptance": "Loudness conferido contra fixtures; agrupamento correto; BPM inclui confiança; scan não interfere callback; write requer preview.",
       "qa": [
@@ -2424,7 +2424,7 @@
       "spec": "library/02-tags-letras.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Templates seguros, plano de renomeação, detecção de colisão e dedupe com preview.",
       "acceptance": "Bloquear escape e nomes reservados; não sobrescrever por padrão; mover preserva identidade/bookmark; duplicatas não são apagadas automaticamente.",
       "qa": [
@@ -2456,7 +2456,7 @@
       "spec": "library/02-tags-letras.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Timers, alarmes, regras de horário/DST, quiet hours e persistência.",
       "acceptance": "Parar ao fim de faixa funciona; DST definido; desligar OS só se habilitado; alarmes respeitam teto de volume.",
       "qa": [
@@ -2486,7 +2486,7 @@
       "spec": "library/02-tags-letras.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "SMTC, media keys, tray/taskbar, hotkeys globais configuráveis e associações consentidas.",
       "acceptance": "Controlar sessão correta; close-to-tray explícito; sem admin/associação involuntária; detectar conflitos de hotkeys.",
       "qa": [
@@ -2516,7 +2516,7 @@
       "spec": "library/02-tags-letras.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Comandos open/enqueue/diagnostics/validate e named pipe com validação de peer.",
       "acceptance": "Segundo launch não executa comando arbitrário; Unicode preservado; CLI retorna exit codes; IPC não expõe filesystem geral.",
       "qa": [
@@ -2547,7 +2547,7 @@
       "spec": "library/02-tags-letras.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Adapters autorizados de Last.fm/ListenBrainz/Libre.fm/Discord, opt-in e revogáveis.",
       "acceptance": "Sem requests antes de opt-in; tokens no keychain; retries idempotentes; revoke impede novos envios.",
       "qa": [
@@ -2578,7 +2578,7 @@
       "spec": "library/02-tags-letras.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Agrupamento de livros, capítulos, bookmarks e adapter de sync de progresso.",
       "acceptance": "Velocidade por categoria; retomada explícita; conflito de retrocesso não usa máximo sempre; sem rede continua reproduzindo.",
       "qa": [
@@ -2610,7 +2610,7 @@
       "spec": "library/02-tags-letras.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "API local desligada por padrão, pairing e opção LAN com TLS/rate limits.",
       "acceptance": "Cliente sem pairing não controla; nenhum endpoint de shell/filesystem; rotação e revogação de token funcionam.",
       "qa": [
@@ -2641,7 +2641,7 @@
       "spec": "streaming/03-plataforma.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "RFC de plataforma com regiões, rights, renditions, limites e orçamento de bandwidth.",
       "acceptance": "Fixtures autorizadas; roles/territórios/janela de disponibilidade definidos; custo por ouvinte-hora estimado com dados.",
       "qa": [
@@ -2672,7 +2672,7 @@
       "spec": "streaming/03-plataforma.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "OpenAPI de catálogo/resolve/sync/stations, erros e testkit do provider.",
       "acceptance": "Exemplos validam; mock e real compartilham contrato; cursor/idempotência/escopos e enums desconhecidos são definidos.",
       "qa": [
@@ -2701,7 +2701,7 @@
       "spec": "streaming/03-plataforma.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "OIDC/PKCE, keychain do cliente, roles, isolamento por conta e revogação.",
       "acceptance": "Negar IDOR/acesso entre contas; login pelo browser; não enviar bearer à CDN; logout limpa apenas dados privados.",
       "qa": [
@@ -2730,7 +2730,7 @@
       "spec": "streaming/03-plataforma.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "API Axum/PostgreSQL, busca, estações, publicação e UI admin auditável.",
       "acceptance": "Paginação estável; conteúdo não publicado invisível ao ouvinte; roles distintas; operações editoriais têm audit trail.",
       "qa": [
@@ -2760,7 +2760,7 @@
       "spec": "streaming/03-plataforma.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Upload assinado, quarantine/probe/rights, outbox e workers de renditions.",
       "acceptance": "Jobs duplicados idempotentes; limites de mídia e SSRF aplicados; master privado; ready somente após validações.",
       "qa": [
@@ -2790,7 +2790,7 @@
       "spec": "streaming/03-plataforma.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Resolve assinado para FLAC/Opus progressivo e HLS AAC com direitos e expiração.",
       "acceptance": "Range/qualidade negociados; token renovável; rights negados bloqueiam resolve; não forçar lossless HLS sem prova.",
       "qa": [
@@ -2821,7 +2821,7 @@
       "spec": "streaming/03-plataforma.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Ingest autenticado, packager HLS, grade, now-playing e failover.",
       "acceptance": "Cliente HLS interoperável; falha de source gera alerta/filler autorizado; grade considera DST; timeline não duplica áudio.",
       "qa": [
@@ -2853,7 +2853,7 @@
       "spec": "streaming/03-plataforma.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Outbox, changelog, cursores, revisões, tombstones e UI de conflitos.",
       "acceptance": "Merge offline de reorder/remove preserva intenção; 409 preserva edição; operação repetida idempotente; paths locais não sobem por padrão.",
       "qa": [
@@ -2884,7 +2884,7 @@
       "spec": "streaming/03-plataforma.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Admin de publisher, validação de pacotes, assinatura, versão imutável e revogação.",
       "acceptance": "Rejeitar pacotes adversariais; conferir hash por artifact; não expor chaves privadas; instalação manual continua sem conta.",
       "qa": [
@@ -2918,7 +2918,7 @@
       "spec": "streaming/03-plataforma.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Teste de 1.000 sessões, custos, restore drill, alertas e runbooks.",
       "acceptance": "API p95 ≤250 ms no ambiente de referência; CDN medida separadamente; demonstrar RPO/RTO; rollback mantém contratos.",
       "qa": [
@@ -3010,7 +3010,7 @@
       "spec": "quality/01-estrategia-testes.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Oráculos PCM, resposta FFT, delay/padding, crossfade e sample conversion.",
       "acceptance": "Detectar frame extra, trim incorreto, mapa de canais errado e NaN; referência independente da implementação sob teste.",
       "qa": [
@@ -3042,7 +3042,7 @@
       "spec": "quality/01-estrategia-testes.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Fixtures HTTP Range/ICY fragmentado/stall/redirect e scripts de timeline.",
       "acceptance": "CI cobre cancel/retry/resume/generation; 401/TLS não entram em retry cego; resultados são reproduzíveis.",
       "qa": [
@@ -3073,7 +3073,7 @@
       "spec": "quality/01-estrategia-testes.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Fuzz targets, corpus adversarial, testes de limites e cobertura do threat model.",
       "acceptance": "Mídia/imagem/HLS/ZIP/RPC inválidos não causam OOM/hang; permissões negativas e URLs filhas cobertas.",
       "qa": [
@@ -3104,7 +3104,7 @@
       "spec": "quality/01-estrategia-testes.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Workflows de teclado, screenshots por DPI e checklist de leitores de tela.",
       "acceptance": "Nenhum controle crítico ausente; validar DPI, PT-BR/EN e reduced motion; evidência manual de screen reader registrada.",
       "qa": [
@@ -3135,7 +3135,7 @@
       "spec": "quality/01-estrategia-testes.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Métricas sanitizadas, callback histogram, launch/search benchmarks e baseline.",
       "acceptance": "Instrumentação não faz I/O na callback; reportar hardware, versões e runs; metas são medidas e não presumidas.",
       "qa": [
@@ -3168,7 +3168,7 @@
       "spec": "quality/01-estrategia-testes.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "8 h em 24/192, DAC unplug, taxa, busy/sleep e stress de CPU.",
       "acceptance": "Zero underruns causados pelo app no ambiente de referência; pausar ao unplug; captura transparente real; limites declarados.",
       "qa": [
@@ -3201,7 +3201,7 @@
       "spec": "quality/01-estrategia-testes.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Drills de kill/migration/update rollback e testes de vazamento em export/log.",
       "acceptance": "Dados irreproduzíveis preservados; update adulterado/replay rejeitado; token de teste não aparece em logs/diagnósticos.",
       "qa": [
@@ -3236,7 +3236,7 @@
       "spec": "quality/01-estrategia-testes.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Matriz de evidência REQ/TASK/QA e relatório de problemas conhecidos.",
       "acceptance": "Aceitar todos os requisitos M1–M3 ou registrar mudança explícita de escopo; zero P0/P1; ausência de hardware não vira teste aprovado.",
       "qa": [
@@ -3400,7 +3400,7 @@
       "spec": "delivery/02-release-devops.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Schema/migrations de configuração, escrita atômica, redaction e retenção.",
       "acceptance": "Fixtures de token/URL/path redacted; portable não grava secrets plaintext; crash permite recovery; telemetria desligada por padrão.",
       "qa": [
@@ -3431,7 +3431,7 @@
       "spec": "delivery/02-release-devops.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Verificação de metadados/artefatos, canais, expiry, rotação e rollback.",
       "acceptance": "Rejeitar tamper/stale/replay; staging antes aplicar; não interromper playback/gravação automaticamente; DB preservado.",
       "qa": [
@@ -3462,7 +3462,7 @@
       "spec": "delivery/02-release-devops.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Windowsinstaller/ZIP, Linuxpackages, MacUniversal2 ou packages x64/arm64 e AndroidAPK/AAB, com signing/symbols.",
       "acceptance": "Instalar/update/remove em cada alvo; preservar dados/grants; Mac slices nativas/notarização e Androidnative/targetSDK/page size checks; interfaces de distribuição específicas do host.",
       "qa": [
@@ -3494,7 +3494,7 @@
       "spec": "delivery/02-release-devops.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Guia de usuário/SDK, notices, privacidade, contato real de segurança e release notes.",
       "acceptance": "Guia corresponde a features reais; SBOM/notices coerentes; canal de disclosure aprovado; limitações e claims corretos.",
       "qa": [
@@ -3526,7 +3526,7 @@
       "spec": "delivery/02-release-devops.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Release candidate, artifacts assinados, relatório de evidência e plano canary.",
       "acceptance": "Gates M3 passam; problemas conhecidos visíveis; checksums/assinaturas conferidos; zero P0/P1; feedback beta tratado.",
       "qa": [
@@ -3555,7 +3555,7 @@
       "spec": "delivery/02-release-devops.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "IaC, secrets, DB/PITR, métricas de CDN/custo e runbooks de restore/rollback.",
       "acceptance": "Drill avalia RPO 15 min/RTO 4 h; métricas sem PII; rollback compatível; responsável operacional designado.",
       "qa": [
@@ -3585,7 +3585,7 @@
       "spec": "platforms/01-matriz-suporte.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Porta Linux x86_64, PipeWire/PulseAudio, MPRIS, Orca, Secret Service e packaging testado.",
       "acceptance": "Passar corpus comum e gates M1–M3 no Linux nativo; Wayland/X11 e portas/saída testados; não usar Wine como substituto; instalar pacote real.",
       "qa": [
@@ -3617,7 +3617,7 @@
       "spec": "platforms/01-matriz-suporte.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "CoreAudio, UI/acessibilidade, Now Playing, Keychain e distribuição x86_64+arm64 nativas.",
       "acceptance": "Fixtures, VoiceOver, device/rate changes e instalação passam em Mac Intel e Silicon reais; Universal2/helpers contêm ambas slices nativas nos DMG/ZIP Universal2 obrigatórios; sem exigir Rosetta.",
       "qa": [
@@ -3649,7 +3649,7 @@
       "spec": "delivery/01-roadmap.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Matriz opcional ARM64 Windows/Linux; Android arm64 e macOSarm64 já são obrigatórios emM3.",
       "acceptance": "Arquiteturas adicionais têm build/hardware/output próprios; nenhum fallback oculto; a expansão não posterga Android/Mac arm64 obrigatórios.",
       "qa": [
@@ -3680,7 +3680,7 @@
       "spec": "delivery/01-roadmap.md",
       "module": "vynamp-output",
       "repo": "vynamp-output",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Backends condicionados ao DAC, packing DoP e capabilities de taxa/DSD.",
       "acceptance": "DSP desligado em DSD nativo; markers/bytes validados; equipamento sem suporte falha sem conversão oculta.",
       "qa": [
@@ -3712,7 +3712,7 @@
       "spec": "delivery/01-roadmap.md",
       "module": "vynamp-decode",
       "repo": "vynamp-decode",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Adapters libopenmpt, synth com SF2 do usuário e codecs opcionais testados.",
       "acceptance": "Matriz por perfil e licença; loops limitados; fonte SF2 explicitada; helpers nativos isolados; sem suporte fictício.",
       "qa": [
@@ -3742,7 +3742,7 @@
       "spec": "delivery/01-roadmap.md",
       "module": "vynamp-decode",
       "repo": "vynamp-decode",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Adapter de drive, secure mode/offset, metadados e relatório de checksums.",
       "acceptance": "Erros de leitura identificados; cancelamento seguro; rip verificado apenas com checksum real; licenças de providers atendidas.",
       "qa": [
@@ -3773,7 +3773,7 @@
       "spec": "delivery/01-roadmap.md",
       "module": "vynamp-engine",
       "repo": "vynamp-engine",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Scanner/worker VST3 isolado, compensação de latência e spike WASM DSP separado.",
       "acceptance": "Plugin travado bloqueado; crash não derruba player; não executar WASM na callback sem prova de deadline; revisar SDK license.",
       "qa": [
@@ -3804,7 +3804,7 @@
       "spec": "delivery/01-roadmap.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Providers autorizados, DASH áudio, locators WebDAV e capability discovery.",
       "acceptance": "Negociar auth/seek/codec/qualidade; DRM desconhecido gera erro explícito; roots privadas só com permissão.",
       "qa": [
@@ -3835,7 +3835,7 @@
       "spec": "delivery/01-roadmap.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Bridges Chromecast/UPnP/AirPlay conforme APIs e controles pareados.",
       "acceptance": "Capacidade real do destino; limites de clock/transferência visíveis; negar cliente não pareado; sem claims hi-res não verificados.",
       "qa": [
@@ -3867,7 +3867,7 @@
       "spec": "delivery/01-roadmap.md",
       "module": "vynamp-engine",
       "repo": "vynamp-engine",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "EQ64, bandas por canal, surround opcional, biblioteca de 1 milhão e RTL completo.",
       "acceptance": "Medir CPU/latência e biblioteca; emulação surround rotulada; RTL/a11y validados; voice remover experimental explicitado.",
       "qa": [
@@ -3992,7 +3992,7 @@
       "spec": "platforms/02-android.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Adapters de document URI/FD, grants persistidos, indexação e capabilities de escrita de tags.",
       "acceptance": "Deny/revoke preserva biblioteca e rádio; não exigir acesso irrestrito a arquivos; Content URI não vira path fictício; backup/limites de escrita explícitos.",
       "qa": [
@@ -4056,7 +4056,7 @@
       "spec": "platforms/02-android.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Adapters do core para HTTP/ICY, podcasts e jobs de download respeitando condições do sistema.",
       "acceptance": "Cancel/retry e rádio screen-off funcionam; permissões, rede e jobs respeitados; não iniciar dois decoders produzindo áudio simultaneamente.",
       "qa": [
@@ -4088,7 +4088,7 @@
       "spec": "platforms/02-android.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Checkpoint, reconexão ao serviço, WorkManager, quotas de cache e wake locks limitados.",
       "acceptance": "Process death permite restore sem autostart proibido; rotation mantém sessão; screen-off 2 h sem underrun causado pelo app; wake locks liberados e visualizer desativado no background.",
       "qa": [
@@ -4120,7 +4120,7 @@
       "spec": "platforms/02-android.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Perfis phone/tablet, manager mobile e runtime de extensões validado para Android.",
       "acceptance": "Fallback acessível; budgets e permissões funcionam; nenhum helper nativo externo; runtime e distribuição compatíveis documentados, sem promessa de JIT não provado.",
       "qa": [
@@ -4154,7 +4154,7 @@
       "spec": "design/05-mobile-tablet.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "UI adaptativa, APK/AAB assinado, ABIs/NDK/page size e requisitos de publicação.",
       "acceptance": "Phone/tablet/landscape/hinge/fonte passam; update preserva dados; target SDK e políticas revisados; aparelho arm64 real além do emulador.",
       "qa": [
@@ -4186,7 +4186,7 @@
       "spec": "quality/03-matriz-multiplataforma.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Relatório de formatos comuns/DSP/HLS, lifecycle/focus/storage/TalkBack e energia.",
       "acceptance": "Gates comuns e Android aprovados no aparelho real; saída hi-res apenas quando negociada; flag AAudio não é prova de bit-perfect.",
       "qa": [
@@ -4281,7 +4281,7 @@
       "spec": "platforms/01-matriz-suporte.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Registry de capabilities por OS e perfis desktop/phone/tablet de tema e preset.",
       "acceptance": "Tema carrega com fallback em todos; registry mostra formatos reais; preset compartilhado tem resposta numérica equivalente; ações não aplicáveis explícitas.",
       "qa": [
@@ -4315,7 +4315,7 @@
       "spec": "reference/audio/05-platform-backends.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Fixtures e hardware por OS/ABI, com clock/seek/drain/gapless dos backends.",
       "acceptance": "Mac Intel e arm64 testados separadamente; Linux nativo e Android real; nenhum fim cortado/buffer antigo; exclusive não presumido.",
       "qa": [
@@ -4350,7 +4350,7 @@
       "spec": "platforms/01-matriz-suporte.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Installer/packages/Universal 2/APK-AAB, migrations, dependencies nativas e SBOM.",
       "acceptance": "Artifacts instalam/assinam/atualizam; permissões preservadas; portais Linux, notarização macOS e native pages Android conferidos no release.",
       "qa": [
@@ -4387,7 +4387,7 @@
       "spec": "quality/03-matriz-multiplataforma.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Matriz de evidência agregada para Windows/Linux/macOS Intel/macOS Silicon/Android.",
       "acceptance": "Todos os alvos M1–M3 aprovados com hardware e acessibilidade; alvo ausente bloqueia stable multiplataforma; zero bugs P0/P1 e exceções por capability explícitas.",
       "qa": [
@@ -4569,7 +4569,7 @@
       "spec": "_arquivo/repo/docs/engineering/06-installers.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "EXE user scope + ZIP, runtime inventory e SignTool.",
       "acceptance": "Install/upgrade/uninstall sem admin para playback; dados preservados; binaries/installer assinados, manifesto/hash correto.",
       "qa": [
@@ -4600,7 +4600,7 @@
       "spec": "_arquivo/repo/docs/engineering/06-installers.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "AppDir/DEB, tool hash, libs/notices e manifesto assinado.",
       "acceptance": "Rodar em distro baseline limpa sem libs ausentes; licenças/SBOM auditados; manifesto assinado e instalação/upgrade preservam dados.",
       "qa": [
@@ -4632,7 +4632,7 @@
       "spec": "_arquivo/repo/docs/engineering/06-installers.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Slices Intel/Silicon, runtime inside-out signing e notary/staple.",
       "acceptance": "Executar nativamente em ambos Macs; Gatekeeper/notary/staple/upgrade testados; helpers/libs suportam arquitetura prometida.",
       "qa": [
@@ -4664,7 +4664,7 @@
       "spec": "_arquivo/repo/docs/engineering/06-installers.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Android release signing, native dependencies/page-size e Play readiness.",
       "acceptance": "APK/AAB signer corresponde ao keystore; target SDK/NDK/ABIs validados, grants/data sobrevivem update; testar aparelho arm64.",
       "qa": [
@@ -4699,7 +4699,7 @@
       "spec": "engineering/07-segredos.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Evidence digest, gates, manifest minisign, secrets/environments e draft.",
       "acceptance": "Conjunto completo de artifacts reais/assinados; source digest e relatórios revisados; nunca publicar stubs/unsigned stable; mantenedor aprova publicação.",
       "qa": [
@@ -4791,7 +4791,7 @@
       "spec": "platforms/03-integracao-sistema.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Registro HKCU, pacote esparso MSIX com IExplorerCommand, verbos completos e pacotes de ícones .ico multi-res.",
       "acceptance": "Explorer moderno (Win11) e clássico (Win10) abrem lote ordenado por IShellItemArray; pacote esparso registrado via PackageManager; remoção limpa; suporte às 3 famílias de ícones.",
       "qa": [
@@ -4824,7 +4824,7 @@
       "spec": "platforms/03-integracao-sistema.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Desktop Entry com Desktop Actions, extensões/ServiceMenus (Dolphin, Nautilus, Thunar), MIME hicolor e MPRIS.",
       "acceptance": "Gerenciadores (Dolphin, Nautilus, Thunar) exibem submenu Vynamp com verbos canônicos; %U repassa lote sem shell; ícones hicolor por família instalados.",
       "qa": [
@@ -4857,7 +4857,7 @@
       "spec": "platforms/03-integracao-sistema.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "UTTypes/document types, Quick Actions (NSServices) no Finder, callbacks LaunchServices e pacotes de ícones in-app.",
       "acceptance": "Intel e Silicon recebem cold/warm batches via application(_:openFiles:); Quick Actions no Finder ativas; pacotes de ícones aplicados na UI interna; defaults preservados.",
       "qa": [
@@ -4891,7 +4891,7 @@
       "spec": "platforms/03-integracao-sistema.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Manifest específico, ContentResolver/FD e encaminhamento ao serviço de sessão.",
       "acceptance": "VIEW/SEND/MULTIPLE e onNewIntent preservam grants/ordem; rotation não duplica; Share pede ação; sem persistência de grant não oferecido.",
       "qa": [
@@ -4924,7 +4924,7 @@
       "spec": "platforms/03-integracao-sistema.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Relatórios por OS/ABI de instalação, defaults, lote, erros e concorrência.",
       "acceptance": "QA-022/023/024 passam nos cenários aplicáveis M1–M3 dos cinco alvos; deep links/OAuth só em M4; terceiros preservados; ausência de hardware não vira aprovação.",
       "qa": [
@@ -4958,7 +4958,7 @@
       "spec": "platforms/04-ativacao-ownership.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Backup/restore consistente, portable relocável e uninstall de registros próprios (ProgIDs e pacote esparso).",
       "acceptance": "Restore por staging e rollback preserva mídia; desinstalação remove pacote esparso e HKCU sem sobras; portable permite ativar/desativar integração com confirmação; update respeita owner.",
       "qa": [
@@ -4989,7 +4989,7 @@
       "spec": "delivery/04-gates.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Gerador de handlers por container/parser e capabilities reais de cada artefato.",
       "acceptance": "planned/experimental/sem backend ou licença não gera handler; MIME genérico/video/BT não é associado; manifest e pacote têm mesmos hashes.",
       "qa": [
@@ -5019,7 +5019,7 @@
       "spec": "platforms/04-ativacao-ownership.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Rotas próprias e HTTPS verificadas, OAuth state/PKCE e preview de ação.",
       "acceptance": "Links rejeitam path/shell/plugin/autoplay e callbacks falsos; não registram HTTP global; intent concedida não amplia filesystem grants.",
       "qa": [
@@ -5080,7 +5080,7 @@
       "spec": "reference/audio/06-codec-capability-registry.md",
       "module": "vynamp-decode",
       "repo": "vynamp-decode",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Contratos de priming, preskip, gain/DRC e samples por demux/decoder.",
       "acceptance": "Opus/MP3/MP4/Matroska/Ogg fixtures não perdem ou duplicam frames; ganho/DRC/RG aplicados uma vez e caminho neutro documentado.",
       "qa": [
@@ -5110,7 +5110,7 @@
       "spec": "reference/audio/06-codec-capability-registry.md",
       "module": "vynamp-decode",
       "repo": "vynamp-decode",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "CAF/AIFF-C/AU/Ogg FLAC, MP4 e Matroska/TS com seleção de faixas de áudio.",
       "acceptance": "Bindings exigidos passam duration/seek/cancel; WebM não anuncia FLAC; seleção language/default é determinística sem decodificar vídeo.",
       "qa": [
@@ -5140,7 +5140,7 @@
       "spec": "reference/audio/06-codec-capability-registry.md",
       "module": "vynamp-decode",
       "repo": "vynamp-decode",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Adapter USAC/AOT42 quando viável, ou relatório de indisponibilidade por build/licença.",
       "acceptance": "Fixtures DRC/seek/trim por alvo ou motivo unsupported auditado; sem fallback LC nem declaração universal; spike M0 registrado.",
       "qa": [
@@ -5170,7 +5170,7 @@
       "spec": "reference/audio/06-codec-capability-registry.md",
       "module": "vynamp-decode",
       "repo": "vynamp-decode",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Corpus WavPack/WVC/float, APE/TTA/MPC/WMA e PCM de containers adicionais.",
       "acceptance": "Lossless inteiro sample-exact; WV sem correção não recebe selo lossless; níveis/versões/endianness/validbits/u64 são verificados.",
       "qa": [
@@ -5199,7 +5199,7 @@
       "spec": "reference/audio/06-codec-capability-registry.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Matriz read/write de ID3/MP4/Matroska/CAF/AIFF/BWF e LRC/WebVTT.",
       "acceptance": "Roundtrip preserva desconhecidos; capítulos/ratings e WVC não somem no rename; grant de sidecar não amplia acesso nem baixa URLs.",
       "qa": [
@@ -5230,7 +5230,7 @@
       "spec": "reference/audio/07-dsp-signal-contract.md",
       "module": "vynamp-engine",
       "repo": "vynamp-engine",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Guard final após mix/master/resampler e antes da quantização, separado do limiter criativo.",
       "acceptance": "Nenhum boost/processamento posterior; ceiling padrão -1 dBTP; latency/reset/generation e modo transparente coerentes.",
       "qa": [
@@ -5260,7 +5260,7 @@
       "spec": "reference/audio/07-dsp-signal-contract.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Harness no buffer do backend, estimador referência e casos adversariais multichannel.",
       "acceptance": "Crossfade/EQ/gain/resample/dither finais não excedem ceiling +0.1 dBTP; taxas/bit-depths/NaN e latência documentados.",
       "qa": [
@@ -5290,7 +5290,7 @@
       "spec": "extensions/05-visualizador.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Scenes declarativas, ring/taps e famílias FFT/phase/spectrogram/particles.",
       "acceptance": "Preset inválido/código arbitrário rejeitado; orçamento agregado e overflow descartam visuais; nunca bloqueiam callback/clock.",
       "qa": [
@@ -5321,7 +5321,7 @@
       "spec": "extensions/05-visualizador.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Testes CPU/GPU/device-loss, acessibilidade, fullscreen e background Android.",
       "acceptance": "GPU perdida mantém áudio; zero rendering Android screen-off/background; reduced motion, foco e FPS/budgets medidos.",
       "qa": [
@@ -5350,7 +5350,7 @@
       "spec": "streaming/04-rede-proxy.md",
       "module": "vynamp-player",
       "repo": "vynamp-player",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Adapters system/manual/direct, vault, CONNECT/TLS e fixtures 407/DNS/redirect.",
       "acceptance": "Proxy failure não cai direto; credenciais origin/proxy/provider separadas; redirects/filhos respeitam política; cancel/reconnect bounded.",
       "qa": [
@@ -5381,7 +5381,7 @@
       "spec": "delivery/04-gates.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Manifest gerado com backend/features/licenças/hashes/evidência e validação do pacote.",
       "acceptance": "Catálogo planned não é disponibilidade; required comum comprovado nos cinco alvos; adapter ausente não gera associação nem encode.",
       "qa": [
@@ -5411,7 +5411,7 @@
       "spec": "reference/audio/06-codec-capability-registry.md",
       "module": "vynamp-decode",
       "repo": "vynamp-decode",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "MHAS/mha1/mhm1 com perfil/level, apresentações e renderer certificado.",
       "acceptance": "Decoder e renderer têm provas separadas; objetos/downmix e saída testados ou unavailable explícito; licença de software não implica patentes.",
       "qa": [
@@ -5441,7 +5441,7 @@
       "spec": "reference/audio/06-codec-capability-registry.md",
       "module": "vynamp-decode",
       "repo": "vynamp-decode",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Adapter AC-4 condicionado, seleção de apresentação/DRC e capacidades.",
       "acceptance": "Apresentação/canais/loudness batem referência por build; não inferir disponibilidade por container MP4.",
       "qa": [
@@ -5471,7 +5471,7 @@
       "spec": "reference/audio/06-codec-capability-registry.md",
       "module": "vynamp-decode",
       "repo": "vynamp-decode",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Demux IAMF, codecs subjacentes e mix presentations com rendering por layout.",
       "acceptance": "Opus/AAC-LC/FLAC/LPCM isolados não aprovam modelo; loudness/layout/DRC e renderer por referência com licenças.",
       "qa": [
@@ -5501,7 +5501,7 @@
       "spec": "reference/audio/06-codec-capability-registry.md",
       "module": "vynamp-decode",
       "repo": "vynamp-decode",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "AC3/EAC3/TrueHD/MLP/DTS Core/HD, downmix e saída codificada condicionada.",
       "acceptance": "Atmos/DTS:X não anunciados como renderer genérico; receiver/rota/licença e DSP incompatível comprovados ou recusados.",
       "qa": [
@@ -5531,7 +5531,7 @@
       "spec": "reference/audio/06-codec-capability-registry.md",
       "module": "vynamp-decode",
       "repo": "vynamp-decode",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Certificação AMR/3GP/Speex/LD/ELD/WMA Voice e bindings legacy opcionais.",
       "acceptance": "Fixture por perfil, cancel/seek limites e helper/licença publicados; não associar vídeo em lote nem prometer todos codecs.",
       "qa": [
@@ -5561,7 +5561,7 @@
       "spec": "reference/audio/06-codec-capability-registry.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Fixtures de subsongs/loops/SF2/WavPack DSD/DST e native/DoP após implementações E12. Extração SACD ISO legal não protegida, sem handler ISO genérico.",
       "acceptance": "Rendering MIDI não é decode PCM; SoundFont licenciado explícito; loops/memória bound; DSD raw/DST/PCM/DoP distinguíveis. SACD ISO separa extração raw/DST, perfis e capacidade legal, sem contornar proteção.",
       "qa": [
@@ -5593,7 +5593,7 @@
       "spec": "reference/audio/06-codec-capability-registry.md",
       "module": "vynamp-output",
       "repo": "vynamp-output",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Diagnóstico de rota OS, codec negociado quando exposto e volume/headroom por dispositivo.",
       "acceptance": "SBC/AAC/aptX/LDAC/LC3 não geram associações; API ausente mostra desconhecido; troca de rota não aumenta volume nem garante hi-res.",
       "qa": [
@@ -5633,7 +5633,7 @@
       "spec": "delivery/04-gates.md",
       "module": "vynamp",
       "repo": "vynamp",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Evidência por build/alvo do corpus comum, condicionais, cadeia final e visualização.",
       "acceptance": "Cinco alvos passam required M3; conditional reportado honestamente; nenhum gate depende de features M4/M5; QA e limites publicados.",
       "qa": [
@@ -5671,7 +5671,7 @@
       "spec": "reference/tools/01-vynamp-restore.md",
       "module": "vynamp-restore",
       "repo": "vynamp-restore",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Ferramenta desktop `vynamp-restore` com motor de restauração próprio, diagnóstico de defeitos e exportação preservando metadados.",
       "acceptance": "A fonte nunca é sobrescrita sem confirmação; escrita atômica com validação pós-escrita preserva origem e metadados; defeitos reportados têm severidade e evidência; correção nunca é aplicada sem previsualização; saída registra versão do motor e parâmetros usados.",
       "qa": [
@@ -5707,7 +5707,7 @@
       "spec": "reference/tools/02-vynamp-converter.md",
       "module": "vynamp-converter",
       "repo": "vynamp-converter",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Ferramenta desktop `vynamp-converter` com fila de jobs persistida, apoiada na lib própria `vynamp-encode` como única fonte de codificadores.",
       "acceptance": "Conversão lossy nunca é anunciada como restauração hi-res; degradação de profundidade ou taxa exige confirmação e aparece no relatório; cancelamento e disco cheio preservam a source; saída é validada após escrita; colisão de nome não sobrescreve.",
       "qa": [
@@ -5800,7 +5800,7 @@
       "spec": "reference/audio/10-vitrola.md",
       "module": "vynamp-engine",
       "repo": "vynamp-engine",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Design aprovado do vitrola incorporado como módulo DSP interno, referências ao repositório externo removidas e repositório vitrola arquivado de forma reversível.",
       "acceptance": "Nenhum documento normativo cita o repositório externo do vitrola; a spec descreve módulo DSP interno preservando VIT-T-01..10; o design local não se perde; o repositório remoto fica arquivado e reversível.",
       "qa": [
@@ -5925,7 +5925,7 @@
       "spec": "reference/audio/03-dsp.md",
       "module": "vynamp-engine",
       "repo": "vynamp-engine",
-      "acceptance_ready": false,
+      "acceptance_ready": true,
       "deliverable": "Módulo DSP interno de vinil e válvula integrado ao grafo do player, com bypass, desativação automática, persistência de WearState e os testes VIT-T-01..10 executáveis.",
       "acceptance": "Bypass transparente após o crossfade; desativação automática em bit-perfect e DSD com motivo visível; WearState persistido por álbum; os testes VIT-T-01..10 rodam com oráculo independente.",
       "qa": [

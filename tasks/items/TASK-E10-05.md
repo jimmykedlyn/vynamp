@@ -1,9 +1,8 @@
 # TASK-E10-05 — Fuzz parsers, pacotes e RPC
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,12 @@ Fuzz targets, corpus adversarial, testes de limites e cobertura do threat model.
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** implementa o broker de permissões nem persiste grants: `TASK-E07-03` é a dependência e a dona. O fuzz só prova que a recusa acontece e com qual motivo; conceder ou revogar grant aqui duplicaria a autoridade de acesso.
+- **Não** implementa o validador ZIP de tema, o staging nem o rollback: `TASK-E06-02` é a dependência. O corpus adversarial de tema entra pelo validador dela, e corrigir o validador dentro desta TASK misturaria achado de fuzz com a entrega que ele audita.
+- **Não** faz a revisão de segurança do isolamento das extensões nem os testes de falha durante reprodução: `TASK-E07-10` é a TASK que esta bloqueia. Um alvo de fuzz sem crash não é revisão de sandbox.
+- **Não** executa os drills de kill, migração e rollback de update, nem o teste de vazamento de token em log ou export: `TASK-E10-09` é quem faz, e esta TASK a bloqueia.
+- **Não** fixa os defaults de limites do threat model: `TASK-E11-02` define budgets, regras de IPC/pacotes e a prova de sandbox. Aqui os limites entram por parâmetro do alvo e o valor medido é registrado, não decidido.
+- **Não** faz soak de 8 h nem matriz de hardware: `TASK-E10-08` cobre isso. Um alvo de fuzz com orçamento de minutos não substitui soak e não mede underrun.
 
 ## Antes de começar
 
@@ -40,16 +44,16 @@ Fuzz targets, corpus adversarial, testes de limites e cobertura do threat model.
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E10-05-AC-1` | PENDENTE | PENDENTE | Mídia/imagem/HLS/ZIP/RPC inválidos não causam OOM/hang |
-| `TASK-E10-05-AC-2` | PENDENTE | PENDENTE | permissões negativas e URLs filhas cobertas. |
+| `TASK-E10-05-AC-1` | o corpus adversarial: os 11 arquivos de `libs/decode/tests/fixtures/flac-conformance/faulty/`, os manifestos pcm/flac/mpeg truncados em cada byte de fronteira, um ZIP de tema com proporção 1000:1, 200 arquivos e um caminho `../`, um manifest HLS com 20 mil entradas e aninhamento 4, e um payload RPC declarando 4 GiB de corpo com 12 bytes enviados | cada entrada roda em alvo de fuzz com teto de memória declarado e watchdog de tempo por execução, por um orçamento fixo de iterações | Mídia/imagem/HLS/ZIP/RPC inválidos não causam OOM/hang |
+| `TASK-E10-05-AC-2` | o broker de `TASK-E07-03` com um grant de `network.domains` que não inclui o host pedido, e manifests cujas URLs filhas apontam para 127.0.0.1, 169.254.169.254, `file:///etc/passwd`, um redirect 302 para host fora da allowlist e um domínio que resolve para loopback | os casos de limite submetem esses pedidos e filhos ao broker e ao parser de manifest e registram a recusa com o motivo e o offset | permissões negativas e URLs filhas cobertas. |
 
 ## Verificação
 
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | alvos de fuzz com `cargo fuzz run parse_media corpus/ -- -max_total_time=600 -rss_limit_mb=1024` e os pares `theme_zip` e `plugin_rpc`, com corpus inicial montado a partir de `libs/decode/tests/fixtures/flac-conformance/faulty/` e dos manifestos truncados, e cada crash minimizado versionado com sha256 no manifesto | Nada de fuzz existe: `find . -type d -name 'fuzz*'` não acha diretório, nenhum `Cargo.toml` cita `arbitrary`, `libfuzzer-sys` ou `proptest`, `cargo-fuzz` não está no PATH desta máquina (`~/.cargo/bin` tem cargo, rustfmt, clippy, miri e rls, não cargo-fuzz) e a toolchain fixada em `rust-toolchain.toml` é 1.99.0 com profile minimal, sem nightly. A prova mais próxima hoje é `libs/decode/crates/vynamp-decode-flac/tests/resilient_decode.rs` com os 11 arquivos faulty e o `Error::Limit(LimitKind)` de `libs/decode/crates/vynamp-decode-core/src/limits.rs`, cujo default é `max_bytes: 64 << 30` e `max_depth: 16`. A evidência alvo: zero OOM com RSS abaixo de 1 GiB, zero execução acima de 10 s de parede, e toda recusa nomeando a variante de `LimitKind` ou o `Error::Invalid` com offset. |
+| Hardware | nenhum: os alvos consomem bytes em processo de usuário; nenhum caso abre dispositivo de áudio, tela ou GPU, e a rede é o fixture local de `TASK-E10-04`, com loopback e DNS controlados pelo próprio teste | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 

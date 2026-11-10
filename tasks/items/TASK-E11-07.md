@@ -1,9 +1,8 @@
 # TASK-E11-07 — Entregar distribuição nativa por plataforma
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,11 @@ Windowsinstaller/ZIP, Linuxpackages, MacUniversal2 ou packages x64/arm64 e Andro
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** valida instalador, pacote e update consumindo os artefatos em cada alvo com evidência assinada: esse gate por alvo é `TASK-E14-05`, e aqui se entrega o artefato, não a matriz de aceite dele.
+- **Não** implementa o helper nativo isolado, o sandbox de processo nem o RPC autenticado que o pacote precisa carregar: isso é `TASK-E07-05`.
+- **Não** implementa a verificação de manifesto, canal, expiração e rollback que consome os artefatos: o updater assinado é `TASK-E11-06`, dependência direta desta TASK.
+- **Não** escreve guia de usuário, notices, política de privacidade nem release notes: a documentação de lançamento é `TASK-E11-08`.
+- **Não** gera as declarações OS e o manifest de capacidades a partir do build: isso é `TASK-E16-09`, e o pacote daqui apenas as inclui.
 
 ## Antes de começar
 
@@ -40,18 +43,18 @@ Windowsinstaller/ZIP, Linuxpackages, MacUniversal2 ou packages x64/arm64 e Andro
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E11-07-AC-1` | PENDENTE | PENDENTE | Instalar/update/remove em cada alvo |
-| `TASK-E11-07-AC-2` | PENDENTE | PENDENTE | preservar dados/grants |
-| `TASK-E11-07-AC-3` | PENDENTE | PENDENTE | Mac slices nativas/notarização e Androidnative/targetSDK/page size checks |
-| `TASK-E11-07-AC-4` | PENDENTE | PENDENTE | interfaces de distribuição específicas do host. |
+| `TASK-E11-07-AC-1` | os oito artefatos nomeados em SUFFIXES de xtask/src/release.rs (windows-x64-setup.exe, windows-x64-portable.zip, linux-x64.deb, linux-x64.AppImage, macos-universal.dmg, macos-universal.zip, android-arm64.apk, android-arm64.aab) reunidos em dist/release | cada artefato é instalado, atualizado para a versão seguinte e removido no alvo que lhe corresponde: VM limpa Windows 11, container Ubuntu LTS, Mac Intel e Mac Silicon reais e aparelho Android arm64 | Instalar/update/remove em cada alvo |
+| `TASK-E11-07-AC-2` | um perfil com biblioteca indexada, playlists, favoritos, grants de pasta no Android e config de dispositivo, mais os artefatos das duas versões anteriores | o instalador roda sobre a instalação existente e depois o uninstall é executado no Windows, no Linux e no Android | preservar dados/grants |
+| `TASK-E11-07-AC-3` | um DMG e um ZIP Universal2 montados com lipo sobre x86_64-apple-darwin e aarch64-apple-darwin, e um APK/AAB arm64 com as bibliotecas .so nativas e o targetSDK e o page size do release corrente | o bundle é inspecionado com lipo -info e codesign --verify, o DMG é submetido a notarização e o APK é verificado com apksigner verify e bundletool dump manifest | Mac slices nativas/notarização e Androidnative/targetSDK/page size checks |
+| `TASK-E11-07-AC-4` | o mesmo build entregue nos cinco alvos, com as interfaces de integração do host: chave HKCU de uninstall e atalho no Windows, .desktop e MIME no Linux, Info.plist e document types no Mac, intent filters e package no Android | o usuário instala, abre arquivo e desinstala pela interface padrão do sistema operacional, sem invocar a CLI do app | interfaces de distribuição específicas do host. |
 
 ## Verificação
 
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | cargo xtask release assemble --version 1.0.0 sobre um dist/release com os oito nomes, exercitando artifact_manifest de xtask/src/release.rs, cujo teste já exige o conjunto exato e não vazio; hoje packaging/runtime-files.json tem audit_complete=false, packaging/update.pub e THIRD_PARTY_NOTICES não existem, e apps/desktop e apps/android também não — ci detect devolve core=false e android=false | artifact_manifest aceita os oito nomes e recusa tanto um a menos quanto um a mais; lipo -info mostra as slices x86_64 e arm64 no binário principal e nos helpers, apksigner verify reporta um signer e o manifest não declara AAB como instalável. O que ainda não existe: instalador compilado, assinatura real, notarização e os smoke de install/update/uninstall em alvo nenhum |
+| Hardware | ausente: exige Mac Intel e Mac Silicon reais para as slices e a notarização, aparelho Android arm64 físico para instalar APK/AAB e VMs limpas Windows e Linux; neste ambiente só a máquina Windows 11 existe, e cross-build não substitui alvo — a limitação se registra como bloqueio das AC-1, AC-2 e AC-3 | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 
