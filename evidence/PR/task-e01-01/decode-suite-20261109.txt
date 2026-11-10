@@ -1,0 +1,89 @@
+# E01-01 — prova de decodificação contra referência
+# Data: 2026-11-09. cwd: libs/decode. Comando: cargo test --workspace --locked
+
+     Running unittests src\lib.rs (target\debug\deps\vynamp_decode-940121af2ddcf03d.exe)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests\conformance_flac.rs (target\debug\deps\conformance_flac-f02389b771be730e.exe)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.76s
+     Running tests\facade.rs (target\debug\deps\facade-20ad5069b8265175.exe)
+test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running tests\flac.rs (target\debug\deps\flac-08ebb4e3b85ad096.exe)
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+     Running tests\mpeg.rs (target\debug\deps\mpeg-813c593cee23381d.exe)
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.49s
+     Running tests\oracle_flac.rs (target\debug\deps\oracle_flac-1a743b33100f5126.exe)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.45s
+     Running tests\oracle_mpeg.rs (target\debug\deps\oracle_mpeg-ecfb91891c38c5ee.exe)
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.29s
+     Running tests\oracle_pcm.rs (target\debug\deps\oracle_pcm-9e97c7def2af34b3.exe)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+     Running unittests src\lib.rs (target\debug\deps\vynamp_decode_aiff-a46ecddf4e8eea9f.exe)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests\aiff.rs (target\debug\deps\aiff-35b4f1fee1a0f5ea.exe)
+test result: ok. 31 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+     Running unittests src\lib.rs (target\debug\deps\vynamp_decode_core-ccf99c30c6e7700f.exe)
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests\bits.rs (target\debug\deps\bits-84ef9df659c51bd4.exe)
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+     Running tests\id3.rs (target\debug\deps\id3-d0b62dd57727dcc3.exe)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests\md5.rs (target\debug\deps\md5-450c2a3f8ede97e6.exe)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+     Running tests\source.rs (target\debug\deps\source-6a2f6dee194dabf2.exe)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests\trailer.rs (target\debug\deps\trailer-9094a2392a23e539.exe)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running unittests src\lib.rs (target\debug\deps\vynamp_decode_flac-f71c54f22a060a28.exe)
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests\decode.rs (target\debug\deps\decode-d652ddbedff7649a.exe)
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests\demux.rs (target\debug\deps\demux-d7947295f208584c.exe)
+test result: ok. 56 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.51s
+     Running tests\md5.rs (target\debug\deps\md5-ee9458207ea9808c.exe)
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+     Running tests\metadata.rs (target\debug\deps\metadata-9c8d36d1a370db60.exe)
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s
+     Running tests\oracle.rs (target\debug\deps\oracle-8c1f7e4fb5dedecb.exe)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests\resilient_decode.rs (target\debug\deps\resilient_decode-b36221f6cd674e45.exe)
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running unittests src\lib.rs (target\debug\deps\vynamp_decode_mp3-d95921d89a586400.exe)
+test result: ok. 95 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 1.10s
+     Running tests\alloc.rs (target\debug\deps\alloc-31f3ec6b21a95bbf.exe)
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.53s
+     Running tests\mp1.rs (target\debug\deps\mp1-207df070ecaa3d03.exe)
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.16s
+     Running tests\mp2.rs (target\debug\deps\mp2-4dbeef41002cb4fe.exe)
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.96s
+     Running tests\mp3.rs (target\debug\deps\mp3-ef8588c15c133d70.exe)
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.98s
+     Running unittests src\lib.rs (target\debug\deps\vynamp_decode_mpa-fb746ffef1e47a54.exe)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests\demux.rs (target\debug\deps\demux-f8136c1b16c85035.exe)
+test result: ok. 40 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.69s
+     Running tests\header.rs (target\debug\deps\header-f58eb04ebc7fd22c.exe)
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+     Running tests\vbr.rs (target\debug\deps\vbr-edf10089c615a196.exe)
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+     Running unittests src\lib.rs (target\debug\deps\vynamp_decode_pcm-e159c365be750de4.exe)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests\pcm.rs (target\debug\deps\pcm-5f753209356aeba4.exe)
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+     Running unittests src\lib.rs (target\debug\deps\vynamp_decode_riff-f9b41badcdf68bce.exe)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests\riff.rs (target\debug\deps\riff-d7f65cb7314dba21.exe)
+test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.53s
+     Running unittests src\lib.rs (target\debug\deps\vynamp_decode_testkit-e89d9173aeb2938e.exe)
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+     Running tests\counting_alloc.rs (target\debug\deps\counting_alloc-418735e5be6cd0a9.exe)
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+rc=0
