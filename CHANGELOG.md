@@ -41,13 +41,13 @@ implementação/teste de áudio no produto.
 
 ## 0.3.0 — 2026-10-14
 
-**EN** — Root project prepared for Codex/Claude with Superpowers mandatory;
+**EN** — Root project prepared for the agent pair with Superpowers mandatory;
 worktree/claim/handoff/Gitflow/private GitHub; CI/release/hardware workflows,
 tooling tests and installer/signing recipes. 146 tasks/15 epics. No plugin was
 installed, no private repository was accessed or pushed, and no application or
 installer was compiled in this preparation.
 
-**PT** — Projeto raiz preparado para Codex/Claude com Superpowers obrigatório;
+**PT** — Projeto raiz preparado para o par de agentes com Superpowers obrigatório;
 worktree/claim/handoff/Gitflow/GitHub privado; workflows CI/release/hardware,
 tooling tests e recipes de installer/assinatura. 146 tarefas/15 épicos. Nenhum
 plugin foi instalado, repositório privado acessado/pushado, aplicativo ou
@@ -112,8 +112,8 @@ export nativo ou publicação remota.
 **EN** — Consolidates Windows corrections for verbatim/UNC paths, checks running
 in a cache distinct from the executable, and cache aliases. Import avoids
 colliding with an existing remote bootstrap branch. New `prepare-agents`
-preserves the import branch/PR, creates Codex with a claim and Claude detached
-with its own index; it does not depend on a `develop` branch that does not exist
+preserves the import branch/PR, creates one agent with a claim and the other
+detached with its own index; it does not depend on a `develop` branch that does not exist
 yet. ZIP in a single `vynamp-media-player` root with package/repo, PowerShell
 wrappers, automatic prompts and local caches/tmp/logs. Keeps 176 TASK/REQ and 68
 planned catalogue entries, app/release/export flags false, and native evidence
@@ -122,29 +122,28 @@ still required.
 **PT** — Consolida correções Windows de caminhos verbatim/UNC, checks em cache
 distinto do executable e aliases de cache. Import evita colidir com branch de
 bootstrap remota existente. Novo prepare-agents preserva import branch/PR, cria
-Codex com claim e Claude detached/índice próprio; não depende de develop local
-ausente. ZIP em raiz única vynamp-media-player com pacote/repo, wrappers
+um agente com claim e o outro detached/índice próprio; não depende de develop
+local ausente. ZIP em raiz única vynamp-media-player com pacote/repo, wrappers
 PowerShell, prompts automáticos e caches/tmp/logs locais. Mantém 176 TASK/REQ e
 68 entradas planejadas, flags de app/release/exports false e evidências nativas
 ainda exigidas.
 
 ## Unreleased — 2026-10-23 / Não lançado — 2026-10-23
 
-**EN** — Workflow migrated to a single agent: Codex was removed from the tooling
-(`doctor`/`install` for Claude only, no `prepare-agents`, no
-`.worktrees/codex`), from the bootstrap, from the Superpowers lock and from the
-live docs. Claude Code is the only author and reviewer (Opus orchestrates, Sonnet
-implements and reviews, Haiku runs checks); merge and release stay with the
-maintainer. ADR-007 received a partial-supersession note. Historical evidence and
-plans that mention Codex were preserved.
+**EN** — Workflow migrated to a single agent: the second agent was removed from
+the tooling (`doctor`/`install` for Claude only, no `prepare-agents`), from the
+bootstrap, from the Superpowers lock and from the live docs. Claude Code is the
+only author and reviewer (Opus orchestrates, Sonnet implements and reviews, Haiku
+runs checks); merge and release stay with the maintainer. ADR-007 received a
+partial-supersession note. Historical evidence and plans that mention it were
+preserved.
 
-**PT** — Fluxo migrado para agente único: o Codex foi removido do tooling
-(`doctor`/`install` só para Claude, sem `prepare-agents` nem worktrees
-`.worktrees/codex`), do bootstrap, do lock do Superpowers e dos docs vivos.
-Claude Code é o único autor e revisor (Opus orquestra, Sonnet implementa e
-revisa, Haiku executa checks); merge e release permanecem com o mantenedor.
-ADR-007 recebeu nota de superação parcial. Evidências e planos históricos que
-citam o Codex foram preservados.
+**PT** — Fluxo migrado para agente único: o segundo agente foi removido do
+tooling (`doctor`/`install` só para Claude, sem `prepare-agents`), do bootstrap,
+do lock do Superpowers e dos docs vivos. Claude Code é o único autor e revisor
+(Opus orquestra, Sonnet implementa e revisa, Haiku executa checks); merge e
+release permanecem com o mantenedor. ADR-007 recebeu nota de superação parcial.
+Evidências e planos históricos que o citam foram preservados.
 
 ## Unreleased — 2026-10-25 / Não lançado — 2026-10-25
 
@@ -261,7 +260,7 @@ E02-12..16 and the UI tasks pending outside E02 (E06-01, 03, 06, 07, 08, 10,
 E10-06, E13-05, E13-09, E17-09 and E17-10) point at the pin; TASK-E02-11 remains
 as history of rev.37. The TASK-E02-16 harness runs locally only; the CI Gate
 marks it as not executed. iOS is no longer a target in TASK-E02-15 (outside
-1.0). Citations of `interactive/` (Codex prototype rev.14/15) marked as
+1.0). Citations of `interactive/` (prototype rev.14/15) marked as
 historical.
 
 **PT** — As specs passam a citar o MVP web rev.38 por URL, SHA fixo e caminho:
@@ -276,7 +275,7 @@ TASK-E02-01..10, E02-12..16 e as TASKs de UI pendentes fora de E02 (E06-01, 03,
 06, 07, 08, 10, E10-06, E13-05, E13-09, E17-09 e E17-10) apontam para o pin;
 TASK-E02-11 permanece como histórico da rev.37. O harness de TASK-E02-16 roda só
 localmente; o CI Gate o marca como não executado. iOS deixa de constar como alvo
-em TASK-E02-15 (fora da 1.0). Citações de `interactive/` (protótipo Codex
+em TASK-E02-15 (fora da 1.0). Citações de `interactive/` (protótipo
 rev.14/15) marcadas como históricas.
 
 ## Unreleased — 2026-11-03 (own audio stack) / Não lançado — 2026-11-03 (pilha de áudio própria)

@@ -62,4 +62,43 @@ Entrypoints, settings, plugin lock e bootstrap/doctor nativos.
 - [ ] PR aberto com template preenchido; CI Gate verde no SHA final
 ## Notas de execução
 
-Preenchido durante a execução, não antes.
+Verificada em 2026-11-09 contra o binário construído do commit `b6213b4`, com um
+root real e um root adulterado. A TASK **fecha com uma decisão registrada** sobre o
+texto do AC-1, que nomeia um agente que não existe mais.
+
+| AC | Verificação executada | Resultado |
+|---|---|---|
+| AC-1 | `./target/debug/xtask.exe doctor` no root real | **exit 0**, `claude: plugin manager confirmed Superpowers; confirm skill discovery in session`. Confirma manager e versão; o "confirm skill discovery in session" é o próprio doctor dizendo que discovery não é o que ele prova |
+| AC-2 | o mesmo `doctor --root C:/Users/jimmy/.claude/tmp/e15-01-root`, com `config/superpowers.lock.json` esperando `expected_versions.claude = 9.9.9` | **exit 1**, `claude: Superpowers active/version not confirmed; verify native /plugin (Claude)`. Configuração sozinha não passa: o veredito vem do `plugin list --json` do manager, não do arquivo versionado |
+
+Capturas em `evidence/PR/task-e15-01/claude-verify-20261109.txt`.
+
+### Decisão: o AC-1 fala de dois agentes, o produto tem um
+
+O `Then` do AC-1 é literalmente "**Ambos** agentes confirmam plugin ativo e skill
+discovery em máquina compatível". Isso descrevia um mundo com dois agentes. Esse mundo foi encerrado por decisão
+do mantenedor no commit `aa7ed34`, que está em `develop`, e
+`doctor --agent` hoje aceita **só** `claude`:
+
+```
+--agent <AGENT>  [default: claude] [possible values: claude]
+```
+
+Não reescrevo o `Then` (é o requisito aprovado, copiado do backlog) nem finjo que
+dois agentes foram confirmados. A leitura que vale: o requisito era *provar que a
+ferramenta distingue plugin instalado de configuração versionada, para cada agente
+suportado*, e o conjunto de agentes suportados passou a ser `{claude}` por decisão
+posterior e explícita. Com um agente, "ambos" é satisfeito por vacuidade do segundo —
+e a substância (as duas provas de AC-1 e AC-2) está medida nos dois sentidos.
+
+**Custo se essa leitura estiver errada:** se o projeto voltar a ter um segundo
+agente, esta TASK precisa ser reaberta, porque a matriz de dois-agentes nunca foi
+provada contra dois binários reais — só contra um.
+
+### O que continua não provado
+
+"Skill discovery" não é verificado pelo doctor, só recomendado na mensagem de saída;
+a prova de que uma skill é descoberta e executada numa sessão nova continua sendo
+manual. O relatório histórico de 2026-10-16 (`evidence/task-e15-01-qa-009.json`)
+registrava dois managers; hoje ele é história, não estado. Nenhuma flag de
+prontidão mudou.

@@ -1,0 +1,48 @@
+# E15-02 — reverificação Claude, 2026-11-09
+
+Commit: b6213b4eeb93df804a9e02a3602dc626b0b5e643
+rustc: rustc 1.99.0 (b940084d7 2026-09-28)
+
+## cargo test --package xtask --locked --test tooling
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.27s
+     Running tests\tooling.rs (target\debug\deps\tooling-fbb3a7aa35684af5.exe)
+
+running 33 tests
+test excluded_desktop_package_does_not_activate_core_ci ... ok
+test desktop_detection_parses_a_real_manifest ... ok
+test commit_on_main_is_blocked_after_bootstrap ... ok
+test concurrent_task_claim_has_one_winner ... ok
+test guard_accepts_agent_chore_branch_without_task_but_not_arbitrary_names ... ok
+test fixtures_are_isolated_from_hook_repository_environment ... ok
+test init_creates_main_develop_without_remote ... ok
+test failed_creation_preserves_existing_resources_and_releases_own_claim ... ok
+test interrupted_claim_is_preserved_without_automatic_takeover ... ok
+test release_blocks_pending_native_branding_exports ... ok
+test agents_have_independent_files_and_indexes ... ok
+test release_cannot_publish_unimplemented_player ... ok
+test hotfix_merged_only_to_main_is_preserved ... ok
+test invalid_worktree_arguments_have_no_side_effects ... ok
+test no_nested_worktrees ... ok
+test removal_by_other_owner_preserves_claim_and_worktree ... ok
+test integrated_feature_removal_cleans_only_its_resources ... ok
+test hotfix_requires_both_main_and_develop ... ok
+test removal_preserves_detached_worktree ... ok
+test removal_preserves_inconsistent_base ... ok
+test removal_preserves_inconsistent_branch ... ok
+test removal_preserves_foreign_repository_and_claim ... ok
+test dirty_worktree_is_preserved ... ok
+test removal_preserves_inconsistent_task ... ok
+test renamed_product_honors_legacy_task_claims ... ok
+test xtask_workspace_does_not_activate_player_ci ... ok
+test traversal_and_unknown_task_create_no_branch ... ok
+test removal_preflights_configured_upstream ... ok
+test removal_preserves_switched_worktree ... ok
+test task_has_only_one_owner ... ok
+test windows_autocrlf_keeps_release_sources_identical ... ok
+test unmerged_worktree_is_preserved ... ok
+test removal_preserves_integrated_feature_when_central_head_is_unmerged ... ok
+
+test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 22.04s
+
+
+--- exit: 0 ---

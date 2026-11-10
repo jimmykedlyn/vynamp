@@ -1,0 +1,120 @@
+# E11-03 — inventário de licenças e dependências
+Data: 2026-11-09. Método: `cargo metadata --locked` nos três workspaces que hoje
+têm dependência de terceiro, mais `find` sobre `assets/` para fonte e ícone.
+
+Este arquivo substitui a versão anterior, que era concatenção de LICENSE e
+SECURITY.md e não media nada.
+
+## 1. Código de terceiro (crates.io), por workspace
+
+| Workspace | Pacotes de terceiro |
+|---|---|
+| `vynamp` (raiz, `xtask`) | 164 |
+| `libs/decode` | 0 |
+| `libs/output` | 0 |
+
+`libs/dsp`, `libs/engine`, `libs/encode`, `apps/player`, `apps/converter`,
+`apps/restore` têm `[dependencies]` vazio: nenhum pacote externo, nada a licenciar
+além da licença própria do repo.
+
+**Consequência direta:** os dois repos com código real hoje (`decode` com 9 crates,
+`output` com 40 arquivos) não têm nenhuma dependência de terceiro. A superfície de
+licença de terceiro do produto é, neste momento, **inteiramente o `xtask`**.
+
+## 2. Expressões SPDX declaradas
+
+```
+    89  MIT OR Apache-2.0
+    21  MIT
+    18  Unicode-3.0
+    12  Apache-2.0 OR MIT
+     4  Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT
+     3  Unlicense OR MIT
+     2  MIT OR Zlib OR Apache-2.0
+     2  MIT/Apache-2.0
+     2  MIT OR Apache-2.0 OR LGPL-2.1-or-later
+     2  Unlicense/MIT
+     2  BSD-2-Clause OR Apache-2.0 OR MIT
+     1  0BSD OR MIT OR Apache-2.0
+     1  MIT-0
+     1  Apache-2.0/MIT
+     1  Apache-2.0 OR BSL-1.0
+     1  (MIT OR Apache-2.0) AND Unicode-3.0
+     1  Zlib
+     1  Apache-2.0
+```
+
+Todas são permissivas ou oferecem rota permissiva. **Nenhum pacote obriga GPL,
+AGPL, SSPL, CDDL, EUPL ou MPL** (licenças copyleft sem escolha): a única entrada
+com copyleft é `r-efi` 5.3.0/6.0.0, `MIT OR Apache-2.0 OR LGPL-2.1-or-later` —
+MIT é a rota exercida, então nada muda para distribuição.
+
+**Onde essa leitura pode falhar:** `cargo metadata` reporta o *campo* `license` do
+manifesto, não o texto de cada arquivo `LICENSE` no crate publicado. Um crate que
+declare MIT mas embuta código de terceiro sob outros termos não é detectado aqui.
+Esse risco não é fechável por metadata; o fechamento é o `cargo deny`/`cargo
+about` com cache de textos, que não está configurado. Registro como limitação, não
+como aprovação.
+
+## 3. Código nativo e codecs — o que NÃO foi verificado aqui
+
+| Item | Estado medido |
+|---|---|
+| FFmpeg | Não linkado nos repos com código: `find libs/decode libs/output -name build.rs` não retorna nada, e os crates de codec (`vynamp-decode-flac`, `-mp3`, `-mpa`, `-pcm`, `-riff`, `-aiff`) são Rust puro. A pergunta de features GPL/nonfree de FFmpeg **não tem objeto hoje**: não há bundle FFmpeg no produto |
+| ASIO SDK | Não presente. Nenhum arquivo ASIO no repo; `platforms/01-matriz-suporte.md:23` trata ASIO como capacidade planejada de Windows, e `delivery/03-riscos.md:26` lista "hardware alvo de DAC e ASIO" como decisão aberta de plataforma. Uma licença de ASIO não pode ser inventariada antes de haver binário com ASIO |
+| NDI / AJA | Não presentes. Nenhuma referência no código ou nos manifests |
+| Encoders | `libs/encode` tem `[dependencies]` vazio e 6 linhas de `lib.rs`. Não há encoder a licenciar |
+
+Isso não é uma aprovação de FFmpeg/ASIO/NDI: é o registro de que a pergunta do
+`Then` de AC-1 ("verificar features FFmpeg/ASIO/encoders") **não tem artefato a
+verificar** neste ponto do projeto. Quando o bundle FFmpeg entrar (é a decisão da
+TASK-E17-01), esta linha deixa de valer e o inventário precisa ser refeito.
+
+## 4. Fontes
+
+`assets/design-tokens.json` declara:
+
+```
+"ui_family": "system-ui, Noto Sans, sans-serif"
+"display_family": "ui-monospace, monospace"
+```
+
+Nenhum arquivo de fonte é distribuído: `find . -iname '*.ttf' -o -iname '*.otf' -o
+-iname '*.woff*'` retorna apenas fontes dentro de `reference/vynamp-mvp/node_modules/`
+(Playwright), que não é produto e não entra em pacote. **A família declarada é
+`system-ui` com fallback `Noto Sans`; como nenhuma fonte é embutida, não há licença
+de fonte a inventariar.** Se o design passar a embutir uma fonte, isso vira item de
+AC de novo.
+
+## 5. Assets próprios
+
+| Diretório | Conteúdo | Licença |
+|---|---|---|
+| `assets/` (raiz) | 19 SVG, 5 PNG, 4 JSON, 2 HTML, 2 MD — layouts, previews, tokens | Próprio do projeto; `assets/branding/asset-manifest.json` registra sha256 e status `reference`/`approved` de cada um |
+| `assets/icons/` | 19 SVG de família (disc, document, signal) mais ferramentas | Desenho próprio; `assets/icons/manifest.json` |
+| `assets/branding/` | Prancha aprovada do conceito C e símbolo | `sha256 faf69f5d…` na manifest; estado `approved-reference-native-exports-pending` |
+
+Nenhum asset tem origem externa registrada. Não há alegação de autorização
+inexistente: o que existe é desenho próprio, com hash no manifesto.
+
+## 6. Cumprimento do AC-1 e do AC-2
+
+**AC-1** — "cada item tem a feature de build e a licença verificadas na fonte
+oficial": feito para os 164 pacotes de terceiro (§2) e para os assets próprios (§5).
+**Não feito** para FFmpeg/ASIO/NDI/encoders, porque não há artefato (§3) — a
+verificação é vazia por ausência, não aprovada por inspeção.
+
+**AC-2** — "decisões de marca/licença final explícitas, sem alegar autorização
+inexistente": a decisão de licença do código está em `security/02-privacidade-licencas.md:11`
+(`MIT OR Apache-2.0`, convenção `crates-copyleft/` vazia nas duas libs). A decisão
+de marca final **permanece aberta** — `delivery/03-riscos.md:26` lista "Nome/marca e
+licença final" entre as decisões que bloqueiam publicação comercial, não a spec.
+Nenhuma autorização de terceiro é alegada em lugar nenhum deste inventário.
+
+## Limitações registradas
+
+1. Verificação por campo de manifesto, não por texto de `LICENSE` de cada crate.
+2. Sem `cargo deny`/`cargo about` para reter textos e detectar embutição.
+3. FFmpeg/ASIO/NDI/encoders sem artefato para verificar hoje; a AC-1 fica
+   parcialmente aberta quanto a eles por esse motivo, e volta a ser exigível quando
+   o bundle existir.

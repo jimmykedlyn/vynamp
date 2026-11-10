@@ -27,7 +27,7 @@ Quatro níveis nunca se misturam neste documento:
 | Nível | Situação hoje |
 |---|---|
 | Especificado | Todos os LYR-01..15 e LYR-AC-01..12 (proposta; este PR é só Markdown) |
-| Implementado no protótipo | Relatado: revisão 14 da referência HTML/SVG/JS do Codex, **fora deste repositório**; nenhum arquivo dela é linkado aqui |
+| Implementado no protótipo | Relatado: revisão 14/15 da referência HTML/SVG/JS, **fora deste repositório**; nenhum arquivo dela é linkado aqui. Fonte atual: MVP web em `vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452` (rev.38) |
 | Validado no protótipo | Relatado: testes e resultados de validação da referência, em Chrome/Windows; **evidência relatada da referência externa, não verificada neste repositório** |
 | Nativo | **Nada** implementado ou validado. O protótipo não prova o aplicativo nativo nem o MVP inteiro |
 

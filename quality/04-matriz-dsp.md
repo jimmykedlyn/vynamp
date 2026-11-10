@@ -32,7 +32,7 @@ Os testes por modalidade de EQ estão em [equalizadores §16](../reference/audio
 
 Matriz PASS/FAIL/BLOCKED obrigatória para o protótipo (contagem de controles, persistência ao recarregar, troca de tema, teclado, navegação responsiva e rótulos `[DEMO]`). Detalhe em EQ-T-01/02/08/09/13/14. Mockup estático não é aceito; "não verificado" deixa a entrega INCOMPLETA.
 
-Convenção das subseções 2.1 e 2.2: testes **planejados para o nativo** e testes **executados no protótipo** ficam em colunas separadas. A coluna do protótipo é evidência relatada da referência externa (Chrome/Windows, fixtures controladas; protótipo Codex rev.14/15, histórico; fonte atual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 rev.38; os arquivos `*-validation.json` e `interactive/tests/` não existem neste repositório) e não equivale a certificação de acessibilidade, medição de qualidade sonora, nem a teste da engine nativa. Nativo: nenhum teste executado.
+Convenção das subseções 2.1 e 2.2: testes **planejados para o nativo** e testes **executados no protótipo** ficam em colunas separadas. A coluna do protótipo é evidência relatada da referência externa (Chrome/Windows, fixtures controladas; protótipo rev.14/15, histórico; fonte atual: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452 rev.38; os arquivos `*-validation.json` e `interactive/tests/` não existem neste repositório) e não equivale a certificação de acessibilidade, medição de qualidade sonora, nem a teste da engine nativa. Nativo: nenhum teste executado.
 
 ### 2.1 Aceite de acesso e controles (DSP-UX-AC)
 

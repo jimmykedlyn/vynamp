@@ -1,0 +1,38 @@
+# E10-01 AC-1 — prova de adulteracao, 2026-11-09
+Arquivo: libs/decode/tests/fixtures/pcm/sine-s16le.wav
+HEAD: c3411696f8238a15988f4f5f04d0bbbb35d3cef0
+sha antes: 1592a47413f5b7c4d25ba9e39cee72fbe64e75f716ab5873090ff20377d14d78
+
+byte 9622 adulterado
+sha depois: 11bc6449f714ef27cfae3d01ed90fd4efd439005bed4d40e4a3286d8cb673a94
+
+## cargo test --test oracle_pcm
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running tests\oracle_pcm.rs (target\debug\deps\oracle_pcm-9e97c7def2af34b3.exe)
+
+running 3 tests
+test source_is_the_documented_signal ... ok
+test source_matches_the_independent_signal_and_pinned_hash ... ok
+test manifest_files_decode_to_the_source ... FAILED
+
+failures:
+
+---- manifest_files_decode_to_the_source stdout ----
+
+thread 'manifest_files_decode_to_the_source' (168972) panicked at crates\vynamp-decode\tests\oracle_pcm.rs:144:9:
+assertion `left == right` failed: sine-s16le.wav: sha256
+  left: "11bc6449f714ef27cfae3d01ed90fd4efd439005bed4d40e4a3286d8cb673a94"
+ right: "1592a47413f5b7c4d25ba9e39cee72fbe64e75f716ab5873090ff20377d14d78"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    manifest_files_decode_to_the_source
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p vynamp-decode --test oracle_pcm`
+exit=101
+
+## restaurado: sha = 1592a47413f5b7c4d25ba9e39cee72fbe64e75f716ab5873090ff20377d14d78
+git status: 0 alteracoes

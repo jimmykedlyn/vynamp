@@ -63,4 +63,43 @@ Matriz de toolchains/ABIs Windows/Linux/macOS Intel/macOS Silicon/Android e depe
 - [ ] PR aberto com template preenchido; CI Gate verde no SHA final
 ## Notas de execução
 
-Preenchido durante a execução, não antes.
+Medido em 2026-11-09. Provas em `evidence/PR/task-e14-01/`.
+
+**Correção de escopo, antes dos ACs.** A raiz do umbrella tem `exclude` para os
+oito módulos, então `cargo check --workspace` lá dentro compila **só o `xtask`**.
+Uma matriz medida na raiz não prova nada sobre core nem codecs. A matriz abaixo foi
+medida **dentro de cada repo que tem código**, e o comentário de escopo está no
+próprio arquivo de evidência.
+
+| AC | Verificação executada | Resultado |
+|---|---|---|
+| AC-1 | `cargo check --workspace --locked --target <t>` para os cinco alvos, dentro de `vynamp` (xtask), `libs/decode` (9 crates, 29 100 linhas) e `libs/output` (40 arquivos, 7 454 linhas) — 15 combinações | **15/15 exit 0.** `libs/dsp`, `libs/engine`, `libs/encode`, `apps/player`, `apps/converter`, `apps/restore` têm `[dependencies]` vazio e 3–6 linhas de `lib.rs`: não há o que resolver por ABI neles |
+| AC-1, artefato | `cargo build --workspace --locked --target aarch64-apple-darwin / aarch64-linux-android / x86_64-unknown-linux-gnu` | `libs/decode` **exit 0** nos três (só libs, sem linker). `libs/output` **exit 101** nos três: `output-probe` é binário e não há linker cruzado nesta máquina — `which cc gcc clang` não acha nenhum, só o `link.exe` da MSVC serve o host. Host `cargo build --workspace` no `libs/output` fecha **exit 0** em 10,75 s, então o 101 é ambiente, não código |
+| AC-2 | procura por adapters por host: `grep -rn "cfg(target_os\|wasapi\|coreaudio\|pipewire\|aaudio"` em `libs/output`, e `grep -rn "keyring\|credential-store\|dpapi"` em todo o repo | **Nenhum adapter de OS existe.** `libs/output/crates/vynamp-output/src/lib.rs:5-6` diz isso com todas as letras: "release only the pure-Rust `NullHost` exists; OS backends (WASAPI, ALSA, CoreAudio, AAudio, PipeWire, Pulse) arrive in later releases". **Nenhuma implementação de keychain** em lugar nenhum do tree. AC-2 **não satisfeito** |
+| AC-3 | inventário de licenças de E11-03 refeito por medição (§E11-03) e baselines de `platforms/01-matriz-suporte.md:9-17` | Inventário de terceiro fechado: 164 pacotes no `xtask`, **0 em `decode` e `output`**, nenhum copyleft sem rota permissiva, nenhuma fonte embutida, nenhum asset de origem externa. Baselines seguem **propostas** ("revisadas em M0 conforme toolchain e testes"), e este M0 não pôde inspecionar artefato cruzado (linha acima). AC-3 **parcialmente satisfeito**: as licenças suportam os alvos, as baselines ainda não foram exercidas em artefato |
+
+| Suite | Comando | Resultado |
+|---|---|---|
+| tooling | `cargo test --package xtask --locked --test tooling` | `test result: ok. 33 passed; 0 failed` em 22,03 s. Os testes de guarda medidos por nome: os 2 `hotfix_*` (`hotfix_requires_both_main_and_develop`, `hotfix_merged_only_to_main_is_preserved`) e os 9 `removal_*` (claim de outro owner, upstream configurado, worktree detached, repo/claim estrangeiro, base inconsistente, branch inconsistente, task inconsistente, feature integrada com head central não mergeado, worktree trocada) |
+| docs | `cargo xtask ci docs` | `test result: ok. 33 passed; 0 failed` em 25,20 s |
+
+**O que esta TASK não prova, e por que isso importa.** O `Then` do AC-1 diz
+"cada ABI é compilada com os codecs nativos e o artefato resultante é
+inspecionado". Duas coisas desse enunciado são falsas hoje: (a) **não há codec
+nativo** — `find libs/decode libs/output -name build.rs` não retorna nada e todos os
+crates de codec são Rust puro, então não existe "codecs nativos" a linkar em ABI
+nenhuma; (b) **o artefato não pôde ser inspecionado**, porque produzir artefato
+cruzado exige linker de cada alvo e esta máquina só tem o da MSVC. O que ficou
+provado é a resolução de tipos e a compilação, alvo por alvo, do código que existe.
+
+**O que faria AC-1 e AC-2 fecharem de verdade:** instalar os toolchains de link por
+alvo (cross-rs ou NDK + toolchain Apple) e escrever os adapters de output/files/
+keychain. Nenhum dos dois pertence a esta TASK: os adapters são TASK-E01-03
+(`vynamp-engine`) e as TASKs de plataforma de E12/E13. Esta TASK fecha a matriz e
+registra os dois vazios; não os transforma em verde.
+
+**Custo se essa leitura estiver errada:** se o mantenedor considerar que
+`cargo check` verde por alvo já satisfaz AC-1 e que AC-2 pode ser fechado sem
+adapter, então a TASK está completa com a matriz em 15/15. Se a leitura correta for
+"artefato inspecionado ou nada", AC-1 segue aberto por infraestrutura e AC-2 por
+código ausente — e não há evidência neste repositório que os feche.
