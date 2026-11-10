@@ -31,7 +31,7 @@ API Axum/PostgreSQL, busca, estações, publicação e UI admin auditável.
 - **Não** implementa autenticação, emissão de token, PKCE, revogação nem o isolamento de conta que o catálogo pressupõe. `TASK-E09-03` é dependência desta e entrega a identidade; esta TASK consome o sujeito e a role que ele afirma, e reimplementar a decisão de token aqui criaria dois pontos de autorização.
 - **Não** sincroniza biblioteca, playlist, favorito, bookmark ou progresso do ouvinte. O changelog, os cursores de sync e a UI de conflitos são `TASK-E09-08`, bloqueada por esta; o cursor de paginação do catálogo é outro cursor, com outra semântica, e compartilhar os dois faria o cliente tratar catálogo como biblioteca.
 - **Não** entrega o registry de temas e plugins, com publisher, assinatura e revogação de versão. É `TASK-E09-09`, também bloqueado por esta; as operações `/v1/admin/packages` aparecem no mesmo contrato por conveniência de arquivo, não por dono.
-- **Não** faz busca na biblioteca local do player nem indexação de arquivos em disco: FTS, filtros e views da biblioteca do desktop são `TASK-E03-05`. O catálogo publicado é do servidor; busca local é da biblioteca do player, com outro índice e sem conta, e a busca desta TASK é só a consulta ao catálogo publicado.
+- **Não** faz busca na biblioteca local do player nem indexação de arquivos em disco: FTS, filtros e views da biblioteca do desktop são `TASK-E03-05`, e o workspace que os exibe é `TASK-E02-05`. O catálogo publicado é do servidor, com outro índice e exigindo conta, e unificar os dois faria a busca do desktop depender de rede; a busca desta TASK é só a consulta ao catálogo publicado.
 
 ## Antes de começar
 
