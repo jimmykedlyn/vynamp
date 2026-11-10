@@ -1,0 +1,40 @@
+# E14-01 — matriz de toolchains/ABIs
+# Data: 2026-11-09. Cada workspace compila sozinho (Cargo.toml raiz exclui os 8 modulos).
+# Comando: cargo check --workspace --locked --target <alvo>, executado DENTRO do repo.
+
+# Escopo do que existe para compilar:
+#   libs/decode   9 crates, 29100 linhas, 0 dependencia de terceiro
+#   libs/output   40 arquivos, 7454 linhas, 0 dependencia de terceiro
+#   libs/dsp libs/engine libs/encode apps/player apps/converter apps/restore: 3-6 linhas cada
+#   xtask (umbrella): 27 arquivos, 164 pacotes de terceiro
+
+### .            x86_64-pc-windows-msvc
+    exit=0
+### .            x86_64-unknown-linux-gnu
+    exit=0
+### .            x86_64-apple-darwin
+    exit=0
+### .            aarch64-apple-darwin
+    exit=0
+### .            aarch64-linux-android
+    exit=0
+### libs/decode  x86_64-pc-windows-msvc
+    exit=0
+### libs/decode  x86_64-unknown-linux-gnu
+    exit=0
+### libs/decode  x86_64-apple-darwin
+    exit=0
+### libs/decode  aarch64-apple-darwin
+    exit=0
+### libs/decode  aarch64-linux-android
+    exit=0
+### libs/output  x86_64-pc-windows-msvc
+    exit=0
+### libs/output  x86_64-unknown-linux-gnu
+    exit=0
+### libs/output  x86_64-apple-darwin
+    exit=0
+### libs/output  aarch64-apple-darwin
+    exit=0
+### libs/output  aarch64-linux-android
+    exit=0

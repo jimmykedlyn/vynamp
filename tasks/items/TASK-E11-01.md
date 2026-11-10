@@ -65,7 +65,7 @@ Repositório independente, Cargo workspace mínimo, toolchain pin, ADRs e CI ini
 ## Notas de execução
 
 Fechada em 2026-11-09 por verificação cláusula a cláusula contra o estado atual do
-repositório, não por leitura da evidência original (Codex, 2026-10-18). O que a
+repositório, não por leitura da evidência original de 2026-10-18. O que a
 evidência dizia continua no arquivo; o que segue foi medido agora.
 
 | AC | Verificação executada | Resultado |

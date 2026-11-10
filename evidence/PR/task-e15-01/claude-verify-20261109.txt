@@ -1,0 +1,20 @@
+# E15-01 — reverificação Claude, 2026-11-09
+
+Commit: b6213b4eeb93df804a9e02a3602dc626b0b5e643
+
+## AC-1 — root real (./target/debug/xtask.exe doctor)
+claude: plugin manager confirmed Superpowers; confirm skill discovery in session
+exit=0
+
+## AC-2 — root temporário com expected_versions.claude = 9.9.9
+Root: C:/Users/jimmy/.claude/tmp/e15-01-root
+claude: Superpowers active/version not confirmed; verify native /plugin (Claude); update parser/lock from real output if needed
+exit=1
+
+## doctor --help (agentes aceitos)
+Usage: xtask.exe doctor [OPTIONS]
+
+Options:
+      --agent <AGENT>  [default: claude] [possible values: claude]
+      --root <ROOT>    
+  -h, --help           Print help

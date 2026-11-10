@@ -1,0 +1,18 @@
+# E10-01 — o job de CI confere o manifesto? 2026-11-09
+
+## grep em libs/decode/.github/workflows/ci.yml por manifesto/hash
+(nenhuma ocorrencia)
+
+## o mesmo grep no umbrella .github/workflows/ci.yml
+108:          # comando (`grep`), e `cargo tree` falhando -- manifest que nao carrega,
+141:          # `pipefail`: um manifest que nao carrega virava arvore vazia, e arvore
+144:            tree=$(cargo tree --manifest-path "libs/$m/Cargo.toml" --prefix none)
+152:            tree=$(cargo tree --manifest-path libs/dsp/Cargo.toml --prefix none)
+165:            cargo build --manifest-path "$d/Cargo.toml"
+
+## quem verifica os hashes: teste, nao job
+libs/decode/crates/vynamp-decode/tests/oracle_flac.rs:91:        assert_eq!(&hex(&sha256(&bytes)), sha, "{name}: sha256");
+libs/decode/crates/vynamp-decode/tests/oracle_mpeg.rs:169:        assert_eq!(hex(&sha256(&data)), row.sha, "{}", row.file);
+libs/decode/crates/vynamp-decode/tests/oracle_mpeg.rs:172:        assert_eq!(hex(&sha256(&ref_bytes)), row.ref_sha, "{}", row.reference);
+libs/decode/crates/vynamp-decode/tests/oracle_pcm.rs:110:    assert_eq!(hex(&sha256(&bytes)), SOURCE_SHA256, "source sha256");
+libs/decode/crates/vynamp-decode/tests/oracle_pcm.rs:144:        assert_eq!(hex(&sha256(&bytes)), sha, "{name}: sha256");

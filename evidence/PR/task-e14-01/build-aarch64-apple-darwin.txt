@@ -1,0 +1,45 @@
+# E14-01 — tentativa de build/link por ABI (limitacao medida)
+# Data: 2026-11-09. cargo build --workspace --locked --target <alvo>, dentro do repo.
+
+### libs/decode --target aarch64-apple-darwin
+   Compiling vynamp-decode-testkit v0.0.0 (D:\Projects\vynamp\libs\decode\crates\vynamp-decode-testkit)
+   Compiling vynamp-decode-mp3 v0.0.0 (D:\Projects\vynamp\libs\decode\crates\vynamp-decode-mp3)
+   Compiling vynamp-decode v0.0.0 (D:\Projects\vynamp\libs\decode\crates\vynamp-decode)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.06s
+    exit=0
+
+### libs/decode --target aarch64-linux-android
+   Compiling vynamp-decode-testkit v0.0.0 (D:\Projects\vynamp\libs\decode\crates\vynamp-decode-testkit)
+   Compiling vynamp-decode-mp3 v0.0.0 (D:\Projects\vynamp\libs\decode\crates\vynamp-decode-mp3)
+   Compiling vynamp-decode v0.0.0 (D:\Projects\vynamp\libs\decode\crates\vynamp-decode)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.16s
+    exit=0
+
+### libs/decode --target x86_64-unknown-linux-gnu
+   Compiling vynamp-decode-testkit v0.0.0 (D:\Projects\vynamp\libs\decode\crates\vynamp-decode-testkit)
+   Compiling vynamp-decode-mp3 v0.0.0 (D:\Projects\vynamp\libs\decode\crates\vynamp-decode-mp3)
+   Compiling vynamp-decode v0.0.0 (D:\Projects\vynamp\libs\decode\crates\vynamp-decode)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.87s
+    exit=0
+
+### libs/output --target aarch64-apple-darwin
+  = note: program not found
+
+warning: `output-probe` (bin "output-probe") generated 1 warning
+error: could not compile `output-probe` (bin "output-probe") due to 1 previous error; 1 warning emitted
+    exit=101
+
+### libs/output --target aarch64-linux-android
+  |
+  = note: program not found
+
+error: could not compile `output-probe` (bin "output-probe") due to 1 previous error
+    exit=101
+
+### libs/output --target x86_64-unknown-linux-gnu
+  |
+  = note: program not found
+
+error: could not compile `output-probe` (bin "output-probe") due to 1 previous error
+    exit=101
+
