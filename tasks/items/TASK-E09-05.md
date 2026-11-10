@@ -26,7 +26,7 @@ Upload assinado, quarantine/probe/rights, outbox e workers de renditions.
 
 ## Boundary
 
-- **Não** define catálogo, perfis de rendition, direitos por região nem orçamento de banda. Esse RFC e `TASK-E09-01`, quatro dependências acima desta (`E09-01` -> `E09-02` -> `E09-03` -> `E09-04`); aqui se executa o perfil que ele aprovou, e escolher o perfil dentro do worker faria o pipeline decidir política de distribuição.
+- **Não** define catálogo, perfis de rendition, direitos por região nem orçamento de banda. Esse RFC é `TASK-E09-01`, quatro dependências acima desta (`E09-01` -> `E09-02` -> `E09-03` -> `E09-04`); aqui se executa o perfil que ele aprovou, e escolher o perfil dentro do worker faria o pipeline decidir política de distribuição.
 - **Não** entrega resolve, URL assinada de delivery nem CDN. Isso é `TASK-E09-06`; o master privado desta TASK é o objeto de armazenamento, não o caminho de reprodução, e servir bytes daqui criaria um segundo caminho de acesso sem expiração.
 - **Não** implementa ingest live, packager HLS nem grade de programação. `TASK-E09-07` é dona do ingest SRT/RTMP e do HLS ao vivo; esta TASK é do pipeline de arquivo já completo, e reaproveitar o worker de VOD para live amarraria a latência do rádio a um job de transcode.
 - **Não** implementa a API de catálogo, a busca nem a publicação editorial. `TASK-E09-04` é dona do Axum/PostgreSQL de catálogo e da UI de admin; o endpoint de upload assinado daqui é o único ponto de escrita de mídia, e trazer o CRUD de asset para cá duplicaria o schema.
