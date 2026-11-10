@@ -1,9 +1,8 @@
 # TASK-E19-06 — Abrir os repositórios ao público e proteger as branches
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,16 @@ Sete repositórios Vynamp abertos ao público com relato privado de vulnerabilid
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** fecha a parte documental da abertura. Os seis repositórios de módulo sem
+  `LICENSE`, `SECURITY.md` e `CONTRIBUTING.md` são `TASK-E19-04` — é a única parte da
+  ADR-014 §2 que a abertura fez na ordem errada, e está declarada como pendência.
+- **Não** protege `vynamp-mvp-reference`: ele não tem `develop` nem workflow, e exigir
+  `CI Gate` ali bloquearia todo pull request.
+- **Não** usa `--reviews 1`: existe uma única conta colaboradora, e com
+  `enforce_admins=true` isso deixaria todo PR sem merge possível. O valor aplicado é
+  `--reviews 0`.
+- **Não** confunde visibilidade com prontidão: a AC-4 exige que repositório sem
+  proteção não seja considerado pronto, mesmo público.
 
 ## Antes de começar
 
@@ -46,12 +54,11 @@ Sete repositórios Vynamp abertos ao público com relato privado de vulnerabilid
 | `TASK-E19-06-AC-4` | um repositório cuja proteção não pôde ser aplicada | `cargo xtask repo audit --repo <owner/name>` roda | repo sem proteção não é considerado pronto. |
 
 ## Verificação
-
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | `gh api repos/<owner>/<name>` e `gh api .../private-vulnerability-reporting` em cada repositório, mais `gh api .../branches/<branch>/protection` | `visibility=public` e relato privado habilitado nos repositórios aplicáveis; `develop` exigindo `CI Gate` com force push e exclusão proibidos — leitura da API, não "parece certo" |
+| Hardware | nenhum: visibilidade e proteção de branch não dependem de dispositivo de áudio | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 

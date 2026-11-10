@@ -1,9 +1,8 @@
 # TASK-E10-02 — Testar domínio e propriedades de fila
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,13 @@ Suite de state machine, comandos aleatórios, ordering e queue invariants.
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** implementa a state machine: ela é o insumo que esta TASK exercita. O que
+  se entrega é o gerador de comandos aleatórios e as invariantes que ele prova.
+- **Não** mede desempenho. Sequência longa aqui é cobertura de estado, não throughput;
+  medir é `TASK-E10-07`.
+- **Não** faz fuzzing de parser, pacote ou RPC: isso é `TASK-E10-05`.
+- **Não** toca em rede. Toda sequência é local e determinística pela seed registrada,
+  porque a AC-1 exige que a seed acompanhe o caso que falha.
 
 ## Antes de começar
 
@@ -44,12 +49,11 @@ Suite de state machine, comandos aleatórios, ordering e queue invariants.
 | `TASK-E10-02-AC-2` | as propriedades de fila e o gerador de comandos de AC-1 | as sequências aleatórias cobrem shuffle, history, repeat e stop-after | shuffle/history/repeat/stop-after são exercitados. |
 
 ## Verificação
-
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | `cargo test --package vynamp --locked` sobre a suíte de sequências aleatórias, com a seed impressa no relatório do caso que falha | a mesma seed reproduz a mesma sequência e o evento carrega a geração que o produziu — resultado lido do relatório, não "parece certo" |
+| Hardware | nenhum: a state machine é determinística e roda em processo de usuário, sem dispositivo de áudio | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 

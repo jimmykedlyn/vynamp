@@ -1,9 +1,8 @@
 # TASK-E14-02 — Entregar ports de arquivos, credenciais e sistema
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,16 @@ Traits/adapters para Path/FD/Content URI, clocks/media controls/config/keychain 
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** implementa o domínio. A AC-1 exige que a árvore de dependências seja
+  inspecionada e que o domínio **não** dependa de Win32; trait e adapter são o
+  contrato, e a tradução de domínio fica no `engine`.
+- **Não** guarda segredo em plaintext. A AC-3 exige que o adapter **falhe** quando o
+  keychain está indisponível: fallback não é degradação aceitável nesta fronteira.
+- **Não** deixa o callback chamar UI nem operação bloqueante de OS. A AC-4 é sobre
+  disciplina de callback, não sobre aparência da interface.
+- **Não** cobre `converter` nem `restore`. São apps próprios, e `restore` usa `engine`
+  e `dsp` direto por decisão já registrada na
+  [ADR-013](../../adr/ADR-013-restore.md).
 
 ## Antes de começar
 
@@ -46,12 +54,11 @@ Traits/adapters para Path/FD/Content URI, clocks/media controls/config/keychain 
 | `TASK-E14-02-AC-4` | o engine na slice M1 com os adapters de cada host ligados | a mesma reprodução, com abrir, play, pause, seek e stop, roda nos cinco targets | callback não chama UI ou operação bloqueante de OS. A slice M1 abre arquivo e executa play/pause/seek/stop nativamente em Windows, Linux, Mac Intel, Mac Silicon e Android. |
 
 ## Verificação
-
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | `cargo tree` do crate de domínio procurando `windows`, `winapi` ou chamada direta de plataforma, mais o teste que confere que nenhum tipo de plataforma atravessa a fronteira | a árvore não contém tipo de plataforma e o teste falha se algum atravessar — leitura da árvore e do teste, não "parece certo" |
+| Hardware | a AC-4 exige a slice M1 (abrir, play, pause, seek, stop) nos cinco alvos, e cada Mac exige relatório nativo independente; emulador não substitui Android físico | cada alvo precisa do seu relatório nativo; onde não há, a ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 

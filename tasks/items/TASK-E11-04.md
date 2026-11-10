@@ -1,9 +1,8 @@
 # TASK-E11-04 — Completar CI e supply chain
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,14 @@ CI Rust e hosts Windows x64/Linux x64/macOS x64+arm64/Android arm64, native depe
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** substitui hardware por cross-build. A AC-2 é literal: cross-build não
+  substitui hardware, e o resultado do cross-build é publicado **como cross-build**.
+- **Não** constrói o player. Os jobs do umbrella compilam o que o umbrella é dono:
+  specs, ferramental, pins de submódulo e regras de arquitetura.
+- **Não** inventa versão de NDK, Gradle ou action: a AC-3 exige que a versão
+  **conferida** seja a mesma do commit, e o pin por SHA é o que torna isso verificável.
+- **Não** emite SBOM de binário publicado: o inventário aqui é de toolchain e de
+  artefato de CI.
 
 ## Antes de começar
 
@@ -45,12 +51,11 @@ CI Rust e hosts Windows x64/Linux x64/macOS x64+arm64/Android arm64, native depe
 | `TASK-E11-04-AC-3` | o workflow e o lockfile no estado do commit | as versões de NDK, Gradle e actions, os hashes e o inventário de secrets são conferidos | features/hashes/NDK/Gradle travados e secrets isolados. |
 
 ## Verificação
-
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | `Cargo.lock` e a matriz de `config/project.json`, confrontados com os jobs de `.github/workflows/ci.yml` e com os pins por SHA | cada um dos cinco alvos aparece em um job e cada `uses:` é SHA de 40 hex — leitura do workflow e do lockfile, não "parece certo" |
+| Hardware | a matriz compila e roda smoke por target; os alvos sem hardware correspondente publicam o cross-build identificado como tal | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 
