@@ -1,9 +1,8 @@
 # TASK-E15-02 — Validar worktrees, claims e handoff
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,14 @@ Scripts e regras de isolamento, claim atômico e remoção segura.
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** implementa o worktree: `cargo xtask repo worktree` cria. Esta TASK entrega
+  as **regras** de isolamento, claim e remoção segura.
+- **Não** remove worktree com mudança não commitada. A AC-1 exige que a worktree
+  suja/unmerged seja **preservada**; perder trabalho na remoção é exatamente o que a
+  regra impede.
+- **Não** libera hotfix antes de `main` **e** `develop`: a AC-2 fixa essa ordem.
+- **Não** substitui o claim atômico do Git common dir, que é o mecanismo real de
+  exclusividade por TASK.
 
 ## Antes de começar
 
@@ -44,12 +50,11 @@ Scripts e regras de isolamento, claim atômico e remoção segura.
 | `TASK-E15-02-AC-2` | uma worktree de hotfix com o merge feito apenas em main | a remoção da worktree é pedida | hotfix só remove após main e develop. |
 
 ## Verificação
-
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | duas worktrees do mesmo repo disputando o mesmo claim, e depois pedido de remoção de uma worktree suja | a segunda worktree é recusada e a worktree suja é preservada — leitura da recusa, não "parece certo" |
+| Hardware | nenhum: isolamento de worktree e claim são de filesystem e índice Git, sem dispositivo de áudio | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 

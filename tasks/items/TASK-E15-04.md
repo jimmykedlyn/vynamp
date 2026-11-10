@@ -1,9 +1,8 @@
 # TASK-E15-04 — Ativar workflows e CI Gate multiplataforma
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,14 @@ CI docs/tooling e matriz Cargo/Android, required aggregate context.
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** faz a agregação do gate. O job `gate` e o `needs:` são `TASK-E19-01`; aqui
+  se entregam os jobs e o contexto agregado que vira required.
+- **Não** deixa job ativo mascarar falha. A AC-1 é literalmente essa regra: um job que
+  falha enquanto outro ainda corre não é aprovação.
+- **Não** aprova o player por skip. A AC-3 exige que skip por falta de hardware ou de
+  fonte **não** aprove o player, e o agregado publica o estado final.
+- **Não** cobre iOS. A AC-4 confronta os workflows com a matriz dos cinco alvos; iOS é
+  FASE 6 e entra depois do gate.
 
 ## Antes de começar
 
@@ -46,12 +52,11 @@ CI docs/tooling e matriz Cargo/Android, required aggregate context.
 | `TASK-E15-04-AC-4` | a matriz de alvos obrigatórios da spec de plataformas | os workflows são confrontados com a matriz | cinco alvos cobertos. |
 
 ## Verificação
-
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | `cargo xtask check-delivery` sobre os workflows, confrontando cada `uses:` e cada permissão com a matriz de alvos | todo `uses:` com SHA de 40 hex, `permissions: contents: read`, e cada um dos cinco alvos presente em um job — leitura do workflow, não "parece certo" |
+| Hardware | nenhum: o gate agregador roda em runner hospedado; a matriz de hardware é o `quality.yml` do umbrella, separado | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 

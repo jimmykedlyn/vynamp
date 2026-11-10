@@ -1,9 +1,8 @@
 # TASK-E15-01 — Configurar Claude Code e Superpowers obrigatório
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,14 @@ Entrypoints, settings, plugin lock e bootstrap/doctor nativos.
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** instala o plugin: `cargo xtask install` instala. A AC-2 exige que a
+  **configuração sozinha** não conte como instalação, e é o doctor que tem de reprovar.
+- **Não** prova skill discovery. O `doctor` confirma o plugin manager e a versão; o
+  "confirm skill discovery in session" é ele mesmo dizendo que discovery não é o que
+  ele mede. A AC-1 fecha essa parte na sessão, não no binário.
+- **Não** roda em máquina incompatível: o doctor é quem decide a compatibilidade.
+- **Não** escreve o entrypoint do app. O player é repo próprio; aqui é o entrypoint do
+  ferramental de engenharia.
 
 ## Antes de começar
 
@@ -44,12 +50,11 @@ Entrypoints, settings, plugin lock e bootstrap/doctor nativos.
 | `TASK-E15-01-AC-2` | os arquivos de configuração versionados e um diretório de plugins vazio | o doctor roda sem o plugin instalado | configuração sozinha não conta como instalação. |
 
 ## Verificação
-
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | `./target/debug/xtask.exe doctor` no root real, e de novo com `--root` apontando para um root cujo `config/superpowers.lock.json` espera versão falsa | no root real **exit 0** (`claude: plugin manager confirmed Superpowers`); no root adulterado **exit 1** (`Superpowers active/version not confirmed`) — a segunda execução é a que prova a AC-2, e as capturas estão em `evidence/PR/task-e15-01/` |
+| Hardware | nenhum: bootstrap e doctor de ferramental não tocam dispositivo de áudio | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 

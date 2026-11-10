@@ -1,9 +1,8 @@
 # TASK-E10-01 — Criar corpus de testes licenciado
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,16 @@ Fixtures geradas de tons/sweep/gapless e corrupções, com manifests de hashes e
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** gera fixture de *sweep* nem par *gapless*. O `Entrega` cita os dois, e
+  nenhum existe ainda: o corpus cobre tons e variantes de codec. A lacuna está
+  registrada na nota de execução, não escondida aqui.
+- **Não** confere o manifesto num job de CI. O `Then` do AC-1 nomeia "o job de CI";
+  quem confere é a suíte `oracle_pcm.rs`, que reprova o build quando o hash não bate.
+  A diferença está medida na nota de execução.
+- **Não** gera corrupção própria: o `faulty/` do FLAC vem do repositório
+  `ietf-wg-cellar/flac-test-files`, versionado com `SOURCE.txt` em CC0 1.0.
+- **Não** toca no áudio: prova que os bytes versionados são os que o manifesto
+  declara, não que o som toca bem.
 
 ## Antes de começar
 
@@ -45,12 +53,11 @@ Fixtures geradas de tons/sweep/gapless e corrupções, com manifests de hashes e
 | `TASK-E10-01-AC-3` | a suíte que consome o corpus | todo stream remoto é procurado na suíte e o CI roda sem rede | testes não dependem de rádios públicas instáveis. |
 
 ## Verificação
-
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | `cargo test --package vynamp-decode --test oracle_pcm --locked` com um byte de `tests/fixtures/pcm/sine-s16le.wav` invertido, depois `git checkout --` no arquivo | **exit 101**: `manifest_files_decode_to_the_source` panica em `oracle_pcm.rs:144` com o sha256 esperado contra o adulterado; restaurado, `git status` limpo — sem esse teste o hash do manifesto seria decoração |
+| Hardware | nenhum: os fixtures são WAV/f32 versionados e o oráculo compara hash e decodificação, sem dispositivo de áudio | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 

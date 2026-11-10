@@ -1,9 +1,8 @@
 # TASK-E11-01 — Criar workspace e baseline de engenharia
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,16 @@ Repositório independente, Cargo workspace mínimo, toolchain pin, ADRs e CI ini
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** implementa player nenhum. O workspace da raiz tem só `xtask`, e o
+  `Cargo.toml` do umbrella **exclui** os oito módulos: `cargo check --workspace` aqui
+  dentro compila apenas o `xtask`.
+- **Não** copia código, mídia nem artefato do Winamp. A AC-1 é exatamente esse limite,
+  e ela mede por varredura da árvore rastreada, não por declaração.
+- **Não** move `application_ready`, `release_enabled` nem `branding_exports_ready`: as
+  três seguem `false`, e esta TASK não é dona delas.
+- **Não** fecha proteção de branch nem relato privado de vulnerabilidade: são
+  `TASK-E15-03` e `TASK-E19-06`.
+- **Não** valida áudio. Nenhum sample foi decodificado e nenhum hardware foi tocado.
 
 ## Antes de começar
 
@@ -46,12 +54,11 @@ Repositório independente, Cargo workspace mínimo, toolchain pin, ADRs e CI ini
 | `TASK-E11-01-AC-4` | cada script de fixture que referencia um arquivo de áudio | o caminho é resolvido a partir da raiz do repositório | fixtures têm paths definidos. |
 
 ## Verificação
-
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | `git grep -In -i -E "winamp|nullsoft"` na árvore rastreada, fora de `_arquivo/` | 0 arquivos e nenhum asset binário Winamp — a varredura é a evidência, não a ausência de reclamação |
+| Hardware | nenhum: bootstrap de repositório e workspace não tocam dispositivo de áudio | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 

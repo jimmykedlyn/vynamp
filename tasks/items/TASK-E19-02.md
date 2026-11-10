@@ -1,9 +1,8 @@
 # TASK-E19-02 — Higiene, governança e README bilíngue do repo principal
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,15 @@ LICENSE dual, LEGAL, CODE_OF_CONDUCT, GOVERNANCE, templates de issue, SECURITY.m
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** promete capacidade que o repositório não tem. A AC-4 é uma varredura de
+  afirmações, e ela já corrigiu quatro que envelheceram quando o passo 34 enxugou os
+  workflows.
+- **Não** inventa canal de reporte nem SLA. A AC-2 exige que o `SECURITY.md` aponte
+  para GitHub Security Advisories, e nada além disso.
+- **Não** substitui a licença dual por uma só: `LICENSE`, `LICENSE-MIT` e
+  `LICENSE-APACHE`, com SPDX `MIT OR Apache-2.0`.
+- **Não** reescreve a governança inteira. A AC-4 confronta cada afirmação com a
+  evidência, e só o que não se sustenta muda.
 
 ## Antes de começar
 
@@ -46,12 +53,11 @@ LICENSE dual, LEGAL, CODE_OF_CONDUCT, GOVERNANCE, templates de issue, SECURITY.m
 | `TASK-E19-02-AC-4` | os documentos de governança e as specs | cada afirmação de capacidade ou de alvo é confrontada com a evidência | docs não afirmam capacidade ou alvo não verificado. |
 
 ## Verificação
-
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | `grep -n "^# " README.md`, `ls LICENSE*`, leitura do `SECURITY.md` e `gh api repos/jimmykedlyn/vynamp/private-vulnerability-reporting` | README bilíngue nas duas metades, os três arquivos de licença presentes, e `{"enabled": true}` no relato privado — leitura da API e dos arquivos, não "parece certo" |
+| Hardware | nenhum: licença, README e política de segurança não dependem de dispositivo de áudio | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 

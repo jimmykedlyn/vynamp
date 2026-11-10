@@ -1,9 +1,8 @@
 # TASK-E15-05 — Integrar testes e evidência operacional
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,14 @@ Unit/integration/numerical/stream/UI/hardware/fuzz e protocolo de relatórios.
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** substitui o gate por relatório. O relatório é o **protocolo** de evidência;
+  quem reprova continua sendo o job.
+- **Não** transforma falta de hardware em aprovação. A AC-3 exige que o resultado seja
+  publicado como ausência declarada.
+- **Não** junta validação de plugin e de instalador no job de tooling: a AC-4 exige
+  separação por tipo.
+- **Não** aceita fixture sem manifesto. A AC-2 exige hash e licença conferidos; fixture
+  que existe sem manifesto verificado é decoração.
 
 ## Antes de começar
 
@@ -46,12 +52,11 @@ Unit/integration/numerical/stream/UI/hardware/fuzz e protocolo de relatórios.
 | `TASK-E15-05-AC-4` | as validações de plugin e as de instalador | os jobs são separados por tipo | plugin/installer validations separados de tooling. |
 
 ## Verificação
-
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | o manifesto de cada fixture, confrontado com o hash do arquivo e com a licença, mais o protocolo de relatório preenchido TASK a TASK | cada fixture usada por teste tem hash e licença conferidos no manifesto — leitura do manifesto, não "parece certo" |
+| Hardware | a AC-3 exige que um teste que depende de hardware indisponível publique o resultado como ausência, sem passar | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 

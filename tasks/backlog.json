@@ -3,13 +3,13 @@
   "spec_version": "0.7.0",
   "version": "2.0.0",
   "generated_by": "passo 37 (37-tasks.ps1)",
-  "source": "backlog.json anterior, 191 tarefas, com module/repo/acceptance_ready acrescentados",
+  "source": "backlog.json anterior, 191 tarefas, com module/repo/acceptance_ready acrescentados; FASE 6 (iOS) acrescentada em 2026-11-10, 6 tarefas",
   "note": "Fonte unica de status. O Markdown em tasks/items nao carrega estado confiavel: os campos vem daqui.",
   "counts": {
-    "product": 191,
+    "product": 197,
     "engineering": 2,
-    "total": 193,
-    "acceptance_ready": 2
+    "total": 199,
+    "acceptance_ready": 8
   },
   "tasks": [
     {
@@ -5986,6 +5986,201 @@
         "max": 2
       },
       "risk": "médio"
+    },
+    {
+      "id": "TASK-E20-01",
+      "epic": "E20",
+      "title": "Provar iOS arm64, bridge Rust e CoreAudio",
+      "phase": "F6",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "android",
+      "requirements": [
+        "REQ-E20-01"
+      ],
+      "dependencies": [
+        "TASK-E11-01",
+        "TASK-E01-01",
+        "TASK-E01-02"
+      ],
+      "spec": "platforms/05-ios.md",
+      "module": "vynamp-player",
+      "repo": "vynamp-player",
+      "acceptance_ready": true,
+      "deliverable": "Spike de build `aarch64-apple-ios`, ownership de buffers entre Swift e Rust, saída CoreAudio (vynamp-output) e adapter AVAudioEngine, com decisão de runtime.",
+      "acceptance": "artefato de simulador e de device são distinguidos no build; callback sem alocação nem travessia para o runtime Swift; WAV e FLAC tocam em aparelho arm64 real; comparar lifecycle e sessão de áudio antes de congelar a decisão.",
+      "qa": [
+        "QA-019",
+        "QA-021",
+        "QA-035"
+      ],
+      "estimate_days": {
+        "min": 2,
+        "max": 5
+      },
+      "risk": "alto"
+    },
+    {
+      "id": "TASK-E20-02",
+      "epic": "E20",
+      "title": "Entregar AVAudioSession e playback em background",
+      "phase": "F6",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "android-audio",
+      "requirements": [
+        "REQ-E20-02"
+      ],
+      "dependencies": [
+        "TASK-E20-01",
+        "TASK-E01-03"
+      ],
+      "spec": "platforms/05-ios.md",
+      "module": "vynamp-player",
+      "repo": "vynamp-player",
+      "acceptance_ready": true,
+      "deliverable": "Sessão de áudio configurada por categoria, Now Playing com MPRemoteCommandCenter, e reprodução que sobrevive ao app ir para segundo plano.",
+      "acceptance": "a sessão de áudio mantém o playback sem interrupção; interrupção pausa e retoma na posição em que estava; comandos remotos operam a fila única em Rust; a sessão não vaza ao terminar a reprodução.",
+      "qa": [
+        "QA-011",
+        "QA-019",
+        "QA-035"
+      ],
+      "estimate_days": {
+        "min": 3,
+        "max": 8
+      },
+      "risk": "alto"
+    },
+    {
+      "id": "TASK-E20-03",
+      "epic": "E20",
+      "title": "Entregar shell SwiftUI touch-first e acessibilidade",
+      "phase": "F6",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "android-ui",
+      "requirements": [
+        "REQ-E20-03"
+      ],
+      "dependencies": [
+        "TASK-E20-01",
+        "TASK-E02-02"
+      ],
+      "spec": "platforms/05-ios.md",
+      "module": "vynamp-player",
+      "repo": "vynamp-player",
+      "acceptance_ready": true,
+      "deliverable": "Shell SwiftUI com controles de 44pt, bottom sheets e editor paramétrico em tela cheia, com VoiceOver e Dynamic Type.",
+      "acceptance": "controles de DSP e playlist acessíveis sem scroll horizontal; VoiceOver nomeia e opera transporte e DSP; Dynamic Type em 200% não esconde ação; rotação não reinicia áudio nem perde seleção.",
+      "qa": [
+        "QA-010",
+        "QA-020",
+        "QA-035"
+      ],
+      "estimate_days": {
+        "min": 3,
+        "max": 8
+      },
+      "risk": "alto"
+    },
+    {
+      "id": "TASK-E20-04",
+      "epic": "E20",
+      "title": "Entregar acesso a arquivos e biblioteca sob sandbox",
+      "phase": "F6",
+      "priority": "P1",
+      "status": "planned",
+      "owner_role": "android-library",
+      "requirements": [
+        "REQ-E20-04"
+      ],
+      "dependencies": [
+        "TASK-E20-02",
+        "TASK-E02-05"
+      ],
+      "spec": "platforms/05-ios.md",
+      "module": "vynamp-player",
+      "repo": "vynamp-player",
+      "acceptance_ready": true,
+      "deliverable": "Importação por document picker, Core File Provider e MediaPlayer, com biblioteca persistida dentro do container do app.",
+      "acceptance": "arquivo escolhido pelo usuário persiste no container; permissão revogada vira erro tipado, não crash; lista de 10 mil entradas rola sem carregar todas de uma vez; nenhuma leitura fora do container.",
+      "qa": [
+        "QA-020",
+        "QA-006",
+        "QA-035"
+      ],
+      "estimate_days": {
+        "min": 2,
+        "max": 6
+      },
+      "risk": "médio"
+    },
+    {
+      "id": "TASK-E20-05",
+      "epic": "E20",
+      "title": "Adaptar DSP e equalização ao layout e ao orçamento iOS",
+      "phase": "F6",
+      "priority": "P1",
+      "status": "planned",
+      "owner_role": "android",
+      "requirements": [
+        "REQ-E20-05"
+      ],
+      "dependencies": [
+        "TASK-E20-03",
+        "TASK-E04-01"
+      ],
+      "spec": "platforms/05-ios.md",
+      "module": "vynamp-player",
+      "repo": "vynamp-player",
+      "acceptance_ready": true,
+      "deliverable": "Editor de DSP adaptado a gestos, com cadeia de efeitos sobre o núcleo Rust compartilhado e orçamento de CPU medido no aparelho.",
+      "acceptance": "presets respondem dentro de ±0.2 dB do desktop; nenhuma alocação na callback; cadeia completa não causa underrun no aparelho de referência; valor aplicado é o que a curva exibe.",
+      "qa": [
+        "QA-005",
+        "QA-019",
+        "QA-035"
+      ],
+      "estimate_days": {
+        "min": 3,
+        "max": 8
+      },
+      "risk": "alto"
+    },
+    {
+      "id": "TASK-E20-06",
+      "epic": "E20",
+      "title": "Fechar assinatura, TestFlight e aceite iOS",
+      "phase": "F6",
+      "priority": "P0",
+      "status": "planned",
+      "owner_role": "qa-android",
+      "requirements": [
+        "REQ-E20-06"
+      ],
+      "dependencies": [
+        "TASK-E20-02",
+        "TASK-E20-03",
+        "TASK-E20-04",
+        "TASK-E20-05"
+      ],
+      "spec": "platforms/05-ios.md",
+      "module": "vynamp-player",
+      "repo": "vynamp-player",
+      "acceptance_ready": true,
+      "deliverable": "Build assinado com Apple Developer Program, distribuição por TestFlight e relatório de aceite em aparelho real.",
+      "acceptance": "build assinado instala por TestFlight em aparelho real; gates comuns aprovados no iOS; hardware ausente bloqueia o aceite em vez de aprová-lo; abre sem violação de sandbox.",
+      "qa": [
+        "QA-019",
+        "QA-021",
+        "QA-035"
+      ],
+      "estimate_days": {
+        "min": 5,
+        "max": 15
+      },
+      "risk": "alto"
     }
   ]
 }

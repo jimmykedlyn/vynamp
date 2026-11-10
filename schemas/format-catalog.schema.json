@@ -91,7 +91,8 @@
               "M2",
               "M3",
               "M4",
-              "M5"
+              "M5",
+              "F6"
             ]
           },
           "policy": {
@@ -131,11 +132,12 @@
                 "linux-x64",
                 "macos-intel",
                 "macos-silicon",
-                "android-arm64"
+                "android-arm64",
+                "ios-arm64"
               ]
             },
             "minItems": 1,
-            "maxItems": 5,
+            "maxItems": 6,
             "uniqueItems": true
           },
           "state": {

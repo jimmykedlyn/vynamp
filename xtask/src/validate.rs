@@ -1,5 +1,5 @@
 use crate::util::*;
-use anyhow::{Context, Result, ensure};
+use anyhow::{Context, Result, bail, ensure};
 use regex::Regex;
 use serde_json::{Value, json};
 use std::{
@@ -26,11 +26,19 @@ fn strings(v: &Value) -> BTreeSet<String> {
         .map(str::to_owned)
         .collect()
 }
+/// Position of a task's phase in the delivery order: `M0`..`M5`, then `F6`.
+///
+/// `F6` is [FASE 6](../../delivery/01-roadmap.md), which ships after 1.0. It ranks above
+/// every milestone, and the dependency rule ("no task may depend on a later phase") has to
+/// read it that way -- ranking it below M0 because `F` sorts before `M` would let an iOS
+/// task be a dependency of an M0 one, which is the whole ordering the rule exists to stop.
 fn phase(v: &Value) -> Result<u32> {
-    Ok(string(v, "phase")?
-        .strip_prefix('M')
-        .context("Bad phase")?
-        .parse()?)
+    let text = string(v, "phase")?;
+    match text.strip_prefix('M') {
+        Some(digits) => Ok(digits.parse()?),
+        None if text == "F6" => Ok(6),
+        None => bail!("Bad phase {text}"),
+    }
 }
 /// Where a task's Markdown and the backlog stop agreeing, if anywhere.
 ///
@@ -457,7 +465,7 @@ pub fn spec(root: &Path) -> Result<()> {
             );
         }
     }
-    let report = json!({"spec_version":data["spec_version"],"scope":"Validação documental em Rust; não testa player/hardware/API/WIT.","mandatory_platforms":["Windows x86_64","Linux x86_64","macOS Intel x86_64","macOS Apple Silicon arm64","Android arm64-v8a"],"markdown_files":md.len(),"tasks":tasks.len(),"requirements":matrixids.len(),"epics":epics.len(),"phases":phases,"schemas_and_examples":schemas.len(),"format_catalog_entries":catalog["entries"].as_array().map(Vec::len),"openapi_paths":paths.len(),"operation_count":ops.len(),"errors":c.errors,"result":if c.errors.is_empty(){"passed"}else{"failed"}});
+    let report = json!({"spec_version":data["spec_version"],"scope":"Validação documental em Rust; não testa player/hardware/API/WIT.","mandatory_platforms":["Windows x86_64","Linux x86_64","macOS Intel x86_64","macOS Apple Silicon arm64","Android arm64-v8a","iOS arm64"],"markdown_files":md.len(),"tasks":tasks.len(),"requirements":matrixids.len(),"epics":epics.len(),"phases":phases,"schemas_and_examples":schemas.len(),"format_catalog_entries":catalog["entries"].as_array().map(Vec::len),"openapi_paths":paths.len(),"operation_count":ops.len(),"errors":c.errors,"result":if c.errors.is_empty(){"passed"}else{"failed"}});
     write_json(root.join("VALIDATION.json"), &report)?;
     println!("{}", serde_json::to_string_pretty(&report)?);
     ensure!(c.errors.is_empty(), "Specification validation failed");
@@ -846,14 +854,22 @@ pub fn delivery(root: &Path) -> Result<()> {
         .keys()
         .map(String::as_str)
         .collect();
+    // Every target the roadmap promises must be declared with its Rust triple, and iOS is
+    // one of them since FASE 6. Subset, not equality: the check is "nothing promised is
+    // missing", and an extra key is a statement about a target the project also builds --
+    // buying a red gate for it would make the roadmap unable to grow without editing the
+    // gate that is supposed to watch it.
     c.check(
-        keys == BTreeSet::from([
+        [
             "windows-x64",
             "linux-x64",
             "macos-intel",
             "macos-silicon",
             "android-arm64",
-        ]),
+            "ios-arm64",
+        ]
+        .into_iter()
+        .all(|t| keys.contains(t)),
         "Missing platform target",
     );
     let ignore = text(root.join(".gitignore"))?;

@@ -2,6 +2,54 @@ use anyhow::{Context, Result, ensure};
 use serde_json::Value;
 use std::collections::BTreeSet;
 
+/// The five targets every required format must reach from M0 to M3.
+const CORE_TARGETS: [&str; 5] = [
+    "windows-x64",
+    "linux-x64",
+    "macos-intel",
+    "macos-silicon",
+    "android-arm64",
+];
+
+/// The phase iOS joins the mandatory set, and the reason it is spelled `F6` rather than
+/// `M6`: iOS is [FASE 6](../../delivery/01-roadmap.md) of the delivery roadmap, shipping
+/// after 1.0, not the sixth milestone of it. No catalog entry is at `F6` today -- the phase
+/// is declared here so that the day one is, the rule that governs it already exists instead
+/// of being written to fit whatever the entry happened to say.
+const IOS_PHASE: &str = "F6";
+
+/// Position of a phase in the delivery order: `M0`..`M5`, then `F6`.
+///
+/// Ordering by the phase string itself is wrong and quietly so: `"F6" < "M1"` compares
+/// `F` (0x46) against `M` (0x4D), so every 1.0 milestone would sort *after* the iOS phase
+/// and inherit its sixth target. The roadmap's order is a number the letters do not carry.
+fn phase_rank(phase: &str) -> Option<u8> {
+    match phase.strip_prefix('M') {
+        Some(digits) => digits.parse::<u8>().ok(),
+        None if phase == IOS_PHASE => Some(6),
+        None => None,
+    }
+}
+
+/// Every target a required format scheduled at `phase` must reach.
+///
+/// Five from M0 to M3, six from FASE 6 on: iOS ships after 1.0, so no 1.0 milestone may be
+/// asked for iOS evidence, and no iPhone build may ship without the formats 1.0 called
+/// required. A phase the roadmap does not define has no floor to state, and the caller
+/// reports the omission rather than guessing one.
+fn required_floor(phase: &str) -> Option<BTreeSet<&'static str>> {
+    let ios = phase_rank(IOS_PHASE)?;
+    let rank = phase_rank(phase)?;
+    let mut floor: BTreeSet<&'static str> = CORE_TARGETS.into_iter().collect();
+    if rank >= ios {
+        floor.insert(IOS_TARGET);
+    }
+    Some(floor)
+}
+
+/// The platform introduced at [`IOS_PHASE`].
+const IOS_TARGET: &str = "ios-arm64";
+
 pub fn validate(value: &Value) -> Result<()> {
     let rows = value["entries"].as_array().context("Catalog entries")?;
     let mut seen = BTreeSet::new();
@@ -51,15 +99,14 @@ pub fn validate(value: &Value) -> Result<()> {
                 .iter()
                 .filter_map(Value::as_str)
                 .collect();
+            // Five targets are mandatory from M0 to M3; iOS joins from FASE 6 on. The
+            // rule is a floor per phase, not equality with one fixed set: equality would
+            // have made an iOS target *illegal* to declare, and the whole point of the
+            // sixth platform is that a required format reaches it too.
+            let floor = required_floor(row["phase"].as_str().unwrap_or_default())
+                .context("Required format has no roadmap phase")?;
             ensure!(
-                targets
-                    == BTreeSet::from([
-                        "windows-x64",
-                        "linux-x64",
-                        "macos-intel",
-                        "macos-silicon",
-                        "android-arm64"
-                    ]),
+                floor.is_subset(&targets),
                 "Required format missing a target: {id}"
             );
         }
@@ -103,6 +150,34 @@ mod tests {
         let mut value = fixture();
         value["entries"][0]["target_platforms"] = json!(["windows-x64"]);
         assert!(validate(&value).is_err());
+    }
+    /// iOS is a mandatory target from FASE 6, and the rule that says so has to fail on the
+    /// format that forgets it -- otherwise adding `ios-arm64` to `config/project.json` would
+    /// be a line no format ever has to honour.
+    #[test]
+    fn required_floor_grows_by_ios_and_never_shrinks_below_five() {
+        // Inside 1.0 the five original targets are the whole floor: a format at M3 that
+        // omits iOS is compliant, because iOS ships after it.
+        let core: BTreeSet<&str> = CORE_TARGETS.into_iter().collect();
+        assert_eq!(required_floor("M0"), Some(core.clone()));
+        assert_eq!(required_floor("M3"), Some(core.clone()));
+
+        // At FASE 6 it no longer is: the sixth target joins, and the five stay mandatory
+        // beside it rather than being replaced.
+        let mut ios = core.clone();
+        ios.insert(IOS_TARGET);
+        assert_eq!(required_floor(IOS_PHASE), Some(ios.clone()));
+        assert!(ios.contains("android-arm64") && ios.contains("windows-x64"));
+        assert_eq!(ios.len(), 6);
+
+        // Ordering is the roadmap's, not the alphabet's: `"F6" < "M1"` as strings, which
+        // is why a string comparison would have given every 1.0 milestone the iOS target.
+        assert!("F6" < "M1");
+        assert!(phase_rank("M1") < phase_rank(IOS_PHASE));
+
+        // A phase the roadmap does not define states no floor instead of inventing one.
+        assert_eq!(required_floor("F9"), None);
+        assert_eq!(required_floor(""), None);
     }
     #[test]
     fn incorrect_format_category_and_webm_binding_rejected() {

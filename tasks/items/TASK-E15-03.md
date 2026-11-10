@@ -1,9 +1,8 @@
 # TASK-E15-03 — Importar GitHub privado e ativar Gitflow
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,16 @@ Importação por branch/PR ou bootstrap vazio, proteções e default develop.
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** decide a visibilidade do repositório: é decisão do mantenedor. A AC-1 mede
+  a **privacidade real pela API**, e o repositório é público hoje por instrução
+  explícita dele — ler o estado de hoje como se fosse a entrega inverteria a ordem
+  dos fatos.
+- **Não** reimporta o repositório. A AC-2 compara o histórico com a origem, e
+  reimportar reescreveria a raiz.
+- **Não** trata 403 de plano como bug: o plano da conta é um limite real do GitHub, e
+  a pendência é registrada, não mascarada.
+- **Não** protege `vynamp-mvp-reference`: ele é referência congelada, pinada por
+  commit, sem `develop` e sem workflow.
 
 ## Antes de começar
 
@@ -46,12 +54,11 @@ Importação por branch/PR ou bootstrap vazio, proteções e default develop.
 | `TASK-E15-03-AC-4` | os dez repositórios, depois da abertura ao público | `cargo xtask repo audit --repo <owner/name>` roda em cada um | CI Gate/proteções realmente aplicados ou pendência registrada. |
 
 ## Verificação
-
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | `gh api repos/jimmykedlyn/<repo>` para visibilidade, `git rev-list --max-parents=0` para a raiz, e `gh api .../branches/<branch>/protection` para a proteção | `private=false` lido da API; a mesma raiz `247b424` em `origin/develop` e `origin/main`; `force=false`, `del=false`, `pr=true`, `strict=true`, `ctx=["CI Gate"]` nas duas branches — leitura da API e do Git, não "parece certo" |
+| Hardware | nenhum: visibilidade, histórico e proteção de branch não dependem de dispositivo de áudio | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 

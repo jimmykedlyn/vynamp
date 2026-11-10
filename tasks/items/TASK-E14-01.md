@@ -1,9 +1,8 @@
 # TASK-E14-01 — Provar os cinco targets e features portáveis
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,16 @@ Matriz de toolchains/ABIs Windows/Linux/macOS Intel/macOS Silicon/Android e depe
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** congela as baselines por conta própria. A AC-3 avalia o freeze **target a
+  target**, e as licenças vêm do inventário de `TASK-E11-03`; congelar aqui seria
+  congelar sem inventário.
+- **Não** implementa o smoke de adapter. A AC-2 mede output, arquivo e credencial por
+  host, e adapter por host é `TASK-E14-02`.
+- **Não** audita a qualidade numérica do sinal: isso é `TASK-E04-10` e a matriz de
+  hardware.
+- **Não** inclui iOS. A matriz desta TASK é a dos cinco alvos existentes; iOS nasce na
+  FASE 6, com a [ADR-016](../../adr/ADR-016-ios.md) e a
+  [spec de iOS](../../platforms/05-ios.md), e não entra num freeze retroativo.
 
 ## Antes de começar
 
@@ -45,12 +53,11 @@ Matriz de toolchains/ABIs Windows/Linux/macOS Intel/macOS Silicon/Android e depe
 | `TASK-E14-01-AC-3` | as baselines de cada target e o inventário de licenças de E11-03 | o freeze é avaliado target a target | baselines e licenças suportam todos os alvos antes freeze. |
 
 ## Verificação
-
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | `cargo check --workspace --locked --target <t>` dentro de cada repo que tem código, para os cinco alvos — não na raiz, que compila só o `xtask` | **15/15 exit 0** nas 15 combinações medidas (xtask, `libs/decode` e `libs/output` × 5 alvos); os outros seis repos têm `[dependencies]` vazio e 3–6 linhas de `lib.rs`, então não há o que resolver por ABI |
+| Hardware | `cargo build` cruzado nesta máquina: `libs/decode` exit 0 nos três alvos testados; `libs/output` exit 101 por falta de linker cruzado (`which cc gcc clang` não acha nenhum) | o 101 é ambiente, não código — o build de host do `libs/output` fecha exit 0 em 10,75 s; ausência de linker é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 

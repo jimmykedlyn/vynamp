@@ -1,9 +1,8 @@
 # TASK-E19-01 — Migrar o CI do repo principal para GitHub Actions
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,18 @@ ADR-014, workflows ci/release/quality em GitHub Actions com actions fixadas por 
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** publica release. `release.yml` não mora aqui: o umbrella não tem binário, e
+  um workflow de release neste repositório só existiria para falhar no próprio
+  preflight. O arquivo está em `_arquivo/workflows/release.yml`, fora da árvore que o
+  CI lê.
+- **Não** usa `macos-latest`. A imagem troca de arquitetura conforme o GitHub
+  rotaciona, e um alvo que se move não é alvo fixado: são `macos-15-intel` e
+  `macos-15`.
+- **Não** exige runner pago além do que o plano comporta. A matriz de cinco alvos por
+  PR já esbarrou na cota do plano Free, e isso está registrado na
+  [ADR-014](../../adr/ADR-014-publico-dsp-interno.md).
+- **Não** migra a documentação de CI para o repositório privado; a ADR-014 registra a
+  migração.
 
 ## Antes de começar
 
@@ -47,14 +57,13 @@ ADR-014, workflows ci/release/quality em GitHub Actions com actions fixadas por 
 | `TASK-E19-01-AC-5` | o histórico completo do repositório | uma varredura por padrões de segredo roda sobre todos os commits | nenhum segredo no histórico. |
 
 ## Verificação
-
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
 | AC-5, varredura de segredo | `cargo xtask check-secrets` | `No credential shape found in the reachable history.` sobre todo blob de toda ref |
 | AC-4, matriz macOS | `cargo xtask check-delivery` | reprova se `macos-15-intel` ou `macos-15` sair da matriz do `tooling`, ou se `macos-latest` entrar |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | `cargo xtask check-delivery` para os pins, `cargo test --package xtask --locked github_actions` para a semântica do gate, e a API de execuções para a matriz | 15 testes verdes, incluindo `rejects_gate_missing_dependency`, `rejects_gate_skipping_on_failure` e `rejects_gate_ignoring_results`; `Tooling (macos-15-intel)` e `Tooling (macos-15)` `success` no mesmo run — lido do relatório, não "parece certo" |
+| Hardware | nenhum: o job `tooling` roda fmt, clippy e os testes do xtask, que são host-agnostic | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 

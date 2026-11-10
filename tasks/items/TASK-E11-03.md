@@ -1,9 +1,8 @@
 # TASK-E11-03 — Resolver licenças e inventário de dependências
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,15 @@ Inventário de codecs, fontes, assets e políticas de build/distribuição.
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** decide licença de terceiro por conta própria. A AC-2 exige que a decisão de
+  marca e de distribuição seja **registrada**, e o `Then` proíbe "alegar autorização
+  inexistente" — o que não se pode provar fica como pendência declarada.
+- **Não** troca dependência travada no lockfile. A AC-1 verifica feature e licença na
+  fonte oficial; substituir o que está fixado é outra decisão.
+- **Não** implementa build de Android nem fixa NDK e Gradle: `TASK-E11-04` é a dona
+  desses pins.
+- **Não** confunde licença de codec com suporte a codec. O inventário é de codecs,
+  fontes, assets e política de distribuição; suporte é do catálogo de formatos.
 
 ## Antes de começar
 
@@ -44,12 +51,11 @@ Inventário de codecs, fontes, assets e políticas de build/distribuição.
 | `TASK-E11-03-AC-2` | os itens cuja licença não permite distribuição sem autorização | a decisão de marca e de distribuição é registrada | decisões de marca/licença final explícitas, sem alegar autorização inexistente. |
 
 ## Verificação
-
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | leitura da licença e da feature de build de cada item na fonte oficial, confrontada com o `Cargo.lock` e com os pins de `TASK-E11-04` | cada item tem licença e feature registradas na própria fonte — a fonte oficial é a evidência, não o resumo do inventário |
+| Hardware | nenhum: inventário de licença e de build não depende de dispositivo de áudio | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 
