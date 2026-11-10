@@ -129,6 +129,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [Plataformas obrigatórias e paridade](platforms/01-matriz-suporte.md) — platforms/01-matriz-suporte.md
 
 - [Android: shell nativo e núcleo Rust](platforms/02-android.md) — platforms/02-android.md
+- [Plataformas iOS](platforms/05-ios.md) — platforms/05-ios.md
 
 - [Integração nativa, associação de arquivos, menus de contexto e pacotes de ícones](platforms/03-integracao-sistema.md) — platforms/03-integracao-sistema.md
 
@@ -426,6 +427,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 # Restauração por IA: fase futura (2026-11-05)
 
 - [ADR-015 — Restauração por IA admitida apenas como fase opt-in pós-1.0](adr/ADR-015-restauracao-ia.md) — adr/ADR-015-restauracao-ia.md
+- [ADR-016 — Suporte iOS](adr/ADR-016-ios.md) — adr/ADR-016-ios.md
 - [Vynamp Restore — restauração por IA](reference/tools/03-vynamp-restore-ia.md) — reference/tools/03-vynamp-restore-ia.md; planejada e não prometida, opt-in, CPU primeiro, pesos por download
 - [Evidência chore-specs-ia-futura](evidence/PR/chore-specs-ia-futura/README.md) — evidence/PR/chore-specs-ia-futura/README.md; verificações locais e limitações declaradas.
 - [Corpo do PR chore-specs-ia-futura](evidence/PR/chore-specs-ia-futura/pr-body.md) — evidence/PR/chore-specs-ia-futura/pr-body.md
