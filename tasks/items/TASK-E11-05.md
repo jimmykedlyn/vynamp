@@ -1,9 +1,8 @@
 # TASK-E11-05 — Implementar config, logs e keychain
 
 > Gerado pelo passo 37 a partir de `tasks/backlog.json`. Os campos de estado vêm do
-> backlog e não devem ser editados aqui. Critério de aceite: **PENDENTE** de autoria —
-> a coluna `Then` é o requisito aprovado, copiado literal; `Given` e `When` ainda
-> não existem.
+> backlog e não devem ser editados aqui. A coluna `Then` é o requisito aprovado,
+> copiado literal do backlog; `Given` e `When` foram autorados na execução.
 
 | Campo | Valor |
 |---|---|
@@ -27,7 +26,11 @@ Schema/migrations de configuração, escrita atômica, redaction e retenção.
 
 ## Boundary
 
-<!-- PENDENTE: o que esta TASK não faz, mesmo parecendo relacionado. -->
+- **Não** implementa o schema SQLite da biblioteca: WAL, write actor e migrations de DB são `TASK-E03-01`, e o config daqui é arquivo versionado separado do banco.
+- **Não** implementa os adapters de keychain por host (Windows Credential Manager, Linux Secret Service, macOS Keychain, Android Keystore): o contrato e a falha fechada quando o vault não existe são `TASK-E14-02`.
+- **Não** implementa o owner único por perfil nem o lock de SO entre instalado e portable: a eleição de dono e a identidade canônica do armazenamento são `TASK-E16-02`, e aqui só se consome o caminho de perfil que ela define. Validar portable relocável e backup é `TASK-E16-08`, que também não cabe aqui.
+- **Não** implementa a tela de preferências que expõe retenção e telemetria ao usuário: a UI e os estados de erro são `TASK-E02-06`.
+- **Não** confunde telemetria com analytics de produto: aqui só se prova o valor inicial do flag de envio, conforme a política de `security/02-privacidade-licencas.md`. A finalidade dos dados e o texto de privacidade publicados são `TASK-E11-08`, e a prova de que nada vaza em export ou log é `TASK-E10-09`; nenhuma das duas cabe neste schema.
 
 ## Antes de começar
 
@@ -40,18 +43,18 @@ Schema/migrations de configuração, escrita atômica, redaction e retenção.
 
 | ID | Given | When | Then |
 |---|---|---|---|
-| `TASK-E11-05-AC-1` | PENDENTE | PENDENTE | Fixtures de token/URL/path redacted |
-| `TASK-E11-05-AC-2` | PENDENTE | PENDENTE | portable não grava secrets plaintext |
-| `TASK-E11-05-AC-3` | PENDENTE | PENDENTE | crash permite recovery |
-| `TASK-E11-05-AC-4` | PENDENTE | PENDENTE | telemetria desligada por padrão. |
+| `TASK-E11-05-AC-1` | um log de diagnóstico gerado com um token de sessão, uma URL com credencial na query e um path de usuário sob %APPDATA%, e o conjunto de padrões de redaction ligado | o diagnóstico sanitizado é exportado e o arquivo de config é regravado pelo caminho de escrita atômica | Fixtures de token/URL/path redacted |
+| `TASK-E11-05-AC-2` | o perfil portable apontado para uma pasta em mídia removível, com o vault do OS indisponível e o modo portable escolhido explicitamente | a sessão guarda a credencial de uma conta e o processo é encerrado, e depois o arquivo de config do perfil é aberto como texto plano | portable não grava secrets plaintext |
+| `TASK-E11-05-AC-3` | uma gravação de config em curso com o arquivo temporário já escrito e o rename ainda não feito, e o processo morto por kill deixando o temporário no diretório do perfil | o app reabre o perfil e lê a config | crash permite recovery |
+| `TASK-E11-05-AC-4` | uma instalação nova, sem arquivo de config prévio e sem consentimento de crash report ou telemetria registrado | o app sobe pela primeira vez e consulta o estado de telemetria antes de qualquer envio | telemetria desligada por padrão. |
 
 ## Verificação
 
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | PENDENTE | comparação numérica, não "parece certo" |
-| Hardware | PENDENTE | ausência é limitação registrada, não aprovação |
+| Oráculo independente | uma fixture nova em tests/fixtures/config/ com três entradas (token em header, URL com credencial na query, path dentro de %APPDATA%) e um teste de integração no crate de config do app; hoje o umbrella tem 168 arquivos .rs e nenhum crate de config — só o xtask —, então a fixture e o teste ainda não existem | cada linha do diagnóstico exportado traz <redacted> no lugar do token, da query e do path, e a busca pelo literal do token no config portable devolve 0 ocorrências; a config sobrevivente ao kill é a última consistente, não o temporário, e a retenção fica em 20 MiB e 7 dias conforme security/02-privacidade-licencas.md, com telemetria em estado off em instalação nova |
+| Hardware | parcial: config, log e redaction rodam em processo de usuário e não abrem dispositivo de áudio, mas a AC-2 pede o vault OS indisponível e nesta máquina o Windows Credential Manager existe e responde; o caso sem vault só ocorre em Linux Secret Service e macOS Keychain, que não há aqui, então a AC-2 se prova com o adapter de `TASK-E14-02` stubado para falhar em vez de com o vault real desligado | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
 
