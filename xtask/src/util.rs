@@ -375,6 +375,12 @@ pub fn validate_version(v: &str) -> Result<()> {
     );
     Ok(())
 }
+/// Gate on the host a packaging run starts from.
+///
+/// `ios-arm64` is deliberately absent: it is a declared build target in
+/// `config/project.json`, but [FASE 6](../../delivery/01-roadmap.md) has no implementation,
+/// and `package --platform` does not accept it. An arm here would be a branch no call can
+/// reach, and a rule that never runs is a claim the tool cannot back.
 pub fn check_host(platform: &str) -> Result<()> {
     let valid = match platform {
         "windows-x64" => cfg!(windows),
