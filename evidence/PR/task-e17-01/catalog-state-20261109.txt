@@ -1,0 +1,27 @@
+# E17-01 — estado real do catalogo de perfis, medido em 2026-11-09
+# Fonte: config/format-catalog.json rev 0.7.0
+
+entradas: 68
+phase: {'M1': 4, 'M3': 30, 'M2': 10, 'M5': 24}
+policy: {'required': 32, 'optional': 16, 'conditional': 19, 'unsupported': 1}
+state: {'planned': 68}
+association_allowed: {'True': 58, 'False': 10}
+
+phase/policy/operations ausentes: nenhum
+backend_candidates distintos: 3
+entradas com sources vazio: 56 de 68
+
+--- entradas NGA / imersivo ---
+aac-lc-mp4     codec=aac            kind=audio              phase=M2  policy=required     state=planned
+aac-lc-adts    codec=aac            kind=audio              phase=M2  policy=required     state=planned
+aac-he         codec=aac            kind=audio              phase=M2  policy=required     state=planned
+aac-latm       codec=aac            kind=audio              phase=M3  policy=conditional  state=planned
+aac-adif       codec=aac            kind=audio              phase=M3  policy=conditional  state=planned
+aac-low-delay  codec=aac            kind=audio              phase=M5  policy=optional     state=planned
+ac3            codec=ac3            kind=audio              phase=M5  policy=conditional  state=planned
+eac3           codec=eac3           kind=audio              phase=M5  policy=conditional  state=planned
+truehd-mlp     codec=truehd-mlp     kind=audio              phase=M5  policy=conditional  state=planned
+dts            codec=dts            kind=audio              phase=M5  policy=conditional  state=planned
+mpeg-h         codec=mpegh          kind=audio              phase=M5  policy=conditional  state=planned
+ac4            codec=ac4            kind=audio              phase=M5  policy=conditional  state=planned
+iamf           codec=iamf           kind=immersive-model    phase=M5  policy=conditional  state=planned
