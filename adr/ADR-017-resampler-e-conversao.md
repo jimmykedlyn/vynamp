@@ -1,6 +1,6 @@
 # ADR-017 — qualidade do resampler e da conversão de amostras
 
-Versão: 0.1.0 · Data: 2026-11-11 · Estado: decisão de projeto do spike de M0. Os números desta versão são **alvo derivado do projeto do filtro**, não medição; a revisão que acompanha a evidência da [TASK-E04-02](../libs/dsp/tasks/items/TASK-E04-02.md) troca cada um pelo medido.
+Versão: 0.2.0 · Data: 2026-11-11 · Estado: decisão de projeto do spike de M0, com os números **medidos** em 2026-11-11 pela [evidência da TASK-E04-02](../evidence/PR/task-e04-02/README.md). A versão 0.1.0 trazia alvos derivados da fórmula de Kaiser; esta troca cada um pelo que o código entregou.
 
 Status: escrita pela TASK-E04-02 em 2026-11-11 e **sujeita à aprovação do mantenedor**. Não decide o nome nem o repositório da biblioteca de resampling — isso continua aberto em D-DSP-08 e na [ADR-011](ADR-011-pilha-propria.md). Preenche a lacuna que a [matriz DSP](../quality/04-matriz-dsp.md) já citava como "metas do ADR de E04-02": até esta ADR existir, o `DSP-T-13` exigia aliasing e ruído "dentro das metas" de um documento que ninguém tinha escrito.
 
@@ -43,20 +43,39 @@ Dimensões pelo projeto de Kaiser: `N ≈ (A − 8) / (14,357·Δf)`, `β = 0,11
 
 Os dois modos diferem **na transição e na profundidade**, não só no comprimento: `high` preserva 0,47 do Nyquist em vez de 0,44 e aprofunda 30 dB. `high` custa 2,69× em MAC e em latência. Medido no spike, é essa a diferença que justifica a escolha existir; um segundo modo que só alongasse o mesmo filtro compraria decibéis a preço cheio e mais nada.
 
+**Medido, não projetado.** O que o código entregou em 2026-11-11, em `\vynamp-dsp` com bloco de 1 024 frames (`evidence/PR/task-e04-02/cpu-latency.json`):
+
+| Modo | Rejeição de alias medida | Alvo | Margem |
+|---|---|---|---|
+| `balanced` | −94,4 dB (48k→44,1k) a −116,2 dB (96k→44,1k) | 80 dB | ≥ 14 dB |
+| `high` | −128,4 dB (48k→44,1k) a −150,2 dB (192k→44,1k) | 110 dB | ≥ 18 dB |
+
+O pior caso dos dois modos é o par **mais próximo** (48k→44,1k), onde a transição é a mais estreita em frequência normalizada. Os alvos da versão 0.1.0 eram atingidos com margem em todas as combinações medidas, não só na média.
+
 O custo real depende do par de taxas, e não é constante — é isso que torna o orçamento de fase e o alargamento por `1/r` itens de projeto, e não detalhe. Em `high`:
 
-| Par | `b` (fases) | `half_eff` | Taps | Tabela | Latência |
-|---|---|---|---|---|---|
-| 44 100 → 48 000 | 160 | 130 | 261 | 163 KiB | 141 frames ≈ 2,95 ms |
-| 48 000 → 44 100 | 147 | 142 | 285 | 164 KiB | 130 frames ≈ 2,96 ms |
-| 44 100 → 96 000 | 320 | 130 | 261 | 326 KiB | 283 frames ≈ 2,95 ms |
-| 96 000 → 44 100 | 147 | 283 | 567 | 326 KiB | 130 frames ≈ 2,95 ms |
-| 192 000 → 44 100 | 147 | 566 | 1 133 | 651 KiB | 130 frames ≈ 2,95 ms |
-| 48 000 → 192 000 | 4 | 130 | 261 | 4 KiB | 520 frames ≈ 2,71 ms |
-| 44 100 → 384 000 | 1 280 | 130 | 261 | 1 305 KiB | 1 132 frames ≈ 2,95 ms |
-| 384 000 → 44 100 | 147 | 1 132 | 2 265 | 1 301 KiB | 130 frames ≈ 2,95 ms |
+| Par | `b` (fases) | Taps | Tabela | Latência | CPU de 1 núcleo | MAC/s |
+|---|---|---|---|---|---|---|
+| 44 100 → 48 000 | 160 | 261 | 163 KiB | 141 frames ≈ 2,94 ms | 4,2 % | 299 M |
+| 48 000 → 44 100 | 147 | 285 | 164 KiB | 130 frames ≈ 2,95 ms | 4,3 % | 296 M |
+| 44 100 → 96 000 | 320 | 261 | 326 KiB | 283 frames ≈ 2,95 ms | 8,0 % | 315 M |
+| 96 000 → 44 100 | 147 | 567 | 326 KiB | 130 frames ≈ 2,95 ms | 7,8 % | 320 M |
+| 192 000 → 44 100 | 147 | 1 133 | 651 KiB | 130 frames ≈ 2,95 ms | 15,7 % | 318 M |
+| 48 000 → 192 000 | 4 | 261 | 4 KiB | 520 frames ≈ 2,71 ms | 16,0 % | 314 M |
+| 44 100 → 384 000 | 1 280 | 261 | 1 305 KiB | 1 132 frames ≈ 2,95 ms | 31,6 % | 317 M |
+| 384 000 → 44 100 | 147 | 2 265 | 1 301 KiB | 130 frames ≈ 2,95 ms | 31,4 % | 318 M |
 
-Duas leituras dessa tabela valem a decisão: a **latência em tempo** fica em ~2,95 ms em quase todo par, e por construção não depende da direção — ela é `half_base / min(fs_in, fs_out)`, sempre o lado da taxa menor. E o **custo** cresce com a razão que separa as taxas: um par inteiro (48 000 → 192 000) cabe em 4 KiB com `b = 4`, enquanto 44 100 → 384 000 precisa de 1 280 fases e 1,3 MB. Por isso o número de fases é orçado e checado na construção, não descoberto na primeira alocação.
+A coluna de CPU tem **~20 % de variação entre execuções** do mesmo binário na mesma
+máquina: uma execução anterior deu 3,4 % em 44,1k→48k e 25,8 % no par extremo; esta deu
+4,2 % e 31,6 %. O `MAC/s` ficou em 283–320 M e a latência não mudou entre as duas. Por
+isso o número que vale para orçamento é a leitura **mais lenta**, e o `MAC/s` — que é o
+que a arquitetura determina — é mais estável que a fração de núcleo.
+
+Os dois números que a medição deixou claros, e que a versão projetada não mostrava:
+
+- **O MAC/s é praticamente constante, ~300 M em todo par de taxas** — não cresce com a razão. A razão não muda o trabalho por amostra de saída; muda a *taxa de saída*. O que decide o custo é a taxa de saída, não a conversão.
+- **A latência em tempo também é constante, ~2,95 ms**, e por construção não depende da direção. Ela é `half_base / min(fs_in, fs_out)`.
+- **O custo de parede cresce com a razão**, porque `output_capacity × taxa de saída` cresce: 44,1k→384k custa ~32 % de um núcleo só em `high`. É o caso que a §Lacunas registra como motivo para decimação em cascata.
 
 Não há modo "low": decodificação de saída para 16/44,1 com filtro pior que `balanced` reprovaria o `DSP-T-13`, e um modo que só existe para ser reprovado não é um modo.
 
@@ -68,7 +87,7 @@ Não há modo "low": decodificação de saída para 16/44,1 com filtro pior que 
 |---|---|---|
 | Ganho DC | ≤ 1 LSB de f32 em toda fase, fora das `half_eff` amostras de borda | entrada constante, saída constante; desvio máximo contra a entrada |
 | Ripple de passband | ≤ 0,1 dB até a borda de passband do modo | sweep logarítmico, magnitude por Goertzel nos bins de teste |
-| Rejeição de alias (decimar) | ≥ 80 dB (`balanced`), ≥ 110 dB (`high`) | tom acima do Nyquist de saída, energia no bin dobrado |
+| Rejeição de alias (decimar) | ≥ 80 dB (`balanced`), ≥ 110 dB (`high`) — **medido**: −94,4 a −116,2 e −128,4 a −150,2 dB | tom acima do Nyquist de saída, energia no bin dobrado |
 | Rejeição de imagem (interpolar) | ≥ 80 dB / ≥ 110 dB | tom na banda, energia na imagem refletida |
 | Alinhamento temporal | pico do impulso a menos de 1 frame de saída da posição ideal | impulso unitário em índice conhecido |
 | Bypass em taxa igual | **bit a bit** idêntico, latência 0 | `fs_in == fs_out` copia a entrada, sem filtrar |
@@ -115,7 +134,7 @@ TPDF é a diferença de duas uniformes independentes: em LSB inteiros, `u1 − u
 | Nome, repositório e release da biblioteca | Mantenedor (D-DSP-08) | Aberto; o spike vive em `vynamp-dsp` sem criar o sexto repositório |
 | Modo de qualidade por dispositivo e a troca em tempo real | TASK-E04-03 (grafo) | Sem plano |
 | Noise shaping | M5 | Fora do escopo de M0 |
-| Decimação em cascata para razões muito pequenas | Esta ADR registra o custo de `1/r`; a cascata é otimização | Medido no spike |
+| Decimação em cascata para razões muito pequenas | Esta ADR registra o custo de `1/r`; a cascata é otimização | **Medido**: 44,1k→384k e 384k→44,1k custam ~32 % de um núcleo em `high`, contra ~4 % dos pares próximos. Viável, mas é o caso que justifica a cascata |
 | Razões cujo denominador reduzido estoura o orçamento da tabela | Esta ADR: a construção devolve erro em vez de alocar sem limite | Medido no spike |
 | Validação acústica e de hardware | TASK-E04-10 | Fora do escopo: nenhum DAC é tocado |
 

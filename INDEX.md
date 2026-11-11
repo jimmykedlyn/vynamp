@@ -443,6 +443,11 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [Design aprovado do vitrola — cópia literal](evidence/PR/task-e19-03/vitrola-design.md) — evidence/PR/task-e19-03/vitrola-design.md; o texto integral de 2026-10-23, preservado porque a incorporação em §8 o reorganizou em subseções e o repositório de origem é arquivado.
 - [Corpo do PR TASK-E19-03](evidence/PR/task-e19-03/pr-body.md) — evidence/PR/task-e19-03/pr-body.md
 
+# Execução E04-02: resampler e conversão de amostras (2026-11-11)
+
+- [Evidência TASK-E04-02](evidence/PR/task-e04-02/README.md) — evidence/PR/task-e04-02/README.md; rejeição de alias, latência, taps e CPU dos 18 pares de taxa medidos, os dois defeitos que o TDD pegou, e o que a evidência não sustenta.
+- [Medição de CPU e latência — JSON](evidence/PR/task-e04-02/cpu-latency.json) — evidence/PR/task-e04-02/cpu-latency.json; 18 pares × 2 modos, bloco de 1 024 frames, 5 s de entrada por linha; SHA-256 836a2756f3df70ad4c482d58e099703d024247e3d537eec8d7502d78e82872bf.
+
 # Execução E01-02: callback e output clock (2026-11-07)
 
 - [Evidência TASK-E01-02](evidence/PR/task-e01-02/README.md) — evidence/PR/task-e01-02/README.md; medições Windows/WASAPI, o que passou para 01-engine.md, a receita de instrumentação RT e a limitação conhecida do relógio.

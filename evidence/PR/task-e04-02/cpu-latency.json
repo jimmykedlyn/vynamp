@@ -1,0 +1,33 @@
+{
+  "note": "wall-clock sobre o buffer; nenhum DAC tocado",
+  "block_frames": 1024,
+  "seconds_of_input_per_row": 5,
+  "rows": [
+    {"fs_in": 44100, "fs_out": 48000, "quality": "balanced", "taps": 97, "latency_frames": 52, "latency_ms": 1.0833, "block_frames": 1024, "out_per_block": 1114, "elapsed_s": 0.0755, "ns_per_out_frame": 313.58, "cpu_ratio_of_realtime": 0.0151, "mac_per_second": 309333891},
+    {"fs_in": 44100, "fs_out": 48000, "quality": "high", "taps": 261, "latency_frames": 141, "latency_ms": 2.9375, "block_frames": 1024, "out_per_block": 1114, "elapsed_s": 0.2099, "ns_per_out_frame": 871.81, "cpu_ratio_of_realtime": 0.0418, "mac_per_second": 299375444},
+    {"fs_in": 48000, "fs_out": 44100, "quality": "balanced", "taps": 107, "latency_frames": 49, "latency_ms": 1.1111, "block_frames": 1024, "out_per_block": 941, "elapsed_s": 0.0816, "ns_per_out_frame": 369.29, "cpu_ratio_of_realtime": 0.0163, "mac_per_second": 289744788},
+    {"fs_in": 48000, "fs_out": 44100, "quality": "high", "taps": 285, "latency_frames": 130, "latency_ms": 2.9478, "block_frames": 1024, "out_per_block": 941, "elapsed_s": 0.2129, "ns_per_out_frame": 963.00, "cpu_ratio_of_realtime": 0.0425, "mac_per_second": 295950495},
+    {"fs_in": 44100, "fs_out": 96000, "quality": "balanced", "taps": 97, "latency_frames": 104, "latency_ms": 1.0833, "block_frames": 1024, "out_per_block": 2229, "elapsed_s": 0.1650, "ns_per_out_frame": 342.74, "cpu_ratio_of_realtime": 0.0329, "mac_per_second": 283013946},
+    {"fs_in": 44100, "fs_out": 96000, "quality": "high", "taps": 261, "latency_frames": 283, "latency_ms": 2.9479, "block_frames": 1024, "out_per_block": 2229, "elapsed_s": 0.3995, "ns_per_out_frame": 829.64, "cpu_ratio_of_realtime": 0.0796, "mac_per_second": 314592497},
+    {"fs_in": 96000, "fs_out": 44100, "quality": "balanced", "taps": 211, "latency_frames": 48, "latency_ms": 1.0884, "block_frames": 1024, "out_per_block": 471, "elapsed_s": 0.1476, "ns_per_out_frame": 668.84, "cpu_ratio_of_realtime": 0.0295, "mac_per_second": 315469797},
+    {"fs_in": 96000, "fs_out": 44100, "quality": "high", "taps": 567, "latency_frames": 130, "latency_ms": 2.9478, "block_frames": 1024, "out_per_block": 471, "elapsed_s": 0.3915, "ns_per_out_frame": 1774.49, "cpu_ratio_of_realtime": 0.0783, "mac_per_second": 319529130},
+    {"fs_in": 44100, "fs_out": 192000, "quality": "balanced", "taps": 97, "latency_frames": 209, "latency_ms": 1.0885, "block_frames": 1024, "out_per_block": 4458, "elapsed_s": 0.3016, "ns_per_out_frame": 313.24, "cpu_ratio_of_realtime": 0.0601, "mac_per_second": 309668073},
+    {"fs_in": 44100, "fs_out": 192000, "quality": "high", "taps": 261, "latency_frames": 566, "latency_ms": 2.9479, "block_frames": 1024, "out_per_block": 4458, "elapsed_s": 0.7955, "ns_per_out_frame": 826.08, "cpu_ratio_of_realtime": 0.1586, "mac_per_second": 315949023},
+    {"fs_in": 192000, "fs_out": 44100, "quality": "balanced", "taps": 419, "latency_frames": 48, "latency_ms": 1.0884, "block_frames": 1024, "out_per_block": 236, "elapsed_s": 0.2911, "ns_per_out_frame": 1319.70, "cpu_ratio_of_realtime": 0.0582, "mac_per_second": 317495479},
+    {"fs_in": 192000, "fs_out": 44100, "quality": "high", "taps": 1133, "latency_frames": 130, "latency_ms": 2.9478, "block_frames": 1024, "out_per_block": 236, "elapsed_s": 0.7863, "ns_per_out_frame": 3563.98, "cpu_ratio_of_realtime": 0.1572, "mac_per_second": 317903049},
+    {"fs_in": 48000, "fs_out": 192000, "quality": "balanced", "taps": 97, "latency_frames": 192, "latency_ms": 1.0000, "block_frames": 1024, "out_per_block": 4096, "elapsed_s": 0.3289, "ns_per_out_frame": 341.71, "cpu_ratio_of_realtime": 0.0656, "mac_per_second": 283870560},
+    {"fs_in": 48000, "fs_out": 192000, "quality": "high", "taps": 261, "latency_frames": 520, "latency_ms": 2.7083, "block_frames": 1024, "out_per_block": 4096, "elapsed_s": 0.8000, "ns_per_out_frame": 831.15, "cpu_ratio_of_realtime": 0.1596, "mac_per_second": 314022482},
+    {"fs_in": 44100, "fs_out": 384000, "quality": "balanced", "taps": 97, "latency_frames": 418, "latency_ms": 1.0885, "block_frames": 1024, "out_per_block": 8917, "elapsed_s": 0.5982, "ns_per_out_frame": 310.60, "cpu_ratio_of_realtime": 0.1193, "mac_per_second": 312301764},
+    {"fs_in": 44100, "fs_out": 384000, "quality": "high", "taps": 261, "latency_frames": 1132, "latency_ms": 2.9479, "block_frames": 1024, "out_per_block": 8917, "elapsed_s": 1.5869, "ns_per_out_frame": 823.93, "cpu_ratio_of_realtime": 0.3164, "mac_per_second": 316774903},
+    {"fs_in": 384000, "fs_out": 44100, "quality": "balanced", "taps": 837, "latency_frames": 48, "latency_ms": 1.0884, "block_frames": 1024, "out_per_block": 118, "elapsed_s": 0.5805, "ns_per_out_frame": 2632.71, "cpu_ratio_of_realtime": 0.1161, "mac_per_second": 317923003},
+    {"fs_in": 384000, "fs_out": 44100, "quality": "high", "taps": 2265, "latency_frames": 130, "latency_ms": 2.9478, "block_frames": 1024, "out_per_block": 118, "elapsed_s": 1.5726, "ns_per_out_frame": 7131.95, "cpu_ratio_of_realtime": 0.3145, "mac_per_second": 317584846}
+  ],
+  "alias_rejection": [
+    {"fs_in": 96000, "fs_out": 44100, "quality": "balanced", "alias_rejection_db": -116.15},
+    {"fs_in": 96000, "fs_out": 44100, "quality": "high", "alias_rejection_db": -150.24},
+    {"fs_in": 192000, "fs_out": 44100, "quality": "balanced", "alias_rejection_db": -110.04},
+    {"fs_in": 192000, "fs_out": 44100, "quality": "high", "alias_rejection_db": -144.47},
+    {"fs_in": 48000, "fs_out": 44100, "quality": "balanced", "alias_rejection_db": -94.36},
+    {"fs_in": 48000, "fs_out": 44100, "quality": "high", "alias_rejection_db": -128.40}
+  ]
+}
