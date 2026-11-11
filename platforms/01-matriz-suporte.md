@@ -1,6 +1,6 @@
 # Plataformas obrigatórias e paridade
 
-Versão: 0.7.1 · Data: 2026-11-03 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.8.0 · Data: 2026-11-11 · Estado: especificação proposta, implementação não iniciada.
 
 ## Compromisso do produto
 
@@ -23,6 +23,10 @@ Obrigatórios nos cinco alvos: formatos comuns e registry de perfis, play/pause/
 Recursos específicos são capacidades explícitas: WASAPI/ASIO Windows, ALSA direto Linux, CoreAudio macOS, audio focus e notificações Android. Desktop docking/tray/global hotkeys/CLI não se aplicam ao telefone; há equivalentes por navegação/MediaSession/ações de notificação. ASIO, VST3, CD, scheduler de desligamento e plugin nativo externo não são exigidos no Android. DSD nativo e 768 kHz permanecem M5 por hardware, independentemente do OS.
 
 Nenhum alvo ganha silêncio, formato omitido ou feature desabilitada apenas por falta de porta: registrar erro/capacidade e tarefa. M3 exige paridade de formatos comuns via decoder compartilhado ou adapter licenciado testado. Formatos raros M5 seguem matriz de capacidades por alvo.
+
+**A exceção declarada são as duas ferramentas desktop.** `vynamp-restore` e `vynamp-converter` não existem nos builds Android e iOS: são escopo decidido pelo mantenedor em 2026-11-03 e registrado em [ADR-012 §1](../adr/ADR-012-integracao-shell.md#1-arquitetura-de-integração-por-plataforma) e [D-MOB-01](../product/05-decisoes.md#decisões-de-mobile-2026-11-11), não falta de porta. O player mobile mantém a paridade de reprodução, DSP e formatos comuns; detalhes em [Android §Escopo do app](02-android.md#escopo-do-app-só-o-player) e [iOS §1](05-ios.md).
+
+**O painel DSP é adaptado ao toque, não reduzido.** A frase "não copiar a geometria desktop" vale literalmente para ele: alvos de 48 dp no Android e 44 pt no iOS, 10 bandas em rolagem horizontal e 20/31/64/paramétrico em tela cheia, mantendo os mesmos limites de ajuste e o mesmo orçamento de qualidade ([painel DSP §10](../design/06-painel-dsp.md#10-layout-no-toque-android-e-ios), [D-MOB-02](../product/05-decisoes.md#decisões-de-mobile-2026-11-11)).
 
 ## Gate por alvo
 

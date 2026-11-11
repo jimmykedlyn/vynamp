@@ -131,6 +131,8 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [Plataformas obrigatórias e paridade](platforms/01-matriz-suporte.md) — platforms/01-matriz-suporte.md
 
 - [Android: shell nativo e núcleo Rust](platforms/02-android.md) — platforms/02-android.md
+- [Android §Escopo do app — só o player, sem Restore e Converter](platforms/02-android.md#escopo-do-app-só-o-player) — platforms/02-android.md
+- [Android §Painel DSP no toque](platforms/02-android.md#painel-dsp-no-toque) — platforms/02-android.md
 - [Plataformas iOS](platforms/05-ios.md) — platforms/05-ios.md
 
 - [Integração nativa, associação de arquivos, menus de contexto e pacotes de ícones](platforms/03-integracao-sistema.md) — platforms/03-integracao-sistema.md
@@ -397,6 +399,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [Painel DSP §6.1 — integração visual dos VU meters (VU-INT-01..06)](design/06-painel-dsp.md#61-integração-visual-dos-vu-meters-vu-int) — design/06-painel-dsp.md
 - [Painel DSP §8 — acesso e controles (DSP-UX-01..21)](design/06-painel-dsp.md#8-acesso-e-controles-dsp-ux) — design/06-painel-dsp.md
 - [Painel DSP §9 — fluxo modular (grafo), referência do protótipo](design/06-painel-dsp.md#9-fluxo-modular-grafo--referência-do-protótipo) — design/06-painel-dsp.md
+- [Painel DSP §10 — layout no toque (Android e iOS)](design/06-painel-dsp.md#10-layout-no-toque-android-e-ios) — design/06-painel-dsp.md
 - [Matriz DSP §2.1 — aceite de acesso e controles (DSP-UX-AC-01..12)](quality/04-matriz-dsp.md#21-aceite-de-acesso-e-controles-dsp-ux-ac) — quality/04-matriz-dsp.md
 - [Matriz DSP §2.2 — grafo modular e VU-INT](quality/04-matriz-dsp.md#22-grafo-modular-e-vu-int) — quality/04-matriz-dsp.md
 - [Grafo modular: protótipo × nativo](reference/audio/03-dsp.md#grafo-modular-protótipo--nativo) — reference/audio/03-dsp.md
@@ -424,6 +427,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 # MVP como fonte única da UI (2026-11-05)
 
 - [Decisão D-MVP-01..04 — o MVP é a fonte única da UI](product/05-decisoes.md#decisão-o-mvp-é-a-fonte-única-da-ui-2026-11-05) — product/05-decisoes.md; os dois arquivos de skin deixam de ser fonte de requisito.
+- [Decisão D-MOB-01/02 — mobile é só o player e o DSP é adaptado ao toque](product/05-decisoes.md#decisões-de-mobile-2026-11-11) — product/05-decisoes.md; sem Restore e sem Converter no Android/iOS.
 - [Evidência chore-specs-skin-gaps](evidence/PR/chore-specs-skin-gaps/README.md) — evidence/PR/chore-specs-skin-gaps/README.md; oito afirmações conferidas contra o código do pin, verificações locais e limitações declaradas.
 - [Corpo do PR chore-specs-skin-gaps](evidence/PR/chore-specs-skin-gaps/pr-body.md) — evidence/PR/chore-specs-skin-gaps/pr-body.md
 - [Corpo do PR chore-specs-skin-fixes](evidence/PR/chore-specs-skin-fixes/pr-body.md) — evidence/PR/chore-specs-skin-fixes/pr-body.md; correção pós-merge dos dois erros factuais do #35.

@@ -1,6 +1,8 @@
 # Painel Audio DSP, equalizador e medidores — UI/UX
 
-Versão: 0.7.4 · Data: 2026-11-07 · Estado: especificação proposta. No nativo, nada está implementado. No MVP web de referência (`vynamp-mvp-reference@0d9860b`, rev.38, fora deste repositório) a UI DSP existe; o código foi conferido onde este documento o cita, com as ressalvas da §6.
+Versão: 0.8.0 · Data: 2026-11-11 · Estado: especificação proposta. No nativo, nada está implementado. No MVP web de referência (`vynamp-mvp-reference@0d9860b`, rev.38, fora deste repositório) a UI DSP existe; o código foi conferido onde este documento o cita, com as ressalvas da §6.
+
+O layout no toque — **Android e iOS** — tem seção própria ([§10](#10-layout-no-toque-android-e-ios)); a versão 0.8.0 corrige a cobertura anterior, que citava Android de passagem em três parágrafos e não mencionava iOS em nenhum.
 
 Base: [visual](01-sistema-visual.md), [layouts](02-layouts.md), [acessibilidade](03-acessibilidade.md), [DSP](../reference/audio/03-dsp.md), [equalizadores](../reference/audio/08-equalizers.md), [vitrola](../reference/audio/10-vitrola.md) e [visualizadores](../extensions/05-visualizador.md). A UI nativa da cadeia e do EQ avançado é planejada em TASK-E02-07 (M3).
 
@@ -8,7 +10,7 @@ Base: [visual](01-sistema-visual.md), [layouts](02-layouts.md), [acessibilidade]
 
 - **Divulgação progressiva** (Hick): a visão **Básica** mostra preset de uso, On/Off geral, EQ e intensidades. A visão **Avançada** mostra parâmetros completos, roteamento, latências e medição.
 - **Consistência** (Jakob): o EQ clássico mantém a metáfora de 10 sliders verticais do player clássico. Os demais módulos usam os mesmos sliders, toggles e menus do Vynamp.
-- **Fitts**: alvos ≥ 24 DIP no desktop e ≥ 48 dp no Android, mesmo no editor de 64 bandas (rolagem/zoom em vez de encolher).
+- **Fitts**: alvos ≥ 24 DIP no desktop, ≥ 48 dp no Android e ≥ 44 pt no iOS, mesmo no editor de 64 bandas (rolagem/zoom em vez de encolher). Layout no toque: [§10](#10-layout-no-toque-android-e-ios).
 - **Gestalt**: os módulos são agrupados por família e a cadeia aparece como uma linha de nós na ordem real.
 - **Feedback**: todo ajuste reflete valor, curva e estado na hora; o áudio muda em até 50 ms.
 - **Honestidade**: "processado" × "transparente" × "DEMO" nunca se confundem.
@@ -31,7 +33,7 @@ As oito famílias organizam o catálogo; não são limite de oito efeitos nem sw
 - **Classic compacto** (576×180): preamp, 10 bandas, On/Off, Auto, Reset, Presets ▾ e mini curva calculada.
 - **Editor avançado** (960×600): seletor **Gráfico 10 · Gráfico 20 · Gráfico 31 · Gráfico 64 · Paramétrico (até 32 filtros)**, gráfico grande (log de 10 Hz a min(40 kHz; 0,45×Fs), eixo em dB), curva prevista e curva medida separadas, pontos arrastáveis, tabela de bandas/filtros, preamp, presets por modo, reset, bypass, aviso de headroom/clipping e contador "n/32" no paramétrico. Especificação completa: [equalizadores §12](../reference/audio/08-equalizers.md#12-uiux-do-equalizador).
 - **64 bandas**: 64 sliders reais com rolagem horizontal, zoom e minimapa. Não pode haver 10 sliders reais e o resto decorativo.
-- **Android**: 10 bandas com rolagem horizontal explícita; 20/31/64 e paramétrico em editor de tela cheia.
+- **Toque (Android e iOS)**: 10 bandas com rolagem horizontal explícita; 20/31/64 e paramétrico em editor de tela cheia. O mapeamento completo por área está em [§10](#10-layout-no-toque-android-e-ios).
 
 ## 4. Cards Vinil e Válvula
 
@@ -78,7 +80,7 @@ Instrumentos de exibição **não são efeitos DSP** e nunca alteram a saída. O
 | Redução de ganho, CPU, buffer, latência | contadores RT coletados fora da callback | planejado |
 
 - **Pontos de medição**: source / pre-EQ / post-EQ / **final (padrão)**. A unidade e a Fs aparecem no tooltip. Medidores pré/pós por módulo (ex.: pré/pós-vitrola) são **propostos**.
-- **Taxa de UI**: 30 fps padrão, 60 opcional, 10 em economia; suspenso quando minimizado ou em background (Android: zero render). Reduced motion: estático com números.
+- **Taxa de UI**: 30 fps padrão, 60 opcional, 10 em economia; suspenso quando minimizado ou em background (Android e iOS: zero render, [§10.4](#104-background-tela-apagada-e-orçamento)). Reduced motion: estático com números.
 - **Coerência**: VU, peak, true peak e LUFS **não** mostram o mesmo número com rótulos diferentes.
 - Orçamento: visualizer ≤ 10% de CPU total agregado ([performance](../quality/02-performance.md)).
 
@@ -192,3 +194,64 @@ Vista **Fluxo modular**, acessível por Áudio e efeitos, complementa o editor t
 **Limites, segurança e recuperação.** Limites do adaptador web: 64 nós, 128 conexões, preset de até 512 KiB, 512 biquads e 32 MiB de IR sintética; não são capacidade nativa comprovada, e latência/CPU exigem medição antes de metas. Presets validados atomicamente; leitura atrasada não sobrescreve edição recente; falha de ativação volta ao bypass com motivo. Ajustes incompatíveis não são executados parcialmente nem ganham badge de processamento real. Foco visível, ações sem arraste, Escape e retorno de foco permanecem requisitos; leitor de tela e WCAG completo seguem pendentes.
 
 **Pendente (fora do protótipo):** processadores nativos e sua qualidade sonora; validação acústica de Vinyl/Tube (o áudio existe, a validação não); true peak **certificado** e LUFS conforme BS.1770 (o limiter e o medidor têm áudio, não certificação); demais recursos do catálogo sem adaptador; saída/driver nativos; cobertura integral do MVP v1.2; importação de IR no grafo; compensação de latência entre ramos; reordenação livre no nativo.
+
+## 10. Layout no toque (Android e iOS)
+
+O painel é o **mesmo produto** no telefone; a geometria é que muda. A regra é da [matriz de suporte §paridade](../platforms/01-matriz-suporte.md#paridade-funcional) — "compartilhar algoritmos e contratos, não copiar a geometria desktop para a tela do telefone" — e o layout phone base é o de [05-mobile-tablet](../design/05-mobile-tablet.md#phone). Especificação de plataforma: [Android](../platforms/02-android.md#painel-dsp-no-toque) e [iOS](../platforms/05-ios.md).
+
+### 10.1 Alvos, gestos e unidades
+
+| Item | Desktop | Android | iOS |
+|---|---|---|---|
+| Alvo mínimo | 24 DIP | **48 dp** ([§1](#1-princípios)) | **44 pt** (mínimo de toque da Apple) |
+| Ajuste | arraste do slider/knob | arraste + alternativa por botão | arraste + alternativa por botão |
+| Valor exato | editor numérico sob demanda | editor numérico sob demanda | editor numérico sob demanda |
+| Unidade | DIP | dp de layout, sp de texto | pt de layout, Dynamic Type para texto |
+| Zoom de texto | 200% sem perder controle | fonte 200% faz reflow, sem clipping ([05-mobile §Phone](../design/05-mobile-tablet.md#phone)) | Dynamic Type 200% não esconde ação ([REQ-E20-03](../product/03-requisitos.md)) |
+
+Nenhuma das três colunas ganha um controle novo: o aumento de alvo sai do **espaçamento** e da rolagem, nunca de encolher o desenho do instrumento nem de esconder banda.
+
+### 10.2 Mapeamento por área do painel
+
+| Área | Android | iOS |
+|---|---|---|
+| Cabeçalho e presets de uso | app bar + presets em *bottom sheet* | navigation bar + presets em *bottom sheet* |
+| Equalizador clássico (10) | página com **rolagem horizontal explícita**, labels fixos, presets e preamp visíveis | página com rolagem horizontal explícita, labels fixos, presets e preamp visíveis |
+| Editor 20/31/64 e paramétrico | **tela cheia** com tabela de bandas/filtros | **tela cheia** (*full-screen parametric editor*) com tabela de bandas/filtros |
+| Famílias e catálogo | lista pesquisável + navegação por família | lista pesquisável + navegação por família |
+| Cadeia (inspector) | sheet; reordenar só nos nós reordenáveis | sheet; reordenar só nos nós reordenáveis |
+| Cards Vinil e Válvula | cards empilhados, bypass próprio preservado | cards empilhados, bypass próprio preservado |
+| Rodapé (latência, CPU, underrun) | linha resumida, expansível | linha resumida, expansível |
+| Medidores | VUs empilhados ou em carrossel | VUs empilhados ou em carrossel |
+| Fluxo modular (grafo) | leitura; edição conforme decisão D-DSP-12 | leitura; edição conforme decisão D-DSP-12 |
+
+O **slider vertical de 44 pt** e o **bottom sheet** são o vocabulário do iOS; o de Android é o slider de 48 dp em página com rolagem e a *bottom sheet* do Material. O contrato observável por trás dos dois é o mesmo: nome, valor, unidade, limites e alternativa ao arraste (DSP-UX-19).
+
+### 10.3 O que não muda com o toque
+
+Preservam-se integralmente:
+
+- **Limites de ajuste** de [§8.5](#85-limites-do-ajuste): Classic 10 bandas, gráficos 10/20/31/64, paramétrico até 32 filtros. O telefone não ganha nem perde modalidade.
+- **Estados de módulo** de [§2](#2-estrutura-do-painel-audio-dsp), com ícone **e** texto, nunca só cor.
+- **A/B, desfazer e bypass geral** com o mesmo crossfade.
+- **Nenhuma UI escreve no grafo RT**: a alteração chega ao áudio com smoothing, em até 50 ms (§1 Feedback).
+- **Medidores não são efeitos** e o espaço do instrumento não é reduzido por controles permanentes (VU-INT-05).
+- **Os VUs de [§6.1](#61-integração-visual-dos-vu-meters-vu-int)** continuam intactos por dentro; só o gabinete externo se adapta, e no telefone a **ampliação** é o caminho para detalhe pequeno, nunca distorcer o desenho.
+
+O que muda é o *host*: largura útil, insets, densidade, teclado ausente e o ciclo de vida do app.
+
+### 10.4 Background, tela apagada e orçamento
+
+Taxa de UI de [§6](#6-medidores-e-visualização) no telefone: **30 fps padrão**, com **zero render** quando o app está em background ou com a tela apagada — no Android isso é explícito; no iOS vale o mesmo, porque o `CADisplayLink` para de fato quando a cena não está visível e o áudio continua pela `AVAudioSession`. Reduced motion no sistema deixa os medidores estáticos com números.
+
+O orçamento de DSP **não** é afrouxado pelo telefone: `REQ-E20-05` exige presets respondendo dentro de **±0,2 dB do desktop**, nenhuma alocação na callback e ausência de underrun no aparelho de referência. O layout no toque é adaptação de interface; a cadeia de processamento é a mesma.
+
+### 10.5 Sem Restore e Converter no painel mobile
+
+O painel do Android e o do iOS controlam **só a cadeia do player**. Não há botão, menu, deep-link nem fluxo que abra restauração ou transcodificação: `apps/restore` e `apps/converter` não existem nesses builds ([Android §Escopo do app](../platforms/02-android.md#escopo-do-app-só-o-player), [iOS §1](../platforms/05-ios.md), [ADR-012 §1](../adr/ADR-012-integracao-shell.md#1-arquitetura-de-integração-por-plataforma), [D-MOB-01](../product/05-decisoes.md#decisões-de-mobile-2026-11-11)).
+
+Um card ou atalho "Restaurar" no telefone seria promessa de capacidade inexistente — a mesma desonestidade que o §1 proíbe com "processado × transparente × DEMO".
+
+### 10.6 Estado
+
+Especificado: tudo nesta seção. Implementado no protótipo: nada além do layout desktop responsivo que o MVP já oferece — o protótipo **não** é a referência do layout mobile, porque os breakpoints dele foram desenhados para navegador, não para gesto. Nativo: nada. Verificação pendente de hardware: TalkBack, VoiceOver e aparelho de referência — nenhum disponível neste ambiente.
