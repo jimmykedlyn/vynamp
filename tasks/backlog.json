@@ -1137,7 +1137,7 @@
       "title": "Provar resampler e sample conversion",
       "phase": "M0",
       "priority": "P0",
-      "status": "planned",
+      "status": "implemented",
       "owner_role": "audio",
       "requirements": [
         "REQ-E04-02"
