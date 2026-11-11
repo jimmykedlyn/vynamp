@@ -1,9 +1,8 @@
 # tasks — vynamp
 
-57tarefa(s) do backlog de produto com este repo como dono.
-As duas últimas são TASKs de engenharia, emitidas pelo passo 37 (D-37-13) e não
-presentes no backlog de produto.
-
+59 tarefa(s) do backlog com este repositório como dono.
+57 são de produto e 2 de engenharia, criadas pelo passo 37
+(D-37-13) sem requisito, por não serem requisito de produto: `TASK-CI-01`, `TASK-CI-02`.
 
 | ID | Título | Módulo dono | Estado |
 |---|---|---|---|
