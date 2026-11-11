@@ -1,6 +1,6 @@
 # Changelog / Histórico
 
-Versão: 0.9.6 · Data: 2026-11-10 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.9.7 · Data: 2026-11-10 · Estado: especificação proposta, implementação não iniciada.
 
 Each entry appears in English and Portuguese. The two texts say the same thing;
 where they appear to differ, the Portuguese text of that entry is the original
@@ -669,6 +669,46 @@ externa que um `url(#x)` literal e passaria. O teste de SVG foi verificado verme
 com a leitura crua antes do conserto. `vynamp-decode` e `vynamp-output` também
 tiveram a linha `Status` do README corrigida de "private repository" para "public
 repository", falsa desde que os repositórios foram abertos.
+
+## Unreleased — 2026-11-10 (ponteiros de execução que apontavam para trabalho entregue) / Não lançado — 2026-11-10 (ponteiros de execução que apontavam para trabalho entregue)
+
+**EN** — Two files told a reader where to start, and both were stale in the same
+direction: they described finished work as pending. `tasks/NEXT.md` was frozen at
+2026-10-14 and listed six TASKs to execute first, three of which had already
+closed (`E11-01`, `E01-02`, `E02-11`); it now leads with what closed, names
+`TASK-E01-01` as the next task — the gate the [ADR-002](adr/ADR-002-audio-core.md)
+declares for its own unfreezing — and states what mobile does not have: no
+converter, no restore, and the DSP layout adapted rather than ported, with iOS as
+phase 6 (`E20`). Two claims in the first draft were wrong and were corrected
+against the repository: the ADR cited was `002-versao-features`, which does not
+exist, and the Android DSP work is not `E05-09` (network and streaming) but
+`E13-05` for the basic EQ, with the full chain staying in `E04-01`. The nine
+`tasks/README.md` files, emitted by step 37, had three defects in their header: the
+count was glued to the text (`57tarefa(s)`), the number did not come from
+`tasks/backlog.json`, and every file said "the last two are engineering" where the
+umbrella has seven and the engine two. The count is now derived from the backlog —
+total, product and engineering, naming the engineering ones — and the seven module
+repositories carry the fix; the umbrella re-pins to those commits. Markdown and
+pins only: no player code, 191 requirements, 199 tasks, 19 epics.
+
+**PT** — Dois arquivos diziam a um leitor por onde começar, e ambos estavam
+desatualizados na mesma direção: descreviam trabalho entregue como pendente.
+`tasks/NEXT.md` estava congelado em 2026-10-14 e listava seis TASKs para executar
+primeiro, três das quais já tinham fechado (`E11-01`, `E01-02`, `E02-11`); agora
+começa pelo que fechou, nomeia `TASK-E01-01` como a próxima — o gate que a
+[ADR-002](adr/ADR-002-audio-core.md) declara para se descongelar — e declara o que
+o mobile não tem: converter, restore, e o layout do DSP adaptado em vez de portado,
+com iOS como fase 6 (`E20`). Duas afirmações do primeiro rascunho estavam erradas e
+foram corrigidas contra o repositório: a ADR citada era `002-versao-features`, que
+não existe, e o DSP Android não é `E05-09` (rede e streaming) e sim `E13-05` para o
+EQ básico, com a cadeia completa permanecendo em `E04-01`. Os nove `tasks/README.md`,
+emitidos pelo passo 37, tinham três defeitos no cabeçalho: a contagem estava colada
+no texto (`57tarefa(s)`), o número não vinha do `tasks/backlog.json`, e todo arquivo
+dizia "as duas últimas são de engenharia" onde o umbrella tem sete e o engine duas.
+A contagem agora é derivada do backlog — total, produto e engenharia, nomeando as de
+engenharia — e os sete repositórios de módulo carregam a correção; o umbrella
+re-pina nesses commits. Somente Markdown e pins: nenhum código de player, 191
+requisitos, 199 tarefas, 19 épicos.
 
 ## Unreleased — 2026-11-10 (autoria das TASKs vira gate) / Não lançado — 2026-11-10 (autoria das TASKs vira gate)
 
