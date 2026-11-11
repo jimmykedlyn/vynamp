@@ -1,0 +1,1 @@
+Leia D:\Projects\vynamp\AGENTS.md e D:\Projects\vynamp-media-player\STATE.md. Voce e o unico autor e revisor do Vynamp. Retome a proxima acao do STATE.md seguindo o contrato do umbrella (Opus orquestra; Sonnet implementa/revisa; Haiku roda checks). Sem merge/release/force push.

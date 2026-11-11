@@ -282,3 +282,7 @@ A exclusao definitiva so acontece no passo 38, sob confirmacao explicita do mant
 | 2026-11-08 | `.cache\tests` | - | cache descartavel do bootstrap (tests) | 38 | excluido |
 | 2026-11-08 | `.cache\flac-test-files` | - | cache descartavel do bootstrap (flac-test-files) | 38 | excluido |
 | 2026-11-08 | `repo` | - | casca do repo antigo; historico migrado para o umbrella (passo 35) | 38 | excluido |
+| 2026-11-11 | `D:\Projects\vynamp-fases` (README, docs/, fase4/, agentes/, padroes/, execucao/3x-*) | `_arquivo/fases/` | pasta solta fora do Git; plano de fases e `01-arvore-final.md` (normativo, citado pelas specs) passam a viver no umbrella | 38 | arquivado |
+| 2026-11-11 | `D:\Projects\vynamp-fases` (execucao/_*, *.bak-*, tmp/) | - | scripts temporarios, corpos de PR ja publicados, backups e logs | 38 | excluido |
+| 2026-11-11 | `D:\Projects\vynamp-media-player` (STATE.md, LEIA-ME.md, PROMPT-CLAUDE.txt, ABRIR-CLAUDE/AMBIENTE/INICIAR.ps1) | `_arquivo/media-player/` | log de estado e lancadores do layout antigo (repo/, .cache/, pacote/), que nao existe mais | 38 | arquivado |
+| 2026-11-11 | `D:\Projects\vynamp-media-player` (.cache, .claude, *.py, t.wma) | - | cache do bootstrap e rascunhos descartaveis | 38 | excluido |
