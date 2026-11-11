@@ -1,6 +1,6 @@
 # Changelog / Histórico
 
-Versão: 0.9.8 · Data: 2026-11-11 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.9.9 · Data: 2026-11-11 · Estado: especificação proposta, implementação não iniciada.
 
 Each entry appears in English and Portuguese. The two texts say the same thing;
 where they appear to differ, the Portuguese text of that entry is the original
@@ -669,6 +669,54 @@ externa que um `url(#x)` literal e passaria. O teste de SVG foi verificado verme
 com a leitura crua antes do conserto. `vynamp-decode` e `vynamp-output` também
 tiveram a linha `Status` do README corrigida de "private repository" para "public
 repository", falsa desde que os repositórios foram abertos.
+
+## Unreleased — 2026-11-11 (ADR-002: o gate media um arquivo que existia) / Não lançado — 2026-11-11 (ADR-002: o gate media um arquivo que existia)
+
+**EN** — [ADR-002](adr/ADR-002-audio-core.md) said, in its step-43 gate table,
+that the decoder registry spike did not exist, citing an empty
+`find . -name '*.rs' | grep -i registry`. The file exists: 182 lines at
+`libs/decode/crates/vynamp-decode-core/src/registry.rs`, added in `7f47c0a`
+(2026-10-23), and present in the `4af4dd5` pin the umbrella carried when the
+wrong line was written in `cca18ff` (2026-11-09). A false line was blocking the
+whole M0 milestone, so the gate was re-measured from the code rather than
+re-read. The same pass wrote the section the TASK-E01-01 deliverable had never
+got — "a ADR-002 com versões/features propostas": nine crates at `0.0.0`,
+`edition 2024`, MSRV 1.99, seven features on the facade and none on the other
+eight crates, zero registry packages in `Cargo.lock`, 151 corpus files and 77
+manifest entries, the output library at `0.0.0` with its core already merged
+into `develop` (`976b236`) and 133 tests green. ADR-002 is now accepted in part:
+the residue ADR-011 explicitly preserved (domain/engine/control in Rust,
+restricted RT callback, whole transparent path separate from float DSP) stands
+on the evidence of TASK-E01-01 and TASK-E01-02; the Symphonia/CPAL candidates
+stay only as a record of what ADR-011 replaced. Two stale claims found in
+ADR-011 are recorded here rather than fixed there, because that ADR has its own
+owner: MP1/2/3 are described as "plano 03, ainda não escrito" when plan 03 is
+written and executed, and the output core is described as "em PR #1, ainda não
+integrado ao develop" when it has been in `develop` since 2026-11-07.
+Documentation only.
+
+**PT** — A [ADR-002](adr/ADR-002-audio-core.md) afirmava, na tabela do gate do
+passo 43, que o spike de decoder registry não existia, citando um
+`find . -name '*.rs' | grep -i registry` vazio. O arquivo existe: 182 linhas em
+`libs/decode/crates/vynamp-decode-core/src/registry.rs`, criado em `7f47c0a`
+(2026-10-23) e presente no pin `4af4dd5` que o umbrella carregava quando a linha
+errada foi escrita em `cca18ff` (2026-11-09). Uma linha falsa estava bloqueando o
+marco M0 inteiro, então o gate foi remedido no código em vez de relido. A mesma
+passagem escreveu a seção que o `deliverable` da TASK-E01-01 nunca teve — "a
+ADR-002 com versões/features propostas": nove crates em `0.0.0`, `edition 2024`,
+MSRV 1.99, sete features na fachada e nenhuma nas outras oito crates, zero
+pacotes de registry no `Cargo.lock`, 151 arquivos de corpus e 77 entradas de
+manifesto, a biblioteca de saída em `0.0.0` com o core já integrado ao `develop`
+(`976b236`) e 133 testes verdes. A ADR-002 passa a aceita em parte: o resíduo que
+a ADR-011 explicitamente preservou (domínio/engine/controle em Rust, RT callback
+restrita, caminho transparente inteiro separado do DSP float) fica de pé com a
+evidência das TASK-E01-01 e TASK-E01-02; os candidatos Symphonia/CPAL ficam
+apenas como registro do que a ADR-011 substituiu. Duas afirmações desatualizadas
+achadas na ADR-011 ficam registradas aqui e não corrigidas lá, porque aquela ADR
+tem outro dono: MP1/2/3 aparecem como "plano 03, ainda não escrito" quando o plano
+03 está escrito e executado, e o core da saída aparece como "em PR #1, ainda não
+integrado ao develop" quando ele está no `develop` desde 2026-11-07. Somente
+documentação.
 
 ## Unreleased — 2026-11-10 (ponteiros de execução que apontavam para trabalho entregue) / Não lançado — 2026-11-10 (ponteiros de execução que apontavam para trabalho entregue)
 
