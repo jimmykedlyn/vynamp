@@ -1,6 +1,6 @@
 # Decisões, hipóteses e pontos em aberto
 
-Versão: 0.8.1 · Data: 2026-11-07 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.9.0 · Data: 2026-11-11 · Estado: especificação proposta, implementação não iniciada.
 
 ## Decisões fixadas pelo pedido
 
@@ -174,3 +174,14 @@ Verificado no pin `vynamp-mvp-reference@0d9860b` (rev.38). Nenhum destes entra n
 | `SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO-v1.2.md` §13.1 ("nenhuma dispensa por fase") × gestão de escopo | a regra era correta **para o protótipo** e contraditória se lida como regra do produto | D-MVP-03: a regra morre com o documento; fases M1–M5 continuam governando o nativo |
 | `SKIN-REQUIREMENTS-CODEX.md` §12/§13 ("é o repositório") × [referência do MVP](../design/07-pin-mvp.md) | os SKIN tratavam o protótipo como se fosse deste repositório; o MVP vive em `vynamp-mvp-reference` por SHA | Resolvido pela fonte única: [06-mvp-reference](../design/07-pin-mvp.md) é a regra |
 
+
+## Decisões de mobile (2026-11-11)
+
+Instrução do mantenedor em 2026-11-11: *"Sobre Android e IOS você precisa adaptar o layout do dsp, também não vai ter restore e nem converter no mobile."* Duas decisões independentes saem daí; nenhuma altera código, porque no nativo nada está implementado.
+
+| ID | Decisão | Razão / revisão |
+|---|---|---|
+| D-MOB-01 | **Mobile é só o player.** O APK/AAB Android e o app iOS embarcam decodificador, motor de áudio, DSP e shell — e **não** embarcam `apps/restore` nem `apps/converter`: sem binário, target, activity, extensão, intent-filter ou deep-link. Consolida e torna explícita a decisão de 2026-11-03, que a [ADR-012 §1](../adr/ADR-012-integracao-shell.md#1-arquitetura-de-integração-por-plataforma) já registrava ao dar ao Android só os verbos **Reproduzir** e **Enfileirar no Vynamp** | A [spec do Restore §11](../reference/tools/01-vynamp-restore.md#11-matriz-de-plataformas) já dizia "fora de escopo na 1.0" para Android, mas a [spec do Converter](../reference/tools/02-vynamp-converter.md#1-escopo) dizia apenas "desktop" sem excluir mobile, e a [spec de Android](../platforms/02-android.md#escopo-do-app-só-o-player) não dizia nada: a mesma regra existia em um documento e faltava em dois. Reabrir exige decisão nova aqui **e** emenda à ADR-012, não TASK avulsa |
+| D-MOB-02 | **O painel DSP é o mesmo produto com geometria adaptada ao toque**, não um subconjunto. Alvos ≥ 48 dp no Android e ≥ 44 pt no iOS; 10 bandas em página com rolagem horizontal explícita; 20/31/64 e paramétrico em editor de tela cheia; presets e inspector em *bottom sheet*; zero render em background e tela apagada. Os **limites de ajuste de [painel §8.5](../design/06-painel-dsp.md#85-limites-do-ajuste) não mudam** — Classic 10, gráficos 10/20/31/64 e paramétrico até 32 filtros continuam iguais no telefone, e o orçamento de `REQ-E20-05` (±0,2 dB do desktop, sem alocação na callback) também | A [matriz de suporte §paridade](../platforms/01-matriz-suporte.md#paridade-funcional) manda compartilhar algoritmos e contratos, não copiar a geometria; o [painel DSP](../design/06-painel-dsp.md#10-layout-no-toque-android-e-ios) citava Android em três parágrafos e **não citava iOS em nenhum** — a assimetria era documental, não de produto. O protótipo web **não** serve de referência de layout mobile: os breakpoints dele são de navegador, não de gesto |
+
+**O que isso não decide.** O painel DSP na FASE 6 (iOS) continua em `TASK-E20-05` e o layout phone Android em `TASK-E13-05`; nenhuma das duas muda de fase, dono ou marco por causa destas linhas. Trazer Restore ou Converter a mobile reabre D-MOB-01 e exige ADR nova.

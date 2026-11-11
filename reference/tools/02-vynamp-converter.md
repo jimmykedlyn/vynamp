@@ -1,6 +1,6 @@
 # Vynamp Converter — conversão e transcodificação
 
-Versão: 0.1.0 · Data: 2026-11-05 · Estado: **escopo preparatório**; implementação não iniciada. A execução completa fica no PR5.
+Versão: 0.1.1 · Data: 2026-11-11 · Estado: **escopo preparatório**; implementação não iniciada. A execução completa fica no PR5.
 
 Documento canônico da ferramenta desktop **Vynamp Converter** (`vynamp-converter`). Complementa [ADR-013](../../adr/ADR-013-restore.md) (fronteira de processo e motor compartilhado), [ADR-012](../../adr/ADR-012-integracao-shell.md) (ação de menu de contexto e identidade), [ADR-011](../../adr/ADR-011-pilha-propria.md) (pilha de áudio própria) e [TASK-E08-02](../../apps/converter/tasks/items/TASK-E08-02.md) (conversor e encoder registry). Matriz normativa: [03-requirements](../../product/03-requisitos.md).
 
@@ -26,6 +26,8 @@ Ferramenta desktop de **transcodificação e conversão em lote**, executável s
 | Áudio | Escala de bit e profundidade **não** degradadas por padrão |
 
 **Fora de escopo na 1.0:** edição de tags (é do player), organização de pastas e dedupe ([TASK-E08-04](../../apps/player/tasks/items/TASK-E08-04.md)), extração de CUE, gravação de fonte autorizada, gravação de disco ([TASK-E08-05](../../apps/player/tasks/items/TASK-E08-05.md)).
+
+**Fora de escopo em mobile (Android e iOS).** O Converter é **exclusivamente desktop** na 1.0. Não há build, activity, target nem extensão de `vynamp-converter` no APK/AAB nem no app iOS, e nenhum app mobile abre conversão por deep-link ou Ação de Compartilhamento. A decisão é do mantenedor, de 2026-11-03, registrada em [ADR-012 §1](../../adr/ADR-012-integracao-shell.md#1-arquitetura-de-integração-por-plataforma) — a linha Android declara só **Reproduzir** e **Enfileirar no Vynamp** — e em [D-MOB-01](../../product/05-decisoes.md#decisões-de-mobile-2026-11-11). O [Restore §11](01-vynamp-restore.md#11-matriz-de-plataformas) já declarava o mesmo para a ferramenta irmã; este parágrafo fecha a assimetria.
 
 ## 2. Contrato de invocação
 
