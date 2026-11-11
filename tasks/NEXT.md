@@ -59,10 +59,14 @@ M0/M1.
 ## Mobile: o que não existe lá
 
 Android e iOS recebem o player, não a suíte. `apps/converter` e `apps/restore`
-**não existem** no mobile, e nenhuma TASK mobile os traz. O layout do DSP é
-adaptado ao orçamento de tela e de CPU de cada um em vez de portar o painel do
-desktop: no iOS isso é `TASK-E20-05`; no Android, o EQ básico entra com
-`TASK-E13-05` e a cadeia completa continua sendo `TASK-E04-01`, compartilhada
-com o desktop. iOS é a fase 6 (épico `E20`, seis TASKs: bridge CoreAudio,
-AVAudioSession, shell SwiftUI touch-first, sandbox de arquivos, DSP adaptado e
-assinatura/TestFlight).
+**não existem** no mobile, e nenhuma TASK mobile os traz — é `D-MOB-01`, com a
+fonte em [ADR-012 §1](../adr/ADR-012-integracao-shell.md#1-arquitetura-de-integração-por-plataforma)
+e nas specs de [Android](../platforms/02-android.md#escopo-do-app-só-o-player) e
+[iOS](../platforms/05-ios.md). O layout do DSP é adaptado ao orçamento de tela e
+de CPU de cada um em vez de portar o painel do desktop, com o mapeamento área por
+área em [painel DSP §10](../design/06-painel-dsp.md#10-layout-no-toque-android-e-ios)
+e os limites de ajuste da §8.5 intactos (`D-MOB-02`): no iOS isso é
+`TASK-E20-05`; no Android, o EQ básico entra com `TASK-E13-05` e a cadeia
+completa continua sendo `TASK-E04-01`, compartilhada com o desktop. iOS é a fase
+6 (épico `E20`, seis TASKs: bridge CoreAudio, AVAudioSession, shell SwiftUI
+touch-first, sandbox de arquivos, DSP adaptado e assinatura/TestFlight).
