@@ -7,7 +7,11 @@
 #
 # Rode depois de clonar, e de novo depois de `git submodule update --init` se os
 # modulos reclamarem de hook ausente: cada repositorio de modulo tem o proprio
-# `setup.sh`, e este aqui **nao** alcanca os submodulos.
+# `setup.sh`, e este aqui **nao** alcanca os submodulos. Para ligar os oito de
+# uma vez (o `reference/vynamp-mvp` nao tem hook, e o filtro o pula):
+#
+#   git submodule foreach --quiet \
+#     'if [ -f setup.sh ]; then sh setup.sh >/dev/null && echo "$name ok"; fi'
 #
 # Uso: sh setup.sh
 set -eu
