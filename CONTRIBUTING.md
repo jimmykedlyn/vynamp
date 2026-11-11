@@ -24,10 +24,18 @@ sh setup.sh
 `core.hooksPath` lives in `.git/config`, which is not versioned: the hooks are in
 the repository, but git ignores them until someone points at them. `setup.sh`
 makes that link, restores the executable bit on `.githooks/*` and warns when a
-hook landed with CRLF — a shebang ending in `` does not execute, and git
+hook landed with CRLF — a shebang ending in `
+` does not execute, and git
 silently skips a hook without the executable bit. It is idempotent. It does
 **not** reach the submodules: each module repository has its own `setup.sh`,
-and each clone of a module needs its own run.
+and each clone of a module needs its own run. To light up all eight at once:
+
+```bash
+git submodule foreach --quiet   'if [ -f setup.sh ]; then sh setup.sh >/dev/null && echo "$name ok"; fi'
+```
+
+`reference/vynamp-mvp` has no hook and no `setup.sh` — the `-f` filter skips it
+instead of failing the whole loop.
 
 ### The change
 
@@ -123,10 +131,18 @@ sh setup.sh
 `core.hooksPath` mora em `.git/config`, que não é versionado: os hooks estão no
 repositório, mas o git os ignora até alguém apontar para eles. O `setup.sh` faz
 essa ligação, devolve o bit de execução a `.githooks/*` e avisa quando um hook
-chegou com CRLF — shebang terminado em `` não executa, e o git pula hook sem
+chegou com CRLF — shebang terminado em `
+` não executa, e o git pula hook sem
 bit de execução em silêncio. É idempotente. Ele **não** alcança os submódulos:
 cada repositório de módulo tem o próprio `setup.sh`, e cada clone de módulo
-precisa da própria execução.
+precisa da própria execução. Para ligar os oito de uma vez:
+
+```bash
+git submodule foreach --quiet   'if [ -f setup.sh ]; then sh setup.sh >/dev/null && echo "$name ok"; fi'
+```
+
+`reference/vynamp-mvp` não tem hook nem `setup.sh` — o filtro `-f` o pula em vez
+de derrubar o laço inteiro.
 
 ### A mudança
 
