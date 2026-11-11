@@ -1,9 +1,8 @@
 # tasks — vynamp
 
-57tarefa(s) do backlog de produto com este repo como dono.
-As duas últimas são TASKs de engenharia, emitidas pelo passo 37 (D-37-13) e não
-presentes no backlog de produto.
-
+59 tarefa(s) do backlog com este repositório como dono.
+57 são de produto e 2 de engenharia, criadas pelo passo 37
+(D-37-13) sem requisito, por não serem requisito de produto: `TASK-CI-01`, `TASK-CI-02`.
 
 | ID | Título | Módulo dono | Estado |
 |---|---|---|---|
@@ -28,7 +27,7 @@ presentes no backlog de produto.
 | `TASK-E10-08` | Executar soak e matriz de hardware | vynamp | planned |
 | `TASK-E10-09` | Validar upgrades, recovery e privacidade | vynamp | planned |
 | `TASK-E10-10` | Fechar gates e cobertura desktop | vynamp | planned |
-| `TASK-E11-01` | Criar workspace e baseline de engenharia | vynamp | in_progress |
+| `TASK-E11-01` | Criar workspace e baseline de engenharia | vynamp | implemented |
 | `TASK-E11-02` | Definir fronteiras de segurança | vynamp | planned |
 | `TASK-E11-03` | Resolver licenças e inventário de dependências | vynamp | planned |
 | `TASK-E11-04` | Completar CI e supply chain | vynamp | planned |
@@ -47,7 +46,7 @@ presentes no backlog de produto.
 | `TASK-E14-06` | Fechar release 1.0 multiplataforma | vynamp | planned |
 | `TASK-E15-01` | Configurar Claude Code e Superpowers obrigatório | vynamp | planned |
 | `TASK-E15-02` | Validar worktrees, claims e handoff | vynamp | planned |
-| `TASK-E15-03` | Importar GitHub privado e ativar Gitflow | vynamp | in_progress |
+| `TASK-E15-03` | Importar GitHub privado e ativar Gitflow | vynamp | implemented |
 | `TASK-E15-04` | Ativar workflows e CI Gate multiplataforma | vynamp | planned |
 | `TASK-E15-05` | Integrar testes e evidência operacional | vynamp | planned |
 | `TASK-E15-06` | Validar NSIS/portable e assinatura Windows | vynamp | planned |
@@ -59,13 +58,14 @@ presentes no backlog de produto.
 | `TASK-E17-12` | Publicar manifest real de capacidades por artefato | vynamp | planned |
 | `TASK-E17-18` | Certificar expansão MIDI, trackers e DSD especial | vynamp | planned |
 | `TASK-E17-20` | Fechar gate combinado de codecs, DSP e visualizers | vynamp | planned |
-| `TASK-E19-01` | Migrar o CI do repo principal para GitHub Actions | vynamp | in_progress |
-| `TASK-E19-02` | Higiene, governança e README bilíngue do repo principal | vynamp | in_progress |
+| `TASK-E19-01` | Migrar o CI do repo principal para GitHub Actions | vynamp | implemented |
+| `TASK-E19-02` | Higiene, governança e README bilíngue do repo principal | vynamp | implemented |
 | `TASK-E19-04` | Re-apontar as specs de Restore e Converter e criar os repos próprios | vynamp | implemented |
 | `TASK-E19-05` | CI e README bilíngue nas libs Rust e no MVP de referência | vynamp | implemented |
 | `TASK-E19-06` | Abrir os repositórios ao público e proteger as branches | vynamp | implemented |
 | `TASK-CI-01` | Reescrever delivery() e github_actions() para a árvore do umbrella | `vynamp` | implemented |
-| `TASK-CI-02` | Adicionar o job check-tasks ao CI do umbrella | `vynamp` | planned |
+| `TASK-CI-02` | Adicionar o job check-tasks ao CI do umbrella | `vynamp` | implemented |
 
 O status oficial é o `tasks/backlog.json` do umbrella. O índice de épico fica lá
 também: uma cópia por repo divergiria.
+Estados conferidos contra o backlog em 2026-11-11.
