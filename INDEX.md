@@ -62,6 +62,8 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [ADR-014 — Repositórios públicos, CI em GitHub Actions e vinil/válvula como DSP interno](adr/ADR-014-publico-dsp-interno.md) — adr/ADR-014-publico-dsp-interno.md
 
+- [ADR-017 — qualidade do resampler e da conversão de amostras](adr/ADR-017-resampler-e-conversao.md) — adr/ADR-017-resampler-e-conversao.md
+
 - [Engine de áudio e invariantes](reference/audio/01-engine.md) — reference/audio/01-engine.md
 
 - [Matriz de formatos, codecs e tags](reference/audio/02-formats.md) — reference/audio/02-formats.md
