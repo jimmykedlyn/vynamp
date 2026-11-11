@@ -38,16 +38,19 @@ cargo xtask check-authoring
 cargo xtask check-delivery
 ```
 
-`check-tasks` covers the backlog and the TASK records; `check-authoring` applies
-the authoring rules to the same Markdown, and its blocking rule is that a
-`Boundary` bullet must name who owns the scope it excludes — a TASK, an ADR or a
-document that exists on disk. `check-docs` requires every Markdown file to have a `# ` title and an entry in
+`check-docs` requires every Markdown file to have a `# ` title and an entry in
 [`INDEX.md`](INDEX.md). `.claude/` is out of scope: files under it are agent
 definitions that open with a YAML frontmatter block, not prose, and they are
-configuration rather than specification. `check-delivery` validates that frontmatter
-instead — the four keys, and a `model:` from `opus|sonnet|haiku`. `check-delivery` validates the workflows:
-every `uses:` pinned by full commit SHA, the `CI Gate` job present and
-fail-closed.
+configuration rather than specification.
+
+`check-tasks` covers the backlog and the TASK records. `check-authoring` applies
+the authoring rules to the same Markdown, and its blocking rule is that a
+`Boundary` bullet must name who owns the scope it excludes — a TASK, an ADR or a
+document that exists on disk; a bullet with no owner is not verifiable, so the
+next task repeats the gap. `check-delivery` validates the agent definitions the
+other two skip — the four frontmatter keys, and a `model:` from
+`opus|sonnet|haiku` — and the workflows: every `uses:` pinned by full commit SHA,
+the `CI Gate` job present and fail-closed.
 
 ### The pull request
 
@@ -120,16 +123,19 @@ cargo xtask check-authoring
 cargo xtask check-delivery
 ```
 
-`check-tasks` cobre o backlog e os registros de TASK; `check-authoring` aplica as
-regras de autoria ao mesmo Markdown, e sua regra bloqueante é que um bullet de
-`Boundary` nomeie quem é dono do escopo que exclui — uma TASK, uma ADR ou um
-documento que exista em disco. `check-docs` exige que todo arquivo Markdown tenha título `# ` e entrada no
+`check-docs` exige que todo arquivo Markdown tenha título `# ` e entrada no
 [`INDEX.md`](INDEX.md). `.claude/` fica fora: o que está ali são definições de
 agente, que começam com bloco de frontmatter YAML, não prosa, e são configuração,
-não especificação. Quem valida esse frontmatter é o `check-delivery` — as quatro
-chaves, e `model:` de `opus|sonnet|haiku`. `check-delivery` valida os workflows: todo
-`uses:` fixado por SHA completo de commit, o job `CI Gate` presente e
-fail-closed.
+não especificação.
+
+`check-tasks` cobre o backlog e os registros de TASK. `check-authoring` aplica as
+regras de autoria ao mesmo Markdown, e sua regra bloqueante é que um bullet de
+`Boundary` nomeie quem é dono do escopo que exclui — uma TASK, uma ADR ou um
+documento que exista em disco; bullet sem dono não é verificável, e a TASK seguinte
+repete a lacuna. `check-delivery` valida as definições de agente que os outros dois
+pulam — as quatro chaves do frontmatter, e `model:` de `opus|sonnet|haiku` — e os
+workflows: todo `uses:` fixado por SHA completo de commit, o job `CI Gate` presente
+e fail-closed.
 
 ### O pull request
 
