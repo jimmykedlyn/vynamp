@@ -15,6 +15,20 @@ unit of work, not the diff.
 Read [`AGENTS.md`](AGENTS.md) (the working contract), [Gitflow](engineering/03-gitflow.md)
 and [CI and gates](engineering/04-ci.md).
 
+Then, once per clone:
+
+```bash
+sh setup.sh
+```
+
+`core.hooksPath` lives in `.git/config`, which is not versioned: the hooks are in
+the repository, but git ignores them until someone points at them. `setup.sh`
+makes that link, restores the executable bit on `.githooks/*` and warns when a
+hook landed with CRLF — a shebang ending in `` does not execute, and git
+silently skips a hook without the executable bit. It is idempotent. It does
+**not** reach the submodules: each module repository has its own `setup.sh`,
+and each clone of a module needs its own run.
+
 ### The change
 
 One branch per task, from `develop`, named
@@ -99,6 +113,20 @@ unidade de trabalho é o backlog, não o diff.
 Leia [`AGENTS.md`](AGENTS.md) (o contrato de trabalho), o
 [Gitflow](engineering/03-gitflow.md) e o
 [CI e gates](engineering/04-ci.md).
+
+Depois, uma vez por clone:
+
+```bash
+sh setup.sh
+```
+
+`core.hooksPath` mora em `.git/config`, que não é versionado: os hooks estão no
+repositório, mas o git os ignora até alguém apontar para eles. O `setup.sh` faz
+essa ligação, devolve o bit de execução a `.githooks/*` e avisa quando um hook
+chegou com CRLF — shebang terminado em `` não executa, e o git pula hook sem
+bit de execução em silêncio. É idempotente. Ele **não** alcança os submódulos:
+cada repositório de módulo tem o próprio `setup.sh`, e cada clone de módulo
+precisa da própria execução.
 
 ### A mudança
 

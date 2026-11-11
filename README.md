@@ -73,10 +73,18 @@ its module on the step that creates that repository.
 Engineering automation is Rust: [repository layout](engineering/08-reinicio-windows.md), [agents and Superpowers](AGENTS.md), [Gitflow](engineering/03-gitflow.md), [CI/CD](engineering/04-ci.md), [tests](engineering/05-testes.md), [installers](delivery/04-gates.md).
 
 ```bash
+sh setup.sh                       # once per clone: links .githooks into core.hooksPath
 cargo xtask check-docs
 cargo xtask check-delivery
 cargo test --workspace --locked
 ```
+
+`setup.sh` is required once per clone: `core.hooksPath` lives in `.git/config`,
+which is not versioned, so a fresh clone commits with no local rule at all until
+it runs. The server-side branch protection still blocks a direct pull request to
+`develop`, but the local `guard-branch` is what catches the commit before it
+exists. Each module repository has its own `setup.sh`; the one here does not
+reach the submodules.
 
 CI runs on GitHub Actions: on every pull request to `develop`, on push to
 `develop`/`main`, and never on a bare feature branch. The required status is
@@ -177,10 +185,18 @@ para o módulo correspondente no passo que cria aquele repositório.
 A automação de engenharia é Rust: [estrutura](engineering/08-reinicio-windows.md), [agentes/Superpowers](AGENTS.md), [Gitflow](engineering/03-gitflow.md), [CI/CD](engineering/04-ci.md), [testes](engineering/05-testes.md), [instaladores](delivery/04-gates.md).
 
 ```bash
+sh setup.sh                       # uma vez por clone: liga .githooks ao core.hooksPath
 cargo xtask check-docs
 cargo xtask check-delivery
 cargo test --workspace --locked
 ```
+
+O `setup.sh` é obrigatório uma vez por clone: `core.hooksPath` mora em
+`.git/config`, que não é versionado, então um clone novo commita sem regra local
+nenhuma até rodá-lo. A branch protection do servidor continua barrando pull
+request direto para `develop`, mas é o `guard-branch` local que pega o commit
+antes de ele existir. Cada repositório de módulo tem o próprio `setup.sh`; o
+daqui não alcança os submódulos.
 
 O CI roda em GitHub Actions: em todo pull request para `develop`, em push para
 `develop`/`main`, e nunca em branch de feature isolada. O status exigido é
