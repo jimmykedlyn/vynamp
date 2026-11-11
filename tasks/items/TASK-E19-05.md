@@ -28,21 +28,23 @@ GitHub Actions com gate CI Gate em vynamp-decode e vynamp-output, CI próprio em
 
 - **Não** escreve o CI das cinco libs e dos três apps além do que a TASK já tinha:
   `dsp`, `encode`, `engine`, `player`, `converter` e `restore` já publicavam `CI Gate`
-  desde o passo 36. Esta TASK fecha `decode` e `output`, que estavam sem workflow, e dá
-  ao MVP um CI próprio em Node.
+  desde o passo 36, e completar essa matriz é `TASK-E11-04`. Esta TASK fecha `decode` e
+  `output`, que estavam sem workflow, e dá ao MVP um CI próprio em Node.
 - **Não** entra no CI do umbrella (`specs`, `tooling`, `submodules`, `arch`, `tasks`).
-  Esse é o `ci.yml` da raiz, anterior a esta TASK, e continua dono dos gates
-  documentais.
+  Esse é o `ci.yml` da raiz, de `TASK-E19-01`, anterior a esta TASK, e continua dono
+  dos gates documentais.
 - **Não** conserta o que o `verify` do MVP compara. `out/` é a especificação congelada
-  e `mvp/` não é nosso; quando o CI reprova por divergência, a correção é do host que
-  mede, não do artefato. Foi exatamente esse o caso de `#graph-minimap`.
+  e `mvp/` não é nosso; congelá-lo e reextraí-lo por hash é `TASK-E02-11`. Quando o CI
+  reprova por divergência, a correção é do host que mede, não do artefato. Foi
+  exatamente esse o caso de `#graph-minimap`.
 - **Não** acrescenta `check-svg` ao CI. `out/check/report.json` lista 6 arquivos que
-  falham por lacuna de renderizador, à espera das tasks de fonte e de carregador;
-  transformá-los em gate agora seria PR vermelho de propósito.
+  falham por lacuna de renderizador, à espera das tasks de fonte e de carregador; o
+  carregador é `TASK-E02-15`, e transformá-los em gate agora seria PR vermelho de
+  propósito.
 - **Não** aplica branch protection nem exige o status. Isso é `TASK-E19-06`, executada
   em 2026-11-08; esta TASK só faz o status existir e valer.
 - **Não** traduz `mvp/`. O código do MVP é a especificação e não é editado; os READMEs
-  citam `mvp/` com os nomes originais.
+  citam `mvp/` com os nomes originais. A dona é `TASK-E02-11`, que congela o MVP.
 
 ## Antes de começar
 

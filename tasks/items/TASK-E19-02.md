@@ -28,13 +28,15 @@ LICENSE dual, LEGAL, CODE_OF_CONDUCT, GOVERNANCE, templates de issue, SECURITY.m
 
 - **Não** promete capacidade que o repositório não tem. A AC-4 é uma varredura de
   afirmações, e ela já corrigiu quatro que envelheceram quando o passo 34 enxugou os
-  workflows.
+  workflows. A prova de capacidade é a matriz de `TASK-E10-10`, não o texto.
 - **Não** inventa canal de reporte nem SLA. A AC-2 exige que o `SECURITY.md` aponte
   para GitHub Security Advisories, e nada além disso.
 - **Não** substitui a licença dual por uma só: `LICENSE`, `LICENSE-MIT` e
-  `LICENSE-APACHE`, com SPDX `MIT OR Apache-2.0`.
+  `LICENSE-APACHE`, com SPDX `MIT OR Apache-2.0`, a decisão D-LIC-01 registrada em
+  `LEGAL.md` e em `product/05-decisoes.md`.
 - **Não** reescreve a governança inteira. A AC-4 confronta cada afirmação com a
-  evidência, e só o que não se sustenta muda.
+  evidência, e só o que não se sustenta muda; mudar o modelo em si exige ADR, como
+  `GOVERNANCE.md` §"Changing this document" determina.
 
 ## Antes de começar
 

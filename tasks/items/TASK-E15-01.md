@@ -28,12 +28,15 @@ Entrypoints, settings, plugin lock e bootstrap/doctor nativos.
 
 - **Não** instala o plugin: `cargo xtask install` instala. A AC-2 exige que a
   **configuração sozinha** não conte como instalação, e é o doctor que tem de reprovar.
+  Instalar é ato do operador sobre o manager nativo (ADR-007), sem dono no backlog.
 - **Não** prova skill discovery. O `doctor` confirma o plugin manager e a versão; o
   "confirm skill discovery in session" é ele mesmo dizendo que discovery não é o que
-  ele mede. A AC-1 fecha essa parte na sessão, não no binário.
-- **Não** roda em máquina incompatível: o doctor é quem decide a compatibilidade.
-- **Não** escreve o entrypoint do app. O player é repo próprio; aqui é o entrypoint do
-  ferramental de engenharia.
+  ele mede. A AC-1 fecha essa parte na sessão, não no binário, e essa prova manual em
+  sessão não tem dono no backlog: a autoridade é `AGENTS.md` §5.
+- **Não** roda em máquina incompatível: o doctor é quem decide a compatibilidade, e a
+  matriz de toolchains e ABIs de cada alvo é `TASK-E14-01`.
+- **Não** escreve o entrypoint do app. O player é repo próprio; o entrypoint dele é
+  `TASK-E02-01`, e aqui é o entrypoint do ferramental de engenharia.
 
 ## Antes de começar
 

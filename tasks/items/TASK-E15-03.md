@@ -26,16 +26,18 @@ Importação por branch/PR ou bootstrap vazio, proteções e default develop.
 
 ## Boundary
 
-- **Não** decide a visibilidade do repositório: é decisão do mantenedor. A AC-1 mede
+- **Não** decide a visibilidade do repositório: é decisão do mantenedor, e quem a
+  executa é `TASK-E19-06`, que abre os repositórios ao público pela ADR-014. A AC-1 mede
   a **privacidade real pela API**, e o repositório é público hoje por instrução
   explícita dele — ler o estado de hoje como se fosse a entrega inverteria a ordem
   dos fatos.
-- **Não** reimporta o repositório. A AC-2 compara o histórico com a origem, e
-  reimportar reescreveria a raiz.
+- **Não** reimporta o repositório: o import é `TASK-E15-01`. A AC-2 compara o
+  histórico com a origem, e reimportar reescreveria a raiz.
 - **Não** trata 403 de plano como bug: o plano da conta é um limite real do GitHub, e
-  a pendência é registrada, não mascarada.
+  a pendência é registrada, não mascarada; quem a fecha é `TASK-E19-06`.
 - **Não** protege `vynamp-mvp-reference`: ele é referência congelada, pinada por
-  commit, sem `develop` e sem workflow.
+  commit, sem `develop` e sem workflow, e quem decide o conjunto protegido é
+  `TASK-E19-06`.
 
 ## Antes de começar
 

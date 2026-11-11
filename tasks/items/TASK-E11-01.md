@@ -28,14 +28,16 @@ Repositório independente, Cargo workspace mínimo, toolchain pin, ADRs e CI ini
 
 - **Não** implementa player nenhum. O workspace da raiz tem só `xtask`, e o
   `Cargo.toml` do umbrella **exclui** os oito módulos: `cargo check --workspace` aqui
-  dentro compila apenas o `xtask`.
+  dentro compila apenas o `xtask`. Código de player é `TASK-E02-01`, o spike desktop
+  que esta TASK destrava.
 - **Não** copia código, mídia nem artefato do Winamp. A AC-1 é exatamente esse limite,
-  e ela mede por varredura da árvore rastreada, não por declaração.
+  e ela mede por varredura da árvore rastreada, não por declaração. Nenhuma TASK do
+  backlog é dona disso: a autoridade é a ADR-001, que fixa o produto independente.
 - **Não** move `application_ready`, `release_enabled` nem `branding_exports_ready`: as
-  três seguem `false`, e esta TASK não é dona delas.
+  três seguem `false`, e esta TASK não é dona delas. A dona é `TASK-E14-06`, que fecha a matriz de 1.0.
 - **Não** fecha proteção de branch nem relato privado de vulnerabilidade: são
   `TASK-E15-03` e `TASK-E19-06`.
-- **Não** valida áudio. Nenhum sample foi decodificado e nenhum hardware foi tocado.
+- **Não** valida áudio. Nenhum sample foi decodificado e nenhum hardware foi tocado. A prova é `TASK-E01-01`.
 
 ## Antes de começar
 

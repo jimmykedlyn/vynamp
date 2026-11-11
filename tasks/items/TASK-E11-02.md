@@ -33,7 +33,7 @@ Threat model aplicado, defaults de limites, regras de IPC/pacotes e prova de san
 - **Não** aplica proteção de branch no GitHub: é decisão do mantenedor, e
   `TASK-E19-06` registra o que foi aplicado.
 - **Não** promete ausência de vulnerabilidade. O que se entrega é threat model com
-  controle e teste mapeados por entrada; o risco residual fica registrado, não zerado.
+  controle e teste mapeados por entrada; o risco residual fica registrado, não zerado. A revisão que classifica achados é `TASK-E07-10`.
 
 ## Antes de começar
 
