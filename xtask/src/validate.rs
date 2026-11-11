@@ -613,17 +613,27 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
     // The required status check is the job id `gate`; a renamed or narrowed
     // gate would stop blocking merges without failing anything else.
     c.check(ci_jobs.contains("gate"), "CI Gate job absent from ci.yml");
-    const UMBRELLA_JOBS: [&str; 5] = ["specs", "tooling", "submodules", "arch", "tasks"];
+    // `authoring` entra na lista porque as nove regras de autoria das TASKs
+    // passaram a ser medidas no CI: um bullet sem dono não é verificável, e um
+    // job que roda mas não está no agregado não bloqueia merge nenhum.
+    const UMBRELLA_JOBS: [&str; 6] = [
+        "specs",
+        "tooling",
+        "submodules",
+        "arch",
+        "tasks",
+        "authoring",
+    ];
     c.check(
         UMBRELLA_JOBS.iter().all(|j| ci_jobs.contains(*j)),
-        "CI workflow must keep specs, tooling, submodules, arch and tasks jobs",
+        "CI workflow must keep specs, tooling, submodules, arch, tasks and authoring jobs",
     );
     c.check(
         ci.is_some_and(|v| {
             strings(&v["jobs"]["gate"]["needs"])
                 == UMBRELLA_JOBS.iter().map(|j| (*j).to_owned()).collect()
         }),
-        "CI Gate job must depend on specs, tooling, submodules, arch and tasks",
+        "CI Gate job must depend on specs, tooling, submodules, arch, tasks and authoring",
     );
     // `if: always()` is what makes the gate run after a cancelled or failed
     // dependency; without it the gate is skipped and never turns red.
@@ -1322,10 +1332,15 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - run: cargo xtask check-tasks
+  authoring:
+    needs: specs
+    runs-on: ubuntu-22.04
+    steps:
+      - run: cargo xtask check-authoring
   gate:
     name: CI Gate
     if: always()
-    needs: [specs, tooling, submodules, arch, tasks]
+    needs: [specs, tooling, submodules, arch, tasks, authoring]
     runs-on: ubuntu-22.04
     steps:
       - run: |
@@ -1545,7 +1560,7 @@ model: sonnet
         edit(
             f.path(),
             "ci.yml",
-            "needs: [specs, tooling, submodules, arch, tasks]",
+            "needs: [specs, tooling, submodules, arch, tasks, authoring]",
             "needs: [specs, tooling, submodules]",
         );
         assert!(ci_errors(f.path()).iter().any(|e| e.contains("CI Gate")));
@@ -1674,7 +1689,7 @@ jobs:
         edit(
             f.path(),
             "ci.yml",
-            "needs: [specs, tooling, submodules, arch, tasks]",
+            "needs: [specs, tooling, submodules, arch, tasks, authoring]",
             "needs: [specs, tooling, submodules]",
         );
         let e = ci_errors(f.path());

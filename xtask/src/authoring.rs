@@ -398,10 +398,24 @@ mod tests {
         with_docs(body, &["ADR-001"], &[])
     }
 
-    fn with_docs(body: &str, adrs: &[&str], docs: &[&str]) -> Vec<&'static str> {
-        let dir = std::env::temp_dir().join("vynamp-authoring-test");
+    /// Diretório temporário exclusivo por chamada.
+    ///
+    /// Os testes rodam em paralelo e todos criam o mesmo nome de pasta para
+    /// montar o fixture; com um nome fixo, um teste apaga o diretório do outro
+    /// no meio da leitura e a suíte falha de forma intermitente. O contador
+    /// atômico dá um caminho por chamada sem depender de aleatoriedade.
+    fn temp_root() -> std::path::PathBuf {
+        use std::sync::atomic::{AtomicUsize, Ordering};
+        static N: AtomicUsize = AtomicUsize::new(0);
+        let n = N.fetch_add(1, Ordering::Relaxed);
+        let dir = std::env::temp_dir().join(format!("vynamp-authoring-{}-{n}", std::process::id()));
         let _ = fs::remove_dir_all(&dir);
         fs::create_dir_all(&dir).unwrap();
+        dir
+    }
+
+    fn with_docs(body: &str, adrs: &[&str], docs: &[&str]) -> Vec<&'static str> {
+        let dir = temp_root();
         for d in docs {
             let p = dir.join(d);
             fs::create_dir_all(p.parent().unwrap()).unwrap();
@@ -420,8 +434,8 @@ mod tests {
     /// repo da TASK para enxergá-lo.
     #[test]
     fn module_relative_spec_is_resolved_in_the_task_repo() {
-        let root = std::env::temp_dir().join("vynamp-authoring-root");
-        let module = std::env::temp_dir().join("vynamp-authoring-module");
+        let root = temp_root();
+        let module = temp_root();
         for d in [&root, &module] {
             let _ = fs::remove_dir_all(d);
             fs::create_dir_all(d).unwrap();
@@ -445,8 +459,8 @@ mod tests {
     /// prefixo deixaria passar um dono inventado.
     #[test]
     fn module_relative_spec_outside_both_roots_is_blocking() {
-        let root = std::env::temp_dir().join("vynamp-authoring-root2");
-        let module = std::env::temp_dir().join("vynamp-authoring-module2");
+        let root = temp_root();
+        let module = temp_root();
         for d in [&root, &module] {
             let _ = fs::remove_dir_all(d);
             fs::create_dir_all(d).unwrap();
