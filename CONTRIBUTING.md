@@ -1,6 +1,6 @@
 # Contributing / Contribuições
 
-Versão 0.10.0 · 2026-11-08 · Estado: contrato vigente; o player ainda não está implementado.
+Versão 0.10.1 · 2026-11-10 · Estado: contrato vigente; o player ainda não está implementado.
 
 ## English
 
@@ -33,10 +33,15 @@ cargo fmt --all --check
 cargo clippy --workspace --all-targets --locked -- -D warnings
 cargo test --workspace --locked
 cargo xtask check-docs
+cargo xtask check-tasks
+cargo xtask check-authoring
 cargo xtask check-delivery
 ```
 
-`check-docs` requires every Markdown file to have a `# ` title and an entry in
+`check-tasks` covers the backlog and the TASK records; `check-authoring` applies
+the authoring rules to the same Markdown, and its blocking rule is that a
+`Boundary` bullet must name who owns the scope it excludes — a TASK, an ADR or a
+document that exists on disk. `check-docs` requires every Markdown file to have a `# ` title and an entry in
 [`INDEX.md`](INDEX.md). `.claude/` is out of scope: files under it are agent
 definitions that open with a YAML frontmatter block, not prose, and they are
 configuration rather than specification. `check-delivery` validates that frontmatter
@@ -110,10 +115,15 @@ cargo fmt --all --check
 cargo clippy --workspace --all-targets --locked -- -D warnings
 cargo test --workspace --locked
 cargo xtask check-docs
+cargo xtask check-tasks
+cargo xtask check-authoring
 cargo xtask check-delivery
 ```
 
-`check-docs` exige que todo arquivo Markdown tenha título `# ` e entrada no
+`check-tasks` cobre o backlog e os registros de TASK; `check-authoring` aplica as
+regras de autoria ao mesmo Markdown, e sua regra bloqueante é que um bullet de
+`Boundary` nomeie quem é dono do escopo que exclui — uma TASK, uma ADR ou um
+documento que exista em disco. `check-docs` exige que todo arquivo Markdown tenha título `# ` e entrada no
 [`INDEX.md`](INDEX.md). `.claude/` fica fora: o que está ali são definições de
 agente, que começam com bloco de frontmatter YAML, não prosa, e são configuração,
 não especificação. Quem valida esse frontmatter é o `check-delivery` — as quatro

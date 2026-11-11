@@ -1,6 +1,6 @@
 # Changelog / Histórico
 
-Versão: 0.9.5 · Data: 2026-11-09 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.9.6 · Data: 2026-11-10 · Estado: especificação proposta, implementação não iniciada.
 
 Each entry appears in English and Portuguese. The two texts say the same thing;
 where they appear to differ, the Portuguese text of that entry is the original
@@ -669,6 +669,54 @@ externa que um `url(#x)` literal e passaria. O teste de SVG foi verificado verme
 com a leitura crua antes do conserto. `vynamp-decode` e `vynamp-output` também
 tiveram a linha `Status` do README corrigida de "private repository" para "public
 repository", falsa desde que os repositórios foram abertos.
+
+## Unreleased — 2026-11-10 (autoria das TASKs vira gate) / Não lançado — 2026-11-10 (autoria das TASKs vira gate)
+
+**EN** — The authoring rules of the TASKs existed only as prose, and nothing
+measured them. Measured, they failed: 113 `Boundary` bullets said what a task does
+*not* do without saying who does, so the reader had nobody to hold the excluded
+scope to and the next task repeated the same gap. `cargo xtask check-authoring`
+ports the nine rules to `xtask` and a new `authoring` job puts it in CI, required by
+the `CI Gate` aggregate; `xtask/src/validate.rs` fails if the aggregate stops
+depending on it, because a job that runs but is not aggregated blocks no merge. Two
+decisions in the gate are worth review. The owner named in R1 may be an ADR or a
+document, not only a TASK: several boundaries are maintainer decisions no task
+covers, and inventing a task to satisfy the gate would produce a fictitious owner —
+so the cited ADR has to exist in `adr/` and the cited document has to exist on disk,
+and `README.md` does not count because it is cited to list tasks, not to name an
+owner. And the document path is resolved in two roots, the umbrella and the TASK's
+own repository: a module spec lives at `apps/player/specs/ui.md`, and a player bullet
+that says `specs/ui.md` is citing real authority — reading only the umbrella root
+would reject the correct bullet. The 113 bullets were then rewritten to name their
+owner, keeping each original argument, and the gate now reports
+`{"blocking":0,"result":"passed","tasks":199,"warnings":15}`; the 15 warnings are
+legitimate short bullets and short `When` cells and block nothing. `engineering/04-ci.md`
+and `CONTRIBUTING.md` were corrected to list the real jobs and the commands a
+contributor actually runs. Markdown and tooling only: no player code, 191
+requirements, 199 tasks, 19 epics.
+
+**PT** — As regras de autoria das TASKs existiam só como prosa, e nada as media.
+Medidas, elas reprovavam: 113 bullets de `Boundary` diziam o que a tarefa *não* faz
+sem dizer quem faz, então o leitor não tinha a quem cobrar o escopo excluído e a
+tarefa seguinte repetia a mesma lacuna. `cargo xtask check-authoring` porta as nove
+regras para o `xtask` e um job `authoring` novo as põe no CI, exigido pelo agregado
+`CI Gate`; `xtask/src/validate.rs` reprova se o agregado deixar de depender dele,
+porque job que roda mas não está no agregado não bloqueia merge nenhum. Duas
+decisões do gate merecem revisão. O dono nomeado na R1 pode ser uma ADR ou um
+documento, não só uma TASK: várias fronteiras são decisões do mantenedor que tarefa
+nenhuma cobre, e inventar uma tarefa para satisfazer o gate produziria um dono
+fictício — então a ADR citada precisa existir em `adr/` e o documento citado precisa
+existir em disco, e `README.md` não conta porque é citado para listar tarefas, não
+para nomear dono. E o caminho do documento é resolvido em duas raízes, a do umbrella
+e a do repositório da TASK: a spec de um módulo mora em `apps/player/specs/ui.md`, e
+um bullet do player que diz `specs/ui.md` cita autoridade real — olhar só a raiz do
+umbrella reprovaria o bullet correto. Os 113 bullets foram então reescritos para
+nomear seu dono, preservando o argumento original de cada um, e o gate passa a
+reportar `{"blocking":0,"result":"passed","tasks":199,"warnings":15}`; os 15 avisos
+são bullets curtos e `When` curto legítimos e não bloqueiam.
+`engineering/04-ci.md` e `CONTRIBUTING.md` foram corrigidos para listar os jobs reais
+e os comandos que um contribuidor de fato roda. Somente Markdown e ferramental:
+nenhum código de player, 191 requisitos, 199 tarefas, 19 épicos.
 
 ## Unreleased — 2026-11-09 (TASK-E19-04, TASK-CI-01 and TASK-CI-02: own repos, tasks gate) / Não lançado — 2026-11-09 (TASK-E19-04, TASK-CI-01 e TASK-CI-02: repos próprios, gate de TASKs)
 
