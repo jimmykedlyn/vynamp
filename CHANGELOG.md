@@ -700,6 +700,13 @@ umbrella's `57` had never been wrong: at `23319a1` it was 57 product plus 2
 engineering, and the table has 59 rows — what was missing was the space between the
 number and the word.
 
+**A fourth defect, found after the merge:** the `Estado` column of those same nine
+tables was frozen at step 37. Seven rows disagreed with `tasks/backlog.json`, the
+file that owns the state — five in the umbrella (`E11-01`, `E15-03`, `E19-01`,
+`E19-02`, `CI-02`) and one each in the player and in the output. They were synced,
+and the umbrella README now says on which date the states were checked, because a
+column nobody revalidates is a claim about a past that reads like a claim about now.
+
 Markdown and pins only: no player code, 191 requirements, 199 tasks, 19 epics.
 
 **PT** — Dois arquivos diziam a um leitor por onde começar, e ambos estavam
@@ -728,6 +735,13 @@ listava como dono de duas tarefas de engenharia (`E19-03`, `E19-07`), não tem n
 Os nove cabeçalhos foram refeitos pela regra do gate, e o `57` do umbrella nunca tinha
 estado errado: em `23319a1` eram 57 de produto mais 2 de engenharia, e a tabela tem 59
 linhas — faltava o espaço entre o número e a palavra.
+
+**Um quarto defeito, achado depois do merge:** a coluna `Estado` dessas mesmas nove
+tabelas estava congelada no passo 37. Sete linhas discordavam do `tasks/backlog.json`,
+que é o dono do estado — cinco no umbrella (`E11-01`, `E15-03`, `E19-01`, `E19-02`,
+`CI-02`) e uma no player e uma no output. Foram sincronizadas, e o README do umbrella
+agora diz em que data os estados foram conferidos, porque coluna que ninguém revalida
+é afirmação sobre o passado que se lê como afirmação sobre o presente.
 
 Somente Markdown e pins: nenhum código de player, 191 requisitos, 199 tarefas, 19 épicos.
 
