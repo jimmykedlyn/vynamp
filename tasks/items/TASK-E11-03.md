@@ -28,13 +28,13 @@ Inventário de codecs, fontes, assets e políticas de build/distribuição.
 
 - **Não** decide licença de terceiro por conta própria. A AC-2 exige que a decisão de
   marca e de distribuição seja **registrada**, e o `Then` proíbe "alegar autorização
-  inexistente" — o que não se pode provar fica como pendência declarada.
+  inexistente" — o que não se pode provar fica como pendência declarada. Sem dono no backlog: é decisão do mantenedor, em `adr/ADR-008-marca.md`.
 - **Não** troca dependência travada no lockfile. A AC-1 verifica feature e licença na
-  fonte oficial; substituir o que está fixado é outra decisão.
+  fonte oficial; substituir o que está fixado é outra decisão. Decisão do mantenedor em `adr/ADR-011-pilha-propria.md`.
 - **Não** implementa build de Android nem fixa NDK e Gradle: `TASK-E11-04` é a dona
   desses pins.
 - **Não** confunde licença de codec com suporte a codec. O inventário é de codecs,
-  fontes, assets e política de distribuição; suporte é do catálogo de formatos.
+  fontes, assets e política de distribuição; suporte é do catálogo de formatos. O catálogo é `TASK-E17-01`.
 
 ## Antes de começar
 

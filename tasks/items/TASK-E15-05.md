@@ -27,13 +27,15 @@ Unit/integration/numerical/stream/UI/hardware/fuzz e protocolo de relatórios.
 ## Boundary
 
 - **Não** substitui o gate por relatório. O relatório é o **protocolo** de evidência;
-  quem reprova continua sendo o job.
+  quem reprova continua sendo o job, e o `gate` é de `TASK-E19-01`.
 - **Não** transforma falta de hardware em aprovação. A AC-3 exige que o resultado seja
-  publicado como ausência declarada.
+  publicado como ausência declarada; executar em hardware real por alvo é
+  `TASK-E14-04`.
 - **Não** junta validação de plugin e de instalador no job de tooling: a AC-4 exige
-  separação por tipo.
+  separação por tipo, e o job que faz essa separação é `TASK-E15-04`.
 - **Não** aceita fixture sem manifesto. A AC-2 exige hash e licença conferidos; fixture
-  que existe sem manifesto verificado é decoração.
+  que existe sem manifesto verificado é decoração, e gerar esse manifesto é
+  `TASK-E10-01`.
 
 ## Antes de começar
 

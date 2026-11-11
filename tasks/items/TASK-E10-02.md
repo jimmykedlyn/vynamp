@@ -26,13 +26,15 @@ Suite de state machine, comandos aleatórios, ordering e queue invariants.
 
 ## Boundary
 
-- **Não** implementa a state machine: ela é o insumo que esta TASK exercita. O que
-  se entrega é o gerador de comandos aleatórios e as invariantes que ele prova.
+- **Não** implementa a state machine: ela é o insumo que esta TASK exercita, e a
+  dona é `TASK-E01-03`. O que se entrega é o gerador de comandos aleatórios e as
+  invariantes que ele prova.
 - **Não** mede desempenho. Sequência longa aqui é cobertura de estado, não throughput;
   medir é `TASK-E10-07`.
 - **Não** faz fuzzing de parser, pacote ou RPC: isso é `TASK-E10-05`.
 - **Não** toca em rede. Toda sequência é local e determinística pela seed registrada,
-  porque a AC-1 exige que a seed acompanhe o caso que falha.
+  porque a AC-1 exige que a seed acompanhe o caso que falha. Os cenários de rede são
+  `TASK-E10-04`, dona do servidor adversarial de HTTP Range e ICY.
 
 ## Antes de começar
 

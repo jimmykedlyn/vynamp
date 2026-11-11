@@ -28,11 +28,13 @@ Traits/adapters para Path/FD/Content URI, clocks/media controls/config/keychain 
 
 - **Não** implementa o domínio. A AC-1 exige que a árvore de dependências seja
   inspecionada e que o domínio **não** dependa de Win32; trait e adapter são o
-  contrato, e a tradução de domínio fica no `engine`.
+  contrato, e a tradução de domínio fica no `engine`, que é `TASK-E01-03`.
 - **Não** guarda segredo em plaintext. A AC-3 exige que o adapter **falhe** quando o
-  keychain está indisponível: fallback não é degradação aceitável nesta fronteira.
+  keychain está indisponível: fallback não é degradação aceitável nesta fronteira. A
+  guarda do secret é `TASK-E11-05`, dona da config e do perfil portable.
 - **Não** deixa o callback chamar UI nem operação bloqueante de OS. A AC-4 é sobre
-  disciplina de callback, não sobre aparência da interface.
+  disciplina de callback, não sobre aparência da interface: a disciplina é
+  `TASK-E01-02`, dona do contrato RT.
 - **Não** cobre `converter` nem `restore`. São apps próprios, e `restore` usa `engine`
   e `dsp` direto por decisão já registrada na
   [ADR-013](../../adr/ADR-013-restore.md).

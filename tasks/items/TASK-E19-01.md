@@ -29,10 +29,10 @@ ADR-014, workflows ci/release/quality em GitHub Actions com actions fixadas por 
 - **Não** publica release. `release.yml` não mora aqui: o umbrella não tem binário, e
   um workflow de release neste repositório só existiria para falhar no próprio
   preflight. O arquivo está em `_arquivo/workflows/release.yml`, fora da árvore que o
-  CI lê.
+  CI lê, e o release assinado é `TASK-E15-10`.
 - **Não** usa `macos-latest`. A imagem troca de arquitetura conforme o GitHub
   rotaciona, e um alvo que se move não é alvo fixado: são `macos-15-intel` e
-  `macos-15`.
+  `macos-15`, a matriz que `TASK-E14-01` congela alvo a alvo.
 - **Não** exige runner pago além do que o plano comporta. A matriz de cinco alvos por
   PR já esbarrou na cota do plano Free, e isso está registrado na
   [ADR-014](../../adr/ADR-014-publico-dsp-interno.md).

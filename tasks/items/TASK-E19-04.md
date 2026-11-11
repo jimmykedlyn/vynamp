@@ -30,11 +30,12 @@ Specs de Restore e Converter re-apontadas para repositórios próprios, com a fo
   passo 37 continua esqueleto: esta TASK aponta os repos e os dota de governança,
   não escreve projeto de API (isso é `TASK-E18-01`/`TASK-E18-02`).
 - **Não** move o texto normativo para os repos de módulo. A fonte continua em
-  `reference/tools/`; num repo de módulo mora código, não uma segunda cópia da norma.
+  `reference/tools/`, que `AGENTS.md` §1.5 declara read-only; num repo de módulo
+  mora código, não uma segunda cópia da norma.
 - **Não** mexe em visibilidade dos outros seis repos nem em branch protection —
   isso é `TASK-E19-06`, já executada.
 - **Não** implementa encoder, conversor ou restaurador. Os três repos ficam em
-  `Status: specification` no README.
+  `Status: specification` no README; a dona é `TASK-E18-02`, o restore `TASK-E18-01`.
 
 ## Antes de começar
 

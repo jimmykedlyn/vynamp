@@ -180,10 +180,26 @@ jobs:
         run: rustup show
       - run: cargo xtask check-tasks
 
+  authoring:
+    name: Authoring
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          # Mesma razao do job `tasks`: os bullets auditados moram nos repos de
+          # modulo, e sem os submodulos o gate leria zero arquivos e aprovaria.
+          submodules: recursive
+          persist-credentials: false
+      - name: Provision pinned Rust toolchain
+        run: rustup show
+      # Le so o Markdown das TASKs: sem build, sem hardware. Uma fronteira sem
+      # dono nao e verificavel, e o gate a reprova em vez de deixar passar.
+      - run: cargo xtask check-authoring
+
   gate:
     name: CI Gate
     if: always()
-    needs: [specs, tooling, submodules, arch, tasks]
+    needs: [specs, tooling, submodules, arch, tasks, authoring]
     runs-on: ubuntu-22.04
     steps:
       - name: Aggregate
@@ -194,5 +210,6 @@ jobs:
           test "${{ needs.submodules.result }}" = success
           test "${{ needs.arch.result }}" = success
           test "${{ needs.tasks.result }}" = success
-          echo 'CI Gate passed: specs, tooling, submodules, architecture rules and tasks.'
+          test "${{ needs.authoring.result }}" = success
+          echo 'CI Gate passed: specs, tooling, submodules, architecture rules, tasks and authoring.'
           echo 'Hardware, signing and release acceptance remain separate gates.'

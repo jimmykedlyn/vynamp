@@ -26,14 +26,18 @@ Scripts e regras de isolamento, claim atômico e remoção segura.
 
 ## Boundary
 
-- **Não** implementa o worktree: `cargo xtask repo worktree` cria. Esta TASK entrega
-  as **regras** de isolamento, claim e remoção segura.
-- **Não** remove worktree com mudança não commitada. A AC-1 exige que a worktree
+- **Não** implementa o worktree: `cargo xtask repo worktree` cria, e esse comando é do
+  workspace de `TASK-E11-01`. Esta TASK entrega as **regras** de isolamento, claim e
+  remoção segura.
+- **Não** remove worktree com mudança não commitada: quem executa a remoção é o
+  `cargo xtask repo remove-worktree` do workspace de `TASK-E11-01`. A AC-1 exige que a worktree
   suja/unmerged seja **preservada**; perder trabalho na remoção é exatamente o que a
   regra impede.
-- **Não** libera hotfix antes de `main` **e** `develop`: a AC-2 fixa essa ordem.
+- **Não** libera hotfix antes de `main` **e** `develop`: a AC-2 fixa essa ordem, e o
+  fluxo de hotfix é ativado por `TASK-E15-03`, dona do Gitflow.
 - **Não** substitui o claim atômico do Git common dir, que é o mecanismo real de
-  exclusividade por TASK.
+  exclusividade por TASK: ele é criado pelo `cargo xtask repo worktree` do workspace de
+  `TASK-E11-01`.
 
 ## Antes de começar
 

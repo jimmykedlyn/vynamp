@@ -29,11 +29,13 @@ CI docs/tooling e matriz Cargo/Android, required aggregate context.
 - **Não** faz a agregação do gate. O job `gate` e o `needs:` são `TASK-E19-01`; aqui
   se entregam os jobs e o contexto agregado que vira required.
 - **Não** deixa job ativo mascarar falha. A AC-1 é literalmente essa regra: um job que
-  falha enquanto outro ainda corre não é aprovação.
+  falha enquanto outro ainda corre não é aprovação — quem reprova é o `gate` de
+  `TASK-E19-01`.
 - **Não** aprova o player por skip. A AC-3 exige que skip por falta de hardware ou de
-  fonte **não** aprove o player, e o agregado publica o estado final.
+  fonte **não** aprove o player, e o agregado publica o estado final; declarar a
+  ausência é `TASK-E15-05`.
 - **Não** cobre iOS. A AC-4 confronta os workflows com a matriz dos cinco alvos; iOS é
-  FASE 6 e entra depois do gate.
+  FASE 6, entra depois do gate, e o aceite dele é `TASK-E20-06`.
 
 ## Antes de começar
 

@@ -27,15 +27,19 @@ Fixtures geradas de tons/sweep/gapless e corrupções, com manifests de hashes e
 ## Boundary
 
 - **Não** gera fixture de *sweep* nem par *gapless*. O `Entrega` cita os dois, e
-  nenhum existe ainda: o corpus cobre tons e variantes de codec. A lacuna está
-  registrada na nota de execução, não escondida aqui.
+  nenhum existe ainda: o corpus cobre tons e variantes de codec. Os pares gapless são
+  `TASK-E01-06`, que os corta em `tests/fixtures/gapless/`. A lacuna está registrada
+  na nota de execução, não escondida aqui.
 - **Não** confere o manifesto num job de CI. O `Then` do AC-1 nomeia "o job de CI";
   quem confere é a suíte `oracle_pcm.rs`, que reprova o build quando o hash não bate.
-  A diferença está medida na nota de execução.
+  O passo de workflow é `TASK-E19-05`, dona do CI Gate do `vynamp-decode`. A
+  diferença está medida na nota de execução.
 - **Não** gera corrupção própria: o `faulty/` do FLAC vem do repositório
-  `ietf-wg-cellar/flac-test-files`, versionado com `SOURCE.txt` em CC0 1.0.
+  `ietf-wg-cellar/flac-test-files`, versionado com `SOURCE.txt` em CC0 1.0. A
+  corrupção adversarial é `TASK-E10-05`, que trunca os manifestos e fuzza os parsers.
 - **Não** toca no áudio: prova que os bytes versionados são os que o manifesto
-  declara, não que o som toca bem.
+  declara, não que o som toca bem. Provar o som é `TASK-E10-03`, cujo harness compara
+  amostra a amostra contra oráculo independente.
 
 ## Antes de começar
 

@@ -27,13 +27,14 @@ CI Rust e hosts Windows x64/Linux x64/macOS x64+arm64/Android arm64, native depe
 ## Boundary
 
 - **Não** substitui hardware por cross-build. A AC-2 é literal: cross-build não
-  substitui hardware, e o resultado do cross-build é publicado **como cross-build**.
+  substitui hardware, e o resultado do cross-build é publicado **como cross-build**. A prova em hardware por alvo é `TASK-E14-04`.
 - **Não** constrói o player. Os jobs do umbrella compilam o que o umbrella é dono:
-  specs, ferramental, pins de submódulo e regras de arquitetura.
+  specs, ferramental, pins de submódulo e regras de arquitetura. A primeira tela do app é `TASK-E02-01`.
 - **Não** inventa versão de NDK, Gradle ou action: a AC-3 exige que a versão
   **conferida** seja a mesma do commit, e o pin por SHA é o que torna isso verificável.
+  A versão vem da matriz de toolchains de `TASK-E14-01`, dona da ABI de cada alvo.
 - **Não** emite SBOM de binário publicado: o inventário aqui é de toolchain e de
-  artefato de CI.
+  artefato de CI. O SBOM do distribuído é `TASK-E11-08`, nos notices de lançamento.
 
 ## Antes de começar
 

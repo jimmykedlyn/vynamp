@@ -30,12 +30,12 @@ Sete repositórios Vynamp abertos ao público com relato privado de vulnerabilid
   `LICENSE`, `SECURITY.md` e `CONTRIBUTING.md` são `TASK-E19-04` — é a única parte da
   ADR-014 §2 que a abertura fez na ordem errada, e está declarada como pendência.
 - **Não** protege `vynamp-mvp-reference`: ele não tem `develop` nem workflow, e exigir
-  `CI Gate` ali bloquearia todo pull request.
+  `CI Gate` ali bloquearia todo pull request. A dona é `TASK-E15-03`, que registra a pendência.
 - **Não** usa `--reviews 1`: existe uma única conta colaboradora, e com
   `enforce_admins=true` isso deixaria todo PR sem merge possível. O valor aplicado é
-  `--reviews 0`.
+  `--reviews 0`. A dona é `TASK-E15-03`, que fixa isso no `repo protect`.
 - **Não** confunde visibilidade com prontidão: a AC-4 exige que repositório sem
-  proteção não seja considerado pronto, mesmo público.
+  proteção não seja considerado pronto, mesmo público. Quem mede é `TASK-E15-03`, dona do `repo audit`.
 
 ## Antes de começar
 
