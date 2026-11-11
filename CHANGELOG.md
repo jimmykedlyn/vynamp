@@ -1,6 +1,6 @@
 # Changelog / Histórico
 
-Versão: 0.9.7 · Data: 2026-11-10 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.9.8 · Data: 2026-11-11 · Estado: especificação proposta, implementação não iniciada.
 
 Each entry appears in English and Portuguese. The two texts say the same thing;
 where they appear to differ, the Portuguese text of that entry is the original
@@ -685,11 +685,22 @@ exist, and the Android DSP work is not `E05-09` (network and streaming) but
 `E13-05` for the basic EQ, with the full chain staying in `E04-01`. The nine
 `tasks/README.md` files, emitted by step 37, had three defects in their header: the
 count was glued to the text (`57tarefa(s)`), the number did not come from
-`tasks/backlog.json`, and every file said "the last two are engineering" where the
-umbrella has seven and the engine two. The count is now derived from the backlog —
-total, product and engineering, naming the engineering ones — and the seven module
-repositories carry the fix; the umbrella re-pins to those commits. Markdown and
-pins only: no player code, 191 requirements, 199 tasks, 19 epics.
+`tasks/backlog.json`, and every file said "the last two are engineering", a sentence
+that describes no file. The count is now derived from the backlog — total, product
+and engineering, naming the engineering ones — and the seven module repositories
+carry the fix; the umbrella re-pins to those commits.
+**The first correction classified engineering by epic (`E19`, `CI`) and was wrong:**
+the rule lives in `xtask/src/validate.rs`, which requires a `REQ` from every product
+task and from no engineering one, so engineering is the TASK **without a `REQ`** —
+`TASK-CI-01` and `TASK-CI-02` in the umbrella, and none in the seven modules. The
+seven `E19` tasks carry `REQ-E19-01`..`REQ-E19-07` and are product tasks; the
+`engine`, which step 37's header listed as owning two engineering tasks (`E19-03`,
+`E19-07`), owns none. All nine headers were redone by the gate's rule, and the
+umbrella's `57` had never been wrong: at `23319a1` it was 57 product plus 2
+engineering, and the table has 59 rows — what was missing was the space between the
+number and the word.
+
+Markdown and pins only: no player code, 191 requirements, 199 tasks, 19 epics.
 
 **PT** — Dois arquivos diziam a um leitor por onde começar, e ambos estavam
 desatualizados na mesma direção: descreviam trabalho entregue como pendente.
@@ -704,11 +715,21 @@ não existe, e o DSP Android não é `E05-09` (rede e streaming) e sim `E13-05` 
 EQ básico, com a cadeia completa permanecendo em `E04-01`. Os nove `tasks/README.md`,
 emitidos pelo passo 37, tinham três defeitos no cabeçalho: a contagem estava colada
 no texto (`57tarefa(s)`), o número não vinha do `tasks/backlog.json`, e todo arquivo
-dizia "as duas últimas são de engenharia" onde o umbrella tem sete e o engine duas.
+dizia "as duas últimas são de engenharia" — frase que não descreve arquivo nenhum.
 A contagem agora é derivada do backlog — total, produto e engenharia, nomeando as de
 engenharia — e os sete repositórios de módulo carregam a correção; o umbrella
-re-pina nesses commits. Somente Markdown e pins: nenhum código de player, 191
-requisitos, 199 tarefas, 19 épicos.
+re-pina nesses commits.
+**A primeira correção classificou engenharia pelo épico (`E19`, `CI`) e estava errada:**
+a regra vive em `xtask/src/validate.rs`, que exige `REQ` de toda tarefa de produto e de
+nenhuma de engenharia, então engenharia é a TASK **sem `REQ`** — `TASK-CI-01` e
+`TASK-CI-02`, no umbrella, e nenhuma nos sete módulos. As sete do épico `E19` carregam
+`REQ-E19-01`..`REQ-E19-07` e são de produto; o `engine`, que o cabeçalho do passo 37
+listava como dono de duas tarefas de engenharia (`E19-03`, `E19-07`), não tem nenhuma.
+Os nove cabeçalhos foram refeitos pela regra do gate, e o `57` do umbrella nunca tinha
+estado errado: em `23319a1` eram 57 de produto mais 2 de engenharia, e a tabela tem 59
+linhas — faltava o espaço entre o número e a palavra.
+
+Somente Markdown e pins: nenhum código de player, 191 requisitos, 199 tarefas, 19 épicos.
 
 ## Unreleased — 2026-11-10 (autoria das TASKs vira gate) / Não lançado — 2026-11-10 (autoria das TASKs vira gate)
 
