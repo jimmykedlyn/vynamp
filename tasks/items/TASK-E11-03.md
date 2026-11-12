@@ -156,3 +156,41 @@ aceito e revertido: o que ficou de pé é a citação das decisões, que faltava
   fica registrada, porque um inventário que olhasse só `pcm/`, `flac/` e `mpeg/` diria que
   o corpus está coberto.
 
+**Um defeito de terceiro que veio junto, em commit separado (`b8a6749`).**
+
+A execução encontrou, no primeiro push desta branch, um defeito que não é desta TASK mas
+que bloqueava a entrega dela: o `pre-push` roda `cargo xtask ci docs`, e o Git exporta
+`GIT_DIR` para o hook quando o push sai de uma worktree — medido em 2026-11-12:
+`GIT_DIR=D:/Projects/vynamp/.git/worktrees/<worktree>`. Os testes de `secrets.rs` rodavam
+`git init/add/commit` num `tempfile::tempdir()` sem limpar essas variáveis, e
+`current_dir()` não as desliga, porque o Git lê `GIT_DIR` **antes** do diretório. Dentro do
+hook, todo `git` desses testes atingiu o repositório real: dois commits criados na branch
+em uso (`4a96cc8` "clean", `d3c553a` "many files"), índice do worktree sobrescrito, e
+`core.bare=true` + `[user] test` gravados no `.git/config` **compartilhado**, o que deixou
+o checkout central respondendo `fatal: this operation must be run in a work tree`.
+
+O conserto tira a lista de `git rev-parse --local-env-vars` (lida do Git, não transcrita)
+e a remove de todo filho `git` no ponto único que é `util::program`, o que cobre
+`util::run`, `util::capture` e `util::local_git`. Corrigiu também um defeito de produção:
+`secrets::scan(root)` obedecia a `GIT_DIR` e lia outro repositório em vez do `root`. O
+teste que paga o critério é `a_fixture_never_writes_to_the_repository_git_exported`, cujo
+vermelho **é** o dano: repositório sentinela, filho `the_fixture_probe` com
+`GIT_DIR`/`GIT_COMMON_DIR`/`GIT_WORK_TREE`/`GIT_INDEX_FILE` apontados para ele, e exigência
+de `HEAD`, `rev-list --all --count` e `status --porcelain` idênticos. O padrão de filho por
+`current_exe()` + variável de guarda é o mesmo de `xtask/tests/tooling.rs`, porque
+`set_var` é `unsafe` em edition 2024 e disputaria com os testes paralelos.
+
+Medido com o comando exato do `.githooks/pre-push` e o ambiente que ele recebe:
+`cargo test --package xtask --locked` dá 110 + 33 verdes, 0 falhas, e o SHA-256 do
+`.git/config` fica idêntico antes e depois. Evidência versionada em
+`evidence/PR/task-e11-03/git-dir-isolation-fix-20261112.txt`, SHA-256
+`9abc3c0242390d5c023fe0be62d9397313e53f9be284de98ba903cc2d7179712`.
+
+**Dano residual, registrado e não mascarado.** O commit `b8a6749` saiu com autor
+`test <test@example.invalid>`, porque o `[user]` injetado pelo defeito estava no config na
+hora do commit. Não foi reescrito — já estava no remoto, e reescrever histórico é proibido
+— e o autor real do trabalho está nos commits vizinhos. O config foi reparado com
+`git config --unset core.bare` e `git config --remove-section user`, com backup em `/tmp`,
+sem `reset --hard` e sem `clean`. A regra correspondente entrou no `AGENTS.md` §5, para que
+teste novo que rode `git` precise de guarda equivalente.
+
