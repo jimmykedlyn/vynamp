@@ -28,7 +28,7 @@ o `Cargo.lock` de verdade, em vez de repetir o que o `Cargo.toml` declara. A sa�
 |---|---|---|
 | `deny-licenses-umbrella.json` | 160 linhas JSON: 158 diagnósticos `rejected`, 1 aviso de configuração e 1 `summary` com `errors: 158` | `7048a251c6a448dc7363b6cf02222887f5ae9175858dce905c8dd1f18ad411d3` |
 | `deny-licenses-decode.json` | 11 linhas; só os 9 crates de path do módulo, cada um `MIT OR Apache-2.0` | `553705b712d66c9e1af4540087851343048fd83fa3e093e555a78785cc237dac` |
-| `licence-counts-20261112.txt` | contagens agregadas derivadas da `metadata` | `718543cd190ac6ae96224181c9f684fe22a1c54f4260d5b45316d7c4b4cd257c` |
+| `licence-counts-20261112.txt` | contagens agregadas derivadas da `metadata` | `b393caa6800829926ac0f883e917aacf50595de1444b66a8aa017fcd78d5ecd4` |
 
 **Por que 158 erros, e por que isso não é defeito.** O repositório não tem `deny.toml`,
 então o `cargo deny` cai na configuração padrão, que não permite licença nenhuma, e sai
