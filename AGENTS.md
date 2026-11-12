@@ -28,14 +28,15 @@ branch são do mantenedor.
 | `vynamp-mvp-reference` | referência | pin do MVP, **read-only**, fora do build |
 
 Regra de como o umbrella vai buscar cada módulo: **submódulo fixado em tag**, nunca em
-branch. Única exceção: `reference/vynamp-mvp`, pinado por **commit** (`741316f`) — não tem
+branch. Única exceção: `reference/vynamp-mvp`, pinado por **commit** (`e689d90`) — não tem
 `develop` nem recebe tag, porque é referência congelada e não versionada. Ele fica
 **fora do workspace do Cargo**, mas **dentro** do `.gitmodules`.
 
-Estado hoje: os submódulos ainda não existem. O `.gitmodules` é criado no passo 35
-(`35-github.md`), junto com os repos de módulo; até lá, `libs/`, `apps/` e
-`reference/vynamp-mvp/` são só diretórios com `LEIA-ME.md` de instrução, e o workspace
-do Cargo tem só `xtask`. Verificar o estado real antes de afirmar o que existe.
+Estado hoje: os nove submódulos existem no `.gitmodules`. Os oito de módulo estão
+pinados em commits da `develop` de cada repo, ainda não em tag; o MVP em `e689d90`. O
+workspace do Cargo do umbrella tem só `xtask`. Passo a passo de desenvolvimento em
+[`engineering/08-reinicio-windows.md`](engineering/08-reinicio-windows.md). Verificar o
+estado real antes de afirmar o que existe.
 
 ### 1.2 Direção de dependência
 
@@ -281,8 +282,8 @@ registrada** — não edição de contrato.
 
 REST apenas. **GraphQL é instável neste ambiente** e não é usado para nada — PR,
 comentário, review, label e arquivo, tudo por REST (`gh api --method PATCH` para
-editar). Nunca passar token como argumento de `gh`: a credencial vem do ambiente
-(`. 'D:\Projects\vynamp-media-player\AMBIENTE.ps1'` e `Invoke-VynampAuthenticatedAgent`).
+editar). Nunca passar token como argumento de `gh`: a credencial vem do
+`gh auth login` do mantenedor, guardada no keyring.
 
 ### Após "merge feito"
 

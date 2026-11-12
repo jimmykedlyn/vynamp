@@ -67,6 +67,19 @@ static PATTERNS: LazyLock<Vec<Pattern>> = LazyLock::new(|| {
     ]
 });
 
+/// Blobs a maintainer read and found to hold no credential, with the reason.
+///
+/// Keyed by blob id, not by path or line: a later edit of the same file is a
+/// new blob and is scanned again. Each entry is a blob already in the shared
+/// history that cannot be removed without a force push, which the project
+/// forbids. Add one only after reading the blob, with the maintainer's OK.
+const REVIEWED_BLOBS: &[(&str, &str)] = &[(
+    "b846c5d8bcaf45cc1fb347d9879ec4529007ecc1",
+    "_arquivo/media-player/STATE.md:104 narrates the PEM header that once \
+     sat in a test; prose, no key material (umbrella PR #49, approved by the \
+     maintainer 2026-11-11)",
+)];
+
 /// A credential found in the history.
 pub struct Finding {
     pub pattern: &'static str,
@@ -271,6 +284,9 @@ pub fn scan(root: &Path) -> Result<Vec<Finding>> {
 /// Separated from `scan` so a test can drive it without building a repository.
 fn scan_text(body: &str, path: &str, blob: &str) -> Vec<Finding> {
     let mut out = Vec::new();
+    if REVIEWED_BLOBS.iter().any(|(id, _)| *id == blob) {
+        return out;
+    }
     for (index, line) in body.lines().enumerate() {
         for p in PATTERNS.iter() {
             if p.regex.is_match(line) {
@@ -335,6 +351,14 @@ mod tests {
         let found = scan_text(&body, "id_ed25519", "sha");
         assert_eq!(found.len(), 1);
         assert_eq!(found[0].pattern, "Private key");
+    }
+
+    #[test]
+    fn reviewed_blobs_are_skipped_and_only_those() {
+        let body = format!("-----BEGIN {} PRIVATE KEY-----\n", "OPENSSH");
+        let (reviewed, _) = REVIEWED_BLOBS[0];
+        assert!(scan_text(&body, "STATE.md", reviewed).is_empty());
+        assert_eq!(scan_text(&body, "STATE.md", "other").len(), 1);
     }
 
     /// The message must name the location and never the credential: CI logs
