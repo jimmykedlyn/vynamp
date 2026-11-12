@@ -176,15 +176,22 @@ e a remove de todo filho `git` no ponto único que é `util::program`, o que cob
 teste que paga o critério é `a_fixture_never_writes_to_the_repository_git_exported`, cujo
 vermelho **é** o dano: repositório sentinela, filho `the_fixture_probe` com
 `GIT_DIR`/`GIT_COMMON_DIR`/`GIT_WORK_TREE`/`GIT_INDEX_FILE` apontados para ele, e exigência
-de `HEAD`, `rev-list --all --count` e `status --porcelain` idênticos. O padrão de filho por
-`current_exe()` + variável de guarda é o mesmo de `xtask/tests/tooling.rs`, porque
-`set_var` é `unsafe` em edition 2024 e disputaria com os testes paralelos.
+de `HEAD`, `rev-list --all --count` e `status --porcelain` idênticos. Esse vermelho foi
+**medido**, não presumido: com o corpo de `util::scrub_git_env` neutralizado e um sentinela
+de sacrifício em `/tmp` (nunca o repositório real), o teste falha em
+`git ["add", "secret.txt"]: fatal: pathspec 'secret.txt' did not match any files` — o `add`
+foi para o repositório de `GIT_DIR`, não para o `tempdir` que era o `root` pedido. A prova
+também fecha o mecanismo do `bare = false` no config: `git init` num repositório existente
+reescreve o `.git/config`. `util::scrub_git_env` foi restaurado de `HEAD` em seguida, sem
+resíduo e sem tocar o repositório real. O padrão de filho por `current_exe()` + variável de
+guarda é o mesmo de `xtask/tests/tooling.rs`, porque `set_var` é `unsafe` em edition 2024 e
+disputaria com os testes paralelos.
 
 Medido com o comando exato do `.githooks/pre-push` e o ambiente que ele recebe:
 `cargo test --package xtask --locked` dá 110 + 33 verdes, 0 falhas, e o SHA-256 do
 `.git/config` fica idêntico antes e depois. Evidência versionada em
 `evidence/PR/task-e11-03/git-dir-isolation-fix-20261112.txt`, SHA-256
-`9abc3c0242390d5c023fe0be62d9397313e53f9be284de98ba903cc2d7179712`.
+`d4ee985b44506ea1b7bf7a4a915592e07faa18e8ecb8bc2b35d82859cef86086`.
 
 **Dano residual, registrado e não mascarado.** O commit `b8a6749` saiu com autor
 `test <test@example.invalid>`, porque o `[user]` injetado pelo defeito estava no config na
