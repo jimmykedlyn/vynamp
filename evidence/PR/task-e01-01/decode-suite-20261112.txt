@@ -1,6 +1,6 @@
-# E01-01 — suite completa depois da triangulacao (2026-11-12)
+# E01-01 — suite completa depois da triangulacao e da revisao (2026-11-12)
 # cwd: libs/decode. Branch: feature/task-e01-01-claude-manifest-e-triangulacao
-# Commit medido: 292897d4dab18bce241c06bddd3d2db6b551847e
+# Commit medido: 01f7509c3ee8dfe334f8783d53f16b94f02e628a
 # Comando: cargo test --workspace --locked
 # Resultado: 513 passed, 3 ignored, 0 failed, 48 suites, rc=0
 # Os 3 ignorados: blackbox::intensity_probe_gains, blackbox::write_blackbox_streams
@@ -19,15 +19,15 @@ running 2 tests
 test faulty_files_are_rejected_in_strict_mode ... ok
 test subset_files_decode_strictly_and_verify_their_md5 ... ok
 
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.48s
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.63s
 
      Running tests\facade.rs (target\debug\deps\facade-20ad5069b8265175.exe)
 
 running 27 tests
 test builtin_formats_have_the_expected_verification_level ... ok
 test codec_lookup ... ok
-test pcm_decoding::cancel_is_checked_before_each_packet ... ok
 test id3::probe_malformed_id3v2_does_not_skip ... ok
+test pcm_decoding::cancel_is_checked_before_each_packet ... ok
 test pcm_decoding::cancel_mid_stream ... ok
 test pcm_decoding::delay_plus_padding_beyond_frames_is_empty ... ok
 test pcm_decoding::demuxer_queue_drops_are_counted_by_the_reader ... ok
@@ -35,18 +35,18 @@ test pcm_decoding::events_are_drained_at_end_of_stream_and_on_error ... ok
 test pcm_decoding::frames_and_position_follow_the_trimmed_timeline ... ok
 test pcm_decoding::event_queue_is_capped_and_counts_drops ... ok
 test pcm_decoding::read_leaves_no_stale_frames_at_end ... ok
-test pcm_decoding::gapless_delay_and_padding_span_packets ... ok
 test pcm_decoding::resilient_aiff_clamp_is_reported_once ... ok
+test pcm_decoding::gapless_delay_and_padding_span_packets ... ok
 test pcm_decoding::aiff_decodes_bit_exact ... ok
 test pcm_decoding::seek_past_end_clamps_position ... ok
 test pcm_decoding::seek_lands_on_requested_output_frame ... ok
 test pcm_decoding::short_decoder_output_does_not_shift_later_packets ... ok
+test id3::probe_id3v2_beyond_metadata_limit_is_a_limit_error ... ok
 test pcm_decoding::unknown_length_still_trims_delay ... ok
 test probe_nothing_matches ... ok
-test id3::probe_id3v2_beyond_metadata_limit_is_a_limit_error ... ok
-test pcm_decoding::short_decoder_output_in_audible_region_and_after_seek ... ok
-test probe_tie_resolved_by_extension ... ok
 test pcm_decoding::wav_seek_past_the_end_lands_at_the_declared_length ... ok
+test probe_tie_resolved_by_extension ... ok
+test pcm_decoding::short_decoder_output_in_audible_region_and_after_seek ... ok
 test reader_is_send ... ok
 test random_bytes_are_unsupported ... ok
 test id3::probe_skips_large_id3v2_tag ... ok
@@ -60,11 +60,11 @@ running 9 tests
 test registered_in_the_default_registry ... ok
 test flac_seek_past_the_end_lands_at_the_declared_length ... ok
 test open_path_uses_the_extension_and_probe ... ok
-test resilient_corrupt_middle_frame_keeps_length_and_reports_once ... ok
+test id3v2_prefixed_flac_decodes_identically ... ok
 test truncated_tail_is_an_error_in_strict_and_reported_in_resilient ... ok
+test resilient_corrupt_middle_frame_keeps_length_and_reports_once ... ok
 test a_stream_without_its_leading_frames_is_rebased_and_decodes_strictly ... ok
 test resilient_delivers_samples_beyond_a_too_small_declared_total ... ok
-test id3v2_prefixed_flac_decodes_identically ... ok
 test strict_intact_file_is_bit_exact_for_its_declared_length ... ok
 
 test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
@@ -74,20 +74,20 @@ test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 running 14 tests
 test gapless_output_is_the_same_in_resilient_mode_and_without_the_id3_tag ... ok
 test a_frame_with_impossible_side_information_is_an_error_or_silence ... ok
-test lame_tagged_files_decode_to_exactly_the_encoded_pcm_length ... ok
-test the_default_registry_knows_mpeg_audio ... ok
 test a_stream_cut_out_of_a_longer_one_starts_silently_and_seeks_in_strict_mode ... ok
-test layer_two_output_is_the_reference_without_the_filterbank_delay ... ok
+test the_default_registry_knows_mpeg_audio ... ok
+test lame_tagged_files_decode_to_exactly_the_encoded_pcm_length ... ok
 test the_reader_reports_conflicting_gapless_information ... ok
+test layer_two_output_is_the_reference_without_the_filterbank_delay ... ok
 test id3v2_apev2_and_id3v1_wrappers_do_not_change_the_output ... ok
 test seeking_in_a_gapless_file_lands_on_the_trimmed_timeline ... ok
-test an_info_header_that_counts_its_own_frame_still_gives_the_exact_length ... ok
 test a_vbr_count_that_includes_the_info_frame_is_tolerated_without_an_event ... ok
-test the_output_is_aligned_with_the_source_pcm_to_the_sample ... ok
+test an_info_header_that_counts_its_own_frame_still_gives_the_exact_length ... ok
 test untagged_layer_three_output_is_the_reference_without_the_decoder_delay ... ok
+test the_output_is_aligned_with_the_source_pcm_to_the_sample ... ok
 test decode_after_seek_equals_the_full_decode_slice ... ok
 
-test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.11s
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.41s
 
      Running tests\oracle_flac.rs (target\debug\deps\oracle_flac-1a743b33100f5126.exe)
 
@@ -105,7 +105,7 @@ running 2 tests
 test the_corpus_covers_every_layer_two_table_and_the_layer_three_modes ... ok
 test every_fixture_matches_its_checksum_and_the_reference_within_the_iso_criterion ... ok
 
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.48s
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.41s
 
      Running tests\oracle_pcm.rs (target\debug\deps\oracle_pcm-9e97c7def2af34b3.exe)
 
@@ -114,18 +114,18 @@ test source_is_the_documented_signal ... ok
 test source_matches_the_independent_signal_and_pinned_hash ... ok
 test manifest_files_decode_to_the_source ... ok
 
-test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
 
      Running tests\triangulation.rs (target\debug\deps\triangulation-ebab39d352c78d96.exe)
 
 running 5 tests
 test pcm24_and_pcm32_keep_every_valid_bit ... ok
 test a_flipped_byte_leaves_the_pinned_hash ... ok
-test the_gapless_trim_is_declared_by_mpeg_and_absent_in_flac ... ok
 test every_gapless_fixture_has_its_hash_in_the_manifest ... ok
+test the_gapless_trim_is_declared_by_mpeg_and_absent_in_flac ... ok
 test wav_flac_and_mp3_of_the_same_tone_decode_against_one_reference ... ok
 
-test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.08s
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
 
      Running unittests src\lib.rs (target\debug\deps\vynamp_decode_aiff-a46ecddf4e8eea9f.exe)
 
@@ -136,15 +136,15 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
      Running tests\aiff.rs (target\debug\deps\aiff-35b4f1fee1a0f5ea.exe)
 
 running 31 tests
-test aifc_comm_too_short ... ok
 test bad_signature_and_form_type ... ok
+test aifc_comm_too_short ... ok
 test compression_sample_size_mismatch ... ok
-test comm_frames_beyond_ssnd ... ok
 test comm_frames_beyond_ssnd_emits_clamped ... ok
+test comm_frames_beyond_ssnd ... ok
 test empty_data_is_valid ... ok
-test declared_1000_present_400_strict ... ok
 test decodes_through_pcm_decoder ... ok
 test extended_canonical_rates ... ok
+test declared_1000_present_400_strict ... ok
 test extended_rejects ... ok
 test extended_rounds_fractional_rates_to_nearest ... ok
 test fractional_rate_is_accepted_in_both_modes ... ok
@@ -162,8 +162,8 @@ test unsupported_compression ... ok
 test zero_size_and_odd_chunks_are_skipped ... ok
 test cancel_at_open_and_between_packets ... ok
 test seek_exact_and_end ... ok
-test byte_flip_and_truncation_smoke ... ok
 test packet_buffer_is_reused ... ok
+test byte_flip_and_truncation_smoke ... ok
 test truncated_strict_and_resilient ... ok
 test round_trip_every_compression_type ... ok
 test round_trip_plain_aiff ... ok
@@ -174,11 +174,11 @@ test result: ok. 31 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
 
 running 13 tests
 test buffer::tests::planar_layout ... ok
-test buffer::tests::i24_i32_share_storage ... ok
-test buffer::tests::reset_overflow_and_huge ... ok
 test buffer::tests::reset_does_not_reallocate ... ok
-test buffer::tests::to_f32 ... ok
 test buffer::tests::to_f32_other_formats ... ok
+test buffer::tests::reset_overflow_and_huge ... ok
+test buffer::tests::to_f32 ... ok
+test buffer::tests::i24_i32_share_storage ... ok
 test buffer::tests::truncate ... ok
 test cancel::tests::cancel_flow ... ok
 test limits::tests::channels ... ok
@@ -193,12 +193,12 @@ test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
 
 running 17 tests
 test align_and_positions ... ok
-test crc8_check_value ... ok
-test crc16_check_value ... ok
 test bit_width_errors ... ok
 test crc_of_message_with_appended_crc_is_zero ... ok
+test crc16_check_value ... ok
 test read_bits_across_byte_boundaries ... ok
 test eof_reports_byte_offset_and_does_not_consume ... ok
+test crc8_check_value ... ok
 test read_bits_wide_and_u64 ... ok
 test rice_signed ... ok
 test signed_reads ... ok
@@ -210,15 +210,15 @@ test rice_extremes_and_overflow ... ok
 test unary_overflow_and_eof ... ok
 test never_panics_on_garbage ... ok
 
-test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
 
      Running tests\id3.rs (target\debug\deps\id3-d0b62dd57727dcc3.exe)
 
 running 4 tests
 test no_tag_returns_zero ... ok
 test oversized_tag_hits_metadata_limit ... ok
-test skips_stacked_tags_and_leaves_source_at_offset ... ok
 test short_source_returns_zero ... ok
+test skips_stacked_tags_and_leaves_source_at_offset ... ok
 
 test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
@@ -230,7 +230,7 @@ test rfc1321_suite ... ok
 test streaming_in_random_chunks_matches_one_shot ... ok
 test padding_boundaries ... ok
 
-test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
 
      Running tests\source.rs (target\debug\deps\source-6a2f6dee194dabf2.exe)
 
@@ -248,12 +248,12 @@ test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
 running 7 tests
 test crc16_mpeg_check_value ... ok
-test at_most_sixteen_trailers_are_stripped ... ok
-test each_kind_reports_its_range ... ok
-test junk_is_not_a_trailer ... ok
 test no_trailer_ends_at_the_source_end ... ok
-test trailers_combine_in_any_order_outermost_last ... ok
+test at_most_sixteen_trailers_are_stripped ... ok
+test junk_is_not_a_trailer ... ok
 test trailers_never_reach_into_the_payload_start ... ok
+test trailers_combine_in_any_order_outermost_last ... ok
+test each_kind_reports_its_range ... ok
 
 test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
@@ -263,13 +263,13 @@ running 13 tests
 test frame::tests::bad_coded_number ... ok
 test frame::tests::bit_depth_codes ... ok
 test frame::tests::block_size_above_streaminfo_max_is_rejected ... ok
-test frame::tests::channel_assignments ... ok
-test frame::tests::crc8_mismatch_and_truncation ... ok
 test frame::tests::block_size_codes ... ok
 test frame::tests::legacy_variable_headers_carry_36_bit_sample_numbers ... ok
+test frame::tests::fixed_header_basic ... ok
+test frame::tests::channel_assignments ... ok
+test frame::tests::crc8_mismatch_and_truncation ... ok
 test frame::tests::rate_must_match_streaminfo ... ok
 test frame::tests::reserved_and_sync_bits ... ok
-test frame::tests::fixed_header_basic ... ok
 test frame::tests::sample_rate_codes ... ok
 test frame::tests::trailing_bytes_are_ignored ... ok
 test frame::tests::variable_header_uses_sample_number ... ok
@@ -280,19 +280,19 @@ test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
 
 running 18 tests
 test constant_subframe ... ok
+test lpc_order_2 ... ok
 test error_offsets_are_absolute ... ok
 test first_partition_may_be_empty_when_it_holds_only_the_warm_up ... ok
-test lpc_order_2 ... ok
 test output_formats ... ok
+test every_channel_assignment ... ok
 test residual_of_minus_2_pow_31_is_rejected ... ok
 test rejects_out_of_range_samples ... ok
 test rice_escape_partition ... ok
-test every_channel_assignment ... ok
 test rice_method_1_and_partitions ... ok
+test rejects_malformed_subframes ... ok
+test silence_packet ... ok
 test verbatim_subframe ... ok
 test side_channel_32_bit_extremes ... ok
-test silence_packet ... ok
-test rejects_malformed_subframes ... ok
 test wasted_bits ... ok
 test fixed_orders_0_to_4 ... ok
 test no_allocation_after_warm_up ... ok
@@ -307,48 +307,48 @@ test a_huge_gap_is_filled_in_bounded_work_and_reported_once ... ok
 test a_gap_within_the_cap_is_one_event_with_the_full_length ... ok
 test a_short_final_frame_may_be_followed_by_trailers_and_junk ... ok
 test a_seek_discards_pending_skipped_byte_reports ... ok
-test a_stream_cut_at_a_frame_boundary_is_rebased_to_sample_zero ... ok
-test bit_flip_in_frame_3_strict ... ok
 test bit_flip_in_frame_3_resilient ... ok
+test a_stream_cut_at_a_frame_boundary_is_rebased_to_sample_zero ... ok
 test blocking_strategy_must_not_change ... ok
+test bit_flip_in_frame_3_strict ... ok
 test complete_file_has_no_tail_event ... ok
-test apev2_trailer_is_not_part_of_the_last_frame ... ok
 test empty_stream ... ok
+test apev2_trailer_is_not_part_of_the_last_frame ... ok
 test false_sync_inside_a_frame_is_not_a_boundary ... ok
 test bisection_ignores_fake_headers_inside_frame_bodies ... ok
 test frame_beyond_max_frames_ends_resilient_streams_and_fails_strict ... ok
 test demuxer_events_beyond_the_queue_capacity_are_counted ... ok
 test fixed_stream_whose_streaminfo_minimum_counts_the_short_tail_is_still_fixed ... ok
 test gap_fill_is_capped_by_max_frames_when_total_is_unknown ... ok
+test fixed_stream_with_short_last_frame ... ok
 test garbage_after_a_frame_is_charged_to_that_frame ... ok
+test garbage_replacing_a_frame_becomes_silence ... ok
 test frame_larger_than_the_buffer_cap_is_corrupt ... ok
 test garbage_before_the_first_frame_is_a_sync_error ... ok
-test garbage_replacing_a_frame_becomes_silence ... ok
-test header_without_a_valid_frame_does_not_justify_a_gap ... ok
 test headers_inconsistent_with_streaminfo_are_not_syncs ... ok
-test fixed_stream_with_short_last_frame ... ok
-test huge_gap_is_capped_by_the_declared_total ... ok
-test id3v2_footer_trailer_is_ignored ... ok
+test header_without_a_valid_frame_does_not_justify_a_gap ... ok
 test id3v1_trailer_is_ignored ... ok
+test id3v2_footer_trailer_is_ignored ... ok
+test huge_gap_is_capped_by_the_declared_total ... ok
 test lyrics3v2_with_id3v1_is_ignored ... ok
 test last_fixture_frame_is_short ... ok
-test bisection_reads_little_on_a_big_file_without_seektable ... ok
 test more_samples_than_declared_is_clamped_in_resilient ... ok
 test more_samples_than_declared_is_invalid_in_strict ... ok
-test cancel_before_and_during_seek ... ok
-test packet_buffer_is_reused ... ok
 test missing_frame_is_an_error_or_silence ... ok
+test packet_buffer_is_reused ... ok
 test seek_past_the_end_and_to_total ... ok
 test packets_are_contiguous_and_complete ... ok
+test bisection_reads_little_on_a_big_file_without_seektable ... ok
+test cancel_before_and_during_seek ... ok
 test seek_survives_a_wrong_seektable ... ok
 test seeking_works_in_the_rebased_timeline ... ok
 test short_block_is_only_valid_as_the_last_frame ... ok
-test a_sparse_seektable_only_bounds_the_bisection ... ok
 test the_streaminfo_maximum_frame_size_is_only_a_hint_in_resilient_mode ... ok
 test trailers_combine_in_any_order ... ok
+test a_sparse_seektable_only_bounds_the_bisection ... ok
 test undersized_non_final_blocks_are_invalid_in_strict_only ... ok
-test unknown_total_decodes_to_eof_and_seeks ... ok
 test seek_uses_the_seektable_without_scanning_from_the_start ... ok
+test unknown_total_decodes_to_eof_and_seeks ... ok
 test unrecognised_junk_after_the_last_frame_is_ignored ... ok
 test seek_without_seektable ... ok
 test zero_fill_after_a_frame_is_caught_by_the_sample_numbers ... ok
@@ -360,7 +360,7 @@ test seek_with_seektable ... ok
 test unterminated_frame_hits_the_hard_cap ... ok
 test byte_flip_smoke_never_panics ... ok
 
-test result: ok. 56 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.91s
+test result: ok. 56 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.08s
 
      Running tests\md5.rs (target\debug\deps\md5-ee9458207ea9808c.exe)
 
@@ -383,37 +383,37 @@ test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
 
 running 23 tests
 test bad_streaminfo_fields ... ok
-test forbidden_block_type ... ok
-test huge_padding_past_eof_is_eof ... ok
 test duplicate_streaminfo ... ok
+test huge_padding_past_eof_is_eof ... ok
+test forbidden_block_type ... ok
 test block_headers_count_toward_the_metadata_limit ... ok
 test missing_last_block_is_eof ... ok
+test probe ... ok
 test metadata_over_limit ... ok
 test rate_beyond_limit ... ok
-test probe ... ok
-test seek_table_bad_length ... ok
 test id3v2_prefix_opens_with_same_track ... ok
-test reserved_and_known_kinds_are_kept ... ok
-test streaminfo_must_be_first ... ok
-test seek_table_and_placeholders ... ok
-test streaminfo_wrong_length ... ok
+test seek_table_bad_length ... ok
 test padding_is_skipped_unread_and_not_counted ... ok
-test streaminfo_fields_and_track ... ok
+test reserved_and_known_kinds_are_kept ... ok
+test seek_table_and_placeholders ... ok
+test streaminfo_must_be_first ... ok
+test streaminfo_wrong_length ... ok
 test single_short_frame_stream_is_valid ... ok
+test streaminfo_fields_and_track ... ok
 test truncated_metadata_is_eof ... ok
 test wrong_signature ... ok
 test unknown_total_gives_no_frames ... ok
 test byte_flip_and_truncation_smoke ... ok
 test the_number_of_metadata_blocks_is_capped ... ok
 
-test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.17s
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
 
      Running tests\oracle.rs (target\debug\deps\oracle-8c1f7e4fb5dedecb.exe)
 
 running 3 tests
 test mono_fixture_is_the_downmix ... ok
-test stereo_16_bit_equals_source ... ok
 test stereo_24_bit_equals_source ... ok
+test stereo_16_bit_equals_source ... ok
 
 test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
 
@@ -430,9 +430,9 @@ test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
      Running unittests src\lib.rs (target\debug\deps\vynamp_decode_mp3-d95921d89a586400.exe)
 
 running 97 tests
-test layer2::tests::free_format_selects_the_table_of_the_bitrate_its_length_stands_for ... ok
-test layer2::tests::allocation_tables_have_the_standard_sizes ... ok
 test layer1::tests::requantization_endpoints ... ok
+test layer2::tests::allocation_tables_have_the_standard_sizes ... ok
+test layer2::tests::free_format_selects_the_table_of_the_bitrate_its_length_stands_for ... ok
 test layer3::alias::tests::all_thirty_one_boundaries_follow_the_definition ... ok
 test layer3::alias::tests::an_8khz_mixed_block_reduces_three_boundaries ... ok
 test layer3::alias::tests::only_the_first_boundary_of_a_mixed_block ... ok
@@ -449,19 +449,19 @@ test layer3::huffman::tests::random_streams_round_trip_through_three_regions ...
 test layer3::huffman::tests::region_bounds_follow_the_band_tables ... ok
 test layer2::tests::grouped_codes_unpack_least_significant_first ... ok
 test layer3::imdct::tests::a_stationary_sine_reconstructs_through_the_overlap ... ok
-test layer3::imdct::tests::clear_forgets_the_overlap ... ok
 test layer3::huffman::tests::source_tables_are_complete_prefix_codes ... ok
+test layer3::imdct::tests::clear_forgets_the_overlap ... ok
 test layer3::imdct::tests::long_imdct_of_a_unit_line_is_a_windowed_cosine ... ok
 test layer3::imdct::tests::long_imdct_matches_the_definition_for_every_window ... ok
 test layer3::imdct::tests::short_imdct_matches_the_definition ... ok
 test layer3::imdct::tests::overlap_add_and_frequency_inversion_follow_the_definition_across_block_types ... ok
-test layer3::requant::tests::extreme_values_stay_finite_and_zero_lines_stay_zero ... ok
 test layer3::imdct::tests::silent_subbands_are_skipped_but_the_overlap_still_drains ... ok
+test layer3::requant::tests::extreme_values_stay_finite_and_zero_lines_stay_zero ... ok
 test layer3::requant::tests::short_and_mixed_blocks_apply_the_subblock_gain_per_window ... ok
-test layer3::requant::tests::long_blocks_follow_the_definition ... ok
-test layer3::requant::tests::x_to_the_four_thirds_table ... ok
-test layer3::reservoir::tests::is_bounded ... ok
 test layer3::huffman::tests::errors_report_a_bit_position_and_garbage_never_panics ... ok
+test layer3::requant::tests::x_to_the_four_thirds_table ... ok
+test layer3::requant::tests::long_blocks_follow_the_definition ... ok
+test layer3::reservoir::tests::is_bounded ... ok
 test layer3::reservoir::tests::keeps_the_most_recent_bytes ... ok
 test layer3::scalefactors::tests::band_tables_cover_exactly_576_lines ... ok
 test layer3::scalefactors::tests::every_slen_pair_has_the_documented_widths ... ok
@@ -471,23 +471,23 @@ test layer3::scalefactors::tests::lsf_short_and_mixed_partitions ... ok
 test layer3::scalefactors::tests::mpeg1_long_uses_two_widths ... ok
 test layer3::scalefactors::tests::mpeg1_short_and_mixed_blocks ... ok
 test layer3::scalefactors::tests::pretab_matches_the_standard ... ok
-test layer3::requant::tests::short_blocks_are_reordered_into_interleaved_windows ... ok
 test layer3::scalefactors::tests::reading_past_the_end_yields_zeros_without_panicking ... ok
 test layer3::scalefactors::tests::scfsi_reuses_the_first_granule_group_by_group ... ok
+test layer3::requant::tests::short_blocks_are_reordered_into_interleaved_windows ... ok
 test layer3::scalefactors::tests::the_8khz_mixed_layout_is_six_long_bands_then_the_short_bands_from_band_3 ... ok
 test layer3::sideinfo::tests::bad_side_info_is_invalid_with_the_absolute_offset ... ok
 test layer3::sideinfo::tests::mpeg1_mono_has_one_channel_of_two_granules ... ok
 test layer3::sideinfo::tests::mpeg1_stereo_round_trips ... ok
-test layer3::sideinfo::tests::mpeg2_has_one_granule_and_no_scfsi_or_preflag ... ok
 test layer3::sideinfo::tests::the_mixed_flag_means_nothing_without_short_blocks ... ok
+test layer3::sideinfo::tests::mpeg2_has_one_granule_and_no_scfsi_or_preflag ... ok
 test layer3::stereo::tests::a_partition_without_positions_is_not_intensity ... ok
 test layer3::stereo::tests::an_empty_right_channel_is_intensity_from_the_first_band ... ok
 test layer3::stereo::tests::channels_with_different_block_layouts_bound_intensity_by_the_right_channel ... ok
 test layer3::stereo::tests::intensity_and_middle_side_share_a_frame ... ok
 test layer3::stereo::tests::garbage_scalefactors_never_panic ... ok
 test layer3::stereo::tests::lsf_position_zero_copies_the_left_channel ... ok
-test layer3::stereo::tests::middle_side_is_the_sum_and_difference_over_root_two ... ok
 test layer3::stereo::tests::lsf_intensity_uses_the_odd_even_ratio_of_the_scale ... ok
+test layer3::stereo::tests::middle_side_is_the_sum_and_difference_over_root_two ... ok
 test layer3::stereo::tests::mixed_blocks_treat_the_long_part_as_one_more_band_group ... ok
 test layer3::stereo::tests::mixed_long_bands_are_intensity_only_if_every_short_window_is_empty ... ok
 test layer3::stereo::tests::mpeg1_intensity_positions_and_the_illegal_value ... ok
@@ -507,28 +507,28 @@ test layer3::tests::mpeg2_mono_long_and_mixed_8khz ... ok
 test layer3::tests::reaches_is_exact_at_the_boundary ... ok
 test layer3::tests::synth::a_joint_stereo_granule_with_one_undecodable_channel_is_silent_in_both ... ok
 test layer3::tests::blackbox::hand_built_streams_match_the_black_box_reference ... ok
-test layer3::tests::synth::an_8khz_mixed_frame_synthesizes_like_the_definition ... ok
-test layer3::tests::synth::a_right_channel_without_positions_is_intensity_at_position_zero ... ok
-test layer3::tests::synth::granules_without_reservoir_data_are_silent ... ok
 test layer3::huffman::tests::every_pair_of_every_table_round_trips ... ok
+test layer3::tests::synth::a_right_channel_without_positions_is_intensity_at_position_zero ... ok
+test layer3::tests::synth::an_8khz_mixed_frame_synthesizes_like_the_definition ... ok
+test layer3::tests::synth::granules_without_reservoir_data_are_silent ... ok
 test layer3::tests::garbage_never_panics ... ok
 test layer3::tests::fixture_streams_decode_with_exactly_consumed_granules ... ok
 test layer3::tests::synth::mpeg2_mixed_and_long_blocks_synthesize_like_the_definition ... ok
 test layer3::tests::the_reservoir_supplies_main_data_from_earlier_frames ... ok
-test layer3::tests::synth::mpeg2_intensity_stereo_uses_odd_even_positions_and_the_scale_bit ... ok
 test synth::tests::impulse_response_lasts_sixteen_slots ... ok
+test layer3::tests::synth::mpeg2_intensity_stereo_uses_odd_even_positions_and_the_scale_bit ... ok
 test synth::tests::reset_forgets_history ... ok
 test synth::tests::random_input_matches_reference ... ok
 test synth::tests::window_is_antisymmetric ... ok
 test layer3::tests::the_end_to_end_fixtures_cover_every_block_type_and_middle_side ... ok
+test synth::tests::subband_impulse_matches_cosine_matrix ... ok
 test layer3::tests::synth::mpeg1_intensity_stereo_splits_the_left_channel_by_position ... ok
 test layer3::tests::synth::every_block_type_synthesizes_like_the_definition ... ok
-test synth::tests::subband_impulse_matches_cosine_matrix ... ok
 test layer1::tests::random_frames_match_reference_in_every_channel_mode ... ok
 test layer2::tests::garbage_payload_with_a_valid_header_never_panics ... ok
 test layer1::tests::measured_filterbank_delay_is_481 ... ok
 
-test result: ok. 95 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.64s
+test result: ok. 95 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.67s
 
      Running tests\alloc.rs (target\debug\deps\alloc-31f3ec6b21a95bbf.exe)
 
@@ -537,41 +537,41 @@ test decoding_does_not_allocate ... ok
 test layer_two_decoding_does_not_allocate ... ok
 test layer_three_decoding_does_not_allocate ... ok
 
-test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.33s
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.35s
 
      Running tests\mp1.rs (target\debug\deps\mp1-207df070ecaa3d03.exe)
 
 running 12 tests
 test forbidden_allocation_is_invalid_at_its_byte ... ok
 test empty_packet_is_silence_without_event ... ok
+test resilient_truncation_is_silence_of_the_frame_length ... ok
 test frame_limit_is_enforced ... ok
 test busy_frame_decodes_and_stays_in_range ... ok
 test foreign_codecs_are_unsupported_and_bad_tracks_invalid ... ok
-test resilient_truncation_is_silence_of_the_frame_length ... ok
 test crc_is_checked_over_header_and_allocation_only ... ok
 test truncated_and_foreign_packets_are_invalid ... ok
-test resilient_replaces_a_bad_frame_with_silence_and_resets ... ok
 test silent_frame_is_f32_planar_silence ... ok
+test resilient_replaces_a_bad_frame_with_silence_and_resets ... ok
 test garbage_never_panics ... ok
 test layer_one_seeks_give_exactly_the_samples_of_a_full_decode ... ok
 
-test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.12s
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.82s
 
      Running tests\mp2.rs (target\debug\deps\mp2-4dbeef41002cb4fe.exe)
 
 running 10 tests
-test fixtures_have_the_expected_shape ... ok
 test empty_packet_is_silence_without_event ... ok
+test fixtures_have_the_expected_shape ... ok
 test scalefactor_index_63_is_invalid ... ok
 test frame_limit_is_enforced ... ok
-test crc_covers_header_allocation_and_scfsi_only ... ok
 test truncated_and_foreign_packets_are_invalid ... ok
+test crc_covers_header_allocation_and_scfsi_only ... ok
 test resilient_replaces_a_bad_frame_with_silence_and_resets ... ok
 test matches_ffmpeg_under_the_iso_full_accuracy_criterion ... ok
 test free_format_takes_its_bitrate_from_the_frame_length ... ok
 test garbage_never_panics ... ok
 
-test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.90s
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.62s
 
      Running tests\mp3.rs (target\debug\deps\mp3-ef8588c15c133d70.exe)
 
@@ -587,7 +587,7 @@ test a_stream_that_starts_inside_the_reservoir_decodes_silently_until_it_is_fill
 test garbage_frames_never_panic ... ok
 test matches_ffmpeg_under_the_iso_full_accuracy_criterion ... ok
 
-test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.61s
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.58s
 
      Running unittests src\lib.rs (target\debug\deps\vynamp_decode_mpa-fb746ffef1e47a54.exe)
 
@@ -603,17 +603,17 @@ test a_tag_that_does_not_fit_the_frame_count_is_a_gapless_conflict ... ok
 test a_constant_bitrate_count_that_includes_the_info_frame_is_normalised_at_open ... ok
 test a_consistent_tag_and_an_untagged_stream_report_no_conflict ... ok
 test a_vbri_frame_gives_the_frame_count_and_is_not_delivered ... ok
-test a_stream_shorter_than_its_declared_frame_count ... ok
 test a_declared_frame_count_may_count_the_info_frame ... ok
+test a_stream_shorter_than_its_declared_frame_count ... ok
 test a_second_file_with_an_id3v2_tag_and_an_info_frame_continues_the_timeline ... ok
 test cancellation ... ok
 test a_zero_or_missing_frame_count_means_no_declared_length ... ok
 test a_trusted_lame_tag_makes_the_frame_count_exact ... ok
 test ffmpeg_lame_tag_crc_validates_as_crc16_arc ... ok
-test a_frame_count_the_audio_cannot_hold_is_invalid_or_dropped ... ok
 test a_header_that_changes_the_frame_length_is_caught_at_that_frame ... ok
-test any_other_declared_frame_count_is_an_error_or_clamped ... ok
+test a_frame_count_the_audio_cannot_hold_is_invalid_or_dropped ... ok
 test false_sync_guard_skips_junk_that_looks_like_a_header ... ok
+test any_other_declared_frame_count_is_an_error_or_clamped ... ok
 test layer_one_synthetic_stream ... ok
 test limits ... ok
 test garbage_does_not_open ... ok
@@ -622,11 +622,11 @@ test resilient_replaces_one_damaged_frame_by_silence ... ok
 test lame_tag_gives_exact_gapless_numbers ... ok
 test fixtures_have_ffprobes_packet_counts_and_a_contiguous_timeline ... ok
 test resilient_trailing_garbage_is_reported_once ... ok
+test resilient_seek_counts_a_gap_like_reading_does ... ok
 test id3v2_apev2_and_id3v1_yield_identical_packets ... ok
 test low_bitrate_seeks_start_early_enough_to_cover_the_reservoir ... ok
-test resilient_seek_counts_a_gap_like_reading_does ... ok
-test resilient_truncated_last_frame_becomes_silence ... ok
 test resilient_reports_junk_after_the_last_frame_once ... ok
+test resilient_truncated_last_frame_becomes_silence ... ok
 test strict_lost_sync_is_an_error_at_the_damaged_frame ... ok
 test strict_truncated_last_frame_is_unexpected_eof ... ok
 test free_format_streams_are_measured ... ok
@@ -644,13 +644,13 @@ test result: ok. 40 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fin
      Running tests\header.rs (target\debug\deps\header-f58eb04ebc7fd22c.exe)
 
 running 7 tests
+test probe_tolerates_leading_junk_and_a_cut_last_frame ... ok
+test every_bitrate_and_rate_index_for_every_version_and_layer ... ok
 test other_fields ... ok
 test free_format_has_bitrate_zero_and_unknown_length ... ok
-test reserved_and_invalid_values_are_rejected ... ok
-test every_bitrate_and_rate_index_for_every_version_and_layer ... ok
-test probe_gives_no_score_to_a_free_format_header_away_from_the_start ... ok
-test probe_tolerates_leading_junk_and_a_cut_last_frame ... ok
 test probe_scores ... ok
+test reserved_and_invalid_values_are_rejected ... ok
+test probe_gives_no_score_to_a_free_format_header_away_from_the_start ... ok
 
 test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
@@ -658,12 +658,12 @@ test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
 running 8 tests
 test flags_select_the_fields ... ok
-test lame_crc_variant_is_crc16_arc ... ok
 test info_kind_and_bad_crc ... ok
-test xing_after_a_header_crc ... ok
-test xing_with_valid_lame_tag ... ok
-test xing_offsets_follow_version_and_channels ... ok
 test vbri ... ok
+test xing_after_a_header_crc ... ok
+test xing_offsets_follow_version_and_channels ... ok
+test xing_with_valid_lame_tag ... ok
+test lame_crc_variant_is_crc16_arc ... ok
 test no_header_and_short_input ... ok
 
 test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
@@ -679,11 +679,11 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 running 12 tests
 test f32_both_endians ... ok
 test f64_both_endians ... ok
-test s32_both_endians ... ok
-test s8_flips_sign_bit ... ok
-test s24_both_endians_sign_extend ... ok
-test u8_direct ... ok
 test s16_both_endians ... ok
+test s8_flips_sign_bit ... ok
+test s32_both_endians ... ok
+test u8_direct ... ok
+test s24_both_endians_sign_extend ... ok
 test unsupported_specs ... ok
 test valid_bits_does_not_change_samples ... ok
 test wrong_packet_size_is_invalid ... ok
@@ -702,12 +702,12 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
 running 28 tests
 test data_before_fmt ... ok
-test frame_limit ... ok
 test channel_limit ... ok
+test frame_limit ... ok
 test huge_chunk_size_is_eof ... ok
 test decodes_through_pcm_decoder ... ok
-test odd_unknown_chunk_is_skipped ... ok
 test declared_1000_present_400_strict ... ok
+test odd_unknown_chunk_is_skipped ... ok
 test partial_trailing_frame_is_dropped ... ok
 test probe_rejects_others ... ok
 test rate_and_channels_zero ... ok
@@ -723,24 +723,24 @@ test wave64_zero_data_size ... ok
 test zero_channels_and_bad_block_align ... ok
 test zero_size_unknown_chunk ... ok
 test streaming_data_size ... ok
-test packet_buffer_is_reused ... ok
 test cancel_between_packets ... ok
+test packet_buffer_is_reused ... ok
 test truncated_strict_and_resilient ... ok
-test byte_flip_and_truncation_smoke ... ok
 test seek_exact_and_end ... ok
+test byte_flip_and_truncation_smoke ... ok
 test round_trip_all_variants ... ok
 
-test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.35s
+test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.33s
 
      Running unittests src\lib.rs (target\debug\deps\vynamp_decode_testkit-e89d9173aeb2938e.exe)
 
 running 6 tests
 test sha256::tests::sha256_abc ... ok
-test writers::tests::aiff_layout ... ok
+test signal::tests::sine_i32_16bit_half_scale ... ok
 test sha256::tests::sha256_two_blocks ... ok
 test sha256::tests::sha256_empty ... ok
+test writers::tests::aiff_layout ... ok
 test writers::tests::riff_layout ... ok
-test signal::tests::sine_i32_16bit_half_scale ... ok
 
 test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
@@ -767,14 +767,14 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
 running 5 tests
 test crates\vynamp-decode-core\src\crc.rs - crc::crc16 (line 60) ... ok
-test crates\vynamp-decode-core\src\crc.rs - crc::crc16_update (line 69) ... ok
-test crates\vynamp-decode-core\src\crc.rs - crc::crc16_mpeg (line 82) ... ok
 test crates\vynamp-decode-core\src\crc.rs - crc::crc8 (line 49) ... ok
 test crates\vynamp-decode-core\src\md5.rs - md5::Md5 (line 83) ... ok
+test crates\vynamp-decode-core\src\crc.rs - crc::crc16_update (line 69) ... ok
+test crates\vynamp-decode-core\src\crc.rs - crc::crc16_mpeg (line 82) ... ok
 
 test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
 
-all doctests ran in 1.00s; merged doctests compilation took 0.80s
+all doctests ran in 0.61s; merged doctests compilation took 0.48s
    Doc-tests vynamp_decode_flac
 
 running 0 tests
@@ -812,4 +812,3 @@ test crates\vynamp-decode-testkit\src\alloc.rs - alloc (line 8) ... ignored
 
 test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-rc=0
