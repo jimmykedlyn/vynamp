@@ -1,0 +1,57 @@
+Isolamento das fixtures de git: medicao de 2026-11-12
+
+O defeito
+---------
+O hook pre-push roda 'cargo xtask ci docs'. Quando o push sai de uma worktree,
+o Git exporta GIT_DIR para o hook (medido: GIT_DIR=D:/Projects/vynamp/.git/worktrees/
+<worktree>). Os testes de secrets.rs rodavam git init/add/commit num tempdir sem
+limpar essas variaveis; 'current_dir()' nao as desliga. Dentro do hook, cada git
+desses testes atingia o repositorio real.
+
+Dano observado em 2026-11-12, durante o primeiro push desta branch:
+  - dois commits criados na branch em uso (4a96cc8 'clean', d3c553a 'many files')
+  - indice do worktree sobrescrito com o conteudo da fixture
+  - core.bare=true e [user] test / test@example.invalid gravados no .git/config
+    COMPARTILHADO, o que fez o checkout central responder
+    'fatal: this operation must be run in a work tree'
+
+O conserto (commit b8a6749)
+---------------------------
+  - util::scrub_git_env remove toda variavel de 'git rev-parse --local-env-vars'
+    de um Command. A lista e lida do proprio git, nao transcrita a mao.
+  - util::local_git(root) = git pinado em root E sem o ambiente do hook.
+  - util::program() aplica o scrub a todo filho chamado 'git', entao util::run e
+    util::capture tambem ficam cobertos.
+  - secrets::blobs, object_types e scan passaram a usar local_git: antes o scan
+    obedecia a GIT_DIR e lia outro repositorio em vez do root pedido.
+  - os 17 call sites de fixture usam fixture_ok/fixture_git, que limpam o ambiente.
+
+Teste cujo vermelho e o dano
+----------------------------
+a_fixture_never_writes_to_the_repository_git_exported monta um repositorio
+sentinela com um token cujo texto so existe em tempo de execucao, roda o filho
+the_fixture_probe com GIT_DIR/GIT_COMMON_DIR/GIT_WORK_TREE/GIT_INDEX_FILE
+apontados para ele, e exige que HEAD, rev-list --all --count e status --porcelain
+do sentinela fiquem identicos. Sem o conserto, o sentinela e escrito; com ele, nao.
+O padrao de filho via current_exe() + variavel de guarda e o mesmo de
+xtask/tests/tooling.rs, porque set_var e unsafe em edition 2024 e disputaria com
+os testes paralelos.
+
+Verificacao de que o hook nao suja mais o config
+-----------------------------------------------
+Com GIT_DIR/GIT_WORK_TREE/GIT_PREFIX exportados como o hook os recebe, e o comando
+exato do .githooks/pre-push executado:
+  cargo test --package xtask --locked   -> 110 passed, 33 passed, 0 failed
+  sha256 de .git/config antes e depois  -> identico
+  git rev-parse HEAD e rev-list --count -> inalterados (b8a6749, 304 commits)
+  git status --porcelain                -> vazio
+
+Registro de dano residual
+-------------------------
+O proprio commit b8a6749 saiu com autor 'test <test@example.invalid>', porque o
+[user] injetado pelo defeito estava no config compartilhado na hora do commit.
+Nao foi reescrito: o commit ja estava no remoto, e reescrever historico e proibido.
+O config foi reparado com 'git config --unset core.bare' e
+'git config --remove-section user' (backups em /tmp), sem reset --hard.
+O agente segue o padrao do projeto: registro do defeito no AGENTS.md §5, para que
+teste novo que rode git precise de guarda equivalente.
