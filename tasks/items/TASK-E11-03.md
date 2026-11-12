@@ -88,7 +88,7 @@ Executada em 2026-11-12. Os números abaixo saíram de `cargo deny 0.20.2`,
 | AC-1, ASIO | leitura arquivo a arquivo do SDK 2.3.4, baixado em 2026-11-12 de `steinberg.net/asiosdk`, que responde `302` para `download.steinberg.net/sdk_downloads/ASIO-SDK_2.3.4_2025-10-15.zip` | **Satisfeito, e a primeira leitura estava errada.** Ler só `ASIOSDK/LICENSE.txt` dava "o SDK é dual-licenciado"; esse texto cobre 2 dos 48 arquivos, e o próprio arquivo diz que vale "only to files referencing this license". Medido: 2 dual (Steinberg ASIO License ou GPLv3), 14 BSD-3 da Steinberg embutido, 8 por remissão ao `LICENSE` da raiz, 4 com cabeçalho **Microsoft** `(c) 1992–1996` e **sem cláusula de redistribuição**, e 20 sem cabeçalho nenhum. O SDK **não está no repositório**, o ADR-011 já o coloca fora do núcleo, e a medição está versionada em `evidence/PR/task-e11-03/asio-sdk-licenca-20261112.txt` |
 | AC-1, fontes | `git ls-files` por `.ttf`/`.otf`/`.woff2` nos nove submódulos e no umbrella, mais a leitura do `asset-manifest.json` | **Satisfeito, e o resultado é ausência.** Nenhuma fonte versionada em nenhum repo; a única ocorrência é o `codicon` do Playwright, em três arquivos dentro de `reference/vynamp-mvp/node_modules/` (dois `codicon-DCmgc-ay.ttf`, um `codicon.DCmgc-ay.ttf`), que é `node_modules` no `.gitignore` da referência e não entra no build. Noto é OFL-1.1 se for a escolha, mas nenhum arquivo foi admitido |
 | AC-2, itens que exigem autorização | três casos concretos, com o texto da fonte citado | **Satisfeito como inventário.** ASIO proprietário exige acordo assinado e proíbe redistribuir o SDK; FFmpeg GPL/nonfree não entra em pacote permissivo; MP3 não tem programa de licenciamento ativo desde 2017 mas também não tem declaração de expiração de patente. Nenhum dos três é usado de forma que hoje distribua algo |
-| AC-2, decisões de marca e licença final | confronto com `adr/ADR-008-marca.md`, `design/04-marca.md` e o `asset-manifest.json` | **Satisfeito por registro, não por decisão.** Marca decidida (conceito C/Pulso), `state` = `approved-reference-native-exports-pending`, `branding_exports_ready=false`. As seis pendências que só o mantenedor fecha estão listadas em §9 do inventário, sem alegar autorização que não existe |
+| AC-2, decisões de marca e licença final | confronto com `adr/ADR-008-marca.md`, `design/04-marca.md` e o `asset-manifest.json` | **NÃO satisfeito, e o documento diz isso em §9.** O `Then` pede "a decisão de marca e de distribuição é registrada"; o que existe é o **estado medido** — marca decidida (conceito C/Pulso), `state` = `approved-reference-native-exports-pending`, `branding_exports_ready=false` — e quatro pendências com dono, nenhuma decidida. Trocar "decisão registrada" por "pendência registrada" seria cumprir a AC no papel. A TASK fica bloqueada no mantenedor para essa AC, e o insumo medido para decidir está entregue |
 
 **Onde o `Then` não tem objeto, e por quê.**
 
@@ -108,6 +108,29 @@ Executada em 2026-11-12. Os números abaixo saíram de `cargo deny 0.20.2`,
 - `security/02-privacidade-licencas.md` repetia a regra de inventário sem apontar para
   nenhuma medição. Agora aponta para o inventário e diz explicitamente que ele mede, não
   autoriza.
+
+**A revisão de contexto limpo (dois revisores, escopos disjuntos, em 2026-11-12).**
+
+Revisor de aritmética e hashes: **aprovado com ressalvas**. Reproduziu os 4 SHA-256 da
+tabela de §1 contra os blobs de `HEAD`, a aritmética das 18 expressões (147 + 5×2 + 7 =
+164), os cinco nomes com duas versões, os cinco pacotes em forma de barra, os 4 sem arquivo
+de licença, os 158 diagnósticos, as 19 fora do alvo Windows e as contagens de módulos e
+assets. Apontou 5 defeitos, todos verificados e corrigidos: "cinco regimes" onde havia três
+regimes e cinco classes; a tabela de raízes de fixture subcontava 36 arquivos e tratava
+quatro subdiretórios como três; o corpus de conformidade era citado como cumprindo
+`05-testes.md` sem ter hash; e a cadeia de `futures-util` dizia "obrigatória" onde o
+`Cargo.toml` do `js-sys` diz `optional = true`.
+
+Revisor de critérios e alegações: **bloqueado**. Apontou 8 defeitos, todos verificados e 7
+corrigidos: `encumbered` e `reverse-engineered` não existem em `Cargo.toml` nenhum e o
+documento os descrevia como build; o corpus `flac-conformance` é ativo de terceiro
+versionado sem entrada em notices, e o `LEGAL.md` afirmava que nenhum havia sido admitido;
+"encoders" da AC-1 não tinha medição nenhuma, e agora tem (zero encoders, zero features,
+`libs/encode` é stub de 6 linhas); a coluna "medido na fonte" tinha duas linhas sem fonte;
+o §5 justificava a ausência de FFmpeg com "fixtures versionadas com hash" que só vale para
+parte do corpus; e a medição do FFmpeg não tinha saída versionada nem era a versão do pin
+do ADR-002. O oitavo é o motivo do bloqueio: **a AC-2 pede decisão registrada e o §9
+registra pendências**, então a AC não está satisfeita. O documento agora diz isso.
 
 **Duas limitações registradas, não corrigidas.**
 

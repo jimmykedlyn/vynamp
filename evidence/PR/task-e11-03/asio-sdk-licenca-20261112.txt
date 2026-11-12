@@ -110,7 +110,19 @@ versao     : Changes in ASIO 2.3.4
 
 ## O que isso muda
   O paragrafo que so lia ASIOSDK/LICENSE.txt concluia 'o SDK e dual-licenciado',
-  o que vale para 2 dos 48 arquivos. Ha ao menos tres regimes distintos dentro do
-  mesmo zip, e os 4 arquivos com cabecalho Microsoft nao tem, no proprio arquivo,
-  clausula de redistribuicao nenhuma. Nenhum deles foi redistribuido por este
-  projeto, entao o efeito hoje e de registro, nao de remediacao.
+  o que vale para 2 dos 48 arquivos. O proprio LICENSE.txt delimita o alcance, e a
+  leitura arquivo a arquivo da CINCO classes de cabecalho (2/14/8/4/20).
+
+  Dessas cinco, TRES sao regimes de licenca de fato:
+    1. dual Steinberg ASIO License / GPLv3  (2 arquivos)
+    2. BSD-3-clause da Steinberg embutido   (14 arquivos)
+    3. 'AS IS' com copyright Microsoft, sem clausula de redistribuicao (4 arquivos)
+  As outras duas NAO sao regimes de licenca:
+    4. remissao ao LICENSE da raiz, sem texto embutido (8) -- aponta para o regime 1
+    5. sem cabecalho de licenca (20) -- inclui .dsw/.dsp/.vcproj, changes.txt,
+       README.md, PDFs e o logo; ausencia de texto, nao um regime.
+
+  Ou seja: cinco CLASSES medidas, tres REGIMES de licenca. O documento nao deve
+  dizer 'cinco regimes'. Os 4 arquivos com cabecalho Microsoft sao o ponto critico:
+  nao trazem, no proprio arquivo, clausula de redistribuicao nenhuma.
+  Nenhum foi redistribuido por este projeto, entao o efeito hoje e de registro.

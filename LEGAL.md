@@ -138,9 +138,16 @@ player is included; their absence is a project rule, not a licence claim.
 
 Third-party test fixtures, fonts and samples enter only with an identified
 licence and an entry in the notices inventory. That inventory is
-`THIRD_PARTY_NOTICES`, which does not exist yet: no third-party asset has been
-admitted so far, and `release preflight` blocks a release until the file is
-created.
+`THIRD_PARTY_NOTICES`, which does not exist yet, and `release preflight` blocks a
+release until the file is created.
+
+One third-party asset is already admitted and is **not** in that inventory: the
+FLAC conformance corpus in `libs/decode/tests/fixtures/flac-conformance/` (36
+files, IETF WG CELLAR, CC0 1.0, licence and provenance in that directory's
+`LICENSE.txt` and `SOURCE.txt`). Its licence is identified; its notices entry is
+missing because the file it would go in does not exist. This file records the
+gap instead of claiming no asset was admitted. Creating `THIRD_PARTY_NOTICES` is
+`TASK-E11-04`/`TASK-E11-08`; see `delivery/05-inventario-licencas.md` §3 and §9.
 
 ### Marcas e ativos de terceiros
 
@@ -153,6 +160,14 @@ qualquer outro player; a ausência é regra do projeto, não alegação de licen
 
 Fixtures de teste, fontes e amostras de terceiros entram apenas com licença
 identificada e entrada no inventário de avisos. Esse inventário é
-`THIRD_PARTY_NOTICES`, que ainda não existe: nenhum ativo de terceiros foi
-admitido até agora, e `release preflight` bloqueia o release até o arquivo
-existir.
+`THIRD_PARTY_NOTICES`, que ainda não existe, e `release preflight` bloqueia o
+release até o arquivo existir.
+
+Um ativo de terceiros **já está admitido** e não está nesse inventário: o corpus
+de conformidade FLAC em `libs/decode/tests/fixtures/flac-conformance/` (36
+arquivos, IETF WG CELLAR, CC0 1.0, licença e procedência no `LICENSE.txt` e no
+`SOURCE.txt` do próprio diretório). A licença está identificada; a entrada em
+notices falta porque o arquivo onde ela iria não existe. Este arquivo registra a
+lacuna em vez de afirmar que nenhum ativo foi admitido. Criar
+`THIRD_PARTY_NOTICES` é `TASK-E11-04`/`TASK-E11-08`; ver
+`delivery/05-inventario-licencas.md` §3 e §9.
