@@ -18,7 +18,7 @@
       "title": "Provar decode, gapless e precisão de samples",
       "phase": "M0",
       "priority": "P0",
-      "status": "planned",
+      "status": "implemented",
       "owner_role": "audio",
       "requirements": [
         "REQ-E01-01"
