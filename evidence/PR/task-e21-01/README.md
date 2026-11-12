@@ -24,15 +24,18 @@ que não é deste PR e não foi tocado. Os 15 avisos de `check-authoring` são t
 zero deles é de TASK de E21. Num worktree limpo do mesmo commit, com os nove submódulos
 inicializados — que é o estado do runner —, `check-docs` devolve `"errors": []`.
 
-## CI do GitHub Actions, no SHA final
+## CI do GitHub Actions
 
-Os três PRs têm o CI verde no SHA revisado:
+Os três PRs têm o CI verde:
 
-| PR | SHA | Jobs |
-|---|---|---|
-| [vynamp#56](https://github.com/jimmykedlyn/vynamp/pull/56) | `e043418` | Authoring, CI Gate, Regras de arquitetura, Specs, Submodules fixados, TASKs, Tooling ×3 — 9 de 9 |
-| [vynamp-encode#7](https://github.com/jimmykedlyn/vynamp-encode/pull/7) | `be5859d` | CI Gate, clippy, fmt, machete, test — 5 de 5 |
-| [vynamp-converter#14](https://github.com/jimmykedlyn/vynamp-converter/pull/14) | `873595f` | CI Gate, build ×4, clippy, fmt, test — 8 de 8 |
+| PR | Jobs |
+|---|---|
+| [vynamp#56](https://github.com/jimmykedlyn/vynamp/pull/56) | Authoring, CI Gate, Regras de arquitetura, Specs, Submodules fixados, TASKs, Tooling ×3 — 9 de 9 |
+| [vynamp-encode#7](https://github.com/jimmykedlyn/vynamp-encode/pull/7) | CI Gate, clippy, fmt, machete, test — 5 de 5 |
+| [vynamp-converter#14](https://github.com/jimmykedlyn/vynamp-converter/pull/14) | CI Gate, build ×4, clippy, fmt, test — 8 de 8 |
+
+O SHA do PR do umbrella não é pinado aqui: o commit que escrevesse o hash mudaria o
+próprio hash. A regra do contrato vale pelo último SHA empurrado, e é lá que o CI rodou.
 
 O merge dos três é do mantenedor; os PRs não o fazem.
 
