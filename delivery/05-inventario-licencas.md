@@ -281,7 +281,11 @@ Três limites, registrados para não virarem alegação:
   trocada, nenhum pin de NDK/Gradle foi fixado. Os três são decisão registrada do
   mantenedor.
 
-## 9. Pendências que só o mantenedor fecha
+## 9. Pendências que esta TASK não fecha
+
+Seis linhas, duas naturezas. As quatro primeiras são **decisão do mantenedor** — a AC-2
+pede que elas fiquem registradas, não que sejam tomadas aqui. As duas últimas são trabalho
+de TASK já existente, registradas para que o estado medido não se perca.
 
 | # | Pendência | Estado medido | Dono |
 |---|---|---|---|
@@ -292,5 +296,7 @@ Três limites, registrados para não virarem alegação:
 | 5 | `deny.toml` com a lista de licenças permitidas | não existe; é por isso que o `cargo deny` recusa as 158 | `TASK-E11-04` |
 | 6 | `THIRD_PARTY_NOTICES` e SBOM de release | não existem; nada de terceiro foi admitido | `TASK-E11-04`, `TASK-E11-08` |
 
-A linha 3 é a que tem prazo mais curto na prática: qualquer trabalho em `vynamp-output`
-para Windows que queira ASIO esbarra nela antes de escrever a primeira linha de código.
+Entre as quatro do mantenedor, a linha 3 é a que tem prazo mais curto na prática: qualquer
+trabalho em `vynamp-output` para Windows que queira ASIO esbarra nela antes de escrever a
+primeira linha de código. Nenhuma delas foi decidida aqui, e este documento não presume
+autorização para nenhuma.
