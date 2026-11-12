@@ -7,7 +7,8 @@ listar as pendências em §9, não decidi-las.
 Este documento responde à `TASK-E11-03` e separa três coisas que costumam ser
 confundidas: o que o projeto **distribui**, o que ele **usa para se construir** e o que
 ele apenas **consulta como referência**. Nenhum número aqui vale por si — cada seção
-nomeia o comando que o produziu, e a saída bruta está em `evidence/PR/task-e11-03/`.
+nomeia o comando que o produziu, e a saída bruta das duas ferramentas externas está em
+`evidence/PR/task-e11-03/`.
 
 ## 1. Método e oráculo
 
@@ -29,6 +30,11 @@ o `Cargo.lock` de verdade, em vez de repetir o que o `Cargo.toml` declara. A sa�
 | `deny-licenses-umbrella.json` | 160 linhas JSON: 158 diagnósticos `rejected`, 1 aviso de configuração e 1 `summary` com `errors: 158` | `7048a251c6a448dc7363b6cf02222887f5ae9175858dce905c8dd1f18ad411d3` |
 | `deny-licenses-decode.json` | 11 linhas; só os 9 crates de path do módulo, cada um `MIT OR Apache-2.0` | `553705b712d66c9e1af4540087851343048fd83fa3e093e555a78785cc237dac` |
 | `licence-counts-20261112.txt` | contagens agregadas derivadas da `metadata` | `471efd46f09a5767bce20b38230aca43cf8af070336ac4931e28ef8102d914fb` |
+
+O `metadata-umbrella.json` não é versionado — são 741 KB de JSON derivado, e o que o
+documento afirma sobre ele está nas contagens acima, que são o que se confere. Os dois
+`deny-licenses-*.json` são versionados porque são a saída do oráculo independente e não se
+reconstroem sem rodar a ferramenta.
 
 **Por que 158 erros, e por que isso não é defeito.** O repositório não tem `deny.toml`,
 então o `cargo deny` cai na configuração padrão, que não permite licença nenhuma, e sai
