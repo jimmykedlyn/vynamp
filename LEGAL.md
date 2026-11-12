@@ -97,8 +97,14 @@ encode and output libraries lives with those libraries, where the code does:
 - `vynamp-output` — no third-party code linked; platform components used only
   through their public APIs.
 
-`vynamp-encode`, which will be the single source of encoders for the Converter,
-does not exist as a repository yet; its format policy is written when it does.
+`vynamp-encode` exists as a repository and is pinned here, but has no codec code
+yet: only the module stub, and a format matrix in
+[`libs/encode/specs/formatos.md`](libs/encode/specs/formatos.md) that is drafted
+and **not approved**. Until it is, no number in it is a contract and this file
+makes no claim about what the encoder will accept.
+
+The measured inventory of third-party code, codecs and assets — with the command
+behind every figure — is [`delivery/05-inventario-licencas.md`](delivery/05-inventario-licencas.md).
 
 ### Política de formatos
 
@@ -110,8 +116,15 @@ de decodificação, codificação e saída vive com elas, onde está o código:
 - `vynamp-output` — nenhum código de terceiros linkado; componentes de
   plataforma usados apenas por suas APIs públicas.
 
-`vynamp-encode`, que será a fonte única de encoders do Conversor, ainda não
-existe como repositório; sua política de formatos é escrita quando ele existir.
+`vynamp-encode` existe como repositório e está pinado aqui, mas ainda não tem
+código de codec: só o stub do módulo e uma matriz de formatos em
+[`libs/encode/specs/formatos.md`](libs/encode/specs/formatos.md) que está
+**autorada e não aprovada**. Enquanto não for, nenhum número dela é contrato e
+este arquivo não afirma o que o encoder vai aceitar.
+
+O inventário medido de código de terceiro, codecs e assets — com o comando por
+trás de cada número — é
+[`delivery/05-inventario-licencas.md`](delivery/05-inventario-licencas.md).
 
 ## Trademarks and third-party assets
 
@@ -125,9 +138,16 @@ player is included; their absence is a project rule, not a licence claim.
 
 Third-party test fixtures, fonts and samples enter only with an identified
 licence and an entry in the notices inventory. That inventory is
-`THIRD_PARTY_NOTICES`, which does not exist yet: no third-party asset has been
-admitted so far, and `release preflight` blocks a release until the file is
-created.
+`THIRD_PARTY_NOTICES`, which does not exist yet, and `release preflight` blocks a
+release until the file is created.
+
+One third-party asset is already admitted and is **not** in that inventory: the
+FLAC conformance corpus in `libs/decode/tests/fixtures/flac-conformance/` (36
+files, IETF WG CELLAR, CC0 1.0, licence and provenance in that directory's
+`LICENSE.txt` and `SOURCE.txt`). Its licence is identified; its notices entry is
+missing because the file it would go in does not exist. This file records the
+gap instead of claiming no asset was admitted. Creating `THIRD_PARTY_NOTICES` is
+`TASK-E11-04`/`TASK-E11-08`; see `delivery/05-inventario-licencas.md` §3 and §9.
 
 ### Marcas e ativos de terceiros
 
@@ -140,6 +160,14 @@ qualquer outro player; a ausência é regra do projeto, não alegação de licen
 
 Fixtures de teste, fontes e amostras de terceiros entram apenas com licença
 identificada e entrada no inventário de avisos. Esse inventário é
-`THIRD_PARTY_NOTICES`, que ainda não existe: nenhum ativo de terceiros foi
-admitido até agora, e `release preflight` bloqueia o release até o arquivo
-existir.
+`THIRD_PARTY_NOTICES`, que ainda não existe, e `release preflight` bloqueia o
+release até o arquivo existir.
+
+Um ativo de terceiros **já está admitido** e não está nesse inventário: o corpus
+de conformidade FLAC em `libs/decode/tests/fixtures/flac-conformance/` (36
+arquivos, IETF WG CELLAR, CC0 1.0, licença e procedência no `LICENSE.txt` e no
+`SOURCE.txt` do próprio diretório). A licença está identificada; a entrada em
+notices falta porque o arquivo onde ela iria não existe. Este arquivo registra a
+lacuna em vez de afirmar que nenhum ativo foi admitido. Criar
+`THIRD_PARTY_NOTICES` é `TASK-E11-04`/`TASK-E11-08`; ver
+`delivery/05-inventario-licencas.md` §3 e §9.

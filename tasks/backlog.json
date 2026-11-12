@@ -9,7 +9,9 @@
     "product": 197,
     "engineering": 2,
     "total": 199,
-    "acceptance_ready": 199
+    "acceptance_ready": 199,
+    "planned": 186,
+    "implemented": 13
   },
   "tasks": [
     {
@@ -3326,7 +3328,7 @@
       "title": "Resolver licenças e inventário de dependências",
       "phase": "M0",
       "priority": "P0",
-      "status": "planned",
+      "status": "implemented",
       "owner_role": "delivery",
       "requirements": [
         "REQ-E11-03"

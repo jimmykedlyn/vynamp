@@ -81,13 +81,110 @@ fn find_program(
             .find(|candidate| candidate.is_file())
     })
 }
+/// The local variables Git exports to the hooks it runs.
+///
+/// `git rev-parse --local-env-vars` is Git's own list, so it is read instead of
+/// transcribed: a hand-written literal drifts when Git grows another one.
+static LOCAL_ENV_VARS: std::sync::LazyLock<Vec<String>> = std::sync::LazyLock::new(|| {
+    // Justified `expect`: this binary only runs where `git` is a prerequisite of
+    // the build itself, and a silently empty list would turn `scrub_git_env`
+    // into a no-op -- restoring the very defect that writes into the pushing
+    // repository. Failing to spawn is unrecoverable and must be loud.
+    let out = Command::new("git")
+        .args(["rev-parse", "--local-env-vars"])
+        .output()
+        .expect("git rev-parse --local-env-vars runs; git is a build prerequisite");
+    if !out.status.success() {
+        // `git` exists but refused the query (a very old Git). Degrade to the
+        // documented list rather than to nothing: an empty list is a no-op
+        // scrub, which is exactly the defect this guard exists to prevent.
+        return FALLBACK_LOCAL_ENV_VARS
+            .iter()
+            .map(|name| (*name).to_owned())
+            .collect();
+    }
+    String::from_utf8_lossy(&out.stdout)
+        .split_whitespace()
+        .map(str::to_owned)
+        .collect()
+});
+
+/// The `git rev-parse --local-env-vars` list as of Git 2.47, used only when the
+/// query itself fails. Kept in sync with `xtask/tests/tooling.rs`.
+const FALLBACK_LOCAL_ENV_VARS: &[&str] = &[
+    "GIT_ALTERNATE_OBJECT_DIRECTORIES",
+    "GIT_CONFIG",
+    "GIT_CONFIG_PARAMETERS",
+    "GIT_CONFIG_COUNT",
+    "GIT_OBJECT_DIRECTORY",
+    "GIT_DIR",
+    "GIT_WORK_TREE",
+    "GIT_IMPLICIT_WORK_TREE",
+    "GIT_GRAFT_FILE",
+    "GIT_INDEX_FILE",
+    "GIT_NO_REPLACE_OBJECTS",
+    "GIT_REPLACE_REF_BASE",
+    "GIT_PREFIX",
+    "GIT_SHALLOW_FILE",
+    "GIT_COMMON_DIR",
+];
+
+/// Drop the repository context Git honours from a child command.
+///
+/// `current_dir` is not enough. Git reads `GIT_DIR`, `GIT_WORK_TREE` and
+/// `GIT_INDEX_FILE` **before** it looks at the working directory, and the
+/// `pre-push` hook here runs `cargo xtask ci docs` with those variables set to
+/// the real worktree. Any child that inherits them operates on the pushing
+/// repository instead of the path it was given -- which, for a fixture, means
+/// committing into the branch being pushed.
+///
+/// The list comes from `git rev-parse --local-env-vars`, which is what Git
+/// *reads*, not what it publishes; the only variable measured as exported by
+/// this machine's `pre-push` is `GIT_DIR`. It also covers
+/// `GIT_CONFIG`/`GIT_CONFIG_PARAMETERS`/`GIT_CONFIG_COUNT`, which are config
+/// injection rather than repository context: a caller that sets them
+/// deliberately will find them dropped for `git` children, and that is intended,
+/// because inheriting the hook's injected config is the failure being prevented.
+pub fn scrub_git_env(command: &mut Command) {
+    for name in LOCAL_ENV_VARS.iter() {
+        command.env_remove(name);
+    }
+}
+
+/// A `git` child pinned to `root` and detached from the hook environment.
+pub fn local_git(root: &Path) -> Command {
+    let mut command = program("git");
+    command.current_dir(root);
+    scrub_git_env(&mut command);
+    command
+}
+
+/// Whether `exe` names Git, by bare name or by a resolved path.
+///
+/// `program` decides the scrub from the name the caller passed, so comparing
+/// against `"git"` alone would silently skip `"git.exe"` or a full
+/// `C:\Program Files\Git\cmd\git.exe`. Checking the file stem covers both.
+fn is_git(exe: &str) -> bool {
+    let stem = Path::new(exe)
+        .file_stem()
+        .and_then(|s| s.to_str())
+        .unwrap_or(exe);
+    stem.eq_ignore_ascii_case("git")
+}
+
 fn program(exe: &str) -> Command {
     let pathext = std::env::var("PATHEXT").unwrap_or_else(|_| ".COM;.EXE;.BAT;.CMD".into());
     let path = std::env::var_os("PATH");
-    match find_program(exe, path.as_deref(), &pathext, cfg!(windows)) {
+    let mut command = match find_program(exe, path.as_deref(), &pathext, cfg!(windows)) {
         Some(resolved) => Command::new(resolved),
         None => Command::new(exe),
+    };
+    // A child that runs git must not inherit the hook's repository context;
+    // see `scrub_git_env`.
+    if is_git(exe) {
+        scrub_git_env(&mut command);
     }
+    command
 }
 pub fn run(root: &Path, exe: &str, args: &[&str]) -> Result<()> {
     ensure!(

@@ -86,6 +86,8 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Manifest de capacidades e gates de distribuição](delivery/04-gates.md) — delivery/04-gates.md
 
+- [Inventário de licenças, codecs e assets](delivery/05-inventario-licencas.md) — delivery/05-inventario-licencas.md
+
 - [Identidade visual, cores e componentes](design/01-sistema-visual.md) — design/01-sistema-visual.md
 
 - [Layouts, geometria e telas](design/02-layouts.md) — design/02-layouts.md
