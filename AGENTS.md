@@ -47,7 +47,7 @@ apps ──→ engine ──→ { decode, output, encode, dsp }
 
 Regras. As 2 a 6 são as que o job `arch` do CI do umbrella vai checar — ele **ainda
 não existe**: nasce no passo 34 (`34-ci.md`), onde as verificações de
-`01-arvore-final.md` §3 viram `cargo tree`, `grep` e `cargo build --manifest-path`.
+`01-arvore-final.md` (em [`_arquivo/fases/docs/`](_arquivo/fases/docs/01-arvore-final.md)) §3 viram `cargo tree`, `grep` e `cargo build --manifest-path`.
 Até lá, todas são revisadas no PR. Só a regra 1 fica fora: apps são repos próprios,
 fora do build do umbrella, e quem a revisa é o PR do app.
 

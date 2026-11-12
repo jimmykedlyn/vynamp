@@ -1,0 +1,597 @@
+origem,destino,acao,motivo,passo
+.gitignore,.gitignore,reescrever,"falta *.log, ARTIFACTS.json, VALIDATION.json, .cache/",30
+ARTIFACTS.json,_arquivo/repo/ARTIFACTS.json,arquivar,manifesto de bundle de outro produto; 562 paths em pacote/ inexistente,30
+D:/Projects/vynamp-media-player/.cache/,-,nao migrar,"6,4 G; 6,1 G descartaveis. cargo/ e import-completed.json sao load-bearing",30
+D:/Projects/vynamp-media-player/.claude/settings.local.json,-,reescrever,"M6: contem JWT Woodpecker literal; regra removida, token a revogar",30
+D:/Projects/vynamp-media-player/AUDIOSR-RUST-CPU.md,_arquivo/raiz/AUDIOSR-RUST-CPU.md,arquivar,absorvido por ADR-015 + tools/03 apos o merge de chore/claude-specs-ia-futura,30
+D:/Projects/vynamp-media-player/CLAUDE-SPEC-LETRAS-SINCRONIZADAS.md,_arquivo/raiz/CLAUDE-SPEC-LETRAS-SINCRONIZADAS.md,arquivar,integrado em library/02 e D-LYR,30
+D:/Projects/vynamp-media-player/Prompt_Claude_Documentacao_DSP_Equalizadores_Obrigatorios_v1.4.md,_arquivo/raiz/Prompt_Claude_DSP_v1.4.md,arquivar,"ja integrado em D-DSP-11..18, design/06, quality/04",30
+D:/Projects/vynamp-media-player/ROADMAP-rodadas.md,_arquivo/raiz/ROADMAP-rodadas.md,arquivar,conceito morto; substituido por tasks/backlog.json,30
+D:/Projects/vynamp-media-player/SKIN-REQUIREMENTS-CODEX.md,_arquivo/raiz/SKIN-REQUIREMENTS-CODEX.md,arquivar,descartado por D-MVP-01; 87% subconjunto do GPT,30
+D:/Projects/vynamp-media-player/SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO-v1.2.md,_arquivo/raiz/SKIN-REQUIREMENTS-GPT-MVP-OBRIGATORIO-v1.2.md,arquivar,descartado por D-MVP-01,30
+D:/Projects/vynamp-media-player/SOURCE_SEPARATION_MODELS.md,_arquivo/raiz/SOURCE_SEPARATION_MODELS.md,arquivar,absorvido por ADR-015 + tools/03 apos o merge de chore/claude-specs-ia-futura,30
+D:/Projects/vynamp-media-player/TAREFA-SPECS-DSP-LETRAS.md,_arquivo/raiz/TAREFA-SPECS-DSP-LETRAS.md,arquivar,ordem de servico concluida,30
+D:/Projects/vynamp-media-player/TAREFA-SPECS-LIBS-MVP.md,_arquivo/raiz/TAREFA-SPECS-LIBS-MVP.md,arquivar,ordem de servico concluida,30
+D:/Projects/vynamp-media-player/archive/,-,nao migrar,ja e arquivo; GUIA-PROMPTS-CODEX-CLAUDE.md com 958 K,30
+D:/Projects/vynamp-media-player/logs/,-,nao migrar,vazio,30
+D:/Projects/vynamp-media-player/repo/.worktrees/,-,nao migrar,11 G; worktrees sao recriadas a partir das branches,30
+D:/Projects/vynamp-media-player/repo/target/,-,nao migrar,"3,1 G de build",30
+D:/Projects/vynamp-media-player/vynamp-chatgpt-arquivo/,-,nao migrar,"M10: fora das specs novas; 123 .md, nao e git",30
+START-HERE.md,_arquivo/repo/START-HERE.md,arquivar,descreve bootstrap de ZIP e INICIAR.ps1 inexistentes,30
+VALIDATION.json,_arquivo/repo/VALIDATION.json,arquivar,saida gerada por xtask validate; passa a ser gitignored,30
+apps/android/README.md,_arquivo/repo/apps/android/README.md,arquivar,placeholders; submodulos os substituem,30
+apps/desktop/README.md,_arquivo/repo/apps/desktop/README.md,arquivar,placeholders; submodulos os substituem,30
+apps/web/README.md,_arquivo/repo/apps/web/README.md,arquivar,placeholders; submodulos os substituem,30
+assets/branding/reference/concepts-a-b-c-d.png,_arquivo/repo/assets/branding/reference/concepts-a-b-c-d.png,arquivar,"conceito A/B/C/D, nao asset de produto",30
+assets/branding/reference/symbol-c-transparent.png,_arquivo/repo/assets/branding/reference/symbol-c-transparent.png,arquivar,"conceito A/B/C/D, nao asset de produto",30
+bootstrap/ABRIR-CLAUDE.ps1,_arquivo/repo/bootstrap/ABRIR-CLAUDE.ps1,arquivar,copias divergentes dos wrappers da raiz externa,30
+bootstrap/AMBIENTE.ps1,_arquivo/repo/bootstrap/AMBIENTE.ps1,arquivar,copias divergentes dos wrappers da raiz externa,30
+bootstrap/INICIAR.ps1,_arquivo/repo/bootstrap/INICIAR.ps1,arquivar,copias divergentes dos wrappers da raiz externa,30
+bootstrap/LEIA-ME.txt,_arquivo/repo/bootstrap/LEIA-ME.txt,arquivar,copias divergentes dos wrappers da raiz externa,30
+bootstrap/PROMPT-CLAUDE.txt,_arquivo/repo/bootstrap/PROMPT-CLAUDE.txt,arquivar,copias divergentes dos wrappers da raiz externa,30
+bootstrap/README.md,_arquivo/repo/bootstrap/README.md,arquivar,copias divergentes dos wrappers da raiz externa,30
+crates/README.md,_arquivo/repo/crates/README.md,arquivar,placeholders; submodulos os substituem,30
+docs/architecture/adr/ADR-010-woodpecker-only-ci.md,_arquivo/repo/docs/architecture/adr/ADR-010-woodpecker-only-ci.md,arquivar,M6: Woodpecker removido por inteiro,30
+docs/engineering/08-folder-structure.md,_arquivo/repo/docs/engineering/08-folder-structure.md,arquivar,descreve raiz de ZIP que nao existe mais,30
+docs/evidence/PR/chore-woodpecker-3-20-1/README.md,_arquivo/repo/docs/evidence/PR/chore-woodpecker-3-20-1/README.md,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/README.md,_arquivo/repo/docs/evidence/PR/task-e15-04/README.md,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/github-status-71f7086.json,_arquivo/repo/docs/evidence/PR/task-e15-04/github-status-71f7086.json,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/github-status-fda34b0.json,_arquivo/repo/docs/evidence/PR/task-e15-04/github-status-fda34b0.json,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/local-exitcode-probe.txt,_arquivo/repo/docs/evidence/PR/task-e15-04/local-exitcode-probe.txt,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-1-linux-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-1-linux-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-1-linux-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-1-linux-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-1-windows-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-1-windows-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-1-windows-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-1-windows-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-1.json,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-1.json,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-10-android-android.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-10-android-android.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-10-android-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-10-android-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-10-gate-gate.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-10-gate-gate.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-10-linux-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-10-linux-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-10-linux-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-10-linux-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-10-windows-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-10-windows-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-10-windows-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-10-windows-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-10.json,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-10.json,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-11-android-android.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-11-android-android.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-11-android-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-11-android-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-11-linux-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-11-linux-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-11-linux-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-11-linux-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-11-windows-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-11-windows-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-11-windows-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-11-windows-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-11.json,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-11.json,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-2-linux-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-2-linux-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-2-linux-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-2-linux-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-2-windows-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-2-windows-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-2-windows-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-2-windows-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-2.json,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-2.json,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-3-linux-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-3-linux-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-3-linux-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-3-linux-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-3-windows-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-3-windows-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-3-windows-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-3-windows-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-3.json,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-3.json,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-4-linux-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-4-linux-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-4-linux-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-4-linux-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-4-windows-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-4-windows-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-4-windows-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-4-windows-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-4.json,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-4.json,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-5-linux-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-5-linux-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-5-linux-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-5-linux-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-5-windows-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-5-windows-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-5-windows-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-5-windows-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-5.json,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-5.json,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-6-linux-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-6-linux-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-6-linux-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-6-linux-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-6-windows-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-6-windows-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-6-windows-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-6-windows-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-6.json,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-6.json,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-9-android-android.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-9-android-android.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-9-android-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-9-android-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-9-gate-gate.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-9-gate-gate.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-9-linux-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-9-linux-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-9-linux-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-9-linux-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-9-windows-clone.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-9-windows-clone.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-9-windows-tooling.log,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-9-windows-tooling.log,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/evidence/PR/task-e15-04/pipeline-9.json,_arquivo/repo/docs/evidence/PR/task-e15-04/pipeline-9.json,arquivar,M6: evidencia de CI morto (Woodpecker),30
+docs/product/08-completeness-audit.md,_arquivo/repo/docs/product/08-completeness-audit.md,arquivar,"auditoria historica 0.6, superada",30
+docs/research/03-completeness-sources.md,_arquivo/repo/docs/research/03-completeness-sources.md,arquivar,"fontes da auditoria 0.6, superadas",30
+docs/superpowers/plans/2026-10-15-e15-01-verification.md,_arquivo/repo/docs/superpowers/plans/2026-10-15-e15-01-verification.md,arquivar,plano de execucao ja concluido,30
+docs/superpowers/plans/2026-10-16-e15-02-isolation.md,_arquivo/repo/docs/superpowers/plans/2026-10-16-e15-02-isolation.md,arquivar,plano de execucao ja concluido,30
+docs/superpowers/plans/2026-10-18-e11-01-workspace.md,_arquivo/repo/docs/superpowers/plans/2026-10-18-e11-01-workspace.md,arquivar,plano de execucao ja concluido,30
+docs/superpowers/plans/2026-10-18-e15-03-gitflow.md,_arquivo/repo/docs/superpowers/plans/2026-10-18-e15-03-gitflow.md,arquivar,plano de execucao ja concluido,30
+docs/superpowers/plans/2026-11-05-specs-shell-integration.md,_arquivo/repo/docs/superpowers/plans/2026-11-05-specs-shell-integration.md,arquivar,plano de execucao ja concluido,30
+docs/superpowers/plans/2026-11-05-specs-vynamp-restore.md,_arquivo/repo/docs/superpowers/plans/2026-11-05-specs-vynamp-restore.md,arquivar,plano de execucao ja concluido,30
+.cargo/config.toml,.cargo/config.toml,manter,configuracao do umbrella,31
+.claude/settings.json,.claude/settings.json,manter,configuracao do umbrella,31
+.editorconfig,.editorconfig,manter,configuracao do umbrella,31
+.gitattributes,.gitattributes,manter,configuracao do umbrella,31
+.githooks/pre-commit,.githooks/pre-commit,manter,configuracao do umbrella,31
+.githooks/pre-push,.githooks/pre-push,manter,configuracao do umbrella,31
+CHANGELOG.md,CHANGELOG.md,manter,M6: mencoes a Woodpecker preservadas (historico datado),31
+CODE_OF_CONDUCT.md,CODE_OF_CONDUCT.md,manter,,31
+CONTRIBUTING.md,CONTRIBUTING.md,manter,,31
+Cargo.lock,Cargo.lock,manter,unificado no umbrella,31
+Cargo.toml,Cargo.toml,reescrever,workspace passa a ser virtual com libs/* e apps/*,31
+D:/Projects/vynamp-media-player/LEIA-ME.md,LEIA-ME.md,absorver,absorvido pelo README.md do umbrella,31
+GOVERNANCE.md,GOVERNANCE.md,manter,,31
+LEGAL.md,LEGAL.md,manter,,31
+LICENSE,LICENSE,manter,licenca,31
+LICENSE-APACHE,LICENSE-APACHE,manter,licenca,31
+LICENSE-MIT,LICENSE-MIT,manter,licenca,31
+README.md,README.md,reescrever,"umbrella com submodulos, nao pacote de specs",31
+SECURITY.md,SECURITY.md,manter,,31
+SPEC.md,SPEC.md,manter,contrato mestre; 191 REQ / 19 epicos,31
+assets/android-layout.svg,assets/android-layout.svg,manter,,31
+assets/android-preview.png,assets/android-preview.png,manter,,31
+assets/branding/README.md,assets/branding/README.md,manter,,31
+assets/branding/approved-c-board.png,assets/branding/approved-c-board.png,manter,,31
+assets/branding/asset-manifest.json,assets/branding/asset-manifest.json,manter,,31
+assets/branding/brand-tokens.json,assets/branding/brand-tokens.json,manter,,31
+assets/classic-layout.svg,assets/classic-layout.svg,manter,,31
+assets/classic-preview.png,assets/classic-preview.png,manter,,31
+assets/design-tokens.json,assets/design-tokens.json,manter,,31
+assets/icons/README.md,assets/icons/README.md,manter,,31
+assets/icons/families/disc/audio.svg,assets/icons/families/disc/audio.svg,manter,,31
+assets/icons/families/disc/flac.svg,assets/icons/families/disc/flac.svg,manter,,31
+assets/icons/families/disc/mp3.svg,assets/icons/families/disc/mp3.svg,manter,,31
+assets/icons/families/disc/wav.svg,assets/icons/families/disc/wav.svg,manter,,31
+assets/icons/families/document/audio.svg,assets/icons/families/document/audio.svg,manter,,31
+assets/icons/families/document/flac.svg,assets/icons/families/document/flac.svg,manter,,31
+assets/icons/families/document/mp3.svg,assets/icons/families/document/mp3.svg,manter,,31
+assets/icons/families/document/wav.svg,assets/icons/families/document/wav.svg,manter,,31
+assets/icons/families/signal/audio.svg,assets/icons/families/signal/audio.svg,manter,,31
+assets/icons/families/signal/flac.svg,assets/icons/families/signal/flac.svg,manter,,31
+assets/icons/families/signal/mp3.svg,assets/icons/families/signal/mp3.svg,manter,,31
+assets/icons/families/signal/wav.svg,assets/icons/families/signal/wav.svg,manter,,31
+assets/icons/manifest.json,assets/icons/manifest.json,manter,,31
+assets/icons/preview.html,assets/icons/preview.html,manter,,31
+assets/icons/tools/vynamp-converter.svg,assets/icons/tools/vynamp-converter.svg,manter,,31
+assets/icons/tools/vynamp-restore.svg,assets/icons/tools/vynamp-restore.svg,manter,,31
+assets/icons/vynamp-symbol-c.svg,assets/icons/vynamp-symbol-c.svg,manter,,31
+assets/layout-reference.html,assets/layout-reference.html,manter,,31
+assets/library-layout.svg,assets/library-layout.svg,manter,,31
+assets/library-preview.png,assets/library-preview.png,manter,,31
+assets/mini-layout.svg,assets/mini-layout.svg,manter,,31
+assets/mini-preview.png,assets/mini-preview.png,manter,,31
+config/format-catalog.json,config/format-catalog.json,manter,68 bindings; referencia de decode/encode,31
+config/github.json,config/github.json,manter,,31
+config/project.json,config/project.json,manter,,31
+config/superpowers.lock.json,config/superpowers.lock.json,manter,,31
+config/toolchains.json,config/toolchains.json,manter,,31
+docs/GLOSSARY.md,architecture/GLOSSARY.md,reescrever,faltam decoder/engine/packet/sink; frame com 3 sentidos,31
+docs/INDEX.md,INDEX.md,reescrever,indice plano com 10 secoes apendadas e 5 alvos duplicados,31
+docs/architecture/01-system.md,architecture/01-sistema.md,reescrever,"M3: lista de 14 crates revogada (sem engine, com vynamp-audio)",31
+docs/architecture/02-stack.md,architecture/02-stack.md,manter,ajustar 'adapters FFmpeg',31
+docs/architecture/03-data.md,architecture/03-dados.md,manter,15 entidades e migrations seguem validas,31
+docs/architecture/04-contracts.md,architecture/04-contratos.md,reescrever,M3: portas violam isolamento; reescrita do zero,31
+docs/architecture/adr/ADR-001-independent-product.md,adr/ADR-001-produto-independente.md,manter,,31
+docs/architecture/adr/ADR-002-audio-core.md,adr/ADR-002-audio-core.md,manter,adicionar banner 'parcialmente substituida',31
+docs/architecture/adr/ADR-003-ui-themes.md,adr/ADR-003-temas.md,manter,,31
+docs/architecture/adr/ADR-004-extensions.md,adr/ADR-004-extensoes.md,manter,,31
+docs/architecture/adr/ADR-005-streaming-platform.md,adr/ADR-005-streaming.md,manter,,31
+docs/architecture/adr/ADR-006-multiplatform.md,adr/ADR-006-multiplataforma.md,manter,,31
+docs/architecture/adr/ADR-007-development-delivery.md,adr/ADR-007-entrega.md,manter,formalizar banner de substituida,31
+docs/architecture/adr/ADR-008-vynamp-brand.md,adr/ADR-008-marca.md,manter,,31
+docs/architecture/adr/ADR-009-engineering-baseline.md,adr/ADR-009-baseline.md,manter,anotar que CI e workspace foram revistos,31
+docs/architecture/adr/ADR-011-own-audio-stack.md,adr/ADR-011-pilha-propria.md,reescrever,l.20 vitrola externo; l.57 crates/vynamp-output,31
+docs/architecture/adr/ADR-012-shell-integration.md,adr/ADR-012-integracao-shell.md,manter,,31
+docs/architecture/adr/ADR-013-vynamp-restore.md,adr/ADR-013-restore.md,manter,,31
+docs/architecture/adr/ADR-014-public-github-actions-and-in-app-dsp.md,adr/ADR-014-publico-dsp-interno.md,manter,fonte das decisoes novas,31
+docs/audio/01-engine.md,_arquivo/repo/docs/audio/01-engine.md,absorver,M3: vira specs do engine; pipeline duplicado com audio/07 | destino: libs/engine specs,31
+docs/audio/02-formats.md,_arquivo/repo/docs/audio/02-formats.md,absorver,particionado por capacidade; C7 resolvido | destino: libs/decode + libs/encode,31
+docs/audio/03-dsp.md,_arquivo/repo/docs/audio/03-dsp.md,absorver,M3/M9: contrato de no vira interno do engine; resampler vai a dsp | destino: libs/engine,31
+docs/audio/04-outputs-hires.md,_arquivo/repo/docs/audio/04-outputs-hires.md,absorver,matriz de backends; recebe audio/05 | destino: libs/output,31
+docs/audio/05-platform-backends.md,_arquivo/repo/docs/audio/05-platform-backends.md,absorver,9 linhas identicas a audio/04 | destino: libs/output,31
+docs/audio/06-codec-capability-registry.md,_arquivo/repo/docs/audio/06-codec-capability-registry.md,absorver,catalogo por capacidade | destino: libs/decode + libs/encode,31
+docs/audio/07-dsp-signal-contract.md,_arquivo/repo/docs/audio/07-dsp-signal-contract.md,absorver,ordem canonica do sinal | destino: libs/engine,31
+docs/audio/08-equalizers.md,_arquivo/repo/docs/audio/08-equalizers.md,absorver,"5 modalidades, EQ-T | destino: libs/engine",31
+docs/audio/09-dsp-catalog.md,_arquivo/repo/docs/audio/09-dsp-catalog.md,absorver,~40 modulos de DSP | destino: libs/engine,31
+docs/audio/10-vitrola.md,_arquivo/repo/docs/audio/10-vitrola.md,absorver,M10: vinil/tube interno do engine; sem repo vitrola | destino: libs/engine,31
+docs/delivery/01-roadmap.md,delivery/01-roadmap.md,manter,M0-M5,31
+docs/delivery/02-release-devops.md,delivery/02-release-devops.md,fundir,canais duplicados com engineering/04,31
+docs/delivery/03-risks-open-questions.md,delivery/03-riscos.md,manter,,31
+docs/delivery/04-capability-release-gates.md,delivery/04-gates.md,manter,recebe engineering/06-installers,31
+docs/design/01-visual-system.md,design/01-sistema-visual.md,manter,M4: 12->16 VUs,31
+docs/design/02-layouts.md,design/02-layouts.md,manter,M4: 12->16 VUs,31
+docs/design/03-accessibility-i18n.md,design/03-acessibilidade.md,manter,,31
+docs/design/04-brand-identity.md,design/04-marca.md,renomear,colisao de numeracao com 04-mobile-tablet,31
+docs/design/04-mobile-tablet.md,design/05-mobile-tablet.md,renomear,colisao; absorve paleta duplicada de 04-marca,31
+docs/design/05-dsp-panel.md,design/06-painel-dsp.md,manter,M4: 12->16 VUs,31
+docs/design/06-mvp-reference.md,design/07-pin-mvp.md,manter,modelo de pin; aponta para reference/,31
+docs/engineering/02-worktrees.md,engineering/02-worktrees.md,manter,,31
+docs/engineering/03-gitflow-github.md,engineering/03-gitflow.md,manter,,31
+docs/engineering/05-tests.md,engineering/05-testes.md,manter,,31
+docs/engineering/06-installers.md,_arquivo/repo/docs/engineering/06-installers.md,fundir,mesmos instaladores que delivery/04,31
+docs/engineering/07-secrets-activation.md,engineering/07-segredos.md,manter,,31
+docs/engineering/09-windows-restart.md,engineering/08-reinicio-windows.md,reescrever,paths atualizados para o umbrella,31
+docs/evidence/PR/chore-dsp-eq-docs/summary.md,evidence/PR/chore-dsp-eq-docs/summary.md,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/chore-specs-shell-integration/README.md,evidence/PR/chore-specs-shell-integration/README.md,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/chore-specs-shell-integration/pr-body.md,evidence/PR/chore-specs-shell-integration/pr-body.md,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/chore-specs-skin-fixes/pr-body.md,evidence/PR/chore-specs-skin-fixes/pr-body.md,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/chore-specs-skin-gaps/README.md,evidence/PR/chore-specs-skin-gaps/README.md,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/chore-specs-skin-gaps/pr-body.md,evidence/PR/chore-specs-skin-gaps/pr-body.md,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/chore-specs-vynamp-restore/README.md,evidence/PR/chore-specs-vynamp-restore/README.md,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/chore-specs-vynamp-restore/pr-body.md,evidence/PR/chore-specs-vynamp-restore/pr-body.md,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e02-11/README.md,evidence/PR/task-e02-11/README.md,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e11-01/README.md,evidence/PR/task-e11-01/README.md,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e11-01/build.txt,evidence/PR/task-e11-01/build.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e11-01/ci-docs.txt,evidence/PR/task-e11-01/ci-docs.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e11-01/detect.txt,evidence/PR/task-e11-01/detect.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e11-01/doctor.txt,evidence/PR/task-e11-01/doctor.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e11-01/environment.txt,evidence/PR/task-e11-01/environment.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e11-01/metadata.txt,evidence/PR/task-e11-01/metadata.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-02/README.md,evidence/PR/task-e15-02/README.md,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-02/ci-docs.txt,evidence/PR/task-e15-02/ci-docs.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-02/docs-index-failure.txt,evidence/PR/task-e15-02/docs-index-failure.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-02/environment.txt,evidence/PR/task-e15-02/environment.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-02/green-tooling.txt,evidence/PR/task-e15-02/green-tooling.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-02/red-removal.txt,evidence/PR/task-e15-02/red-removal.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-02/review-fix-ci-docs.txt,evidence/PR/task-e15-02/review-fix-ci-docs.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-02/review-fix-green.txt,evidence/PR/task-e15-02/review-fix-green.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-02/review-fix-red.txt,evidence/PR/task-e15-02/review-fix-red.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-03/README.md,evidence/PR/task-e15-03/README.md,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-03/audit-after.json,evidence/PR/task-e15-03/audit-after.json,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-03/audit-after.txt,evidence/PR/task-e15-03/audit-after.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-03/audit-before.json,evidence/PR/task-e15-03/audit-before.json,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-03/audit-before.txt,evidence/PR/task-e15-03/audit-before.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-03/audit-fix.json,evidence/PR/task-e15-03/audit-fix.json,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-03/audit-fix.txt,evidence/PR/task-e15-03/audit-fix.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-03/ci-docs-baseline.txt,evidence/PR/task-e15-03/ci-docs-baseline.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-03/ci-docs-final.txt,evidence/PR/task-e15-03/ci-docs-final.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-03/ci-docs-fix.txt,evidence/PR/task-e15-03/ci-docs-fix.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-03/doctor.txt,evidence/PR/task-e15-03/doctor.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-03/environment.txt,evidence/PR/task-e15-03/environment.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-03/history.txt,evidence/PR/task-e15-03/history.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-03/protect.txt,evidence/PR/task-e15-03/protect.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-03/tdd-fix-green.txt,evidence/PR/task-e15-03/tdd-fix-green.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e15-03/tdd-fix-red.txt,evidence/PR/task-e15-03/tdd-fix-red.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e19-01/README.md,evidence/PR/task-e19-01/README.md,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e19-02/README.md,evidence/PR/task-e19-02/README.md,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/PR/task-e19-02/pr-body.md,evidence/PR/task-e19-02/pr-body.md,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/README.md,evidence/README.md,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/completeness-audit.json,evidence/completeness-audit.json,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/completeness-verification.log,evidence/completeness-verification.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/rust-tooling-verification.log,evidence/rust-tooling-verification.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/rust-tooling.json,evidence/rust-tooling.json,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-check-delivery.log,evidence/task-e15-01-check-delivery.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-check-docs.log,evidence/task-e15-01-check-docs.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-ci-docs.log,evidence/task-e15-01-ci-docs.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-claude-manager-7.0.0.json,evidence/task-e15-01-claude-manager-7.0.0.json,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-claude-manager.json,evidence/task-e15-01-claude-manager.json,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-claude-review-479ae30.txt,evidence/task-e15-01-claude-review-479ae30.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-claude7-after.log,evidence/task-e15-01-claude7-after.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-claude7-before.log,evidence/task-e15-01-claude7-before.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-claude7-ci-docs.log,evidence/task-e15-01-claude7-ci-docs.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-claude7-tests.log,evidence/task-e15-01-claude7-tests.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-clippy.log,evidence/task-e15-01-clippy.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-doctor-explicit-home.log,evidence/task-e15-01-doctor-explicit-home.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-doctor.log,evidence/task-e15-01-doctor.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-fmt.log,evidence/task-e15-01-fmt.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-handoff-ci-docs.log,evidence/task-e15-01-handoff-ci-docs.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-hook-ci-docs-sandbox.log,evidence/task-e15-01-hook-ci-docs-sandbox.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-hook-direct-final.log,evidence/task-e15-01-hook-direct-final.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-hook-fixtures-green.log,evidence/task-e15-01-hook-fixtures-green.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-hook-isolation.txt,evidence/task-e15-01-hook-isolation.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-macos-hook-root.txt,evidence/task-e15-01-macos-hook-root.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-prs.stderr.log,evidence/task-e15-01-prs.stderr.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-qa-009.json,evidence/task-e15-01-qa-009.json,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-source-digest.log,evidence/task-e15-01-source-digest.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-tests.log,evidence/task-e15-01-tests.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-unix-project-path.txt,evidence/task-e15-01-unix-project-path.txt,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/task-e15-01-user-terminal-20261016.log,evidence/task-e15-01-user-terminal-20261016.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/tooling-preparation.json,evidence/tooling-preparation.json,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/vynamp-branding-verification.log,evidence/vynamp-branding-verification.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/vynamp-branding.json,evidence/vynamp-branding.json,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/windows-restart-powershell.log,evidence/windows-restart-powershell.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/windows-restart-verification.log,evidence/windows-restart-verification.log,manter,evidencia de PR mergeado; registro datado,31
+docs/evidence/windows-restart.json,evidence/windows-restart.json,manter,evidencia de PR mergeado; registro datado,31
+docs/extensions/01-themes.md,extensions/01-temas.md,manter,,31
+docs/extensions/02-plugins.md,extensions/02-plugins.md,manter,,31
+docs/extensions/03-visualizations-integrations.md,_arquivo/repo/docs/extensions/03-visualizations-integrations.md,fundir,subconjunto de 04-visualizer-contract,31
+docs/extensions/04-sdk-contract.md,extensions/04-sdk.md,renomear,colisao de numeracao,31
+docs/extensions/04-visualizer-contract.md,extensions/05-visualizador.md,renomear,colisao de numeracao,31
+docs/library/01-library-playlists.md,library/01-biblioteca-playlists.md,manter,,31
+docs/library/02-tags-lyrics-tools.md,library/02-tags-letras.md,manter,M4: 12->16 VUs,31
+docs/platforms/01-support-matrix.md,platforms/01-matriz-suporte.md,manter,,31
+docs/platforms/02-android.md,platforms/02-android.md,manter,,31
+docs/platforms/03-system-integration.md,platforms/03-integracao-sistema.md,manter,17 formatos,31
+docs/platforms/04-activation-ownership.md,platforms/04-ativacao-ownership.md,manter,,31
+docs/product/01-vision-scope.md,product/01-visao-escopo.md,manter,,31
+docs/product/02-reference-benchmark.md,product/02-benchmark.md,manter,,31
+docs/product/03-requirements.md,product/03-requisitos.md,manter,191 REQ com paridade 191/191 com tasks/,31
+docs/product/04-user-journeys.md,product/04-jornadas.md,manter,,31
+docs/product/05-decisions.md,product/05-decisoes.md,reescrever,"M4 (16 VUs), C5 (D-DSP-17), D-MVP-04",31
+docs/product/06-feature-parity.md,product/06-paridade.md,manter,,31
+docs/quality/01-test-strategy.md,quality/01-estrategia-testes.md,manter,recebe QA-022..033 de quality/04,31
+docs/quality/02-performance-observability.md,quality/02-performance.md,manter,,31
+docs/quality/03-multiplatform-matrix.md,quality/03-matriz-multiplataforma.md,manter,,31
+docs/quality/04-integration-codecs-dsp.md,_arquivo/repo/docs/quality/04-integration-codecs-dsp.md,fundir,QA-022..033 byte-identicas a quality/01:59-70,31
+docs/quality/05-dsp-test-matrix.md,quality/04-matriz-dsp.md,manter,M4: VU-INT-06 = 12 skins x 16 VUs = 192,31
+docs/security/01-threat-model.md,security/01-threat-model.md,manter,,31
+docs/security/02-privacy-licensing.md,security/02-privacidade-licencas.md,manter,,31
+docs/streaming/01-client.md,streaming/01-cliente.md,manter,"radio, HLS, ICY",31
+docs/streaming/02-podcasts-recording.md,streaming/02-podcasts-gravacao.md,manter,,31
+docs/streaming/03-platform.md,streaming/03-plataforma.md,manter,,31
+docs/streaming/04-api-semantics.md,_arquivo/repo/docs/streaming/04-api-semantics.md,fundir,endpoints duplicados com architecture/04,31
+docs/streaming/05-network-proxy-and-containers.md,streaming/04-rede-proxy.md,manter,,31
+docs/tools/01-vynamp-restore.md,apps/restore spec,absorver,11 estagios; vira specs do vynamp-restore,31
+docs/tools/02-vynamp-converter.md,apps/converter spec,absorver,codecs e lote; C7 vence aqui,31
+packaging/README.md,packaging/README.md,manter,,31
+packaging/android/signing.gradle.kts,packaging/android/signing.gradle.kts,manter,,31
+packaging/icons/README.md,packaging/icons/README.md,manter,,31
+packaging/icons/export-manifest.example.json,packaging/icons/export-manifest.example.json,manter,,31
+packaging/linux/AppRun,packaging/linux/AppRun,manter,,31
+packaging/linux/vynamp.desktop,packaging/linux/vynamp.desktop,manter,,31
+packaging/macos/Info.plist,packaging/macos/Info.plist,manter,,31
+packaging/runtime-files.json,packaging/runtime-files.json,manter,,31
+packaging/tools.lock.json,packaging/tools.lock.json,manter,,31
+packaging/windows/installer.nsi,packaging/windows/installer.nsi,manter,,31
+rust-toolchain.toml,rust-toolchain.toml,manter,,31
+schemas/README.md,schemas/README.md,manter,,31
+schemas/audio-preset.schema.json,schemas/audio-preset.schema.json,manter,,31
+schemas/codec-capability.schema.json,schemas/codec-capability.schema.json,manter,,31
+schemas/examples/audio-preset.json,schemas/examples/audio-preset.json,manter,,31
+schemas/examples/codec-capability.json,schemas/examples/codec-capability.json,manter,,31
+schemas/examples/format-catalog.json,schemas/examples/format-catalog.json,manter,,31
+schemas/examples/open-request.json,schemas/examples/open-request.json,manter,,31
+schemas/examples/playback-event.json,schemas/examples/playback-event.json,manter,,31
+schemas/examples/plugin-manifest.json,schemas/examples/plugin-manifest.json,manter,,31
+schemas/examples/source-descriptor.json,schemas/examples/source-descriptor.json,manter,,31
+schemas/examples/theme-layout.json,schemas/examples/theme-layout.json,manter,,31
+schemas/examples/theme-manifest.json,schemas/examples/theme-manifest.json,manter,,31
+schemas/examples/visualizer-preset.json,schemas/examples/visualizer-preset.json,manter,,31
+schemas/format-catalog.schema.json,schemas/format-catalog.schema.json,manter,,31
+schemas/open-request.schema.json,schemas/open-request.schema.json,manter,,31
+schemas/openapi-platform.json,schemas/openapi-platform.json,manter,,31
+schemas/playback-event.schema.json,schemas/playback-event.schema.json,manter,,31
+schemas/plugin-host.wit,schemas/plugin-host.wit,manter,,31
+schemas/plugin-manifest.schema.json,schemas/plugin-manifest.schema.json,manter,,31
+schemas/source-descriptor.schema.json,schemas/source-descriptor.schema.json,manter,,31
+schemas/theme-layout.schema.json,schemas/theme-layout.schema.json,manter,,31
+schemas/theme-manifest.schema.json,schemas/theme-manifest.schema.json,manter,,31
+schemas/visualizer-preset.schema.json,schemas/visualizer-preset.schema.json,manter,,31
+tests/README.md,tests/README.md,manter,,31
+tests/fixtures/README.md,tests/fixtures/README.md,manter,,31
+xtask/Cargo.toml,xtask/Cargo.toml,manter,ferramentaria do umbrella,31
+xtask/README.md,xtask/README.md,manter,ferramentaria do umbrella,31
+xtask/src/agents.rs,xtask/src/agents.rs,manter,ferramentaria do umbrella,31
+xtask/src/branding.rs,xtask/src/branding.rs,manter,ferramentaria do umbrella,31
+xtask/src/catalog.rs,xtask/src/catalog.rs,manter,ferramentaria do umbrella,31
+xtask/src/ci.rs,xtask/src/ci.rs,manter,ferramentaria do umbrella,31
+xtask/src/github.rs,xtask/src/github.rs,manter,ferramentaria do umbrella,31
+xtask/src/main.rs,xtask/src/main.rs,manter,ferramentaria do umbrella,31
+xtask/src/package.rs,xtask/src/package.rs,manter,ferramentaria do umbrella,31
+xtask/src/release.rs,xtask/src/release.rs,manter,ferramentaria do umbrella,31
+xtask/src/repo.rs,xtask/src/repo.rs,manter,ferramentaria do umbrella,31
+xtask/src/signing.rs,xtask/src/signing.rs,manter,ferramentaria do umbrella,31
+xtask/src/util.rs,xtask/src/util.rs,manter,ferramentaria do umbrella,31
+xtask/src/validate.rs,xtask/src/validate.rs,manter,ferramentaria do umbrella,31
+xtask/tests/tooling.rs,xtask/tests/tooling.rs,manter,ferramentaria do umbrella,31
+AGENTS.md,_arquivo/repo/AGENTS.md,absorver,M5: consolidado no AGENTS.md unico do umbrella,32
+CLAUDE.md,_arquivo/repo/CLAUDE.md,absorver,M5: CLAUDE.md do umbrella = @AGENTS.md,32
+D:/Projects/vynamp-media-player/AGENTS.md,AGENTS.md,reescrever,M5: contrato unico consolidado,32
+docs/engineering/01-agents-superpowers.md,_arquivo/repo/docs/engineering/01-agents-superpowers.md,absorver,absorvido por AGENTS.md secao 5,32
+.github/CODEOWNERS,.github/CODEOWNERS,reescrever,M6: workflows sem Woodpecker,34
+.github/ISSUE_TEMPLATE/bug_report.yml,.github/ISSUE_TEMPLATE/bug_report.yml,reescrever,M6: workflows sem Woodpecker,34
+.github/ISSUE_TEMPLATE/config.yml,.github/ISSUE_TEMPLATE/config.yml,reescrever,M6: workflows sem Woodpecker,34
+.github/ISSUE_TEMPLATE/docs_problem.yml,.github/ISSUE_TEMPLATE/docs_problem.yml,reescrever,M6: workflows sem Woodpecker,34
+.github/dependabot.yml,.github/dependabot.yml,reescrever,M6: workflows sem Woodpecker,34
+.github/pull_request_template.md,.github/pull_request_template.md,reescrever,M6: workflows sem Woodpecker,34
+.github/workflows/ci.yml,.github/workflows/ci.yml,reescrever,M6: workflows sem Woodpecker,34
+.github/workflows/quality.yml,.github/workflows/quality.yml,reescrever,M6: workflows sem Woodpecker,34
+.github/workflows/release.yml,.github/workflows/release.yml,reescrever,M6: workflows sem Woodpecker,34
+docs/engineering/04-ci-cd.md,engineering/04-ci.md,reescrever,M6: remover 100% Woodpecker; C9 corrigido,34
+D:/Projects/vynamp-media-player/STATE.md,STATE.md,reescrever,gerado do backlog.json; nunca editado a mao no status,37
+tasks/EVIDENCE.md,tasks/EVIDENCE.md,reescrever,fonte unica de status; M2 e padroes/tasks.md,37
+tasks/NEXT.md,tasks/NEXT.md,reescrever,fonte unica de status; M2 e padroes/tasks.md,37
+tasks/README.md,tasks/README.md,reescrever,fonte unica de status; M2 e padroes/tasks.md,37
+tasks/TASK-TEMPLATE.md,tasks/TASK-TEMPLATE.md,reescrever,fonte unica de status; M2 e padroes/tasks.md,37
+tasks/backlog.json,tasks/backlog.json,reescrever,fonte unica de status; M2 e padroes/tasks.md,37
+tasks/epics/E01.md,libs/engine/tasks/E01.md,manter,indice de epico | modulo: vynamp-engine,37
+tasks/epics/E02.md,apps/player/tasks/E02.md,manter,indice de epico | modulo: vynamp-player,37
+tasks/epics/E03.md,apps/player/tasks/E03.md,manter,indice de epico | modulo: vynamp-player,37
+tasks/epics/E04.md,libs/engine/tasks/E04.md,manter,indice de epico | modulo: vynamp-engine,37
+tasks/epics/E05.md,apps/player/tasks/E05.md,manter,indice de epico | modulo: vynamp-player,37
+tasks/epics/E06.md,apps/player/tasks/E06.md,manter,indice de epico | modulo: vynamp-player,37
+tasks/epics/E07.md,apps/player/tasks/E07.md,manter,indice de epico | modulo: vynamp-player,37
+tasks/epics/E08.md,apps/*/tasks/E08.md,manter,indice de epico | modulo: vynamp-player/converter/restore,37
+tasks/epics/E09.md,apps/player/tasks/E09.md,manter,indice de epico | modulo: vynamp-player,37
+tasks/epics/E10.md,umbrella/tasks/E10.md,manter,indice de epico | modulo: vynamp,37
+tasks/epics/E11.md,umbrella/tasks/E11.md,manter,indice de epico | modulo: vynamp,37
+tasks/epics/E12.md,libs/engine/tasks/E12.md,manter,indice de epico | modulo: vynamp-engine,37
+tasks/epics/E13.md,apps/player/tasks/E13.md,manter,indice de epico | modulo: vynamp-player,37
+tasks/epics/E14.md,umbrella/tasks/E14.md,manter,indice de epico | modulo: vynamp,37
+tasks/epics/E15.md,umbrella/tasks/E15.md,manter,indice de epico | modulo: vynamp,37
+tasks/epics/E16.md,apps/player/tasks/E16.md,manter,indice de epico | modulo: vynamp-player,37
+tasks/epics/E17.md,libs/decode + libs/encode/tasks/E17.md,manter,indice de epico | modulo: vynamp-decode/encode,37
+tasks/epics/E18.md,apps/*/tasks/E18.md,manter,indice de epico | modulo: vynamp-converter/restore,37
+tasks/epics/E19.md,umbrella/tasks/E19.md,manter,indice de epico | modulo: vynamp,37
+tasks/items/TASK-E01-01.md,libs/engine/tasks/TASK-E01-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E01-02.md,libs/engine/tasks/TASK-E01-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E01-03.md,libs/engine/tasks/TASK-E01-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E01-04.md,libs/engine/tasks/TASK-E01-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E01-05.md,libs/engine/tasks/TASK-E01-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E01-06.md,libs/engine/tasks/TASK-E01-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E01-07.md,libs/engine/tasks/TASK-E01-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E01-08.md,libs/engine/tasks/TASK-E01-08.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E01-09.md,libs/engine/tasks/TASK-E01-09.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E01-10.md,libs/engine/tasks/TASK-E01-10.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E02-01.md,apps/player/tasks/TASK-E02-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E02-02.md,apps/player/tasks/TASK-E02-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E02-03.md,apps/player/tasks/TASK-E02-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E02-04.md,apps/player/tasks/TASK-E02-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E02-05.md,apps/player/tasks/TASK-E02-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E02-06.md,apps/player/tasks/TASK-E02-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E02-07.md,apps/player/tasks/TASK-E02-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E02-08.md,apps/player/tasks/TASK-E02-08.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E02-09.md,apps/player/tasks/TASK-E02-09.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E02-10.md,apps/player/tasks/TASK-E02-10.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E02-11.md,apps/player/tasks/TASK-E02-11.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E02-12.md,apps/player/tasks/TASK-E02-12.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E02-13.md,apps/player/tasks/TASK-E02-13.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E02-14.md,apps/player/tasks/TASK-E02-14.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E02-15.md,apps/player/tasks/TASK-E02-15.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E02-16.md,apps/player/tasks/TASK-E02-16.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E03-01.md,apps/player/tasks/TASK-E03-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E03-02.md,apps/player/tasks/TASK-E03-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E03-03.md,apps/player/tasks/TASK-E03-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E03-04.md,apps/player/tasks/TASK-E03-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E03-05.md,apps/player/tasks/TASK-E03-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E03-06.md,apps/player/tasks/TASK-E03-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E03-07.md,apps/player/tasks/TASK-E03-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E03-08.md,apps/player/tasks/TASK-E03-08.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E03-09.md,apps/player/tasks/TASK-E03-09.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E03-10.md,apps/player/tasks/TASK-E03-10.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E04-01.md,libs/engine/tasks/TASK-E04-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E04-02.md,libs/engine/tasks/TASK-E04-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E04-03.md,libs/engine/tasks/TASK-E04-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E04-04.md,libs/engine/tasks/TASK-E04-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E04-05.md,libs/engine/tasks/TASK-E04-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E04-06.md,libs/engine/tasks/TASK-E04-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E04-07.md,libs/engine/tasks/TASK-E04-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E04-08.md,libs/engine/tasks/TASK-E04-08.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E04-09.md,libs/engine/tasks/TASK-E04-09.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E04-10.md,libs/engine/tasks/TASK-E04-10.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E05-01.md,apps/player/tasks/TASK-E05-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E05-02.md,apps/player/tasks/TASK-E05-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E05-03.md,apps/player/tasks/TASK-E05-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E05-04.md,apps/player/tasks/TASK-E05-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E05-05.md,apps/player/tasks/TASK-E05-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E05-06.md,apps/player/tasks/TASK-E05-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E05-07.md,apps/player/tasks/TASK-E05-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E05-08.md,apps/player/tasks/TASK-E05-08.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E05-09.md,apps/player/tasks/TASK-E05-09.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E05-10.md,apps/player/tasks/TASK-E05-10.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E06-01.md,apps/player/tasks/TASK-E06-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E06-02.md,apps/player/tasks/TASK-E06-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E06-03.md,apps/player/tasks/TASK-E06-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E06-04.md,apps/player/tasks/TASK-E06-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E06-05.md,apps/player/tasks/TASK-E06-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E06-06.md,apps/player/tasks/TASK-E06-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E06-07.md,apps/player/tasks/TASK-E06-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E06-08.md,apps/player/tasks/TASK-E06-08.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E06-09.md,apps/player/tasks/TASK-E06-09.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E06-10.md,apps/player/tasks/TASK-E06-10.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E07-01.md,apps/player/tasks/TASK-E07-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E07-02.md,apps/player/tasks/TASK-E07-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E07-03.md,apps/player/tasks/TASK-E07-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E07-04.md,apps/player/tasks/TASK-E07-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E07-05.md,apps/player/tasks/TASK-E07-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E07-06.md,apps/player/tasks/TASK-E07-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E07-07.md,apps/player/tasks/TASK-E07-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E07-08.md,apps/player/tasks/TASK-E07-08.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E07-09.md,apps/player/tasks/TASK-E07-09.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E07-10.md,apps/player/tasks/TASK-E07-10.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E08-01.md,apps/*/tasks/TASK-E08-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player/converter/restore,37
+tasks/items/TASK-E08-02.md,apps/*/tasks/TASK-E08-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player/converter/restore,37
+tasks/items/TASK-E08-03.md,apps/*/tasks/TASK-E08-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player/converter/restore,37
+tasks/items/TASK-E08-04.md,apps/*/tasks/TASK-E08-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player/converter/restore,37
+tasks/items/TASK-E08-05.md,apps/*/tasks/TASK-E08-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player/converter/restore,37
+tasks/items/TASK-E08-06.md,apps/*/tasks/TASK-E08-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player/converter/restore,37
+tasks/items/TASK-E08-07.md,apps/*/tasks/TASK-E08-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player/converter/restore,37
+tasks/items/TASK-E08-08.md,apps/*/tasks/TASK-E08-08.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player/converter/restore,37
+tasks/items/TASK-E08-09.md,apps/*/tasks/TASK-E08-09.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player/converter/restore,37
+tasks/items/TASK-E08-10.md,apps/*/tasks/TASK-E08-10.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player/converter/restore,37
+tasks/items/TASK-E09-01.md,apps/player/tasks/TASK-E09-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E09-02.md,apps/player/tasks/TASK-E09-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E09-03.md,apps/player/tasks/TASK-E09-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E09-04.md,apps/player/tasks/TASK-E09-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E09-05.md,apps/player/tasks/TASK-E09-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E09-06.md,apps/player/tasks/TASK-E09-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E09-07.md,apps/player/tasks/TASK-E09-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E09-08.md,apps/player/tasks/TASK-E09-08.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E09-09.md,apps/player/tasks/TASK-E09-09.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E09-10.md,apps/player/tasks/TASK-E09-10.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E10-01.md,umbrella/tasks/TASK-E10-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E10-02.md,umbrella/tasks/TASK-E10-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E10-03.md,umbrella/tasks/TASK-E10-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E10-04.md,umbrella/tasks/TASK-E10-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E10-05.md,umbrella/tasks/TASK-E10-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E10-06.md,umbrella/tasks/TASK-E10-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E10-07.md,umbrella/tasks/TASK-E10-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E10-08.md,umbrella/tasks/TASK-E10-08.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E10-09.md,umbrella/tasks/TASK-E10-09.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E10-10.md,umbrella/tasks/TASK-E10-10.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E11-01.md,umbrella/tasks/TASK-E11-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E11-02.md,umbrella/tasks/TASK-E11-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E11-03.md,umbrella/tasks/TASK-E11-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E11-04.md,umbrella/tasks/TASK-E11-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E11-05.md,umbrella/tasks/TASK-E11-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E11-06.md,umbrella/tasks/TASK-E11-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E11-07.md,umbrella/tasks/TASK-E11-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E11-08.md,umbrella/tasks/TASK-E11-08.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E11-09.md,umbrella/tasks/TASK-E11-09.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E11-10.md,umbrella/tasks/TASK-E11-10.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E12-01.md,libs/engine/tasks/TASK-E12-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E12-02.md,libs/engine/tasks/TASK-E12-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E12-03.md,libs/engine/tasks/TASK-E12-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E12-04.md,libs/engine/tasks/TASK-E12-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E12-05.md,libs/engine/tasks/TASK-E12-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E12-06.md,libs/engine/tasks/TASK-E12-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E12-07.md,libs/engine/tasks/TASK-E12-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E12-08.md,libs/engine/tasks/TASK-E12-08.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E12-09.md,libs/engine/tasks/TASK-E12-09.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E12-10.md,libs/engine/tasks/TASK-E12-10.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-engine,37
+tasks/items/TASK-E13-01.md,apps/player/tasks/TASK-E13-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E13-02.md,apps/player/tasks/TASK-E13-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E13-03.md,apps/player/tasks/TASK-E13-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E13-04.md,apps/player/tasks/TASK-E13-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E13-05.md,apps/player/tasks/TASK-E13-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E13-06.md,apps/player/tasks/TASK-E13-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E13-07.md,apps/player/tasks/TASK-E13-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E13-08.md,apps/player/tasks/TASK-E13-08.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E13-09.md,apps/player/tasks/TASK-E13-09.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E13-10.md,apps/player/tasks/TASK-E13-10.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E14-01.md,umbrella/tasks/TASK-E14-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E14-02.md,umbrella/tasks/TASK-E14-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E14-03.md,umbrella/tasks/TASK-E14-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E14-04.md,umbrella/tasks/TASK-E14-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E14-05.md,umbrella/tasks/TASK-E14-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E14-06.md,umbrella/tasks/TASK-E14-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E15-01.md,umbrella/tasks/TASK-E15-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E15-02.md,umbrella/tasks/TASK-E15-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E15-03.md,umbrella/tasks/TASK-E15-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E15-04.md,umbrella/tasks/TASK-E15-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E15-05.md,umbrella/tasks/TASK-E15-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E15-06.md,umbrella/tasks/TASK-E15-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E15-07.md,umbrella/tasks/TASK-E15-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E15-08.md,umbrella/tasks/TASK-E15-08.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E15-09.md,umbrella/tasks/TASK-E15-09.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E15-10.md,umbrella/tasks/TASK-E15-10.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E16-01.md,apps/player/tasks/TASK-E16-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E16-02.md,apps/player/tasks/TASK-E16-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E16-03.md,apps/player/tasks/TASK-E16-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E16-04.md,apps/player/tasks/TASK-E16-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E16-05.md,apps/player/tasks/TASK-E16-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E16-06.md,apps/player/tasks/TASK-E16-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E16-07.md,apps/player/tasks/TASK-E16-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E16-08.md,apps/player/tasks/TASK-E16-08.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E16-09.md,apps/player/tasks/TASK-E16-09.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E16-10.md,apps/player/tasks/TASK-E16-10.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-player,37
+tasks/items/TASK-E17-01.md,libs/decode + libs/encode/tasks/TASK-E17-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-02.md,libs/decode + libs/encode/tasks/TASK-E17-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-03.md,libs/decode + libs/encode/tasks/TASK-E17-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-04.md,libs/decode + libs/encode/tasks/TASK-E17-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-05.md,libs/decode + libs/encode/tasks/TASK-E17-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-06.md,libs/decode + libs/encode/tasks/TASK-E17-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-07.md,libs/decode + libs/encode/tasks/TASK-E17-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-08.md,libs/decode + libs/encode/tasks/TASK-E17-08.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-09.md,libs/decode + libs/encode/tasks/TASK-E17-09.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-10.md,libs/decode + libs/encode/tasks/TASK-E17-10.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-11.md,libs/decode + libs/encode/tasks/TASK-E17-11.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-12.md,libs/decode + libs/encode/tasks/TASK-E17-12.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-13.md,libs/decode + libs/encode/tasks/TASK-E17-13.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-14.md,libs/decode + libs/encode/tasks/TASK-E17-14.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-15.md,libs/decode + libs/encode/tasks/TASK-E17-15.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-16.md,libs/decode + libs/encode/tasks/TASK-E17-16.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-17.md,libs/decode + libs/encode/tasks/TASK-E17-17.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-18.md,libs/decode + libs/encode/tasks/TASK-E17-18.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-19.md,libs/decode + libs/encode/tasks/TASK-E17-19.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E17-20.md,libs/decode + libs/encode/tasks/TASK-E17-20.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-decode/encode,37
+tasks/items/TASK-E18-01.md,apps/*/tasks/TASK-E18-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-converter/restore,37
+tasks/items/TASK-E18-02.md,apps/*/tasks/TASK-E18-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp-converter/restore,37
+tasks/items/TASK-E19-01.md,umbrella/tasks/TASK-E19-01.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E19-02.md,umbrella/tasks/TASK-E19-02.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E19-03.md,umbrella/tasks/TASK-E19-03.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E19-04.md,umbrella/tasks/TASK-E19-04.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E19-05.md,umbrella/tasks/TASK-E19-05.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E19-06.md,umbrella/tasks/TASK-E19-06.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
+tasks/items/TASK-E19-07.md,umbrella/tasks/TASK-E19-07.md,reescrever,reescrever com Given/When/Then + Boundary (M2) | modulo: vynamp,37
