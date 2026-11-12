@@ -97,8 +97,14 @@ encode and output libraries lives with those libraries, where the code does:
 - `vynamp-output` — no third-party code linked; platform components used only
   through their public APIs.
 
-`vynamp-encode`, which will be the single source of encoders for the Converter,
-does not exist as a repository yet; its format policy is written when it does.
+`vynamp-encode` exists as a repository and is pinned here, but has no codec code
+yet: only the module stub, and a format matrix in
+[`libs/encode/specs/formatos.md`](libs/encode/specs/formatos.md) that is drafted
+and **not approved**. Until it is, no number in it is a contract and this file
+makes no claim about what the encoder will accept.
+
+The measured inventory of third-party code, codecs and assets — with the command
+behind every figure — is [`delivery/05-inventario-licencas.md`](delivery/05-inventario-licencas.md).
 
 ### Política de formatos
 
@@ -110,8 +116,15 @@ de decodificação, codificação e saída vive com elas, onde está o código:
 - `vynamp-output` — nenhum código de terceiros linkado; componentes de
   plataforma usados apenas por suas APIs públicas.
 
-`vynamp-encode`, que será a fonte única de encoders do Conversor, ainda não
-existe como repositório; sua política de formatos é escrita quando ele existir.
+`vynamp-encode` existe como repositório e está pinado aqui, mas ainda não tem
+código de codec: só o stub do módulo e uma matriz de formatos em
+[`libs/encode/specs/formatos.md`](libs/encode/specs/formatos.md) que está
+**autorada e não aprovada**. Enquanto não for, nenhum número dela é contrato e
+este arquivo não afirma o que o encoder vai aceitar.
+
+O inventário medido de código de terceiro, codecs e assets — com o comando por
+trás de cada número — é
+[`delivery/05-inventario-licencas.md`](delivery/05-inventario-licencas.md).
 
 ## Trademarks and third-party assets
 
