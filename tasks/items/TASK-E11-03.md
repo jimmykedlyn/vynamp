@@ -109,10 +109,17 @@ Executada em 2026-11-12. Os números abaixo saíram de `cargo deny 0.20.2`,
   nenhuma medição. Agora aponta para o inventário e diz explicitamente que ele mede, não
   autoriza.
 
-**Limitação registrada, não corrigida.** A contagem de 164 crates de terceiro é do
-`Cargo.lock` do umbrella, que só contém o `xtask`. Os oito submódulos de módulo foram lidos
-pelo lock de cada um (todos checados out nesta máquina em 2026-11-12, zero terceiro), mas
-qualquer um deles que passe a ter dependência externa reabre a §3 do inventário sem que
-este documento mude. Nada aqui mede o `vynamp-mvp-reference`, que é read-only e está fora
-do build.
+**Duas limitações registradas, não corrigidas.**
+
+- A contagem de 164 crates de terceiro é do `Cargo.lock` do umbrella, que só contém o
+  `xtask`. Os oito submódulos de módulo foram lidos pelo lock de cada um (todos checados
+  out nesta máquina em 2026-11-12, zero terceiro), mas qualquer um deles que passe a ter
+  dependência externa reabre a §3 do inventário sem que este documento mude. Nada aqui
+  mede o `vynamp-mvp-reference`, que é read-only e está fora do build.
+- Três das cinco raízes de fixture do `vynamp-decode` não têm hash versionado — 63
+  arquivos. `engineering/05-testes.md` exige hash, licença, formato e oráculo no manifesto,
+  e a lacuna está medida em §7 do inventário. Não é desta TASK (o corpus é do
+  `vynamp-decode`) nem muda o inventário de licença, porque as fixtures são sintéticas; mas
+  fica registrada, porque um inventário que olhasse só `pcm/`, `flac/` e `mpeg/` diria que
+  o corpus está coberto.
 
