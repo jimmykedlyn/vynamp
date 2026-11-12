@@ -6,10 +6,8 @@
   "source": "backlog.json anterior, 191 tarefas, com module/repo/acceptance_ready acrescentados; FASE 6 (iOS) acrescentada em 2026-11-10, 6 tarefas",
   "note": "Fonte unica de status. O Markdown em tasks/items nao carrega estado confiavel: os campos vem daqui.",
   "counts": {
-    "product": 197,
-    "engineering": 2,
-    "total": 199,
-    "acceptance_ready": 199
+    "planned": 186,
+    "implemented": 13
   },
   "tasks": [
     {
@@ -3326,7 +3324,7 @@
       "title": "Resolver licenças e inventário de dependências",
       "phase": "M0",
       "priority": "P0",
-      "status": "planned",
+      "status": "implemented",
       "owner_role": "delivery",
       "requirements": [
         "REQ-E11-03"

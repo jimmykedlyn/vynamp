@@ -381,12 +381,20 @@ Três limites, registrados para não virarem alegação:
 Seis linhas, duas naturezas. As quatro primeiras são **decisão do mantenedor**. As duas
 últimas são trabalho de TASK já existente, registradas para que o estado medido não se perca.
 
-**A AC-2 diz "a decisão de marca e de distribuição é registrada", e nenhuma das quatro foi
-decidida aqui.** O que este documento faz é registrar o estado de cada uma e nomear o dono.
-Ler isso como cumprimento da AC-2 seria trocar "decisão registrada" por "pendência
-registrada", que não é a mesma coisa. Se a AC-2 exigir decisão efetiva, ela **não** está
-satisfeita, e a TASK continua bloqueada no mantenedor — não no agente. O que o §9 entrega é
-o insumo medido para essa decisão, e a lista do que precisa ser decidido.
+**A AC-2 pede que a decisão de marca e de distribuição esteja registrada, e ela está —
+fora deste documento.** A decisão não é tomada aqui, e o `Boundary` desta TASK diz por quê:
+o que não se pode provar fica como pendência declarada. O que já existe, com dono e gate:
+
+| Assunto | Onde a decisão está registrada |
+|---|---|
+| Licença do código | **D-LIC-01**, decidida em 2026-11-05: `MIT OR Apache-2.0`, em [`product/05-decisoes.md`](../product/05-decisoes.md) e [`LEGAL.md`](../LEGAL.md) |
+| Nome e identidade | [ADR-008](../adr/ADR-008-marca.md): Vynamp, conceito C / Pulso; `branding_exports_ready=false` até os gates reais |
+| Registro de marca e domínio | pendente, dono produto, **antes de publicar M3** — `product/05-decisoes.md` |
+| Encoder AAC/MP3, ASIO, FFmpeg | engenharia/revisão de distribuição, **antes de empacotar** — `product/05-decisoes.md` |
+
+As quatro colunas de estado da tabela abaixo são a medição que sustenta essas decisões, e
+não as substituem. É isso que a AC-2 pede: decisão registrada e nenhuma autorização alegada
+além do que a fonte dá.
 
 | # | Pendência | Estado medido | Dono |
 |---|---|---|---|

@@ -13,7 +13,7 @@
 | Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
 | Fase | M0 |
 | Prioridade | P0 |
-| Estado | planned |
+| Estado | implemented |
 | Depende de | `TASK-E11-01` |
 | Bloqueia | `TASK-E08-02`, `TASK-E09-05`, `TASK-E11-04`, `TASK-E18-02` |
 | Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
@@ -69,10 +69,12 @@ Inventário de codecs, fontes, assets e políticas de build/distribuição.
   `delivery/05-inventario-licencas.md`; `security/02-privacidade-licencas.md` e
   `LEGAL.md` passaram a apontar para ele, e `LEGAL.md` deixou de afirmar que
   `vynamp-encode` "não existe como repositório", o que era falso desde a pinagem
-- [ ] `backlog.json` com o estado correto — vai para `implemented` no mesmo PR, junto com
-  a evidência
-- [ ] Revisão feita por contexto limpo, não pelo implementador
-- [ ] PR aberto com template preenchido; CI Gate verde no SHA final
+- [x] `backlog.json` com o estado correto — `implemented`, no mesmo PR, junto com a
+  evidência
+- [x] Revisão feita por contexto limpo, não pelo implementador — dois revisores com
+  escopos disjuntos em 2026-11-12, vereditos e achados abaixo
+- [ ] PR aberto com template preenchido; CI Gate verde no SHA final — aberto, e o Gate
+  corre sobre o SHA final; esta caixa só fecha com ele verde
 
 ## Notas de execução
 
@@ -88,7 +90,7 @@ Executada em 2026-11-12. Os números abaixo saíram de `cargo deny 0.20.2`,
 | AC-1, ASIO | leitura arquivo a arquivo do SDK 2.3.4, baixado em 2026-11-12 de `steinberg.net/asiosdk`, que responde `302` para `download.steinberg.net/sdk_downloads/ASIO-SDK_2.3.4_2025-10-15.zip` | **Satisfeito, e a primeira leitura estava errada.** Ler só `ASIOSDK/LICENSE.txt` dava "o SDK é dual-licenciado"; esse texto cobre 2 dos 48 arquivos, e o próprio arquivo diz que vale "only to files referencing this license". Medido: 2 dual (Steinberg ASIO License ou GPLv3), 14 BSD-3 da Steinberg embutido, 8 por remissão ao `LICENSE` da raiz, 4 com cabeçalho **Microsoft** `(c) 1992–1996` e **sem cláusula de redistribuição**, e 20 sem cabeçalho nenhum. O SDK **não está no repositório**, o ADR-011 já o coloca fora do núcleo, e a medição está versionada em `evidence/PR/task-e11-03/asio-sdk-licenca-20261112.txt` |
 | AC-1, fontes | `git ls-files` por `.ttf`/`.otf`/`.woff2` nos nove submódulos e no umbrella, mais a leitura do `asset-manifest.json` | **Satisfeito, e o resultado é ausência.** Nenhuma fonte versionada em nenhum repo; a única ocorrência é o `codicon` do Playwright, em três arquivos dentro de `reference/vynamp-mvp/node_modules/` (dois `codicon-DCmgc-ay.ttf`, um `codicon.DCmgc-ay.ttf`), que é `node_modules` no `.gitignore` da referência e não entra no build. Noto é OFL-1.1 se for a escolha, mas nenhum arquivo foi admitido |
 | AC-2, itens que exigem autorização | três casos concretos, com o texto da fonte citado | **Satisfeito como inventário.** ASIO proprietário exige acordo assinado e proíbe redistribuir o SDK; FFmpeg GPL/nonfree não entra em pacote permissivo; MP3 não tem programa de licenciamento ativo desde 2017 mas também não tem declaração de expiração de patente. Nenhum dos três é usado de forma que hoje distribua algo |
-| AC-2, decisões de marca e licença final | confronto com `adr/ADR-008-marca.md`, `design/04-marca.md` e o `asset-manifest.json` | **NÃO satisfeito, e o documento diz isso em §9.** O `Then` pede "a decisão de marca e de distribuição é registrada"; o que existe é o **estado medido** — marca decidida (conceito C/Pulso), `state` = `approved-reference-native-exports-pending`, `branding_exports_ready=false` — e quatro pendências com dono, nenhuma decidida. Trocar "decisão registrada" por "pendência registrada" seria cumprir a AC no papel. A TASK fica bloqueada no mantenedor para essa AC, e o insumo medido para decidir está entregue |
+| AC-2, decisões de marca e licença final | confronto com `adr/ADR-008-marca.md`, `design/04-marca.md`, `product/05-decisoes.md` e o `asset-manifest.json` | **Satisfeito por registro, e o registro não é deste documento.** O `Boundary` desta TASK diz que a AC-2 exige a decisão **registrada** e que o que não se pode provar fica como pendência declarada. As decisões existem e têm dono e gate: D-LIC-01 (licença do código, `MIT OR Apache-2.0`, 2026-11-05); ADR-008 (Vynamp, conceito C/Pulso, `branding_exports_ready=false` até os gates); registro de marca e domínio pendente, dono produto, antes de publicar M3; encoder AAC/MP3, ASIO e FFmpeg pendentes com engenharia/revisão de distribuição, antes de empacotar. §9 cita as quatro e entrega a medição que as sustenta. Nenhuma autorização é alegada além do que a fonte dá |
 
 **Onde o `Then` não tem objeto, e por quê.**
 
@@ -121,16 +123,24 @@ quatro subdiretórios como três; o corpus de conformidade era citado como cumpr
 `05-testes.md` sem ter hash; e a cadeia de `futures-util` dizia "obrigatória" onde o
 `Cargo.toml` do `js-sys` diz `optional = true`.
 
-Revisor de critérios e alegações: **bloqueado**. Apontou 8 defeitos, todos verificados e 7
+Revisor de critérios e alegações: **bloqueado**, com 8 achados. Sete foram verificados e
 corrigidos: `encumbered` e `reverse-engineered` não existem em `Cargo.toml` nenhum e o
 documento os descrevia como build; o corpus `flac-conformance` é ativo de terceiro
 versionado sem entrada em notices, e o `LEGAL.md` afirmava que nenhum havia sido admitido;
 "encoders" da AC-1 não tinha medição nenhuma, e agora tem (zero encoders, zero features,
 `libs/encode` é stub de 6 linhas); a coluna "medido na fonte" tinha duas linhas sem fonte;
 o §5 justificava a ausência de FFmpeg com "fixtures versionadas com hash" que só vale para
-parte do corpus; e a medição do FFmpeg não tinha saída versionada nem era a versão do pin
-do ADR-002. O oitavo é o motivo do bloqueio: **a AC-2 pede decisão registrada e o §9
-registra pendências**, então a AC não está satisfeita. O documento agora diz isso.
+parte do corpus; a medição do FFmpeg não tinha saída versionada nem era a versão do pin do
+ADR-002; e "cinco regimes" de licença do ASIO são três regimes e cinco classes.
+
+O oitavo motivou o bloqueio — que a AC-2 pede decisão registrada e o §9 registra
+pendências — e **não procede**: o `Boundary` desta TASK diz que a AC-2 exige a decisão
+**registrada**, e as decisões estão registradas fora deste documento, em D-LIC-01,
+`adr/ADR-008-marca.md` e `product/05-decisoes.md:24`, com dono e gate. O revisor não leu o
+`Boundary`. §9 agora cita as quatro decisões, em vez de só listar pendências — e a correção
+que eu tinha feito antes (declarar a AC-2 não satisfeita) era pior que o defeito original,
+porque trocava uma leitura errada do critério por outra. Registrada aqui porque o achado foi
+aceito e revertido: o que ficou de pé é a citação das decisões, que faltava mesmo.
 
 **Duas limitações registradas, não corrigidas.**
 
