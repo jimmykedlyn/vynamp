@@ -81,13 +81,59 @@ fn find_program(
             .find(|candidate| candidate.is_file())
     })
 }
+/// The local variables Git exports to the hooks it runs.
+///
+/// `git rev-parse --local-env-vars` is Git's own list, so it is read instead of
+/// transcribed: a hand-written literal drifts when Git grows another one.
+static LOCAL_ENV_VARS: std::sync::LazyLock<Vec<String>> = std::sync::LazyLock::new(|| {
+    let out = Command::new("git")
+        .args(["rev-parse", "--local-env-vars"])
+        .output()
+        .expect("git rev-parse --local-env-vars runs");
+    if !out.status.success() {
+        return Vec::new();
+    }
+    String::from_utf8_lossy(&out.stdout)
+        .split_whitespace()
+        .map(str::to_owned)
+        .collect()
+});
+
+/// Drop the repository context Git exports to hooks from a child command.
+///
+/// `current_dir` is not enough. Git reads `GIT_DIR`, `GIT_WORK_TREE` and
+/// `GIT_INDEX_FILE` **before** it looks at the working directory, and the
+/// `pre-push` hook here runs `cargo xtask ci docs` with those variables set to
+/// the real worktree. Any child that inherits them operates on the pushing
+/// repository instead of the path it was given -- which, for a fixture, means
+/// committing into the branch being pushed.
+pub fn scrub_git_env(command: &mut Command) {
+    for name in LOCAL_ENV_VARS.iter() {
+        command.env_remove(name);
+    }
+}
+
+/// A `git` child pinned to `root` and detached from the hook environment.
+pub fn local_git(root: &Path) -> Command {
+    let mut command = program("git");
+    command.current_dir(root);
+    scrub_git_env(&mut command);
+    command
+}
+
 fn program(exe: &str) -> Command {
     let pathext = std::env::var("PATHEXT").unwrap_or_else(|_| ".COM;.EXE;.BAT;.CMD".into());
     let path = std::env::var_os("PATH");
-    match find_program(exe, path.as_deref(), &pathext, cfg!(windows)) {
+    let mut command = match find_program(exe, path.as_deref(), &pathext, cfg!(windows)) {
         Some(resolved) => Command::new(resolved),
         None => Command::new(exe),
+    };
+    // A child that runs git must not inherit the hook's repository context;
+    // see `scrub_git_env`.
+    if exe == "git" {
+        scrub_git_env(&mut command);
     }
+    command
 }
 pub fn run(root: &Path, exe: &str, args: &[&str]) -> Result<()> {
     ensure!(

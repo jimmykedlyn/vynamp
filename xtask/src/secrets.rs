@@ -22,10 +22,8 @@ use regex::Regex;
 use std::fmt::Write as _;
 use std::io::{BufRead, BufReader, Read, Write};
 use std::path::Path;
-use std::process::{Command, Stdio};
+use std::process::Stdio;
 use std::sync::LazyLock;
-
-use crate::util::git;
 
 /// One credential shape that is a secret on sight.
 ///
@@ -125,7 +123,16 @@ struct Blob {
 /// types come from a single `cat-file --batch-check` rather than from guessing
 /// at the output shape.
 fn blobs(root: &Path) -> Result<Vec<Blob>> {
-    let listing = git(root, &["rev-list", "--all", "--objects"])?;
+    let out = crate::util::local_git(root)
+        .args(["rev-list", "--all", "--objects"])
+        .output()
+        .context("Start git rev-list --objects")?;
+    ensure!(
+        out.status.success(),
+        "git rev-list --objects failed: {}",
+        String::from_utf8_lossy(&out.stderr)
+    );
+    let listing = String::from_utf8(out.stdout)?;
     let mut candidates: Vec<Blob> = Vec::new();
     let mut seen = std::collections::BTreeSet::new();
     for line in listing.lines() {
@@ -169,9 +176,8 @@ fn blobs(root: &Path) -> Result<Vec<Blob>> {
 /// explanation. `wait_with_output` already drains stdout and stderr on threads
 /// of its own, so only the writer needs one.
 fn object_types(root: &Path, candidates: &[Blob]) -> Result<Vec<(String, String)>> {
-    let mut child = Command::new("git")
+    let mut child = crate::util::local_git(root)
         .args(["cat-file", "--batch-check=%(objectname) %(objecttype)"])
-        .current_dir(root)
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
@@ -226,9 +232,8 @@ pub fn scan(root: &Path) -> Result<Vec<Finding>> {
     if blobs.is_empty() {
         return Ok(findings);
     }
-    let mut child = Command::new("git")
+    let mut child = crate::util::local_git(root)
         .args(["cat-file", "--batch"])
-        .current_dir(root)
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
@@ -413,21 +418,9 @@ mod tests {
         let tmp = tempfile::tempdir().unwrap();
         let root = tmp.path();
         let token = format!("gh{}_", "p") + &"A1b2C3d4E5f6G7h8I9j0".repeat(2);
-        let run = |args: &[&str]| {
-            let out = std::process::Command::new("git")
-                .args(args)
-                .current_dir(root)
-                .output()
-                .expect("git runs");
-            assert!(
-                out.status.success(),
-                "git {args:?}: {}",
-                String::from_utf8_lossy(&out.stderr)
-            );
-        };
-        run(&["init", "-q", "."]);
-        run(&["config", "user.email", "test@example.invalid"]);
-        run(&["config", "user.name", "test"]);
+        fixture_ok(root, &["init", "-q", "."]);
+        fixture_ok(root, &["config", "user.email", "test@example.invalid"]);
+        fixture_ok(root, &["config", "user.name", "test"]);
         std::fs::write(
             root.join("leak.txt"),
             format!(
@@ -437,11 +430,11 @@ TOKEN={token}
             ),
         )
         .unwrap();
-        run(&["add", "leak.txt"]);
-        run(&["commit", "-q", "-m", "leak"]);
+        fixture_ok(root, &["add", "leak.txt"]);
+        fixture_ok(root, &["commit", "-q", "-m", "leak"]);
         std::fs::remove_file(root.join("leak.txt")).unwrap();
-        run(&["add", "-A"]);
-        run(&["commit", "-q", "-m", "remove the leak"]);
+        fixture_ok(root, &["add", "-A"]);
+        fixture_ok(root, &["commit", "-q", "-m", "remove the leak"]);
         assert!(
             !root.join("leak.txt").exists(),
             "the working tree must be clean for this test to mean anything"
@@ -468,29 +461,17 @@ TOKEN={token}
     fn the_scan_reads_a_repository_history() {
         let tmp = tempfile::tempdir().unwrap();
         let root = tmp.path();
-        let run = |args: &[&str]| {
-            let out = std::process::Command::new("git")
-                .args(args)
-                .current_dir(root)
-                .output()
-                .expect("git runs");
-            assert!(
-                out.status.success(),
-                "git {args:?}: {}",
-                String::from_utf8_lossy(&out.stderr)
-            );
-        };
-        run(&["init", "-q", "."]);
-        run(&["config", "user.email", "test@example.invalid"]);
-        run(&["config", "user.name", "test"]);
+        fixture_ok(root, &["init", "-q", "."]);
+        fixture_ok(root, &["config", "user.email", "test@example.invalid"]);
+        fixture_ok(root, &["config", "user.name", "test"]);
         std::fs::write(
             root.join("ok.txt"),
             "no credential here
 ",
         )
         .unwrap();
-        run(&["add", "ok.txt"]);
-        run(&["commit", "-q", "-m", "clean"]);
+        fixture_ok(root, &["add", "ok.txt"]);
+        fixture_ok(root, &["commit", "-q", "-m", "clean"]);
         assert!(scan(root).expect("scan runs").is_empty());
     }
 
@@ -508,28 +489,16 @@ TOKEN={token}
     fn a_scan_larger_than_a_pipe_buffer_completes() {
         let tmp = tempfile::tempdir().unwrap();
         let root = tmp.path();
-        let run = |args: &[&str]| {
-            let out = std::process::Command::new("git")
-                .args(args)
-                .current_dir(root)
-                .output()
-                .expect("git runs");
-            assert!(
-                out.status.success(),
-                "git {args:?}: {}",
-                String::from_utf8_lossy(&out.stderr)
-            );
-        };
-        run(&["init", "-q", "."]);
-        run(&["config", "user.email", "test@example.invalid"]);
-        run(&["config", "user.name", "test"]);
+        fixture_ok(root, &["init", "-q", "."]);
+        fixture_ok(root, &["config", "user.email", "test@example.invalid"]);
+        fixture_ok(root, &["config", "user.name", "test"]);
         // 2,000 blobs is about 82 KiB of object ids here: comfortably past the
         // 64 KiB pipe buffer the deadlock needed, on every platform.
         for i in 0..2_000 {
             std::fs::write(root.join(format!("f{i}.txt")), "no credential here\n").unwrap();
         }
-        run(&["add", "-A"]);
-        run(&["commit", "-q", "-m", "many files"]);
+        fixture_ok(root, &["add", "-A"]);
+        fixture_ok(root, &["commit", "-q", "-m", "many files"]);
 
         let (tx, rx) = std::sync::mpsc::channel();
         let path = root.to_path_buf();
@@ -541,5 +510,140 @@ TOKEN={token}
             Err(_) => panic!("scan deadlocked on a history larger than a pipe buffer"),
         }
         worker.join().expect("scan thread");
+    }
+    /// Run git against a throwaway fixture, isolated from the caller.
+    ///
+    /// `current_dir` is not enough: Git reads `GIT_DIR` and friends **before**
+    /// it looks at the working directory, and `pre-push` here exports them
+    /// (`cargo xtask ci docs` runs inside the hook). Without the removal below,
+    /// a fixture's `git init/add/commit` lands in the real repository that
+    /// started the push.
+    fn fixture_git(root: &Path, args: &[&str]) -> std::process::Output {
+        let mut command = std::process::Command::new("git");
+        crate::util::scrub_git_env(&mut command);
+        command
+            .args(args)
+            .current_dir(root)
+            .output()
+            .expect("git runs")
+    }
+
+    fn fixture_ok(root: &Path, args: &[&str]) {
+        let out = fixture_git(root, args);
+        assert!(
+            out.status.success(),
+            "git {args:?}: {}",
+            String::from_utf8_lossy(&out.stderr)
+        );
+    }
+
+    fn fixture_text(root: &Path, args: &[&str]) -> String {
+        let out = fixture_git(root, args);
+        assert!(
+            out.status.success(),
+            "git {args:?}: {}",
+            String::from_utf8_lossy(&out.stderr)
+        );
+        String::from_utf8(out.stdout).unwrap()
+    }
+
+    /// Child half of [`a_fixture_never_writes_to_the_repository_git_exported`].
+    ///
+    /// Builds and scans a fixture repository exactly the way the tests above do,
+    /// under whatever `GIT_*` the parent exported. Returns at once when the
+    /// parent did not set `VYNAMP_FIXTURE_PROBE` -- a plain `cargo test` run
+    /// must not need the sentinel, and the parent is what makes this mean
+    /// anything.
+    #[test]
+    fn the_fixture_probe() {
+        if std::env::var_os("VYNAMP_FIXTURE_PROBE").is_none() {
+            return;
+        }
+        let target = tempfile::tempdir().unwrap();
+        let root = target.path();
+        fixture_ok(root, &["init", "-q", "."]);
+        fixture_ok(root, &["config", "user.email", "test@example.invalid"]);
+        fixture_ok(root, &["config", "user.name", "test"]);
+        std::fs::write(root.join("ok.txt"), "no credential here\n").unwrap();
+        fixture_ok(root, &["add", "ok.txt"]);
+        fixture_ok(root, &["commit", "-q", "-m", "fixture"]);
+        assert!(
+            scan(root).expect("scan runs").is_empty(),
+            "the fixture history is clean, so the scan must report nothing"
+        );
+    }
+
+    /// A fixture must operate on its own tempdir, never on the repository Git
+    /// exported to the hook.
+    ///
+    /// The oracle is a sentinel repository that carries a token-shaped blob.
+    /// The child runs a whole fixture flow (`init`, `add`, `commit`, `scan`)
+    /// with `GIT_DIR` and friends pointed at the sentinel, which is what Git
+    /// hands `pre-push`. Two independent things must hold afterwards: the
+    /// sentinel's history must be untouched, and the scan must have read the
+    /// fixture rather than the sentinel -- reading the sentinel would surface
+    /// its token and fail the child's own assertion.
+    ///
+    /// This is not hypothetical. On 2026-11-12 the unguarded tests committed
+    /// `clean` and `many files` onto the branch being pushed, overwrote the
+    /// worktree index with 2,000 fixture files, and wrote `core.bare=true` and
+    /// `[user] test` into the shared `.git/config`. The damage landed in the
+    /// sentinel's role here, which is a tempdir -- that is the point of it.
+    #[test]
+    fn a_fixture_never_writes_to_the_repository_git_exported() {
+        let sentinel = tempfile::tempdir().unwrap();
+        let sentinel_root = sentinel.path();
+        fixture_ok(sentinel_root, &["init", "-q", "."]);
+        fixture_ok(
+            sentinel_root,
+            &["config", "user.email", "test@example.invalid"],
+        );
+        fixture_ok(sentinel_root, &["config", "user.name", "test"]);
+        // Assembled at runtime so this file has no token shape of its own.
+        let token = format!("gh{}_", "p") + &"A1b2C3d4E5f6G7h8I9j0".repeat(2);
+        std::fs::write(sentinel_root.join("secret.txt"), format!("TOKEN={token}\n")).unwrap();
+        fixture_ok(sentinel_root, &["add", "secret.txt"]);
+        fixture_ok(sentinel_root, &["commit", "-q", "-m", "sentinel"]);
+
+        let head_before = fixture_text(sentinel_root, &["rev-parse", "HEAD"]);
+        let count_before = fixture_text(sentinel_root, &["rev-list", "--all", "--count"]);
+        let status_before = fixture_text(sentinel_root, &["status", "--porcelain"]);
+
+        let output = std::process::Command::new(std::env::current_exe().unwrap())
+            .args([
+                "--exact",
+                "secrets::tests::the_fixture_probe",
+                "--nocapture",
+            ])
+            .env("GIT_DIR", sentinel_root.join(".git"))
+            .env("GIT_COMMON_DIR", sentinel_root.join(".git"))
+            .env("GIT_WORK_TREE", sentinel_root)
+            .env("GIT_INDEX_FILE", sentinel_root.join(".git/index"))
+            .env("VYNAMP_FIXTURE_PROBE", "1")
+            .output()
+            .unwrap();
+        assert!(
+            output.status.success(),
+            "the fixture probe failed under the hook environment -- it either read the exported \
+             repository or wrote into it:\n{}\n{}",
+            String::from_utf8_lossy(&output.stdout),
+            String::from_utf8_lossy(&output.stderr)
+        );
+
+        assert_eq!(
+            fixture_text(sentinel_root, &["rev-parse", "HEAD"]),
+            head_before,
+            "the exported repository HEAD must not move"
+        );
+        assert_eq!(
+            fixture_text(sentinel_root, &["rev-list", "--all", "--count"]),
+            count_before,
+            "the exported repository must gain no commits"
+        );
+        assert_eq!(
+            fixture_text(sentinel_root, &["status", "--porcelain"]),
+            status_before,
+            "the exported repository index and working tree must not change"
+        );
     }
 }

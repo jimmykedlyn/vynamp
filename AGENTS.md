@@ -244,6 +244,16 @@ Teste precisa de **oráculo independente**: assertar que o espelho da implementa
 não prova nada. Fixtures exigem hash, licença, formato e oráculo próprio. Contrato
 em [engineering/05-testes.md](engineering/05-testes.md).
 
+**Teste que roda `git` em repositório descartável limpa o ambiente local antes.**
+O Git exporta as variáveis de `git rev-parse --local-env-vars` (`GIT_DIR`,
+`GIT_WORK_TREE`, `GIT_INDEX_FILE`, `GIT_COMMON_DIR`…) para os hooks, e `current_dir()`
+num `tempdir` **não** as desliga: dentro do `pre-push` (que roda `cargo xtask ci docs`)
+todo `git init`/`add`/`commit` de um teste sem essa limpeza atinge o repositório real.
+Em 2026-11-12 isso criou dois commits na branch em uso, sobrescreveu o índice do
+worktree e gravou `core.bare=true` e `[user] test` no `.git/config` compartilhado. O
+helper `Fixture::command` de `xtask/tests/tooling.rs` é a referência; teste novo que
+rode git precisa de guarda equivalente, provada por teste cujo vermelho seja o dano.
+
 ### Licença, marca e identidade (decisões já tomadas)
 
 Não reabrir decisão registrada. O contrato fixa o destino de cada uma:
