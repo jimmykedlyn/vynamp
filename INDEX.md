@@ -110,7 +110,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Ativação externa e segredos](engineering/07-segredos.md) — engineering/07-segredos.md
 
-- [Reinício Windows — passo a passo completo](engineering/08-reinicio-windows.md) — engineering/08-reinicio-windows.md
+- [Guia de desenvolvimento — passo a passo](engineering/08-reinicio-windows.md) — engineering/08-reinicio-windows.md
 
 - [Evidências e relatórios](evidence/README.md) — evidence/README.md
 

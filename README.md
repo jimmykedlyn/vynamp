@@ -70,7 +70,7 @@ its module on the step that creates that repository.
 
 ## Tooling and verification
 
-Engineering automation is Rust: [repository layout](engineering/08-reinicio-windows.md), [agents and Superpowers](AGENTS.md), [Gitflow](engineering/03-gitflow.md), [CI/CD](engineering/04-ci.md), [tests](engineering/05-testes.md), [installers](delivery/04-gates.md).
+Engineering automation is Rust: [development guide](engineering/08-reinicio-windows.md), [agents and Superpowers](AGENTS.md), [Gitflow](engineering/03-gitflow.md), [CI/CD](engineering/04-ci.md), [tests](engineering/05-testes.md), [installers](delivery/04-gates.md).
 
 ```bash
 sh setup.sh                       # once per clone: links .githooks into core.hooksPath
@@ -182,7 +182,7 @@ para o módulo correspondente no passo que cria aquele repositório.
 
 ## Tooling e verificação
 
-A automação de engenharia é Rust: [estrutura](engineering/08-reinicio-windows.md), [agentes/Superpowers](AGENTS.md), [Gitflow](engineering/03-gitflow.md), [CI/CD](engineering/04-ci.md), [testes](engineering/05-testes.md), [instaladores](delivery/04-gates.md).
+A automação de engenharia é Rust: [guia de desenvolvimento](engineering/08-reinicio-windows.md), [agentes/Superpowers](AGENTS.md), [Gitflow](engineering/03-gitflow.md), [CI/CD](engineering/04-ci.md), [testes](engineering/05-testes.md), [instaladores](delivery/04-gates.md).
 
 ```bash
 sh setup.sh                       # uma vez por clone: liga .githooks ao core.hooksPath

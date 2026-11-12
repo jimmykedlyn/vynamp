@@ -66,4 +66,4 @@ Nome Vynamp e conceito C — Pulso aprovados. [Guia de marca](design/04-marca.md
 
 ## Bootstrap consolidado 0.7
 
-[Reinício Windows](engineering/08-reinicio-windows.md): todos os arquivos de projeto na raiz D:\Projects\vynamp-media-player, com pacote/repo/worktrees/cache/tmp/logs. CLI prepare-agents isola autor e revisor sem depender de develop ainda ausente na importação. Codecs/áudio/UI e as 191 tarefas permanecem planejados. Não altera o nome do repositório GitHub nem os contratos funcionais.
+[Guia de desenvolvimento](engineering/08-reinicio-windows.md): desde 2026-11-11 tudo vive no umbrella D:\Projects\vynamp, com libs/apps/reference como submódulos; o bootstrap 0.7 em D:\Projects\vynamp-media-player foi aposentado e está em _arquivo/media-player. Codecs/áudio/UI e as 191 tarefas permanecem planejados. Não altera o nome do repositório GitHub nem os contratos funcionais.

@@ -1,73 +1,129 @@
-# Reinício Windows — passo a passo completo
+# Guia de desenvolvimento — passo a passo
 
-Versão 0.7.0 · 2026-10-14 · Preparação e correções; não é um player funcionando.
+Versão 0.8.0 · 2026-11-11 · Substitui o antigo "Reinício Windows" (bootstrap 0.7 em
+`D:\Projects\vynamp-media-player`, pasta apagada em 2026-11-11; histórico em
+`_arquivo/media-player/`). O nome do arquivo ficou para não quebrar links.
 
-## 1. Extrair
+## 1. Pasta
 
-Use a pasta `vynamp-media-player` do ZIP em `D:\Projects`; a raiz final é `D:\Projects\vynamp-media-player`. Não extrair duas vezes criando uma raiz duplicada. Não levar `.git`, `target` ou worktrees das versões antigas. O script não apaga pastas antigas nem reescreve commits do GitHub. Ferramentas já instaladas não precisam ser reinstaladas.
+Tudo acontece em **`D:\Projects\vynamp`** (o umbrella). Não existe outra raiz.
 
-## 2. Preparar
+| Caminho | O que é | Onde vai o PR |
+|---|---|---|
+| `D:\Projects\vynamp` | umbrella: docs, specs, `tasks/`, `evidence/`, `xtask` | `jimmykedlyn/vynamp` |
+| `libs\decode`, `libs\output`, `libs\dsp`, `libs\encode`, `libs\engine` | bibliotecas (submódulos) | repo do módulo (`vynamp-decode`, …) |
+| `apps\player`, `apps\converter`, `apps\restore` | aplicativos (submódulos) | repo do app (`vynamp-player`, …) |
+| `reference\vynamp-mvp` | MVP web de referência, **read-only** | nenhum |
+| `_arquivo\` | histórico (STATE.md, fases, media-player) | só para registrar |
 
-PowerShell normal, sem executar como administrador:
+## 2. Preparar (uma vez por máquina, ou depois de um clone novo)
 
-```powershell
-cd D:\Projects\vynamp-media-player
-powershell -NoProfile -ExecutionPolicy Bypass -File .\INICIAR.ps1
-```
-
-A permissão Bypass vale só para esse processo, sem mudar a política permanente. O script verifica cargo/git/gh/claude no PATH, usa login GitHub existente ou solicita autenticação, pede nome/email Git se ausentes e configura identidade somente no checkout local. Não grava credenciais no repo/log nem configura safe.directory global.
-
-O tooling Rust clona o repositório privado em `repo`, copia a configuração atual, valida e faz commit. Repositório vazio: publica main/develop. Repositório com histórico: cria branch e PR de bootstrap na base real, preservando branch remota já existente com sufixo novo. Nenhum force push/merge. As worktrees das TASKs partem do snapshot importado; não dependem de develop local inexistente nem iniciam features antes da integração.
-
-O cache inicial baixa/compila dependências uma vez. Cada worktree tem seu target/driver; hooks usam target/xtask-hooks próprio por worktree, evitando recompilar o importador/driver durante git commit/push. Os checks usam outro target dir que não contém o xtask.exe em execução; paths externos Git ordinários/UNC recebem normalização adequada. Junctions/symlinks no bootstrap não são usados para escapar da raiz. Criar a pasta em terminal normal evita ownership de Administradores versus usuário.
-
-Se houver erro, o script para e preserva trabalho; consulte `logs\inicio-*.log`. Depois de uma importação concluída (recibo `.cache/import-completed.json`), reexecutar o script reaproveita checkout/worktrees válidos e não sobrescreve arquivos ou claims de outra tarefa. Feche sessões antes de preparar novamente. Não usar --force, --no-verify ou executar como administrador para esconder erro.
-
-## 3. Abrir o Claude
-
-Em outro PowerShell normal:
+PowerShell normal, sem administrador:
 
 ```powershell
-cd D:\Projects\vynamp-media-player
-powershell -NoProfile -ExecutionPolicy Bypass -File .\ABRIR-CLAUDE.ps1
+cd D:\Projects\vynamp
+git switch develop
+git pull --ff-only
+git submodule update --init --recursive
+sh setup.sh
+git submodule foreach --quiet 'if [ -f setup.sh ]; then sh setup.sh >/dev/null && echo "$name ok"; fi'
 ```
 
-O atalho abre o Claude Code na raiz e passa automaticamente o prompt de `PROMPT-CLAUDE.txt`. Verifique Superpowers/discovery real na sessão. Claude é o único autor e revisor: cria a worktree da TASK com `cargo xtask repo worktree --agent claude`, entrega com evidências e PR, sem aceitar tarefa por mera presença de config.
+`setup.sh` instala os hooks (`pre-commit` recusa commit em `main`/`develop` e nome de
+branch fora do padrão). Credencial do GitHub: `gh auth login` uma vez; ela fica no
+keyring. Nunca passar token como argumento de `gh`. API do GitHub só REST.
 
-## 4. Revisar e integrar
+Antes de qualquer `cargo`, apontar o temporário para um disco com espaço e **fora
+de qualquer repositório Git** (os testes do `xtask` criam repos temporários e recusam
+TEMP dentro de um repo: "Nested repository refused"):
 
-A revisão técnica é feita por subagente em contexto limpo, com os checks apropriados, sem checkout sobre alterações pendentes. Merge pelo mantenedor após CI Gate e revisão. Concluir discovery/config, depois E15-02/claims. Por haver histórico remoto, a base de integração é determinada pelo PR, não por presumir main/develop.
-
-## 5. Desenvolver
-
-Após as dependências aceitas e develop atualizado, o agente prepara nova worktree a partir do checkout raiz, nunca dentro de outra worktree, e respeita ownership/dependências. Um owner por TASK e outputs/cache locais. PR/merge/publicação seguem [Gitflow](03-gitflow.md).
-
-## Estrutura final
-
-```text
-D:\Projects\vynamp-media-player\
-├── INICIAR.ps1 / AMBIENTE.ps1
-├── ABRIR-CLAUDE.ps1
-├── PROMPT-CLAUDE.txt / LEIA-ME.md
-├── pacote\                # spec e tooling originais do ZIP
-├── repo\                  # checkout Git preservando histórico
-│   ├── .git\
-│   ├── .worktrees\claude\<task>-<slug>\
-│   ├── target\xtask-hooks\ # driver dos hooks, separado do chamador
-│   ├── target\xtask-ci\   # cache dos checks isolado do driver
-│   └── dist\              # artefatos futuros, ignored
-├── .cache\cargo\          # dependências Cargo do projeto
-├── .cache\bootstrap-build\
-├── .cache\tmp\
-└── logs\
+```powershell
+$env:TEMP = 'D:\Temp\vynamp'; $env:TMP = $env:TEMP
+New-Item -ItemType Directory -Force $env:TEMP | Out-Null
+cargo xtask doctor
+cargo xtask ci docs
 ```
 
-Programas/SDKs e perfis existentes de Rust, Claude, GitHub e plugins permanecem suas instalações; nenhum deles é copiado ou versionado. Arquivos do projeto/cache/tmp ficam nesta raiz. Não exportar tokens/grants/credenciais em backup/ZIP. Config local do agente fica nas worktrees. A regra não autoriza copiar secrets globais para o projeto.
+**ffmpeg (oráculo de dev):** só para gerar fixtures e comparar decode. A cópia antiga
+morava na pasta apagada; baixar de novo para `D:\Projects\vynamp\.cache\tools\ffmpeg\`
+(ignorado pelo Git) e expor com
+`$env:FFMPEG = 'D:\Projects\vynamp\.cache\tools\ffmpeg\bin\ffmpeg.exe'`.
+Os scripts em `libs\decode\tools\fixtures\` leem `$env:FFMPEG` ou `-FFmpeg`.
 
-## Limites de verificação
+## 3. Escolher a TASK
 
-Logs desta entrega distinguem testes Linux, parser/orquestração PowerShell e execução Windows real. Primeiro INICIAR no Windows executa também as regressões nativas; não alegamos autenticação/push privados ou hardware já executados. application_ready/release_enabled/branding_exports_ready continuam false.
+1. `tasks\NEXT.md` diz qual abrir; `tasks\backlog.json` tem o status oficial.
+2. Ler a TASK. As do umbrella ficam em `tasks\items\`; as de módulo ficam no
+   submódulo (ex.: `libs\decode\tasks\items\TASK-E01-01.md`).
+3. Hoje a próxima é **`TASK-E01-01`** (decode, gapless, precisão de samples), em
+   `libs\decode`.
 
-## Importação interrompida antes da confirmação
+Para pedir ao Claude: abrir o Claude Code em `D:\Projects\vynamp` e escrever
+`execute a TASK-E01-01`. As regras que ele segue estão em `AGENTS.md`.
 
-Se o clone/commit existir, mas push ou criação de PR tiver falhado, o script bloqueia os agentes: não assume publicação concluída. Leia o log e resolva autenticação/rede. Antes de iniciar agentes, preserve a pasta `repo` renomeando-a para `repo-interrompido` dentro da mesma raiz (escolha outro sufixo se já existir) e execute `INICIAR.ps1` novamente. Não apague o checkout interrompido nem fabrique o recibo. A nova importação preserva branches remotas existentes e escolhe outro nome para seu PR quando necessário. Mudanças locais no checkout preservado devem ser revisadas antes de portá-las. Um PR antigo já publicado permanece no GitHub e deve ser identificado na revisão; o script não o fecha automaticamente.
+## 4. TASK de módulo (o caso comum)
+
+O código vive no repo do submódulo; o umbrella só repina.
+
+```powershell
+cd D:\Projects\vynamp\libs\decode
+git switch develop
+git pull --ff-only
+git switch -c feature/task-e01-01-claude-<slug>
+# ... implementar com TDD ...
+cargo fmt --check
+cargo clippy --workspace --all-targets --locked -- -D warnings
+cargo test --workspace --locked
+git push -u origin HEAD
+```
+
+1. PR no repo do módulo (`jimmykedlyn/vynamp-decode`), base `develop`.
+2. CI do módulo verde → merge com **merge commit** (nunca squash/rebase).
+3. No umbrella, branch `chore/claude-repin-decode-<slug>`: atualizar o submódulo
+   para o merge commit, atualizar `tasks\backlog.json` e a evidência em
+   `evidence\PR\task-e01-01\`, rodar os gates (§6), PR em `jimmykedlyn/vynamp`.
+
+Padrão de nome de branch (o hook recusa o resto):
+`{feature,fix,chore,hotfix}/task-eNN-NN-claude-<slug>`, `chore/claude-<slug>` ou
+`release/X.Y.Z`.
+
+## 5. TASK do próprio umbrella
+
+Para TASKs cujo entregável é doc, `xtask` ou CI do umbrella, usar uma worktree
+isolada, criada do checkout central:
+
+```powershell
+cd D:\Projects\vynamp
+cargo xtask repo worktree --agent claude --task TASK-EXX-NN --slug <slug> [--kind fix|chore|hotfix]
+# trabalha em .worktrees\claude\task-exx-nn-<slug>\
+cargo xtask repo remove-worktree --agent claude --task TASK-EXX-NN
+```
+
+A worktree recusa ser criada dentro de um submódulo; para módulo, use §4.
+
+## 6. Gates antes do PR do umbrella
+
+```powershell
+cargo xtask check-docs
+cargo xtask check-tasks
+cargo xtask check-authoring
+cargo xtask check-delivery
+cargo xtask check-secrets
+```
+
+No GitHub o agregado **CI Gate** precisa passar; `develop` tem `enforce_admins`.
+Evidência fica em `evidence\PR\<task>\` (log da suíte + `EVIDENCE.md`).
+
+## 7. Depois do merge
+
+```powershell
+cd D:\Projects\vynamp
+git switch develop
+git fetch origin
+git merge --ff-only origin/develop
+git submodule update --init --recursive
+```
+
+Verificar o PR real (estado, base, merge commit) antes de seguir. Registrar o que
+mudou em `_arquivo\media-player\STATE.md` quando for decisão de projeto. Nunca usar
+`git reset --hard`, `git clean -fdx`, `--no-verify` ou force push.
