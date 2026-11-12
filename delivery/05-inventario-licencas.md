@@ -76,11 +76,14 @@ os 4 que não publicam são `r-efi 5.3.0`, `r-efi 6.0.0`, `uuid-simd 0.8.0` e `v
 e os quatro declaram a licença no `Cargo.toml`. Não há crate sem expressão declarada.
 
 **Cinco no lock e fora de toda árvore**: `futures-core`, `futures-task`, `futures-util`,
-`pin-project-lite` e `slab`, todos `MIT OR Apache-2.0` ou `Apache-2.0 OR MIT`, todos
-dependência opcional não ativada. Estão no lock porque o lock é resolvido com todas as
-features; não estão no binário. Medido pelo complemento: `cargo tree -e
-normal,build --target all` tem 160 pares, e são exatamente esses cinco de registry que
-ficam de fora dos 164 do lock — os outros 159 estão no grafo.
+`pin-project-lite` e `slab`, todos `MIT OR Apache-2.0` ou `Apache-2.0 OR MIT`. Nenhum
+deles está no grafo compilado; eles existem no lock porque ficam atrás de aresta
+**opcional** não ativada — `futures-util` é dependência obrigatória de `js-sys`, que é
+opcional de `getrandom`, que por sua vez só é alcançável por nós opcionais. Estão no lock
+porque ele é resolvido com todas as features (`--all-features`); não estão no binário.
+Medido pelo complemento: `cargo tree -e normal,build --target all` tem 160 pares, e são
+exatamente esses cinco de registry que ficam de fora dos 164 do lock — os outros 159 estão
+no grafo.
 
 **As 17 dependências diretas do `xtask`**, com o requisito do manifesto, a versão que o
 lock resolveu e a licença medida, estão em `licence-counts-20261112.txt` §"dependências
@@ -165,19 +168,20 @@ Por isso a política é curta e não muda com a versão do binário:
   gerador no próprio `MANIFEST.txt`, e é por isso que o número acima é uma citação, não uma
   suposição.
 
-**Duas limitações do gerador, medidas e registradas, não desta TASK.** Rodar
-`generate-mpeg-dev.ps1` inteiro regera quatro fixtures de
-`crates/vynamp-decode-mpa/tests/fixtures/` com bytes diferentes e o mesmo tamanho
-(`cbr128-44k-stereo.mp3`, `cbr128-48k-stereo.mp3`, `mpeg2-22k-stereo.mp3`,
-`nolame-cbr128-48k.mp3`); as quinze do gapless são reproduzíveis byte a byte. E o
-`MANIFEST.txt` do crate `vynamp-decode-mpa` não existe: os doze arquivos de lá não têm
-hash versionado, ao contrário dos de `pcm/`, `flac/` e `mpeg/`. Ambas estão registradas em
-[`libs/decode/tasks/items/TASK-E01-01.md`](../libs/decode/tasks/items/TASK-E01-01.md) e
-pertencem à TASK dona do corpus MPEG, não a esta.
 - **Nenhuma feature GPL ou nonfree entra em pacote permissivo.** Se um dia houver bundle
   FFmpeg, ele é build próprio, com a lista de `--enable` travada, separado do que é
   permissivo — e essa decisão é de release, não desta TASK. A regra já está escrita em
   [`security/02-privacidade-licencas.md`](../security/02-privacidade-licencas.md).
+
+**Uma limitação do gerador, medida e registrada, não desta TASK.** Rodar
+`generate-mpeg-dev.ps1` inteiro regera quatro fixtures de
+`crates/vynamp-decode-mpa/tests/fixtures/` com bytes diferentes e o mesmo tamanho
+(`cbr128-44k-stereo.mp3`, `cbr128-48k-stereo.mp3`, `mpeg2-22k-stereo.mp3`,
+`nolame-cbr128-48k.mp3`); as quinze do gapless são reproduzíveis byte a byte. Está
+registrada em
+[`libs/decode/tasks/items/TASK-E01-01.md`](../libs/decode/tasks/items/TASK-E01-01.md) e
+pertence à TASK dona do corpus MPEG, não a esta. A falta de manifesto em três raízes de
+fixture é outra lacuna e está medida em §7.
 
 ## 6. ASIO: dual-licenciado, e a rota proprietária proíbe redistribuir o SDK
 
@@ -241,9 +245,27 @@ e licença ao lado dos arquivos — que é o que
 [`engineering/05-testes.md`](../engineering/05-testes.md) exige de fixture.
 
 **Fixtures sintéticas.** Todo o resto do corpus é gerado por FFmpeg a partir de um tom
-sintético (`tools/fixtures/source-sine.wav`, 997 Hz à esquerda e 1499 Hz à direita), sem
-material de terceiro. É o que permite versioná-las sem notícia de licença: não há obra
-alheia nelas.
+sintético (`tools/fixtures/source-sine.wav`, 48 kHz estéreo s32, 4800 frames, 997 Hz à
+esquerda e 1499 Hz à direita, escrito por
+`crates/vynamp-decode-testkit/examples/gen_source_sine.rs`), sem material de terceiro. É o
+que permite versioná-las sem notícia de licença: não há obra alheia nelas.
+
+**O que falta nelas, medido.** [`engineering/05-testes.md`](../engineering/05-testes.md)
+exige que o manifesto de fixture traga **hash, licença, formato e oráculo próprio**. Cinco
+raízes de fixture existem; só três têm hash versionado:
+
+| Raiz | Arquivos | Manifesto |
+|---|---|---|
+| `libs/decode/tests/fixtures/` | 152 | `pcm/`, `flac/` e `mpeg/` têm `MANIFEST.txt` |
+| `crates/vynamp-decode/tests/fixtures/` | 16 | `mpeg/triangulation.sha256` |
+| `crates/vynamp-decode-flac/tests/fixtures/` | 4 | **nenhum** |
+| `crates/vynamp-decode-mp3/tests/fixtures/` | 47 | **nenhum** |
+| `crates/vynamp-decode-mpa/tests/fixtures/` | 12 | **nenhum** |
+
+São 63 arquivos sem hash versionado. A lacuna não é desta TASK — o corpus pertence ao
+`vynamp-decode` — e não muda o inventário de licença, porque são fixtures sintéticas: não
+há obra de terceiro a atribuir. Fica registrada aqui porque um inventário que só olhasse
+`pcm/`, `flac/` e `mpeg/` diria que o corpus está coberto, e não está.
 
 ## 8. O que este inventário **não** prova
 
