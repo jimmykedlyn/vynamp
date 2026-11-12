@@ -55,3 +55,26 @@ O config foi reparado com 'git config --unset core.bare' e
 'git config --remove-section user' (backups em /tmp), sem reset --hard.
 O agente segue o padrao do projeto: registro do defeito no AGENTS.md §5, para que
 teste novo que rode git precise de guarda equivalente.
+
+Prova do vermelho (o teste falha pelo dano, nao por acidente)
+------------------------------------------------------------
+Executado em 2026-11-12, com um repositorio sentinela de sacrificio em /tmp,
+NUNCA o repositorio real, e com o corpo de util::scrub_git_env neutralizado
+de proposito:
+
+  scrub desligado + GIT_DIR/GIT_COMMON_DIR/GIT_WORK_TREE/GIT_INDEX_FILE
+  apontados para o sentinela:
+    a_fixture_never_writes_to_the_repository_git_exported ... FAILED
+    panicked: git ["add", "secret.txt"]:
+              fatal: pathspec 'secret.txt' did not match any files
+
+A falha e o dano: o 'git add' do setup foi executado no repositorio apontado
+por GIT_DIR, e nao no tempdir do teste, que era o root pedido. Isso fecha
+tambem o mecanismo do dano original: 'git init' num repositorio ja existente
+reescreve o .git/config, que e a origem do 'bare = false' injetado na secao
+[core] observado no config compartilhado.
+
+Depois da prova, util::scrub_git_env foi restaurado de HEAD (git checkout --
+xtask/src/util.rs), o worktree ficou limpo (git status vazio) e o sentinela
+terminou com o mesmo HEAD e a mesma contagem de commits do inicio. O
+repositorio real terminou com .git/config limpo e HEAD inalterado.
