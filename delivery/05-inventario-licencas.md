@@ -208,10 +208,15 @@ assinado. Isso é verificação de release, com o contrato em mãos, não de inv
 
 ## 7. Fontes e assets
 
-**Fontes próprias: nenhuma.** `git ls-files` não devolve nenhum `.ttf`, `.otf` ou `.woff2`.
-A única ocorrência de fonte na árvore de trabalho é `codicon-DCmgc-ay.ttf`, três cópias
-dentro de `reference/vynamp-mvp/node_modules/playwright-core/`, que é `node_modules` não
-versionado, não entra no build e não é asset do produto. A decisão de tipografia em
+**Fontes próprias: nenhuma.** `git ls-files` não devolve nenhum `.ttf`, `.otf` ou `.woff2`
+em nenhum dos nove submódulos nem no umbrella. A única ocorrência de fonte é o
+`codicon` do Playwright, em três arquivos dentro de
+`reference/vynamp-mvp/node_modules/playwright-core/lib/vite/` — dois como
+`codicon-DCmgc-ay.ttf` (`dashboard/assets/` e `recorder/assets/`) e um como
+`codicon.DCmgc-ay.ttf` com ponto (`traceViewer/`). `node_modules/` está no `.gitignore` da
+referência e nenhum dos três é versionado; eles aparecem só no checkout central do
+umbrella, onde o `npm install` foi rodado — worktree recém-criada não os tem. Não entram
+no build e não são asset do produto. A decisão de tipografia em
 [`design/01-sistema-visual.md`](../design/01-sistema-visual.md) fala em "system sans ou
 Noto Sans com licença incluída": o Noto é OFL-1.1 (confirmado em
 `notofonts/notofonts.github.io`, lido em 2026-11-12), mas **nenhum arquivo de fonte foi
