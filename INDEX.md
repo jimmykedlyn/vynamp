@@ -363,6 +363,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [Evidência TASK-E19-05](evidence/PR/task-e19-05/README.md) — evidence/PR/task-e19-05/README.md; CI Gate em decode e output (prova de cancelamento no run 42650469273), serve e verify encadeados no MVP, READMEs bilíngues e nenhum caminho Woodpecker nos dez repos.
 - [Evidência TASK-CI-01](evidence/PR/task-ci-01/README.md) — evidence/PR/task-ci-01/README.md; `delivery()`/`github_actions()` na árvore do umbrella, e o AC-4 que faltava (arquivo e linha do `uses:` sem SHA).
 - [Evidência TASK-CI-02](evidence/PR/task-ci-02/README.md) — evidence/PR/task-ci-02/README.md; job `check-tasks`, as seis regras, a contradição AC-4×AC-5 e as sete autorias que levaram ao verde.
+- [Evidência TASK-E21-01](evidence/PR/task-e21-01/README.md) — evidence/PR/task-e21-01/README.md; as 16 TASKs de E21, a saída dos três gates e o conflito de nome do encoder registry.
 
 - [Organização de testes](tests/README.md) — tests/README.md
 
