@@ -157,9 +157,11 @@ patente expirada, `encumbered` e `reverse-engineered` desligados por padrão.
 
 Medido em 2026-11-12: `find libs apps -name build.rs` não devolve nada, e nenhum
 `Cargo.toml` de módulo ou app menciona `ffmpeg` ou `libav`. O binário local, em
-`.cache/tools/ffmpeg/`, é `n8.1.3-35-gf1acb0a266-20261111`, um build `--enable-gpl
---enable-version3` da comunidade — **licença que este projeto não pode distribuir** se um
-dia viesse a embarcá-lo.
+`.cache/tools/ffmpeg/bin/ffmpeg.exe` no checkout central — `.cache/` está no `.gitignore` e
+a worktree não o tem —, responde `ffmpeg version n8.1.3-35-gf1acb0a266-20261111` com
+`--enable-gpl --enable-version3` na configuração, um build estático da comunidade:
+**licença que este projeto não pode distribuir** se um dia viesse a embarcá-lo. O que
+importa não é a versão, é que nenhum `--enable` desse tipo entra em pacote permissivo.
 
 Por isso a política é curta e não muda com a versão do binário:
 
