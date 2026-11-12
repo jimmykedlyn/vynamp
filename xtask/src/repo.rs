@@ -5,7 +5,6 @@ use serde_json::{Value, json};
 use std::{
     fs,
     path::{Path, PathBuf},
-    process::Command,
 };
 fn common(root: &Path) -> Result<PathBuf> {
     Ok(root
@@ -73,9 +72,8 @@ pub fn worktree(root: &Path, agent: &str, id: &str, slug: &str, kind: &str) -> R
         "Already in isolated worktree; do not nest"
     );
     ensure!(
-        Command::new("git")
+        local_git(root)
             .args(["check-ignore", "-q", "--no-index", ".worktrees/"])
-            .current_dir(root)
             .status()?
             .success(),
         ".worktrees/ must be ignored"
@@ -183,9 +181,8 @@ pub fn remove(root: &Path, agent: &str, id: &str) -> Result<()> {
     };
     for base in bases {
         ensure!(
-            Command::new("git")
+            local_git(root)
                 .args(["merge-base", "--is-ancestor", &head, base])
-                .current_dir(root)
                 .status()?
                 .success(),
             "Unmerged commits in {base}; removal refused"
@@ -200,9 +197,8 @@ pub fn remove(root: &Path, agent: &str, id: &str) -> Result<()> {
     )
     .unwrap_or_else(|_| "HEAD".to_owned());
     ensure!(
-        Command::new("git")
+        local_git(root)
             .args(["merge-base", "--is-ancestor", &head, &deletion_base])
-            .current_dir(root)
             .status()?
             .success(),
         "Branch deletion not merged into upstream/checkout HEAD; removal refused"

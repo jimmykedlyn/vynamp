@@ -123,16 +123,10 @@ struct Blob {
 /// types come from a single `cat-file --batch-check` rather than from guessing
 /// at the output shape.
 fn blobs(root: &Path) -> Result<Vec<Blob>> {
-    let out = crate::util::local_git(root)
-        .args(["rev-list", "--all", "--objects"])
-        .output()
-        .context("Start git rev-list --objects")?;
-    ensure!(
-        out.status.success(),
-        "git rev-list --objects failed: {}",
-        String::from_utf8_lossy(&out.stderr)
-    );
-    let listing = String::from_utf8(out.stdout)?;
+    // `util::git` goes through `util::program`, which already scrubs the hook
+    // environment from every `git` child; using it keeps one error style and
+    // one place to change the git invocation.
+    let listing = crate::util::git(root, &["rev-list", "--all", "--objects"])?;
     let mut candidates: Vec<Blob> = Vec::new();
     let mut seen = std::collections::BTreeSet::new();
     for line in listing.lines() {
@@ -608,6 +602,11 @@ TOKEN={token}
         let head_before = fixture_text(sentinel_root, &["rev-parse", "HEAD"]);
         let count_before = fixture_text(sentinel_root, &["rev-list", "--all", "--count"]);
         let status_before = fixture_text(sentinel_root, &["status", "--porcelain"]);
+        // HEAD, commit count and `status --porcelain` cannot see a config write:
+        // measured, `git config user.name test` changes `.git/config` while all
+        // three stay identical. The config is where the real damage landed
+        // (`core.bare`, `[user]`), so it is hashed on its own.
+        let config_before = file_digest(&sentinel_root.join(".git/config"));
 
         let output = std::process::Command::new(std::env::current_exe().unwrap())
             .args([
@@ -622,12 +621,19 @@ TOKEN={token}
             .env("VYNAMP_FIXTURE_PROBE", "1")
             .output()
             .unwrap();
+        let stdout = String::from_utf8_lossy(&output.stdout);
         assert!(
             output.status.success(),
             "the fixture probe failed under the hook environment -- it either read the exported \
-             repository or wrote into it:\n{}\n{}",
-            String::from_utf8_lossy(&output.stdout),
+             repository or wrote into it:\n{stdout}\n{}",
             String::from_utf8_lossy(&output.stderr)
+        );
+        // A child that runs zero tests exits 0: `--exact` with a wrong name
+        // prints "0 passed ... 110 filtered out" and succeeds. Without this the
+        // probe could be renamed and the test would pass forever, proving nothing.
+        assert!(
+            stdout.contains("1 passed"),
+            "the probe did not run any test, so this test proves nothing:\n{stdout}"
         );
 
         assert_eq!(
@@ -645,5 +651,17 @@ TOKEN={token}
             status_before,
             "the exported repository index and working tree must not change"
         );
+        assert_eq!(
+            file_digest(&sentinel_root.join(".git/config")),
+            config_before,
+            "the exported repository config must not be rewritten -- `git init` and \
+             `git config user.*` in a fixture both land here"
+        );
+    }
+
+    /// SHA-256 of a file, used to observe writes that leave no trace in HEAD,
+    /// the commit count or `status --porcelain`.
+    fn file_digest(path: &Path) -> Option<String> {
+        crate::util::sha(path).ok()
     }
 }
