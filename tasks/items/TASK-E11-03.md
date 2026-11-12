@@ -110,8 +110,9 @@ Executada em 2026-11-12. Os números abaixo saíram de `cargo deny 0.20.2`,
   autoriza.
 
 **Limitação registrada, não corrigida.** A contagem de 164 crates de terceiro é do
-`Cargo.lock` do umbrella, que só contém o `xtask`. Ela não cobre os outros submódulos além
-dos cinco que estão checados out nesta máquina, e qualquer um deles que passe a ter
-dependência externa reabre a §3 do inventário. Nada aqui mede o `vynamp-mvp-reference`, que
-é read-only e está fora do build.
+`Cargo.lock` do umbrella, que só contém o `xtask`. Os oito submódulos de módulo foram lidos
+pelo lock de cada um (todos checados out nesta máquina em 2026-11-12, zero terceiro), mas
+qualquer um deles que passe a ter dependência externa reabre a §3 do inventário sem que
+este documento mude. Nada aqui mede o `vynamp-mvp-reference`, que é read-only e está fora
+do build.
 

@@ -28,7 +28,7 @@ o `Cargo.lock` de verdade, em vez de repetir o que o `Cargo.toml` declara. A sa�
 |---|---|---|
 | `deny-licenses-umbrella.json` | 160 linhas JSON: 158 diagnósticos `rejected`, 1 aviso de configuração e 1 `summary` com `errors: 158` | `7048a251c6a448dc7363b6cf02222887f5ae9175858dce905c8dd1f18ad411d3` |
 | `deny-licenses-decode.json` | 11 linhas; só os 9 crates de path do módulo, cada um `MIT OR Apache-2.0` | `553705b712d66c9e1af4540087851343048fd83fa3e093e555a78785cc237dac` |
-| `licence-counts-20261112.txt` | contagens agregadas derivadas da `metadata` | `b393caa6800829926ac0f883e917aacf50595de1444b66a8aa017fcd78d5ecd4` |
+| `licence-counts-20261112.txt` | contagens agregadas derivadas da `metadata` | `471efd46f09a5767bce20b38230aca43cf8af070336ac4931e28ef8102d914fb` |
 
 **Por que 158 erros, e por que isso não é defeito.** O repositório não tem `deny.toml`,
 então o `cargo deny` cai na configuração padrão, que não permite licença nenhuma, e sai
@@ -65,11 +65,11 @@ duas merecem nota:
   ou Apache não copylefta nada; escolher LGPL seria uma decisão diferente. Ambos são
   UEFI-only e não entram no build do Windows — estão entre os 19 pacotes fora do alvo
   `x86_64-pc-windows-msvc`.
-- **Cinco expressões usam barra em vez de `OR`** (`Apache-2.0/MIT`, `MIT/Apache-2.0`,
-  `Unlicense/MIT`): `bytecount`, `num-cmp`, `same-file`, `version_check`, `walkdir`. A
-  convenção de barra é ambígua entre "ou" e "e"; nas cinco, a licença real é `OR` — é
-  como os próprios arquivos `LICENSE-*` de cada crate leem. Fica registrado como
-  fragilidade de metadado, não como risco.
+- **Cinco pacotes usam barra em vez de `OR`**, em três expressões distintas
+  (`Apache-2.0/MIT`, `MIT/Apache-2.0`, `Unlicense/MIT`): `bytecount`, `num-cmp`,
+  `same-file`, `version_check`, `walkdir`. A convenção de barra é ambígua entre "ou" e
+  "e"; nos cinco, a licença real é `OR` — é como os próprios arquivos `LICENSE-*` de cada
+  crate leem. Fica registrado como fragilidade de metadado, não como risco.
 
 **Cobertura de arquivo de licença.** 160 dos 164 publicam um arquivo de licença no pacote;
 os 4 que não publicam são `r-efi 5.3.0`, `r-efi 6.0.0`, `uuid-simd 0.8.0` e `vsimd 0.8.0`,
@@ -78,18 +78,29 @@ e os quatro declaram a licença no `Cargo.toml`. Não há crate sem expressão d
 **Cinco no lock e fora de toda árvore**: `futures-core`, `futures-task`, `futures-util`,
 `pin-project-lite` e `slab`, todos `MIT OR Apache-2.0` ou `Apache-2.0 OR MIT`, todos
 dependência opcional não ativada. Estão no lock porque o lock é resolvido com todas as
-features; não estão no binário.
+features; não estão no binário. Medido pelo complemento: `cargo tree -e
+normal,build --target all` tem 160 pares, e são exatamente esses cinco de registry que
+ficam de fora dos 164 do lock — os outros 159 estão no grafo.
 
-**As 17 dependências diretas do `xtask`**, com a versão que o lock resolveu e a licença
-medida, estão em `licence-counts-20261112.txt` §"dependências diretas do xtask": `anyhow`,
-`base64`, `clap`, `getrandom`, `jsonschema` (`MIT`), `png`, `quick-xml` (`MIT`), `regex`,
-`semver`, `serde`, `serde_json`, `serde_yaml_ng` (`MIT`), `sha2`, `tempfile`, `toml`,
-`walkdir` (`Unlicense/MIT`) e `zip` (`MIT`). Nenhuma copyleft.
+**As 17 dependências diretas do `xtask`**, com o requisito do manifesto, a versão que o
+lock resolveu e a licença medida, estão em `licence-counts-20261112.txt` §"dependências
+diretas do xtask": `anyhow`, `base64`, `clap`, `getrandom`, `jsonschema` (`MIT`), `png`,
+`quick-xml` (`MIT`), `regex`, `semver`, `serde`, `serde_json`, `serde_yaml_ng` (`MIT`),
+`sha2`, `tempfile`, `toml`, `walkdir` (`Unlicense/MIT`) e `zip` (`MIT`). Nenhuma copyleft.
+
+O arquivo lista **todas** as versões que o lock tem para cada nome, e não só a que o
+requisito direto resolve, porque cinco nomes aparecem duas vezes no lock: `getrandom` está
+em 0.3.4 (o requisito direto `^0.3`, compartilhado com `ahash`) **e** em 0.4.3 (puxado por
+`tempfile` e `zip`); `base64` em 0.23.1 (direto) e 0.22.1 (transitivo); `syn` em 2.0.119
+e 3.0.9; `miniz_oxide` em 0.8.9 e 0.9.1; e `r-efi` em 5.3.0 e 6.0.0. Citar só uma das
+versões de cada seria uma contagem errada por omissão, e é por isso que a tabela tem uma
+coluna de versões resolvidas em vez de uma só.
 
 ## 3. Os módulos: zero terceiro
 
 O umbrella não distribui binário, e nenhum módulo de biblioteca puxa crate externo. Medido
-pelo `Cargo.lock` de cada submódulo:
+pelo `Cargo.lock` de cada um dos oito submódulos de módulo, todos checados out nesta
+máquina em 2026-11-12:
 
 | Módulo | Pacotes no lock | De terceiro |
 |---|---|---|
@@ -146,10 +157,23 @@ Por isso a política é curta e não muda com a versão do binário:
 - FFmpeg **não** é dependência de build nem de teste. Os testes comparam contra fixtures
   versionadas com hash, não contra uma execução ao vivo.
 - Os scripts de `libs/decode/tools/fixtures/` leem `$env:FFMPEG` ou `-FFmpeg` e só rodam
-  quando alguém quer regerar fixture; os quatro arquivos de `vynamp-decode-mpa` não são
-  reproduzíveis byte a byte e por isso o gerador tem o modo `-ManifestOnly`.
-- O pin do oráculo está em [`engineering/08-reinicio-windows.md`](../engineering/08-reinicio-windows.md);
-  as fixtures registram a versão do gerador no próprio `MANIFEST.txt`.
+  quando alguém quer regerar fixture. **Não há modo que regenere só o manifesto**: rodar o
+  gerador inteiro é o único caminho, e ele reescreve todos os arquivos que produz.
+- O pin do oráculo está em [`adr/ADR-002-audio-core.md`](../adr/ADR-002-audio-core.md)
+  (`n8.1.3-23-g5c4f5744cd-20261022`); `engineering/08-reinicio-windows.md` só ensina onde
+  baixar e como expor `$env:FFMPEG`, sem fixar versão. As fixtures registram a versão do
+  gerador no próprio `MANIFEST.txt`, e é por isso que o número acima é uma citação, não uma
+  suposição.
+
+**Duas limitações do gerador, medidas e registradas, não desta TASK.** Rodar
+`generate-mpeg-dev.ps1` inteiro regera quatro fixtures de
+`crates/vynamp-decode-mpa/tests/fixtures/` com bytes diferentes e o mesmo tamanho
+(`cbr128-44k-stereo.mp3`, `cbr128-48k-stereo.mp3`, `mpeg2-22k-stereo.mp3`,
+`nolame-cbr128-48k.mp3`); as quinze do gapless são reproduzíveis byte a byte. E o
+`MANIFEST.txt` do crate `vynamp-decode-mpa` não existe: os doze arquivos de lá não têm
+hash versionado, ao contrário dos de `pcm/`, `flac/` e `mpeg/`. Ambas estão registradas em
+[`libs/decode/tasks/items/TASK-E01-01.md`](../libs/decode/tasks/items/TASK-E01-01.md) e
+pertencem à TASK dona do corpus MPEG, não a esta.
 - **Nenhuma feature GPL ou nonfree entra em pacote permissivo.** Se um dia houver bundle
   FFmpeg, ele é build próprio, com a lista de `--enable` travada, separado do que é
   permissivo — e essa decisão é de release, não desta TASK. A regra já está escrita em
@@ -185,10 +209,11 @@ assinado. Isso é verificação de release, com o contrato em mãos, não de inv
 ## 7. Fontes e assets
 
 **Fontes próprias: nenhuma.** `git ls-files` não devolve nenhum `.ttf`, `.otf` ou `.woff2`.
-A única ocorrência de fonte no repositório é `codicon-*.ttf` dentro de
-`reference/vynamp-mvp/node_modules`, que é read-only, não entra no build e não é asset do
-produto. A decisão de tipografia em [`design/01-sistema-visual.md`](../design/01-sistema-visual.md)
-fala em "system sans ou Noto Sans com licença incluída": o Noto é OFL-1.1 (confirmado em
+A única ocorrência de fonte na árvore de trabalho é `codicon-DCmgc-ay.ttf`, três cópias
+dentro de `reference/vynamp-mvp/node_modules/playwright-core/`, que é `node_modules` não
+versionado, não entra no build e não é asset do produto. A decisão de tipografia em
+[`design/01-sistema-visual.md`](../design/01-sistema-visual.md) fala em "system sans ou
+Noto Sans com licença incluída": o Noto é OFL-1.1 (confirmado em
 `notofonts/notofonts.github.io`, lido em 2026-11-12), mas **nenhum arquivo de fonte foi
 admitido ainda**, então não há aviso a emitir. A escolha final da fonte de display é
 pendência declarada em §9.
@@ -198,10 +223,13 @@ três PNGs com sha256, dimensões e papel — a prancha C aprovada, o símbolo t
 prancha histórica A/B/C/D. `state` é `approved-reference-native-exports-pending`, e os
 exports nativos (ICO/ICNS/SVG/PNG por tamanho no Android) aparecem como `pending` por
 plataforma. O [ADR-008](../adr/ADR-008-marca.md) é o dono: `branding_exports_ready=false`
-até os gates reais. Os 19 SVGs de `assets/icons/` são desenho do próprio projeto.
+até os gates reais. Os 15 SVGs de `assets/icons/`, mais 4 pranchas de layout em `assets/`
+(`classic`, `mini`, `library`, `android`), são desenho do próprio projeto.
 
-**Corpus de conformidade FLAC: CC0 1.0.** 20 arquivos `subset` (mais os `faulty`
-selecionados), ~8,2 MiB, de `ietf-wg-cellar/flac-test-files` no commit
+**Corpus de conformidade FLAC: CC0 1.0.** 20 arquivos `.flac` em `subset/` e 10 em
+`faulty/` (o arquivo 10 do grupo `faulty`, com comentário Vorbis inválido, foi omitido de
+propósito), 36 arquivos no total contando os textos, 8.211.668 bytes = 7,83 MiB, de
+`ietf-wg-cellar/flac-test-files` no commit
 `aa7b0c6cf32994c106ae517a08134c28a96ff5b2`, não modificados.
 `libs/decode/tests/fixtures/flac-conformance/SOURCE.txt` e `LICENSE.txt` registram origem
 e licença ao lado dos arquivos — que é o que
