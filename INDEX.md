@@ -235,6 +235,8 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [E20 — iOS: CoreAudio, SwiftUI e sandbox](tasks/epics/E20.md) — tasks/epics/E20.md
 
+- [E21 — Encoder: registry, sessão e matriz de formatos](tasks/epics/E21.md) — tasks/epics/E21.md
+
 - [TASK-E04-10 — Validar qualidade numérica e hardware matrix](tasks/items/TASK-E04-10.md) — tasks/items/TASK-E04-10.md
 
 - [TASK-E09-01 — Definir catálogo, direitos, escala e custos](tasks/items/TASK-E09-01.md) — tasks/items/TASK-E09-01.md
