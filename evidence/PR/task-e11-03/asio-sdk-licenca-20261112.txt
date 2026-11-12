@@ -1,0 +1,116 @@
+# TASK-E11-03 — licenca do ASIO SDK, medida em 2026-11-12
+# fonte: curl -sS -L -o asiosdk.zip https://www.steinberg.net/asiosdk
+#   -> 302 https://download.steinberg.net/sdk_downloads/ASIO-SDK_2.3.4_2025-10-15.zip
+
+zip baixado: 8910208 bytes
+zip sha256 : d5ebf0c20dd2c5f43771fd0c1418f4b361bf52434ee670097cfa6b3a335e2eca
+conteudo   : 48 arquivos sob ASIOSDK/
+versao     : Changes in ASIO 2.3.4
+
+## Texto de ASIOSDK/LICENSE.txt (integral, sem edicao)
+  //-----------------------------------------------------------------------------
+  // LICENSE
+  // (c) 2025, Steinberg Media Technologies GmbH, All Rights Reserved
+  //-----------------------------------------------------------------------------
+  This license applies only to files referencing this license,
+  for other files of the Software Development Kit the respective embedded license text
+  is applicable.
+  
+  This Software Development Kit is licensed under the terms of the Steinberg ASIO License,
+  or alternatively under the terms of the General Public License (GPL) Version 3.
+  You may use the Software Development Kit according to either of these licenses as it is
+  most appropriate for your project on a case-by-case basis (commercial or not).
+  
+  a) Proprietary Steinberg ASIO License
+  The Software Development Kit may not be distributed in parts or its entirety
+  without prior written agreement by Steinberg Media Technologies GmbH.
+  The SDK must not be used to re-engineer or manipulate any technology used
+  in any Steinberg or Third-party application or software module,
+  unless permitted by law.
+  Neither the name of the Steinberg Media Technologies GmbH nor the names of its
+  contributors may be used to endorse or promote products derived from this
+  software without specific prior written permission.
+  Before publishing a software under the proprietary license, you need to obtain a copy
+  of the License Agreement signed by Steinberg Media Technologies GmbH.
+  The Steinberg ASIO SDK License Agreement can be found at:
+  www.steinberg.net/en/company/developers.html
+  
+  THE SDK IS PROVIDED BY STEINBERG MEDIA TECHNOLOGIES GMBH "AS IS" AND
+  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+  IN NO EVENT SHALL STEINBERG MEDIA TECHNOLOGIES GMBH BE LIABLE FOR ANY DIRECT,
+  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+  OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+  OF THE POSSIBILITY OF SUCH DAMAGE.
+  
+  b) General Public License (GPL) Version 3
+  Details of these licenses can be found at: www.gnu.org/licenses/gpl-3.0.html
+  
+  Best Practice recommendation:
+  Please refer to the Steinberg ASIO usage guidelines for the use of ASIO, ASIO logo and ASIO 
+  compatible logos.
+  //----------------------------------------------------------------------------------
+
+## Escopo declarado pelo proprio LICENSE.txt
+  linha 5-6: 'This license applies only to files referencing this license,
+  for other files of the Software Development Kit the respective embedded license
+  text is applicable.'
+  => o arquivo NAO declara que o SDK inteiro e dual-licenciado.
+
+## Classificacao dos 48 arquivos pelo cabecalho de cada um
+  (a ordem testa do mais especifico para o mais generico; cada arquivo
+   entra na primeira classe que casar)
+
+### 1. texto dual Steinberg ASIO License / GPLv3 : 2 arquivos
+  ASIOSDK/LICENSE.txt
+  ASIOSDK/common/LICENSE.txt
+
+### 2. cabecalho Microsoft (c) 1992-1996            : 4 arquivos
+  ASIOSDK/common/combase.cpp
+  ASIOSDK/common/combase.h
+  ASIOSDK/common/dllentry.cpp
+  ASIOSDK/common/wxdebug.h
+  cabecalho desses arquivos: 'AS IS', copyright Microsoft Corporation,
+  sem mencao a Steinberg e sem texto de licenca de redistribuicao.
+
+### 3. BSD-3-clause da propria Steinberg            : 14 arquivos
+  ASIOSDK/driver/asiosample/asiosmpl.cpp
+  ASIOSDK/driver/asiosample/asiosmpl.h
+  ASIOSDK/driver/asiosample/macnanosecs.cpp
+  ASIOSDK/driver/asiosample/mactimer.cpp
+  ASIOSDK/driver/asiosample/makesamp.cpp
+  ASIOSDK/driver/asiosample/wintimer.cpp
+  ASIOSDK/host/ASIOConvertSamples.cpp
+  ASIOSDK/host/ASIOConvertSamples.h
+  ASIOSDK/host/asiodrivers.cpp
+  ASIOSDK/host/asiodrivers.h
+  ASIOSDK/host/ginclude.h
+  ASIOSDK/host/pc/asiolist.cpp
+  ASIOSDK/host/pc/asiolist.h
+  ASIOSDK/host/sample/hostsample.cpp
+  '(c) 2025, Steinberg Media Technologies GmbH' + as tres clausulas BSD.
+  NAO e o texto dual: e uma licenca BSD-3 separada, embutida arquivo a arquivo.
+
+### 4. remissao ao LICENSE da raiz                  : 8 arquivos
+  ASIOSDK/common/asio.cpp
+  ASIOSDK/common/asio.h
+  ASIOSDK/common/asiodrvr.cpp
+  ASIOSDK/common/asiodrvr.h
+  ASIOSDK/common/asiosys.h
+  ASIOSDK/common/debugmessage.cpp
+  ASIOSDK/common/iasiodrv.h
+  ASIOSDK/common/register.cpp
+
+### 5. sem cabecalho de licenca                     : 20 arquivos
+  arquivos de projeto (.dsw .dsp .vcproj .def), changes.txt, README.md,
+  oito PDFs/EPS/PNGs de logo e da documentacao, e asiosample.txt.
+
+## O que isso muda
+  O paragrafo que so lia ASIOSDK/LICENSE.txt concluia 'o SDK e dual-licenciado',
+  o que vale para 2 dos 48 arquivos. Ha ao menos tres regimes distintos dentro do
+  mesmo zip, e os 4 arquivos com cabecalho Microsoft nao tem, no proprio arquivo,
+  clausula de redistribuicao nenhuma. Nenhum deles foi redistribuido por este
+  projeto, entao o efeito hoje e de registro, nao de remediacao.

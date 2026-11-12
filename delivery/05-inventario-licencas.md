@@ -30,6 +30,7 @@ o `Cargo.lock` de verdade, em vez de repetir o que o `Cargo.toml` declara. A sa�
 | `deny-licenses-umbrella.json` | 160 linhas JSON: 158 diagnósticos `rejected`, 1 aviso de configuração e 1 `summary` com `errors: 158` | `7048a251c6a448dc7363b6cf02222887f5ae9175858dce905c8dd1f18ad411d3` |
 | `deny-licenses-decode.json` | 11 linhas; só os 9 crates de path do módulo, cada um `MIT OR Apache-2.0` | `553705b712d66c9e1af4540087851343048fd83fa3e093e555a78785cc237dac` |
 | `licence-counts-20261112.txt` | contagens agregadas derivadas da `metadata` | `471efd46f09a5767bce20b38230aca43cf8af070336ac4931e28ef8102d914fb` |
+| `asio-sdk-licenca-20261112.txt` | classificação dos 48 arquivos do ASIO SDK 2.3.4 pelo cabeçalho de licença de cada um | `8bc679481ed067042d1ebfe90407a95188ff033bfb7248977f04fdc1c7322863` |
 
 O `metadata-umbrella.json` não é versionado — são 741 KB de JSON derivado, e o que o
 documento afirma sobre ele está nas contagens acima, que são o que se confere. Os dois
@@ -191,32 +192,56 @@ registrada em
 pertence à TASK dona do corpus MPEG, não a esta. A falta de manifesto em três raízes de
 fixture é outra lacuna e está medida em §7.
 
-## 6. ASIO: dual-licenciado, e a rota proprietária proíbe redistribuir o SDK
+## 6. ASIO: cinco regimes de licença dentro do mesmo SDK
 
-O ASIO SDK **não está no repositório** e não é dependência de nada. A leitura da fonte
-oficial (SDK 2.3.4, `ASIOSDK/LICENSE.txt`, baixado de
-`steinberg.net/asiosdk` em 2026-11-12) dá o texto que governa qualquer uso futuro:
+O ASIO SDK **não está no repositório** e não é dependência de nada. O que se mediu foi o
+pacote oficial: `https://www.steinberg.net/asiosdk` responde `302` para
+`download.steinberg.net/sdk_downloads/ASIO-SDK_2.3.4_2025-10-15.zip` (8.910.208 bytes,
+SHA-256 `d5ebf0c2…35e2eca`), com 48 arquivos sob `ASIOSDK/`. A medição arquivo a arquivo
+está versionada em
+[`evidence/PR/task-e11-03/asio-sdk-licenca-20261112.txt`](../evidence/PR/task-e11-03/asio-sdk-licenca-20261112.txt).
+
+**A conclusão fácil é falsa.** `ASIOSDK/LICENSE.txt` diz:
 
 > This Software Development Kit is licensed under the terms of the Steinberg ASIO License,
 > or alternatively under the terms of the General Public License (GPL) Version 3.
 
-E, na opção proprietária:
+…mas o próprio arquivo começa delimitando o próprio alcance: *"This license applies only to
+files referencing this license, for other files of the Software Development Kit the
+respective embedded license text is applicable."* E é isso que se vê ao ler os 48
+arquivos — **cinco regimes distintos**, não um:
+
+| Regime | Arquivos | Onde |
+|---|---|---|
+| Texto dual Steinberg ASIO License **ou** GPLv3 | 2 | `LICENSE.txt`, `common/LICENSE.txt` |
+| BSD-3-clause, `(c) 2025 Steinberg`, com as três cláusulas | 14 | `driver/asiosample/`, `host/` |
+| Remissão ao `LICENSE` da raiz, sem texto embutido | 8 | `common/asio.h`, `asiosys.h`, `asiodrvr.*`, `iasiodrv.h`, `register.cpp`, `debugmessage.cpp`, `asio.cpp` |
+| Cabeçalho **Microsoft** `(c) 1992–1996`, "AS IS", **sem cláusula de redistribuição** | 4 | `common/combase.{h,cpp}`, `dllentry.cpp`, `wxdebug.h` |
+| Sem cabeçalho de licença | 20 | arquivos de projeto (`.dsw`/`.dsp`/`.vcproj`/`.def`), `changes.txt`, `README.md`, PDFs e o logo |
+
+O texto da opção proprietária, que vale para os dois primeiros:
 
 > The Software Development Kit may not be distributed in parts or its entirety without
 > prior written agreement by Steinberg Media Technologies GmbH.
 
-Duas consequências que o projeto precisa carregar:
+Três consequências que o projeto precisa carregar:
 
 1. **Não existe caminho "ASIO no núcleo".** A rota proprietária exige acordo assinado com a
    Steinberg e proíbe redistribuir o SDK; a rota GPLv3 contaminaria o resto do produto, que
    é `MIT OR Apache-2.0`. Por isso o [ADR-011](../adr/ADR-011-pilha-propria.md) já coloca
    ASIO "fora do núcleo, adapter privado opcional futuro, sem plano".
-2. **Trazer o SDK para o repo é uma decisão, não um `git add`.** Nem pela rota GPLv3 ela é
-   trivial: o SDK inteiro passaria a ser GPLv3 e conviveria com código incompatível. Nada
-   disso foi feito, e o registro fica como pendência do mantenedor (§9).
+2. **"O SDK é dual-licenciado" é uma afirmação sobre 2 dos 48 arquivos.** Os 14 BSD-3 e os
+   8 por remissão não são o texto dual; e os 4 com cabeçalho Microsoft não trazem, no
+   próprio arquivo, cláusula de redistribuição nenhuma. Quem for embarcar `common/` — que é
+   onde ficam `asio.h` e `asiosys.h`, as interfaces que um adapter privado precisaria —
+   teria de resolver isso antes, não depois. É a armadilha exata que a AC-2 proíbe: alegar
+   autorização que a fonte não dá.
+3. **Trazer o SDK para o repo é uma decisão, não um `git add`.** Nada disso foi feito, e o
+   registro fica como pendência do mantenedor (§9).
 
 O que **não** está provado aqui: se um dia houver binário com ASIO, o cumprimento do acordo
-assinado. Isso é verificação de release, com o contrato em mãos, não de inventário.
+assinado, e sob qual dos cinco regimes cada arquivo embarcado é redistribuído. Isso é
+verificação de release, com o contrato em mãos, não de inventário.
 
 ## 7. Fontes e assets
 
@@ -299,7 +324,7 @@ de TASK já existente, registradas para que o estado medido não se perca.
 |---|---|---|---|
 | 1 | Nome/marca e licença final dos ativos | marca decidida (ADR-008); exports nativos `pending`; `branding_exports_ready=false` | mantenedor, pelo ADR-008 |
 | 2 | Fonte de display e fonte de UI | nenhuma fonte admitida; Noto é OFL-1.1 se for a escolha | mantenedor, em `design/01` |
-| 3 | ASIO: rota proprietária (acordo assinado) ou GPLv3, ou nenhuma | nada no repositório; ADR-011 diz "fora do núcleo, sem plano" | mantenedor, pelo ADR-011 |
+| 3 | ASIO: rota proprietária (acordo assinado) ou GPLv3, ou nenhuma — e, se houver, sob qual regime cada arquivo embarcado é redistribuído | nada no repositório; ADR-011 diz "fora do núcleo, sem plano"; o SDK tem cinco regimes distintos (§6) | mantenedor, pelo ADR-011 |
 | 4 | Bundle de FFmpeg, se algum dia houver | não há bundle; binário local é GPL e não distribuível | mantenedor, decisão de release |
 | 5 | `deny.toml` com a lista de licenças permitidas | não existe; é por isso que o `cargo deny` recusa as 158 | `TASK-E11-04` |
 | 6 | `THIRD_PARTY_NOTICES` e SBOM de release | não existem; nada de terceiro foi admitido | `TASK-E11-04`, `TASK-E11-08` |
