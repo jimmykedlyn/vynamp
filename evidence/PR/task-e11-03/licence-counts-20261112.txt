@@ -1,0 +1,103 @@
+# TASK-E11-03 — contagens medidas em 2026-11-12
+# gerado por .superpowers/verify/counts.py a partir de `cargo metadata --locked --all-features`
+# e da saída do `cargo deny`; os comandos estão no corpo de delivery/05-inventario-licencas.md
+
+Cargo.lock: 165 pacotes = 164 de registry + 1 de path (xtask 0.7.0)
+nomes distintos entre os de registry: 159
+nomes com duas versões no lock: ['base64', 'getrandom', 'miniz_oxide', 'r-efi', 'syn']
+
+expressões SPDX distintas: 18 (somando 164)
+   89  MIT OR Apache-2.0
+   21  MIT
+   18  Unicode-3.0
+   12  Apache-2.0 OR MIT
+    4  Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT
+    3  Unlicense OR MIT
+    2  MIT OR Zlib OR Apache-2.0
+    2  MIT/Apache-2.0
+    2  MIT OR Apache-2.0 OR LGPL-2.1-or-later
+    2  Unlicense/MIT
+    2  BSD-2-Clause OR Apache-2.0 OR MIT
+    1  0BSD OR MIT OR Apache-2.0
+    1  MIT-0
+    1  Apache-2.0/MIT
+    1  Apache-2.0 OR BSL-1.0
+    1  (MIT OR Apache-2.0) AND Unicode-3.0
+    1  Zlib
+    1  Apache-2.0
+
+expressões em forma não-SPDX (barra em vez de OR): 5
+  bytecount 0.6.9: Apache-2.0/MIT
+  num-cmp 0.1.0: MIT/Apache-2.0
+  same-file 1.0.6: Unlicense/MIT
+  version_check 0.9.5: MIT/Apache-2.0
+  walkdir 2.5.0: Unlicense/MIT
+
+crates publicados com arquivo de licença no pacote: 160 de 164
+crates publicados SEM arquivo de licença: 4
+  r-efi 5.3.0: MIT OR Apache-2.0 OR LGPL-2.1-or-later (sem arquivo no pacote)
+  r-efi 6.0.0: MIT OR Apache-2.0 OR LGPL-2.1-or-later (sem arquivo no pacote)
+  uuid-simd 0.8.0: MIT (sem arquivo no pacote)
+  vsimd 0.8.0: MIT (sem arquivo no pacote)
+
+cargo deny 0.20.2: 158 diagnósticos, 158 pares (nome,versão) distintos avaliados
+  desses, 157 são de registry e 1 é de path (xtask 0.7.0)
+no lock que o cargo deny NÃO avalia: 7
+  futures-core 0.3.34: MIT OR Apache-2.0
+  futures-task 0.3.34: MIT OR Apache-2.0
+  futures-util 0.3.34: MIT OR Apache-2.0
+  pin-project-lite 0.2.17: Apache-2.0 OR MIT
+  slab 0.4.12: MIT
+  syn 2.0.119: MIT OR Apache-2.0
+  zerocopy-derive 0.8.63: BSD-2-Clause OR Apache-2.0 OR MIT
+
+cargo tree -e normal,build --target all            : 160 pares (nome,versão) distintos
+cargo tree -e normal,build --target x86_64-windows : 141
+cargo tree -e normal,build --target wasm32-unknown : 140
+no grafo de todos os alvos mas fora do Windows: 19
+  cfg_aliases 0.2.2
+  errno 0.3.14
+  js-sys 0.3.106
+  libc 0.2.190
+  linux-raw-sys 0.12.1
+  nix 0.31.3
+  r-efi 5.3.0
+  r-efi 6.0.0
+  redox_syscall 0.5.18
+  rustix 1.1.5
+  rustversion 1.0.23
+  syn 2.0.119
+  wasip2 1.0.4+wasi-0.2.12
+  wasm-bindgen 0.2.129
+  wasm-bindgen-macro 0.2.129
+  wasm-bindgen-macro-support 0.2.129
+  wasm-bindgen-shared 0.2.129
+  wit-bindgen 0.57.1
+  zerocopy-derive 0.8.63
+
+no lock de registry e fora de TODA árvore (complemento de 160 para 164): 5
+  futures-core 0.3.34: MIT OR Apache-2.0
+  futures-task 0.3.34: MIT OR Apache-2.0
+  futures-util 0.3.34: MIT OR Apache-2.0
+  pin-project-lite 0.2.17: Apache-2.0 OR MIT
+  slab 0.4.12: MIT
+
+### dependências diretas do xtask (do Cargo.toml, TODAS as versões do lock)
+# crate declarado | chave no manifesto | requisito | versões resolvidas | licença
+  anyhow           anyhow             1          -> 1.0.104            MIT OR Apache-2.0
+  base64           base64             0.23       -> 0.22.1, 0.23.1     MIT OR Apache-2.0
+  getrandom        getrandom          0.3        -> 0.3.4, 0.4.3       MIT OR Apache-2.0
+  clap             clap               { version = "4", features = ["derive"] } -> 4.6.7              MIT OR Apache-2.0
+  jsonschema       jsonschema         { version = "0.33", default-features = false } -> 0.33.0             MIT
+  quick-xml        quick-xml          0.42       -> 0.42.0             MIT
+  regex            regex              1          -> 1.13.1             MIT OR Apache-2.0
+  semver           semver             1          -> 1.0.28             MIT OR Apache-2.0
+  serde            serde              { version = "1", features = ["derive"] } -> 1.0.229            MIT OR Apache-2.0
+  serde_json       serde_json         1          -> 1.0.154            MIT OR Apache-2.0
+  serde_yaml_ng    serde_yaml         { package = "serde_yaml_ng", version = "0.10" } -> 0.10.0             MIT
+  sha2             sha2               0.11       -> 0.11.1             MIT OR Apache-2.0
+  tempfile         tempfile           3          -> 3.27.0             MIT OR Apache-2.0
+  toml             toml               1.2        -> 1.2.0+spec-1.1.0   MIT OR Apache-2.0
+  walkdir          walkdir            2          -> 2.5.0              Unlicense/MIT
+  zip              zip                { version = "9", default-features = false, features = ["deflate"] } -> 9.3.0              MIT
+  png              png                0.18       -> 0.18.1             MIT OR Apache-2.0

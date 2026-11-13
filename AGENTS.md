@@ -244,6 +244,24 @@ Teste precisa de **oráculo independente**: assertar que o espelho da implementa
 não prova nada. Fixtures exigem hash, licença, formato e oráculo próprio. Contrato
 em [engineering/05-testes.md](engineering/05-testes.md).
 
+**Teste que roda `git` em repositório descartável limpa o ambiente local antes.**
+O Git **honra** as variáveis de `git rev-parse --local-env-vars` (`GIT_DIR`,
+`GIT_WORK_TREE`, `GIT_INDEX_FILE`, `GIT_COMMON_DIR`…). Essa lista é o que o Git lê, não
+o que ele publica: do `pre-push` desta máquina só `GIT_DIR` está medido
+(`GIT_DIR=D:/Projects/vynamp/.git/worktrees/<worktree>`, mais `GIT_PREFIX`), e as
+demais são precaução, não medição. O que importa é que `current_dir()` num `tempdir`
+**não** desliga o que estiver setado: dentro do `pre-push` (que roda
+`cargo xtask ci docs`) todo `git init`/`add`/`commit` de um teste sem essa limpeza
+atinge o repositório real. Em 2026-11-12 isso criou dois commits na branch em uso,
+sobrescreveu o índice do worktree e gravou `core.bare=true` e `[user] test` no
+`.git/config` compartilhado.
+
+A referência é `util::scrub_git_env` de `xtask/src/util.rs`, que lê a lista do próprio
+Git em vez de transcrevê-la; teste novo que rode git precisa de guarda equivalente,
+provada por teste cujo vermelho seja o dano. A cópia hardcoded de
+`xtask/tests/tooling.rs` (`Fixture::command`) é anterior a isso e **não** é a
+referência — é outro crate, não enxerga o bin, e pode ficar para trás.
+
 ### Licença, marca e identidade (decisões já tomadas)
 
 Não reabrir decisão registrada. O contrato fixa o destino de cada uma:

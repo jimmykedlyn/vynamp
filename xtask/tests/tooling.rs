@@ -5,6 +5,27 @@ use std::{
     process::{Command, Output},
 };
 use tempfile::TempDir;
+/// The variables `git` honours from its environment, read from Git itself.
+///
+/// `xtask` is a binary crate, so this integration test cannot import
+/// `util::scrub_git_env`; asking Git the same question keeps the two scrubs
+/// from drifting apart when Git grows another variable.
+fn local_env_vars() -> Vec<String> {
+    let out = Command::new("git")
+        .args(["rev-parse", "--local-env-vars"])
+        .env_remove("GIT_DIR")
+        .output()
+        .expect("git rev-parse --local-env-vars runs; git is a test prerequisite");
+    assert!(
+        out.status.success(),
+        "git rev-parse --local-env-vars failed: {}",
+        String::from_utf8_lossy(&out.stderr)
+    );
+    String::from_utf8_lossy(&out.stdout)
+        .split_whitespace()
+        .map(str::to_owned)
+        .collect()
+}
 struct Fixture {
     _temp: TempDir,
     root: PathBuf,
@@ -28,26 +49,10 @@ impl Fixture {
     }
     fn command(&self, exe: &str, args: &[&str], cwd: &Path) -> Command {
         let mut command = Command::new(exe);
-        // Fixtures operate on foreign repositories. Git exports these local
-        // variables to hooks; changing cwd alone does not isolate their children.
-        // Keep this list aligned with `git rev-parse --local-env-vars`.
-        for name in [
-            "GIT_ALTERNATE_OBJECT_DIRECTORIES",
-            "GIT_CONFIG",
-            "GIT_CONFIG_PARAMETERS",
-            "GIT_CONFIG_COUNT",
-            "GIT_OBJECT_DIRECTORY",
-            "GIT_DIR",
-            "GIT_WORK_TREE",
-            "GIT_IMPLICIT_WORK_TREE",
-            "GIT_GRAFT_FILE",
-            "GIT_INDEX_FILE",
-            "GIT_NO_REPLACE_OBJECTS",
-            "GIT_REPLACE_REF_BASE",
-            "GIT_PREFIX",
-            "GIT_SHALLOW_FILE",
-            "GIT_COMMON_DIR",
-        ] {
+        // Fixtures operate on foreign repositories. Git honours these local
+        // variables for its children; changing cwd alone does not isolate them.
+        // The list is read from Git itself so it cannot drift from the tool.
+        for name in local_env_vars() {
             command.env_remove(name);
         }
         command
