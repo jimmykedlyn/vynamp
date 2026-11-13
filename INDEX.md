@@ -114,7 +114,11 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Guia de desenvolvimento — passo a passo](engineering/08-reinicio-windows.md) — engineering/08-reinicio-windows.md
 
+- [Guia de desenvolvimento — passo a passo, versão detalhada](engineering/guia-desenvolvimento.md) — engineering/guia-desenvolvimento.md; expande o mesmo fluxo com visão geral, termos, TASK de módulo em três etapas e problemas comuns.
+
 - [Evidências e relatórios](evidence/README.md) — evidence/README.md
+
+- [Cópia morta do backlog, 2026-11-12 12:36](_arquivo/raiz/bl.tmp.2026-11-12.json) — _arquivo/raiz/bl.tmp.2026-11-12.json; cópia de trabalho do `tasks/backlog.json` anterior às 16 TASKs de `E21`, achada sem rastreamento na raiz. Subconjunto estrito do backlog versionado (199 de 215 TASKs), preservada só como registro; não é fonte de nada.
 
 - [Temas próprios e editor](extensions/01-temas.md) — extensions/01-temas.md
 
