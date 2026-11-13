@@ -118,6 +118,8 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Evidências e relatórios](evidence/README.md) — evidence/README.md
 
+- [Cópia morta do backlog, 2026-11-12 12:36](_arquivo/raiz/bl.tmp.2026-11-12.json) — _arquivo/raiz/bl.tmp.2026-11-12.json; cópia de trabalho do `tasks/backlog.json` anterior às 16 TASKs de `E21`, achada sem rastreamento na raiz. Subconjunto estrito do backlog versionado (199 de 215 TASKs), preservada só como registro; não é fonte de nada.
+
 - [Temas próprios e editor](extensions/01-temas.md) — extensions/01-temas.md
 
 - [Plugins próprios, SDK e isolamento](extensions/02-plugins.md) — extensions/02-plugins.md

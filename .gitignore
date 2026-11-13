@@ -21,6 +21,8 @@ Thumbs.db
 
 # passo 30
 VALIDATION.json
+# rascunho de edicao do backlog por script (mktemp-style, prefixo `.`); nao e fonte.
+.bl.tmp.*
 .cache/
 *.log
 /target/
