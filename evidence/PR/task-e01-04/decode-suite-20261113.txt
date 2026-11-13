@@ -1,0 +1,15 @@
+# TASK-E01-04 — suite completa antes do PR (2026-11-13)
+# cwd: libs/decode
+# Commit medido: 2227943da258189e11ba8d98b6dbb9ed275f747f
+# Base: cccde3094d354667de2215bf00387e7491c13510 (origin/develop)
+# Comando: cargo test --workspace --locked
+# Resultado: 517 passed, 3 ignored, 0 failed, 48 suites ok, rc=0
+
+# Baseline na abertura da TASK (mesmo comando, commit cccde30): 513 passed, 3 ignored, 0 failed, 48 suites.
+# Delta: +4 testes. Nenhum teste ignorado novo: os 3 continuam os mesmos de antes da TASK.
+
+# --- Pos-merge, medido no commit integrado ---
+# Commit medido: 6b83a8b1433a14b961646a140b9127c8cab67fbf (merge commit do PR #29)
+# Comando: cargo test --workspace --locked
+# Resultado: 517 passed, 3 ignored, 0 failed, 48 suites ok
+# Igual ao medido na branch: o merge commit nao acrescentou nem removeu teste.
