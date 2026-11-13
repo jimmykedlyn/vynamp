@@ -193,6 +193,10 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Registro de evidências de implementação](tasks/EVIDENCE.md) — tasks/EVIDENCE.md
 
+- [STATE — onde o projeto está](STATE.md) — STATE.md; resumo de leitura do backlog, com bloco gerado por `cargo xtask docs-sync`.
+
+- [Ordem de execução das TASKs](tasks/ORDER.md) — tasks/ORDER.md; gerado a partir das dependências do backlog por `cargo xtask docs-sync`.
+
 - [Primeira execução recomendada](tasks/NEXT.md) — tasks/NEXT.md
 
 - [Backlog executável e mapa de dependências](tasks/README.md) — tasks/README.md

@@ -1,6 +1,6 @@
 # Changelog / Histórico
 
-Versão: 0.9.9 · Data: 2026-11-11 · Estado: especificação proposta, implementação não iniciada.
+Versão: 0.10.0 · Data: 2026-11-13 · Estado: especificação proposta, implementação não iniciada.
 
 Each entry appears in English and Portuguese. The two texts say the same thing;
 where they appear to differ, the Portuguese text of that entry is the original
@@ -669,6 +669,54 @@ externa que um `url(#x)` literal e passaria. O teste de SVG foi verificado verme
 com a leitura crua antes do conserto. `vynamp-decode` e `vynamp-output` também
 tiveram a linha `Status` do README corrigida de "private repository" para "public
 repository", falsa desde que os repositórios foram abertos.
+
+## Unreleased — 2026-11-13 (STATE, NEXT e ORDER passam a ser gerados e conferidos) / Não lançado — 2026-11-13 (STATE, NEXT e ORDER passam a ser gerados e conferidos)
+
+**EN** — Three documents told a reader where the project stands, and none of them
+could be checked against the backlog, so all three drifted. `tasks/NEXT.md` still
+listed `TASK-E01-04` as pending after it had merged into `develop` (`6b83a8b`), and
+`STATE.md` lived outside git, in the maintainer's folder: a clone received no
+summary at all, and the file had no way of being verified. The fix is not a promise
+of discipline but the removal of the part that ages from human hands. `STATE.md` is
+now versioned at the repository root, and the part of it and of `tasks/NEXT.md` that
+changes with every delivered TASK lives in a block between
+`<!-- BEGIN GENERATED: <name> -->` and `<!-- END GENERATED: <name> -->`. The new
+`tasks/ORDER.md` is generated whole: it is the topological order of the backlog's
+dependencies, 25 waves, each TASK with title, owning module, phase, priority and
+what it depends on. `cargo xtask docs-sync` rewrites all three; `cargo xtask
+check-docs` fails when any of them diverges from `tasks/backlog.json`, and it runs
+in the `specs` job of the umbrella CI. The rule is deliberately narrow: the gate
+compares only what is derivable from the backlog, because a gate that judges prose
+fails on style. `AGENTS.md` §4.7 and §4.8 were corrected to match — the old text
+sent `STATE.md` outside git, which the new gate would have failed on its own rule.
+The generated blocks carry no date and no SHA: a date ages the next day and a SHA
+changes on every merge, and a summary carrying both becomes daily maintenance that
+lies in between. Measured: `check-docs` passes with 215 tasks; breaking one cell of
+`ORDER.md` and one count of `STATE.md` each turned it red naming the file, and both
+were restored. Documentation and tooling only; no player code.
+
+**PT** — Três documentos diziam ao leitor onde o projeto está, e nenhum podia ser
+conferido contra o backlog, então os três defasaram. O `tasks/NEXT.md` ainda listava
+`TASK-E01-04` como pendente depois de ela ter entrado em `develop` (`6b83a8b`), e o
+`STATE.md` morava fora do git, na pasta do mantenedor: quem clonava não recebia
+resumo nenhum, e o arquivo não tinha como ser verificado. A correção não é promessa
+de disciplina, é tirar da mão humana a parte que envelhece. O `STATE.md` passa a ser
+versionado na raiz do repositório, e a parte dele e do `tasks/NEXT.md` que muda a
+cada TASK entregue vive num bloco entre `<!-- BEGIN GENERATED: <nome> -->` e
+`<!-- END GENERATED: <nome> -->`. O novo `tasks/ORDER.md` é gerado inteiro: é a
+ordem topológica das dependências do backlog, 25 ondas, cada TASK com título, módulo
+dono, fase, prioridade e do que depende. `cargo xtask docs-sync` reescreve os três;
+`cargo xtask check-docs` reprova quando qualquer um diverge de `tasks/backlog.json`,
+e ele roda no job `specs` do CI do umbrella. A regra é estreita de propósito: o gate
+compara só o que é derivável do backlog, porque um gate que julga prosa reprova por
+estilo. O `AGENTS.md` §4.7 e §4.8 foram corrigidos junto — o texto antigo mandava o
+`STATE.md` para fora do git, e o gate novo reprovaria a própria regra. Os blocos
+gerados não carregam data nem SHA: data envelhece no dia seguinte e SHA muda a cada
+merge, e um resumo que carrega os dois vira manutenção diária que mente no
+intervalo. Medido: `check-docs` passa com 215 tasks; quebrar uma célula do
+`ORDER.md` e uma contagem do `STATE.md` deixou o gate vermelho nomeando o arquivo, e
+os dois foram restaurados. Somente documentação e ferramental; nenhum código de
+player.
 
 ## Unreleased — 2026-11-11 (ADR-002: o gate media um arquivo que existia) / Não lançado — 2026-11-11 (ADR-002: o gate media um arquivo que existia)
 

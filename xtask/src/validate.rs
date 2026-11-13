@@ -465,6 +465,12 @@ pub fn spec(root: &Path) -> Result<()> {
             );
         }
     }
+    // Os três documentos de estado derivam do backlog; conferir aqui é o que impede
+    // que eles envelheçam. `sync` é quem os reescreve, e o gate não o chama: um gate
+    // que conserta o que audita nunca reprova nada.
+    for message in crate::order::check(root)? {
+        c.check(false, message);
+    }
     let report = json!({"spec_version":data["spec_version"],"scope":"Validação documental em Rust; não testa player/hardware/API/WIT.","mandatory_platforms":["Windows x86_64","Linux x86_64","macOS Intel x86_64","macOS Apple Silicon arm64","Android arm64-v8a","iOS arm64"],"markdown_files":md.len(),"tasks":tasks.len(),"requirements":matrixids.len(),"epics":epics.len(),"phases":phases,"schemas_and_examples":schemas.len(),"format_catalog_entries":catalog["entries"].as_array().map(Vec::len),"openapi_paths":paths.len(),"operation_count":ops.len(),"errors":c.errors,"result":if c.errors.is_empty(){"passed"}else{"failed"}});
     write_json(root.join("VALIDATION.json"), &report)?;
     println!("{}", serde_json::to_string_pretty(&report)?);
