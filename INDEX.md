@@ -114,6 +114,8 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Guia de desenvolvimento — passo a passo](engineering/08-reinicio-windows.md) — engineering/08-reinicio-windows.md
 
+- [Guia de desenvolvimento — passo a passo, versão detalhada](engineering/guia-desenvolvimento.md) — engineering/guia-desenvolvimento.md; expande o mesmo fluxo com visão geral, termos, TASK de módulo em três etapas e problemas comuns.
+
 - [Evidências e relatórios](evidence/README.md) — evidence/README.md
 
 - [Temas próprios e editor](extensions/01-temas.md) — extensions/01-temas.md

@@ -55,11 +55,11 @@ Os scripts em `libs\decode\tools\fixtures\` leem `$env:FFMPEG` ou `-FFmpeg`.
 1. `tasks\NEXT.md` diz qual abrir; `tasks\backlog.json` tem o status oficial.
 2. Ler a TASK. As do umbrella ficam em `tasks\items\`; as de módulo ficam no
    submódulo (ex.: `libs\decode\tasks\items\TASK-E01-01.md`).
-3. Hoje a próxima é **`TASK-E01-01`** (decode, gapless, precisão de samples), em
-   `libs\decode`.
+3. Hoje a próxima é **`TASK-E11-02`** (fronteiras de segurança), no umbrella; para
+   código de módulo, a fila é `TASK-E01-03` no `libs\engine`.
 
 Para pedir ao Claude: abrir o Claude Code em `D:\Projects\vynamp` e escrever
-`execute a TASK-E01-01`. As regras que ele segue estão em `AGENTS.md`.
+`execute a TASK-E11-02`. As regras que ele segue estão em `AGENTS.md`.
 
 ## 4. TASK de módulo (o caso comum)
 

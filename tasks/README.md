@@ -29,7 +29,7 @@
 | `TASK-E10-10` | Fechar gates e cobertura desktop | vynamp | planned |
 | `TASK-E11-01` | Criar workspace e baseline de engenharia | vynamp | implemented |
 | `TASK-E11-02` | Definir fronteiras de segurança | vynamp | planned |
-| `TASK-E11-03` | Resolver licenças e inventário de dependências | vynamp | planned |
+| `TASK-E11-03` | Resolver licenças e inventário de dependências | vynamp | implemented |
 | `TASK-E11-04` | Completar CI e supply chain | vynamp | planned |
 | `TASK-E11-05` | Implementar config, logs e keychain | vynamp | planned |
 | `TASK-E11-06` | Implementar updater assinado | vynamp | planned |

@@ -1,6 +1,6 @@
 # Primeira execução recomendada
 
-Versão: 0.8.0 · Data: 2026-11-10 · Estado: especificação proposta; provas M0 de E01-02, E02-11, E11-01, E15-03 e E19 entregues, nenhum código de player.
+Versão: 0.8.1 · Data: 2026-11-13 · Estado: especificação proposta; provas M0 de E01-01, E01-02, E02-11, E04-02, E11-01, E11-03, E15-03 e E19 entregues, nenhum código de player.
 
 O status de cada TASK vive em [`backlog.json`](backlog.json) e não aqui. Este
 arquivo responde uma pergunta só: qual TASK abrir depois das que já fecharam.
@@ -8,36 +8,41 @@ Entrega conta pelo critério da TASK no PR e no CI, nunca por esta lista.
 
 ## O que já está feito
 
-Quatro provas M0 fecharam: `TASK-E11-01` (workspace e baseline de engenharia),
-`TASK-E01-02` (callback e output clock), `TASK-E02-11` (MVP de referência
-congelado, com SVGs, ícones e tokens) e `TASK-E15-03` (importação, Gitflow,
-branch protection). O épico `E19` fechou inteiro — repositórios próprios,
-política de segurança, e os gates `check-docs`, `check-tasks`, `check-delivery`,
-`check-authoring` e `check-secrets` no GitHub Actions sob o agregado `CI Gate`.
-`TASK-CI-01` e `TASK-CI-02` também. O umbrella hoje verifica documentação,
-autoria das TASKs, pins de submódulo, direção de dependência e segredos; ele não
-constrói aplicação (D-CI-1).
+As provas M0 de áudio fecharam: `TASK-E11-01` (workspace e baseline de
+engenharia), `TASK-E01-02` (callback e output clock), `TASK-E01-01` (decode,
+gapless e precisão de samples), `TASK-E04-02` (resampler e conversão de sample)
+e `TASK-E02-11` (MVP de referência congelado, com SVGs, ícones e tokens).
+Fecharam também `TASK-E15-03` (importação, Gitflow, branch protection) e
+`TASK-E11-03` (licenças e inventário). O épico `E19` fechou inteiro —
+repositórios próprios, política de segurança, e os gates `check-docs`,
+`check-tasks`, `check-delivery`, `check-authoring` e `check-secrets` no GitHub
+Actions sob o agregado `CI Gate`. `TASK-CI-01` e `TASK-CI-02` também. O umbrella
+hoje verifica documentação, autoria das TASKs, pins de submódulo, direção de
+dependência e segredos; ele não constrói aplicação (D-CI-1).
 
 ## A próxima TASK
 
-`TASK-E01-01` — provar decode, gapless e precisão de samples. É a prova que
-destrava a camada de áudio: a [ADR-002](../adr/ADR-002-audio-core.md) está
-explicitamente **não congelada** até ela, e toda a fatia vertical depende disso.
-Antes de ampliar dependências nativas, resolver `TASK-E11-02` (fronteiras de
-segurança) e `TASK-E11-03` (licenças e inventário).
+`TASK-E11-02` — definir as fronteiras de segurança. É a que o próprio backlog
+ordena antes de ampliar dependências nativas, e é o que ainda falta para o
+sandbox de plugins ter um contrato. Roda junto com `TASK-E07-01` (spike de
+sandbox WASM e capabilities), que depende só de `TASK-E11-01` e é o que prova o
+`ADR-004` na prática.
 
-Depois dela, na ordem de dependência: `TASK-E04-02` (resampler e conversão de
-sample), `TASK-E07-01` (sandbox WASM e capabilities) e `TASK-E10-01` (corpus de
-testes licenciado). `TASK-E02-01` (toolkit Rust com UI clássica acessível) só
-faz sentido com o corpus e o resampler provados, porque é ele que mede o gate do
-leitor de tela.
+`TASK-E10-01` (corpus de testes licenciado) é a terceira da fila: o corpus de
+gapless do MPEG já está licenciado e com manifesto medido pela `TASK-E01-01`,
+mas o corpus licenciado de tons, sweep e corrupções continua faltando.
 
 ## A primeira fatia vertical
 
-Abrir WAV/FLAC/MP3 → decodificar → saída shared → pause/seek/stop → fila
-independente → Classic Graphite com EQ10 e volume. Tasks E01-03/04/05,
-E03-01/02, E04-01 e E02-02/03/04. O resultado tem que tocar de verdade, com
-cancelamento e recovery, não apenas tela.
+`TASK-E01-03` (state machine e generation cancellation) é a primeira TASK de
+produto da fatia vertical, e agora está destravada: as duas dependências dela,
+`TASK-E01-01` e `TASK-E01-02`, fecharam. Depois vêm E01-04/05, E03-01/02,
+E04-01 e E02-02/03/04: abrir WAV/FLAC/MP3 → decodificar → saída shared →
+pause/seek/stop → fila independente → Classic Graphite com EQ10 e volume. O
+resultado tem que tocar de verdade, com cancelamento e recovery, não apenas tela.
+
+Não abrir `TASK-E02-01` (toolkit Rust com UI clássica acessível) antes do corpus
+e do resampler estarem provados, porque é ela que mede o gate do leitor de tela.
 
 ## Depois
 
