@@ -2,7 +2,7 @@
 
 Versão: 0.1.1 · Data: 2026-11-11 · Estado: **escopo preparatório**; implementação não iniciada. A execução completa fica no PR5.
 
-Documento canônico da ferramenta desktop **Vynamp Converter** (`vynamp-converter`). Complementa [ADR-013](../../adr/ADR-013-restore.md) (fronteira de processo e motor compartilhado), [ADR-012](../../adr/ADR-012-integracao-shell.md) (ação de menu de contexto e identidade), [ADR-011](../../adr/ADR-011-pilha-propria.md) (pilha de áudio própria) e [TASK-E08-02](../../apps/converter/tasks/items/TASK-E08-02.md) (conversor e encoder registry). Matriz normativa: [03-requirements](../../product/03-requisitos.md).
+Documento canônico da ferramenta desktop **Vynamp Converter** (`vynamp-converter`). Complementa [ADR-013](../../adr/ADR-013-restore.md) (fronteira de processo e motor compartilhado), [ADR-012](../../adr/ADR-012-integracao-shell.md) (ação de menu de contexto e identidade), [ADR-011](../../adr/ADR-011-pilha-propria.md) (pilha de áudio própria) e [TASK-E08-02](../../apps/converter/tasks/items/TASK-E08-02.md) (conversor em lote). Matriz normativa: [03-requirements](../../product/03-requisitos.md).
 
 > **Código-fonte:** [`jimmykedlyn/vynamp-converter`](https://github.com/jimmykedlyn/vynamp-converter)
 > e a lib de codificadores em [`jimmykedlyn/vynamp-encode`](https://github.com/jimmykedlyn/vynamp-encode).
