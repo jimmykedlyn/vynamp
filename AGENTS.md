@@ -174,9 +174,21 @@ Regras que não têm exceção:
    pelo SHA final, não pelo anterior.
 6. **Teste ignorado aparece listado com motivo escrito.** Nunca silencioso.
 7. **`tasks/backlog.json` é a fonte única de status.** Ele é versionado e viaja com
-   o clone. `STATE.md` é o resumo que aponta para o backlog, atualizado a cada TASK
-   entregue, e mora **fora do git**, na pasta do mantenedor: quem clona não o
-   recebe, e a ausência dele não bloqueia nada.
+   o clone. `STATE.md`, `tasks/NEXT.md` e `tasks/ORDER.md` são **leituras** dele:
+   nenhum dos três guarda status, e quando divergem do backlog é o backlog que ganha.
+   Os três são versionados. Até 2026-11-13 o `STATE.md` morava fora do git, na pasta
+   do mantenedor — quem clonava não recebia resumo nenhum e o arquivo não tinha como
+   ser conferido; a decisão mudou junto com a regra 8, porque resumo que ninguém lê e
+   ninguém confere não é resumo.
+
+8. **O que deriva do backlog é gerado, não escrito.** A parte de `STATE.md` e de
+   `tasks/NEXT.md` que muda a cada TASK entregue vive num bloco entre
+   `<!-- BEGIN GENERATED: <nome> -->` e `<!-- END GENERATED: <nome> -->`, e
+   `tasks/ORDER.md` é gerado inteiro. Quem reescreve é `cargo xtask docs-sync`; quem
+   reprova a divergência é `cargo xtask check-docs`, no CI. Editar dentro do bloco à
+   mão é perder a edição no próximo run — a prosa fora do bloco continua humana e o
+   gate não a julga. A regra é estreita de propósito: o gate só compara o que é
+   derivável do backlog, porque um gate que tenta julgar prosa reprova por estilo.
 
 ---
 
@@ -308,8 +320,10 @@ editar). Nunca passar token como argumento de `gh`: a credencial vem do
 Verificar o PR real (`state=MERGED`, base, merge commit) antes de qualquer coisa:
 `gh` pode falhar por rede. Depois `git fetch origin` e fast-forward do `develop` no
 checkout central limpo, confirmando `HEAD` = `origin/develop`. Worktree e branch da
-TASK integrada são descartáveis; worktree de outra sessão não é. Atualizar
-`STATE.md` e começar a próxima TASK.
+TASK integrada são descartáveis; worktree de outra sessão não é. Rodar
+`cargo xtask docs-sync` — ele reescreve `STATE.md`, `tasks/NEXT.md` e
+`tasks/ORDER.md` a partir do backlog — e começar a próxima TASK. Não editar os
+blocos gerados à mão: o `check-docs` reprova a divergência no CI.
 
 ### Entrega
 
@@ -320,8 +334,9 @@ autenticação ou rede é registrada com o erro real, não mascarada.
 
 ### Economia de tokens
 
-Evidência vai no commit e no corpo do PR. `STATE.md` só aponta. Subagente devolve
-resumo curto, não despejo de saída. Não registrar handoff longo.
+Evidência vai no commit e no corpo do PR. `STATE.md` só aponta, e o que ele aponta
+é gerado. Subagente devolve resumo curto, não despejo de saída. Não registrar
+handoff longo.
 
 ---
 
