@@ -1,0 +1,45 @@
+# TASK-E01-04 — prova de vermelho por mutacao (2026-11-13)
+# cwd: libs/decode
+# Cada teste cobre comportamento que ja funcionava, entao nao ha vermelho natural.
+# Metodo: quebrar a implementacao de proposito, rodar o teste, conferir que falha,
+# reverter com `git checkout --` e confirmar verde. Nenhuma mutacao sobreviveu ao commit.
+
+## 1. declared_length_beyond_max_frames_is_a_typed_error
+# Mutacao: removido `opts.limits.check_frames(f)?` em crates/vynamp-decode-flac/src/demux.rs
+# Resultado: FAILED
+#   assertion `left == right` failed
+#     left: None
+#    right: Some(Limit(Frames))
+# Revertido; teste verde.
+
+## 2. truncated_streaminfo_is_a_typed_error
+# Mutacao: ByteReader::eof em crates/vynamp-decode-core/src/bytes.rs passou a reportar offset: 0
+# Resultado: FAILED
+#   assertion `left == right` failed
+#     left: ("unexpected eof", 0)
+#    right: ("unexpected eof", 40)
+# Revertido; teste verde.
+
+## 3. renamed_files_probe_by_content_not_by_extension
+# Mutacao: Registry::probe em crates/vynamp-decode-core/src/registry.rs devolve o descritor
+#          pela extensao antes de considerar o score do conteudo.
+# Resultado: FAILED (2 testes)
+#   renamed_files_probe_by_content_not_by_extension:
+#     ...renamed-as-mp3.mp3: invalid mpeg sync at offset 0
+#   probe_tie_resolved_by_extension (teste preexistente, mesmo caminho):
+#     left: "low"  right: "a"
+# Revertido; ambos verdes.
+
+## 4. registry_enumerates_names_extensions_and_verification
+# Mutacao: removido `reg.add_codec(&MPEG_AUDIO_LAYER1_CODEC)` em crates/vynamp-decode/src/lib.rs
+# Resultado: FAILED (2 testes)
+#   registry_enumerates_names_extensions_and_verification:
+#     left: ["pcm", "flac", "mpeg-audio"]
+#    right: ["pcm", "flac", "mpeg-audio", "mpeg-audio-layer1"]
+#   codec_lookup (preexistente): assertion failed: Mp1
+# Revertido; ambos verdes.
+
+## Estado final medido
+# cargo test --workspace --locked  -> 517 passed, 3 ignored, 0 failed, 48 suites
+# cargo fmt --all -- --check       -> limpo
+# cargo clippy --workspace --all-targets --locked -- -D warnings -> No issues found

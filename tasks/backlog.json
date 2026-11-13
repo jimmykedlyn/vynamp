@@ -112,7 +112,7 @@
       "title": "Entregar fonte local e decoder registry",
       "phase": "M1",
       "priority": "P1",
-      "status": "planned",
+      "status": "implemented",
       "owner_role": "audio",
       "requirements": [
         "REQ-E01-04"
@@ -125,7 +125,7 @@
       "repo": "vynamp-decode",
       "acceptance_ready": true,
       "deliverable": "Adapters local source/probe/decode para WAV/AIFF/FLAC/MP3.",
-      "acceptance": "Extensão incorreta permite sniff; corrupt/oversized falham com erro tipado; decoder lista perfis reais.",
+      "acceptance": "Extensão incorreta permite sniff; corrupt/oversized falham com erro tipado; decoder lista os formatos que abrem com nome, extensões e nível de verificação.",
       "qa": [
         "QA-001",
         "QA-015"
