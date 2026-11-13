@@ -110,11 +110,11 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Instaladores: formatos, recipes e assinatura](_arquivo/repo/docs/engineering/06-installers.md) — _arquivo/repo/docs/engineering/06-installers.md
 
+- [Guia de desenvolvimento — versão detalhada, fora do projeto](_arquivo/engineering/guia-desenvolvimento.md) — _arquivo/engineering/guia-desenvolvimento.md; reescrita expandida do `engineering/08-reinicio-windows.md` (visão geral numerada, glossário, TASK de módulo em três etapas, problemas comuns). Arquivada em 2026-11-13 a pedido do mantenedor, que não a quer no projeto: ficam dois guias sobrepostos e o canônico é o `08`. Motivo no corpo do vynamp#58.
+
 - [Ativação externa e segredos](engineering/07-segredos.md) — engineering/07-segredos.md
 
 - [Guia de desenvolvimento — passo a passo](engineering/08-reinicio-windows.md) — engineering/08-reinicio-windows.md
-
-- [Guia de desenvolvimento — passo a passo, versão detalhada](engineering/guia-desenvolvimento.md) — engineering/guia-desenvolvimento.md; expande o mesmo fluxo com visão geral, termos, TASK de módulo em três etapas e problemas comuns.
 
 - [Evidências e relatórios](evidence/README.md) — evidence/README.md
 
