@@ -64,6 +64,8 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [ADR-017 — qualidade do resampler e da conversão de amostras](adr/ADR-017-resampler-e-conversao.md) — adr/ADR-017-resampler-e-conversao.md
 
+- [ADR-018 — entrega automática de TASK pelo `cargo xtask deliver`](adr/ADR-018-entrega-automatica.md) — adr/ADR-018-entrega-automatica.md
+
 - [Engine de áudio e invariantes](reference/audio/01-engine.md) — reference/audio/01-engine.md
 
 - [Matriz de formatos, codecs e tags](reference/audio/02-formats.md) — reference/audio/02-formats.md
