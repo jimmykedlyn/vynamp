@@ -1,0 +1,18 @@
+# TASK-E01-04 — suite no commit integrado das ressalvas (2026-11-14)
+# cwd: libs/decode
+# Commit medido: 9f26d7c9bea916da1e7c52e3b71db2a9897be412
+#   (merge commit do PR #30, fix/task-e01-04-claude-ressalvas-da-revisao)
+# Pais do merge: 6b83a8b (develop antes) e 6469f10 (a correcao das ressalvas)
+# Comando: cargo test --workspace --locked
+# Resultado: 517 passed, 3 ignored, 0 failed, 48 suites ok, rc=0
+
+# Comparacao com o commit anteriormente pinado (6b83a8b, merge do PR #29):
+#   517 passed, 3 ignored, 0 failed, 48 suites.
+# O PR #30 corrigiu assercoes e comentarios de teste; nao acrescentou nem removeu
+# teste, entao a contagem nao muda. O que muda e o que os testes existentes provam:
+#   - verification passou a ser asserido (antes era coletado e descartado)
+#   - assert_eq!(results.len(), 3) tautologico trocado por assercao de codecs distintos
+#   - probe_flac passou a ser exercitado no DECODE-AC-32
+#   - os dois testes novos ganharam #[cfg(all(...))] e passam em --no-default-features
+#     --features riff (antes falhavam em ext_of("flac"))
+# Os 3 ignorados continuam os mesmos de antes da TASK.

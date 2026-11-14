@@ -63,7 +63,12 @@ Entregues, em ordem de ID:
 
 ## Pendências de processo que não são TASK
 
-- **Revisão em contexto limpo da `TASK-E01-04`.** O subagente `revisor` falhou duas
-  vezes sem devolver saída e a revisão saiu da sessão do implementador. O código está
-  em `develop` (`6b83a8b`); fechar o registro exige revisão nova, não edição de
-  histórico.
+- **Ratificar ou reverter três critérios da `specs/decode.md` §5.** O commit `2227943`
+  acrescentou `DECODE-AC-32` e `-33` e reescreveu `DECODE-AC-01` no mesmo commit dos
+  testes, contra a regra "a spec muda antes do código". A violação está registrada na
+  própria §5; desfazer exigiria reescrever história, então a decisão é do mantenedor.
+
+- **Revisão em contexto limpo da `TASK-E01-04`: feita.** Veredito APROVADO COM
+  RESSALVAS, sete achados, seis corrigidos e um registrado. As quatro tentativas
+  anteriores foram interrompidas por um sinal inválido — arquivo de saída de subagente
+  em 0 byte não indica travamento, e todos os desta sessão gravam assim.
