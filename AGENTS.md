@@ -299,8 +299,15 @@ registrada** — não edição de contrato.
   `chore/claude-<slug>` ou `release/X.Y.Z`. TASK usa a primeira forma, criada por
   `xtask repo worktree`; trabalho de fase sem TASK usa `chore/claude-<slug>`.
 - Conventional Commits. Um commit por passo lógico.
-- **Sem merge, tag, release, force push ou reescrita de histórico pelo agente.**
-  Merge é do mantenedor, pelo GitHub, como merge commit.
+- **Sem tag, release, force push ou reescrita de histórico pelo agente.**
+  Merge é do mantenedor, pelo GitHub, como merge commit — com **uma** exceção
+  nomeada: `cargo xtask deliver` pode mergear o PR que ele mesmo abriu, sob as
+  condições da [ADR-018](adr/ADR-018-entrega-automatica.md) §1 (base `develop`,
+  head SHA igual ao revisado, todos os checks em `SUCCESS` incluindo `CI Gate`,
+  `mergeStateStatus` `CLEAN`, merge commit). Merge em `main`, PR que o `deliver`
+  não abriu, e tudo fora dessa lista continua sendo do mantenedor. Histórico e
+  motivos estão na ADR; se as duas divergirem, a ADR ganha e este parágrafo é
+  corrigido no mesmo PR.
 - **Nunca `git reset --hard`, `git clean -fdx` nem qualquer descarte destrutivo.**
   Trabalho não commitado é de outra sessão ou do mantenedor; se precisa sumir,
   vai para `_arquivo/` ou fica para quem o criou.
@@ -345,7 +352,8 @@ handoff longo.
 | Proibido | Motivo |
 |---|---|
 | `git push --force`, reescrever histórico | irreversível para quem já clonou |
-| merge, tag, release pelo agente | decisão do mantenedor |
+| tag, release, merge em `main`, merge de PR alheio | decisão do mantenedor |
+| merge do PR que o próprio `deliver` abriu | permitido, só sob a ADR-018 §1 |
 | alterar visibilidade, proteção ou plano do GitHub | decisão do mantenedor |
 | `--no-verify` ou bypass de hook | contorna o portão |
 | imprimir token, credencial ou chave | vaza em transcript e log |
