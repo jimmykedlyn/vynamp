@@ -24,7 +24,7 @@ passa a ser documental. É a razão de o job `specs` do `ci.yml` buscar submódu
 
 | Entrada / ameaça | Controle obrigatório | Cenário adversarial | Teste que existe hoje |
 |---|---|---|---|
-| Mídia/tag/capa malformada | budgets, parser seguro, native helper isolado | fuzz/corpus, oversized/decompression bomb | **Parcial.** `libs/decode/crates/vynamp-decode-core/src/limits.rs:117` `channels`, `:131` `sample_rate`, `:142` `frames_bytes`, `:156` `default_metadata_limit_is_64_mib`; `libs/decode/crates/vynamp-decode-core/tests/id3.rs:38` `oversized_tag_hits_metadata_limit`; `libs/decode/crates/vynamp-decode-flac/tests/metadata.rs:180` `metadata_over_limit`, `:204` `block_headers_count_toward_the_metadata_limit`, `:232` `the_number_of_metadata_blocks_is_capped`, `:424` `byte_flip_and_truncation_smoke`; `libs/decode/crates/vynamp-decode-flac/tests/decode.rs:464` `rejects_malformed_subframes`, `:628` `garbage_never_panics`; `libs/decode/crates/vynamp-decode-flac/tests/demux.rs:611` `byte_flip_smoke_never_panics`, `:666` `truncation_at_frame_boundaries`; `libs/decode/crates/vynamp-decode-riff/tests/riff.rs:316` `channel_limit`, `:333` `frame_limit`, `:500` `huge_chunk_size_is_eof`, `:525` `truncated_headers`, `:568` `byte_flip_and_truncation_smoke`; `libs/decode/crates/vynamp-decode-aiff/tests/aiff.rs:687` `byte_flip_and_truncation_smoke`; `libs/decode/crates/vynamp-decode-mp3/tests/mp1.rs:269` e `mp2.rs:374` `garbage_never_panics`. **Sem teste:** decompression bomb (corpus/fuzz é `TASK-E10-05`) e capa — o bloco `PICTURE` é hoje só `RawBlock` não interpretado (`libs/decode/crates/vynamp-decode-flac/src/metadata.rs:69`), então não há parser de imagem a atacar nem teste a escrever até existir um |
+| Mídia/tag/capa malformada | budgets, parser seguro, native helper isolado | fuzz/corpus, oversized/decompression bomb | **Parcial.** `libs/decode/crates/vynamp-decode-core/src/limits.rs:117` `channels`, `:131` `sample_rate`, `:142` `frames_bytes`, `:156` `default_metadata_limit_is_64_mib`; `libs/decode/crates/vynamp-decode-core/tests/id3.rs:38` `oversized_tag_hits_metadata_limit`; `libs/decode/crates/vynamp-decode-flac/tests/metadata.rs:180` `metadata_over_limit`, `:204` `block_headers_count_toward_the_metadata_limit`, `:232` `the_number_of_metadata_blocks_is_capped`, `:424` `byte_flip_and_truncation_smoke`; `libs/decode/crates/vynamp-decode-flac/tests/decode.rs:464` `rejects_malformed_subframes`, `:628` `garbage_never_panics`; `libs/decode/crates/vynamp-decode-flac/tests/demux.rs:611` `byte_flip_smoke_never_panics`, `:666` `truncation_at_frame_boundaries`; `libs/decode/crates/vynamp-decode-riff/tests/riff.rs:316` `channel_limit`, `:333` `frame_limit`, `:500` `huge_chunk_size_is_eof`, `:525` `truncated_headers`, `:568` `byte_flip_and_truncation_smoke`; `libs/decode/crates/vynamp-decode-aiff/tests/aiff.rs:687` `byte_flip_and_truncation_smoke`; `libs/decode/crates/vynamp-decode-mp3/tests/mp1.rs:269` e `mp2.rs:374` `garbage_never_panics`. **Sem teste:** decompression bomb (corpus/fuzz é `TASK-E10-05`) e capa — o bloco `PICTURE` é hoje só `RawBlock` não interpretado (`libs/decode/crates/vynamp-decode-flac/src/metadata.rs:71`), então não há parser de imagem a atacar nem teste a escrever até existir um |
 | Playlist/HLS/redirect SSRF | scheme/domain policy, DNS+redirect checks | loopback, link-local, rebound, file URI | **sem teste.** Nenhum cliente HTTP existe no tree; a dona é `TASK-E05-09`, com a política de proxy em `TASK-E17-11` |
 | Pacote zip traversal/bomb | canonical path, limits, staging | ../, absolute, symlink, huge ratio | **sem teste.** Nenhum leitor de pacote existe; a dona é `TASK-E06-02`, sobre o validador de `TASK-E06-01` |
 | Plugin loop/rede/arquivo indevido | fuel/deadline/memory/cap broker | trap, denied calls, flood | **sem teste.** Sem runtime de plugin; dona `TASK-E07-01`, com broker em `TASK-E07-03` e lifecycle em `TASK-E07-04` |
@@ -46,12 +46,12 @@ não confiável de mídia. Os valores medidos em `limits.rs:23`:
 | `max_frames` | 66 355 200 000 | teto de frames | Sim |
 | `max_channels` | 32 | recusa acima; zero é `Invalid` | Sim |
 | `max_sample_rate` | 768 000 Hz | recusa acima; zero é `Invalid` | Sim |
-| `max_metadata_bytes` | 64 MiB | teto do metadado, contado com os cabeçalhos de bloco (`metadata.rs:214`) | Sim |
+| `max_metadata_bytes` | 64 MiB | teto do metadado, contado com os cabeçalhos de bloco (`src/metadata.rs:214`) | Sim |
 | `max_depth` | 16 | teto de aninhamento | **Não.** `libs/decode/specs/decode.md:339-341` registra que nenhum demuxer o aplica, e `:424` mantém a limitação aberta: os quatro containers de hoje são planos, então não há profundidade a limitar. O dono é a primeira TASK que trouxer container aninhado (`TASK-E17-03` ou `TASK-E01-07`) |
 
 O default é o piso, não a política final: cada chamador pode apertar. O que o teste
 prova é que o limite **reprova** acima do teto e **aceita** exatamente no teto, nos dois
-sentidos (`metadata.rs:180`, `:204`) — para os cinco campos aplicados. Para `max_depth`
+sentidos (`tests/metadata.rs:180`, `tests/metadata.rs:204`) — para os cinco campos aplicados. Para `max_depth`
 não existe teste, porque não existe chamador.
 
 ## Segurança não bloqueante
@@ -112,12 +112,17 @@ cria processo:
 ```
 $ grep -rniE '\bhelper\b|ipc|named pipe|unix socket' --include=*.rs --include=*.toml \
     libs apps xtask | grep -v target
-$ grep -rn 'Command::new' libs/*/crates libs/*/src apps/*/src
+$ grep -rn 'Command::new' libs apps
 ```
 
 O primeiro devolve cinco ocorrências, todas comentário ou nome de função de teste. O
-segundo devolve **zero** em `libs/` e `apps/`: nenhum código de produto cria processo
-filho. (`xtask` cria — oito ocorrências em cinco arquivos: `signing.rs:141`,
+segundo devolve **uma** ocorrência em `libs/` e `apps/`, e ela não é código de produto:
+`libs/output/tools/output-probe/tests/probe.rs:6` invoca o próprio binário do probe
+(`Command::new(env!("CARGO_BIN_EXE_output-probe"))`). O `output-probe` é ferramenta de
+teste, não produto — o manifesto dele declara `publish = false`
+(`libs/output/tools/output-probe/Cargo.toml:8`) e a descrição diz que ele abre
+host/device e imprime a config real. Nenhum código de produto cria
+processo filho. (`xtask` cria — oito ocorrências em cinco arquivos: `signing.rs:141`,
 `ci.rs:183`, `package.rs:109`, `util.rs:93`, `util.rs:179`, `util.rs:180`,
 `secrets.rs:516`, `secrets.rs:611` — mas `xtask` é ferramental de build, não produto, e
 não é o host que o AC-3 descreve.) Os três `apps/*/src/main.rs` são um `println!` de

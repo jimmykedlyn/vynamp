@@ -100,11 +100,13 @@ Executado em 2026-11-15. O estado abaixo foi medido, não herdado do plano.
 `security/01-threat-model.md` v0.8.4 ganhou a coluna `Teste que existe hoje`, com
 `arquivo:linha` e nome da função para cada teste que roda. A coluna carrega **22
 referências `arquivo:linha`**, todas distintas: 21 resolvem para a `fn` de teste nomeada
-ao lado (`sed -n <linha>p`) e a vigésima segunda, `…/src/metadata.rs:69`, para
+ao lado (`sed -n <linha>p`) e a vigésima segunda, `…/src/metadata.rs:71`, para
 `pub struct RawBlock` — é a citação de código que sustenta o "capa não tem parser a
-atacar", não uma referência a teste. O documento inteiro tem **40 ocorrências / 38
+atacar", não uma referência a teste. O documento inteiro tem **42 ocorrências / 41
 distintas** (`grep -oE '([A-Za-z0-9_./-]+\.rs)?:[0-9]+(-[0-9]+)?' | sort | uniq -c`), porque
-as tabelas de `Limits` repetem `:204` e `:424`. A suíte do `vynamp-decode` rodou verde:
+`:424` aparece duas vezes — em `decode.md:424` e em `tests/metadata.rs:424`. A contagem
+de 0.8.4 era 40/38; o delta e a causa estão na seção da quinta revisão. A suíte do
+`vynamp-decode` rodou verde:
 **517 passed, 0 failed, 3 ignored**.
 
 A coluna de controle carrega três afirmações que a revisão derrubou e que foram
@@ -201,14 +203,37 @@ destino está registrada logo abaixo dela. Quem leva a linha para o repo do play
 | # | Defeito | Correção |
 |---|---|---|
 | 1 | O caso "workflow" de `github_actions_rejects_the_shorthand_permission_forms` passava pela checagem de `contents`, não por `check_permissions`; remover a chamada do workflow deixava o teste verde | A asserção passou a exigir a mensagem específica `grants \`permissions: write-all\``. Mutação: removi `check_permissions` do bloco de workflow e o teste ficou **vermelho** (`expected a message containing "grants \`permissions: write-all\`", got ["Workflow ci must declare \`permissions: contents: read\` …"]`); restaurei e voltou a verde |
-| 2 | `metadata.rs:204` apontava para `}`, não para o `if` do limite | Corrigido para `metadata.rs:214`, medido no pin `9f26d7c` |
+| 2 | `metadata.rs:204` apontava para `}`, não para o `if` do limite | Corrigido para `src/metadata.rs:214`, medido no pin `9f26d7c`; a forma qualificada é a da quinta revisão, ver abaixo |
 | 3 | Lista de `Command::new` dizia três | São **oito** em cinco arquivos, medidos com `grep -rn 'Command::new' xtask/src` |
 | 4 | A tabela declarava `check-delivery` `"passed"` sem apontar para a limitação | A linha agora diz que o `passed` só existe com o `origin` realinhado e remete à limitação |
 | 5 | O registro versionado não citava a `JKC-227` | Os dois documentos agora nomeiam a `JKC-227` como quem leva o critério |
 
-A troca de `:204` por `:214` mudou a contagem de referências do documento: **40
-ocorrências / 38 distintas**, remedidas com o mesmo `grep -oE`. A coluna do AC-1 segue
-com **22 referências, todas distintas**.
+A contagem de referências do documento **não** mudou por causa da troca de `:204` por
+`:214`: o swap é neutro. Aplicando só o swap sobre o texto anterior dá **35/33**, e
+revertendo só o swap sobre o texto entregue dá **40/38**. O delta que levou o documento
+de 35/33 a 40/38 veio **inteiro** da lista de `Command::new`, que passou de três para
+oito referências. A coluna do AC-1 segue com **22 referências, todas distintas**.
+
+### Ressalvas da quinta revisão — fechadas
+
+| # | Defeito | Correção |
+|---|---|---|
+| 1 | A explicação causal acima atribuía o delta de contagem à troca de linha, que é neutra | O parágrafo agora atribui o delta inteiro à lista de `Command::new` (3 → 8) e registra o swap como neutro, com os dois números medidos (35/33 e 40/38) |
+| 2 | `security/01-threat-model.md` afirmava "zero em `libs/` e `apps/`", mas o comando mostrado não alcançava `libs/*/tools/` | O comando passou a ser `grep -rn 'Command::new' libs apps`, que mede o que a frase diz. A ocorrência encontrada — `libs/output/tools/output-probe/tests/probe.rs:6` — está registrada com o motivo de não contar: é binário de teste com `publish = false` (`libs/output/tools/output-probe/Cargo.toml:8`) que invoca a si mesmo |
+| 3 | `libs/decode/crates/vynamp-decode-flac/src/metadata.rs:69` não é `pub struct RawBlock` | Corrigido para `:71`, medido no pin `9f26d7c`: `sed -n '71p'` imprime `pub struct RawBlock {`; a `69` é o `///` de doc e a `70` o `#[derive(...)]` |
+| 4 | Depois do fix, `metadata.rs:204` na linha 49 significava `src/metadata.rs` e na linha 54 significava `tests/metadata.rs` — dois tokens iguais, arquivos diferentes | As duas agora são explícitas: `src/metadata.rs:214` e `tests/metadata.rs:180`, `tests/metadata.rs:204`. Conferido: `sed -n '214p'` em `src/` imprime `if total > u64::from(limits.max_metadata_bytes) {`; `sed -n '180p'` e `sed -n '204p'` em `tests/` imprimem `fn metadata_over_limit()` e `fn block_headers_count_toward_the_metadata_limit()` |
+
+**A contagem mudou de 40/38 para 42 ocorrências / 41 distintas**, remedida com o mesmo
+`grep -oE`. Dois efeitos, medidos no diff do multiconjunto de tokens:
+
+- Desambiguação da ressalva 4: saem `metadata.rs:180`, `metadata.rs:214` e uma das duas
+  ocorrências de `:204`; entram `src/metadata.rs:214`, `tests/metadata.rs:180` e
+  `tests/metadata.rs:204`. Total **−3 +3 = 0**; distintas **−2 +3 = +1**, porque `:204`
+  continua existindo uma vez (linha 27).
+- Citações novas da ressalva 2: entram `libs/output/tools/output-probe/tests/probe.rs:6`
+  e `libs/output/tools/output-probe/Cargo.toml:8`. Total **+2**; distintas **+2**.
+
+Somando: total 40 + 0 + 2 = **42**; distintas 38 + 1 + 2 = **41**.
 
 ### Comandos e resultado
 
