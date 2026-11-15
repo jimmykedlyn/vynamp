@@ -10,8 +10,8 @@
     "engineering": 2,
     "total": 215,
     "acceptance_ready": 215,
-    "planned": 201,
-    "implemented": 14
+    "planned": 198,
+    "implemented": 17
   },
   "tasks": [
     {
@@ -2938,7 +2938,7 @@
       "title": "Criar corpus de testes licenciado",
       "phase": "M0",
       "priority": "P0",
-      "status": "planned",
+      "status": "implemented",
       "owner_role": "quality",
       "requirements": [
         "REQ-E10-01"
@@ -4410,7 +4410,7 @@
       "title": "Configurar Claude Code e Superpowers obrigatório",
       "phase": "M0",
       "priority": "P0",
-      "status": "planned",
+      "status": "implemented",
       "owner_role": "engineering-delivery",
       "requirements": [
         "REQ-E15-01"

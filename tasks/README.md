@@ -17,7 +17,7 @@
 | `TASK-E09-08` | Entregar sincronização de dados do ouvinte | vynamp | planned |
 | `TASK-E09-09` | Entregar registry de temas e plugins | vynamp | planned |
 | `TASK-E09-10` | Validar operação, carga e recuperação | vynamp | planned |
-| `TASK-E10-01` | Criar corpus de testes licenciado | vynamp | planned |
+| `TASK-E10-01` | Criar corpus de testes licenciado | vynamp | implemented |
 | `TASK-E10-02` | Testar domínio e propriedades de fila | vynamp | planned |
 | `TASK-E10-03` | Criar harness numérico de áudio | vynamp | planned |
 | `TASK-E10-04` | Criar servidor de streaming adversarial | vynamp | planned |
@@ -44,7 +44,7 @@
 | `TASK-E14-04` | Executar corpus e outputs por alvo | vynamp | planned |
 | `TASK-E14-05` | Validar packaging e update em cada alvo | vynamp | planned |
 | `TASK-E14-06` | Fechar release 1.0 multiplataforma | vynamp | planned |
-| `TASK-E15-01` | Configurar Claude Code e Superpowers obrigatório | vynamp | planned |
+| `TASK-E15-01` | Configurar Claude Code e Superpowers obrigatório | vynamp | implemented |
 | `TASK-E15-02` | Validar worktrees, claims e handoff | vynamp | planned |
 | `TASK-E15-03` | Importar GitHub privado e ativar Gitflow | vynamp | implemented |
 | `TASK-E15-04` | Ativar workflows e CI Gate multiplataforma | vynamp | planned |
