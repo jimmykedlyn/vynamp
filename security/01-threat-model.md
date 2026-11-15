@@ -1,6 +1,6 @@
 # Modelo de ameaças e controles
 
-Versão: 0.8.3 · Data: 2026-11-15 · Estado: threat model aplicado (TASK-E11-02, AC-1 e AC-2); AC-3 movido para `TASK-E07-05` por decisão do mantenedor; código de produto ainda não iniciado.
+Versão: 0.8.4 · Data: 2026-11-15 · Estado: threat model aplicado (TASK-E11-02, AC-1 e AC-2); AC-3 movido para `TASK-E07-05` por decisão do mantenedor; código de produto ainda não iniciado.
 
 Assets: arquivos do usuário, biblioteca/ratings, credentials, integridade do áudio, conta/provider, pacotes, updater. Trust boundaries: arquivo de mídia, metadado/cover, URL/manifest, pacote/theme/plugin, helper, web API e ingest admin. Local user media é entrada não confiável para parsers, não autorização para executar código.
 
@@ -46,7 +46,7 @@ não confiável de mídia. Os valores medidos em `limits.rs:23`:
 | `max_frames` | 66 355 200 000 | teto de frames | Sim |
 | `max_channels` | 32 | recusa acima; zero é `Invalid` | Sim |
 | `max_sample_rate` | 768 000 Hz | recusa acima; zero é `Invalid` | Sim |
-| `max_metadata_bytes` | 64 MiB | teto do metadado, contado com os cabeçalhos de bloco (`metadata.rs:204`) | Sim |
+| `max_metadata_bytes` | 64 MiB | teto do metadado, contado com os cabeçalhos de bloco (`metadata.rs:214`) | Sim |
 | `max_depth` | 16 | teto de aninhamento | **Não.** `libs/decode/specs/decode.md:339-341` registra que nenhum demuxer o aplica, e `:424` mantém a limitação aberta: os quatro containers de hoje são planos, então não há profundidade a limitar. O dono é a primeira TASK que trouxer container aninhado (`TASK-E17-03` ou `TASK-E01-07`) |
 
 O default é o piso, não a política final: cada chamador pode apertar. O que o teste
@@ -117,9 +117,11 @@ $ grep -rn 'Command::new' libs/*/crates libs/*/src apps/*/src
 
 O primeiro devolve cinco ocorrências, todas comentário ou nome de função de teste. O
 segundo devolve **zero** em `libs/` e `apps/`: nenhum código de produto cria processo
-filho. (`xtask` cria — `ci.rs:183`, `util.rs:93`, `secrets.rs:516` — mas `xtask` é
-ferramental de build, não produto, e não é o host que o AC-3 descreve.) Os três
-`apps/*/src/main.rs` são um `println!` de versão.
+filho. (`xtask` cria — oito ocorrências em cinco arquivos: `signing.rs:141`,
+`ci.rs:183`, `package.rs:109`, `util.rs:93`, `util.rs:179`, `util.rs:180`,
+`secrets.rs:516`, `secrets.rs:611` — mas `xtask` é ferramental de build, não produto, e
+não é o host que o AC-3 descreve.) Os três `apps/*/src/main.rs` são um `println!` de
+versão.
 
 Consequência, registrada em vez de mascarada: **AC-3 não é satisfazível nesta TASK**
 enquanto o helper não existir. Por decisão do mantenedor em **2026-11-15**, o critério
@@ -136,7 +138,8 @@ está escrito em `apps/player/tasks/items/TASK-E07-05.md`. Esse arquivo pertence
 é que TASK que toca dois módulos é duas TASKs. Enquanto a linha não for autorada lá,
 `E07-05` é implementável contra os próprios quatro ACs sem que nenhum peça a evidência
 de isolamento, e o AC-3 some entre as duas TASKs. O texto a copiar está em
-`tasks/items/TASK-E11-02.md`; quem o leva é uma TASK do repo do player.
+`tasks/items/TASK-E11-02.md`; quem o leva é a `JKC-227`, aberta no tracker para autorar a
+linha no repo do player.
 
 A prova de sandbox que o AC-3 pede — filho que cai, RPC malicioso, revisão de escape —
 não pode rodar sem o processo existir. O relatório de ausência é a evidência honesta

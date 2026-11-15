@@ -2241,7 +2241,17 @@ model: sonnet
     /// `none` -- so both are rejected wherever they appear.
     #[test]
     fn github_actions_rejects_the_shorthand_permission_forms() {
-        for shorthand in ["write-all", "read-all", "\"write-all\""] {
+        // The assertion names the message `check_permissions` emits, not just
+        // the AC tag. A workflow-level `write-all` also trips the separate
+        // `contents: read` check, whose message carries the same tag -- so
+        // asserting only the tag would stay green if `check_permissions` were
+        // dropped from the workflow block, and the workflow half of the rule
+        // would lose its only guard.
+        for (shorthand, word) in [
+            ("write-all", "write-all"),
+            ("read-all", "read-all"),
+            ("\"write-all\"", "write-all"),
+        ] {
             let cases = [
                 (
                     "workflow",
@@ -2258,9 +2268,11 @@ model: sonnet
                 let f = ci_fixture();
                 edit(f.path(), "ci.yml", &from, &to);
                 let e = ci_errors(f.path());
+                let expected = format!("grants `permissions: {word}`");
                 assert!(
-                    e.iter().any(|e| e.contains("TASK-E11-02 AC-2")),
-                    "a {where_} block with `permissions: {shorthand}` must fail the gate, got {e:?}"
+                    e.iter().any(|e| e.contains(&expected)),
+                    "a {where_} block with `permissions: {shorthand}` must be rejected by \
+                     check_permissions (expected a message containing {expected:?}), got {e:?}"
                 );
             }
         }

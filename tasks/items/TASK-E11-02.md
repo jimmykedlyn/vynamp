@@ -97,12 +97,12 @@ Executado em 2026-11-15. O estado abaixo foi medido, não herdado do plano.
 
 ### AC-1 — controle e teste por entrada
 
-`security/01-threat-model.md` v0.8.3 ganhou a coluna `Teste que existe hoje`, com
+`security/01-threat-model.md` v0.8.4 ganhou a coluna `Teste que existe hoje`, com
 `arquivo:linha` e nome da função para cada teste que roda. A coluna carrega **22
 referências `arquivo:linha`**, todas distintas: 21 resolvem para a `fn` de teste nomeada
 ao lado (`sed -n <linha>p`) e a vigésima segunda, `…/src/metadata.rs:69`, para
 `pub struct RawBlock` — é a citação de código que sustenta o "capa não tem parser a
-atacar", não uma referência a teste. O documento inteiro tem **35 ocorrências / 33
+atacar", não uma referência a teste. O documento inteiro tem **40 ocorrências / 38
 distintas** (`grep -oE '([A-Za-z0-9_./-]+\.rs)?:[0-9]+(-[0-9]+)?' | sort | uniq -c`), porque
 as tabelas de `Limits` repetem `:204` e `:424`. A suíte do `vynamp-decode` rodou verde:
 **517 passed, 0 failed, 3 ignored**.
@@ -192,8 +192,23 @@ TASK fecha com AC-1 e AC-2, e o estado no backlog vai a `implemented`.
 **O critério recebido ainda não está no arquivo de `E07-05`.** Medido:
 `grep -c "AC-5" apps/player/tasks/items/TASK-E07-05.md` devolve **0**, e o arquivo tem
 quatro ACs. O texto integral está na seção "Critérios de aceite" acima, e a pendência de
-destino está registrada logo abaixo dela. Quem leva a linha para o repo do player é uma
-TASK daquele repo — decisão do mantenedor em 2026-11-15 (`optionIds: ["new_task"]`).
+destino está registrada logo abaixo dela. Quem leva a linha para o repo do player é a
+`JKC-227`, aberta no tracker para receber o critério — decisão do mantenedor em
+2026-11-15 (`optionIds: ["new_task"]`).
+
+### Ressalvas da quarta revisão — fechadas
+
+| # | Defeito | Correção |
+|---|---|---|
+| 1 | O caso "workflow" de `github_actions_rejects_the_shorthand_permission_forms` passava pela checagem de `contents`, não por `check_permissions`; remover a chamada do workflow deixava o teste verde | A asserção passou a exigir a mensagem específica `grants \`permissions: write-all\``. Mutação: removi `check_permissions` do bloco de workflow e o teste ficou **vermelho** (`expected a message containing "grants \`permissions: write-all\`", got ["Workflow ci must declare \`permissions: contents: read\` …"]`); restaurei e voltou a verde |
+| 2 | `metadata.rs:204` apontava para `}`, não para o `if` do limite | Corrigido para `metadata.rs:214`, medido no pin `9f26d7c` |
+| 3 | Lista de `Command::new` dizia três | São **oito** em cinco arquivos, medidos com `grep -rn 'Command::new' xtask/src` |
+| 4 | A tabela declarava `check-delivery` `"passed"` sem apontar para a limitação | A linha agora diz que o `passed` só existe com o `origin` realinhado e remete à limitação |
+| 5 | O registro versionado não citava a `JKC-227` | Os dois documentos agora nomeiam a `JKC-227` como quem leva o critério |
+
+A troca de `:204` por `:214` mudou a contagem de referências do documento: **40
+ocorrências / 38 distintas**, remedidas com o mesmo `grep -oE`. A coluna do AC-1 segue
+com **22 referências, todas distintas**.
 
 ### Comandos e resultado
 
@@ -205,7 +220,7 @@ TASK daquele repo — decisão do mantenedor em 2026-11-15 (`optionIds: ["new_ta
 | `cargo xtask check-docs` | `"result": "passed"`, 215 TASKs |
 | `cargo xtask check-tasks` | `"result": "passed"` |
 | `cargo xtask check-authoring` | `"result": "passed"`, 0 blocking |
-| `cargo xtask check-delivery` | `"result": "passed"`, 2 workflows |
+| `cargo xtask check-delivery` | `"result": "passed"`, 2 workflows — **só com o `origin` realinhado**; no estado do clone ele falha, ver limitação abaixo |
 | `cargo test --workspace` em `libs/decode` | 517 passed, 0 failed, 3 ignored (listados acima) |
 
 ### Limitações registradas
