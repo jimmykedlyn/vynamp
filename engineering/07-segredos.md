@@ -1,24 +1,34 @@
 # Ativação externa e segredos
 
-Versão 0.8.0 · 2026-11-15 · Configuração do projeto; player ainda não implementado.
+Versão 0.8.1 · 2026-11-15 · Configuração do projeto; player ainda não implementado.
 
 Não commitar credenciais, .env, PFX/P12/JKS/P8 ou export de tokens. Plugin/account auth é por máquina; o agente não herda token de outra ferramenta automaticamente. gh auth login/setup-git na máquina autorizada, sem token colado na conversa/repo. O ambiente de preparação não acessou repo privado; config/github.json registra isso explicitamente.
 
 ## Verificação, não declaração
 
-Duas checagens provam o que este arquivo pede, e as duas são portão no CI do umbrella:
+Duas checagens provam o que este arquivo pede. **Uma roda em CI; a outra, hoje, só no
+`pre-push` local** — a diferença está dita em cada item, porque "portão" que não roda no
+runner não barra merge nenhum:
 
-- **Credencial no histórico.** `cargo xtask check-secrets` lê todo blob alcançável de
-  toda ref, não a árvore de trabalho: segredo apagado no commit seguinte continua no
-  clone. Roda no job `tooling` com `git fetch --unshallow` antes, porque um clone raso
-  escanearia a árvore e chamaria de limpo um histórico que ainda tem o token. Resultado
-  medido em 2026-11-15: `No credential shape found in the reachable history.`
-- **Token do workflow.** Todo workflow declara `permissions: contents: read` e nenhum
-  job sobrescreve com escopo maior. O default do GitHub não é seguro por omissão — em
-  repositório antigo o token nasce read/write — e um `permissions:` de job substitui o
-  do workflow inteiro. O gate está em `xtask/src/validate.rs` (`github_actions`), com
-  teste para o bloco de workflow e para o de job. Toda action é fixada por SHA de 40
-  hex, conferido no mesmo job.
+- **Credencial no histórico — roda em CI.** `cargo xtask check-secrets` lê todo blob
+  alcançável de toda ref, não a árvore de trabalho: segredo apagado no commit seguinte
+  continua no clone. Roda no job `tooling` do `ci.yml` com `git fetch --unshallow` antes,
+  porque um clone raso escanearia a árvore e chamaria de limpo um histórico que ainda tem
+  o token. Resultado medido em 2026-11-15: `No credential shape found in the reachable
+  history.`
+- **Token do workflow — portão local no `pre-push`, ainda não em CI.** Todo workflow
+  declara `permissions: contents: read` e nenhuma chave de permissão, no bloco de
+  workflow nem no de job, tem valor diferente de `read` ou `none`. O default do GitHub
+  não é seguro por omissão — em repositório antigo o token nasce read/write —, um
+  `permissions:` de job substitui o do workflow inteiro, e ler só `contents` deixaria
+  `id-token: write` passar. O gate está em `xtask/src/validate.rs` (`github_actions`),
+  com teste para o bloco de workflow, para o de job e para chave larga fora de
+  `contents`. Toda action é fixada por SHA de 40 hex, conferido no mesmo gate.
+  **O gate não roda em workflow nenhum neste commit:** `.githooks/pre-push` chama
+  `cargo xtask ci docs`, que inclui `check-delivery`, mas nenhum job de
+  `.github/workflows/` o chama. Clone sem `setup.sh` e todo runner de CI ficam sem ele.
+  Quem fecha é `TASK-E15-04` (commit `8d11700`, branch
+  `feature/task-e15-04-claude-ci-gate-multiplataforma`), ainda **não** em `develop`.
 
 O que **não** está coberto: redaction de credencial em log de runtime. A varredura acha
 segredo commitado, não segredo impresso. Redaction é `TASK-E11-05`.

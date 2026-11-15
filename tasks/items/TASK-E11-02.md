@@ -73,9 +73,18 @@ Executado em 2026-11-15. O estado abaixo foi medido, não herdado do plano.
 ### AC-1 — controle e teste por entrada
 
 `security/01-threat-model.md` v0.8.0 ganhou a coluna `Teste que existe hoje`, com
-`arquivo:linha` e nome da função para cada teste que roda. As 23 referências citadas
-foram conferidas uma a uma contra o tree (`sed -n <linha>p` devolveu a `fn` esperada em
-todas) e a suíte do `vynamp-decode` rodou verde: **517 passed, 0 failed, 0 ignored**.
+`arquivo:linha` e nome da função para cada teste que roda. As **26 ocorrências (25 pares
+distintos** — `metadata.rs:204` aparece duas vezes) foram conferidas uma a uma contra o
+tree (`sed -n <linha>p` devolveu a `fn` esperada em todas) e a suíte do `vynamp-decode`
+rodou verde: **517 passed, 0 failed, 3 ignored**.
+
+Os três ignorados, com motivo, como o `AGENTS.md` §4.6 exige:
+
+| Teste | Motivo declarado |
+|---|---|
+| `blackbox::intensity_probe_gains` (`vynamp-decode-mp3/src/layer3/tests/blackbox.rs:489`) | `writes and analyses scratch files for the black-box comparison` |
+| `blackbox::write_blackbox_streams` (`vynamp-decode-mp3/src/layer3/tests/blackbox.rs:285`) | `writes scratch files for the black-box comparison` |
+| doctest de `vynamp-decode-testkit/src/alloc.rs:8` | `ignore` — exemplo de `#[global_allocator]`, não compila como doctest |
 
 Resultado por entrada: **1 de 10 com cobertura parcial** (mídia/tag/capa — budgets e
 parsers com testes reais; bomb e capa sem teste, com dona nomeada) e **9 de 10 sem
@@ -88,15 +97,22 @@ helper, updater, banco nem backend, então não há o que atacar.
 | Verificação | Comando | Resultado |
 |---|---|---|
 | Varredura de segredo no histórico | `cargo xtask check-secrets` | `No credential shape found in the reachable history.`, exit 0 |
-| Token read-only por workflow | leitura de `.github/workflows/*.yml` | `ci.yml:13` e `quality.yml:15` declaram `permissions: contents: read`; nenhum job sobrescreve |
+| Token read-only por workflow | leitura de `.github/workflows/*.yml` | `ci.yml:13` e `quality.yml:15` declaram `permissions: contents: read`; nenhum job sobrescreve, e nenhuma chave tem valor fora de `read`/`none` |
 | Action fixada por SHA | `grep -n "uses:" .github/workflows/*.yml` | 7 ocorrências, todas `actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1` (40 hex) |
 
-A política de token era **afirmada e não verificada**: nada em CI reprovava a remoção do
-bloco `permissions:`. Foi fechada com TDD — dois testes vermelhos primeiro
-(`github_actions_requires_the_read_only_token_policy`,
-`github_actions_rejects_a_job_that_widens_the_token`), depois o gate em
+A política de token era **afirmada e não verificada**: nada reprovava a remoção do bloco
+`permissions:`. Foi fechada com TDD — testes vermelhos primeiro, depois o gate em
 `xtask/src/validate.rs` (`github_actions`). O gate cobre o bloco de workflow **e** o de
-job, porque um `permissions:` de job substitui o do workflow inteiro.
+job, porque um `permissions:` de job substitui o do workflow inteiro; e rejeita
+**qualquer** chave com valor diferente de `read`/`none`, não só `contents` — a primeira
+versão lia só `contents`, e `id-token: write` passava. `github_actions_rejects_any_wide_permission_key`
+ficou vermelho antes da regra (`got []`) e verde depois;
+`github_actions_accepts_permissions_named_none` guarda o outro lado.
+
+**Onde o gate roda:** no `pre-push` local (`.githooks/pre-push` → `cargo xtask ci docs`
+→ `check-delivery`). **Não** roda em workflow nenhum de `.github/workflows/` neste
+commit — medido com `grep -rn "check-delivery\|ci docs" .github/workflows/`. Quem fecha
+é `TASK-E15-04` (`8d11700`), ainda fora de `develop`.
 
 ### AC-3 — isolamento de helper: **não satisfeito**
 
@@ -107,9 +123,9 @@ $ grep -rniE '\bhelper\b|ipc|named pipe|unix socket' --include=*.rs --include=*.
     libs apps xtask | grep -v target
 ```
 
-Quatro ocorrências, todas comentário ou nome de função de teste. `apps/player/src/main.rs`
-é um `println!` de versão. Sem processo, não há prova de sandbox a rodar: filho que cai,
-RPC malicioso e revisão de escape precisam do binário.
+Cinco ocorrências, todas comentário ou nome de função de teste. Os três
+`apps/*/src/main.rs` são um `println!` de versão. Sem processo, não há prova de sandbox a
+rodar: filho que cai, RPC malicioso e revisão de escape precisam do binário.
 
 Registrado como ausência medida, não como pendência disfarçada. O que fecha o AC é
 `TASK-E07-05` (sandbox OS, RPC autenticado), sobre os adapters de `TASK-E14-02` — ambas
@@ -128,7 +144,7 @@ evidência.
 | `cargo xtask check-tasks` | `"result": "passed"` |
 | `cargo xtask check-authoring` | `"result": "passed"`, 0 blocking |
 | `cargo xtask check-delivery` | `"result": "passed"`, 2 workflows |
-| `cargo test --workspace` em `libs/decode` | 517 passed, 0 failed, 0 ignored |
+| `cargo test --workspace` em `libs/decode` | 517 passed, 0 failed, 3 ignored (listados acima) |
 
 ### Limitações registradas
 

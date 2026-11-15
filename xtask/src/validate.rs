@@ -542,6 +542,12 @@ fn triggers(v: &Value) -> BTreeSet<String> {
         _ => BTreeSet::new(),
     }
 }
+/// Renders a permission value for a gate message. A bare `{value}` on a
+/// `serde_json::Value` string prints the JSON form, quotes included, and the
+/// reader ends up hunting for literal quotes in a file that has none.
+fn scope(v: &serde_json::Value) -> String {
+    v.as_str().map_or_else(|| v.to_string(), str::to_owned)
+}
 /// CI runs on GitHub Actions (ADR-014). Every action is pinned by full commit
 /// SHA and the aggregate gate fails closed on any non-success dependency.
 ///
@@ -602,6 +608,11 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
     // overrides it with a wider scope: a job-level block replaces the
     // workflow-level one wholesale, so the top-level line alone proves
     // nothing about the job that actually runs.
+    //
+    // Reading `contents` alone would test one key and call it the policy.
+    // `id-token: write` exchanges OIDC for cloud credentials and
+    // `packages: write` publishes artifacts, so every key has to be `read` or
+    // `none` -- `none` is narrower than `read`, not wider.
     for (name, v) in &flows {
         c.check(
             v["permissions"]["contents"].as_str() == Some("read"),
@@ -609,6 +620,16 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
                 "Workflow {name} must declare `permissions: contents: read` (TASK-E11-02 AC-2)"
             ),
         );
+        for (key, value) in v["permissions"].as_object().into_iter().flatten() {
+            c.check(
+                matches!(value.as_str(), Some("read" | "none")),
+                format!(
+                    "Workflow {name} grants `{key}: {}`; every permission must be \
+                     `read` or `none` (TASK-E11-02 AC-2)",
+                    scope(value)
+                ),
+            );
+        }
         for (job, body) in v["jobs"].as_object().into_iter().flatten() {
             let Some(perms) = body.get("permissions") else {
                 continue;
@@ -620,6 +641,16 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
                      (TASK-E11-02 AC-2)"
                 ),
             );
+            for (key, value) in perms.as_object().into_iter().flatten() {
+                c.check(
+                    matches!(value.as_str(), Some("read" | "none")),
+                    format!(
+                        "Job {name}/{job} grants `{key}: {}`; every permission must be \
+                         `read` or `none` (TASK-E11-02 AC-2)",
+                        scope(value)
+                    ),
+                );
+            }
         }
     }
     let ci = flows.get("ci");
@@ -2075,6 +2106,55 @@ model: sonnet
             e.iter()
                 .any(|e| e.contains("TASK-E11-02 AC-2") && e.contains("specs")),
             "a job with `contents: write` must fail the gate and name the job, got {e:?}"
+        );
+    }
+    /// Reading only `contents` tests one key and calls it the policy. Any
+    /// other key left at `write` is a wider token than the workflow declares
+    /// at the top: `id-token: write` exchanges OIDC for cloud credentials, and
+    /// `packages: write` publishes artifacts. The gate has to reject every key
+    /// that is neither `read` nor `none`, in the workflow block and in a job
+    /// block alike.
+    #[test]
+    fn github_actions_rejects_any_wide_permission_key() {
+        let cases = [
+            (
+                "ci.yml",
+                "permissions:\n  contents: read\n",
+                "permissions:\n  contents: read\n  id-token: write\n",
+                "workflow",
+            ),
+            (
+                "ci.yml",
+                "  specs:\n    runs-on: ubuntu-22.04\n",
+                "  specs:\n    runs-on: ubuntu-22.04\n    permissions:\n      contents: read\n      packages: write\n",
+                "job",
+            ),
+        ];
+        for (name, from, to, where_) in cases {
+            let f = ci_fixture();
+            edit(f.path(), name, from, to);
+            let e = ci_errors(f.path());
+            assert!(
+                e.iter().any(|e| e.contains("TASK-E11-02 AC-2")),
+                "a {where_} block with `write` outside `contents` must fail the gate, got {e:?}"
+            );
+        }
+    }
+    /// `none` is narrower than `read`, not wider: a workflow that turns off a
+    /// permission it does not use must keep passing.
+    #[test]
+    fn github_actions_accepts_permissions_named_none() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "ci.yml",
+            "permissions:\n  contents: read\n",
+            "permissions:\n  contents: read\n  packages: none\n",
+        );
+        assert_eq!(
+            ci_errors(f.path()),
+            Vec::<String>::new(),
+            "`packages: none` must not be read as a widened token"
         );
     }
     /// AC-2 of TASK-E15-04: `persist-credentials: false` is what keeps the
