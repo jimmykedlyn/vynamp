@@ -1,6 +1,6 @@
 # Modelo de ameaças e controles
 
-Versão: 0.8.4 · Data: 2026-11-15 · Estado: threat model aplicado (TASK-E11-02, AC-1 e AC-2); AC-3 movido para `TASK-E07-05` por decisão do mantenedor; código de produto ainda não iniciado.
+Versão: 0.8.5 · Data: 2026-11-15 · Estado: threat model aplicado (TASK-E11-02, AC-1 e AC-2); AC-3 movido para `TASK-E07-05` por decisão do mantenedor; código de produto ainda não iniciado.
 
 Assets: arquivos do usuário, biblioteca/ratings, credentials, integridade do áudio, conta/provider, pacotes, updater. Trust boundaries: arquivo de mídia, metadado/cover, URL/manifest, pacote/theme/plugin, helper, web API e ingest admin. Local user media é entrada não confiável para parsers, não autorização para executar código.
 
