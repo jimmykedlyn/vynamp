@@ -10,8 +10,8 @@
     "engineering": 2,
     "total": 215,
     "acceptance_ready": 215,
-    "planned": 198,
-    "implemented": 17
+    "planned": 197,
+    "implemented": 18
   },
   "tasks": [
     {
@@ -4437,7 +4437,7 @@
       "title": "Validar worktrees, claims e handoff",
       "phase": "M0",
       "priority": "P0",
-      "status": "planned",
+      "status": "implemented",
       "owner_role": "engineering-delivery",
       "requirements": [
         "REQ-E15-02"
