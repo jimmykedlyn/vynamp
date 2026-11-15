@@ -548,6 +548,36 @@ fn triggers(v: &Value) -> BTreeSet<String> {
 fn scope(v: &serde_json::Value) -> String {
     v.as_str().map_or_else(|| v.to_string(), str::to_owned)
 }
+/// Rejects a `permissions:` block that grants more than `read`.
+///
+/// GitHub accepts `write-all` and `read-all` as shorthands for a whole block,
+/// and neither is a mapping. Walking only the keys of an object therefore
+/// sends both shorthands straight through: `as_object()` is `None`, the
+/// iterator is empty, and the gate reports success on the widest token GitHub
+/// can issue. `read-all` is not a pass either -- it reads every scope,
+/// including the ones a block would otherwise set to `none`.
+///
+/// `null` and `{}` stay silent: the first is an absent block, the second is
+/// every permission off, and both are narrower than the policy.
+fn check_permissions(c: &mut Checks, at: &str, perms: &Value) {
+    if let Some(word) = perms.as_str() {
+        c.check(
+            false,
+            format!("{at} grants `permissions: {word}`; write it as keys, each `read` or `none` (TASK-E11-02 AC-2)"),
+        );
+        return;
+    }
+    for (key, value) in perms.as_object().into_iter().flatten() {
+        c.check(
+            matches!(value.as_str(), Some("read" | "none")),
+            format!(
+                "{at} grants `{key}: {}`; every permission must be `read` or `none` \
+                 (TASK-E11-02 AC-2)",
+                scope(value)
+            ),
+        );
+    }
+}
 /// CI runs on GitHub Actions (ADR-014). Every action is pinned by full commit
 /// SHA and the aggregate gate fails closed on any non-success dependency.
 ///
@@ -620,16 +650,7 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
                 "Workflow {name} must declare `permissions: contents: read` (TASK-E11-02 AC-2)"
             ),
         );
-        for (key, value) in v["permissions"].as_object().into_iter().flatten() {
-            c.check(
-                matches!(value.as_str(), Some("read" | "none")),
-                format!(
-                    "Workflow {name} grants `{key}: {}`; every permission must be \
-                     `read` or `none` (TASK-E11-02 AC-2)",
-                    scope(value)
-                ),
-            );
-        }
+        check_permissions(c, &format!("Workflow {name}"), &v["permissions"]);
         for (job, body) in v["jobs"].as_object().into_iter().flatten() {
             let Some(perms) = body.get("permissions") else {
                 continue;
@@ -640,16 +661,7 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
             // scope above `read`. Requiring `contents: read` on the job would
             // reject `permissions: {}` and `contents: none`, which are the two
             // safest blocks there are; the gate would then punish hardening.
-            for (key, value) in perms.as_object().into_iter().flatten() {
-                c.check(
-                    matches!(value.as_str(), Some("read" | "none")),
-                    format!(
-                        "Job {name}/{job} grants `{key}: {}`; every permission must be \
-                         `read` or `none` (TASK-E11-02 AC-2)",
-                        scope(value)
-                    ),
-                );
-            }
+            check_permissions(c, &format!("Job {name}/{job}"), perms);
         }
     }
     let ci = flows.get("ci");
@@ -2217,6 +2229,40 @@ model: sonnet
                 Vec::<String>::new(),
                 "a job narrowing to {narrowed:?} must not be read as a widened token"
             );
+        }
+    }
+    /// GitHub accepts two shorthand forms for `permissions:` -- `write-all`
+    /// and `read-all` -- and neither is a mapping. A gate that only walks the
+    /// keys of an object sees `None` for both, iterates nothing, and reports
+    /// success: `write-all` on a job would grant write on issues, packages and
+    /// contents while the document keeps claiming every key is `read` or
+    /// `none`. Both shorthands are wider than the declared policy -- `read-all`
+    /// reads every scope, including the ones a workflow would otherwise set to
+    /// `none` -- so both are rejected wherever they appear.
+    #[test]
+    fn github_actions_rejects_the_shorthand_permission_forms() {
+        for shorthand in ["write-all", "read-all", "\"write-all\""] {
+            let cases = [
+                (
+                    "workflow",
+                    "permissions:\n  contents: read\n".to_owned(),
+                    format!("permissions: {shorthand}\n"),
+                ),
+                (
+                    "job",
+                    "  specs:\n    runs-on: ubuntu-22.04\n".to_owned(),
+                    format!("  specs:\n    runs-on: ubuntu-22.04\n    permissions: {shorthand}\n"),
+                ),
+            ];
+            for (where_, from, to) in cases {
+                let f = ci_fixture();
+                edit(f.path(), "ci.yml", &from, &to);
+                let e = ci_errors(f.path());
+                assert!(
+                    e.iter().any(|e| e.contains("TASK-E11-02 AC-2")),
+                    "a {where_} block with `permissions: {shorthand}` must fail the gate, got {e:?}"
+                );
+            }
         }
     }
     #[test]

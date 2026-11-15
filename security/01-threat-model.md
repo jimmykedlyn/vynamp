@@ -1,6 +1,6 @@
 # Modelo de ameaças e controles
 
-Versão: 0.8.2 · Data: 2026-11-15 · Estado: threat model aplicado (TASK-E11-02, AC-1 e AC-2); AC-3 movido para `TASK-E07-05` por decisão do mantenedor; código de produto ainda não iniciado.
+Versão: 0.8.3 · Data: 2026-11-15 · Estado: threat model aplicado (TASK-E11-02, AC-1 e AC-2); AC-3 movido para `TASK-E07-05` por decisão do mantenedor; código de produto ainda não iniciado.
 
 Assets: arquivos do usuário, biblioteca/ratings, credentials, integridade do áudio, conta/provider, pacotes, updater. Trust boundaries: arquivo de mídia, metadado/cover, URL/manifest, pacote/theme/plugin, helper, web API e ingest admin. Local user media é entrada não confiável para parsers, não autorização para executar código.
 
@@ -66,10 +66,13 @@ condições abaixo, e ambas são verificadas por `cargo xtask check-delivery`:
 1. Todo workflow declara `permissions: contents: read` no topo. O token default do GitHub
    não é seguro por omissão — em repositório antigo ele nasce read/write.
 2. Nenhuma chave de permissão, no bloco de workflow nem no de job, tem valor diferente de
-   `read` ou `none`. Um `permissions:` de job substitui o do workflow inteiro, então a
-   linha do topo sozinha não prova nada sobre o job que roda; e ler só `contents` provaria
+   `read` ou `none`, e as formas abreviadas `write-all` e `read-all` são recusadas nas
+   duas posições. Um `permissions:` de job substitui o do workflow inteiro, então a
+   linha do topo sozinha não prova nada sobre o job que roda; ler só `contents` provaria
    uma chave e chamaria isso de política — `id-token: write` troca OIDC por credencial de
-   nuvem e `packages: write` publica artefato.
+   nuvem e `packages: write` publica artefato. As abreviadas não são um mapa, então um
+   gate que só percorre chaves as deixaria passar sem ver nada; e `read-all` não é
+   estreito: ele lê todo escopo, inclusive os que o bloco poria em `none`.
 
 **Onde o gate roda hoje: no `pre-push` local, ainda não em CI.** O
 `.githooks/pre-push` chama `cargo xtask ci docs`, que inclui `check-delivery`; nenhum
@@ -80,12 +83,17 @@ fecha essa lacuna é `TASK-E15-04` (job de CI para o gate multiplataforma, commi
 `8d11700`, branch `feature/task-e15-04-claude-ci-gate-multiplataforma`), que **ainda não
 está em `develop`**. Até lá, "portão no CI" não é afirmável.
 
-O gate está em `xtask/src/validate.rs` (`github_actions`), com os testes
-`github_actions_requires_the_read_only_token_policy`,
+O gate está em `xtask/src/validate.rs` (`github_actions`), com seis testes:
+`github_actions_requires_the_read_only_token_policy` (apagar o bloco do topo reprova),
 `github_actions_rejects_a_job_that_widens_the_token`,
-`github_actions_rejects_any_wide_permission_key` e
-`github_actions_accepts_permissions_named_none`. Sem ele, apagar o bloco é uma linha
-silenciosa: o workflow continua rodando e nada diz que o token alargou.
+`github_actions_rejects_any_wide_permission_key` (qualquer chave acima de `read`, no
+workflow e no job), `github_actions_rejects_the_shorthand_permission_forms`
+(`write-all`/`read-all`, nas duas posições), `github_actions_accepts_permissions_named_none`
+e `github_actions_accepts_a_job_that_narrows_the_token` — os dois últimos existem para
+que o gate não puna quem endurece: `none` e `{}` são mais estreitos que `read`, e um
+`pre-push` vermelho por endurecer empurra a saída óbvia, voltar para `read`. Sem o gate,
+apagar o bloco é uma linha silenciosa: o workflow continua rodando e nada diz que o token
+alargou.
 
 Toda action é fixada por SHA de 40 hex, conferido pelo mesmo gate
 (`github_actions_rejects_unpinned_action`). A varredura de segredo roda no job `tooling`

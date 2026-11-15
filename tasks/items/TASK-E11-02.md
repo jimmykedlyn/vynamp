@@ -97,11 +97,15 @@ Executado em 2026-11-15. O estado abaixo foi medido, não herdado do plano.
 
 ### AC-1 — controle e teste por entrada
 
-`security/01-threat-model.md` v0.8.2 ganhou a coluna `Teste que existe hoje`, com
-`arquivo:linha` e nome da função para cada teste que roda. As **26 ocorrências (25 pares
-distintos** — `metadata.rs:204` aparece duas vezes) foram conferidas uma a uma contra o
-tree (`sed -n <linha>p` devolveu a `fn` esperada em todas) e a suíte do `vynamp-decode`
-rodou verde: **517 passed, 0 failed, 3 ignored**.
+`security/01-threat-model.md` v0.8.3 ganhou a coluna `Teste que existe hoje`, com
+`arquivo:linha` e nome da função para cada teste que roda. A coluna carrega **22
+referências `arquivo:linha`**, todas distintas: 21 resolvem para a `fn` de teste nomeada
+ao lado (`sed -n <linha>p`) e a vigésima segunda, `…/src/metadata.rs:69`, para
+`pub struct RawBlock` — é a citação de código que sustenta o "capa não tem parser a
+atacar", não uma referência a teste. O documento inteiro tem **35 ocorrências / 33
+distintas** (`grep -oE '([A-Za-z0-9_./-]+\.rs)?:[0-9]+(-[0-9]+)?' | sort | uniq -c`), porque
+as tabelas de `Limits` repetem `:204` e `:424`. A suíte do `vynamp-decode` rodou verde:
+**517 passed, 0 failed, 3 ignored**.
 
 A coluna de controle carrega três afirmações que a revisão derrubou e que foram
 corrigidas contra o tree, não por leitura da versão anterior: `max_depth` **não é
@@ -155,6 +159,17 @@ ele desligado, `github_actions_rejects_a_job_that_widens_the_token` e
 commit — medido com `grep -rn "check-delivery\|ci docs" .github/workflows/`. Quem fecha
 é `TASK-E15-04` (`8d11700`), ainda fora de `develop`.
 
+**As formas abreviadas passavam.** O laço de job percorria
+`perms.as_object().into_iter().flatten()`; `permissions: write-all` e `read-all` não são
+um mapa, então `as_object()` devolvia `None`, o iterador ficava vazio e **nenhum `check`
+rodava** — `write-all` num job passava com zero erro. Era regressão em relação a
+`d126e19`, onde o mesmo fixture reprovava. Fechado com TDD:
+`github_actions_rejects_the_shorthand_permission_forms` ficou vermelho antes da regra
+(`a job block with permissions: write-all must fail the gate, got []`) e verde depois,
+cobrindo `write-all`, `read-all` e a forma entre aspas, no bloco de workflow e no de job.
+A regra virou `check_permissions`, usada pelas duas posições. Mutação: desligar só o ramo
+de string deixa o teste vermelho de novo.
+
 ### AC-3 — isolamento de helper: **movido para `TASK-E07-05`**
 
 O helper de privilégio e o host que o invoca **não existem**. Comandos que provaram:
@@ -171,16 +186,20 @@ Os três `apps/*/src/main.rs` são um `println!` de versão. Sem processo, não 
 sandbox a rodar: filho que cai, RPC malicioso e revisão de escape precisam do binário.
 
 **Decisão do mantenedor em 2026-11-15** (`optionIds: ["split"]`): o AC-3 foi movido para
-`TASK-E07-05` (sandbox OS, RPC autenticado), sobre os adapters de `TASK-E14-02`. O
-critério recebido está em `apps/player/tasks/items/TASK-E07-05.md` como
-`TASK-E07-05-AC-5`, com o vínculo explícito de que é a evidência que fecha o AC-3 desta
-TASK. Esta TASK fecha com AC-1 e AC-2, e o estado no backlog vai a `implemented`.
+`TASK-E07-05` (sandbox OS, RPC autenticado), sobre os adapters de `TASK-E14-02`. Esta
+TASK fecha com AC-1 e AC-2, e o estado no backlog vai a `implemented`.
+
+**O critério recebido ainda não está no arquivo de `E07-05`.** Medido:
+`grep -c "AC-5" apps/player/tasks/items/TASK-E07-05.md` devolve **0**, e o arquivo tem
+quatro ACs. O texto integral está na seção "Critérios de aceite" acima, e a pendência de
+destino está registrada logo abaixo dela. Quem leva a linha para o repo do player é uma
+TASK daquele repo — decisão do mantenedor em 2026-11-15 (`optionIds: ["new_task"]`).
 
 ### Comandos e resultado
 
 | Comando | Resultado |
 |---|---|
-| `cargo test --package xtask --bin xtask` | 123 passed, 0 failed |
+| `cargo test --package xtask --locked` | 124 + 36 passed, 0 failed |
 | `cargo fmt --all -- --check` | limpo |
 | `cargo clippy --package xtask --all-targets --locked -- -D warnings` | limpo |
 | `cargo xtask check-docs` | `"result": "passed"`, 215 TASKs |

@@ -21,9 +21,13 @@ runner não barra merge nenhum:
   workflow nem no de job, tem valor diferente de `read` ou `none`. O default do GitHub
   não é seguro por omissão — em repositório antigo o token nasce read/write —, um
   `permissions:` de job substitui o do workflow inteiro, e ler só `contents` deixaria
-  `id-token: write` passar. O gate está em `xtask/src/validate.rs` (`github_actions`),
-  com teste para o bloco de workflow, para o de job e para chave larga fora de
-  `contents`. Toda action é fixada por SHA de 40 hex, conferido no mesmo gate.
+  `id-token: write` passar. As abreviadas `write-all` e `read-all` também são recusadas:
+  não são um mapa, então um gate que só percorre chaves não vê nada nelas, e `read-all`
+  lê todo escopo, inclusive os que o bloco poria em `none`. O gate está em
+  `xtask/src/validate.rs` (`github_actions`), com teste para o bloco de workflow, para o
+  de job, para chave larga fora de `contents` e para as duas abreviadas — mais dois que
+  garantem o contrário, que `none` e `{}` passam, para o gate não punir quem endurece.
+  Toda action é fixada por SHA de 40 hex, conferido no mesmo gate.
   **O gate não roda em workflow nenhum neste commit:** `.githooks/pre-push` chama
   `cargo xtask ci docs`, que inclui `check-delivery`, mas nenhum job de
   `.github/workflows/` o chama. Clone sem `setup.sh` e todo runner de CI ficam sem ele.
