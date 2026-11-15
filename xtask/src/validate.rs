@@ -594,17 +594,19 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
         }
         flows.insert(name, v);
     }
-    // AC-2 of TASK-E15-04: every workflow declares `permissions: contents:
-    // read`, and no job widens it. An absent block is not a safe default -- it
-    // is an unstated one, and GitHub's default has been read/write on older
-    // repositories. A job-level block replaces the workflow-level one
-    // wholesale, so the top-level line alone proves nothing about the job that
-    // actually runs.
+    // TASK-E11-02 AC-2: the token policy is a claim about what the workflows
+    // *grant*, and a claim nothing reads is a claim that drifts. GitHub's
+    // default token is read/write on older repositories and read-only on new
+    // ones, so an absent `permissions:` block is not a safe default -- it is
+    // an unstated one. Every workflow states `contents: read`, and no job
+    // overrides it with a wider scope: a job-level block replaces the
+    // workflow-level one wholesale, so the top-level line alone proves
+    // nothing about the job that actually runs.
     for (name, v) in &flows {
         c.check(
             v["permissions"]["contents"].as_str() == Some("read"),
             format!(
-                "Workflow {name} must declare `permissions: contents: read` (TASK-E15-04 AC-2)"
+                "Workflow {name} must declare `permissions: contents: read` (TASK-E11-02 AC-2)"
             ),
         );
         for (job, body) in v["jobs"].as_object().into_iter().flatten() {
@@ -615,7 +617,7 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
                 perms["contents"].as_str() == Some("read"),
                 format!(
                     "Job {name}/{job} widens the token; it must keep `contents: read` \
-                     (TASK-E15-04 AC-2)"
+                     (TASK-E11-02 AC-2)"
                 ),
             );
         }
@@ -2020,10 +2022,10 @@ model: sonnet
             "dropping the android job must fail the gate, got {e:?}"
         );
     }
-    /// AC-2 of TASK-E15-04: the token policy is a claim about what the
-    /// workflows *grant*, and a claim nothing reads is a claim that drifts.
-    /// Deleting `permissions:` is one silent line: the workflow still runs and
-    /// the token widens to the repository default.
+    /// AC-2 of TASK-E11-02 proves the token policy by *reading* it, not by
+    /// assuming it. Without a gate, deleting `permissions:` is one silent
+    /// line: the workflow still runs, the token silently widens to the
+    /// repository default, and nothing in CI says so.
     #[test]
     fn github_actions_requires_the_read_only_token_policy() {
         for (from, to) in [
@@ -2037,7 +2039,7 @@ model: sonnet
             edit(f.path(), "ci.yml", from, to);
             let e = ci_errors(f.path());
             assert!(
-                e.iter().any(|e| e.contains("TASK-E15-04 AC-2")),
+                e.iter().any(|e| e.contains("TASK-E11-02 AC-2")),
                 "ci.yml without `contents: read` must fail the gate, got {e:?}"
             );
         }
@@ -2053,7 +2055,7 @@ model: sonnet
         );
         let e = ci_errors(f.path());
         assert!(
-            e.iter().any(|e| e.contains("TASK-E15-04 AC-2")),
+            e.iter().any(|e| e.contains("TASK-E11-02 AC-2")),
             "quality.yml without `contents: read` must fail the gate, got {e:?}"
         );
     }
@@ -2071,7 +2073,7 @@ model: sonnet
         let e = ci_errors(f.path());
         assert!(
             e.iter()
-                .any(|e| e.contains("TASK-E15-04 AC-2") && e.contains("specs")),
+                .any(|e| e.contains("TASK-E11-02 AC-2") && e.contains("specs")),
             "a job with `contents: write` must fail the gate and name the job, got {e:?}"
         );
     }
