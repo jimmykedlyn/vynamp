@@ -594,6 +594,32 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
         }
         flows.insert(name, v);
     }
+    // AC-2 of TASK-E15-04: every workflow declares `permissions: contents:
+    // read`, and no job widens it. An absent block is not a safe default -- it
+    // is an unstated one, and GitHub's default has been read/write on older
+    // repositories. A job-level block replaces the workflow-level one
+    // wholesale, so the top-level line alone proves nothing about the job that
+    // actually runs.
+    for (name, v) in &flows {
+        c.check(
+            v["permissions"]["contents"].as_str() == Some("read"),
+            format!(
+                "Workflow {name} must declare `permissions: contents: read` (TASK-E15-04 AC-2)"
+            ),
+        );
+        for (job, body) in v["jobs"].as_object().into_iter().flatten() {
+            let Some(perms) = body.get("permissions") else {
+                continue;
+            };
+            c.check(
+                perms["contents"].as_str() == Some("read"),
+                format!(
+                    "Job {name}/{job} widens the token; it must keep `contents: read` \
+                     (TASK-E15-04 AC-2)"
+                ),
+            );
+        }
+    }
     let ci = flows.get("ci");
     let jobs = |flow: Option<&Value>| -> BTreeSet<String> {
         flow.and_then(|v| v["jobs"].as_object())
@@ -622,9 +648,14 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
     // `authoring` entra na lista porque as nove regras de autoria das TASKs
     // passaram a ser medidas no CI: um bullet sem dono não é verificável, e um
     // job que roda mas não está no agregado não bloqueia merge nenhum.
-    const UMBRELLA_JOBS: [&str; 6] = [
+    // `delivery` entra pela mesma razão, e por uma a mais: ele é o job que roda
+    // `check-delivery`, o gate que lê os próprios workflows. Sem ele no
+    // agregado, as regras de pin, permissão e matriz deste arquivo seriam
+    // verificadas por um job cuja falha ninguém lê.
+    const UMBRELLA_JOBS: [&str; 7] = [
         "specs",
         "tooling",
+        "delivery",
         "submodules",
         "arch",
         "tasks",
@@ -632,14 +663,43 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
     ];
     c.check(
         UMBRELLA_JOBS.iter().all(|j| ci_jobs.contains(*j)),
-        "CI workflow must keep specs, tooling, submodules, arch, tasks and authoring jobs",
+        "CI workflow must keep specs, tooling, delivery, submodules, arch, tasks and authoring jobs",
     );
+    // AC-1 of TASK-E15-04: a job that runs but is not in the aggregate's
+    // `needs:` is a job whose failure nobody reads. The gate would stay green
+    // while the job that failed sits red beside it. The rule is structural --
+    // every job except the gate itself must be a dependency -- because a list
+    // of known names cannot see a job added tomorrow, and that is exactly the
+    // job that would be forgotten.
+    let gate_needs = ci
+        .map(|v| strings(&v["jobs"]["gate"]["needs"]))
+        .unwrap_or_default();
+    for job in ci_jobs.iter().filter(|j| *j != "gate") {
+        c.check(
+            gate_needs.contains(job),
+            format!("Job {job} is not in the CI Gate needs; its failure would be masked"),
+        );
+    }
+    // `needs:` only orders the jobs. A gate that tests two of seven results
+    // still passes when the other five fail, so every dependency's result has
+    // to be read.
+    let gate_text = ci
+        .map(|v| v["jobs"]["gate"].to_string())
+        .unwrap_or_default();
+    for job in &gate_needs {
+        c.check(
+            gate_text.contains(&format!("needs.{job}.result")),
+            format!("CI Gate never reads needs.{job}.result; a failed {job} would pass"),
+        );
+    }
+    // AC-3 of TASK-E15-04: GitHub reports a skipped job as `skipped`, not
+    // `failure`. A gate that only rejects `failure` publishes green for a job
+    // nobody ran -- the player skipped for lack of hardware or source would
+    // read as approved. The comparison has to be against `success`.
     c.check(
-        ci.is_some_and(|v| {
-            strings(&v["jobs"]["gate"]["needs"])
-                == UMBRELLA_JOBS.iter().map(|j| (*j).to_owned()).collect()
-        }),
-        "CI Gate job must depend on specs, tooling, submodules, arch, tasks and authoring",
+        !gate_text.contains("!= failure"),
+        "CI Gate must reject every non-success result, including skipped; \
+         comparing against `failure` lets a skipped job pass",
     );
     // `if: always()` is what makes the gate run after a cancelled or failed
     // dependency; without it the gate is skipped and never turns red.
@@ -692,6 +752,17 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
         }),
         "Tooling matrix must not use macos-latest; it changes architecture as GitHub rotates it",
     );
+    // AC-1 of TASK-E15-04: the matrix has to run to the end. GitHub's default
+    // `fail-fast: true` cancels the remaining legs as soon as one fails, so a
+    // red Linux leg would cancel the macOS legs and the five mandatory targets
+    // would stop being verified by a run that still reports one failure and
+    // says nothing about the four that never ran. The setting is one line and
+    // its absence is silent, so it has to be a rule rather than a convention.
+    c.check(
+        ci.is_some_and(|v| v["jobs"]["tooling"]["strategy"]["fail-fast"].as_bool() == Some(false)),
+        "Tooling matrix must set fail-fast: false; a cancelled leg is a target that never ran \
+         (TASK-E15-04 AC-1)",
+    );
     // AC-5 of TASK-E19-01 is a claim about the *history*, and the scanner that
     // proves it is worthless unless CI runs it. Removing the step is silent:
     // the gate stays green, the claim stays in the task, and nothing reads the
@@ -704,6 +775,90 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
             steps.contains("cargo xtask check-secrets") && steps.contains("fetch --unshallow")
         }),
         "Tooling job must run cargo xtask check-secrets on full history (TASK-E19-01 AC-5)",
+    );
+    // AC-4 of TASK-E15-04: the five mandatory targets of
+    // `platforms/01-matriz-suporte.md` -- Windows, Linux, macOS Intel, macOS
+    // Apple Silicon and Android -- each need a job that runs on them. The
+    // umbrella builds no app (D-CI-1), so the coverage is the tooling matrix
+    // for the four hosted images plus the Android toolchain check, which is
+    // the only Android work this repository can do without an app to build.
+    // A target named only in prose is not covered.
+    let runners = ci
+        .map(|v| strings(&v["jobs"]["tooling"]["strategy"]["matrix"]["runner"]))
+        .unwrap_or_default();
+    // The gate itself is excluded: its `needs:` list names every job, so a
+    // substring search over the whole workflow would find "android" in the
+    // aggregate and call the target covered after the job that runs it was
+    // deleted. The match is on the job id or its body, never on the gate.
+    let android = ci.is_some_and(|v| {
+        v["jobs"]
+            .as_object()
+            .into_iter()
+            .flatten()
+            .any(|(id, job)| {
+                id != "gate" && (id.contains("android") || job.to_string().contains("android"))
+            })
+    });
+    for (target, covered) in [
+        ("Windows", runners.contains("windows-2022")),
+        ("Linux", runners.contains("ubuntu-22.04")),
+        ("macOS Intel", runners.contains("macos-15-intel")),
+        ("macOS Apple Silicon", runners.contains("macos-15")),
+        ("Android", android),
+    ] {
+        c.check(
+            covered,
+            format!("The five mandatory targets are not covered: {target} has no job"),
+        );
+    }
+    // AC-2 of TASK-E15-04: `persist-credentials: false` is what keeps the
+    // checkout token out of `.git/config`, where every later step in the job
+    // can read it. Dropping the line is silent -- the job still passes.
+    for (name, v) in &flows {
+        for (job, body) in v["jobs"].as_object().into_iter().flatten() {
+            for step in body["steps"].as_array().into_iter().flatten() {
+                let Some(uses) = step["uses"].as_str() else {
+                    continue;
+                };
+                if !uses.starts_with("actions/checkout@") {
+                    continue;
+                }
+                c.check(
+                    step["with"]["persist-credentials"].as_bool() == Some(false),
+                    format!(
+                        "Checkout in {name}/{job} must set persist-credentials: false \
+                         (TASK-E15-04 AC-2)"
+                    ),
+                );
+            }
+        }
+    }
+    // `check-delivery` is the gate that reads the workflows themselves. A
+    // workflow file that no job validates is a rule nobody enforces: the
+    // pins, the permissions and the aggregate could all drift while CI stays
+    // green.
+    c.check(
+        ci.is_some_and(|v| v.to_string().contains("cargo xtask check-delivery")),
+        "CI must run cargo xtask check-delivery; the workflow rules need a job that reads them",
+    );
+    // AC-3 of TASK-E15-04, hardware half: the quality workflow is where a
+    // skip is most likely, because the runners do not exist yet. It still
+    // needs an aggregate that publishes the final state, or the run ends
+    // green with nothing measured.
+    c.check(
+        quality.is_some_and(|v| {
+            v["jobs"]
+                .as_object()
+                .into_iter()
+                .flatten()
+                .any(|(id, job)| {
+                    id != "trusted-hardware"
+                        && job["if"].as_str().is_some_and(|s| s.contains("always()"))
+                        && job.to_string().contains("needs.trusted-hardware.result")
+                })
+        }),
+        "Quality workflow must publish a Hardware Gate that reads the matrix result; \
+         a skipped matrix must not end the run green",
     );
     Ok(flows.len())
 }
@@ -820,6 +975,27 @@ fn agent_definitions(root: &Path, c: &mut Checks) {
     }
 }
 
+/// Whether two remote URLs name the same repository.
+///
+/// `github.json` writes the canonical clone URL, with `.git`. `actions/checkout`
+/// writes the remote it configured, which is the same repository without the
+/// suffix -- so a strict `==` makes `check-delivery` fail on every CI runner
+/// while passing on a workstation whose remote was cloned by hand. The
+/// comparison is on the repository identity, not on the spelling: scheme,
+/// trailing slash and the `.git` suffix are all noise.
+fn same_remote(a: &str, b: &str) -> bool {
+    fn normalize(url: &str) -> String {
+        let url = url.trim().trim_end_matches('/');
+        let url = url.strip_suffix(".git").unwrap_or(url);
+        let url = url
+            .strip_prefix("https://")
+            .or_else(|| url.strip_prefix("http://"))
+            .or_else(|| url.strip_prefix("git@"))
+            .unwrap_or(url);
+        url.replace(':', "/").to_lowercase()
+    }
+    normalize(a) == normalize(b)
+}
 pub fn delivery(root: &Path) -> Result<()> {
     // Packaging belongs to the app that ships it, not to the umbrella, and a repo without
     // a binary has nothing to install. D-CI-2 of step 34 removed the installer, branding
@@ -859,7 +1035,7 @@ pub fn delivery(root: &Path) -> Result<()> {
     );
     if let Ok(origin) = git(root, &["remote", "get-url", "origin"]) {
         c.check(
-            origin == url,
+            same_remote(&origin, url),
             format!("origin is {origin}, github.json says {url}"),
         );
     }
@@ -1292,6 +1468,33 @@ mod tests {
             vec!["Backlog/MD mismatch TASK-X title"]
         );
     }
+    /// `actions/checkout` configures the remote without the `.git` suffix that
+    /// `github.json` writes. A strict comparison makes `check-delivery` pass on
+    /// a workstation and fail on every runner -- the gate would be right about
+    /// the repository and wrong about the spelling.
+    #[test]
+    fn same_remote_ignores_the_checkout_spelling() {
+        for (origin, expected) in [
+            ("https://github.com/o/r", "https://github.com/o/r.git"),
+            ("https://github.com/o/r.git", "https://github.com/o/r.git"),
+            ("https://github.com/o/r/", "https://github.com/o/r.git"),
+            ("git@github.com:o/r.git", "https://github.com/o/r.git"),
+        ] {
+            assert!(same_remote(origin, expected), "{origin} vs {expected}");
+        }
+        // A different repository must still fail: normalization is about
+        // spelling, not about accepting anything that looks like a URL.
+        for origin in [
+            "https://github.com/o/other",
+            "https://github.com/someone/r",
+            "https://gitlab.com/o/r.git",
+        ] {
+            assert!(
+                !same_remote(origin, "https://github.com/o/r.git"),
+                "{origin} must not match"
+            );
+        }
+    }
     const SHA: &str = "11bd71901bbe5b1630ceea73d27597364c9af683";
     fn ci_fixture() -> tempfile::TempDir {
         let tmp = tempfile::tempdir().unwrap();
@@ -1307,22 +1510,37 @@ on:
     branches: [develop]
   push:
     branches: [develop, main]
+permissions:
+  contents: read
 jobs:
   specs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@{SHA}
+        with:
+          persist-credentials: false
       - run: cargo xtask check-docs
   tooling:
     needs: specs
     strategy:
+      fail-fast: false
       matrix:
-        runner: [ubuntu-22.04, macos-15-intel, macos-15]
+        runner: [ubuntu-22.04, windows-2022, macos-15-intel, macos-15]
     runs-on: ${{{{ matrix.runner }}}}
     steps:
       - uses: actions/checkout@{SHA}
+        with:
+          persist-credentials: false
       - run: git fetch --unshallow || true
       - run: cargo xtask check-secrets
+  delivery:
+    needs: specs
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@{SHA}
+        with:
+          persist-credentials: false
+      - run: cargo xtask check-delivery
   submodules:
     needs: specs
     runs-on: ubuntu-22.04
@@ -1343,15 +1561,26 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - run: cargo xtask check-authoring
+  android:
+    needs: specs
+    runs-on: ubuntu-22.04
+    steps:
+      - run: cargo xtask ci detect
   gate:
     name: CI Gate
     if: always()
-    needs: [specs, tooling, submodules, arch, tasks, authoring]
+    needs: [specs, tooling, delivery, submodules, arch, tasks, authoring, android]
     runs-on: ubuntu-22.04
     steps:
       - run: |
           test needs.specs=${{{{ needs.specs.result }}}} = success
           test needs.tooling=${{{{ needs.tooling.result }}}} = success
+          test needs.delivery=${{{{ needs.delivery.result }}}} = success
+          test needs.submodules=${{{{ needs.submodules.result }}}} = success
+          test needs.arch=${{{{ needs.arch.result }}}} = success
+          test needs.tasks=${{{{ needs.tasks.result }}}} = success
+          test needs.authoring=${{{{ needs.authoring.result }}}} = success
+          test needs.android=${{{{ needs.android.result }}}} = success
 "
         );
         std::fs::write(w.join("ci.yml"), ci).unwrap();
@@ -1364,12 +1593,24 @@ jobs:
                 "name: Quality
 on:
   workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   trusted-hardware:
     runs-on: [self-hosted, vynamp-hardware]
     steps:
       - uses: actions/checkout@{SHA}
+        with:
+          persist-credentials: false
       - run: cargo xtask quality-gate
+  verdict:
+    name: Hardware Gate
+    if: always()
+    needs: [trusted-hardware]
+    runs-on: ubuntu-22.04
+    steps:
+      - run: |
+          test needs.trusted-hardware=${{{{ needs.trusted-hardware.result }}}} = success
 "
             ),
         )
@@ -1566,7 +1807,7 @@ model: sonnet
         edit(
             f.path(),
             "ci.yml",
-            "needs: [specs, tooling, submodules, arch, tasks, authoring]",
+            "needs: [specs, tooling, delivery, submodules, arch, tasks, authoring, android]",
             "needs: [specs, tooling, submodules]",
         );
         assert!(ci_errors(f.path()).iter().any(|e| e.contains("CI Gate")));
@@ -1593,10 +1834,10 @@ model: sonnet
     /// other check green while returning macOS to "not verified".
     #[test]
     fn github_actions_requires_the_macos_matrix_in_tooling() {
-        const FULL: &str = "ubuntu-22.04, macos-15-intel, macos-15";
+        const FULL: &str = "ubuntu-22.04, windows-2022, macos-15-intel, macos-15";
         for (dropped, without) in [
-            ("macos-15-intel", "ubuntu-22.04, macos-15"),
-            ("macos-15", "ubuntu-22.04, macos-15-intel"),
+            ("macos-15-intel", "ubuntu-22.04, windows-2022, macos-15"),
+            ("macos-15", "ubuntu-22.04, windows-2022, macos-15-intel"),
         ] {
             let f = ci_fixture();
             edit(f.path(), "ci.yml", FULL, without);
@@ -1616,8 +1857,8 @@ model: sonnet
         edit(
             f.path(),
             "ci.yml",
-            "ubuntu-22.04, macos-15-intel, macos-15",
-            "ubuntu-22.04, macos-latest",
+            "ubuntu-22.04, windows-2022, macos-15-intel, macos-15",
+            "ubuntu-22.04, windows-2022, macos-latest",
         );
         let e = ci_errors(f.path());
         assert!(e.iter().any(|e| e.contains("macos-latest")), "{e:?}");
@@ -1640,6 +1881,236 @@ model: sonnet
                 "dropping {needle} must fail the gate, got {e:?}"
             );
         }
+    }
+    /// AC-1 of TASK-E15-04: a job that runs but is not in the aggregate's
+    /// `needs:` is a job whose failure nobody reads. The gate would stay green
+    /// while the job that failed sits red beside it, which is exactly the
+    /// "active job masks a failure" the criterion forbids. The check is
+    /// structural -- every job except the gate itself must be a dependency --
+    /// because a list of known job names cannot see a job added tomorrow.
+    #[test]
+    fn github_actions_rejects_a_job_outside_the_aggregate() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "ci.yml",
+            "  submodules:",
+            "  orphan:
+    runs-on: ubuntu-22.04
+    steps:
+      - run: exit 1
+  submodules:",
+        );
+        let e = ci_errors(f.path());
+        assert!(
+            e.iter()
+                .any(|e| e.contains("orphan") && e.contains("CI Gate")),
+            "a job missing from the aggregate must fail the gate and name it, got {e:?}"
+        );
+    }
+    /// The aggregate must read every dependency's result, not a sample of
+    /// them. `needs:` alone only orders the jobs; a gate that tests two of
+    /// seven results still passes when the other five fail.
+    #[test]
+    fn github_actions_requires_the_gate_to_read_every_dependency_result() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "ci.yml",
+            "          test needs.delivery=${{ needs.delivery.result }} = success\n",
+            "",
+        );
+        let e = ci_errors(f.path());
+        assert!(
+            e.iter()
+                .any(|e| e.contains("delivery") && e.contains("result")),
+            "a dependency whose result the gate never reads must fail, got {e:?}"
+        );
+    }
+    /// AC-3 of TASK-E15-04: a job that skips because the hardware or the
+    /// source is absent must not read as approval. GitHub reports a skipped
+    /// job as `skipped`, and a gate that only rejects `failure` would publish
+    /// green for a player nobody ran. The aggregate has to reject every
+    /// non-`success` result, `skipped` included.
+    #[test]
+    fn github_actions_rejects_a_gate_that_accepts_skipped_jobs() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "ci.yml",
+            "          test needs.tooling=${{ needs.tooling.result }} = success\n",
+            "          test needs.tooling=${{ needs.tooling.result }} != failure\n",
+        );
+        let e = ci_errors(f.path());
+        assert!(
+            e.iter().any(|e| e.contains("skipped")),
+            "a gate that accepts a skipped job must fail, got {e:?}"
+        );
+    }
+    /// The hardware workflow is where a skip is most likely: the runners do
+    /// not exist yet (TASK-E15-05), so every dispatch skips the matrix. It
+    /// still needs an aggregate that publishes the final state, or the run
+    /// ends green with nothing measured.
+    #[test]
+    fn quality_workflow_publishes_a_verdict_that_rejects_skips() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "quality.yml",
+            "  verdict:\n    name: Hardware Gate\n    if: always()\n    needs: [trusted-hardware]\n",
+            "",
+        );
+        let e = ci_errors(f.path());
+        assert!(
+            e.iter().any(|e| e.contains("Hardware Gate")),
+            "quality.yml without an aggregate must fail, got {e:?}"
+        );
+    }
+    /// AC-1 of TASK-E15-04 says the matrix runs to the end. GitHub's default
+    /// `fail-fast: true` cancels the remaining legs as soon as one fails, so a
+    /// red Linux leg would cancel the macOS legs and the five targets would
+    /// stop being verified -- while the gate reports a single failure and
+    /// nothing says the other four never ran. The setting is one line and its
+    /// absence is silent, so it has to be a rule.
+    #[test]
+    fn github_actions_requires_the_matrix_to_run_to_the_end() {
+        let f = ci_fixture();
+        edit(f.path(), "ci.yml", "      fail-fast: false\n", "");
+        let e = ci_errors(f.path());
+        assert!(
+            e.iter().any(|e| e.contains("fail-fast")),
+            "a matrix without fail-fast: false must fail, got {e:?}"
+        );
+    }
+    /// AC-4 of TASK-E15-04: the five mandatory targets of
+    /// `platforms/01-matriz-suporte.md` have to be covered by a job that
+    /// actually runs on them. Windows and Android are the two the matrix
+    /// lacked; a target named only in prose is not covered.
+    #[test]
+    fn github_actions_requires_the_five_mandatory_targets() {
+        // Windows is dropped from the matrix; the four hosted images are what
+        // carries the desktop targets here.
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "ci.yml",
+            "ubuntu-22.04, windows-2022, macos-15-intel, macos-15",
+            "ubuntu-22.04, macos-15-intel, macos-15",
+        );
+        let e = ci_errors(f.path());
+        assert!(
+            e.iter()
+                .any(|e| e.contains("five mandatory targets") && e.contains("Windows")),
+            "dropping windows must fail the gate, got {e:?}"
+        );
+        // Android is covered by its own job, not by the matrix: the umbrella
+        // builds no app (D-CI-1), so the job checks the toolchain. Deleting it
+        // must be caught even though `needs:` still names it in the gate.
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "ci.yml",
+            "  android:\n    needs: specs\n    runs-on: ubuntu-22.04\n    steps:\n      - run: cargo xtask ci detect\n",
+            "",
+        );
+        let e = ci_errors(f.path());
+        assert!(
+            e.iter()
+                .any(|e| e.contains("five mandatory targets") && e.contains("Android")),
+            "dropping the android job must fail the gate, got {e:?}"
+        );
+    }
+    /// AC-2 of TASK-E15-04: the token policy is a claim about what the
+    /// workflows *grant*, and a claim nothing reads is a claim that drifts.
+    /// Deleting `permissions:` is one silent line: the workflow still runs and
+    /// the token widens to the repository default.
+    #[test]
+    fn github_actions_requires_the_read_only_token_policy() {
+        for (from, to) in [
+            ("permissions:\n  contents: read\n", ""),
+            (
+                "permissions:\n  contents: read\n",
+                "permissions:\n  contents: write\n",
+            ),
+        ] {
+            let f = ci_fixture();
+            edit(f.path(), "ci.yml", from, to);
+            let e = ci_errors(f.path());
+            assert!(
+                e.iter().any(|e| e.contains("TASK-E15-04 AC-2")),
+                "ci.yml without `contents: read` must fail the gate, got {e:?}"
+            );
+        }
+        // Every workflow, not just `ci.yml`: `quality.yml` reaches hardware
+        // runners and an environment, where a write token is the one that
+        // matters most.
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "quality.yml",
+            "permissions:\n  contents: read\n",
+            "",
+        );
+        let e = ci_errors(f.path());
+        assert!(
+            e.iter().any(|e| e.contains("TASK-E15-04 AC-2")),
+            "quality.yml without `contents: read` must fail the gate, got {e:?}"
+        );
+    }
+    /// A job that names its own wider permissions overrides the workflow-level
+    /// block, so the read-only default at the top is not the whole story.
+    #[test]
+    fn github_actions_rejects_a_job_that_widens_the_token() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "ci.yml",
+            "  specs:\n    runs-on: ubuntu-22.04\n",
+            "  specs:\n    runs-on: ubuntu-22.04\n    permissions:\n      contents: write\n",
+        );
+        let e = ci_errors(f.path());
+        assert!(
+            e.iter()
+                .any(|e| e.contains("TASK-E15-04 AC-2") && e.contains("specs")),
+            "a job with `contents: write` must fail the gate and name the job, got {e:?}"
+        );
+    }
+    /// AC-2 of TASK-E15-04: `persist-credentials: false` is what keeps the
+    /// checkout token out of `.git/config`, where every later step in the job
+    /// can read it. Dropping the line is silent -- the job still passes.
+    #[test]
+    fn github_actions_requires_persist_credentials_false() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "ci.yml",
+            "        with:\n          persist-credentials: false\n      - run: cargo xtask check-docs",
+            "      - run: cargo xtask check-docs",
+        );
+        let e = ci_errors(f.path());
+        assert!(
+            e.iter().any(|e| e.contains("persist-credentials")),
+            "a checkout without persist-credentials: false must fail, got {e:?}"
+        );
+    }
+    /// `check-delivery` is the gate that reads the workflows themselves. A
+    /// workflow file that no job validates is a rule nobody enforces: the
+    /// pins, the permissions and the aggregate could all drift while CI stays
+    /// green.
+    #[test]
+    fn github_actions_requires_check_delivery_in_ci() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "ci.yml",
+            "      - run: cargo xtask check-delivery\n",
+            "",
+        );
+        let e = ci_errors(f.path());
+        assert!(
+            e.iter().any(|e| e.contains("check-delivery")),
+            "ci.yml without check-delivery must fail, got {e:?}"
+        );
     }
     #[test]
     fn github_actions_rejects_release_workflow_in_the_umbrella() {
@@ -1695,7 +2166,7 @@ jobs:
         edit(
             f.path(),
             "ci.yml",
-            "needs: [specs, tooling, submodules, arch, tasks, authoring]",
+            "needs: [specs, tooling, delivery, submodules, arch, tasks, authoring, android]",
             "needs: [specs, tooling, submodules]",
         );
         let e = ci_errors(f.path());

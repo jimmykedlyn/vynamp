@@ -38,8 +38,8 @@ reescrevê-lo: `cargo xtask docs-sync`.
 <!-- BEGIN GENERATED: state -->
 | Estado | TASKs |
 |---|---|
-| `implemented` | 15 |
-| `planned` | 200 |
+| `implemented` | 16 |
+| `planned` | 199 |
 | **total** | 215 |
 
 Entregues, em ordem de ID:
@@ -54,6 +54,7 @@ Entregues, em ordem de ID:
 - `TASK-E11-01` — Criar workspace e baseline de engenharia
 - `TASK-E11-03` — Resolver licenças e inventário de dependências
 - `TASK-E15-03` — Importar GitHub privado e ativar Gitflow
+- `TASK-E15-04` — Ativar workflows e CI Gate multiplataforma
 - `TASK-E19-01` — Migrar o CI do repo principal para GitHub Actions
 - `TASK-E19-02` — Higiene, governança e README bilíngue do repo principal
 - `TASK-E19-04` — Re-apontar as specs de Restore e Converter e criar os repos próprios

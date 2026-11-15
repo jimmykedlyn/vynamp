@@ -12,7 +12,7 @@ arquivo quando ele diverge do backlog. Para reescrever: `cargo xtask docs-sync`.
 ## O que está destravado agora
 
 <!-- BEGIN GENERATED: next -->
-15 TASKs entregues de 215. A onda 1 tem 19 destravada(s) agora.
+16 TASKs entregues de 215. A onda 1 tem 19 destravada(s) agora.
 
 | ID | Título | Módulo | Fase | Prio |
 |---|---|---|---|---|
@@ -29,7 +29,7 @@ arquivo quando ele diverge do backlog. Para reescrever: `cargo xtask docs-sync`.
 | `TASK-E16-01` | Provar envelope de ativação e protocolo comum | `vynamp-player` | M0 | P0 |
 | `TASK-E01-03` | Implementar state machine e generation cancellation | `vynamp-engine` | M1 | P0 |
 | `TASK-E03-01` | Implementar schema SQLite e migrations seguras | `vynamp-player` | M1 | P0 |
-| `TASK-E15-04` | Ativar workflows e CI Gate multiplataforma | `vynamp` | M1 | P0 |
+| `TASK-E15-05` | Integrar testes e evidência operacional | `vynamp` | M1 | P0 |
 | `TASK-E01-05` | Implementar mixer, drain e transições básicas | `vynamp-engine` | M1 | P1 |
 | `TASK-E01-07` | Adicionar codecs modernos e capítulos | `vynamp-decode` | M2 | P1 |
 | `TASK-E21-01` | Entregar registry de encoders e disponibilidade por build | `vynamp-encode` | M3 | P0 |

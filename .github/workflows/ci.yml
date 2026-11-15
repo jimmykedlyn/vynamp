@@ -50,7 +50,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [ubuntu-22.04, macos-15-intel, macos-15]
+        runner: [ubuntu-22.04, windows-2022, macos-15-intel, macos-15]
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -71,6 +71,39 @@ jobs:
       - name: Full history for the secret scan
         run: git fetch --unshallow || true
       - run: cargo xtask check-secrets
+
+  delivery:
+    name: Delivery
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Provision pinned Rust toolchain
+        run: rustup show
+      # `check-delivery` e o gate que le os proprios workflows: pins por SHA,
+      # `permissions: contents: read`, `persist-credentials: false` e a matriz
+      # dos cinco alvos. Sem um job que o rode, essas regras existem no xtask e
+      # ninguem as aplica -- o CI ficaria verde enquanto o arquivo que ele le
+      # deriva.
+      - run: cargo xtask check-delivery
+
+  android:
+    name: Android toolchain
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Provision pinned Rust toolchain
+        run: rustup show
+      # O umbrella nao constroi app (D-CI-1), entao o alvo Android nao pode ser
+      # um build aqui. O que se verifica e o que o umbrella possui: o alvo Rust
+      # `aarch64-linux-android` existe no toolchain pinado e o `detect` diz a
+      # verdade sobre haver ou nao app para construir. O build de verdade roda
+      # no CI do repo do app.
+      - run: rustup target add aarch64-linux-android
+      - run: cargo xtask ci detect
 
   submodules:
     name: Submodules fixados
@@ -113,20 +146,19 @@ jobs:
           # primitivas, nao dominio, e 01-arvore-final o permite opcional em
           # decode/encode/output. Lista-lo aqui contradiria a arvore aprovada.
           #
-          # Antes do passo 35 nenhum lib de modulo existe, e uma regra sobre
-          # diretorio vazio nao reprova nada de verdade -- so quebra o gate por
-          # ausencia. Mas "pular se vazio" seria pior: uma migracao pela metade
-          # (decode presente, output esquecido) passaria calada. Por isso a
-          # condicao e tudo-ou-nada: nenhum presente, nada a verificar; qualquer
-          # um presente, os tres tem de estar.
+          # Os tres modulos sao submodulos fixados, e o checkout deste job e
+          # `submodules: recursive`. Ausencia de fonte nao e "nada a verificar":
+          # e o checkout que nao trouxe o que o gate deveria ler, e aprovar por
+          # ausencia e a falha que a AC-3 proibe. Por isso a condicao e
+          # tudo-ou-nada e a ausencia reprova, em vez de sair com 0.
           present=0
           for m in decode encode output; do
             if [ -f "libs/$m/Cargo.toml" ]; then present=$((present + 1)); fi
           done
           if [ "$present" -eq 0 ]; then
-            echo 'Nenhum lib de modulo no umbrella ainda; regras 3 e 4 sem alvo.'
-            echo 'Passam a valer no commit que trouxer o primeiro submodulo.'
-            exit 0
+            echo 'Nenhum lib de modulo encontrado: o checkout nao trouxe os submodulos.'
+            echo 'Regra sobre fonte ausente nao aprova; verifique `submodules: recursive`.'
+            exit 1
           fi
           if [ "$present" -ne 3 ]; then
             echo "libs/ parcialmente migrado: $present de 3 modulos presentes."
@@ -199,17 +231,23 @@ jobs:
   gate:
     name: CI Gate
     if: always()
-    needs: [specs, tooling, submodules, arch, tasks, authoring]
+    needs: [specs, tooling, delivery, android, submodules, arch, tasks, authoring]
     runs-on: ubuntu-22.04
     steps:
       - name: Aggregate
         shell: bash
         run: |
+          # Comparacao contra `success`, nunca contra `failure`: o GitHub
+          # reporta job pulado como `skipped`, e um gate que so rejeita
+          # `failure` publica verde para um job que ninguem rodou. Skip por
+          # falta de hardware ou de fonte nao aprova nada.
           test "${{ needs.specs.result }}" = success
           test "${{ needs.tooling.result }}" = success
+          test "${{ needs.delivery.result }}" = success
+          test "${{ needs.android.result }}" = success
           test "${{ needs.submodules.result }}" = success
           test "${{ needs.arch.result }}" = success
           test "${{ needs.tasks.result }}" = success
           test "${{ needs.authoring.result }}" = success
-          echo 'CI Gate passed: specs, tooling, submodules, architecture rules, tasks and authoring.'
+          echo 'CI Gate passed: specs, tooling, delivery, android, submodules, architecture rules, tasks and authoring.'
           echo 'Hardware, signing and release acceptance remain separate gates.'
