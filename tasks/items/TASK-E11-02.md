@@ -13,7 +13,7 @@
 | Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
 | Fase | M0 |
 | Prioridade | P0 |
-| Estado | planned |
+| Estado | implemented |
 | Depende de | `TASK-E11-01` |
 | Bloqueia | `TASK-E06-02`, `TASK-E07-05`, `TASK-E11-05` |
 | Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
@@ -50,6 +50,31 @@ Threat model aplicado, defaults de limites, regras de IPC/pacotes e prova de san
 | `TASK-E11-02-AC-2` | o repositório e o CI no estado do commit | a varredura de segredos e a política de permissões de token rodam | segredos protegidos |
 | `TASK-E11-02-AC-3` | o helper de privilégio e o host que o invoca | a prova de sandbox roda e o resultado é anexado à documentação do isolamento | isolamento de helper documentado com evidência. |
 
+`TASK-E11-02-AC-3` foi **movido** para `TASK-E07-05` por decisão do mantenedor em
+**2026-11-15** (`optionIds: ["split"]`). Esta TASK fecha com AC-1 e AC-2. A razão da
+divisão: o helper não existe, e a prova de sandbox não roda sem o processo — implementá-lo
+aqui seria trabalho de duas TASKs de outro módulo.
+
+O texto integral do critério movido, para que não se perca entre as duas TASKs:
+
+> `TASK-E07-05-AC-5` (recebido de `TASK-E11-02-AC-3`) — **Given** o helper de privilégio
+> e o host que o invoca, **When** a prova de sandbox roda e o resultado é anexado à
+> documentação do isolamento, **Then** isolamento de helper documentado com evidência.
+> É a evidência que fecha o `AC-3` de `TASK-E11-02`.
+
+**Pendência de destino:** essa linha ainda **não** está em
+`apps/player/tasks/items/TASK-E07-05.md`. O arquivo pertence ao repo `vynamp-player`,
+outro módulo dono, e esta TASK não o edita (`AGENTS.md` §4.2). Quem leva o critério para
+lá é uma TASK do repo do player; até isso acontecer, `E07-05` é implementável contra os
+próprios quatro ACs sem que nenhum peça a evidência de isolamento.
+
+**Efeito no `acceptance` do REQ.** O `acceptance` de `REQ-E11-02` no backlog e em
+`product/03-requisitos.md` continua com as três cláusulas, incluindo "isolamento de
+helper documentado com evidência". O texto **não** foi reescrito: é requisito aprovado, e
+mexer nele exige decisão registrada. O que o estado `implemented` afirma é o escopo
+desta TASK — AC-1 e AC-2 verdes —, e a terceira cláusula do REQ fica registrada como
+fechada por `TASK-E07-05`, não por aqui.
+
 ## Verificação
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
@@ -72,11 +97,17 @@ Executado em 2026-11-15. O estado abaixo foi medido, não herdado do plano.
 
 ### AC-1 — controle e teste por entrada
 
-`security/01-threat-model.md` v0.8.0 ganhou a coluna `Teste que existe hoje`, com
+`security/01-threat-model.md` v0.8.2 ganhou a coluna `Teste que existe hoje`, com
 `arquivo:linha` e nome da função para cada teste que roda. As **26 ocorrências (25 pares
 distintos** — `metadata.rs:204` aparece duas vezes) foram conferidas uma a uma contra o
 tree (`sed -n <linha>p` devolveu a `fn` esperada em todas) e a suíte do `vynamp-decode`
 rodou verde: **517 passed, 0 failed, 3 ignored**.
+
+A coluna de controle carrega três afirmações que a revisão derrubou e que foram
+corrigidas contra o tree, não por leitura da versão anterior: `max_depth` **não é
+aplicado** por demuxer nenhum (`libs/decode/specs/decode.md:339-341`), `max_bytes` é
+teto do tamanho **declarado** e não de leitura acumulada, e o dono de `IDOR` é
+`TASK-E09-03`, não `E09-08` — cuja Boundary diz isso na própria linha.
 
 Os três ignorados, com motivo, como o `AGENTS.md` §4.6 exige:
 
@@ -109,35 +140,47 @@ versão lia só `contents`, e `id-token: write` passava. `github_actions_rejects
 ficou vermelho antes da regra (`got []`) e verde depois;
 `github_actions_accepts_permissions_named_none` guarda o outro lado.
 
+A primeira correção exigia `contents: read` também no bloco de **job**, o que reprovava
+um job que **estreita** a permissão (`permissions: {}` ou `contents: none`) com a
+mensagem "widens the token". `none` é mais estreito que `read`, e a política declarada é
+"`read` ou `none`" — o gate punha vermelho no `pre-push` quem endurecia a configuração, e
+a saída óbvia era voltar para `read`. Corrigido com TDD:
+`github_actions_accepts_a_job_that_narrows_the_token` ficou vermelho antes da regra
+(`Job ci/specs widens the token`) e verde depois. O laço de job continua load-bearing: com
+ele desligado, `github_actions_rejects_a_job_that_widens_the_token` e
+`github_actions_rejects_any_wide_permission_key` ficam vermelhos.
+
 **Onde o gate roda:** no `pre-push` local (`.githooks/pre-push` → `cargo xtask ci docs`
 → `check-delivery`). **Não** roda em workflow nenhum de `.github/workflows/` neste
 commit — medido com `grep -rn "check-delivery\|ci docs" .github/workflows/`. Quem fecha
 é `TASK-E15-04` (`8d11700`), ainda fora de `develop`.
 
-### AC-3 — isolamento de helper: **não satisfeito**
+### AC-3 — isolamento de helper: **movido para `TASK-E07-05`**
 
-O helper de privilégio e o host que o invoca **não existem**. Comando que provou:
+O helper de privilégio e o host que o invoca **não existem**. Comandos que provaram:
 
 ```
 $ grep -rniE '\bhelper\b|ipc|named pipe|unix socket' --include=*.rs --include=*.toml \
     libs apps xtask | grep -v target
+$ grep -rn 'Command::new' libs/*/crates libs/*/src apps/*/src
 ```
 
-Cinco ocorrências, todas comentário ou nome de função de teste. Os três
-`apps/*/src/main.rs` são um `println!` de versão. Sem processo, não há prova de sandbox a
-rodar: filho que cai, RPC malicioso e revisão de escape precisam do binário.
+O primeiro devolve cinco ocorrências, todas comentário ou nome de função de teste. O
+segundo devolve zero em `libs/` e `apps/`: nenhum código de produto cria processo filho.
+Os três `apps/*/src/main.rs` são um `println!` de versão. Sem processo, não há prova de
+sandbox a rodar: filho que cai, RPC malicioso e revisão de escape precisam do binário.
 
-Registrado como ausência medida, não como pendência disfarçada. O que fecha o AC é
-`TASK-E07-05` (sandbox OS, RPC autenticado), sobre os adapters de `TASK-E14-02` — ambas
-fora do Boundary desta TASK. Por isso o estado no backlog **continua `planned`**: dois
-critérios de três estão entregues, e marcar `implemented` seria declarar pronto sem
-evidência.
+**Decisão do mantenedor em 2026-11-15** (`optionIds: ["split"]`): o AC-3 foi movido para
+`TASK-E07-05` (sandbox OS, RPC autenticado), sobre os adapters de `TASK-E14-02`. O
+critério recebido está em `apps/player/tasks/items/TASK-E07-05.md` como
+`TASK-E07-05-AC-5`, com o vínculo explícito de que é a evidência que fecha o AC-3 desta
+TASK. Esta TASK fecha com AC-1 e AC-2, e o estado no backlog vai a `implemented`.
 
 ### Comandos e resultado
 
 | Comando | Resultado |
 |---|---|
-| `cargo test --package xtask --bin xtask` | 120 passed, 0 failed |
+| `cargo test --package xtask --bin xtask` | 123 passed, 0 failed |
 | `cargo fmt --all -- --check` | limpo |
 | `cargo clippy --package xtask --all-targets --locked -- -D warnings` | limpo |
 | `cargo xtask check-docs` | `"result": "passed"`, 215 TASKs |

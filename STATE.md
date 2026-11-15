@@ -52,6 +52,7 @@ Entregues, em ordem de ID:
 - `TASK-E02-11` — Congelar MVP de referência e extrair SVGs, ícones e temas
 - `TASK-E04-02` — Provar resampler e sample conversion
 - `TASK-E11-01` — Criar workspace e baseline de engenharia
+- `TASK-E11-02` — Definir fronteiras de segurança
 - `TASK-E11-03` — Resolver licenças e inventário de dependências
 - `TASK-E15-03` — Importar GitHub privado e ativar Gitflow
 - `TASK-E15-04` — Ativar workflows e CI Gate multiplataforma

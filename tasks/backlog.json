@@ -10,8 +10,8 @@
     "engineering": 2,
     "total": 215,
     "acceptance_ready": 215,
-    "planned": 201,
-    "implemented": 14
+    "planned": 199,
+    "implemented": 16
   },
   "tasks": [
     {
@@ -3299,7 +3299,7 @@
       "title": "Definir fronteiras de segurança",
       "phase": "M0",
       "priority": "P0",
-      "status": "planned",
+      "status": "implemented",
       "owner_role": "delivery",
       "requirements": [
         "REQ-E11-02"

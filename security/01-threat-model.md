@@ -1,6 +1,6 @@
 # Modelo de ameaças e controles
 
-Versão: 0.8.1 · Data: 2026-11-15 · Estado: threat model aplicado (TASK-E11-02); código de produto ainda não iniciado.
+Versão: 0.8.2 · Data: 2026-11-15 · Estado: threat model aplicado (TASK-E11-02, AC-1 e AC-2); AC-3 movido para `TASK-E07-05` por decisão do mantenedor; código de produto ainda não iniciado.
 
 Assets: arquivos do usuário, biblioteca/ratings, credentials, integridade do áudio, conta/provider, pacotes, updater. Trust boundaries: arquivo de mídia, metadado/cover, URL/manifest, pacote/theme/plugin, helper, web API e ingest admin. Local user media é entrada não confiável para parsers, não autorização para executar código.
 
@@ -28,30 +28,31 @@ passa a ser documental. É a razão de o job `specs` do `ci.yml` buscar submódu
 | Playlist/HLS/redirect SSRF | scheme/domain policy, DNS+redirect checks | loopback, link-local, rebound, file URI | **sem teste.** Nenhum cliente HTTP existe no tree; a dona é `TASK-E05-09`, com a política de proxy em `TASK-E17-11` |
 | Pacote zip traversal/bomb | canonical path, limits, staging | ../, absolute, symlink, huge ratio | **sem teste.** Nenhum leitor de pacote existe; a dona é `TASK-E06-02`, sobre o validador de `TASK-E06-01` |
 | Plugin loop/rede/arquivo indevido | fuel/deadline/memory/cap broker | trap, denied calls, flood | **sem teste.** Sem runtime de plugin; dona `TASK-E07-01`, com broker em `TASK-E07-03` e lifecycle em `TASK-E07-04` |
-| Native helper compromise | sandbox OS, mínimo handles, IPC auth | child crash, malicious RPC, escape review | **sem teste, e sem helper.** Medido: não há helper de privilégio nem processo filho no tree (ver §Isolamento de helper) |
+| Native helper compromise | sandbox OS, mínimo handles, IPC auth | child crash, malicious RPC, escape review | **sem teste, e sem helper.** Medido: não há helper de privilégio, e `libs/` e `apps/` não criam processo filho (ver §Isolamento de helper) |
 | Token/URL em logs | keychain e redaction estrutural | secret fixture em export/log | **sem teste de redaction.** O que existe é a varredura de segredo no histórico (`cargo xtask check-secrets`, `xtask/src/secrets.rs`), que é outra coisa: ela acha credencial commitada, não credencial impressa em log. Redaction é `TASK-E11-05` |
 | Update adulterado/downgrade | assinatura+hash+metadata expirável | invalid key, replay, rollback attack | **sem teste.** Updater inexistente; dona `TASK-E11-06` |
 | DB/write interrompido | atomic write/transaction/backups | kill durante save/migrate | **sem teste.** Nenhum schema ou escrita de biblioteca existe; dona `TASK-E03-01`, com escrita atômica de configuração em `TASK-E11-05` |
-| Web ingest remoto/upload | SSRF, content probe, quotas, workers | invalid body/foreign tenant | **sem teste.** Sem backend; dona `TASK-E09-05` |
-| Sync cross-user | authz por objeto, tenant/account scope | IDOR, replay, stale revision | **sem teste.** Sem sync; dona `TASK-E09-08` |
+| Web ingest remoto/upload | SSRF, content probe, quotas, workers | invalid body/foreign tenant | **sem teste.** Sem backend. `invalid body` e SSRF são `TASK-E09-05` (AC-2: corpo acima do teto, MIME mentido, URL de loopback/link-local/`file://`); `foreign tenant` **não** é dela — isolamento por conta é `TASK-E09-03` |
+| Sync cross-user | authz por objeto, tenant/account scope | IDOR, replay, stale revision | **sem teste.** Sem sync. `replay` e `stale revision` são `TASK-E09-08` (AC-1: operação repetida idempotente, 409 preserva edição); `IDOR` **não** é dela — a Boundary de `E09-08` diz que isolamento por conta é `TASK-E09-03`, cujo AC-1 é literalmente "Negar IDOR/acesso entre contas" |
 
 ## Defaults de limite
 
 Onde há budget hoje, ele é o `Limits` de `vynamp-decode-core`, aplicado a toda entrada
 não confiável de mídia. Os valores medidos em `limits.rs:23`:
 
-| Campo | Default | Efeito |
-|---|---|---|
-| `max_bytes` | 64 GiB | teto de leitura acumulada |
-| `max_frames` | 66 355 200 000 | teto de frames |
-| `max_channels` | 32 | recusa acima; zero é `Invalid` |
-| `max_sample_rate` | 768 000 Hz | recusa acima; zero é `Invalid` |
-| `max_metadata_bytes` | 64 MiB | teto do metadado, contado com os cabeçalhos de bloco (`metadata.rs:204`) |
-| `max_depth` | 16 | teto de aninhamento |
+| Campo | Default | Efeito | Aplicado hoje? |
+|---|---|---|---|
+| `max_bytes` | 64 GiB | teto do tamanho **declarado** da fonte | Sim, mas só quando `Source::len()` responde: os quatro demuxers chamam `check_bytes(len)` uma vez na abertura (`flac/src/demux.rs:748`, `riff/src/lib.rs:88`, `aiff/src/lib.rs:93`, `mpa/src/demux.rs:800`). Não há contador de leitura acumulada, e uma `Source` que devolva `len() == None` passa sem teto de bytes |
+| `max_frames` | 66 355 200 000 | teto de frames | Sim |
+| `max_channels` | 32 | recusa acima; zero é `Invalid` | Sim |
+| `max_sample_rate` | 768 000 Hz | recusa acima; zero é `Invalid` | Sim |
+| `max_metadata_bytes` | 64 MiB | teto do metadado, contado com os cabeçalhos de bloco (`metadata.rs:204`) | Sim |
+| `max_depth` | 16 | teto de aninhamento | **Não.** `libs/decode/specs/decode.md:339-341` registra que nenhum demuxer o aplica, e `:424` mantém a limitação aberta: os quatro containers de hoje são planos, então não há profundidade a limitar. O dono é a primeira TASK que trouxer container aninhado (`TASK-E17-03` ou `TASK-E01-07`) |
 
 O default é o piso, não a política final: cada chamador pode apertar. O que o teste
 prova é que o limite **reprova** acima do teto e **aceita** exatamente no teto, nos dois
-sentidos (`metadata.rs:180`, `:204`).
+sentidos (`metadata.rs:180`, `:204`) — para os cinco campos aplicados. Para `max_depth`
+não existe teste, porque não existe chamador.
 
 ## Segurança não bloqueante
 
@@ -96,25 +97,42 @@ CI.
 ## Isolamento de helper
 
 **Estado medido: não há helper.** O critério AC-3 fala do helper de privilégio e do host
-que o invoca; nenhum dos dois existe. O comando que provou a ausência:
+que o invoca; nenhum dos dois existe. Dois comandos, porque são duas afirmações
+diferentes — a primeira procura o vocabulário de IPC, a segunda procura o que de fato
+cria processo:
 
 ```
 $ grep -rniE '\bhelper\b|ipc|named pipe|unix socket' --include=*.rs --include=*.toml \
     libs apps xtask | grep -v target
+$ grep -rn 'Command::new' libs/*/crates libs/*/src apps/*/src
 ```
 
-As cinco ocorrências são comentário e nome de função de teste — nenhuma é processo,
-socket ou transporte (`apps/*/src/main.rs`, os três, são um `println!` de versão).
+O primeiro devolve cinco ocorrências, todas comentário ou nome de função de teste. O
+segundo devolve **zero** em `libs/` e `apps/`: nenhum código de produto cria processo
+filho. (`xtask` cria — `ci.rs:183`, `util.rs:93`, `secrets.rs:516` — mas `xtask` é
+ferramental de build, não produto, e não é o host que o AC-3 descreve.) Os três
+`apps/*/src/main.rs` são um `println!` de versão.
 
-Consequência, registrada em vez de mascarada: **AC-3 não está satisfeito e não pode
-estar** enquanto o helper não existir. O que fecha o AC é a implementação do helper, que
-é `TASK-E07-05` (sandbox OS, RPC autenticado, memória compartilhada limitada), sobre os
-adapters por host de `TASK-E14-02`. Esta TASK define a fronteira e registra a ausência;
-implementar o helper aqui seria fazer trabalho de duas TASKs de outro módulo.
+Consequência, registrada em vez de mascarada: **AC-3 não é satisfazível nesta TASK**
+enquanto o helper não existir. Por decisão do mantenedor em **2026-11-15**, o critério
+foi **movido** para `TASK-E07-05` (sandbox OS, RPC autenticado, memória compartilhada
+limitada), sobre os adapters por host de `TASK-E14-02`; esta TASK fecha com AC-1 e AC-2.
+A divisão e o texto integral do critério movido estão em
+`tasks/items/TASK-E11-02.md`, que é o registro durável do que saiu daqui. Esta TASK
+define a fronteira e registra a ausência; implementar o helper aqui seria fazer trabalho
+de duas TASKs de outro módulo.
+
+**Pendência de destino, registrada e não mascarada:** o critério recebido ainda **não**
+está escrito em `apps/player/tasks/items/TASK-E07-05.md`. Esse arquivo pertence ao repo
+`vynamp-player`, outro módulo dono, e esta TASK não o edita — a regra do `AGENTS.md` §4.2
+é que TASK que toca dois módulos é duas TASKs. Enquanto a linha não for autorada lá,
+`E07-05` é implementável contra os próprios quatro ACs sem que nenhum peça a evidência
+de isolamento, e o AC-3 some entre as duas TASKs. O texto a copiar está em
+`tasks/items/TASK-E11-02.md`; quem o leva é uma TASK do repo do player.
 
 A prova de sandbox que o AC-3 pede — filho que cai, RPC malicioso, revisão de escape —
 não pode rodar sem o processo existir. O relatório de ausência é a evidência honesta
-disponível; "sandbox provado" não é afirmável.
+disponível; "sandbox provado" não é afirmável, e não é afirmado aqui.
 
 ## Updater
 
@@ -127,6 +145,11 @@ registro: das 10 entradas, uma tem cobertura parcial com testes medidos e nove e
 teste, cada uma com TASK dona nomeada. Um threat model que declarasse as dez cobertas
 seria falso — o produto não tem cliente HTTP, empacotador, runtime de plugin, helper,
 updater, banco nem backend.
+
+A entrada de helper nativo é a única cujo critério de aceite saiu desta TASK: a prova de
+sandbox foi movida para `TASK-E07-05` em 2026-11-15, porque depende de um processo que
+não existe. O risco continua aberto e continua registrado aqui; o que mudou é quem o
+fecha.
 
 A TASK que fecha a lacuna de cobertura como um todo é `TASK-E10-05` (fuzz targets,
 corpus adversarial, testes de limites e cobertura do threat model). Enquanto ela não

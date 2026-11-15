@@ -634,13 +634,12 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
             let Some(perms) = body.get("permissions") else {
                 continue;
             };
-            c.check(
-                perms["contents"].as_str() == Some("read"),
-                format!(
-                    "Job {name}/{job} widens the token; it must keep `contents: read` \
-                     (TASK-E11-02 AC-2)"
-                ),
-            );
+            // A job block replaces the workflow one wholesale, and a key it does
+            // not name is set to `none` -- that is narrower, not wider. So the
+            // only thing to reject here is a key the job *does* name with a
+            // scope above `read`. Requiring `contents: read` on the job would
+            // reject `permissions: {}` and `contents: none`, which are the two
+            // safest blocks there are; the gate would then punish hardening.
             for (key, value) in perms.as_object().into_iter().flatten() {
                 c.check(
                     matches!(value.as_str(), Some("read" | "none")),
@@ -2193,6 +2192,32 @@ model: sonnet
             e.iter().any(|e| e.contains("check-delivery")),
             "ci.yml without check-delivery must fail, got {e:?}"
         );
+    }
+    /// A job that narrows the token must pass. `none` and an empty block are
+    /// both *narrower* than `read`, and the policy the document states is
+    /// "`read` or `none`" -- so a job that does no checkout and turns every
+    /// permission off is the safest configuration there is. Rejecting it would
+    /// make the gate punish the hardening it exists to encourage, and the
+    /// obvious way out of a red `pre-push` is to widen back to `read`.
+    #[test]
+    fn github_actions_accepts_a_job_that_narrows_the_token() {
+        for narrowed in [
+            "    permissions:\n      contents: none\n      id-token: none\n      packages: none\n",
+            "    permissions: {}\n",
+        ] {
+            let f = ci_fixture();
+            edit(
+                f.path(),
+                "ci.yml",
+                "  specs:\n    runs-on: ubuntu-22.04\n",
+                &format!("  specs:\n    runs-on: ubuntu-22.04\n{narrowed}"),
+            );
+            assert_eq!(
+                ci_errors(f.path()),
+                Vec::<String>::new(),
+                "a job narrowing to {narrowed:?} must not be read as a widened token"
+            );
+        }
     }
     #[test]
     fn github_actions_rejects_release_workflow_in_the_umbrella() {

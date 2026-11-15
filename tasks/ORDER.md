@@ -12,7 +12,7 @@ escolha entre elas é do mantenedor. O status de cada uma vive no backlog, e
 
 16 TASKs entregues, 199 planejadas, 25 ondas.
 
-## Onda 1 — 19 TASK(s)
+## Onda 1 — 18 TASK(s)
 
 | ID | Título | Módulo | Fase | Prio | Depende de |
 |---|---|---|---|---|---|
@@ -22,7 +22,6 @@ escolha entre elas é do mantenedor. O status de cada uma vive no backlog, e
 | `TASK-E02-14` | Gerar gabarito de comportamento e preferências | `vynamp-player` | M0 | P0 | `TASK-E02-11` |
 | `TASK-E07-01` | Provar sandbox WASM e capabilities | `vynamp-player` | M0 | P0 | `TASK-E11-01` |
 | `TASK-E10-01` | Criar corpus de testes licenciado | `vynamp` | M0 | P0 | `TASK-E11-01` |
-| `TASK-E11-02` | Definir fronteiras de segurança | `vynamp` | M0 | P0 | `TASK-E11-01` |
 | `TASK-E13-01` | Provar Android arm64, bridge Rust e output | `vynamp-player` | M0 | P0 | `TASK-E11-01`, `TASK-E01-01`, `TASK-E01-02` |
 | `TASK-E14-01` | Provar os cinco targets e features portáveis | `vynamp` | M0 | P0 | `TASK-E11-01` |
 | `TASK-E15-01` | Configurar Claude Code e Superpowers obrigatório | `vynamp` | M0 | P0 | — |
