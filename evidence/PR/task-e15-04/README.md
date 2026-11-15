@@ -65,9 +65,10 @@ conflito em vez de se esconder num merge silencioso.
 
 ## Limitações
 
-- Nenhum workflow foi executado no GitHub Actions a partir deste ambiente: `gh` não
-  autentica aqui (`failed to read configuration: ... permission denied`). O CI Gate vale
-  pelo SHA final no PR, não por esta evidência local.
+- Nenhum workflow foi executado no GitHub Actions a partir deste ambiente. O push da
+  branch e a abertura do PR usam `GITHUB_TOKEN_REPO` (write medido por sonda de ref), mas
+  a execução dos jobs acontece só no runner do GitHub. O CI Gate vale pelo SHA final no
+  PR, não por esta evidência local.
 - Os runners `vynamp-hardware`/`vynamp-android-device` continuam ausentes (TASK-E15-05).
   O `Hardware Gate` agora reprova o run nesse estado, em vez de terminar verde.
 - `windows-2022` e `macos-15` não foram executados localmente; a matriz é afirmação de
