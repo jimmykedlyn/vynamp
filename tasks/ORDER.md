@@ -10,7 +10,7 @@ começar primeiro -- dentro de uma onda a ordem é fase, prioridade e ID, e a
 escolha entre elas é do mantenedor. O status de cada uma vive no backlog, e
 `cargo xtask check-docs` reprova este arquivo quando ele diverge de lá.
 
-16 TASKs entregues, 199 planejadas, 25 ondas.
+17 TASKs entregues, 198 planejadas, 25 ondas.
 
 ## Onda 1 — 18 TASK(s)
 

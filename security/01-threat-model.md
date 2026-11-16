@@ -74,14 +74,12 @@ condições abaixo, e ambas são verificadas por `cargo xtask check-delivery`:
    gate que só percorre chaves as deixaria passar sem ver nada; e `read-all` não é
    estreito: ele lê todo escopo, inclusive os que o bloco poria em `none`.
 
-**Onde o gate roda hoje: no `pre-push` local, ainda não em CI.** O
-`.githooks/pre-push` chama `cargo xtask ci docs`, que inclui `check-delivery`; nenhum
-workflow de `.github/workflows/` chama `check-delivery` nem `ci docs`. Consequência
-medida: um clone sem `setup.sh` — e todo runner de CI — não tem o gate, então apagar
-`permissions:` passa verde no CI e só reprova na máquina de quem instalou o hook. Quem
-fecha essa lacuna é `TASK-E15-04` (job de CI para o gate multiplataforma, commit
-`8d11700`, branch `feature/task-e15-04-claude-ci-gate-multiplataforma`), que **ainda não
-está em `develop`**. Até lá, "portão no CI" não é afirmável.
+**Onde o gate roda: em CI e no `pre-push` local.** O job `delivery` do `ci.yml` chama
+`cargo xtask check-delivery`, e o `.githooks/pre-push` chama `cargo xtask ci docs`, que
+inclui o mesmo `check-delivery`. Quem pôs o job no CI foi `TASK-E15-04` (commit
+`8d11700`), mergeada em `develop` pelo PR #67 (`a2f7e40`). Antes disso, um clone sem
+`setup.sh` — e todo runner de CI — ficava sem o gate, e apagar `permissions:` passava
+verde no CI.
 
 O gate está em `xtask/src/validate.rs` (`github_actions`), com seis testes:
 `github_actions_requires_the_read_only_token_policy` (apagar o bloco do topo reprova),

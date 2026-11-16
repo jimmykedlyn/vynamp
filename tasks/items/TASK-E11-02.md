@@ -156,10 +156,10 @@ a saída óbvia era voltar para `read`. Corrigido com TDD:
 ele desligado, `github_actions_rejects_a_job_that_widens_the_token` e
 `github_actions_rejects_any_wide_permission_key` ficam vermelhos.
 
-**Onde o gate roda:** no `pre-push` local (`.githooks/pre-push` → `cargo xtask ci docs`
-→ `check-delivery`). **Não** roda em workflow nenhum de `.github/workflows/` neste
-commit — medido com `grep -rn "check-delivery\|ci docs" .github/workflows/`. Quem fecha
-é `TASK-E15-04` (`8d11700`), ainda fora de `develop`.
+**Onde o gate roda:** em CI, no job `delivery` do `ci.yml` (`cargo xtask check-delivery`),
+e no `pre-push` local (`.githooks/pre-push` → `cargo xtask ci docs` → `check-delivery`).
+O job de CI veio de `TASK-E15-04` (`8d11700`), mergeada em `develop` pelo PR #67
+(`a2f7e40`); antes disso o gate só existia no hook local.
 
 **As formas abreviadas passavam.** O laço de job percorria
 `perms.as_object().into_iter().flatten()`; `permissions: write-all` e `read-all` não são

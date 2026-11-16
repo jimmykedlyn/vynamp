@@ -12,7 +12,7 @@ arquivo quando ele diverge do backlog. Para reescrever: `cargo xtask docs-sync`.
 ## O que está destravado agora
 
 <!-- BEGIN GENERATED: next -->
-16 TASKs entregues de 215. A onda 1 tem 19 destravada(s) agora.
+17 TASKs entregues de 215. A onda 1 tem 18 destravada(s) agora.
 
 | ID | Título | Módulo | Fase | Prio |
 |---|---|---|---|---|

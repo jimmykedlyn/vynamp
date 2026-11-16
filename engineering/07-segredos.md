@@ -6,9 +6,8 @@ Não commitar credenciais, .env, PFX/P12/JKS/P8 ou export de tokens. Plugin/acco
 
 ## Verificação, não declaração
 
-Duas checagens provam o que este arquivo pede. **Uma roda em CI; a outra, hoje, só no
-`pre-push` local** — a diferença está dita em cada item, porque "portão" que não roda no
-runner não barra merge nenhum:
+Duas checagens provam o que este arquivo pede, e **as duas rodam em CI** — a diferença
+está dita em cada item, porque "portão" que não roda no runner não barra merge nenhum:
 
 - **Credencial no histórico — roda em CI.** `cargo xtask check-secrets` lê todo blob
   alcançável de toda ref, não a árvore de trabalho: segredo apagado no commit seguinte
@@ -16,7 +15,7 @@ runner não barra merge nenhum:
   porque um clone raso escanearia a árvore e chamaria de limpo um histórico que ainda tem
   o token. Resultado medido em 2026-11-15: `No credential shape found in the reachable
   history.`
-- **Token do workflow — portão local no `pre-push`, ainda não em CI.** Todo workflow
+- **Token do workflow — roda em CI.** Todo workflow
   declara `permissions: contents: read` e nenhuma chave de permissão, no bloco de
   workflow nem no de job, tem valor diferente de `read` ou `none`. O default do GitHub
   não é seguro por omissão — em repositório antigo o token nasce read/write —, um
@@ -28,11 +27,10 @@ runner não barra merge nenhum:
   de job, para chave larga fora de `contents` e para as duas abreviadas — mais dois que
   garantem o contrário, que `none` e `{}` passam, para o gate não punir quem endurece.
   Toda action é fixada por SHA de 40 hex, conferido no mesmo gate.
-  **O gate não roda em workflow nenhum neste commit:** `.githooks/pre-push` chama
-  `cargo xtask ci docs`, que inclui `check-delivery`, mas nenhum job de
-  `.github/workflows/` o chama. Clone sem `setup.sh` e todo runner de CI ficam sem ele.
-  Quem fecha é `TASK-E15-04` (commit `8d11700`, branch
-  `feature/task-e15-04-claude-ci-gate-multiplataforma`), ainda **não** em `develop`.
+  **O gate roda em CI:** o job `delivery` do `ci.yml` chama `cargo xtask check-delivery`,
+  e o `pre-push` local chama `cargo xtask ci docs`, que inclui o mesmo `check-delivery`.
+  Quem pôs o job no CI foi `TASK-E15-04` (commit `8d11700`), mergeada em `develop` pelo
+  PR #67 (`a2f7e40`).
 
 O que **não** está coberto: redaction de credencial em log de runtime. A varredura acha
 segredo commitado, não segredo impresso. Redaction é `TASK-E11-05`.
