@@ -12,7 +12,7 @@ arquivo quando ele diverge do backlog. Para reescrever: `cargo xtask docs-sync`.
 ## O que está destravado agora
 
 <!-- BEGIN GENERATED: next -->
-16 TASKs entregues de 215. A onda 1 tem 19 destravada(s) agora.
+19 TASKs entregues de 215. A onda 1 tem 17 destravada(s) agora.
 
 | ID | Título | Módulo | Fase | Prio |
 |---|---|---|---|---|
@@ -21,11 +21,9 @@ arquivo quando ele diverge do backlog. Para reescrever: `cargo xtask docs-sync`.
 | `TASK-E02-13` | Gerar gabarito de movimento, medidores e ondas | `vynamp-player` | M0 | P0 |
 | `TASK-E02-14` | Gerar gabarito de comportamento e preferências | `vynamp-player` | M0 | P0 |
 | `TASK-E07-01` | Provar sandbox WASM e capabilities | `vynamp-player` | M0 | P0 |
-| `TASK-E10-01` | Criar corpus de testes licenciado | `vynamp` | M0 | P0 |
 | `TASK-E11-02` | Definir fronteiras de segurança | `vynamp` | M0 | P0 |
 | `TASK-E13-01` | Provar Android arm64, bridge Rust e output | `vynamp-player` | M0 | P0 |
 | `TASK-E14-01` | Provar os cinco targets e features portáveis | `vynamp` | M0 | P0 |
-| `TASK-E15-01` | Configurar Claude Code e Superpowers obrigatório | `vynamp` | M0 | P0 |
 | `TASK-E16-01` | Provar envelope de ativação e protocolo comum | `vynamp-player` | M0 | P0 |
 | `TASK-E01-03` | Implementar state machine e generation cancellation | `vynamp-engine` | M1 | P0 |
 | `TASK-E03-01` | Implementar schema SQLite e migrations seguras | `vynamp-player` | M1 | P0 |
