@@ -73,3 +73,28 @@ conflito em vez de se esconder num merge silencioso.
   O `Hardware Gate` agora reprova o run nesse estado, em vez de terminar verde.
 - `windows-2022` e `macos-15` não foram executados localmente; a matriz é afirmação de
   configuração, verificada por leitura do YAML, não por execução.
+
+## Correção pós-merge do `Estado`
+
+O PR #67 entrou como `a2f7e40` e o CI Gate ficou verde nos 12 checks. Um defeito
+sobreviveu ao merge, e o gate que devia tê-lo pego não existia.
+
+`tasks/items/TASK-E15-04.md` foi mergeado com `| Estado | planned |` enquanto
+`tasks/backlog.json` já dizia `implemented`. O próprio cabeçalho do arquivo afirma que
+os campos de estado vêm do backlog, e nada conferia: `check-tasks` comparava dono e
+critérios de aceite, nunca o `Estado`. O arquivo que um leitor abre para saber o estado
+da TASK mentia, e os 12 checks verdes não tinham como notar.
+
+A regra nova compara o `Estado` do Markdown com o `status` do backlog, e só para as
+TASKs do umbrella -- o arquivo de um módulo mora no repo do módulo, e corrigi-lo exige
+commit lá e repin aqui. Reprovar o umbrella por um arquivo que ele não pode consertar
+deixaria o CI vermelho sem saída.
+
+**Verificação.** Com a regra e sem a correção do arquivo, `cargo xtask check-tasks`
+responde `{"errors":["TASK-E15-04 is implemented in backlog, planned in Markdown"],
+"result":"failed"}`. Com a correção, `passed` em 215 tasks.
+
+**Achado que a regra deixou visível e que não é desta TASK:** `TASK-E01-04`
+(`vynamp-decode`, pinado em `9f26d7c`) tem a mesma divergência -- `planned` no arquivo,
+`implemented` no backlog do umbrella. Fica registrado, não corrigido: é arquivo de outro
+módulo, e o conserto é uma TASK lá mais um repin aqui.
