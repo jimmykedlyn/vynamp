@@ -10,7 +10,7 @@ começar primeiro -- dentro de uma onda a ordem é fase, prioridade e ID, e a
 escolha entre elas é do mantenedor. O status de cada uma vive no backlog, e
 `cargo xtask check-docs` reprova este arquivo quando ele diverge de lá.
 
-15 TASKs entregues, 200 planejadas, 25 ondas.
+16 TASKs entregues, 199 planejadas, 25 ondas.
 
 ## Onda 1 — 19 TASK(s)
 
@@ -29,14 +29,14 @@ escolha entre elas é do mantenedor. O status de cada uma vive no backlog, e
 | `TASK-E16-01` | Provar envelope de ativação e protocolo comum | `vynamp-player` | M0 | P0 | `TASK-E11-01` |
 | `TASK-E01-03` | Implementar state machine e generation cancellation | `vynamp-engine` | M1 | P0 | `TASK-E01-01`, `TASK-E01-02` |
 | `TASK-E03-01` | Implementar schema SQLite e migrations seguras | `vynamp-player` | M1 | P0 | `TASK-E11-01` |
-| `TASK-E15-04` | Ativar workflows e CI Gate multiplataforma | `vynamp` | M1 | P0 | `TASK-E15-03` |
+| `TASK-E15-05` | Integrar testes e evidência operacional | `vynamp` | M1 | P0 | `TASK-E11-01`, `TASK-E15-04` |
 | `TASK-E01-05` | Implementar mixer, drain e transições básicas | `vynamp-engine` | M1 | P1 | `TASK-E01-04` |
 | `TASK-E01-07` | Adicionar codecs modernos e capítulos | `vynamp-decode` | M2 | P1 | `TASK-E01-04` |
 | `TASK-E21-01` | Entregar registry de encoders e disponibilidade por build | `vynamp-encode` | M3 | P0 | — |
 | `TASK-E04-05` | Entregar saída exclusiva e device profiles | `vynamp-output` | M3 | P1 | `TASK-E01-02`, `TASK-E04-02` |
 | `TASK-E20-01` | Provar iOS arm64, bridge Rust e CoreAudio | `vynamp-player` | F6 | P0 | `TASK-E11-01`, `TASK-E01-01`, `TASK-E01-02` |
 
-## Onda 2 — 29 TASK(s)
+## Onda 2 — 28 TASK(s)
 
 | ID | Título | Módulo | Fase | Prio | Depende de |
 |---|---|---|---|---|---|
@@ -48,7 +48,6 @@ escolha entre elas é do mantenedor. O status de cada uma vive no backlog, e
 | `TASK-E04-01` | Implementar EQ10, ganho e ReplayGain playback | `vynamp-engine` | M1 | P0 | `TASK-E01-05` |
 | `TASK-E13-02` | Entregar serviço e MediaSession com engine Rust | `vynamp-player` | M1 | P0 | `TASK-E13-01`, `TASK-E01-03` |
 | `TASK-E14-02` | Entregar ports de arquivos, credenciais e sistema | `vynamp` | M1 | P0 | `TASK-E14-01`, `TASK-E01-03` |
-| `TASK-E15-05` | Integrar testes e evidência operacional | `vynamp` | M1 | P0 | `TASK-E11-01`, `TASK-E15-04` |
 | `TASK-E16-02` | Implementar owner único por perfil e IPC autorizado | `vynamp-player` | M1 | P0 | `TASK-E16-01`, `TASK-E01-03` |
 | `TASK-E11-04` | Completar CI e supply chain | `vynamp` | M1 | P1 | `TASK-E11-01`, `TASK-E11-03`, `TASK-E14-01`, `TASK-E15-04` |
 | `TASK-E03-03` | Implementar import incremental e roots offline | `vynamp-player` | M2 | P0 | `TASK-E03-01`, `TASK-E01-07` |

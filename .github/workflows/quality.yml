@@ -56,3 +56,26 @@ jobs:
       - name: Provision pinned Rust toolchain
         run: rustup show
       - run: cargo xtask quality-gate
+
+  # AC-3 of TASK-E15-04: um job que pula por falta de hardware ou de fonte nao
+  # aprova nada. O GitHub reporta o skip como `skipped`, e um run que termina
+  # sem este agregado fica verde com a matriz inteira pulada -- exatamente o
+  # "skip sem fonte aprovando o player" que o criterio proibe. Este job roda
+  # sempre e compara contra `success`, entao skip reprova.
+  verdict:
+    name: Hardware Gate
+    if: always()
+    needs: [preflight, trusted-hardware]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Aggregate
+        shell: bash
+        run: |
+          test "${{ needs.preflight.result }}" = success
+          if [ "${{ needs.trusted-hardware.result }}" != success ]; then
+            echo "Hardware Gate failed: the matrix result is '${{ needs.trusted-hardware.result }}'."
+            echo 'A skipped matrix measured nothing, so it approves nothing.'
+            echo 'Re-dispatch with confirm_hardware_runners = true once the runners are online.'
+            exit 1
+          fi
+          echo 'Hardware Gate passed: the matrix ran on real devices.'

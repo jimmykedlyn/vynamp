@@ -71,4 +71,38 @@ CI docs/tooling e matriz Cargo/Android, required aggregate context.
 - [ ] PR aberto com template preenchido; CI Gate verde no SHA final
 ## Notas de execução
 
-Preenchido durante a execução, não antes.
+**2026-11-15.** Cinco achados medidos em `develop` `310a0ad`, todos com teste que
+reprovava antes da correção:
+
+1. **`check-delivery` não rodava em job nenhum.** As regras de pin, permissão e matriz
+   existiam no xtask e nenhum workflow as aplicava. Entrou o job `delivery`.
+2. **`persist-credentials: false` não era verificado.** Regra nova, por step de
+   checkout em todos os workflows.
+3. **Nenhuma regra ligava o conjunto de jobs ao `needs:` do gate.** Um job acrescentado
+   fora do agregado rodaria com a falha invisível. A regra é estrutural, e cada
+   dependência tem de ter o `result` lido — `needs:` só ordena.
+4. **O `arch` saía com 0 quando não achava `libs/*/Cargo.toml`.** Era o skip sem fonte
+   que a AC-3 proíbe: o checkout que não trouxe os submódulos aprovava. Agora reprova.
+5. **A matriz cobria três alvos, não os cinco.** Entraram `windows-2022` e o job
+   `android`.
+6. **`fail-fast` não era verificado.** O `ci.yml` já tinha `fail-fast: false`, mas nada
+   o prendia: com o default `true`, uma perna vermelha cancela as outras e quatro dos
+   cinco alvos deixam de ser verificados por um run que reporta uma falha só. Virou
+   regra.
+
+`quality.yml` ganhou o agregado `Hardware Gate`: com os runners de TASK-E15-05 ainda
+ausentes, o run terminava verde com a matriz pulada.
+
+**Decisão de escopo.** O job `android` não constrói app (D-CI-1): confirma o alvo
+`aarch64-linux-android` no toolchain pinado e roda `cargo xtask ci detect`. O build
+Android pertence ao CI do repo do app. Registrado em `engineering/04-ci.md`.
+
+**Correção fora do escopo estrito, mas necessária para o AC-2 valer:** `check-delivery`
+comparava o `origin` com `==` contra a URL de `config/github.json`, que leva `.git`. O
+`actions/checkout` grava o remoto sem o sufixo, então o job `delivery` que esta TASK
+acrescenta reprovaria em todo runner. A comparação passou a ser sobre a identidade do
+repositório (`same_remote`), com teste que prova que repositório diferente continua
+reprovando.
+
+**Limitação.** Nenhum workflow rodou no GitHub Actions a partir deste ambiente: `gh` não
+autentica aqui. O CI Gate vale pelo SHA final no PR.
