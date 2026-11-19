@@ -38,8 +38,8 @@ reescrevê-lo: `cargo xtask docs-sync`.
 <!-- BEGIN GENERATED: state -->
 | Estado | TASKs |
 |---|---|
-| `implemented` | 17 |
-| `planned` | 198 |
+| `implemented` | 20 |
+| `planned` | 195 |
 | **total** | 215 |
 
 Entregues, em ordem de ID:
