@@ -13,7 +13,7 @@
 | Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
 | Fase | M1 |
 | Prioridade | P0 |
-| Estado | planned |
+| Estado | implemented |
 | Depende de | `TASK-E15-03` |
 | Bloqueia | `TASK-E11-04`, `TASK-E15-05`, `TASK-E17-12` |
 | Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |

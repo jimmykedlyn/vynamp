@@ -1195,6 +1195,20 @@ pub fn module_owners(body: &str) -> Vec<String> {
         .map(str::to_owned)
         .collect()
 }
+/// O `Estado` do cabeçalho de uma TASK, se o arquivo tiver a linha.
+///
+/// O campo é opcional: os arquivos anteriores ao passo 37 não o têm, e exigir a
+/// linha aqui reprovaria arquivos que nunca a tiveram. Quem chama compara só
+/// quando há o que comparar.
+fn markdown_status(body: &str) -> Option<String> {
+    let line = body
+        .lines()
+        .map(str::trim)
+        .find(|l| l.starts_with("| Estado |"))?;
+    let cell = line.trim_matches('|').split('|').nth(1)?.trim();
+    let cell = cell.trim_matches('`').trim();
+    (!cell.is_empty()).then(|| cell.to_owned())
+}
 /// The rules `check-tasks` enforces, as a function of a backlog and a reader for the
 /// task Markdown. Split out from `tasks()` so the four adversarial cases its acceptance
 /// criteria name can be exercised without a repository on disk.
@@ -1263,6 +1277,30 @@ fn task_disagreements(backlog: &Value, read: impl Fn(&str) -> Option<String>) ->
                         out.push(format!(
                             "{id} owner is {} in Markdown, {backlog_owner} in backlog",
                             owners[0]
+                        ));
+                    }
+                    // O cabeçalho do arquivo diz que os campos de estado vêm do
+                    // backlog. Nada conferia, e `TASK-E15-04` foi mergeada com
+                    // `Estado | planned` enquanto o backlog já dizia
+                    // `implemented` -- o arquivo que o leitor abre para saber o
+                    // estado da TASK mentia, e o gate passava. A cópia é
+                    // legítima (o arquivo é lido sozinho); cópia que ninguém
+                    // compara é cópia que envelhece.
+                    //
+                    // A regra vale só para as TASKs do umbrella. O arquivo de um
+                    // módulo mora no repo daquele módulo, e corrigi-lo exige um
+                    // commit lá e um repin aqui -- trabalho de outra TASK, em
+                    // outro repo. Reprovar o umbrella por um arquivo que ele não
+                    // pode consertar deixaria o CI vermelho sem que ninguém
+                    // pudesse fechá-lo. A divergência que a regra achar fora do
+                    // umbrella é registrada como achado, não como falha.
+                    if owner(t) == "vynamp"
+                        && let (Some(md), Ok(backlog_status)) =
+                            (markdown_status(&body), string(t, "status"))
+                        && md != backlog_status
+                    {
+                        out.push(format!(
+                            "{id} is {backlog_status} in backlog, {md} in Markdown"
                         ));
                     }
                     let rows = acceptance_rows(&body);
@@ -2389,6 +2427,14 @@ jobs:
             "# TASK — t\n\n| Campo | Valor |\n|---|---|\n| ID | `TASK-E99-01` |\n| Módulo dono | {owners} |\n\n## Critérios de aceite\n\n| ID | Given | When | Then |\n|---|---|---|---|\n| `TASK-E99-01-AC-1` | {given} | {when} | {then} |\n"
         )
     }
+    /// O `Estado` do cabeçalho é a segunda cópia do status do backlog, e o
+    /// cabeçalho do arquivo diz que ele vem de lá. Um arquivo sem a linha modela
+    /// os que precedem o campo; um com ela, o caso real.
+    fn task_md_with_estado(status: &str) -> String {
+        format!(
+            "# TASK — t\n\n| Campo | Valor |\n|---|---|\n| ID | `TASK-E99-01` |\n| Estado | {status} |\n| Módulo dono | `vynamp` |\n\n## Critérios de aceite\n\n| ID | Given | When | Then |\n|---|---|---|---|\n| `TASK-E99-01-AC-1` | g | w | t |\n"
+        )
+    }
     fn run(backlog: Value, body: String) -> Vec<String> {
         task_disagreements(&backlog, move |_| Some(body.clone()))
     }
@@ -2468,6 +2514,47 @@ jobs:
             json!({"tasks":[task_entry("TASK-E99-01","implemented",true)]}),
             task_md("`vynamp`", "o repo", "o gate roda", "passa"),
         );
+        assert!(e.is_empty(), "{e:?}");
+    }
+    /// O cabeçalho de `tasks/items/*.md` diz que os campos de estado vêm do
+    /// backlog. Nada conferia isso, e `TASK-E15-04` foi mergeada com
+    /// `Estado | planned` enquanto o backlog já dizia `implemented`: o arquivo
+    /// que o leitor abre para saber o estado da TASK mentia, e o gate passava.
+    /// A cópia é legítima (o arquivo é lido sozinho), mas cópia que ninguém
+    /// compara é cópia que envelhece.
+    #[test]
+    fn check_tasks_rejects_an_estado_that_disagrees_with_the_backlog() {
+        let e = run(
+            json!({"tasks":[task_entry("TASK-E99-01","implemented",true)]}),
+            task_md_with_estado("planned"),
+        );
+        assert_eq!(
+            e,
+            vec!["TASK-E99-01 is implemented in backlog, planned in Markdown"]
+        );
+        // O mesmo estado nas duas fontes é o caso verde: a regra compara, não proíbe.
+        let e = run(
+            json!({"tasks":[task_entry("TASK-E99-01","implemented",true)]}),
+            task_md_with_estado("implemented"),
+        );
+        assert!(e.is_empty(), "{e:?}");
+        // Um arquivo sem a linha não é divergência: o campo é opcional no
+        // formato, e exigir a linha aqui reprovaria arquivos que nunca a tiveram.
+        let e = run(
+            json!({"tasks":[task_entry("TASK-E99-01","implemented",true)]}),
+            task_md("`vynamp`", "g", "w", "t"),
+        );
+        assert!(e.is_empty(), "{e:?}");
+    }
+    /// A regra do `Estado` vale só para as TASKs do umbrella. O arquivo de um
+    /// módulo mora no repo daquele módulo: consertá-lo exige commit lá e repin
+    /// aqui, que é trabalho de outra TASK. Reprovar o umbrella por um arquivo
+    /// que ele não pode consertar deixaria o CI vermelho sem saída.
+    #[test]
+    fn check_tasks_does_not_fail_the_umbrella_for_a_module_task() {
+        let mut decode = task_entry("TASK-E99-01", "implemented", true);
+        decode["repo"] = json!("vynamp-decode");
+        let e = run(json!({"tasks":[decode]}), task_md_with_estado("planned"));
         assert!(e.is_empty(), "{e:?}");
     }
     #[test]
