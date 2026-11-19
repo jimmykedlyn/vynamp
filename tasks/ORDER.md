@@ -10,9 +10,9 @@ começar primeiro -- dentro de uma onda a ordem é fase, prioridade e ID, e a
 escolha entre elas é do mantenedor. O status de cada uma vive no backlog, e
 `cargo xtask check-docs` reprova este arquivo quando ele diverge de lá.
 
-17 TASKs entregues, 198 planejadas, 25 ondas.
+20 TASKs entregues, 195 planejadas, 25 ondas.
 
-## Onda 1 — 18 TASK(s)
+## Onda 1 — 16 TASK(s)
 
 | ID | Título | Módulo | Fase | Prio | Depende de |
 |---|---|---|---|---|---|
@@ -21,10 +21,8 @@ escolha entre elas é do mantenedor. O status de cada uma vive no backlog, e
 | `TASK-E02-13` | Gerar gabarito de movimento, medidores e ondas | `vynamp-player` | M0 | P0 | `TASK-E02-11` |
 | `TASK-E02-14` | Gerar gabarito de comportamento e preferências | `vynamp-player` | M0 | P0 | `TASK-E02-11` |
 | `TASK-E07-01` | Provar sandbox WASM e capabilities | `vynamp-player` | M0 | P0 | `TASK-E11-01` |
-| `TASK-E10-01` | Criar corpus de testes licenciado | `vynamp` | M0 | P0 | `TASK-E11-01` |
 | `TASK-E13-01` | Provar Android arm64, bridge Rust e output | `vynamp-player` | M0 | P0 | `TASK-E11-01`, `TASK-E01-01`, `TASK-E01-02` |
 | `TASK-E14-01` | Provar os cinco targets e features portáveis | `vynamp` | M0 | P0 | `TASK-E11-01` |
-| `TASK-E15-01` | Configurar Claude Code e Superpowers obrigatório | `vynamp` | M0 | P0 | — |
 | `TASK-E16-01` | Provar envelope de ativação e protocolo comum | `vynamp-player` | M0 | P0 | `TASK-E11-01` |
 | `TASK-E01-03` | Implementar state machine e generation cancellation | `vynamp-engine` | M1 | P0 | `TASK-E01-01`, `TASK-E01-02` |
 | `TASK-E03-01` | Implementar schema SQLite e migrations seguras | `vynamp-player` | M1 | P0 | `TASK-E11-01` |
@@ -35,12 +33,11 @@ escolha entre elas é do mantenedor. O status de cada uma vive no backlog, e
 | `TASK-E04-05` | Entregar saída exclusiva e device profiles | `vynamp-output` | M3 | P1 | `TASK-E01-02`, `TASK-E04-02` |
 | `TASK-E20-01` | Provar iOS arm64, bridge Rust e CoreAudio | `vynamp-player` | F6 | P0 | `TASK-E11-01`, `TASK-E01-01`, `TASK-E01-02` |
 
-## Onda 2 — 28 TASK(s)
+## Onda 2 — 27 TASK(s)
 
 | ID | Título | Módulo | Fase | Prio | Depende de |
 |---|---|---|---|---|---|
 | `TASK-E02-15` | Mapear lacunas web para nativo por plataforma | `vynamp-player` | M0 | P0 | `TASK-E02-12`, `TASK-E02-13`, `TASK-E02-14` |
-| `TASK-E15-02` | Validar worktrees, claims e handoff | `vynamp` | M0 | P0 | `TASK-E15-01` |
 | `TASK-E17-01` | Fixar catálogo por binding, capacidades e corpus | `vynamp-decode` | M0 | P0 | `TASK-E11-01`, `TASK-E14-01` |
 | `TASK-E02-02` | Implementar tokens e componentes semânticos | `vynamp-player` | M1 | P0 | `TASK-E02-01`, `TASK-E02-11` |
 | `TASK-E03-02` | Implementar queue independente e shuffle | `vynamp-player` | M1 | P0 | `TASK-E03-01`, `TASK-E01-03` |

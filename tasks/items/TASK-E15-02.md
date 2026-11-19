@@ -13,7 +13,7 @@
 | Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
 | Fase | M0 |
 | Prioridade | P0 |
-| Estado | planned |
+| Estado | implemented |
 | Depende de | `TASK-E15-01` |
 | Bloqueia | `TASK-E11-01`, `TASK-E15-03` |
 | Modelo executor | Opus — áudio/RT, concorrência, segurança ou release |
@@ -72,3 +72,38 @@ Scripts e regras de isolamento, claim atômico e remoção segura.
 ## Notas de execução
 
 Preenchido durante a execução, não antes.
+
+### 2026-11-15 — verificação e registro
+
+A implementação já existia em `develop` desde o commit `247b424` (tooling inicial), mas a
+TASK nunca teve o estado atualizado. O mantenedor decidiu registrar como entregue em
+2026-11-15, após a evidência abaixo.
+
+**AC-1** — claim exclusivo e preservação de worktree suja/unmerged. Testes que provam, no
+checkout central (`310a0ad`), todos verdes:
+
+```
+cargo test --package xtask --locked -- \
+    concurrent_task_claim_has_one_winner \
+    dirty_worktree_is_preserved unmerged_worktree_is_preserved
+# 3 passed; 0 failed
+```
+
+Implementação correspondente em `xtask/src/repo.rs`: o claim é tomado com
+`fs::create_dir` atômico (a segunda sessão recebe `Task already claimed`), e a remoção
+preserva a worktree quando o claim está inconsistente, quando a branch diverge do claim ou
+quando o HEAD está detached.
+
+**AC-2** — hotfix só remove após `main` **e** `develop`. Testes:
+
+```
+cargo test --package xtask --locked -- \
+    hotfix_requires_both_main_and_develop hotfix_merged_only_to_main_is_preserved
+# 2 passed; 0 failed
+```
+
+Suíte inteira do `xtask` no mesmo commit: `118 passed` (unittests) + `36 passed`
+(`tests/tooling.rs`), zero falhas.
+
+**Limitação registrada:** sem push/PR neste runner, não há CI Gate pelo SHA. A evidência é
+local e os testes são os mesmos que o CI executa.

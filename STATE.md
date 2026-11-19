@@ -38,8 +38,8 @@ reescrevê-lo: `cargo xtask docs-sync`.
 <!-- BEGIN GENERATED: state -->
 | Estado | TASKs |
 |---|---|
-| `implemented` | 17 |
-| `planned` | 198 |
+| `implemented` | 20 |
+| `planned` | 195 |
 | **total** | 215 |
 
 Entregues, em ordem de ID:
@@ -51,9 +51,12 @@ Entregues, em ordem de ID:
 - `TASK-E01-04` — Entregar fonte local e decoder registry
 - `TASK-E02-11` — Congelar MVP de referência e extrair SVGs, ícones e temas
 - `TASK-E04-02` — Provar resampler e sample conversion
+- `TASK-E10-01` — Criar corpus de testes licenciado
 - `TASK-E11-01` — Criar workspace e baseline de engenharia
 - `TASK-E11-02` — Definir fronteiras de segurança
 - `TASK-E11-03` — Resolver licenças e inventário de dependências
+- `TASK-E15-01` — Configurar Claude Code e Superpowers obrigatório
+- `TASK-E15-02` — Validar worktrees, claims e handoff
 - `TASK-E15-03` — Importar GitHub privado e ativar Gitflow
 - `TASK-E15-04` — Ativar workflows e CI Gate multiplataforma
 - `TASK-E19-01` — Migrar o CI do repo principal para GitHub Actions
