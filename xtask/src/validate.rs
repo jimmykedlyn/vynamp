@@ -542,6 +542,42 @@ fn triggers(v: &Value) -> BTreeSet<String> {
         _ => BTreeSet::new(),
     }
 }
+/// Renders a permission value for a gate message. A bare `{value}` on a
+/// `serde_json::Value` string prints the JSON form, quotes included, and the
+/// reader ends up hunting for literal quotes in a file that has none.
+fn scope(v: &serde_json::Value) -> String {
+    v.as_str().map_or_else(|| v.to_string(), str::to_owned)
+}
+/// Rejects a `permissions:` block that grants more than `read`.
+///
+/// GitHub accepts `write-all` and `read-all` as shorthands for a whole block,
+/// and neither is a mapping. Walking only the keys of an object therefore
+/// sends both shorthands straight through: `as_object()` is `None`, the
+/// iterator is empty, and the gate reports success on the widest token GitHub
+/// can issue. `read-all` is not a pass either -- it reads every scope,
+/// including the ones a block would otherwise set to `none`.
+///
+/// `null` and `{}` stay silent: the first is an absent block, the second is
+/// every permission off, and both are narrower than the policy.
+fn check_permissions(c: &mut Checks, at: &str, perms: &Value) {
+    if let Some(word) = perms.as_str() {
+        c.check(
+            false,
+            format!("{at} grants `permissions: {word}`; write it as keys, each `read` or `none` (TASK-E11-02 AC-2)"),
+        );
+        return;
+    }
+    for (key, value) in perms.as_object().into_iter().flatten() {
+        c.check(
+            matches!(value.as_str(), Some("read" | "none")),
+            format!(
+                "{at} grants `{key}: {}`; every permission must be `read` or `none` \
+                 (TASK-E11-02 AC-2)",
+                scope(value)
+            ),
+        );
+    }
+}
 /// CI runs on GitHub Actions (ADR-014). Every action is pinned by full commit
 /// SHA and the aggregate gate fails closed on any non-success dependency.
 ///
@@ -594,30 +630,38 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
         }
         flows.insert(name, v);
     }
-    // AC-2 of TASK-E15-04: every workflow declares `permissions: contents:
-    // read`, and no job widens it. An absent block is not a safe default -- it
-    // is an unstated one, and GitHub's default has been read/write on older
-    // repositories. A job-level block replaces the workflow-level one
-    // wholesale, so the top-level line alone proves nothing about the job that
-    // actually runs.
+    // TASK-E11-02 AC-2: the token policy is a claim about what the workflows
+    // *grant*, and a claim nothing reads is a claim that drifts. GitHub's
+    // default token is read/write on older repositories and read-only on new
+    // ones, so an absent `permissions:` block is not a safe default -- it is
+    // an unstated one. Every workflow states `contents: read`, and no job
+    // overrides it with a wider scope: a job-level block replaces the
+    // workflow-level one wholesale, so the top-level line alone proves
+    // nothing about the job that actually runs.
+    //
+    // Reading `contents` alone would test one key and call it the policy.
+    // `id-token: write` exchanges OIDC for cloud credentials and
+    // `packages: write` publishes artifacts, so every key has to be `read` or
+    // `none` -- `none` is narrower than `read`, not wider.
     for (name, v) in &flows {
         c.check(
             v["permissions"]["contents"].as_str() == Some("read"),
             format!(
-                "Workflow {name} must declare `permissions: contents: read` (TASK-E15-04 AC-2)"
+                "Workflow {name} must declare `permissions: contents: read` (TASK-E11-02 AC-2)"
             ),
         );
+        check_permissions(c, &format!("Workflow {name}"), &v["permissions"]);
         for (job, body) in v["jobs"].as_object().into_iter().flatten() {
             let Some(perms) = body.get("permissions") else {
                 continue;
             };
-            c.check(
-                perms["contents"].as_str() == Some("read"),
-                format!(
-                    "Job {name}/{job} widens the token; it must keep `contents: read` \
-                     (TASK-E15-04 AC-2)"
-                ),
-            );
+            // A job block replaces the workflow one wholesale, and a key it does
+            // not name is set to `none` -- that is narrower, not wider. So the
+            // only thing to reject here is a key the job *does* name with a
+            // scope above `read`. Requiring `contents: read` on the job would
+            // reject `permissions: {}` and `contents: none`, which are the two
+            // safest blocks there are; the gate would then punish hardening.
+            check_permissions(c, &format!("Job {name}/{job}"), perms);
         }
     }
     let ci = flows.get("ci");
@@ -2058,10 +2102,10 @@ model: sonnet
             "dropping the android job must fail the gate, got {e:?}"
         );
     }
-    /// AC-2 of TASK-E15-04: the token policy is a claim about what the
-    /// workflows *grant*, and a claim nothing reads is a claim that drifts.
-    /// Deleting `permissions:` is one silent line: the workflow still runs and
-    /// the token widens to the repository default.
+    /// AC-2 of TASK-E11-02 proves the token policy by *reading* it, not by
+    /// assuming it. Without a gate, deleting `permissions:` is one silent
+    /// line: the workflow still runs, the token silently widens to the
+    /// repository default, and nothing in CI says so.
     #[test]
     fn github_actions_requires_the_read_only_token_policy() {
         for (from, to) in [
@@ -2075,7 +2119,7 @@ model: sonnet
             edit(f.path(), "ci.yml", from, to);
             let e = ci_errors(f.path());
             assert!(
-                e.iter().any(|e| e.contains("TASK-E15-04 AC-2")),
+                e.iter().any(|e| e.contains("TASK-E11-02 AC-2")),
                 "ci.yml without `contents: read` must fail the gate, got {e:?}"
             );
         }
@@ -2091,7 +2135,7 @@ model: sonnet
         );
         let e = ci_errors(f.path());
         assert!(
-            e.iter().any(|e| e.contains("TASK-E15-04 AC-2")),
+            e.iter().any(|e| e.contains("TASK-E11-02 AC-2")),
             "quality.yml without `contents: read` must fail the gate, got {e:?}"
         );
     }
@@ -2109,8 +2153,57 @@ model: sonnet
         let e = ci_errors(f.path());
         assert!(
             e.iter()
-                .any(|e| e.contains("TASK-E15-04 AC-2") && e.contains("specs")),
+                .any(|e| e.contains("TASK-E11-02 AC-2") && e.contains("specs")),
             "a job with `contents: write` must fail the gate and name the job, got {e:?}"
+        );
+    }
+    /// Reading only `contents` tests one key and calls it the policy. Any
+    /// other key left at `write` is a wider token than the workflow declares
+    /// at the top: `id-token: write` exchanges OIDC for cloud credentials, and
+    /// `packages: write` publishes artifacts. The gate has to reject every key
+    /// that is neither `read` nor `none`, in the workflow block and in a job
+    /// block alike.
+    #[test]
+    fn github_actions_rejects_any_wide_permission_key() {
+        let cases = [
+            (
+                "ci.yml",
+                "permissions:\n  contents: read\n",
+                "permissions:\n  contents: read\n  id-token: write\n",
+                "workflow",
+            ),
+            (
+                "ci.yml",
+                "  specs:\n    runs-on: ubuntu-22.04\n",
+                "  specs:\n    runs-on: ubuntu-22.04\n    permissions:\n      contents: read\n      packages: write\n",
+                "job",
+            ),
+        ];
+        for (name, from, to, where_) in cases {
+            let f = ci_fixture();
+            edit(f.path(), name, from, to);
+            let e = ci_errors(f.path());
+            assert!(
+                e.iter().any(|e| e.contains("TASK-E11-02 AC-2")),
+                "a {where_} block with `write` outside `contents` must fail the gate, got {e:?}"
+            );
+        }
+    }
+    /// `none` is narrower than `read`, not wider: a workflow that turns off a
+    /// permission it does not use must keep passing.
+    #[test]
+    fn github_actions_accepts_permissions_named_none() {
+        let f = ci_fixture();
+        edit(
+            f.path(),
+            "ci.yml",
+            "permissions:\n  contents: read\n",
+            "permissions:\n  contents: read\n  packages: none\n",
+        );
+        assert_eq!(
+            ci_errors(f.path()),
+            Vec::<String>::new(),
+            "`packages: none` must not be read as a widened token"
         );
     }
     /// AC-2 of TASK-E15-04: `persist-credentials: false` is what keeps the
@@ -2149,6 +2242,78 @@ model: sonnet
             e.iter().any(|e| e.contains("check-delivery")),
             "ci.yml without check-delivery must fail, got {e:?}"
         );
+    }
+    /// A job that narrows the token must pass. `none` and an empty block are
+    /// both *narrower* than `read`, and the policy the document states is
+    /// "`read` or `none`" -- so a job that does no checkout and turns every
+    /// permission off is the safest configuration there is. Rejecting it would
+    /// make the gate punish the hardening it exists to encourage, and the
+    /// obvious way out of a red `pre-push` is to widen back to `read`.
+    #[test]
+    fn github_actions_accepts_a_job_that_narrows_the_token() {
+        for narrowed in [
+            "    permissions:\n      contents: none\n      id-token: none\n      packages: none\n",
+            "    permissions: {}\n",
+        ] {
+            let f = ci_fixture();
+            edit(
+                f.path(),
+                "ci.yml",
+                "  specs:\n    runs-on: ubuntu-22.04\n",
+                &format!("  specs:\n    runs-on: ubuntu-22.04\n{narrowed}"),
+            );
+            assert_eq!(
+                ci_errors(f.path()),
+                Vec::<String>::new(),
+                "a job narrowing to {narrowed:?} must not be read as a widened token"
+            );
+        }
+    }
+    /// GitHub accepts two shorthand forms for `permissions:` -- `write-all`
+    /// and `read-all` -- and neither is a mapping. A gate that only walks the
+    /// keys of an object sees `None` for both, iterates nothing, and reports
+    /// success: `write-all` on a job would grant write on issues, packages and
+    /// contents while the document keeps claiming every key is `read` or
+    /// `none`. Both shorthands are wider than the declared policy -- `read-all`
+    /// reads every scope, including the ones a workflow would otherwise set to
+    /// `none` -- so both are rejected wherever they appear.
+    #[test]
+    fn github_actions_rejects_the_shorthand_permission_forms() {
+        // The assertion names the message `check_permissions` emits, not just
+        // the AC tag. A workflow-level `write-all` also trips the separate
+        // `contents: read` check, whose message carries the same tag -- so
+        // asserting only the tag would stay green if `check_permissions` were
+        // dropped from the workflow block, and the workflow half of the rule
+        // would lose its only guard.
+        for (shorthand, word) in [
+            ("write-all", "write-all"),
+            ("read-all", "read-all"),
+            ("\"write-all\"", "write-all"),
+        ] {
+            let cases = [
+                (
+                    "workflow",
+                    "permissions:\n  contents: read\n".to_owned(),
+                    format!("permissions: {shorthand}\n"),
+                ),
+                (
+                    "job",
+                    "  specs:\n    runs-on: ubuntu-22.04\n".to_owned(),
+                    format!("  specs:\n    runs-on: ubuntu-22.04\n    permissions: {shorthand}\n"),
+                ),
+            ];
+            for (where_, from, to) in cases {
+                let f = ci_fixture();
+                edit(f.path(), "ci.yml", &from, &to);
+                let e = ci_errors(f.path());
+                let expected = format!("grants `permissions: {word}`");
+                assert!(
+                    e.iter().any(|e| e.contains(&expected)),
+                    "a {where_} block with `permissions: {shorthand}` must be rejected by \
+                     check_permissions (expected a message containing {expected:?}), got {e:?}"
+                );
+            }
+        }
     }
     #[test]
     fn github_actions_rejects_release_workflow_in_the_umbrella() {
