@@ -38,8 +38,8 @@ reescrevê-lo: `cargo xtask docs-sync`.
 <!-- BEGIN GENERATED: state -->
 | Estado | TASKs |
 |---|---|
-| `implemented` | 19 |
-| `planned` | 196 |
+| `implemented` | 17 |
+| `planned` | 198 |
 | **total** | 215 |
 
 Entregues, em ordem de ID:
@@ -53,6 +53,7 @@ Entregues, em ordem de ID:
 - `TASK-E04-02` — Provar resampler e sample conversion
 - `TASK-E10-01` — Criar corpus de testes licenciado
 - `TASK-E11-01` — Criar workspace e baseline de engenharia
+- `TASK-E11-02` — Definir fronteiras de segurança
 - `TASK-E11-03` — Resolver licenças e inventário de dependências
 - `TASK-E15-01` — Configurar Claude Code e Superpowers obrigatório
 - `TASK-E15-02` — Validar worktrees, claims e handoff
