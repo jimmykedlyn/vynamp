@@ -195,11 +195,11 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Registro de evidências de implementação](tasks/EVIDENCE.md) — tasks/EVIDENCE.md
 
-- [STATE — onde o projeto está](STATE.md) — STATE.md; resumo de leitura do backlog, com bloco gerado por `cargo xtask docs-sync`.
+- [STATE — onde o projeto está](STATE.md) — STATE.md; retrato congelado em 2026-11-21, quando o status das TASKs passou para a base do Notion.
 
-- [Ordem de execução das TASKs](tasks/ORDER.md) — tasks/ORDER.md; gerado a partir das dependências do backlog por `cargo xtask docs-sync`.
+- [Ordem de execução das TASKs (arquivada)](_arquivo/raiz/ORDER.md) — _arquivo/raiz/ORDER.md; última saída do `docs-sync`, de 2026-11-21. Arquivada porque a ordem passou a viver nos campos `Depende de`, `Onda` e `Prio` da base do Notion.
 
-- [Primeira execução recomendada](tasks/NEXT.md) — tasks/NEXT.md
+- [Primeira execução recomendada](tasks/NEXT.md) — tasks/NEXT.md; retrato de 2026-11-21.
 
 - [Backlog executável e mapa de dependências](tasks/README.md) — tasks/README.md
 

@@ -4,7 +4,6 @@ mod branding;
 mod catalog;
 mod ci;
 mod github;
-mod order;
 mod package;
 mod release;
 mod repo;
@@ -80,8 +79,6 @@ enum Action {
     CheckTasks,
     #[command(name = "check-authoring")]
     CheckAuthoring,
-    #[command(name = "docs-sync")]
-    DocsSync,
     #[command(name = "guard-branch")]
     GuardBranch,
     #[command(name = "github-import")]
@@ -204,7 +201,6 @@ fn execute() -> Result<()> {
         Action::CheckDelivery => validate::delivery(&root),
         Action::CheckTasks => validate::tasks(&root),
         Action::CheckAuthoring => authoring::check(&root),
-        Action::DocsSync => order::sync(&root),
         Action::GuardBranch => repo::guard(&root),
         Action::GithubImport { destination, push } => github::import(&root, &destination, push),
         Action::QualityGate => ci::quality(&root),

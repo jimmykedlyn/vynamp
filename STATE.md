@@ -1,41 +1,30 @@
 # STATE — onde o projeto está
 
-Versão: 0.1.0 · Data: 2026-11-13 · Estado: resumo de leitura; a fonte de status é
-[`tasks/backlog.json`](tasks/backlog.json).
+Versão: 0.2.0 · Data: 2026-11-21 · Estado: retrato congelado; a fonte de status das
+TASKs é a base de backlog do Notion (ver [AGENTS.md](AGENTS.md) §7).
 
-Este arquivo responde uma pergunta só: **em que ponto o projeto está agora**. Ele não
-decide nada e não guarda status — quem guarda é o backlog, que é versionado e viaja com
-o clone. Quando os dois divergirem, o backlog ganha e este arquivo está errado.
-
-A parte que muda a cada TASK entregue está no bloco gerado abaixo, e
-`cargo xtask check-docs` reprova o arquivo quando ele diverge do backlog. Para
-reescrevê-lo: `cargo xtask docs-sync`.
+Este arquivo responde uma pergunta só: **em que ponto o projeto estava quando o
+status saiu do repositório**. Desde 2026-11-21 o status vivo de cada TASK mora no
+Notion. O `tasks/backlog.json` continua versionado como **especificação** das
+TASKs (título, módulo, requisitos, dependências, critério), e o campo `status` dele
+ficou congelado nesta data: serve só para o `check-tasks` saber quanto rigor cobrar
+de cada TASK. Quem leva uma TASK além de `planned` no Notion atualiza esse campo no
+mesmo PR, porque é ele que faz o gate exigir o critério escrito. O
+`cargo xtask docs-sync` deixou de existir, e a lista abaixo não é mais regenerada.
 
 ## Onde estão as coisas
 
 | Pergunta | Documento |
 |---|---|
-| Qual o status de cada TASK | [`tasks/backlog.json`](tasks/backlog.json) |
-| Em que ordem executar | [`tasks/ORDER.md`](tasks/ORDER.md) — gerado |
-| O que abrir depois | [`tasks/NEXT.md`](tasks/NEXT.md) |
+| Qual o status de cada TASK | base de backlog do Notion |
+| Em que ordem executar | campos `Depende de`, `Onda` e `Prio` da base do Notion |
+| O que abrir depois | base do Notion; [`tasks/NEXT.md`](tasks/NEXT.md) é o retrato de 2026-11-21 |
 | O que já foi entregue e com que prova | [`tasks/EVIDENCE.md`](tasks/EVIDENCE.md) e `evidence/PR/` |
 | Por que a arquitetura é assim | [`adr/`](adr/) |
 | O que o produto promete | [`product/03-requisitos.md`](product/03-requisitos.md) |
 
-## Regras que valem para este arquivo
+## O estado em 2026-11-21
 
-1. **Nada de data nem SHA.** Data envelhece no dia seguinte e SHA muda a cada merge. Um
-   resumo que carrega os dois vira trabalho de manutenção diária e mente no intervalo.
-   O que muda por TASK é a lista de entregues, e é só ela que entra no bloco gerado.
-2. **Prosa é humana, bloco é gerado.** O texto fora dos marcadores é escrito à mão; o
-   que está entre `<!-- BEGIN GENERATED -->` e `<!-- END GENERATED -->` é saída de
-   `docs-sync`, e editar à mão ali é perder a edição no próximo run.
-3. **Este arquivo não bloqueia nada.** Ele é leitura. Se sumir, o clone continua
-   completo, porque o backlog tem tudo.
-
-## O estado
-
-<!-- BEGIN GENERATED: state -->
 | Estado | TASKs |
 |---|---|
 | `implemented` | 20 |
@@ -64,7 +53,6 @@ Entregues, em ordem de ID:
 - `TASK-E19-04` — Re-apontar as specs de Restore e Converter e criar os repos próprios
 - `TASK-E19-05` — CI e README bilíngue nas libs Rust e no MVP de referência
 - `TASK-E19-06` — Abrir os repositórios ao público e proteger as branches
-<!-- END GENERATED: state -->
 
 ## Pendências de processo que não são TASK
 
