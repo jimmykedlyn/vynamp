@@ -65,6 +65,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [ADR-017 — qualidade do resampler e da conversão de amostras](adr/ADR-017-resampler-e-conversao.md) — adr/ADR-017-resampler-e-conversao.md
 
 - [ADR-018 — entrega automática de TASK pelo `cargo xtask deliver`](adr/ADR-018-entrega-automatica.md) — adr/ADR-018-entrega-automatica.md
+- [ADR-019 — subagentes do Claude Code e backlog no Notion](adr/ADR-019-subagentes-e-notion.md) — adr/ADR-019-subagentes-e-notion.md
 
 - [Engine de áudio e invariantes](reference/audio/01-engine.md) — reference/audio/01-engine.md
 

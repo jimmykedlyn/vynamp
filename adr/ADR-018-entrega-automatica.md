@@ -8,6 +8,10 @@ Status: aprovada pelo mantenedor na mesma data. O código que a implementa é
 `cargo xtask deliver`, e ele não existe antes desta ADR de propósito: a regra §1.6 exige
 ADR antes do código quando a decisão muda o contrato, e esta muda.
 
+Superada parcialmente pela [ADR-019](ADR-019-subagentes-e-notion.md) em 2026-11-21: o
+merge em `develop` passa ao subagente integrador, sob as mesmas condições do §1, e o
+`docs-sync` saiu. O `deliver` nunca chegou a `develop`.
+
 ## Contexto
 
 O `AGENTS.md` §6 lista "merge, tag, release pelo agente" como proibido, e a §Git diz que
