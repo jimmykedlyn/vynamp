@@ -6,12 +6,8 @@
   "source": "backlog.json anterior, 191 tarefas, com module/repo/acceptance_ready acrescentados; FASE 6 (iOS) acrescentada em 2026-11-10, 6 tarefas",
   "note": "Fonte unica de status. O Markdown em tasks/items nao carrega estado confiavel: os campos vem daqui.",
   "counts": {
-    "product": 213,
-    "engineering": 2,
-    "total": 215,
-    "acceptance_ready": 215,
-    "planned": 199,
-    "implemented": 16
+    "implemented": 20,
+    "planned": 199
   },
   "tasks": [
     {
@@ -198,7 +194,7 @@
     {
       "id": "TASK-E01-07",
       "epic": "E01",
-      "title": "Adicionar codecs modernos e capítulos",
+      "title": "AAC-LC + HE-AAC (não anunciado como AAC-LC)",
       "phase": "M2",
       "priority": "P1",
       "status": "planned",
@@ -207,20 +203,24 @@
         "REQ-E01-07"
       ],
       "dependencies": [
-        "TASK-E01-04"
+        "TASK-E01-04",
+        "TASK-E01-11",
+        "TASK-E01-12",
+        "TASK-E01-13",
+        "TASK-E01-14"
       ],
       "spec": "reference/audio/01-engine.md",
       "module": "vynamp-decode",
       "repo": "vynamp-decode",
       "acceptance_ready": true,
-      "deliverable": "Adapters AAC-LC/HE-AAC/ALAC/Vorbis/Opus e M4B conforme prova/licença.",
-      "acceptance": "Fixture por perfil suporta duration/seek/metadata quando aplicável; HE-AAC não é anunciado por decode AAC-LC.",
+      "deliverable": "Adapter AAC-LC/HE-AAC conforme prova/licença; HE-AAC não é anunciado como AAC-LC.",
+      "acceptance": "Fixture por perfil suporta duration/seek/metadata quando aplicavel; HE-AAC nao e anunciado por decode AAC-LC.",
       "qa": [
         "QA-015"
       ],
       "estimate_days": {
-        "min": 5,
-        "max": 12
+        "min": 3,
+        "max": 6
       },
       "risk": "alto"
     },
@@ -316,6 +316,123 @@
         "max": 15
       },
       "risk": "alto"
+    },
+    {
+      "id": "TASK-E01-11",
+      "epic": "E01",
+      "title": "MP4 demux + ALAC + M4B (capítulos)",
+      "phase": "M2",
+      "priority": "P1",
+      "status": "planned",
+      "owner_role": "audio",
+      "requirements": [
+        "REQ-E01-07"
+      ],
+      "dependencies": [
+        "TASK-E01-04"
+      ],
+      "spec": "libs/decode/specs/decode.md",
+      "module": "vynamp-decode",
+      "repo": "vynamp-decode",
+      "acceptance_ready": true,
+      "deliverable": "Demuxer MP4, adapter ALAC lossless e leitura de capítulos M4B.",
+      "acceptance": "o PCM decodificado e bit-exato ao da origem; frames() devolve a contagem bruta do manifesto (antes de trim); um seek para o frame da metade seguido de leitura ate Ok(false) cai no mesmo slice do decode linear. A lista de capitulos (titulo + timestamp) e igual ao FFMETADATA de origem; frames() devolve a contagem bruta do manifesto; seek para o frame da metade cai no slice esperado.",
+      "qa": [
+        "QA-015"
+      ],
+      "estimate_days": {
+        "min": 3,
+        "max": 6
+      },
+      "risk": "médio"
+    },
+    {
+      "id": "TASK-E01-12",
+      "epic": "E01",
+      "title": "Ogg demux + Vorbis",
+      "phase": "M2",
+      "priority": "P1",
+      "status": "planned",
+      "owner_role": "audio",
+      "requirements": [
+        "REQ-E01-07"
+      ],
+      "dependencies": [
+        "TASK-E01-04"
+      ],
+      "spec": "libs/decode/specs/decode.md",
+      "module": "vynamp-decode",
+      "repo": "vynamp-decode",
+      "acceptance_ready": true,
+      "deliverable": "Demuxer Ogg e adapter Vorbis.",
+      "acceptance": "Vorbis decodifica com SNR >= 90 dB contra referencia FFmpeg; seek pela metade cai no mesmo slice do decode linear",
+      "qa": [
+        "QA-015"
+      ],
+      "estimate_days": {
+        "min": 2,
+        "max": 5
+      },
+      "risk": "médio"
+    },
+    {
+      "id": "TASK-E01-13",
+      "epic": "E01",
+      "title": "Opus CELT-only (música fullband)",
+      "phase": "M2",
+      "priority": "P1",
+      "status": "planned",
+      "owner_role": "audio",
+      "requirements": [
+        "REQ-E01-07"
+      ],
+      "dependencies": [
+        "TASK-E01-04"
+      ],
+      "spec": "libs/decode/specs/decode.md",
+      "module": "vynamp-decode",
+      "repo": "vynamp-decode",
+      "acceptance_ready": true,
+      "deliverable": "Adapter Opus CELT-only fullband em Ogg.",
+      "acceptance": "Opus CELT decodifica com SNR >= 90 dB contra referencia FFmpeg; frames brutos a taxa fixa; seek para frame da metade cai no mesmo slice do decode linear",
+      "qa": [
+        "QA-015"
+      ],
+      "estimate_days": {
+        "min": 2,
+        "max": 5
+      },
+      "risk": "médio"
+    },
+    {
+      "id": "TASK-E01-14",
+      "epic": "E01",
+      "title": "Opus SILK + modo híbrido",
+      "phase": "M2",
+      "priority": "P1",
+      "status": "planned",
+      "owner_role": "audio",
+      "requirements": [
+        "REQ-E01-07"
+      ],
+      "dependencies": [
+        "TASK-E01-04",
+        "TASK-E01-13"
+      ],
+      "spec": "libs/decode/specs/decode.md",
+      "module": "vynamp-decode",
+      "repo": "vynamp-decode",
+      "acceptance_ready": true,
+      "deliverable": "Adapter Opus SILK e modo híbrido em Ogg.",
+      "acceptance": "Opus SILK/hbrido decodifica com SNR >= 80 dB contra referencia FFmpeg; frames brutos a taxa fixa; seek para frame da metade cai no mesmo slice do decode linear",
+      "qa": [
+        "QA-015"
+      ],
+      "estimate_days": {
+        "min": 2,
+        "max": 5
+      },
+      "risk": "médio"
     },
     {
       "id": "TASK-E02-01",
