@@ -399,44 +399,51 @@ de saída.
 O backlog vive numa base do Notion, lida e escrita pela sessão principal pelo MCP do
 Notion. Subagente não toca no Notion: recebe do orquestrador o que precisa.
 
-### 7.1 Campos
+### 7.1 A base
 
-| Campo | Tipo esperado | Uso |
+Base **TASKs** em *Vynamp — Guia de desenvolvimento / Ordem de execução*, data source
+`collection://4172db34-4753-811b-98bb-000bb999ffcc`. Uma página por TASK; o corpo da
+página é a seção **Comandos** (início, checks, PR) daquela TASK.
+
+| Propriedade | Tipo | Uso |
 |---|---|---|
-| TASK | título ou texto, `TASK-EII-NN` | id estável; nome da branch `task/<TASK>` |
+| TASK | título, `TASK-EII-NN` | id estável; nome da branch `task/<TASK>` |
 | Título | texto | uma linha, igual ao da spec |
-| Módulo | seleção (`umbrella`, `dsp`, `decode`, `encode`, `output`, `engine`, `player`, `converter`, `restore`) | repo onde a TASK roda; um só (regra 4.2) |
-| Fase | seleção | fase do roadmap |
-| Onda | número ou seleção | ordem de execução dentro da fase |
-| Prio | seleção | desempate dentro da onda |
-| Depende de | relação com a própria base | só começa com todas as dependências concluídas |
-| Comandos | página ou texto | plano de execução: comandos de build/teste e critérios Given/When/Then, ou link para a spec |
-| Status | status | a fonte única de status (regra 4.7) |
+| Módulo | seleção: `vynamp`, `vynamp-dsp`, `-decode`, `-encode`, `-output`, `-engine`, `-player`, `-converter`, `-restore` | repo onde a TASK roda; um só (regra 4.2) |
+| Fase | seleção: `M0`…`M5`, `F6` | fase do roadmap |
+| Onda | seleção: `Onda 01`…`Onda 25` | ordem de execução |
+| Prio | seleção: `P0`, `P1`, `P2` | desempate dentro da onda |
+| Depende de | texto com ids de TASK | só começa com todas entregues |
+| Plano aprovado | checkbox | plano curto aceito pelo orquestrador |
+| PR do módulo | checkbox | PR aberto com evidência |
+| Entregue | checkbox | PR mergeado em `develop`; é o "concluída" |
+
+Não há propriedade Status: o andamento são as três caixas, nessa ordem.
 
 ### 7.2 Fluxo por TASK
 
-1. **Ler** no Notion a próxima TASK por Fase → Onda → Prio, com status "a fazer".
-2. **Conferir dependências**: todo item em "Depende de" está concluído. Não está:
+1. **Ler** a próxima TASK com `Entregue` desmarcado, por Onda → Prio.
+2. **Conferir dependências**: cada id em "Depende de" tem `Entregue` marcado. Não tem:
    pula para a próxima, sem forçar.
 3. **Branch** `task/<TASK-ID>` a partir de `develop`, numa worktree própria, no repo
-   do Módulo (§5.3). Marcar a TASK "em andamento" no Notion.
+   do Módulo (§5.3). Plano curto escrito → marcar `Plano aprovado`.
 4. **Agentes** conforme a página de Comandos: implementador → checador → revisor →
    integrador (§5).
 5. **PR com evidência**: corpo com critérios cobertos, comandos com resultado, prova
-   do vermelho, veredito do revisor e SHA revisado.
-6. **Atualizar o Notion**: link do PR; após o merge, status concluído e merge commit.
-   CI pendente ou falho deixa a TASK em andamento, nunca concluída.
+   do vermelho, veredito do revisor e SHA revisado → marcar `PR do módulo` e comentar
+   na página o link do PR.
+6. **Atualizar o Notion**: após o merge verificado, marcar `Entregue` e comentar o
+   merge commit. CI pendente ou falho deixa `Entregue` desmarcado.
 
 ### 7.3 O que ainda falta para integrar
 
-- Identificar a base: URL ou id da data source no Notion. Sem ela o orquestrador não
-  lê nada, e não pode supor qual é.
-- Nomes exatos das propriedades e valores do campo Status ("a fazer", "em andamento",
-  "concluída"…), para o contrato e para as consultas.
-- Importar as 215 TASKs do `tasks/backlog.json` para a base (uma vez), mapeando o
-  status congelado em 2026-11-21 para os valores do Notion.
-- Permissão de escrita da integração do MCP na base (o plugin Notion já está conectado
-  nesta máquina; falta compartilhar a base com ele).
+- Conferir que a base tem as 215 TASKs do `tasks/backlog.json` e que `Entregue` bate
+  com o status congelado em 2026-11-21 (`done` ↔ marcado). Divergência: o mantenedor
+  decide qual vale, e o outro lado é corrigido.
+- "Depende de" é texto, não relação: a conferência de dependência é por id, feita pelo
+  orquestrador. Trocar por relação é opcional e melhora a consulta.
+- Escrita: a leitura pelo MCP do Notion funciona nesta máquina; a primeira marcação de
+  caixa confirma a permissão de escrita.
 - `cargo xtask repo worktree --task` e `check-tasks` ainda validam contra
   `tasks/backlog.json`: TASK nova criada só no Notion precisa também da entrada de spec
   no backlog, ou de uma mudança no xtask registrada em ADR.

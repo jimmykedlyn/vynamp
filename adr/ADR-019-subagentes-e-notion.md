@@ -26,9 +26,10 @@ Notion. Três decisões anteriores colidem com isso:
 
 ### 1. Fonte de status: Notion
 
-O status vivo de cada TASK mora na base de backlog do Notion, com os campos `TASK`,
-`Título`, `Módulo`, `Fase`, `Onda`, `Prio`, `Depende de` e `Comandos` (link para a página
-com os passos), mais um campo de status. `tasks/backlog.json` continua versionado como
+O status vivo de cada TASK mora na base **TASKs** do Notion
+(`collection://4172db34-4753-811b-98bb-000bb999ffcc`), com os campos `TASK`, `Título`,
+`Módulo`, `Fase`, `Onda`, `Prio` e `Depende de`; o corpo de cada página são os
+Comandos. O andamento são três caixas: `Plano aprovado`, `PR do módulo` e `Entregue`. `tasks/backlog.json` continua versionado como
 **especificação**: título, módulo, requisitos, dependências e critério. O campo `status`
 dele fica congelado em 2026-11-21 e só define o rigor do `check-tasks` (TASK `planned`
 pode ter `Given`/`When` em `PENDENTE`; qualquer outra não). Quem leva uma TASK além de
