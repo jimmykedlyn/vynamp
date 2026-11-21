@@ -442,8 +442,9 @@ Não há propriedade Status: o andamento são as três caixas, nessa ordem.
   (`TASK-CI-01/02`, `E01-01/02/04`, `E02-11`, `E04-02`, `E11-01/03`, `E15-03`,
   `E19-01/02/04/05/06`), e nenhuma está só no Notion. Fica decidido assim: a base lista o
   que falta fazer; TASK entregue antes da migração não é reimportada.
-- `TASK-E01-03` tem `Plano aprovado` marcado e PR aberto no `vynamp-engine` (#18): é a
-  primeira a seguir o fluxo novo.
+- Só `TASK-E01-07` tem `Plano aprovado` marcado. `TASK-E01-03` já tem PR aberto no
+  `vynamp-engine` (#18) mas nenhuma caixa marcada: o orquestrador acerta as caixas dela
+  na primeira passada.
 - "Depende de" é texto, não relação: a conferência de dependência é por id, feita pelo
   orquestrador. Trocar por relação é opcional e melhora a consulta.
 - Escrita: a leitura pelo MCP do Notion funciona nesta máquina; a primeira marcação de
