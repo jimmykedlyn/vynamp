@@ -4,6 +4,10 @@ Versão 0.7.0 · 2026-10-14 · Configuração do projeto; player ainda não impl
 
 Status: requisitos de configuração aceitos pelo usuário; operação remota/signing depende de ativação externa real.
 
+Superada parcialmente pela [ADR-019](ADR-019-subagentes-e-notion.md) em 2026-11-21: os
+papéis e tiers de modelo dos agentes passam a ser os da ADR-019; Gitflow, PR e CI Gate
+continuam valendo.
+
 Decisão: Superpowers obrigatório no Claude Code, instrução comumAGENTS e entrypointCLAUDE; uma worktree/owner porTASK e revisão técnica por subagente; Gitflowmain/develop com merge commits e PR; CI Gate único agregado. GitHubprivado jimmykedlyn/vynamp-mediaplayer informado pelo usuário, não verificado/pushado no ambiente.
 
 Instaladores1.0 definidos: WindowsNSIS+ZIP, LinuxAppImage+DEB, macOSUniversal2DMG+ZIP, AndroidAPK+AAB. MSIX/Flatpak são adicionais futuros, não ambiguity do gateinicial. Preflight impede release antes app/hardware/licença/signing. Nativecodeplatform signatures e manifesto assinado protegem entrega; Linux usa signature do manifesto/hash.

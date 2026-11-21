@@ -173,80 +173,115 @@ Regras que não têm exceção:
 5. **CI ausente, pendente ou falho ≠ pronto para merge.** O Gate do GitHub Actions vale
    pelo SHA final, não pelo anterior.
 6. **Teste ignorado aparece listado com motivo escrito.** Nunca silencioso.
-7. **`tasks/backlog.json` é a fonte única de status.** Ele é versionado e viaja com
-   o clone. `STATE.md`, `tasks/NEXT.md` e `tasks/ORDER.md` são **leituras** dele:
-   nenhum dos três guarda status, e quando divergem do backlog é o backlog que ganha.
-   Os três são versionados. Até 2026-11-13 o `STATE.md` morava fora do git, na pasta
-   do mantenedor — quem clonava não recebia resumo nenhum e o arquivo não tinha como
-   ser conferido; a decisão mudou junto com a regra 8, porque resumo que ninguém lê e
-   ninguém confere não é resumo.
+7. **A base de backlog do Notion é a fonte única de status** (§7,
+   [ADR-019](adr/ADR-019-subagentes-e-notion.md)). `tasks/backlog.json` continua
+   versionado como **especificação** das TASKs — título, módulo, REQ, dependências,
+   critério — e é o que os gates `check-tasks` e `check-authoring` leem. O campo
+   `status` dele ficou congelado em 2026-11-21 e só diz ao `check-tasks` quanto rigor
+   cobrar: TASK `planned` pode ter `Given`/`When` em `PENDENTE`, as demais não. Quem
+   leva uma TASK além de `planned` no Notion atualiza esse campo **no mesmo PR**.
 
-8. **O que deriva do backlog é gerado, não escrito.** A parte de `STATE.md` e de
-   `tasks/NEXT.md` que muda a cada TASK entregue vive num bloco entre
-   `<!-- BEGIN GENERATED: <nome> -->` e `<!-- END GENERATED: <nome> -->`, e
-   `tasks/ORDER.md` é gerado inteiro. Quem reescreve é `cargo xtask docs-sync`; quem
-   reprova a divergência é `cargo xtask check-docs`, no CI. Editar dentro do bloco à
-   mão é perder a edição no próximo run — a prosa fora do bloco continua humana e o
-   gate não a julga. A regra é estreita de propósito: o gate só compara o que é
-   derivável do backlog, porque um gate que tenta julgar prosa reprova por estilo.
+8. **`STATE.md` e `tasks/NEXT.md` são retratos de 2026-11-21**, não regenerados. O
+   `cargo xtask docs-sync` saiu, e `tasks/ORDER.md` foi para `_arquivo/raiz/`. Não
+   recriar nenhum dos três como fonte de tarefas.
 
 ---
 
-## 5. Fluxo de execução (Superpowers)
+## 5. Fluxo de execução: sessão principal + subagentes
 
 **Superpowers é obrigatório.** Antes de implementar, confirmar que o plugin está
 instalado e que o *skill discovery* responde — configuração em `.claude/settings.json`
 habilita mas não instala. Nunca alegar uso de skill que não existe, e nunca fabricar
 teste, assinatura ou resultado de CI. `cargo xtask doctor` confere o ambiente local.
 
-Comece por [SPEC.md](SPEC.md) e [tasks/NEXT.md](tasks/NEXT.md) antes de escolher a
-TASK.
+Decisão registrada em [ADR-019](adr/ADR-019-subagentes-e-notion.md). Ela substitui os
+tiers da ADR-007 e o merge pelo `deliver` da ADR-018.
 
-Cadeia de skills, na ordem: `using-superpowers` → `spec`/`brainstorming` →
-`writing-plans` → `using-git-worktrees` → TDD → `verification-before-completion` →
-revisão por subagente → `finishing-a-development-branch`. Cada passo entrega
-evidência observável; sem a evidência, o passo não aconteceu.
+### 5.1 Papéis
 
-**Uma TASK, um owner.** `cargo xtask repo worktree` cria a claim atômica no Git
-common dir (`.git/auralis/claims/<TASK>/owner.json`), compartilhada entre worktrees,
-que evita duas sessões na mesma TASK. Nunca abrir duas sessões no mesmo diretório
-ou índice Git; dependências podem ser revisadas por subagente em modo leitura.
-Worktree de outra sessão não se toca. Detalhes em
-[engineering/02-worktrees.md](engineering/02-worktrees.md).
+| Agente | Onde vive | Modelo | Effort | Edita código | Faz merge |
+|---|---|---|---|---|---|
+| orquestrador | **sessão principal** (este arquivo) | `claude-opus-5-5` | medium | não | não |
+| implementador | `.claude/agents/implementador.md` | `claude-opus-5-5` | high | sim | não |
+| checador | `.claude/agents/checador.md` | `claude-sonnet-5-5` | medium | não | não |
+| revisor | `.claude/agents/revisor.md` | `claude-sonnet-5-5` | high | não | não |
+| integrador | `.claude/agents/integrador.md` | `claude-sonnet-5-5` | medium | não | **sim**, só `develop` |
 
-As quatro definições estão em `.claude/agents/` (`orquestrador.md`,
-`implementador.md`, `checador.md` e `revisor.md`), com `model:` explícito em cada uma —
-nenhuma herda o modelo da sessão. Os tiers são a decisão registrada em ADR-007 e
-repetida na lista abaixo: **Opus orquestra, Sonnet implementa e revisa, Haiku checa.**
-TASK de alto risco — áudio/tempo real, concorrência, segurança, release — já está em
-Opus na orquestração e na revisão, e o implementador daquela TASK sobe de Sonnet para
-Opus trocando o `model:` da definição **antes** de chamar. A definição é a versão
-executável do que segue; se as duas divergirem, a definição perde e este contrato é
-corrigido no mesmo PR.
+O orquestrador é a sessão principal porque subagente não chama subagente. O modelo e o
+`effort` dos quatro subagentes estão no frontmatter de cada definição (campos `model` e
+`effort`, documentados em code.claude.com/docs/en/sub-agents), e o `check-docs` reprova
+valor fora da lista. O `effort` do orquestrador é o da própria sessão: `/effort medium`
+(ou `CLAUDE_CODE_EFFORT_LEVEL=medium`, que se sobrepõe também ao dos subagentes —
+**não** exportar essa variável, senão o `high` do implementador e do revisor some).
 
-1. **Orquestrador (Opus)** lê a spec da TASK e escreve o plano curto
-   (`writing-plans`). O plano é rascunho de execução, não spec, e **não é versionado**:
-   mora no scratch `.superpowers/` (já no `.gitignore`), nunca no documento da TASK nem
-   em `tasks/`. O que sobrevive é o commit, a evidência em `evidence/PR/<task>/` e o
-   corpo do PR, onde o plano aparece resumido — não como arquivo do repositório.
-2. **Worktree própria**: `cargo xtask repo worktree --agent claude --task
-   TASK-E<II>-<NN> --slug <slug>` (com `--kind fix|chore|hotfix` quando não for
-   feature). `--task` só aceita id existente em `tasks/backlog.json`.
-3. **Implementação (Sonnet)** com TDD. Alto risco — áudio/tempo real, concorrência,
-   segurança, release — sobe para **Opus**.
-4. **Checks (Haiku)** devolvem só passou/falhou e o comando exato. Baseline
-   obrigatório antes de mexer: `cargo xtask ci docs`.
-5. **Review (contexto limpo, nunca o implementador)**: Sonnet; alto risco, Opus.
-   Ele aponta e não corrige: quem corrige é outra sessão, senão o revisor passa a
-   defender o próprio código.
-6. **PR** com template, `--body-file`, sem duplicar PR existente.
-7. **Entrega ao mantenedor**: URL do PR, SHA revisado, base, status de review e CI.
+A definição é a versão executável do que segue; se as duas divergirem, a definição
+perde e este contrato é corrigido no mesmo PR.
 
-Até 2–3 TASKs independentes em paralelo. Serializar as que tocam `Cargo.toml`,
-`Cargo.lock` ou índices de docs.
+**Restrição de ferramenta é parcial.** Checador e revisor não têm `Write`/`Edit`, e o
+integrador também não, mas os três têm `Bash`, que escreve. "Não edita código" é regra
+de conduta, não bloqueio técnico; quem quebrar diz isso no relatório.
 
-**Decisões já dadas pelo mantenedor não pedem aprovação de novo**, e o escopo e as
-autorizações dele prevalecem sobre a leitura padrão das skills.
+### 5.2 Orquestrador (sessão principal)
+
+- Escolhe a TASK no Notion (§7), confere dependências e abre a worktree.
+- Lê a TASK, a spec do módulo dono e a ADR que a rege. Confirma módulo dono (um só),
+  REQ, critério em Given/When/Then e `Boundary`; faltou, **para** e reporta.
+- Escreve o plano curto (`writing-plans`) no scratch `.superpowers/` — não versionado.
+- Chama os subagentes na ordem de §5.3 e passa a cada um **só** o que ele precisa. O
+  revisor não recebe o relato nem o raciocínio do implementador.
+- Não escreve código de produto nem teste; não faz merge. Atualiza o status no Notion.
+- Até 2–3 TASKs independentes em paralelo. Serializar as que tocam `Cargo.toml`,
+  `Cargo.lock` ou índices de docs.
+
+### 5.3 Fluxo de uma TASK
+
+```
+orquestrador lê a TASK no Notion e confere `Depende de`
+  → worktree + branch task/<TASK-ID>
+    → implementador (TDD, commits na branch)
+      → checador (fmt/clippy/test/gates) ── falhou → volta ao implementador
+        → revisor (contexto limpo) ── BLOQUEADO → volta ao implementador
+          → integrador (push, PR com evidência, CI, merge em develop)
+            → orquestrador atualiza o status no Notion
+```
+
+1. **Worktree própria**: `cargo xtask repo worktree --agent claude --task
+   TASK-E<II>-<NN> --slug <slug>`, ou `git worktree add -b task/<TASK-ID>
+   .worktrees/claude/<task-id> develop` quando a branch for a forma curta. O
+   `repo worktree` cria a claim atômica em `.git/auralis/claims/<TASK>/owner.json`,
+   que evita duas sessões na mesma TASK; ele ainda só aceita ID que exista em
+   `tasks/backlog.json`. Worktree de outra sessão não se toca. Detalhes em
+   [engineering/02-worktrees.md](engineering/02-worktrees.md).
+2. **Baseline** antes de mexer: `cargo xtask ci docs` (umbrella) ou fmt/clippy/test
+   (módulo).
+3. **Implementação** com TDD. O vermelho de cada teste novo vai para
+   `evidence/PR/<task>/red-proof.txt`.
+4. **Checks**: só passou/falhou e o comando exato.
+5. **Review** em contexto limpo. Aponta e não corrige: quem corrige é o implementador,
+   noutra chamada, senão o revisor passa a defender o próprio código.
+6. **Integração**: PR com template e `--body-file`, sem duplicar PR existente; merge só
+   sob as condições de §5.4.
+7. **Entrega ao mantenedor**: URL do PR, SHA revisado, base, veredito e CI.
+
+### 5.4 Merge
+
+O integrador é o **único** agente que mergeia, e só quando tudo vale, conferido na
+hora: base `develop`; head do PR igual ao SHA revisado (`--match-head-commit`); todos os
+checks em `SUCCESS`, incluindo `CI Gate`; `mergeStateStatus` `CLEAN`; revisor sem
+BLOQUEADO; estratégia merge commit. Merge em `main`, tag, release, visibilidade e
+proteção de branch são do mantenedor.
+
+### 5.5 Regras comuns
+
+- **Notion é a fonte da verdade** das tarefas (§7). Nada de status em arquivo.
+- **GitHub**: credencial do `gh auth login` do mantenedor ou `GH_TOKEN` já exportado
+  no ambiente. Nunca passar token como argumento, nunca imprimir.
+- **Sem loop de `sleep`.** CI pendente é estado (`ci_pending`), não espera ativa: o
+  integrador consulta uma vez e devolve; o orquestrador decide quando consultar de novo.
+- **Evidência obrigatória no PR**: comandos com resultado, prova do vermelho, veredito
+  do revisor, SHA, CI verde pelo SHA final.
+- **Decisões já dadas pelo mantenedor não pedem aprovação de novo**, e o escopo e as
+  autorizações dele prevalecem sobre a leitura padrão das skills.
 
 Mudança de comportamento atualiza junto o que a nomeia: docs, schema, backlog,
 ADR e notices — mantendo IDs e links estáveis. Não quebrar referência viva sem
@@ -295,19 +330,12 @@ registrada** — não edição de contrato.
 
 - Gitflow: `main` (release) ← `develop` ← branch de trabalho.
 - Nome de branch não é livre: o hook `pre-commit` (`xtask guard-branch`) recusa
-  commit fora de `{feature,fix,chore,hotfix}/task-eNN-NN-claude-<slug>`,
-  `chore/claude-<slug>` ou `release/X.Y.Z`. TASK usa a primeira forma, criada por
-  `xtask repo worktree`; trabalho de fase sem TASK usa `chore/claude-<slug>`.
+  commit fora de `task/TASK-EII-NN`, `{feature,fix,chore,hotfix}/task-eNN-NN-claude-<slug>`,
+  `chore/claude-<slug>` ou `release/X.Y.Z`. TASK usa `task/<TASK-ID>` (ou a forma
+  longa, criada por `xtask repo worktree`); trabalho sem TASK usa `chore/claude-<slug>`.
 - Conventional Commits. Um commit por passo lógico.
-- **Sem tag, release, force push ou reescrita de histórico pelo agente.**
-  Merge é do mantenedor, pelo GitHub, como merge commit — com **uma** exceção
-  nomeada: `cargo xtask deliver` pode mergear o PR que ele mesmo abriu, sob as
-  condições da [ADR-018](adr/ADR-018-entrega-automatica.md) §1 (base `develop`,
-  head SHA igual ao revisado, todos os checks em `SUCCESS` incluindo `CI Gate`,
-  `mergeStateStatus` `CLEAN`, merge commit). Merge em `main`, PR que o `deliver`
-  não abriu, e tudo fora dessa lista continua sendo do mantenedor. Histórico e
-  motivos estão na ADR; se as duas divergirem, a ADR ganha e este parágrafo é
-  corrigido no mesmo PR.
+- **Sem tag, release, force push ou reescrita de histórico pelo agente.** Merge em
+  `develop` só pelo integrador, sob §5.4; tudo o mais é do mantenedor.
 - **Nunca `git reset --hard`, `git clean -fdx` nem qualquer descarte destrutivo.**
   Trabalho não commitado é de outra sessão ou do mantenedor; se precisa sumir,
   vai para `_arquivo/` ou fica para quem o criou.
@@ -320,17 +348,17 @@ registrada** — não edição de contrato.
 REST apenas. **GraphQL é instável neste ambiente** e não é usado para nada — PR,
 comentário, review, label e arquivo, tudo por REST (`gh api --method PATCH` para
 editar). Nunca passar token como argumento de `gh`: a credencial vem do
-`gh auth login` do mantenedor, guardada no keyring.
+`gh auth login` do mantenedor, guardada no keyring, ou de `GH_TOKEN` já exportado no
+ambiente da sessão. O valor nunca aparece em comando, log, PR ou evidência.
 
-### Após "merge feito"
+### Após o merge
 
-Verificar o PR real (`state=MERGED`, base, merge commit) antes de qualquer coisa:
-`gh` pode falhar por rede. Depois `git fetch origin` e fast-forward do `develop` no
-checkout central limpo, confirmando `HEAD` = `origin/develop`. Worktree e branch da
-TASK integrada são descartáveis; worktree de outra sessão não é. Rodar
-`cargo xtask docs-sync` — ele reescreve `STATE.md`, `tasks/NEXT.md` e
-`tasks/ORDER.md` a partir do backlog — e começar a próxima TASK. Não editar os
-blocos gerados à mão: o `check-docs` reprova a divergência no CI.
+O integrador já verificou o PR real (`state=MERGED`, base, merge commit). O
+orquestrador então: `git fetch origin` e fast-forward do `develop` no checkout central
+limpo, confirmando `HEAD` = `origin/develop`; atualiza o status da TASK no Notion com o
+link do PR e o merge commit; descarta worktree e branch da TASK integrada (worktree de
+outra sessão não). Se a TASK é de módulo, o repin do submódulo no umbrella é um PR
+próprio, apontando para o **merge commit**, nunca para o topo da branch.
 
 ### Entrega
 
@@ -341,9 +369,8 @@ autenticação ou rede é registrada com o erro real, não mascarada.
 
 ### Economia de tokens
 
-Evidência vai no commit e no corpo do PR. `STATE.md` só aponta, e o que ele aponta
-é gerado. Subagente devolve resumo curto, não despejo de saída. Não registrar
-handoff longo.
+Evidência vai no commit e no corpo do PR. Subagente devolve resumo curto, não despejo
+de saída.
 
 ---
 
@@ -353,7 +380,9 @@ handoff longo.
 |---|---|
 | `git push --force`, reescrever histórico | irreversível para quem já clonou |
 | tag, release, merge em `main`, merge de PR alheio | decisão do mantenedor |
-| merge do PR que o próprio `deliver` abriu | permitido, só sob a ADR-018 §1 |
+| merge em `develop` por quem não é o integrador, ou fora de §5.4 | só o integrador mergeia, e só com CI verde |
+| revisor ou checador editando código | perde o ponto de vista que justifica o papel |
+| loop de `sleep` esperando CI | CI pendente é estado, não espera ativa |
 | alterar visibilidade, proteção ou plano do GitHub | decisão do mantenedor |
 | `--no-verify` ou bypass de hook | contorna o portão |
 | imprimir token, credencial ou chave | vaza em transcript e log |
@@ -362,3 +391,65 @@ handoff longo.
 | abrir PR com teste falhando | fonte de PR que envelhece sem merge |
 | editar `reference/` | referência congelada |
 | declarar pronto sem evidência | a regra mais importante desta lista |
+
+---
+
+## 7. Backlog no Notion
+
+O backlog vive numa base do Notion, lida e escrita pela sessão principal pelo MCP do
+Notion. Subagente não toca no Notion: recebe do orquestrador o que precisa.
+
+### 7.1 A base
+
+Base **TASKs** em *Vynamp — Guia de desenvolvimento / Ordem de execução*, data source
+`collection://4172db34-4753-811b-98bb-000bb999ffcc`. Uma página por TASK; o corpo da
+página é a seção **Comandos** (início, checks, PR) daquela TASK.
+
+| Propriedade | Tipo | Uso |
+|---|---|---|
+| TASK | título, `TASK-EII-NN` | id estável; nome da branch `task/<TASK>` |
+| Título | texto | uma linha, igual ao da spec |
+| Módulo | seleção: `vynamp`, `vynamp-dsp`, `-decode`, `-encode`, `-output`, `-engine`, `-player`, `-converter`, `-restore` | repo onde a TASK roda; um só (regra 4.2) |
+| Fase | seleção: `M0`…`M5`, `F6` | fase do roadmap |
+| Onda | seleção: `Onda 01`…`Onda 25` | ordem de execução |
+| Prio | seleção: `P0`, `P1`, `P2` | desempate dentro da onda |
+| Depende de | texto com ids de TASK | só começa com todas entregues |
+| Plano aprovado | checkbox | plano curto aceito pelo orquestrador |
+| PR do módulo | checkbox | PR aberto com evidência |
+| Entregue | checkbox | PR mergeado em `develop`; é o "concluída" |
+
+Não há propriedade Status: o andamento são as três caixas, nessa ordem.
+
+### 7.2 Fluxo por TASK
+
+1. **Ler** a próxima TASK com `Entregue` desmarcado, por Onda → Prio.
+2. **Conferir dependências**: cada id em "Depende de" tem `Entregue` marcado. Não tem:
+   pula para a próxima, sem forçar.
+3. **Branch** `task/<TASK-ID>` a partir de `develop`, numa worktree própria, no repo
+   do Módulo (§5.3). Plano curto escrito → marcar `Plano aprovado`.
+4. **Agentes** conforme a página de Comandos: implementador → checador → revisor →
+   integrador (§5).
+5. **PR com evidência**: corpo com critérios cobertos, comandos com resultado, prova
+   do vermelho, veredito do revisor e SHA revisado → marcar `PR do módulo` e comentar
+   na página o link do PR.
+6. **Atualizar o Notion**: após o merge verificado, marcar `Entregue` e comentar o
+   merge commit. CI pendente ou falho deixa `Entregue` desmarcado.
+
+### 7.3 O que ainda falta para integrar
+
+- Conferido em 2026-11-21: a base tem 200 TASKs, nenhuma com `Entregue`; o
+  `tasks/backlog.json` tem 215. As 15 ausentes são todas `implemented` no backlog
+  (`TASK-CI-01/02`, `E01-01/02/04`, `E02-11`, `E04-02`, `E11-01/03`, `E15-03`,
+  `E19-01/02/04/05/06`), e nenhuma está só no Notion. Fica decidido assim: a base lista o
+  que falta fazer; TASK entregue antes da migração não é reimportada.
+- Só `TASK-E01-07` tem `Plano aprovado` marcado. `TASK-E01-03` já tem PR aberto no
+  `vynamp-engine` (#18) mas nenhuma caixa marcada: o orquestrador acerta as caixas dela
+  na primeira passada.
+- "Depende de" é texto, não relação: a conferência de dependência é por id, feita pelo
+  orquestrador. Trocar por relação é opcional e melhora a consulta.
+- Escrita: a leitura pelo MCP do Notion funciona nesta máquina; a primeira marcação de
+  caixa confirma a permissão de escrita.
+- `cargo xtask repo worktree --task` e `check-tasks` ainda validam contra
+  `tasks/backlog.json`: TASK nova criada só no Notion precisa também da entrada de spec
+  no backlog, ou de uma mudança no xtask registrada em ADR.
+- Os repos de módulo têm `tasks/README.md` próprio; cada um aponta para cá.

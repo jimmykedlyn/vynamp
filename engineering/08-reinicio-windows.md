@@ -52,7 +52,8 @@ Os scripts em `libs\decode\tools\fixtures\` leem `$env:FFMPEG` ou `-FFmpeg`.
 
 ## 3. Escolher a TASK
 
-1. `tasks\NEXT.md` diz qual abrir; `tasks\backlog.json` tem o status oficial.
+1. A base do Notion diz qual abrir e tem o status oficial (AGENTS.md §7);
+   `tasksacklog.json` guarda a spec da TASK.
 2. Ler a TASK. As do umbrella ficam em `tasks\items\`; as de módulo ficam no
    submódulo (ex.: `libs\decode\tasks\items\TASK-E01-01.md`).
 3. Hoje a próxima é **`TASK-E11-02`** (fronteiras de segurança), no umbrella; para

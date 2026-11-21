@@ -65,6 +65,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [ADR-017 — qualidade do resampler e da conversão de amostras](adr/ADR-017-resampler-e-conversao.md) — adr/ADR-017-resampler-e-conversao.md
 
 - [ADR-018 — entrega automática de TASK pelo `cargo xtask deliver`](adr/ADR-018-entrega-automatica.md) — adr/ADR-018-entrega-automatica.md
+- [ADR-019 — subagentes do Claude Code e backlog no Notion](adr/ADR-019-subagentes-e-notion.md) — adr/ADR-019-subagentes-e-notion.md
 
 - [Engine de áudio e invariantes](reference/audio/01-engine.md) — reference/audio/01-engine.md
 
@@ -195,11 +196,11 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Registro de evidências de implementação](tasks/EVIDENCE.md) — tasks/EVIDENCE.md
 
-- [STATE — onde o projeto está](STATE.md) — STATE.md; resumo de leitura do backlog, com bloco gerado por `cargo xtask docs-sync`.
+- [STATE — onde o projeto está](STATE.md) — STATE.md; retrato congelado em 2026-11-21, quando o status das TASKs passou para a base do Notion.
 
-- [Ordem de execução das TASKs](tasks/ORDER.md) — tasks/ORDER.md; gerado a partir das dependências do backlog por `cargo xtask docs-sync`.
+- [Ordem de execução das TASKs (arquivada)](_arquivo/raiz/ORDER.md) — _arquivo/raiz/ORDER.md; última saída do `docs-sync`, de 2026-11-21. Arquivada porque a ordem passou a viver nos campos `Depende de`, `Onda` e `Prio` da base do Notion.
 
-- [Primeira execução recomendada](tasks/NEXT.md) — tasks/NEXT.md
+- [Primeira execução recomendada](tasks/NEXT.md) — tasks/NEXT.md; retrato de 2026-11-21.
 
 - [Backlog executável e mapa de dependências](tasks/README.md) — tasks/README.md
 

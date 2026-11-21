@@ -1,17 +1,16 @@
 # Primeira execução recomendada
 
-Versão: 0.9.0 · Data: 2026-11-13 · Estado: especificação proposta; provas M0 de E01-01, E01-02, E01-04, E02-11, E04-02, E11-01, E11-03, E15-03 e E19 entregues, nenhum código de player.
+Versão: 0.10.0 · Data: 2026-11-21 · Estado: retrato congelado; provas M0 de E01-01, E01-02, E01-04, E02-11, E04-02, E11-01, E11-03, E15-03 e E19 entregues, nenhum código de player.
 
-O status de cada TASK vive em [`backlog.json`](backlog.json) e não aqui. Este
-arquivo responde uma pergunta só: qual TASK abrir depois das que já fecharam.
-Entrega conta pelo critério da TASK no PR e no CI, nunca por esta lista. A
-sequência completa, onda por onda, está em [`ORDER.md`](ORDER.md); o bloco
-gerado abaixo repete só a primeira onda, e `cargo xtask check-docs` reprova este
-arquivo quando ele diverge do backlog. Para reescrever: `cargo xtask docs-sync`.
+**Retrato de 2026-11-21.** O status vivo das TASKs e a ordem de execução moram na
+base de backlog do Notion (ver [AGENTS.md](../AGENTS.md) §7); este arquivo não é
+mais regenerado e não decide o que abrir. A tabela abaixo é a primeira onda
+destravada na data em que o status saiu do repositório, preservada como contexto.
+A sequência completa daquela data está em
+[`_arquivo/raiz/ORDER.md`](../_arquivo/raiz/ORDER.md).
 
-## O que está destravado agora
+## O que estava destravado em 2026-11-21
 
-<!-- BEGIN GENERATED: next -->
 20 TASKs entregues de 215. A onda 1 tem 16 destravada(s) agora.
 
 | ID | Título | Módulo | Fase | Prio |
@@ -32,7 +31,6 @@ arquivo quando ele diverge do backlog. Para reescrever: `cargo xtask docs-sync`.
 | `TASK-E21-01` | Entregar registry de encoders e disponibilidade por build | `vynamp-encode` | M3 | P0 |
 | `TASK-E04-05` | Entregar saída exclusiva e device profiles | `vynamp-output` | M3 | P1 |
 | `TASK-E20-01` | Provar iOS arm64, bridge Rust e CoreAudio | `vynamp-player` | F6 | P0 |
-<!-- END GENERATED: next -->
 
 ## O que já está feito
 

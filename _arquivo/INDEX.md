@@ -286,3 +286,6 @@ A exclusao definitiva so acontece no passo 38, sob confirmacao explicita do mant
 | 2026-11-11 | `D:\Projects\vynamp-fases` (execucao/_*, *.bak-*, tmp/) | - | scripts temporarios, corpos de PR ja publicados, backups e logs | 38 | excluido |
 | 2026-11-11 | `D:\Projects\vynamp-media-player` (STATE.md, LEIA-ME.md, PROMPT-CLAUDE.txt, ABRIR-CLAUDE/AMBIENTE/INICIAR.ps1) | `_arquivo/media-player/` | log de estado e lancadores do layout antigo (repo/, .cache/, pacote/), que nao existe mais | 38 | arquivado |
 | 2026-11-11 | `D:\Projects\vynamp-media-player` (.cache, .claude, *.py, t.wma) | - | cache do bootstrap e rascunhos descartaveis | 38 | excluido |
+| 2026-11-21 | `tasks/ORDER.md` | `_arquivo/raiz/ORDER.md` | gerado por `docs-sync`, que saiu: a ordem das TASKs passou para a base do Notion | migração Paperclip → Claude Code | arquivado |
+| 2026-11-21 | `xtask/src/order.rs` | `_arquivo/xtask/order.rs.txt` | implementava `docs-sync` e a checagem dos blocos gerados; o status saiu do repositório (`.txt` para ficar fora do build e do clippy) | migração Paperclip → Claude Code | arquivado |
+| 2026-11-21 | `.claude/agents/orquestrador.md` | `_arquivo/claude-agents/orquestrador.md` | o orquestrador passou a ser a sessão principal (ADR-019); as regras dele estão no `AGENTS.md` §5 | migração Paperclip → Claude Code | arquivado |
