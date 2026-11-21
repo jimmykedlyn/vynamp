@@ -193,177 +193,183 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Contratos estruturados e exemplos](schemas/README.md) — schemas/README.md
 
-- [Registro de evidências de implementação](tasks/EVIDENCE.md) — tasks/EVIDENCE.md
+## Arquivos da migração backlog.json (JKC-620, 2026-11-20)
 
-- [STATE — onde o projeto está](STATE.md) — STATE.md; resumo de leitura do backlog, com bloco gerado por `cargo xtask docs-sync`.
+O `tasks/backlog.json` e todos os arquivos derivados dele — STATE, NEXT, ORDER, README, TASK-TEMPLATE, EVIDENCE, os 21 épicos e as TASKs em `tasks/items/` — foram movidos para `_arquivo/tasks/`. As issues do Paperclip são a fonte única de status, dependências e prioridade; nenhum desses arquivos é fonte de nada.
 
-- [Ordem de execução das TASKs](tasks/ORDER.md) — tasks/ORDER.md; gerado a partir das dependências do backlog por `cargo xtask docs-sync`.
+- [Registro de evidências de implementação](_arquivo/tasks/EVIDENCE.md) — _arquivo/tasks/EVIDENCE.md; arquivado em 2026-11-20 (JKC-620), junto com o `backlog.json`.
 
-- [Primeira execução recomendada](tasks/NEXT.md) — tasks/NEXT.md
+- [STATE arquivado](_arquivo/tasks/STATE.md) — _arquivo/tasks/STATE.md; resumo de leitura do `backlog.json`, arquivado em 2026-11-20 (JKC-620). O status vive nas issues do Paperclip; este arquivo não é fonte de nada.
 
-- [Backlog executável e mapa de dependências](tasks/README.md) — tasks/README.md
+- [Ordem de execução arquivada](_arquivo/tasks/ORDER.md) — _arquivo/tasks/ORDER.md; gerado a partir das dependências do `backlog.json`, arquivado em 2026-11-20 (JKC-620). Não é fonte de nada.
 
-- [Template de tarefa](tasks/TASK-TEMPLATE.md) — tasks/TASK-TEMPLATE.md
+- [Primeira execução arquivada](_arquivo/tasks/NEXT.md) — _arquivo/tasks/NEXT.md; primeira onda derivada do `backlog.json`, arquivado em 2026-11-20 (JKC-620). Não é fonte de nada.
 
-- [E01 — Engine, decode e reprodução](tasks/epics/E01.md) — tasks/epics/E01.md
+- [Backlog arquivado e mapa de dependências](_arquivo/tasks/README.md) — _arquivo/tasks/README.md; índice de TASKs do umbrella derivado do `backlog.json`, arquivado em 2026-11-20 (JKC-620). Não é fonte de nada.
 
-- [E02 — Interface, layout e acessibilidade](tasks/epics/E02.md) — tasks/epics/E02.md
+- [Cópia do backlog arquivado](_arquivo/tasks/backlog.json) — _arquivo/tasks/backlog.json; o `tasks/backlog.json` aposentado em 2026-11-20 (JKC-620), quando as issues do Paperclip passaram a ser a fonte única de status, dependências e prioridade. Histórico, não autoridade.
 
-- [E03 — Biblioteca, playlists e metadados](tasks/epics/E03.md) — tasks/epics/E03.md
+- [Template de tarefa](_arquivo/tasks/TASK-TEMPLATE.md) — _arquivo/tasks/TASK-TEMPLATE.md; arquivado em 2026-11-20 (JKC-620).
 
-- [E04 — DSP, outputs e hi-res](tasks/epics/E04.md) — tasks/epics/E04.md
+- [E01 — Engine, decode e reprodução](_arquivo/tasks/epics/E01.md) — _arquivo/tasks/epics/E01.md; os 21 épicos e suas TASKs foram arquivados em 2026-11-20 (JKC-620) junto com o `backlog.json`.
 
-- [E05 — Streaming, rádios e podcasts](tasks/epics/E05.md) — tasks/epics/E05.md
+- [E02 — Interface, layout e acessibilidade](_arquivo/tasks/epics/E02.md) — _arquivo/tasks/epics/E02.md
 
-- [E06 — Temas, editor e visualizações](tasks/epics/E06.md) — tasks/epics/E06.md
+- [E03 — Biblioteca, playlists e metadados](_arquivo/tasks/epics/E03.md) — _arquivo/tasks/epics/E03.md
 
-- [E07 — Plugins próprios e SDK](tasks/epics/E07.md) — tasks/epics/E07.md
+- [E04 — DSP, outputs e hi-res](_arquivo/tasks/epics/E04.md) — _arquivo/tasks/epics/E04.md
 
-- [E08 — Ferramentas, jobs e integrações](tasks/epics/E08.md) — tasks/epics/E08.md
+- [E05 — Streaming, rádios e podcasts](_arquivo/tasks/epics/E05.md) — _arquivo/tasks/epics/E05.md
 
-- [E09 — Plataforma web e provider](tasks/epics/E09.md) — tasks/epics/E09.md
+- [E06 — Temas, editor e visualizações](_arquivo/tasks/epics/E06.md) — _arquivo/tasks/epics/E06.md
 
-- [E10 — QA, segurança eperformance](tasks/epics/E10.md) — tasks/epics/E10.md
+- [E07 — Plugins próprios e SDK](_arquivo/tasks/epics/E07.md) — _arquivo/tasks/epics/E07.md
 
-- [E11 — Fundação, CI e distribuição](tasks/epics/E11.md) — tasks/epics/E11.md
+- [E08 — Ferramentas, jobs e integrações](_arquivo/tasks/epics/E08.md) — _arquivo/tasks/epics/E08.md
 
-- [E12 — Portas nativas e expansões de áudio](tasks/epics/E12.md) — tasks/epics/E12.md
+- [E09 — Plataforma web e provider](_arquivo/tasks/epics/E09.md) — _arquivo/tasks/epics/E09.md
 
-- [E13 — Android, UI nativa e lifecycle](tasks/epics/E13.md) — tasks/epics/E13.md
+- [E10 — QA, segurança eperformance](_arquivo/tasks/epics/E10.md) — _arquivo/tasks/epics/E10.md
 
-- [E14 — Portabilidade e gates multiplataforma](tasks/epics/E14.md) — tasks/epics/E14.md
+- [E11 — Fundação, CI e distribuição](_arquivo/tasks/epics/E11.md) — _arquivo/tasks/epics/E11.md
 
-- [E15 — Agentes, Gitflow, CI e instaladores](tasks/epics/E15.md) — tasks/epics/E15.md
+- [E12 — Portas nativas e expansões de áudio](_arquivo/tasks/epics/E12.md) — _arquivo/tasks/epics/E12.md
 
-- [E16 — Ativação nativa, associações e ownership](tasks/epics/E16.md) — tasks/epics/E16.md
+- [E13 — Android, UI nativa e lifecycle](_arquivo/tasks/epics/E13.md) — _arquivo/tasks/epics/E13.md
 
-- [E17 — Codecs por perfil, sinal final e visualização](tasks/epics/E17.md) — tasks/epics/E17.md
+- [E14 — Portabilidade e gates multiplataforma](_arquivo/tasks/epics/E14.md) — _arquivo/tasks/epics/E14.md
 
-- [E18 — Ferramentas de arquivo: Restore e Converter](tasks/epics/E18.md) — tasks/epics/E18.md
+- [E15 — Agentes, Gitflow, CI e instaladores](_arquivo/tasks/epics/E15.md) — _arquivo/tasks/epics/E15.md
 
-- [E19 — Repos públicos, CI público e reorganização](tasks/epics/E19.md) — tasks/epics/E19.md
+- [E16 — Ativação nativa, associações e ownership](_arquivo/tasks/epics/E16.md) — _arquivo/tasks/epics/E16.md
 
-- [E20 — iOS: CoreAudio, SwiftUI e sandbox](tasks/epics/E20.md) — tasks/epics/E20.md
+- [E17 — Codecs por perfil, sinal final e visualização](_arquivo/tasks/epics/E17.md) — _arquivo/tasks/epics/E17.md
 
-- [E21 — Encoder: registry, sessão e matriz de formatos](tasks/epics/E21.md) — tasks/epics/E21.md
+- [E18 — Ferramentas de arquivo: Restore e Converter](_arquivo/tasks/epics/E18.md) — _arquivo/tasks/epics/E18.md
 
-- [TASK-E04-10 — Validar qualidade numérica e hardware matrix](tasks/items/TASK-E04-10.md) — tasks/items/TASK-E04-10.md
+- [E19 — Repos públicos, CI público e reorganização](_arquivo/tasks/epics/E19.md) — _arquivo/tasks/epics/E19.md
 
-- [TASK-E09-01 — Definir catálogo, direitos, escala e custos](tasks/items/TASK-E09-01.md) — tasks/items/TASK-E09-01.md
+- [E20 — iOS: CoreAudio, SwiftUI e sandbox](_arquivo/tasks/epics/E20.md) — _arquivo/tasks/epics/E20.md
 
-- [TASK-E09-02 — Materializar OpenAPI v1 e contract tests](tasks/items/TASK-E09-02.md) — tasks/items/TASK-E09-02.md
+- [E21 — Encoder: registry, sessão e matriz de formatos](_arquivo/tasks/epics/E21.md) — _arquivo/tasks/epics/E21.md
 
-- [TASK-E09-03 — Implementar identidade e autorização](tasks/items/TASK-E09-03.md) — tasks/items/TASK-E09-03.md
+- [TASK-E04-10 — Validar qualidade numérica e hardware matrix](_arquivo/tasks/items/TASK-E04-10.md) — _arquivo/tasks/items/TASK-E04-10.md
 
-- [TASK-E09-04 — Implementar catálogo e administração editorial](tasks/items/TASK-E09-04.md) — tasks/items/TASK-E09-04.md
+- [TASK-E09-01 — Definir catálogo, direitos, escala e custos](_arquivo/tasks/items/TASK-E09-01.md) — _arquivo/tasks/items/TASK-E09-01.md
 
-- [TASK-E09-05 — Implementar ingest e transcode isolados](tasks/items/TASK-E09-05.md) — tasks/items/TASK-E09-05.md
+- [TASK-E09-02 — Materializar OpenAPI v1 e contract tests](_arquivo/tasks/items/TASK-E09-02.md) — _arquivo/tasks/items/TASK-E09-02.md
 
-- [TASK-E09-06 — Entregar streaming VOD e CDN](tasks/items/TASK-E09-06.md) — tasks/items/TASK-E09-06.md
+- [TASK-E09-03 — Implementar identidade e autorização](_arquivo/tasks/items/TASK-E09-03.md) — _arquivo/tasks/items/TASK-E09-03.md
 
-- [TASK-E09-07 — Entregar ingest live e programação de rádio](tasks/items/TASK-E09-07.md) — tasks/items/TASK-E09-07.md
+- [TASK-E09-04 — Implementar catálogo e administração editorial](_arquivo/tasks/items/TASK-E09-04.md) — _arquivo/tasks/items/TASK-E09-04.md
 
-- [TASK-E09-08 — Entregar sincronização de dados do ouvinte](tasks/items/TASK-E09-08.md) — tasks/items/TASK-E09-08.md
+- [TASK-E09-05 — Implementar ingest e transcode isolados](_arquivo/tasks/items/TASK-E09-05.md) — _arquivo/tasks/items/TASK-E09-05.md
 
-- [TASK-E09-09 — Entregar registry de temas e plugins](tasks/items/TASK-E09-09.md) — tasks/items/TASK-E09-09.md
+- [TASK-E09-06 — Entregar streaming VOD e CDN](_arquivo/tasks/items/TASK-E09-06.md) — _arquivo/tasks/items/TASK-E09-06.md
 
-- [TASK-E09-10 — Validar operação, carga e recuperação](tasks/items/TASK-E09-10.md) — tasks/items/TASK-E09-10.md
+- [TASK-E09-07 — Entregar ingest live e programação de rádio](_arquivo/tasks/items/TASK-E09-07.md) — _arquivo/tasks/items/TASK-E09-07.md
 
-- [TASK-E10-01 — Criar corpus de testes licenciado](tasks/items/TASK-E10-01.md) — tasks/items/TASK-E10-01.md
+- [TASK-E09-08 — Entregar sincronização de dados do ouvinte](_arquivo/tasks/items/TASK-E09-08.md) — _arquivo/tasks/items/TASK-E09-08.md
 
-- [TASK-E10-02 — Testar domínio e propriedades de fila](tasks/items/TASK-E10-02.md) — tasks/items/TASK-E10-02.md
+- [TASK-E09-09 — Entregar registry de temas e plugins](_arquivo/tasks/items/TASK-E09-09.md) — _arquivo/tasks/items/TASK-E09-09.md
 
-- [TASK-E10-03 — Criar harness numérico de áudio](tasks/items/TASK-E10-03.md) — tasks/items/TASK-E10-03.md
+- [TASK-E09-10 — Validar operação, carga e recuperação](_arquivo/tasks/items/TASK-E09-10.md) — _arquivo/tasks/items/TASK-E09-10.md
 
-- [TASK-E10-04 — Criar servidor de streaming adversarial](tasks/items/TASK-E10-04.md) — tasks/items/TASK-E10-04.md
+- [TASK-E10-01 — Criar corpus de testes licenciado](_arquivo/tasks/items/TASK-E10-01.md) — _arquivo/tasks/items/TASK-E10-01.md
 
-- [TASK-E10-05 — Fuzz parsers, pacotes e RPC](tasks/items/TASK-E10-05.md) — tasks/items/TASK-E10-05.md
+- [TASK-E10-02 — Testar domínio e propriedades de fila](_arquivo/tasks/items/TASK-E10-02.md) — _arquivo/tasks/items/TASK-E10-02.md
 
-- [TASK-E10-06 — Automatizar semântica e regressão visual](tasks/items/TASK-E10-06.md) — tasks/items/TASK-E10-06.md
+- [TASK-E10-03 — Criar harness numérico de áudio](_arquivo/tasks/items/TASK-E10-03.md) — _arquivo/tasks/items/TASK-E10-03.md
 
-- [TASK-E10-07 — Instrumentar e medir performance](tasks/items/TASK-E10-07.md) — tasks/items/TASK-E10-07.md
+- [TASK-E10-04 — Criar servidor de streaming adversarial](_arquivo/tasks/items/TASK-E10-04.md) — _arquivo/tasks/items/TASK-E10-04.md
 
-- [TASK-E10-08 — Executar soak e matriz de hardware](tasks/items/TASK-E10-08.md) — tasks/items/TASK-E10-08.md
+- [TASK-E10-05 — Fuzz parsers, pacotes e RPC](_arquivo/tasks/items/TASK-E10-05.md) — _arquivo/tasks/items/TASK-E10-05.md
 
-- [TASK-E10-09 — Validar upgrades, recovery e privacidade](tasks/items/TASK-E10-09.md) — tasks/items/TASK-E10-09.md
+- [TASK-E10-06 — Automatizar semântica e regressão visual](_arquivo/tasks/items/TASK-E10-06.md) — _arquivo/tasks/items/TASK-E10-06.md
 
-- [TASK-E10-10 — Fechar gates e cobertura desktop](tasks/items/TASK-E10-10.md) — tasks/items/TASK-E10-10.md
+- [TASK-E10-07 — Instrumentar e medir performance](_arquivo/tasks/items/TASK-E10-07.md) — _arquivo/tasks/items/TASK-E10-07.md
 
-- [TASK-E11-01 — Criar workspace e baseline de engenharia](tasks/items/TASK-E11-01.md) — tasks/items/TASK-E11-01.md
+- [TASK-E10-08 — Executar soak e matriz de hardware](_arquivo/tasks/items/TASK-E10-08.md) — _arquivo/tasks/items/TASK-E10-08.md
 
-- [TASK-E11-02 — Definir fronteiras de segurança](tasks/items/TASK-E11-02.md) — tasks/items/TASK-E11-02.md
+- [TASK-E10-09 — Validar upgrades, recovery e privacidade](_arquivo/tasks/items/TASK-E10-09.md) — _arquivo/tasks/items/TASK-E10-09.md
 
-- [TASK-E11-03 — Resolver licenças e inventário de dependências](tasks/items/TASK-E11-03.md) — tasks/items/TASK-E11-03.md
+- [TASK-E10-10 — Fechar gates e cobertura desktop](_arquivo/tasks/items/TASK-E10-10.md) — _arquivo/tasks/items/TASK-E10-10.md
 
-- [TASK-E11-04 — Completar CI e supply chain](tasks/items/TASK-E11-04.md) — tasks/items/TASK-E11-04.md
+- [TASK-E11-01 — Criar workspace e baseline de engenharia](_arquivo/tasks/items/TASK-E11-01.md) — _arquivo/tasks/items/TASK-E11-01.md
 
-- [TASK-E11-05 — Implementar config, logs e keychain](tasks/items/TASK-E11-05.md) — tasks/items/TASK-E11-05.md
+- [TASK-E11-02 — Definir fronteiras de segurança](_arquivo/tasks/items/TASK-E11-02.md) — _arquivo/tasks/items/TASK-E11-02.md
 
-- [TASK-E11-06 — Implementar updater assinado](tasks/items/TASK-E11-06.md) — tasks/items/TASK-E11-06.md
+- [TASK-E11-03 — Resolver licenças e inventário de dependências](_arquivo/tasks/items/TASK-E11-03.md) — _arquivo/tasks/items/TASK-E11-03.md
 
-- [TASK-E11-07 — Entregar distribuição nativa por plataforma](tasks/items/TASK-E11-07.md) — tasks/items/TASK-E11-07.md
+- [TASK-E11-04 — Completar CI e supply chain](_arquivo/tasks/items/TASK-E11-04.md) — _arquivo/tasks/items/TASK-E11-04.md
 
-- [TASK-E11-08 — Preparar documentação de lançamento](tasks/items/TASK-E11-08.md) — tasks/items/TASK-E11-08.md
+- [TASK-E11-05 — Implementar config, logs e keychain](_arquivo/tasks/items/TASK-E11-05.md) — _arquivo/tasks/items/TASK-E11-05.md
 
-- [TASK-E11-09 — Preparar stable 1.0 e rollout beta](tasks/items/TASK-E11-09.md) — tasks/items/TASK-E11-09.md
+- [TASK-E11-06 — Implementar updater assinado](_arquivo/tasks/items/TASK-E11-06.md) — _arquivo/tasks/items/TASK-E11-06.md
 
-- [TASK-E11-10 — Preparar operação da plataforma](tasks/items/TASK-E11-10.md) — tasks/items/TASK-E11-10.md
+- [TASK-E11-07 — Entregar distribuição nativa por plataforma](_arquivo/tasks/items/TASK-E11-07.md) — _arquivo/tasks/items/TASK-E11-07.md
 
-- [TASK-E12-03 — Validar ARM64 adicional Windows/Linux e helpers](tasks/items/TASK-E12-03.md) — tasks/items/TASK-E12-03.md
+- [TASK-E11-08 — Preparar documentação de lançamento](_arquivo/tasks/items/TASK-E11-08.md) — _arquivo/tasks/items/TASK-E11-08.md
 
-- [TASK-E14-01 — Provar os cinco targets e features portáveis](tasks/items/TASK-E14-01.md) — tasks/items/TASK-E14-01.md
+- [TASK-E11-09 — Preparar stable 1.0 e rollout beta](_arquivo/tasks/items/TASK-E11-09.md) — _arquivo/tasks/items/TASK-E11-09.md
 
-- [TASK-E14-02 — Entregar ports de arquivos, credenciais e sistema](tasks/items/TASK-E14-02.md) — tasks/items/TASK-E14-02.md
+- [TASK-E11-10 — Preparar operação da plataforma](_arquivo/tasks/items/TASK-E11-10.md) — _arquivo/tasks/items/TASK-E11-10.md
 
-- [TASK-E14-03 — Entregar paridade de presets e schema de temas](tasks/items/TASK-E14-03.md) — tasks/items/TASK-E14-03.md
+- [TASK-E12-03 — Validar ARM64 adicional Windows/Linux e helpers](_arquivo/tasks/items/TASK-E12-03.md) — _arquivo/tasks/items/TASK-E12-03.md
 
-- [TASK-E14-04 — Executar corpus e outputs por alvo](tasks/items/TASK-E14-04.md) — tasks/items/TASK-E14-04.md
+- [TASK-E14-01 — Provar os cinco targets e features portáveis](_arquivo/tasks/items/TASK-E14-01.md) — _arquivo/tasks/items/TASK-E14-01.md
 
-- [TASK-E14-05 — Validar packaging e update em cada alvo](tasks/items/TASK-E14-05.md) — tasks/items/TASK-E14-05.md
+- [TASK-E14-02 — Entregar ports de arquivos, credenciais e sistema](_arquivo/tasks/items/TASK-E14-02.md) — _arquivo/tasks/items/TASK-E14-02.md
 
-- [TASK-E14-06 — Fechar release 1.0 multiplataforma](tasks/items/TASK-E14-06.md) — tasks/items/TASK-E14-06.md
+- [TASK-E14-03 — Entregar paridade de presets e schema de temas](_arquivo/tasks/items/TASK-E14-03.md) — _arquivo/tasks/items/TASK-E14-03.md
 
-- [TASK-E15-01 — Configurar Claude Code e Superpowers obrigatório](tasks/items/TASK-E15-01.md) — tasks/items/TASK-E15-01.md
+- [TASK-E14-04 — Executar corpus e outputs por alvo](_arquivo/tasks/items/TASK-E14-04.md) — _arquivo/tasks/items/TASK-E14-04.md
 
-- [TASK-E15-02 — Validar worktrees, claims e handoff](tasks/items/TASK-E15-02.md) — tasks/items/TASK-E15-02.md
+- [TASK-E14-05 — Validar packaging e update em cada alvo](_arquivo/tasks/items/TASK-E14-05.md) — _arquivo/tasks/items/TASK-E14-05.md
 
-- [TASK-E15-03 — Importar GitHub privado e ativar Gitflow](tasks/items/TASK-E15-03.md) — tasks/items/TASK-E15-03.md
+- [TASK-E14-06 — Fechar release 1.0 multiplataforma](_arquivo/tasks/items/TASK-E14-06.md) — _arquivo/tasks/items/TASK-E14-06.md
 
-- [TASK-E15-04 — Ativar workflows e CI Gate multiplataforma](tasks/items/TASK-E15-04.md) — tasks/items/TASK-E15-04.md
+- [TASK-E15-01 — Configurar Claude Code e Superpowers obrigatório](_arquivo/tasks/items/TASK-E15-01.md) — _arquivo/tasks/items/TASK-E15-01.md
 
-- [TASK-E15-05 — Integrar testes e evidência operacional](tasks/items/TASK-E15-05.md) — tasks/items/TASK-E15-05.md
+- [TASK-E15-02 — Validar worktrees, claims e handoff](_arquivo/tasks/items/TASK-E15-02.md) — _arquivo/tasks/items/TASK-E15-02.md
 
-- [TASK-E15-06 — Validar NSIS/portable e assinatura Windows](tasks/items/TASK-E15-06.md) — tasks/items/TASK-E15-06.md
+- [TASK-E15-03 — Importar GitHub privado e ativar Gitflow](_arquivo/tasks/items/TASK-E15-03.md) — _arquivo/tasks/items/TASK-E15-03.md
 
-- [TASK-E15-07 — Validar AppImage/DEB e dependências Linux](tasks/items/TASK-E15-07.md) — tasks/items/TASK-E15-07.md
+- [TASK-E15-04 — Ativar workflows e CI Gate multiplataforma](_arquivo/tasks/items/TASK-E15-04.md) — _arquivo/tasks/items/TASK-E15-04.md
 
-- [TASK-E15-08 — Validar DMG/ZIP Universal2 e notarização](tasks/items/TASK-E15-08.md) — tasks/items/TASK-E15-08.md
+- [TASK-E15-05 — Integrar testes e evidência operacional](_arquivo/tasks/items/TASK-E15-05.md) — _arquivo/tasks/items/TASK-E15-05.md
 
-- [TASK-E15-09 — Validar APK/AAB, SDK/NDK e identidade](tasks/items/TASK-E15-09.md) — tasks/items/TASK-E15-09.md
+- [TASK-E15-06 — Validar NSIS/portable e assinatura Windows](_arquivo/tasks/items/TASK-E15-06.md) — _arquivo/tasks/items/TASK-E15-06.md
 
-- [TASK-E15-10 — Fechar release assinado e draft privado](tasks/items/TASK-E15-10.md) — tasks/items/TASK-E15-10.md
+- [TASK-E15-07 — Validar AppImage/DEB e dependências Linux](_arquivo/tasks/items/TASK-E15-07.md) — _arquivo/tasks/items/TASK-E15-07.md
 
-- [TASK-E17-08 — Medir teto no PCM final com oráculo independente](tasks/items/TASK-E17-08.md) — tasks/items/TASK-E17-08.md
+- [TASK-E15-08 — Validar DMG/ZIP Universal2 e notarização](_arquivo/tasks/items/TASK-E15-08.md) — _arquivo/tasks/items/TASK-E15-08.md
 
-- [TASK-E17-12 — Publicar manifest real de capacidades por artefato](tasks/items/TASK-E17-12.md) — tasks/items/TASK-E17-12.md
+- [TASK-E15-09 — Validar APK/AAB, SDK/NDK e identidade](_arquivo/tasks/items/TASK-E15-09.md) — _arquivo/tasks/items/TASK-E15-09.md
 
-- [TASK-E17-18 — Certificar expansão MIDI, trackers e DSD especial](tasks/items/TASK-E17-18.md) — tasks/items/TASK-E17-18.md
+- [TASK-E15-10 — Fechar release assinado e draft privado](_arquivo/tasks/items/TASK-E15-10.md) — _arquivo/tasks/items/TASK-E15-10.md
 
-- [TASK-E17-20 — Fechar gate combinado de codecs, DSP e visualizers](tasks/items/TASK-E17-20.md) — tasks/items/TASK-E17-20.md
+- [TASK-E17-08 — Medir teto no PCM final com oráculo independente](_arquivo/tasks/items/TASK-E17-08.md) — _arquivo/tasks/items/TASK-E17-08.md
 
-- [TASK-E19-01 — Migrar o CI do repo principal para GitHub Actions](tasks/items/TASK-E19-01.md) — tasks/items/TASK-E19-01.md
+- [TASK-E17-12 — Publicar manifest real de capacidades por artefato](_arquivo/tasks/items/TASK-E17-12.md) — _arquivo/tasks/items/TASK-E17-12.md
 
-- [TASK-E19-02 — Higiene, governança e README bilíngue do repo principal](tasks/items/TASK-E19-02.md) — tasks/items/TASK-E19-02.md
+- [TASK-E17-18 — Certificar expansão MIDI, trackers e DSD especial](_arquivo/tasks/items/TASK-E17-18.md) — _arquivo/tasks/items/TASK-E17-18.md
 
-- [TASK-E19-04 — Re-apontar as specs de Restore e Converter e criar os repos próprios](tasks/items/TASK-E19-04.md) — tasks/items/TASK-E19-04.md
+- [TASK-E17-20 — Fechar gate combinado de codecs, DSP e visualizers](_arquivo/tasks/items/TASK-E17-20.md) — _arquivo/tasks/items/TASK-E17-20.md
 
-- [TASK-E19-05 — CI e README bilíngue nas libs Rust e no MVP de referência](tasks/items/TASK-E19-05.md) — tasks/items/TASK-E19-05.md
+- [TASK-E19-01 — Migrar o CI do repo principal para GitHub Actions](_arquivo/tasks/items/TASK-E19-01.md) — _arquivo/tasks/items/TASK-E19-01.md
 
-- [TASK-E19-06 — Abrir os repositórios ao público e proteger as branches](tasks/items/TASK-E19-06.md) — tasks/items/TASK-E19-06.md
+- [TASK-E19-02 — Higiene, governança e README bilíngue do repo principal](_arquivo/tasks/items/TASK-E19-02.md) — _arquivo/tasks/items/TASK-E19-02.md
 
-- [TASK-CI-01 — Reescrever delivery() e github_actions() para a árvore do umbrella](tasks/items/TASK-CI-01.md) — tasks/items/TASK-CI-01.md
+- [TASK-E19-04 — Re-apontar as specs de Restore e Converter e criar os repos próprios](_arquivo/tasks/items/TASK-E19-04.md) — _arquivo/tasks/items/TASK-E19-04.md
 
-- [TASK-CI-02 — Adicionar o job check-tasks ao CI do umbrella](tasks/items/TASK-CI-02.md) — tasks/items/TASK-CI-02.md
+- [TASK-E19-05 — CI e README bilíngue nas libs Rust e no MVP de referência](_arquivo/tasks/items/TASK-E19-05.md) — _arquivo/tasks/items/TASK-E19-05.md
+
+- [TASK-E19-06 — Abrir os repositórios ao público e proteger as branches](_arquivo/tasks/items/TASK-E19-06.md) — _arquivo/tasks/items/TASK-E19-06.md
+
+- [TASK-CI-01 — Reescrever delivery() e github_actions() para a árvore do umbrella](_arquivo/tasks/items/TASK-CI-01.md) — _arquivo/tasks/items/TASK-CI-01.md
+
+- [TASK-CI-02 — Adicionar o job check-tasks ao CI do umbrella](_arquivo/tasks/items/TASK-CI-02.md) — _arquivo/tasks/items/TASK-CI-02.md
 
 - [Evidência TASK-E19-01](evidence/PR/task-e19-01/README.md) — evidence/PR/task-e19-01/README.md; workflows Actions, validador invertido, gates locais e limitações (nenhum workflow executado no remoto).
 - [Evidência TASK-E19-02](evidence/PR/task-e19-02/README.md) — evidence/PR/task-e19-02/README.md; licença dual, governança, canal de advisory, README bilíngue e limitações (nada aberto, nada assinado).

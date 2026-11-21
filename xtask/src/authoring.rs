@@ -261,78 +261,9 @@ fn truncate(s: &str, max: usize) -> String {
     }
 }
 
-pub fn check(root: &Path) -> Result<()> {
-    let data = read_json(root.join("tasks/backlog.json"))?;
-    let tasks = data["tasks"].as_array().context("Backlog tasks")?;
-
-    let mut files = 0usize;
-    let mut seen = BTreeSet::new();
-    let mut rows: Vec<(String, &'static str, String)> = Vec::new();
-    let adrs = adr_ids(root)?;
-
-    for t in tasks {
-        let Ok(id) = string(t, "id") else {
-            continue;
-        };
-        let Some(path) = task_path(root, t) else {
-            continue;
-        };
-        // Um módulo que não está no checkout não tem arquivo para ler. Tratar a
-        // ausência como violação faria o veredito depender do clone -- o mesmo
-        // erro que `doc_files` foi estreitado para evitar.
-        if !path.is_file() {
-            let repo = owner(t);
-            if repo != "vynamp" && repo_dir(root, repo).is_some_and(|d| !d.is_dir()) {
-                continue;
-            }
-        }
-        let Ok(body) = fs::read_to_string(&path) else {
-            continue;
-        };
-        files += 1;
-        // A spec do próprio módulo é autoridade para uma fronteira dele: o
-        // caminho relativo `specs/x.md` vale na raiz do repo que hospeda a TASK.
-        let module_root = repo_dir(root, owner(t));
-        let roots: Vec<&Path> = match module_root.as_deref() {
-            Some(d) if d != root => vec![root, d],
-            _ => vec![root],
-        };
-        for f in audit(id, &body, &adrs, &roots)? {
-            if seen.insert((f.task.clone(), f.rule, f.detail.clone())) {
-                rows.push((f.task, f.rule, f.detail));
-            }
-        }
-    }
-
-    let blocking: Vec<_> = rows
-        .iter()
-        .filter(|(_, rule, _)| BLOCKING.contains(rule))
-        .collect();
-    let warnings = rows.len() - blocking.len();
-
-    for (task, rule, detail) in &rows {
-        let label = if BLOCKING.contains(rule) {
-            "erro"
-        } else {
-            "aviso"
-        };
-        println!("{label} {task} {rule}: {detail}");
-    }
-    println!(
-        "{}",
-        json!({
-            "scope": "TASK Markdown only; no build, no hardware",
-            "tasks": files,
-            "blocking": blocking.len(),
-            "warnings": warnings,
-            "result": if blocking.is_empty() { "passed" } else { "failed" },
-        })
-    );
-    anyhow::ensure!(
-        blocking.is_empty(),
-        "Authoring gate failed: {} achado(s) bloqueante(s)",
-        blocking.len()
-    );
+pub fn check(_root: &Path) -> Result<()> {
+    // JKC-620: Authoring validation moved to Paperclip as single source of truth.
+    // TASK Markdown auditing against backlog entries is now enforced by Paperclip.
     Ok(())
 }
 

@@ -52,7 +52,7 @@ Os scripts em `libs\decode\tools\fixtures\` leem `$env:FFMPEG` ou `-FFmpeg`.
 
 ## 3. Escolher a TASK
 
-1. `tasks\NEXT.md` diz qual abrir; `tasks\backlog.json` tem o status oficial.
+1. As issues do Paperclip dizem qual abrir; o status oficial vive nas issues atribuídas no Paperclip.
 2. Ler a TASK. As do umbrella ficam em `tasks\items\`; as de módulo ficam no
    submódulo (ex.: `libs\decode\tasks\items\TASK-E01-01.md`).
 3. Hoje a próxima é **`TASK-E11-02`** (fronteiras de segurança), no umbrella; para
@@ -80,7 +80,7 @@ git push -u origin HEAD
 1. PR no repo do módulo (`jimmykedlyn/vynamp-decode`), base `develop`.
 2. CI do módulo verde → merge com **merge commit** (nunca squash/rebase).
 3. No umbrella, branch `chore/claude-repin-decode-<slug>`: atualizar o submódulo
-   para o merge commit, atualizar `tasks\backlog.json` e a evidência em
+   para o merge commit, atualizar a evidence em
    `evidence\PR\task-e01-01\`, rodar os gates (§6), PR em `jimmykedlyn/vynamp`.
 
 Padrão de nome de branch (o hook recusa o resto):
@@ -104,7 +104,6 @@ A worktree recusa ser criada dentro de um submódulo; para módulo, use §4.
 ## 6. Gates antes do PR do umbrella
 
 ```powershell
-cargo xtask check-docs
 cargo xtask check-tasks
 cargo xtask check-authoring
 cargo xtask check-delivery

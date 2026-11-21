@@ -173,22 +173,18 @@ Regras que não têm exceção:
 5. **CI ausente, pendente ou falho ≠ pronto para merge.** O Gate do GitHub Actions vale
    pelo SHA final, não pelo anterior.
 6. **Teste ignorado aparece listado com motivo escrito.** Nunca silencioso.
-7. **`tasks/backlog.json` é a fonte única de status.** Ele é versionado e viaja com
-   o clone. `STATE.md`, `tasks/NEXT.md` e `tasks/ORDER.md` são **leituras** dele:
-   nenhum dos três guarda status, e quando divergem do backlog é o backlog que ganha.
-   Os três são versionados. Até 2026-11-13 o `STATE.md` morava fora do git, na pasta
-   do mantenedor — quem clonava não recebia resumo nenhum e o arquivo não tinha como
-   ser conferido; a decisão mudou junto com a regra 8, porque resumo que ninguém lê e
-   ninguém confere não é resumo.
+7. **As issues do Paperclip são a fonte única de status, dependências e prioridade.**
+   O agente consulta as issues atribuídas no Paperclip para decidir o que fazer, em
+   que ordem e com quais bloqueios. Nenhum arquivo local (`backlog.json`, `STATE.md`,
+   `NEXT.md`, `ORDER.md`) decide estado; se existirem, são artefatos históricos ou
+   leituras derivadas sem autoridade. A consistência é garantida pelo Paperclip
+   (issues como oráculo), não por validação local.
 
-8. **O que deriva do backlog é gerado, não escrito.** A parte de `STATE.md` e de
-   `tasks/NEXT.md` que muda a cada TASK entregue vive num bloco entre
-   `<!-- BEGIN GENERATED: <nome> -->` e `<!-- END GENERATED: <nome> -->`, e
-   `tasks/ORDER.md` é gerado inteiro. Quem reescreve é `cargo xtask docs-sync`; quem
-   reprova a divergência é `cargo xtask check-docs`, no CI. Editar dentro do bloco à
-   mão é perder a edição no próximo run — a prosa fora do bloco continua humana e o
-   gate não a julga. A regra é estreita de propósito: o gate só compara o que é
-   derivável do backlog, porque um gate que tenta julgar prosa reprova por estilo.
+   A migração para Paperclip como fonte única entrou em 2026-11-20 (JKC-620). Até lá,
+   `tasks/backlog.json` era a fonte única e `STATE.md`, `tasks/NEXT.md` e
+   `tasks/ORDER.md` eram leituras geradas dele. O bloco gerado e o gate
+   `check-docs` foram removidos junto com o `backlog.json` — veja
+   [`_arquivo/tasks/`](../_arquivo/tasks/) para o histórico.
 
 ---
 
@@ -199,7 +195,7 @@ instalado e que o *skill discovery* responde — configuração em `.claude/sett
 habilita mas não instala. Nunca alegar uso de skill que não existe, e nunca fabricar
 teste, assinatura ou resultado de CI. `cargo xtask doctor` confere o ambiente local.
 
-Comece por [SPEC.md](SPEC.md) e [tasks/NEXT.md](tasks/NEXT.md) antes de escolher a
+Comece por [SPEC.md](SPEC.md) e as issues atribuídas no Paperclip antes de escolher a
 TASK.
 
 Cadeia de skills, na ordem: `using-superpowers` → `spec`/`brainstorming` →
@@ -231,7 +227,8 @@ corrigido no mesmo PR.
    corpo do PR, onde o plano aparece resumido — não como arquivo do repositório.
 2. **Worktree própria**: `cargo xtask repo worktree --agent claude --task
    TASK-E<II>-<NN> --slug <slug>` (com `--kind fix|chore|hotfix` quando não for
-   feature). `--task` só aceita id existente em `tasks/backlog.json`.
+   feature). `--task` aceita qualquer id de issue Paperclip; não valida contra
+   `backlog.json`.
 3. **Implementação (Sonnet)** com TDD. Alto risco — áudio/tempo real, concorrência,
    segurança, release — sobe para **Opus**.
 4. **Checks (Haiku)** devolvem só passou/falhou e o comando exato. Baseline
@@ -327,10 +324,9 @@ editar). Nunca passar token como argumento de `gh`: a credencial vem do
 Verificar o PR real (`state=MERGED`, base, merge commit) antes de qualquer coisa:
 `gh` pode falhar por rede. Depois `git fetch origin` e fast-forward do `develop` no
 checkout central limpo, confirmando `HEAD` = `origin/develop`. Worktree e branch da
-TASK integrada são descartáveis; worktree de outra sessão não é. Rodar
-`cargo xtask docs-sync` — ele reescreve `STATE.md`, `tasks/NEXT.md` e
-`tasks/ORDER.md` a partir do backlog — e começar a próxima TASK. Não editar os
-blocos gerados à mão: o `check-docs` reprova a divergência no CI.
+TASK integrada são descartáveis; worktree de outra sessão não é. A consistência é
+garantida pelo Paperclip (issues como oráculo), não por validação local nem por
+`docs-sync` nem por `check-docs`.
 
 ### Entrega
 
@@ -341,9 +337,8 @@ autenticação ou rede é registrada com o erro real, não mascarada.
 
 ### Economia de tokens
 
-Evidência vai no commit e no corpo do PR. `STATE.md` só aponta, e o que ele aponta
-é gerado. Subagente devolve resumo curto, não despejo de saída. Não registrar
-handoff longo.
+Evidência vai no commit e no corpo do PR. Subagente devolve resumo curto, não
+despejo de saída. Não registrar handoff longo.
 
 ---
 

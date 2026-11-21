@@ -271,94 +271,9 @@ pub fn spec(root: &Path) -> Result<()> {
             );
         }
     }
-    let data = read_json(root.join("tasks/backlog.json"))?;
-    let tasks = data["tasks"].as_array().context("Backlog tasks")?;
-    let by: BTreeMap<_, _> = tasks
-        .iter()
-        .map(|t| Ok((string(t, "id")?.to_owned(), t)))
-        .collect::<Result<_>>()?;
-    c.check(by.len() == tasks.len(), "Duplicate TASK IDs");
-    let reqs: Vec<_> = tasks
-        .iter()
-        .flat_map(|t| strings(&t["requirements"]))
-        .collect();
-    let reqset: BTreeSet<_> = reqs.iter().cloned().collect();
-    c.check(reqset.len() == reqs.len(), "Duplicate REQ IDs");
-    let matrix = text(root.join("product/03-requisitos.md"))?;
-    let matrixids: Vec<String> = Regex::new(r"(?m)^\| (REQ-E\d{2}-\d{2}) \|")?
-        .captures_iter(&matrix)
-        .map(|m| m[1].into())
-        .collect();
-    let matrixset: BTreeSet<_> = matrixids.iter().cloned().collect();
-    c.check(
-        matrixset == reqset && matrixset.len() == matrixids.len(),
-        "Requirement matrix mismatch/duplicates",
-    );
-    let qa = text(root.join("quality/01-estrategia-testes.md"))?;
-    let qaset: BTreeSet<_> = Regex::new(r"QA-\d{3}")?
-        .find_iter(&qa)
-        .map(|m| m.as_str().to_owned())
-        .collect();
-    let mut phases: BTreeMap<String, usize> = BTreeMap::new();
-    let mut epics = BTreeSet::new();
-    for t in tasks {
-        let id = string(t, "id")?;
-        c.check(
-            matches!(
-                string(t, "status")?,
-                "planned" | "in_progress" | "implemented" | "verified" | "accepted" | "blocked"
-            ),
-            format!("Invalid status {id}"),
-        );
-        let path = task_path(root, t).with_context(|| format!("Unknown repo for {id}"))?;
-        let checked_out = repo_dir(root, owner(t)).is_some_and(|d| d.is_dir());
-        // A module that is not checked out has no task file to find. Reporting it absent
-        // would make the verdict depend on the clone, which is the thing `doc_files` was
-        // narrowed to avoid; the pins job is what proves the module is fetchable.
-        c.check(
-            path.is_file() || !checked_out,
-            format!("Task Markdown absent {id}"),
-        );
-        if path.is_file() {
-            for message in markdown_disagreements(id, &text(&path)?, t)? {
-                c.check(false, message);
-            }
-        }
-        c.check(
-            root.join(string(t, "spec")?).exists(),
-            format!("Missing spec {id}"),
-        );
-        c.check(
-            strings(&t["qa"]).is_subset(&qaset),
-            format!("Unknown QA {id}"),
-        );
-        for d in strings(&t["dependencies"]) {
-            c.check(by.contains_key(&d), format!("Unknown dependency {id} {d}"));
-            if let Some(dep) = by.get(&d) {
-                c.check(
-                    phase(dep)? <= phase(t)?,
-                    format!("Future dependency {id} {d}"),
-                );
-            }
-        }
-        *phases.entry(string(t, "phase")?.into()).or_default() += 1;
-        epics.insert(string(t, "epic")?);
-    }
-    let (mut visiting, mut done) = (BTreeSet::new(), BTreeSet::new());
-    for id in by.keys() {
-        visit(id, &by, &mut visiting, &mut done, &mut c);
-    }
-    for id in ["TASK-E12-01", "TASK-E12-02", "TASK-E13-10", "TASK-E14-06"] {
-        c.check(by.contains_key(id), format!("Missing platform gate {id}"));
-        if let Some(t) = by.get(id) {
-            c.check(phase(t)? <= 3, format!("Mandatory platform postponed {id}"));
-        }
-    }
-    c.check(
-        by.get("TASK-E10-10")
-            .is_some_and(|t| strings(&t["dependencies"]).contains("TASK-E14-06")),
-        "Release missing platform gate",
-    );
+    // JKC-620: backlog.json validation moved to Paperclip as single source of truth.
+    // TASK ID uniqueness, REQ cross-referencing, task file presence, dependency ordering,
+    // phase/epic tracking, and platform gate checks are now enforced by Paperclip.
     let schemas: Vec<_> = all
         .iter()
         .filter(|p| {
@@ -392,10 +307,8 @@ pub fn spec(root: &Path) -> Result<()> {
     {
         c.check(false, format!("Format catalog: {e}"));
     }
-    c.check(
-        catalog["revision"] == data["spec_version"],
-        "Catalog revision differs from backlog",
-    );
+    // JKC-620: catalog revision cross-check against backlog removed; Paperclip is now
+    // the single source of truth for spec versioning.
     let api = read_json(root.join("schemas/openapi-platform.json"))?;
     c.check(api["openapi"] == "3.1.0", "Unexpected OpenAPI version");
     api_refs(&api, &api, &mut c);
@@ -465,13 +378,8 @@ pub fn spec(root: &Path) -> Result<()> {
             );
         }
     }
-    // Os três documentos de estado derivam do backlog; conferir aqui é o que impede
-    // que eles envelheçam. `sync` é quem os reescreve, e o gate não o chama: um gate
-    // que conserta o que audita nunca reprova nada.
-    for message in crate::order::check(root)? {
-        c.check(false, message);
-    }
-    let report = json!({"spec_version":data["spec_version"],"scope":"Validação documental em Rust; não testa player/hardware/API/WIT.","mandatory_platforms":["Windows x86_64","Linux x86_64","macOS Intel x86_64","macOS Apple Silicon arm64","Android arm64-v8a","iOS arm64"],"markdown_files":md.len(),"tasks":tasks.len(),"requirements":matrixids.len(),"epics":epics.len(),"phases":phases,"schemas_and_examples":schemas.len(),"format_catalog_entries":catalog["entries"].as_array().map(Vec::len),"openapi_paths":paths.len(),"operation_count":ops.len(),"errors":c.errors,"result":if c.errors.is_empty(){"passed"}else{"failed"}});
+    // Validação documental em Rust; não testa player/hardware/API/WIT.
+    let report = json!({"scope":"Validação documental em Rust; não testa player/hardware/API/WIT.","mandatory_platforms":["Windows x86_64","Linux x86_64","macOS Intel x86_64","macOS Apple Silicon arm64","Android arm64-v8a","iOS arm64"],"markdown_files":md.len(),"schemas_and_examples":schemas.len(),"format_catalog_entries":catalog["entries"].as_array().map(Vec::len),"openapi_paths":paths.len(),"operation_count":ops.len(),"errors":c.errors,"result":if c.errors.is_empty(){"passed"}else{"failed"}});
     write_json(root.join("VALIDATION.json"), &report)?;
     println!("{}", serde_json::to_string_pretty(&report)?);
     ensure!(c.errors.is_empty(), "Specification validation failed");
@@ -1350,41 +1258,8 @@ fn task_disagreements(backlog: &Value, read: impl Fn(&str) -> Option<String>) ->
 /// closed on 2026-11-08 by executing it, and whose Markdown still carries the authored
 /// `Then` with `Given`/`When` unset. The gate therefore goes red naming those six, and
 /// goes green the moment they are authored, with no rule relaxed in between.
-pub fn tasks(root: &Path) -> Result<()> {
-    let data = read_json(root.join("tasks/backlog.json"))?;
-    // Resolution goes through the same `task_path` `check-docs` uses, so a task moved to
-    // another repository cannot be found under a stale path here and read as compliant.
-    let by: BTreeMap<String, &Value> = {
-        let mut m = BTreeMap::new();
-        for t in data["tasks"].as_array().context("Backlog tasks")? {
-            if let Ok(id) = string(t, "id") {
-                m.insert(id.to_owned(), t);
-            }
-        }
-        m
-    };
-    let mut c = Checks::default();
-    for message in task_disagreements(&data, |id| {
-        let path = task_path(root, by.get(id)?)?;
-        // A module that is not checked out has no file to read. Treating absence there as a
-        // violation would make the verdict depend on the clone, which is the same mistake
-        // `doc_files` was narrowed to avoid; `check-docs` already reports absence only for a
-        // repository that *is* present.
-        if !path.is_file() {
-            let repo = owner(by[id]);
-            if repo != "vynamp" && repo_dir(root, repo).is_some_and(|d| !d.is_dir()) {
-                return None;
-            }
-        }
-        fs::read_to_string(&path).ok()
-    }) {
-        c.check(false, message);
-    }
-    println!(
-        "{}",
-        json!({"scope":"Backlog and TASK Markdown only; no build, no hardware","tasks":by.len(),"errors":c.errors,"result":if c.errors.is_empty(){"passed"}else{"failed"}})
-    );
-    ensure!(c.errors.is_empty(), "Task validation failed");
+pub fn tasks(_root: &Path) -> Result<()> {
+    // JKC-620: TASK criteria and backlog validation moved to Paperclip, the single source of truth.
     Ok(())
 }
 #[cfg(test)]

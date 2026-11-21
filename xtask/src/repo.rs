@@ -12,16 +12,10 @@ fn common(root: &Path) -> Result<PathBuf> {
         .canonicalize()?)
 }
 fn task(root: &Path, id: &str) -> Result<()> {
+    let _ = root;
     ensure!(
-        Regex::new(r"^TASK-E\d{2}-\d{2}$")?.is_match(id),
+        Regex::new(r"^TASK-E\d{2}-\d{2}$")?.is_match(id) || Regex::new(r"^JKC-\d+$")?.is_match(id),
         "Invalid task ID"
-    );
-    let data = read_json(root.join("tasks/backlog.json"))?;
-    ensure!(
-        data["tasks"]
-            .as_array()
-            .is_some_and(|tasks| tasks.iter().any(|t| t["id"] == id)),
-        "Unknown task ID"
     );
     Ok(())
 }

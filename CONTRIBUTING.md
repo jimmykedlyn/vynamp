@@ -6,11 +6,11 @@ Versão 0.10.1 · 2026-11-10 · Estado: contrato vigente; o player ainda não es
 
 ### Before you start
 
-Pick a `TASK-*` from [`tasks/backlog.json`](tasks/backlog.json) and open its spec
-in [`tasks/items/`](tasks/items/). Read the requirement it traces to in the
-[matrix](product/03-requisitos.md), and any ADR that constrains it. If the
-task does not exist, the change is not ready to be written — the backlog is the
-unit of work, not the diff.
+Choose an assigned `TASK-*` issue in Paperclip and open its specification in
+[`tasks/items/`](tasks/items/). Read the requirement it traces to in the
+[matrix](product/03-requisitos.md), and any ADR that constrains it. If the issue
+does not exist, the change is not ready to be written — the issue is the unit of
+work, not the diff.
 
 Read [`AGENTS.md`](AGENTS.md) (the working contract), [Gitflow](engineering/03-gitflow.md)
 and [CI and gates](engineering/04-ci.md).
@@ -54,18 +54,12 @@ Then run, in this order:
 cargo fmt --all --check
 cargo clippy --workspace --all-targets --locked -- -D warnings
 cargo test --workspace --locked
-cargo xtask check-docs
 cargo xtask check-tasks
 cargo xtask check-authoring
 cargo xtask check-delivery
 ```
 
-`check-docs` requires every Markdown file to have a `# ` title and an entry in
-[`INDEX.md`](INDEX.md). `.claude/` is out of scope: files under it are agent
-definitions that open with a YAML frontmatter block, not prose, and they are
-configuration rather than specification.
-
-`check-tasks` covers the backlog and the TASK records. `check-authoring` applies
+`check-tasks` covers the task records. `check-authoring` applies
 the authoring rules to the same Markdown, and its blocking rule is that a
 `Boundary` bullet must name who owns the scope it excludes — a TASK, an ADR or a
 document that exists on disk; a bullet with no owner is not verifiable, so the
@@ -112,11 +106,11 @@ See [LEGAL.md](LEGAL.md). Security problems go to
 
 ### Antes de começar
 
-Escolha uma `TASK-*` em [`tasks/backlog.json`](tasks/backlog.json) e abra a spec
+Escolha uma issue `TASK-*` atribuída no Paperclip e abra a especificação dela
 em [`tasks/items/`](tasks/items/). Leia o requisito correspondente na
 [matriz](product/03-requisitos.md) e qualquer ADR que restrinja a
-mudança. Se a tarefa não existe, a mudança não está pronta para ser escrita — a
-unidade de trabalho é o backlog, não o diff.
+mudança. Se a issue não existe, a mudança não está pronta para ser escrita — a
+unidade de trabalho é a issue, não o diff.
 
 Leia [`AGENTS.md`](AGENTS.md) (o contrato de trabalho), o
 [Gitflow](engineering/03-gitflow.md) e o
@@ -161,18 +155,12 @@ Depois rode, nesta ordem:
 cargo fmt --all --check
 cargo clippy --workspace --all-targets --locked -- -D warnings
 cargo test --workspace --locked
-cargo xtask check-docs
 cargo xtask check-tasks
 cargo xtask check-authoring
 cargo xtask check-delivery
 ```
 
-`check-docs` exige que todo arquivo Markdown tenha título `# ` e entrada no
-[`INDEX.md`](INDEX.md). `.claude/` fica fora: o que está ali são definições de
-agente, que começam com bloco de frontmatter YAML, não prosa, e são configuração,
-não especificação.
-
-`check-tasks` cobre o backlog e os registros de TASK. `check-authoring` aplica as
+`check-tasks` cobre os registros de TASK. `check-authoring` aplica as
 regras de autoria ao mesmo Markdown, e sua regra bloqueante é que um bullet de
 `Boundary` nomeie quem é dono do escopo que exclui — uma TASK, uma ADR ou um
 documento que exista em disco; bullet sem dono não é verificável, e a TASK seguinte

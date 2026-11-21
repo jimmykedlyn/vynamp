@@ -18,24 +18,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  specs:
-    name: Specs
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        with:
-          persist-credentials: false
-          # O passo 37 mudou 134 das 191 TASKs para o repositorio dono de cada uma
-          # (`01-arvore-final.md` secao 1). `check-docs` resolve o Markdown da task pelo
-          # campo `repo` do backlog, e o INDEX/los requisitos apontam para dentro dos
-          # submodulos: sem eles o job validaria uma arvore diferente da da estacao --
-          # exatamente a divergencia que `doc_files()` foi escrito para evitar. Os
-          # arquivos lidos aqui sao Markdown e JSON; nada e compilado.
-          submodules: recursive
-      - name: Provision pinned Rust toolchain
-        run: rustup show
-      - run: cargo xtask check-docs
-
   tooling:
     name: Tooling
     # macOS Intel and Apple Silicon are mandatory targets (REQ-E19-01), and a
@@ -231,7 +213,7 @@ jobs:
   gate:
     name: CI Gate
     if: always()
-    needs: [specs, tooling, delivery, android, submodules, arch, tasks, authoring]
+    needs: [tooling, delivery, android, submodules, arch, tasks, authoring]
     runs-on: ubuntu-22.04
     steps:
       - name: Aggregate
@@ -241,7 +223,6 @@ jobs:
           # reporta job pulado como `skipped`, e um gate que so rejeita
           # `failure` publica verde para um job que ninguem rodou. Skip por
           # falta de hardware ou de fonte nao aprova nada.
-          test "${{ needs.specs.result }}" = success
           test "${{ needs.tooling.result }}" = success
           test "${{ needs.delivery.result }}" = success
           test "${{ needs.android.result }}" = success
@@ -249,5 +230,5 @@ jobs:
           test "${{ needs.arch.result }}" = success
           test "${{ needs.tasks.result }}" = success
           test "${{ needs.authoring.result }}" = success
-          echo 'CI Gate passed: specs, tooling, delivery, android, submodules, architecture rules, tasks and authoring.'
+          echo 'CI Gate passed: tooling, delivery, android, submodules, architecture rules, tasks and authoring.'
           echo 'Hardware, signing and release acceptance remain separate gates.'
