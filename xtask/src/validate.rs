@@ -929,6 +929,17 @@ fn archived_release(root: &Path, c: &mut Checks) -> Result<()> {
 }
 const AGENT_MODELS: [&str; 3] = ["opus", "sonnet", "haiku"];
 const AGENT_KEYS: [&str; 4] = ["name", "description", "model", "tools"];
+/// Optional frontmatter keys Claude Code documents for subagents and this project uses.
+const AGENT_OPTIONAL_KEYS: [&str; 1] = ["effort"];
+const AGENT_EFFORTS: [&str; 5] = ["low", "medium", "high", "xhigh", "max"];
+/// The frontmatter `model` accepts an alias or a full Claude model ID (ADR-019 pins
+/// IDs such as `claude-opus-5-5`); anything else is a typo the session would only
+/// discover when the subagent fails to start.
+fn valid_agent_model(value: &str) -> bool {
+    AGENT_MODELS.contains(&value)
+        || Regex::new(r"^claude-(?:opus|sonnet|haiku|fable)-\d+(?:-\d+)*$")
+            .is_ok_and(|r| r.is_match(value))
+}
 
 /// Validates every subagent definition in `.claude/agents/`: an opening `---`, a closing
 /// `---`, the four required keys, a `model:` from the known set, and no repeated key.
@@ -979,15 +990,18 @@ fn agent_definitions(root: &Path, c: &mut Checks) {
             if line.starts_with(' ') || key.contains(' ') {
                 continue;
             }
-            if !AGENT_KEYS.contains(&key) {
+            if !AGENT_KEYS.contains(&key) && !AGENT_OPTIONAL_KEYS.contains(&key) {
                 c.check(false, format!("Agent {name}: unknown key '{key}'"));
                 continue;
             }
             if !found.insert(key.to_string()) {
                 c.check(false, format!("Agent {name}: repeated key '{key}'"));
             }
-            if key == "model" && !AGENT_MODELS.contains(&value) {
+            if key == "model" && !valid_agent_model(value) {
                 c.check(false, format!("Agent {name}: invalid model '{value}'"));
+            }
+            if key == "effort" && !AGENT_EFFORTS.contains(&value) {
+                c.check(false, format!("Agent {name}: invalid effort '{value}'"));
             }
             if key != "model" && value.is_empty() {
                 c.check(false, format!("Agent {name}: empty '{key}'"));
@@ -1000,11 +1014,13 @@ fn agent_definitions(root: &Path, c: &mut Checks) {
             );
         }
     }
+    // The orchestrator is the main session (ADR-019): subagents cannot spawn subagents,
+    // so its rules live in AGENTS.md and it has no definition file here.
     for required in [
-        "orquestrador.md",
         "implementador.md",
         "checador.md",
         "revisor.md",
+        "integrador.md",
     ] {
         c.check(
             seen.contains(required),
@@ -1697,7 +1713,7 @@ jobs:
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().join(".claude/agents");
         std::fs::create_dir_all(&dir).unwrap();
-        for name in ["orquestrador", "implementador", "checador", "revisor"] {
+        for name in ["implementador", "checador", "revisor", "integrador"] {
             std::fs::write(
                 dir.join(format!("{name}.md")),
                 format!(
@@ -1724,6 +1740,41 @@ body
     fn agent_definitions_accept_the_four_known_models() {
         let (tmp, _) = agent_fixture("sonnet", "");
         assert!(agent_errors(tmp.path()).is_empty());
+    }
+    #[test]
+    fn agent_definitions_accept_full_model_id_and_known_effort() {
+        let (tmp, _) = agent_fixture("claude-opus-5-5", "\neffort: high");
+        assert_eq!(agent_errors(tmp.path()), Vec::<String>::new());
+    }
+    #[test]
+    fn agent_definitions_reject_unknown_effort() {
+        let (tmp, _) = agent_fixture("claude-sonnet-5-5", "\neffort: extreme");
+        let e = agent_errors(tmp.path());
+        assert!(
+            e.iter().any(|e| e.contains("invalid effort 'extreme'")),
+            "{e:?}"
+        );
+    }
+    #[test]
+    fn agent_definitions_reject_model_id_outside_claude_family() {
+        let (tmp, _) = agent_fixture("gpt-5", "");
+        let e = agent_errors(tmp.path());
+        assert!(
+            e.iter().any(|e| e.contains("invalid model 'gpt-5'")),
+            "{e:?}"
+        );
+    }
+    #[test]
+    fn agent_definitions_require_integrador_not_orquestrador() {
+        let (tmp, dir) = agent_fixture("sonnet", "");
+        std::fs::remove_file(dir.join("integrador.md")).unwrap();
+        let e = agent_errors(tmp.path());
+        assert!(
+            e.iter()
+                .any(|e| e.contains("Missing agent definition: integrador.md")),
+            "{e:?}"
+        );
+        assert!(!e.iter().any(|e| e.contains("orquestrador")), "{e:?}");
     }
     #[test]
     fn agent_definitions_reject_invalid_model() {
