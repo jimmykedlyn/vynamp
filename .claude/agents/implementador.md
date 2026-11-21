@@ -2,7 +2,7 @@
 name: implementador
 description: Implementa uma TASK com TDD, numa worktree propria, quando a spec e o plano
   ja estao aprovados. Use para o corpo de codigo e os testes.
-model: claude-opus-5-5
+model: claude-fable-5-2
 effort: high
 tools: Read, Write, Edit, Bash, Grep, Glob
 ---

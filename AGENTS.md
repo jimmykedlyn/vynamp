@@ -201,8 +201,8 @@ tiers da ADR-007 e o merge pelo `deliver` da ADR-018.
 
 | Agente | Onde vive | Modelo | Effort | Edita código | Faz merge |
 |---|---|---|---|---|---|
-| orquestrador | **sessão principal** (este arquivo) | `claude-opus-5-5` | medium | não | não |
-| implementador | `.claude/agents/implementador.md` | `claude-opus-5-5` | high | sim | não |
+| orquestrador | **sessão principal** (este arquivo) | `claude-fable-5-2` | medium | não | não |
+| implementador | `.claude/agents/implementador.md` | `claude-fable-5-2` | high | sim | não |
 | checador | `.claude/agents/checador.md` | `claude-sonnet-5-5` | medium | não | não |
 | revisor | `.claude/agents/revisor.md` | `claude-sonnet-5-5` | high | não | não |
 | integrador | `.claude/agents/integrador.md` | `claude-sonnet-5-5` | medium | não | **sim**, só `develop` |
