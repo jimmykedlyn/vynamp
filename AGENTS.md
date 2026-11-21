@@ -437,9 +437,13 @@ Não há propriedade Status: o andamento são as três caixas, nessa ordem.
 
 ### 7.3 O que ainda falta para integrar
 
-- Conferir que a base tem as 215 TASKs do `tasks/backlog.json` e que `Entregue` bate
-  com o status congelado em 2026-11-21 (`done` ↔ marcado). Divergência: o mantenedor
-  decide qual vale, e o outro lado é corrigido.
+- Conferido em 2026-11-21: a base tem 200 TASKs, nenhuma com `Entregue`; o
+  `tasks/backlog.json` tem 215. As 15 ausentes são todas `implemented` no backlog
+  (`TASK-CI-01/02`, `E01-01/02/04`, `E02-11`, `E04-02`, `E11-01/03`, `E15-03`,
+  `E19-01/02/04/05/06`), e nenhuma está só no Notion. Fica decidido assim: a base lista o
+  que falta fazer; TASK entregue antes da migração não é reimportada.
+- `TASK-E01-03` tem `Plano aprovado` marcado e PR aberto no `vynamp-engine` (#18): é a
+  primeira a seguir o fluxo novo.
 - "Depende de" é texto, não relação: a conferência de dependência é por id, feita pelo
   orquestrador. Trocar por relação é opcional e melhora a consulta.
 - Escrita: a leitura pelo MCP do Notion funciona nesta máquina; a primeira marcação de
