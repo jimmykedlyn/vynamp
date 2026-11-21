@@ -37,13 +37,8 @@ impl Fixture {
         fs::create_dir(&root).unwrap();
         fs::write(root.join(".gitignore"), ".worktrees/\n.superpowers/\n").unwrap();
         fs::write(root.join("README.md"), "# Fixture\n").unwrap();
-        fs::create_dir(root.join("tasks")).unwrap();
+        // JKC-620: backlog.json fixture removed; Paperclip is now the single source of truth.
         fs::create_dir(root.join("config")).unwrap();
-        fs::write(
-            root.join("tasks/backlog.json"),
-            json!({"tasks":[{"id":"TASK-E01-03"},{"id":"TASK-E02-03"}]}).to_string(),
-        )
-        .unwrap();
         fs::write(root.join("config/project.json"), json!({"application_ready":false,"release_enabled":false,"desktop_package":"vynamp-desktop","desktop_binary":"vynamp","product_version":"0.1.0"}).to_string()).unwrap();
         Self { _temp: temp, root }
     }

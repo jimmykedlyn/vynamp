@@ -4,7 +4,6 @@ mod branding;
 mod catalog;
 mod ci;
 mod github;
-mod order;
 mod package;
 mod release;
 mod repo;
@@ -72,16 +71,12 @@ enum Action {
         #[arg(long, value_enum, default_value = "claude")]
         agent: Agent,
     },
-    #[command(name = "check-docs")]
-    CheckDocs,
     #[command(name = "check-delivery")]
     CheckDelivery,
     #[command(name = "check-tasks")]
     CheckTasks,
     #[command(name = "check-authoring")]
     CheckAuthoring,
-    #[command(name = "docs-sync")]
-    DocsSync,
     #[command(name = "guard-branch")]
     GuardBranch,
     #[command(name = "github-import")]
@@ -200,11 +195,9 @@ fn execute() -> Result<()> {
     match cli.command {
         Action::Doctor { agent } => agents::doctor(&root, agent.as_str()),
         Action::Install { agent } => agents::install(&root, agent.as_str()),
-        Action::CheckDocs => validate::spec(&root),
         Action::CheckDelivery => validate::delivery(&root),
         Action::CheckTasks => validate::tasks(&root),
         Action::CheckAuthoring => authoring::check(&root),
-        Action::DocsSync => order::sync(&root),
         Action::GuardBranch => repo::guard(&root),
         Action::GithubImport { destination, push } => github::import(&root, &destination, push),
         Action::QualityGate => ci::quality(&root),

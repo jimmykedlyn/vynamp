@@ -30,7 +30,7 @@ um merge.
 |---|---|
 | Architecture, technology, irreversible choice / Arquitetura, tecnologia, escolha irreversível | ADR in [`adr`](adr) |
 | Product or policy decision, including licence and security channel / Decisão de produto ou política | [Decisions register](product/05-decisoes.md) (D-* IDs) |
-| What will be built, in what order / O que será construído e em que ordem | Backlog [`tasks/backlog.json`](tasks/backlog.json) and [requirement matrix](product/03-requisitos.md) |
+| What will be built, in what order / O que será construído e em que ordem | Paperclip issues (assigned `TASK-*`) and [requirement matrix](product/03-requisitos.md) |
 | A single unit of work / Uma unidade de trabalho | TASK in [`tasks/items/`](tasks/items/) |
 | Day-to-day rule for whoever writes code / Regra do dia a dia de quem escreve | [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md) |
 
@@ -46,14 +46,14 @@ mesmo vale para uma linha do registro de decisões — ela é emendada, não apa
 
 External contributions are welcome and are reviewed by the same process and the
 same gates as the maintainer's own work: `CI Gate` green, `cargo xtask
-check-docs` and `check-delivery` passing, a PR that states source, task, command,
+and `check-delivery` passing, a PR that states source, task, command,
 result and limitations. A contribution is accepted under the project licence
 (`MIT OR Apache-2.0`) unless stated otherwise. See
 [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 Contribuições externas são bem-vindas e passam pela mesma revisão e pelos mesmos
 gates do trabalho do próprio mantenedor: `CI Gate` verde, `cargo xtask
-check-docs` e `check-delivery` passando, e um PR que declare fonte, tarefa,
+e `check-delivery` passando, e um PR que declare fonte, tarefa,
 comando, resultado e limitações. A contribuição é aceita sob a licença do
 projeto (`MIT OR Apache-2.0`) salvo declaração em contrário. Ver
 [`CONTRIBUTING.md`](CONTRIBUTING.md).
