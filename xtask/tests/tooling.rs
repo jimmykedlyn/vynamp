@@ -811,6 +811,27 @@ fn guard_accepts_agent_chore_branch_without_task_but_not_arbitrary_names() {
     assert!(!f.run(&["guard-branch"]).status.success());
 }
 #[test]
+fn guard_accepts_task_branch_named_by_the_notion_id_only() {
+    let f = Fixture::new();
+    f.init();
+    ok(f.git(&["switch", "-c", "task/TASK-E01-03"]));
+    ok(f.run(&["guard-branch"]));
+    // Distinct numbers: refs are case-insensitive on Windows, so `task/task-e01-03`
+    // would collide with the branch created above instead of reaching the guard.
+    for bad in [
+        "task/foo",
+        "task/task-e02-04",
+        "task/TASK-E1-05",
+        "task/TASK-E01-06-x",
+    ] {
+        ok(f.git(&["switch", "-c", bad]));
+        assert!(
+            !f.run(&["guard-branch"]).status.success(),
+            "{bad} must be refused"
+        );
+    }
+}
+#[test]
 fn desktop_detection_parses_a_real_manifest() {
     let f = Fixture::new();
     fs::create_dir_all(f.root.join("apps/desktop/src")).unwrap();
