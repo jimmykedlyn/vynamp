@@ -8,8 +8,8 @@ Mantenedor: jimmykedlyn. Agente: Claude. Merge em `main`, tag, release, visibili
 proteção de branch são do mantenedor.
 
 Este arquivo só guarda regra. Estado do dia (o que existe, o que está pinado onde, o que
-falta migrar) vive em [engineering/estado-transicao.md](engineering/estado-transicao.md)
-e [engineering/notion.md](engineering/notion.md). Verificar o estado real antes de
+falta migrar) vive em [engineering/10-estado-transicao.md](engineering/10-estado-transicao.md)
+e [engineering/09-notion.md](engineering/09-notion.md). Verificar o estado real antes de
 afirmar o que existe.
 
 ---
@@ -335,7 +335,7 @@ confirma `HEAD = origin/develop`, atualiza o Notion e remove worktree e branch d
 
 Base **TASKs** em *Vynamp — Guia de desenvolvimento / Ordem de execução*, data source
 `collection://4172db34-4753-811b-98bb-000bb999ffcc`. Esquema, visões e modelo da página em
-[engineering/notion.md](engineering/notion.md). Só o orquestrador lê e escreve no Notion;
+[engineering/09-notion.md](engineering/09-notion.md). Só o orquestrador lê e escreve no Notion;
 subagente recebe dele o que precisa.
 
 ### 8.1 Propriedades
