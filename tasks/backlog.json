@@ -214,7 +214,7 @@
       "repo": "vynamp-decode",
       "acceptance_ready": true,
       "deliverable": "Adapter AAC-LC/HE-AAC conforme prova/licença; HE-AAC não é anunciado como AAC-LC.",
-      "acceptance": "Fixture por perfil suporta duration/seek/metadata quando aplicavel; HE-AAC nao e anunciado por decode AAC-LC.",
+      "acceptance": "Fixture por perfil suporta duration/seek/metadata quando aplicável; HE-AAC não é anunciado por decode AAC-LC.",
       "qa": [
         "QA-015"
       ],
@@ -326,7 +326,7 @@
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
-        "REQ-E01-07"
+        "REQ-E01-11"
       ],
       "dependencies": [
         "TASK-E01-04"
@@ -336,7 +336,7 @@
       "repo": "vynamp-decode",
       "acceptance_ready": true,
       "deliverable": "Demuxer MP4, adapter ALAC lossless e leitura de capítulos M4B.",
-      "acceptance": "o PCM decodificado e bit-exato ao da origem; frames() devolve a contagem bruta do manifesto (antes de trim); um seek para o frame da metade seguido de leitura ate Ok(false) cai no mesmo slice do decode linear. A lista de capitulos (titulo + timestamp) e igual ao FFMETADATA de origem; frames() devolve a contagem bruta do manifesto; seek para o frame da metade cai no slice esperado.",
+      "acceptance": "o PCM decodificado é bit-exato ao da origem; `frames()` devolve a contagem bruta do manifesto (antes de trim); um seek para o frame da metade seguido de leitura até `Ok(false)` cai no mesmo slice do decode linear; a lista de capítulos (título + timestamp) é igual à do FFMETADATA de origem; `frames()` devolve a contagem bruta do manifesto; seek para o frame da metade cai no slice esperado",
       "qa": [
         "QA-015"
       ],
@@ -355,7 +355,7 @@
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
-        "REQ-E01-07"
+        "REQ-E01-12"
       ],
       "dependencies": [
         "TASK-E01-04"
@@ -365,7 +365,7 @@
       "repo": "vynamp-decode",
       "acceptance_ready": true,
       "deliverable": "Demuxer Ogg e adapter Vorbis.",
-      "acceptance": "Vorbis decodifica com SNR >= 90 dB contra referencia FFmpeg; seek pela metade cai no mesmo slice do decode linear",
+      "acceptance": "SNR >= 90 dB contra a referência (tolerância explícita para lossy); `frames()` devolve a contagem bruta do manifesto; seek para o frame da metade cai no slice esperado",
       "qa": [
         "QA-015"
       ],
@@ -384,7 +384,7 @@
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
-        "REQ-E01-07"
+        "REQ-E01-13"
       ],
       "dependencies": [
         "TASK-E01-04"
@@ -394,7 +394,7 @@
       "repo": "vynamp-decode",
       "acceptance_ready": true,
       "deliverable": "Adapter Opus CELT-only fullband em Ogg.",
-      "acceptance": "Opus CELT decodifica com SNR >= 90 dB contra referencia FFmpeg; frames brutos a taxa fixa; seek para frame da metade cai no mesmo slice do decode linear",
+      "acceptance": "SNR >= 90 dB contra a referência (tolerância explícita para lossy); `frames()` devolve a contagem bruta do manifesto (antes de pre-skip); seek para o frame da metade cai no slice esperado",
       "qa": [
         "QA-015"
       ],
@@ -413,7 +413,7 @@
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
-        "REQ-E01-07"
+        "REQ-E01-14"
       ],
       "dependencies": [
         "TASK-E01-04",
@@ -424,7 +424,7 @@
       "repo": "vynamp-decode",
       "acceptance_ready": true,
       "deliverable": "Adapter Opus SILK e modo híbrido em Ogg.",
-      "acceptance": "Opus SILK/hbrido decodifica com SNR >= 80 dB contra referencia FFmpeg; frames brutos a taxa fixa; seek para frame da metade cai no mesmo slice do decode linear",
+      "acceptance": "SNR >= 80 dB contra a referência (tolerância explícita, menor que CELT pelo codec); `frames()` devolve a contagem bruta do manifesto; seek para o frame da metade cai no slice esperado",
       "qa": [
         "QA-015"
       ],
