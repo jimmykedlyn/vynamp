@@ -141,6 +141,25 @@ negativas escritas. Decisão só no chat não existe.
   medida para provar isso (contador por thread, região `RT-BEGIN`/`RT-END`) está em
   [quality/02-performance.md](quality/02-performance.md).
 - Função pública sem documentação `///` é função não terminada.
+- **Mudança cirúrgica.** Toda linha alterada no diff liga a um critério da TASK. Código
+  vizinho que funciona não é "melhorado", reformatado nem refatorado de carona. Código morto
+  que não é da TASK é apontado no PR, não apagado; o que a própria mudança deixou sem uso
+  sai junto.
+- **Nada especulativo.** Sem abstração para uso único, sem trait ou genérico com um só
+  implementador, sem opção, flag ou configuração que a spec não pede. Quando a spec pedir,
+  entra pela spec.
+- **Idempotência.** Operação que grava estado (job, conversão, restauração, migração,
+  instalação de tema ou plugin) deixa o mesmo resultado se rodar duas vezes, ou de novo
+  depois de um crash no meio. O teste prova isso repetindo a operação e interrompendo-a.
+- **Escritor único.** Estado mutável compartilhado entre threads tem um só escritor, e
+  isso está na estrutura (posse, canal, fila), não numa convenção. Trabalho independente
+  tem estado próprio.
+- **Causa raiz.** Bug primeiro vira teste que o reproduz. Guarda que só esconde o sintoma
+  (`if` que engole o caso, `unwrap_or_default` para calar erro, retry cego) não é
+  correção.
+- **Teste que sobrevive ao vazio não vale.** Se o teste continuaria passando com a função
+  sob teste devolvendo um valor vazio ou padrão, ou sem fazer nada, ele não prova o
+  critério e não conta como cobertura.
 - Nada de `todo!()` ou stub que finge funcionar. Botão desabilitado não conta como
   funcionalidade entregue.
 - Nomes em inglês no código e na API pública; documentação e specs em português.
@@ -257,8 +276,11 @@ orquestrador lê a TASK no Notion e confere `Depende de`
 3. **Implementação** com TDD. O vermelho de cada teste novo vai para
    `evidence/PR/<task>/red-proof.txt`.
 4. **Checks**: só passou/falhou e o comando exato.
-5. **Review** em contexto limpo. Aponta e não corrige: quem corrige é o implementador,
-   noutra chamada, senão o revisor passa a defender o próprio código.
+5. **Review** em contexto limpo. Aponta, não corrige. Além de correção e contrato, confere
+   o §3. São achados: linha do diff que não liga a um critério da TASK; abstração ou
+   configuração não pedida; teste que sobrevive ao vazio; guarda que esconde sintoma;
+   operação que grava estado sem prova de idempotência. BLOQUEADO → implementador, noutra
+   chamada.
 6. **Integração**: PR com template e `--body-file`, sem duplicar PR existente; merge só
    sob as condições de §5.4.
 7. **Entrega ao mantenedor**: URL do PR, SHA revisado, base, veredito e CI.
@@ -340,6 +362,13 @@ registrada** — não edição de contrato.
   Trabalho não commitado é de outra sessão ou do mantenedor; se precisa sumir,
   vai para `_arquivo/` ou fica para quem o criou.
 - Sem bypass de hooks. Nunca.
+- **O `pre-push` não roda `cargo xtask ci docs`.** O gate de documentação (`ci docs`)
+  mora no CI do PR (SHA final), não no hook local. O agente não executa `cargo xtask ci
+  docs` fora do CI; se o comando estiver no `pre-push`, remova a chamada. Se o hook fizer
+  outras coisas, mantenha-as; se só fazia isso, desregistre o hook e mova o arquivo para
+  `_arquivo/`, com o motivo no `INDEX.md`. Não mexa no `pre-commit` (`xtask guard-branch`).
+- **Código de tempo real e FFI** (callback de áudio, JNI, bindings de codec) é exceção ao
+  oráculo e fica para outra prova (a receita de `quality/02-performance.md`).
 - Antes de qualquer repo ficar público: varredura de segredos no histórico, resultado
   apresentado, e espera explícita por "pode publicar".
 
