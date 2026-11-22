@@ -66,6 +66,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [ADR-018 — entrega automática de TASK pelo `cargo xtask deliver`](adr/ADR-018-entrega-automatica.md) — adr/ADR-018-entrega-automatica.md
 - [ADR-019 — subagentes do Claude Code e backlog no Notion](adr/ADR-019-subagentes-e-notion.md) — adr/ADR-019-subagentes-e-notion.md
+- [ADR-020 — Ciclo de vida da TASK no Notion](adr/ADR-020-ciclo-de-vida-da-task.md) — adr/ADR-020-ciclo-de-vida-da-task.md
 
 - [Engine de áudio e invariantes](reference/audio/01-engine.md) — reference/audio/01-engine.md
 
@@ -118,6 +119,8 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [Ativação externa e segredos](engineering/07-segredos.md) — engineering/07-segredos.md
 
 - [Guia de desenvolvimento — passo a passo](engineering/08-reinicio-windows.md) — engineering/08-reinicio-windows.md
+- [Base TASKs no Notion](engineering/09-notion.md) — engineering/09-notion.md
+- [Estado de transição](engineering/10-estado-transicao.md) — engineering/10-estado-transicao.md
 
 - [Evidências e relatórios](evidence/README.md) — evidence/README.md
 
