@@ -8,8 +8,9 @@ Mantenedor: jimmykedlyn. Agente: Claude. Merge em `main`, tag, release, visibili
 proteção de branch são do mantenedor.
 
 Este arquivo só guarda regra. Estado do dia (o que existe, o que está pinado onde, o que
-falta migrar) vive em [engineering/estado-transicao.md](engineering/estado-transicao.md).
-Verificar o estado real antes de afirmar o que existe.
+falta migrar) vive em [engineering/estado-transicao.md](engineering/estado-transicao.md)
+e [engineering/notion.md](engineering/notion.md). Verificar o estado real antes de
+afirmar o que existe.
 
 ---
 
