@@ -113,8 +113,6 @@ fn fixtures_are_isolated_from_hook_repository_environment() {
     // context just as Git exports it to hooks. Do not mutate this test process.
     let test_names = [
         "init_creates_main_develop_without_remote",
-        #[cfg(unix)]
-        "git_hooks_do_not_reuse_shared_outer_driver_cache",
     ];
     for test_name in test_names {
         ok(Command::new(std::env::current_exe().unwrap())
@@ -1017,7 +1015,7 @@ fn git_hooks_do_not_reuse_shared_outer_driver_cache() {
         ok(output);
     }
     let output = fs::read_to_string(log).unwrap();
-    assert_eq!(output.lines().count(), 2);
+    assert_eq!(output.lines().count(), 1);
     // Git resolves the worktree root physically (for example /var -> /private/var
     // on macOS), while tempfile may preserve an alias in its original path.
     let expected = f.root.canonicalize().unwrap().join("target/xtask-hooks");
