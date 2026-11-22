@@ -111,9 +111,7 @@ fn fixtures_are_isolated_from_hook_repository_environment() {
     let before = fs::read(f.root.join(".git/index")).unwrap();
     // Run an existing fixture test as a child, with the caller's repository
     // context just as Git exports it to hooks. Do not mutate this test process.
-    let test_names = [
-        "init_creates_main_develop_without_remote",
-    ];
+    let test_names = ["init_creates_main_develop_without_remote"];
     for test_name in test_names {
         ok(Command::new(std::env::current_exe().unwrap())
             .args(["--exact", test_name, "--nocapture"])
