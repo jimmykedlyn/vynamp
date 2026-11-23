@@ -50,7 +50,7 @@ Começar por [NEXT](tasks/NEXT.md). Aceitar tarefas apenas com evidência numér
 
 Plataformas são obrigatórias no mesmo release1.0: [matriz](platforms/01-matriz-suporte.md), [host Android](platforms/02-android.md), [design phone/tablet](design/05-mobile-tablet.md) e [QA por alvo](quality/03-matriz-multiplataforma.md). Android UI/serviço proposta usa Kotlin/Compose e núcleoRust; Mac Intel+Silicon exigem execução nativa em ambos.
 
-Preparação de engenharia0.7.0: [estrutura](engineering/08-reinicio-windows.md), [agentes/Superpowers](engineering/01-agents-superpowers.md), [Gitflow](engineering/03-gitflow.md), [CI/CD](engineering/04-ci.md), [testes](engineering/05-testes.md), [instaladores](engineering/06-installers.md). GitHub privado escolhido: jimmykedlyn/vynamp-mediaplayer; acesso remoto ainda não confirmado no ambiente.
+Preparação de engenharia0.7.0: [estrutura](engineering/08-reinicio-windows.md), [Gitflow](engineering/03-gitflow.md), [CI/CD](engineering/04-ci.md), [testes](engineering/05-testes.md). GitHub privado escolhido: jimmykedlyn/vynamp-mediaplayer; acesso remoto ainda não confirmado no ambiente.
 
 ## Identidade Vynamp
 
