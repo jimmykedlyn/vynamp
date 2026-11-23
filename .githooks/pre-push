@@ -2,6 +2,6 @@
 # Local checks supplement protected branches and GitHub CI.
 set -eu
 # Each worktree has its own hook driver; never rebuild the caller executable.
-CARGO_TARGET_DIR="$(git rev-parse --show-toplevel)/target/xtask-hooks"
-export CARGO_TARGET_DIR
-cargo xtask ci docs
+# cargo xtask ci docs foi removido do pre-push: gate de docs roda no CI do PR
+# (SHA final), por ADR-021. Ver AGENTS.md §7.1.
+echo "pre-push: ok (ci docs gate moved to CI)"
