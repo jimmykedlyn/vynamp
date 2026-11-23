@@ -12,8 +12,6 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Code of Conduct / Código de Conduta](CODE_OF_CONDUCT.md) — CODE_OF_CONDUCT.md
 
-- [Governance / Governança](GOVERNANCE.md) — GOVERNANCE.md
-
 - [Contribuições e revisão](CONTRIBUTING.md) — CONTRIBUTING.md
 
 - [Legal notes](LEGAL.md) — LEGAL.md
@@ -102,8 +100,6 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Layout Android, tablet e identidade compartilhada](design/05-mobile-tablet.md) — design/05-mobile-tablet.md
 
-- [Claude Code e Superpowers obrigatório](engineering/01-agents-superpowers.md) — engineering/01-agents-superpowers.md
-
 - [Worktrees, ownership e recuperação](engineering/02-worktrees.md) — engineering/02-worktrees.md
 
 - [Gitflow e envio para o GitHub privado](engineering/03-gitflow.md) — engineering/03-gitflow.md
@@ -111,8 +107,6 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [CI/CD e gates por plataforma](engineering/04-ci.md) — engineering/04-ci.md
 
 - [Contrato de testes, evidência e comandos](engineering/05-testes.md) — engineering/05-testes.md
-
-- [Instaladores: formatos, recipes e assinatura](engineering/06-installers.md) — engineering/06-installers.md
 
 - [Ativação externa e segredos](engineering/07-segredos.md) — engineering/07-segredos.md
 
@@ -122,11 +116,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Evidências e relatórios](evidence/README.md) — evidence/README.md
 
-- [Temas próprios e editor](extensions/01-temas.md) — extensions/01-temas.md
-
 - [Plugins próprios, SDK e isolamento](extensions/02-plugins.md) — extensions/02-plugins.md
-
-- [Visualizações e integrações de sistema](extensions/03-visualizations-integrations.md) — extensions/03-visualizations-integrations.md
 
 - [Contrato do SDK de extensões](extensions/04-sdk.md) — extensions/04-sdk.md
 
@@ -165,8 +155,6 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Matriz de validação e release multiplataforma](quality/03-matriz-multiplataforma.md) — quality/03-matriz-multiplataforma.md
 
-- [QA complementar — integração, codecs, DSP e capacidades](quality/04-integration-codecs-dsp.md) — quality/04-integration-codecs-dsp.md
-
 - [Modelo de ameaças e controles](security/01-threat-model.md) — security/01-threat-model.md
 
 - [Privacidade, conteúdo e distribuição](security/02-privacidade-licencas.md) — security/02-privacidade-licencas.md
@@ -176,8 +164,6 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [Podcasts, audiobooks, gravação e offline](streaming/02-podcasts-gravacao.md) — streaming/02-podcasts-gravacao.md
 
 - [Plataforma web futura e catálogo](streaming/03-plataforma.md) — streaming/03-plataforma.md
-
-- [Semântica da API da plataforma](streaming/04-api-semantics.md) — streaming/04-api-semantics.md
 
 - [Rede, proxy e bindings de streaming](streaming/04-rede-proxy.md) — streaming/04-rede-proxy.md
 
