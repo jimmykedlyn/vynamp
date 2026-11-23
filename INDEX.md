@@ -116,6 +116,8 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Layout Android, tablet e identidade compartilhada](design/05-mobile-tablet.md) — design/05-mobile-tablet.md
 
+- [Estudos e requisitos](engineering/01-agents-superpowers.md) — engineering/01-agents-superpowers.md
+
 - [Worktrees, ownership e recuperação](engineering/02-worktrees.md) — engineering/02-worktrees.md
 
 - [Gitflow e envio para o GitHub privado](engineering/03-gitflow.md) — engineering/03-gitflow.md
@@ -123,6 +125,8 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [CI/CD e gates por plataforma](engineering/04-ci.md) — engineering/04-ci.md
 
 - [Contrato de testes, evidência e comandos](engineering/05-testes.md) — engineering/05-testes.md
+
+- [Instaladores: formatos, recipes e assinatura](engineering/06-installers.md) — engineering/06-installers.md
 
 - [Ativação externa e segredos](engineering/07-segredos.md) — engineering/07-segredos.md
 
