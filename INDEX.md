@@ -12,6 +12,20 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Code of Conduct / Código de Conduta](CODE_OF_CONDUCT.md) — CODE_OF_CONDUCT.md
 
+- [Governance / Governança](GOVERNANCE.md) — GOVERNANCE.md
+
+- [Contribuições e revisão](CONTRIBUTING.md) — CONTRIBUTING.md
+
+- [Licença](LICENSE) — LICENSE
+
+- [Contribuidores](README.md) — README.md
+
+- [EditorConfig](.editorconfig) — .editorconfig
+
+- [GUIA DO PROJETO](README.md) — README.md
+
+- [Temas e editor](extensions/01-temas.md) — extensions/01-temas.md
+
 - [Contribuições e revisão](CONTRIBUTING.md) — CONTRIBUTING.md
 
 - [Legal notes](LEGAL.md) — LEGAL.md
