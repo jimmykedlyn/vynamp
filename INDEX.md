@@ -18,6 +18,8 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Licença](LICENSE) — LICENSE
 
+- [Tarefa complementar: ajustes no contrato, ADR de mutação e ci docs fora do pre-push](prompt-claude-code-complemento.md) — prompt-claude-code-complemento.md
+
 - [Contribuidores](README.md) — README.md
 
 - [EditorConfig](.editorconfig) — .editorconfig

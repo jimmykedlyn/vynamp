@@ -119,7 +119,7 @@ Símbolo C / Pulso com **badge de conversão** (setas circulares em verde-lima `
 | Evidência | Referência |
 |---|---|
 | Comandos e resultados | `evidence/PR/chore-specs-vynamp-converter/` (PR5) |
-| Fixtures de codec | [Matriz de testes DSP](../../quality/04-matriz-dsp.md), [04-integration-codecs-dsp](../../quality/04-integration-codecs-dsp.md) |
+| Fixtures de codec | [Matriz de testes DSP](../../quality/04-matriz-dsp.md), [04-matriz-dsp](../../quality/04-matriz-dsp.md) |
 | Estratégia de QA | [01-test-strategy](../../quality/01-estrategia-testes.md) — QA-015, QA-016, QA-023, QA-024, QA-031 |
 
 A validação deste documento é **documental e estrutural**. Nenhum arquivo foi transcodificado, nenhum encoder foi implementado e a lib `vynamp-encode` ainda não existe.

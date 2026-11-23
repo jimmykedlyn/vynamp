@@ -61,7 +61,7 @@ QA-018: Linux/macOS Intel+Silicon nativos. QA-019: Android playback/lifecycle/fo
 | QA-034 | Fidelidade ao MVP de referência | Gabaritos da [referência do MVP](../design/07-pin-mvp.md) (SVG, tema, ícone, captura, movimento, roteiro) (fonte: vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452, rev.38) reproduzidos no nativo dentro da tolerância declarada; o harness de TASK-E02-16 roda só localmente e o CI Gate o marca como não executado; exceção só para API intrínseca do navegador, com comportamento reimplementado |
 | QA-035 | iOS playback, sandbox e distribuição | Build assinado instala por TestFlight em aparelho real; sessão de áudio mantém o playback em segundo plano e não vaza ao encerrar; interrupção pausa e retoma na posição; arquivo escolhido persiste no container e nenhuma leitura ocorre fora dele; VoiceOver opera transporte e DSP. Simulador não substitui device, e ausência de hardware bloqueia o aceite em vez de aprová-lo. |
 
-QA-032/033 (2026-10-25) detalham a [matriz de testes DSP](04-matriz-dsp.md). [Cenários completos](04-integration-codecs-dsp.md). QA-026 nos formatos M5 é futuro; M3 exige decisões/limitações dos condicionais e provas dos codecs comuns.
+QA-032/033 (2026-10-25) detalham a [matriz de testes DSP](04-matriz-dsp.md). [Cenários completos](04-matriz-dsp.md). QA-026 nos formatos M5 é futuro; M3 exige decisões/limitações dos condicionais e provas dos codecs comuns.
 
 ## Cenarios complementares de integracao, codecs e DSP
 
