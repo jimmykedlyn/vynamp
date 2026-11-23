@@ -80,8 +80,8 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [ADR-018 — entrega automática de TASK pelo `cargo xtask deliver`](adr/ADR-018-entrega-automatica.md) — adr/ADR-018-entrega-automatica.md
 - [ADR-019 — subagentes do Claude Code e backlog no Notion](adr/ADR-019-subagentes-e-notion.md) — adr/ADR-019-subagentes-e-notion.md
-- [ADR-020 — Ciclo de vida da TASK no Notion](adr/ADR-020-ciclo-de-vida-da-task.md) — adr/ADR-020-ciclo-de-vida-da-task.md
-
+- [ADR-020 — teste de mutação como gate de CI](adr/ADR-020-teste-de-mutacao-no-ci.md) — adr/ADR-020-teste-de-mutacao-no-ci.md
+- [ADR-021 — `cargo xtask ci docs` sai do `pre-push`](adr/ADR-021-ci-docs-fora-do-pre-push.md) — adr/ADR-021-ci-docs-fora-do-pre-push.md
 - [Engine de áudio e invariantes](reference/audio/01-engine.md) — reference/audio/01-engine.md
 
 - [Matriz de formatos, codecs e tags](reference/audio/02-formats.md) — reference/audio/02-formats.md

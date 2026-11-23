@@ -129,8 +129,7 @@ consequências negativas. Decisão só no chat não existe.
   comentário imediatamente acima (`// SAFETY:` para `unsafe`).
 - **Callback de tempo real: sem alocação, lock, I/O, log, plugin ou JNI.** Prova medida em
   [quality/02-performance.md](quality/02-performance.md).
-- Função pública sem `///` é função não terminada. Nada de `todo!()`, stub que finge
-  funcionar ou botão desabilitado contado como entrega.
+- Função pública sem documentação `///` é função não terminada.
 - **Mudança cirúrgica.** Toda linha alterada no diff liga a um critério da TASK. Código
   vizinho que funciona não é "melhorado", reformatado nem refatorado de carona. Código morto
   que não é da TASK é apontado no PR, não apagado; o que a própria mudança deixou sem uso
@@ -150,11 +149,10 @@ consequências negativas. Decisão só no chat não existe.
 - **Teste que sobrevive ao vazio não vale.** Se o teste continuaria passando com a função
   sob teste devolvendo um valor vazio ou padrão, ou sem fazer nada, ele não prova o
   critério e não conta como cobertura.
-- Teste precisa de **oráculo independente**; fixture tem hash, licença, formato e oráculo
-  próprio ([engineering/05-testes.md](engineering/05-testes.md)).
-- Teste que roda `git` em repositório descartável limpa as variáveis locais do Git antes
-  (`util::scrub_git_env` de `xtask/src/util.rs`, ou guarda equivalente provada por teste).
-  Motivo e incidente em `engineering/05-testes.md`.
+- Nada de `todo!()` ou stub que finge funcionar. Botão desabilitado não conta como
+  funcionalidade entregue.
+- Nomes em inglês no código e na API pública; documentação e specs em português.
+- Sem `#[allow(...)]` novo sem justificativa escrita ao lado.
 
 ---
 
@@ -325,54 +323,23 @@ conduta, não bloqueio técnico; quem quebrar diz no relatório.
    fmt/clippy/test (módulo).
 3. **Implementador**: TDD; o vermelho de cada teste novo vai para
    `evidence/PR/<task>/red-proof.txt`.
-4. **Checador**: devolve só passou/falhou e o comando exato. Falhou → implementador.
-5. **Revisor**, em contexto limpo: aponta, não corrige. Além de correção e contrato, confere
+4. **Checks**: só passou/falhou e o comando exato.
+5. **Review** em contexto limpo. Aponta, não corrige. Além de correção e contrato, confere
    o §3. São achados: linha do diff que não liga a um critério da TASK; abstração ou
    configuração não pedida; teste que sobrevive ao vazio; guarda que esconde sintoma;
    operação que grava estado sem prova de idempotência. BLOQUEADO → implementador, noutra
    chamada.
-6. **Integrador**: PR com evidência, uma consulta de CI, merge sob §7.3. CI pendente →
-   devolve `ci_pending`; sem loop de `sleep`.
-7. **Orquestrador**: atualiza o Notion; para libs, abre o PR de repin no umbrella apontando
-   para o **merge commit**.
+6. **Integração**: PR com template e `--body-file`, sem duplicar PR existente; merge só
+   sob as condições de §5.4.
+7. **Entrega ao mantenedor**: URL do PR, SHA revisado, base, veredito e CI.
 
-Subagente devolve resumo curto, não despejo de saída. Evidência vai no commit e no PR.
+### 5.4 Merge
 
----
-
-## 7. Git e GitHub
-
-### 7.1 Git
-
-- Gitflow: `main` (release) ← `develop` ← branch de trabalho.
-- Branch aceita pelo hook `pre-commit` (`xtask guard-branch`): `task/TASK-EII-NN`,
-  `{feature,fix,chore,hotfix}/task-eNN-NN-claude-<slug>`, `chore/claude-<slug>`,
-  `release/X.Y.Z`. Repin usa `chore/claude-repin-<módulo>-<slug>`.
-- Conventional Commits, um commit por passo lógico.
-- O `pre-push` **não** roda `cargo xtask ci docs`. Esse gate roda no CI do umbrella e entra
-  no `CI Gate`. Quem muda o umbrella roda o comando à mão antes de abrir o PR (§6.3,
-  passo 2).
-- **Sem** tag, release, force push, reescrita de histórico, `git reset --hard`,
-  `git clean -fdx`, descarte destrutivo ou bypass de hook. Trabalho não commitado é de outra
-  sessão ou do mantenedor.
-
-### 7.2 API do GitHub: só REST
-
-GraphQL é instável neste ambiente. Comandos `gh pr ...` usam GraphQL por baixo e **não** são
-usados. Credencial vem do `gh auth login` do mantenedor ou de `GH_TOKEN` já exportado; nunca
-em argumento, log, PR ou evidência.
-
-| Ação | Chamada REST |
-|---|---|
-| PR já existe? | `gh api "repos/{o}/{r}/pulls?state=all&head={o}:{branch}"` |
-| Criar PR | `gh api --method POST repos/{o}/{r}/pulls -f title=… -f head=… -f base=develop -F body=@<arquivo>` |
-| Editar PR | `gh api --method PATCH repos/{o}/{r}/pulls/{n} -F body=@<arquivo>` |
-| Estado do PR | `gh api repos/{o}/{r}/pulls/{n}` → `head.sha`, `mergeable_state`, `merged`, `merge_commit_sha` |
-| Checks do SHA | `gh api repos/{o}/{r}/commits/{sha}/check-runs` |
-| Merge | `gh api --method PUT repos/{o}/{r}/pulls/{n}/merge -f sha={SHA revisado} -f merge_method=merge` |
-
-Um 403 não é automaticamente limite de plano: o de branch protection vem do repo privado
-(ADR-014); o de permissão vem de autenticação. Diagnosticar antes de concluir.
+O integrador é o **único** agente que mergeia, e só quando tudo vale, conferido na
+hora: base `develop`; head do PR igual ao SHA revisado (`--match-head-commit`); todos os
+checks em `SUCCESS`, incluindo `CI Gate`; `mergeStateStatus` `CLEAN`; revisor sem
+BLOQUEADO; estratégia merge commit. Merge em `main`, tag, release, visibilidade e
+proteção de branch são do mantenedor.
 
 ### 7.3 Condições de merge
 
@@ -460,8 +427,61 @@ Não reabrir. Mudar qualquer uma exige decisão registrada, não edição deste 
 | Backend web não antes de M4 | H-08 em [product/05-decisoes.md](product/05-decisoes.md) |
 | Subagentes e Notion | [ADR-019](adr/ADR-019-subagentes-e-notion.md), emendada pela ADR-020 |
 
-Decisão já dada pelo mantenedor não pede aprovação de novo; o escopo e as autorizações dele
-prevalecem sobre a leitura padrão das skills.
+Criar licença nova, renomear a marca ou alterar esses números **exige decisão
+registrada** — não edição de contrato.
+
+### Git
+
+- Gitflow: `main` (release) ← `develop` ← branch de trabalho.
+- Nome de branch não é livre: o hook `pre-commit` (`xtask guard-branch`) recusa
+  commit fora de `task/TASK-EII-NN`, `{feature,fix,chore,hotfix}/task-eNN-NN-claude-<slug>`,
+  `chore/claude-<slug>` ou `release/X.Y.Z`. TASK usa `task/<TASK-ID>` (ou a forma
+  longa, criada por `xtask repo worktree`); trabalho sem TASK usa `chore/claude-<slug>`.
+- Conventional Commits. Um commit por passo lógico.
+- **Sem tag, release, force push ou reescrita de histórico pelo agente.** Merge em
+  `develop` só pelo integrador, sob §5.4; tudo o mais é do mantenedor.
+- **Nunca `git reset --hard`, `git clean -fdx` nem qualquer descarte destrutivo.**
+  Trabalho não commitado é de outra sessão ou do mantenedor; se precisa sumir,
+  vai para `_arquivo/` ou fica para quem o criou.
+- Sem bypass de hooks. Nunca.
+- **O `pre-push` não roda `cargo xtask ci docs`.** O gate de documentação (`ci docs`)
+  mora no CI do PR (SHA final), não no hook local. O agente não executa `cargo xtask ci
+  docs` fora do CI; se o comando estiver no `pre-push`, remova a chamada. Se o hook fizer
+  outras coisas, mantenha-as; se só fazia isso, desregistre o hook e mova o arquivo para
+  `_arquivo/`, com o motivo no `INDEX.md`. Não mexa no `pre-commit` (`xtask guard-branch`).
+- **Código de tempo real e FFI** (callback de áudio, JNI, bindings de codec) é exceção ao
+  oráculo e fica para outra prova (a receita de `quality/02-performance.md`).
+- Antes de qualquer repo ficar público: varredura de segredos no histórico, resultado
+  apresentado, e espera explícita por "pode publicar".
+
+### API do GitHub
+
+REST apenas. **GraphQL é instável neste ambiente** e não é usado para nada — PR,
+comentário, review, label e arquivo, tudo por REST (`gh api --method PATCH` para
+editar). Nunca passar token como argumento de `gh`: a credencial vem do
+`gh auth login` do mantenedor, guardada no keyring, ou de `GH_TOKEN` já exportado no
+ambiente da sessão. O valor nunca aparece em comando, log, PR ou evidência.
+
+### Após o merge
+
+O integrador já verificou o PR real (`state=MERGED`, base, merge commit). O
+orquestrador então: `git fetch origin` e fast-forward do `develop` no checkout central
+limpo, confirmando `HEAD` = `origin/develop`; atualiza o status da TASK no Notion com o
+link do PR e o merge commit; descarta worktree e branch da TASK integrada (worktree de
+outra sessão não). Se a TASK é de módulo, o repin do submódulo no umbrella é um PR
+próprio, apontando para o **merge commit**, nunca para o topo da branch.
+
+### Entrega
+
+Ao entregar trabalho, dizer: branch, SHA completo **revisado**, base, URL real do PR
+(ou o motivo de não existir), escopo commitado, comandos com resultado, ambiente e
+limitações. **Nunca inventar SHA, número de PR ou resultado de CI.** Falha de
+autenticação ou rede é registrada com o erro real, não mascarada.
+
+### Economia de tokens
+
+Evidência vai no commit e no corpo do PR. Subagente devolve resumo curto, não despejo
+de saída.
 
 ---
 
