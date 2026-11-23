@@ -250,6 +250,39 @@ Regras:
 e o *skill discovery* responde (`cargo xtask doctor` confere o ambiente). Sem ele, parar e
 avisar. Nunca alegar uso de skill que não existe, nem fabricar teste, assinatura ou CI.
 
+**Os subagentes são obrigatórios.** Toda TASK passa pelos quatro, na ordem do §6.3:
+implementador, checador, revisor, integrador. Não há exceção por tamanho, urgência ou
+tipo de TASK, e decidir que "dessa vez não precisa" não é papel da sessão principal.
+
+- **Pedido de TASK é pedido de orquestração.** "Implemente", "faça", "comece", "resolva"
+  ou "entregue a TASK-X" significam rodar o §6.3 com os subagentes. Ninguém precisa repetir
+  "use os agentes".
+- **A sessão principal não faz o trabalho de um subagente.** Ela não edita código de
+  produto, teste, fixture nem a spec da TASK, não roda os checks no lugar do checador, não
+  revisa no lugar do revisor e não abre PR nem mergeia no lugar do integrador. `Write` e
+  `Edit` dela ficam restritos a `.superpowers/`. Se perceber que vai editar outro arquivo,
+  para e chama o implementador.
+- **Subagente indisponível** (não aparece em `/agents`, falha ao carregar, erro de modelo):
+  a TASK vai para `Bloqueada` com o erro real, e a sessão avisa o mantenedor. Ela não faz o
+  trabalho do subagente que falhou.
+- **Sem evidência de subagente, não foi feito.** O PR mostra, para cada um dos quatro, que
+  ele rodou e sobre qual SHA (§9).
+- **Trabalho sem TASK** (`chore/claude-<slug>`), pedido pelo mantenedor e só de
+  documentação, configuração ou ferramenta do repo (`xtask`, hooks, CI), pode ser feito pela
+  sessão principal. Mesmo assim, o revisor confere antes do PR. Se tocar código ou teste de
+  produto, vira TASK.
+- **Trava técnica.** Um hook `PreToolUse` (`.claude/hooks/trava-orquestrador.ps1`,
+  registrado em `.claude/settings.json`) faz valer os itens acima:
+  - bloqueia `Edit`, `Write`, `MultiEdit` e `NotebookEdit` da sessão principal fora de
+    `.superpowers/`, salvo numa branch `chore/claude-*`;
+  - em qualquer branch, bloqueia a sessão principal em `.rs` fora de `xtask/` e em
+    `tests/fixtures/`;
+  - fora de `chore/claude-*`, bloqueia os comandos de escrita mais comuns por `Bash`;
+  - bloqueia qualquer subagente de editar `.claude/`.
+
+  A trava não alcança toda escrita por shell: onde ela não chega, vale a regra. Mudar a
+  trava é trabalho sem TASK, com ADR.
+
 ### 6.1 Papéis
 
 | Agente | Onde vive | Modelo | Effort | Edita código | Mergeia |
@@ -277,18 +310,19 @@ conduta, não bloqueio técnico; quem quebrar diz no relatório.
   mantenedor.
 - Passa a cada subagente **só** o que ele precisa. O revisor não recebe o relato nem o
   raciocínio do implementador.
-- Não escreve código de produto nem teste; não mergeia. É o único que escreve no Notion.
+- Só orquestra: não escreve código de produto nem teste, não roda os checks da TASK, não
+  revisa, não abre PR e não mergeia. É o único que escreve no Notion.
 - Até 2–3 TASKs independentes em paralelo; serializa as que tocam `Cargo.toml`,
   `Cargo.lock` ou índices de docs.
 
-### 6.3 Fluxo de uma TASK
+### 6.3 Fluxo de uma TASK (obrigatório, nesta ordem)
 
 1. **Worktree**: `cargo xtask repo worktree --agent claude --task <TASK> --slug <slug>`
    (cria a claim atômica local), ou `git worktree add -b task/<TASK>
    .worktrees/claude/<task> develop`. Worktree de outra sessão não se toca
    ([engineering/02-worktrees.md](engineering/02-worktrees.md)).
-2. **Baseline** antes de mexer: `cargo xtask ci docs` (umbrella) ou fmt/clippy/test
-   (módulo).
+2. **Baseline**, pelo checador, antes de mexer: `cargo xtask ci docs` (umbrella) ou
+   fmt/clippy/test (módulo).
 3. **Implementador**: TDD; o vermelho de cada teste novo vai para
    `evidence/PR/<task>/red-proof.txt`.
 4. **Checador**: devolve só passou/falhou e o comando exato. Falhou → implementador.
@@ -348,7 +382,7 @@ O integrador é o **único** que mergeia, e só quando tudo vale, conferido na h
 - `head.sha` igual ao SHA revisado (e o `PUT .../merge` leva `sha=` para garantir);
 - todos os check-runs do SHA com `conclusion = success`, incluindo `CI Gate`;
 - `mergeable_state = clean` (`unknown` é pendente, não falha);
-- revisor sem BLOQUEADO;
+- veredito do subagente revisor, sem BLOQUEADO, sobre o SHA revisado;
 - `merge_method = merge`.
 
 Depois do merge: o integrador confirma `merged = true` e o `merge_commit_sha`; o
@@ -400,6 +434,7 @@ Uma TASK só sai de `PR aberto` para `Entregue` com tudo isto no PR:
 - comandos com resultado (fmt, clippy, test, gates);
 - prova do vermelho (`red-proof.txt`);
 - veredito do revisor e o SHA que ele revisou;
+- registro dos quatro subagentes: quem rodou, sobre qual SHA e com que resultado;
 - CI verde **pelo SHA final**;
 - testes ignorados listados com motivo.
 
@@ -438,6 +473,7 @@ prevalecem sobre a leitura padrão das skills.
 | tag, release, merge em `main`, merge de PR alheio | decisão do mantenedor |
 | merge em `develop` fora do integrador ou de §7.3 | só com CI verde pelo SHA revisado |
 | revisor ou checador editando código | perde o ponto de vista que justifica o papel |
+| sessão principal fazendo o trabalho de um subagente, ou TASK que pulou algum dos quatro | sem revisão independente não há evidência (§6) |
 | loop de `sleep` esperando CI | CI pendente é estado |
 | GraphQL, inclusive via `gh pr …` | instável neste ambiente |
 | alterar visibilidade, proteção ou plano do GitHub | decisão do mantenedor |

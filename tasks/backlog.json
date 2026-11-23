@@ -773,7 +773,7 @@
       "title": "Gerar gabarito visual e estratégia de fontes",
       "phase": "M0",
       "priority": "P0",
-      "status": "planned",
+      "status": "implemented",
       "owner_role": "design",
       "requirements": [
         "REQ-E02-12"
