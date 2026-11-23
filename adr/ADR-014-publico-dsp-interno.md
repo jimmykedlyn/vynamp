@@ -2,7 +2,7 @@
 
 Versão: 0.1.0 · Data: 2026-11-05 · Estado: decisão do mantenedor; especificação normativa de CI e de organização dos repositórios.
 
-Status: aceito pelo mantenedor em 2026-11-05. **Substitui a [ADR-010](../_arquivo/repo/docs/architecture/adr/ADR-010-woodpecker-only-ci.md)** (CI/CD somente pelo Woodpecker) e revisa a linha do `vitrola` na [ADR-011](ADR-011-pilha-propria.md). Orienta [TASK-E19-01](../tasks/items/TASK-E19-01.md) a [TASK-E19-07](../libs/engine/tasks/items/TASK-E19-07.md).
+Status: aceito pelo mantenedor em 2026-11-05. **Substitui a ADR-010 (Woodpecker)** (CI/CD somente pelo Woodpecker) e revisa a linha do `vitrola` na [ADR-011](ADR-011-pilha-propria.md). Orienta [TASK-E19-01](../tasks/items/TASK-E19-01.md) a [TASK-E19-07](../libs/engine/tasks/items/TASK-E19-07.md).
 
 ## Contexto
 
@@ -35,7 +35,7 @@ O passo 34 (D-CI-1 e D-CI-3, PR #45 `438b212`) enxugou o conjunto: o umbrella **
 | `.github/workflows/ci.yml` | `pull_request` → `develop`; `push` em `develop`/`main`; `workflow_dispatch` | jobs `specs`, `tasks`, `tooling` (matriz `ubuntu-22.04`, `macos-15-intel`, `macos-15`), `submodules`, `arch` e o job agregado `gate` |
 | `.github/workflows/quality.yml` | `workflow_dispatch` | qualidade em hardware; permanece desabilitado até existirem runners de hardware |
 
-**`release.yml` não mora mais aqui.** O umbrella não tem binário; um workflow de release neste repositório só existiria para falhar no próprio preflight. O release pertence ao app que publica, e `cargo xtask release` continua no `xtask` como a ferramenta que esse app vai chamar. O arquivo está em `_arquivo/workflows/release.yml`, fora da árvore que o CI lê.
+**`release.yml` não mora mais aqui.** O umbrella não tem binário; um workflow de release neste repositório só existiria para falhar no próprio preflight. O release pertence ao app que publica, e `cargo xtask release` continua no `xtask` como a ferramenta que esse app vai chamar. O arquivo está no histórico Git, fora da árvore que o CI lê.
 
 **"Só quando realmente necessário"** é honrado pela restrição de gatilho: push em branch de feature **não** dispara workflow — o PR já cobre a mudança. Não há cron, não há workflow de branch isolada.
 

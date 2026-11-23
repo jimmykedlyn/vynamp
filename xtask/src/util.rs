@@ -344,7 +344,6 @@ pub fn excluded(name: &str) -> bool {
     matches!(
         name.as_str(),
         ".git"
-            | "_arquivo"
             | ".worktrees"
             | ".superpowers"
             | "target"

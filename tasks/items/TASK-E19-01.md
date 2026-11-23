@@ -28,7 +28,7 @@ ADR-014, workflows ci/release/quality em GitHub Actions com actions fixadas por 
 
 - **Não** publica release. `release.yml` não mora aqui: o umbrella não tem binário, e
   um workflow de release neste repositório só existiria para falhar no próprio
-  preflight. O arquivo está em `_arquivo/workflows/release.yml`, fora da árvore que o
+  preflight. O arquivo está no histórico Git, fora da árvore que o
   CI lê, e o release assinado é `TASK-E15-10`.
 - **Não** usa `macos-latest`. A imagem troca de arquitetura conforme o GitHub
   rotaciona, e um alvo que se move não é alvo fixado: são `macos-15-intel` e
@@ -96,8 +96,8 @@ real, lida do run `42677998586` em `5c0b82a`, tem os oito jobs e `CI Gate`
 `success`.
 
 **AC-3 — o critério perdeu seu objeto, e a remoção foi deliberada.** O
-`release.yml` **não está mais** em `.github/workflows/`: o passo 34 o arquivou em
-`_arquivo/workflows/release.yml` pela decisão **D-CI-3** ("o umbrella não tem
+`release.yml` **não está mais** em `.github/workflows/`: o passo 34 o moveu para
+  fora da árvore de CI pela decisão **D-CI-3** ("o umbrella não tem
 binário; um workflow de release aqui só existiria para falhar no preflight").
 `check-delivery` hoje **reprova** o retorno do arquivo à árvore
 (`github_actions_rejects_release_workflow_in_the_umbrella`) e, ao mesmo tempo,

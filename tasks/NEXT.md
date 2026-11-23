@@ -6,8 +6,7 @@ Versão: 0.10.0 · Data: 2026-11-21 · Estado: retrato congelado; provas M0 de E
 base de backlog do Notion (ver [AGENTS.md](../AGENTS.md) §7); este arquivo não é
 mais regenerado e não decide o que abrir. A tabela abaixo é a primeira onda
 destravada na data em que o status saiu do repositório, preservada como contexto.
-A sequência completa daquela data está em
-[`_arquivo/raiz/ORDER.md`](../_arquivo/raiz/ORDER.md).
+A sequência completa daquela data está no histórico Git.
 
 ## O que estava destravado em 2026-11-21
 

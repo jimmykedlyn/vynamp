@@ -114,7 +114,7 @@ Origem das mudanças (decisões do mantenedor em 2026-11-22):
      pergunte**. Proteção de branch é do mantenedor.
 9. **Tire o `cargo xtask ci docs` do `pre-push`.**
    - Se o hook faz outras coisas, remova só essa chamada.
-   - Se ele só fazia isso, desregistre o hook e mova o arquivo para `_arquivo/`, com o
+   - Se ele só fazia isso, desregistre o hook e mova o arquivo para `.arquivo/`, com o
      motivo no `INDEX.md`. Não apague.
    - Não mexa no `pre-commit` (`xtask guard-branch`).
 10. **Código do `xtask`, se houver** (instalador de hook, checagem do `doctor`, testes que

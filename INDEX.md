@@ -102,7 +102,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Layout Android, tablet e identidade compartilhada](design/05-mobile-tablet.md) — design/05-mobile-tablet.md
 
-- [Claude Code e Superpowers obrigatório](_arquivo/repo/docs/engineering/01-agents-superpowers.md) — _arquivo/repo/docs/engineering/01-agents-superpowers.md
+- [Claude Code e Superpowers obrigatório](engineering/01-agents-superpowers.md) — engineering/01-agents-superpowers.md
 
 - [Worktrees, ownership e recuperação](engineering/02-worktrees.md) — engineering/02-worktrees.md
 
@@ -112,9 +112,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Contrato de testes, evidência e comandos](engineering/05-testes.md) — engineering/05-testes.md
 
-- [Instaladores: formatos, recipes e assinatura](_arquivo/repo/docs/engineering/06-installers.md) — _arquivo/repo/docs/engineering/06-installers.md
-
-- [Guia de desenvolvimento — versão detalhada, fora do projeto](_arquivo/engineering/guia-desenvolvimento.md) — _arquivo/engineering/guia-desenvolvimento.md; reescrita expandida do `engineering/08-reinicio-windows.md` (visão geral numerada, glossário, TASK de módulo em três etapas, problemas comuns). Arquivada em 2026-11-13 a pedido do mantenedor, que não a quer no projeto; o guia canônico é o `08`.
+- [Instaladores: formatos, recipes e assinatura](engineering/06-installers.md) — engineering/06-installers.md
 
 - [Ativação externa e segredos](engineering/07-segredos.md) — engineering/07-segredos.md
 
@@ -124,13 +122,11 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Evidências e relatórios](evidence/README.md) — evidence/README.md
 
-- [Cópia morta do backlog, 2026-11-12 12:36](_arquivo/raiz/bl.tmp.2026-11-12.json) — _arquivo/raiz/bl.tmp.2026-11-12.json; cópia de trabalho do `tasks/backlog.json` anterior às 16 TASKs de `E21`, achada sem rastreamento na raiz. Subconjunto estrito do backlog versionado (199 de 215 TASKs), preservada só como registro; não é fonte de nada.
-
 - [Temas próprios e editor](extensions/01-temas.md) — extensions/01-temas.md
 
 - [Plugins próprios, SDK e isolamento](extensions/02-plugins.md) — extensions/02-plugins.md
 
-- [Visualizações e integrações de sistema](_arquivo/repo/docs/extensions/03-visualizations-integrations.md) — _arquivo/repo/docs/extensions/03-visualizations-integrations.md
+- [Visualizações e integrações de sistema](extensions/03-visualizations-integrations.md) — extensions/03-visualizations-integrations.md
 
 - [Contrato do SDK de extensões](extensions/04-sdk.md) — extensions/04-sdk.md
 
@@ -169,7 +165,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Matriz de validação e release multiplataforma](quality/03-matriz-multiplataforma.md) — quality/03-matriz-multiplataforma.md
 
-- [QA complementar — integração, codecs, DSP e capacidades](_arquivo/repo/docs/quality/04-integration-codecs-dsp.md) — _arquivo/repo/docs/quality/04-integration-codecs-dsp.md
+- [QA complementar — integração, codecs, DSP e capacidades](quality/04-integration-codecs-dsp.md) — quality/04-integration-codecs-dsp.md
 
 - [Modelo de ameaças e controles](security/01-threat-model.md) — security/01-threat-model.md
 
@@ -181,7 +177,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [Plataforma web futura e catálogo](streaming/03-plataforma.md) — streaming/03-plataforma.md
 
-- [Semântica da API da plataforma](_arquivo/repo/docs/streaming/04-api-semantics.md) — _arquivo/repo/docs/streaming/04-api-semantics.md
+- [Semântica da API da plataforma](streaming/04-api-semantics.md) — streaming/04-api-semantics.md
 
 - [Rede, proxy e bindings de streaming](streaming/04-rede-proxy.md) — streaming/04-rede-proxy.md
 
@@ -201,7 +197,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 
 - [STATE — onde o projeto está](STATE.md) — STATE.md; retrato congelado em 2026-11-21, quando o status das TASKs passou para a base do Notion.
 
-- [Ordem de execução das TASKs (arquivada)](_arquivo/raiz/ORDER.md) — _arquivo/raiz/ORDER.md; última saída do `docs-sync`, de 2026-11-21. Arquivada porque a ordem passou a viver nos campos `Depende de`, `Onda` e `Prio` da base do Notion.
+- [Ordem de execução das TASKs (arquivada)](tasks/NEXT.md) — tasks/NEXT.md; última saída do `docs-sync`, de 2026-11-21. Arquivada porque a ordem passou a viver nos campos `Depende de`, `Onda` e `Prio` da base do Notion.
 
 - [Primeira execução recomendada](tasks/NEXT.md) — tasks/NEXT.md; retrato de 2026-11-21.
 

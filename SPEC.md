@@ -50,7 +50,7 @@ Começar por [NEXT](tasks/NEXT.md). Aceitar tarefas apenas com evidência numér
 
 Plataformas são obrigatórias no mesmo release1.0: [matriz](platforms/01-matriz-suporte.md), [host Android](platforms/02-android.md), [design phone/tablet](design/05-mobile-tablet.md) e [QA por alvo](quality/03-matriz-multiplataforma.md). Android UI/serviço proposta usa Kotlin/Compose e núcleoRust; Mac Intel+Silicon exigem execução nativa em ambos.
 
-Preparação de engenharia0.7.0: [estrutura](engineering/08-reinicio-windows.md), [agentes/Superpowers](_arquivo/repo/docs/engineering/01-agents-superpowers.md), [Gitflow](engineering/03-gitflow.md), [CI/CD](engineering/04-ci.md), [testes](engineering/05-testes.md), [instaladores](_arquivo/repo/docs/engineering/06-installers.md). GitHub privado escolhido: jimmykedlyn/vynamp-mediaplayer; acesso remoto ainda não confirmado no ambiente.
+Preparação de engenharia0.7.0: [estrutura](engineering/08-reinicio-windows.md), [agentes/Superpowers](engineering/01-agents-superpowers.md), [Gitflow](engineering/03-gitflow.md), [CI/CD](engineering/04-ci.md), [testes](engineering/05-testes.md), [instaladores](engineering/06-installers.md). GitHub privado escolhido: jimmykedlyn/vynamp-mediaplayer; acesso remoto ainda não confirmado no ambiente.
 
 ## Identidade Vynamp
 
@@ -60,10 +60,8 @@ Nome Vynamp e conceito C — Pulso aprovados. [Guia de marca](design/04-marca.md
 
 [catálogo de 68 bindings](config/format-catalog.json), [ativação/associações](platforms/03-integracao-sistema.md), [ownership](platforms/04-ativacao-ownership.md), [sinal final](reference/audio/07-dsp-signal-contract.md), [visualizers](extensions/05-visualizador.md) e [novos gates](delivery/04-gates.md). São 191 TASK/REQ em 19 épicos; nenhum item de aplicativo está concluído por este pacote.
 
-## Ferramentas de arquivo 0.8
-
 [Vynamp Restore](reference/tools/01-vynamp-restore.md) e [Vynamp Converter](reference/tools/02-vynamp-converter.md) são executáveis desktop separados sobre as mesmas libs do player ([ADR-012](adr/ADR-012-integracao-shell.md) §3, [ADR-013](adr/ADR-013-restore.md)), com épico próprio [E18](tasks/epics/E18.md). O Restore entrega diagnóstico de defeitos, restauração e exportação não destrutiva; o Converter entrega transcodificação em lote sobre a lib própria `vynamp-encode`. Nenhuma das duas foi implementada por este pacote.
 
 ## Bootstrap consolidado 0.7
 
-[Guia de desenvolvimento](engineering/08-reinicio-windows.md): desde 2026-11-11 tudo vive no umbrella D:\Projects\vynamp, com libs/apps/reference como submódulos; o bootstrap 0.7 em D:\Projects\vynamp-media-player foi aposentado e está em _arquivo/media-player. Codecs/áudio/UI e as 191 tarefas permanecem planejados. Não altera o nome do repositório GitHub nem os contratos funcionais.
+[Guia de desenvolvimento](engineering/08-reinicio-windows.md): desde 2026-11-11 tudo vive no umbrella D:\Projects\vynamp, com libs/apps/reference como submódulos; o bootstrap 0.7 em D:\Projects\vynamp-media-player foi aposentado. Codecs/áudio/UI e as 191 tarefas permanecem planejados. Não altera o nome do repositório GitHub nem os contratos funcionais.

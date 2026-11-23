@@ -395,7 +395,7 @@ implementada ou executada.
 ## Unreleased — 2026-11-05 (GitHub Actions, public repositories and governance) / Não lançado — 2026-11-05 (GitHub Actions, repositórios públicos e governança)
 
 **EN** — CI moved back to GitHub Actions ([ADR-014](adr/ADR-014-publico-dsp-interno.md),
-which supersedes [ADR-010](_arquivo/repo/docs/architecture/adr/ADR-010-woodpecker-only-ci.md)):
+which supersedes ADR-010):
 `ci.yml`, `release.yml` and `quality.yml` under `.github/workflows/`, actions
 pinned by full commit SHA, the `gate` job published as `CI Gate`, and the
 Woodpecker server, its Cloudflare tunnel and `infra/ci/` removed from the
@@ -419,7 +419,7 @@ player code.
 
 **PT** — CI voltou para GitHub Actions
 ([ADR-014](adr/ADR-014-publico-dsp-interno.md),
-que substitui a [ADR-010](_arquivo/repo/docs/architecture/adr/ADR-010-woodpecker-only-ci.md)):
+que substitui a ADR-010):
 `ci.yml`, `release.yml` e `quality.yml` em `.github/workflows/`, actions fixadas
 por SHA completo de commit, job `gate` publicado como `CI Gate`, e o servidor
 Woodpecker, seu túnel Cloudflare e `infra/ci/` removidos do repositório. O
@@ -447,7 +447,7 @@ Decisão do mantenedor: os dois arquivos de skin da raiz do projeto (`SKIN-REQUI
 
 ## Não lançado — 2026-11-06 (remoção de planos substituídos)
 
-Dez arquivos de `docs/superpowers/` saem do repositório: `plans/2026-10-14-completeness-audit.md`, `specs/2026-10-14-completeness-audit-design.md`, `plans/2026-10-14-project-tooling.md`, `plans/2026-10-14-rust-tooling.md`, `specs/2026-10-14-rust-tooling-design.md`, `plans/2026-10-14-vynamp-branding.md`, `plans/2026-10-15-windows-restart.md`, `plans/2026-10-18-e15-04-woodpecker.md`, `plans/2026-10-19-e15-04-woodpecker-only-ci.md` e `specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md`. Critério aplicado, e não "arquivo sem uso" em geral: plano ou desenho cuja decisão **já vive** num documento normativo posterior — [ADR-008](adr/ADR-008-marca.md) para a marca, [ADR-009](adr/ADR-009-baseline.md) para o tooling Rust, [ADR-014](adr/ADR-014-publico-dsp-interno.md) para o CI, [08-completeness-audit](_arquivo/repo/docs/product/08-completeness-audit.md) para a auditoria e [09-windows-restart](engineering/08-reinicio-windows.md) para o reinício — e cujo conteúdo nenhum INDEX, backlog ou ROADMAP cita como autoridade. Os seis planos restantes ficam: cada um é citado pela TASK ou pela evidência do PR que o executou ([TASK-E15-01](tasks/items/TASK-E15-01.md), E15-02, E15-03, E11-01, e as evidências dos PRs de shell e Restore). O conteúdo integral continua no histórico Git. `docs/INDEX.md` perde as dez entradas; `check-docs` foi de 356 para 346 arquivos Markdown, com 191 requisitos, 191 tarefas e 19 épicos inalterados. Somente documentação.
+Dez arquivos de `docs/superpowers/` saem do repositório: `plans/2026-10-14-completeness-audit.md`, `specs/2026-10-14-completeness-audit-design.md`, `plans/2026-10-14-project-tooling.md`, `plans/2026-10-14-rust-tooling.md`, `specs/2026-10-14-rust-tooling-design.md`, `plans/2026-10-14-vynamp-branding.md`, `plans/2026-10-15-windows-restart.md`, `plans/2026-10-18-e15-04-woodpecker.md`, `plans/2026-10-19-e15-04-woodpecker-only-ci.md` e `specs/2026-10-18-e15-04-woodpecker-cloudflare-design.md`. Critério aplicado, e não "arquivo sem uso" em geral: plano ou desenho cuja decisão **já vive** num documento normativo posterior — [ADR-008](adr/ADR-008-marca.md) para a marca, [ADR-009](adr/ADR-009-baseline.md) para o tooling Rust, [ADR-014](adr/ADR-014-publico-dsp-interno.md) para o CI, [08-completeness-audit](engineering/08-reinicio-windows.md) para a auditoria e [09-windows-restart](engineering/08-reinicio-windows.md) para o reinício — e cujo conteúdo nenhum INDEX, backlog ou ROADMAP cita como autoridade. Os seis planos restantes ficam: cada um é citado pela TASK ou pela evidência do PR que o executou ([TASK-E15-01](tasks/items/TASK-E15-01.md), E15-02, E15-03, E11-01, e as evidências dos PRs de shell e Restore). O conteúdo integral continua no histórico Git. `docs/INDEX.md` perde as dez entradas; `check-docs` foi de 356 para 346 arquivos Markdown, com 191 requisitos, 191 tarefas e 19 épicos inalterados. Somente documentação.
 
 ## Não lançado — 2026-11-05 (o vitrola é módulo DSP interno, não biblioteca)
 
@@ -1049,8 +1049,8 @@ de player, 191 requisitos, 191 tarefas, 19 épicos.
 carries **16** VU meters, not 12 — every count derived from the old number was
 rewritten. **M6:** Woodpecker is removed in full; CI is GitHub Actions only
 ([ADR-014](adr/ADR-014-publico-dsp-interno.md)),
-and `_arquivo/` is created with `INDEX.md`, which records the reason for every
-file it holds. **M11:** the inherited anchor SHA `29e14e6` is recorded. The
+and the archive directory was created with `INDEX.md`, which records the reason for every
+file it holds (later removed in step 38). **M11:** the inherited anchor SHA `29e14e6` is recorded. The
 `cargo xtask bundle-spec` subcommand is gone: it packaged the five
 `bootstrap/*` templates, all of which are now archived, so the command could
 only fail; its only job was producing the ZIP package this umbrella no longer
@@ -1070,8 +1070,8 @@ player code, 191 requirements, 191 tasks, 19 epics.
 ter **16** VU meters, não 12 — toda contagem derivada do número antigo foi
 reescrita. **M6:** o Woodpecker é removido por inteiro; o CI é só GitHub
 Actions ([ADR-014](adr/ADR-014-publico-dsp-interno.md)),
-e `_arquivo/` é criado com `INDEX.md`, que registra o motivo de cada arquivo
-guardado ali. **M11:** o SHA-âncora herdado `29e14e6` fica registrado. O
+e o diretório de arquivo é criado com `INDEX.md`, que registra o motivo de cada arquivo
+guardado ali (depois removido no passo 38). **M11:** o SHA-âncora herdado `29e14e6` fica registrado. O
 subcomando `cargo xtask bundle-spec` sai: ele empacotava os cinco templates de
 `bootstrap/*`, todos agora arquivados, então o comando só podia falhar; seu
 único serviço era produzir o ZIP que este umbrella deixou de ser.
