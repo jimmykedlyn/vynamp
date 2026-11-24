@@ -137,7 +137,7 @@
       "epic": "E01",
       "title": "Implementar drain, relógio de saída e A/B loop",
       "phase": "M1",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -167,7 +167,7 @@
       "epic": "E01",
       "title": "Implementar gapless sample-accurate",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -196,7 +196,7 @@
       "epic": "E01",
       "title": "AAC-LC + HE-AAC (não anunciado como AAC-LC)",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -229,7 +229,7 @@
       "epic": "E01",
       "title": "Completar codecs desktop e large files",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -258,7 +258,7 @@
       "epic": "E01",
       "title": "Entregar channel mapping e DSD para PCM",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -289,7 +289,7 @@
       "epic": "E01",
       "title": "Endurecer engine e documentação dos limites",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -322,7 +322,7 @@
       "epic": "E01",
       "title": "MP4 demux + ALAC + M4B (capítulos)",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -351,7 +351,7 @@
       "epic": "E01",
       "title": "Ogg demux + Vorbis",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -380,7 +380,7 @@
       "epic": "E01",
       "title": "Opus CELT-only (música fullband)",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -410,7 +410,7 @@
       "epic": "E01",
       "title": "Opus SILK + modo híbrido",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -441,7 +441,7 @@
       "epic": "E01",
       "title": "Implementar mixer PCM e ramp de play/stop",
       "phase": "M1",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -561,7 +561,7 @@
       "epic": "E02",
       "title": "Entregar playlist UI e keyboard workflow",
       "phase": "M1",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "design",
       "requirements": [
@@ -592,7 +592,7 @@
       "epic": "E02",
       "title": "Construir Library Workspace e inspector",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "design",
       "requirements": [
@@ -623,7 +623,7 @@
       "epic": "E02",
       "title": "Entregar Mini, preferências e estados de erro",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "design",
       "requirements": [
@@ -653,7 +653,7 @@
       "epic": "E02",
       "title": "Integrar cadeia de áudio e EQ avançado na UI",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "design",
       "requirements": [
@@ -685,7 +685,7 @@
       "epic": "E02",
       "title": "Entregar docking e persistência multi-monitor",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "design",
       "requirements": [
@@ -715,7 +715,7 @@
       "epic": "E02",
       "title": "Completar localização e testes visuais",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "design",
       "requirements": [
@@ -745,7 +745,7 @@
       "epic": "E02",
       "title": "Validar experiência desktop ponta a ponta",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "design",
       "requirements": [
@@ -1043,7 +1043,7 @@
       "epic": "E03",
       "title": "Implementar leitura de tags e capas segura",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "library",
       "requirements": [
@@ -1073,7 +1073,7 @@
       "epic": "E03",
       "title": "Entregar FTS, filtros e views de biblioteca",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "library",
       "requirements": [
@@ -1102,7 +1102,7 @@
       "epic": "E03",
       "title": "Entregar playlists import/export e CUE",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "library",
       "requirements": [
@@ -1133,7 +1133,7 @@
       "epic": "E03",
       "title": "Implementar smart playlists e templates",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "library",
       "requirements": [
@@ -1163,7 +1163,7 @@
       "epic": "E03",
       "title": "Implementar escrita de tags e capítulos em lote",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "library",
       "requirements": [
@@ -1194,7 +1194,7 @@
       "epic": "E03",
       "title": "Entregar letras, bookmarks e histórico",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "library",
       "requirements": [
@@ -1225,7 +1225,7 @@
       "epic": "E03",
       "title": "Completar recovery, export e large-library gate",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "library",
       "requirements": [
@@ -1351,7 +1351,7 @@
       "epic": "E04",
       "title": "Entregar EQ paramétrico e presets",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -1380,7 +1380,7 @@
       "epic": "E04",
       "title": "Entregar saída exclusiva e device profiles",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -1411,7 +1411,7 @@
       "epic": "E04",
       "title": "Entregar modo transparente e diagnósticos hi-res",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -1442,7 +1442,7 @@
       "epic": "E04",
       "title": "Entregar dynamics, tone e channel controls",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -1471,7 +1471,7 @@
       "epic": "E04",
       "title": "Entregar tempo, pitch e efeitos criativos",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -1502,7 +1502,7 @@
       "epic": "E04",
       "title": "Entregar perfis e headphone preset import",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -1533,7 +1533,7 @@
       "epic": "E04",
       "title": "Validar qualidade numérica e hardware matrix",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "audio",
       "requirements": [
@@ -1658,7 +1658,7 @@
       "epic": "E05",
       "title": "Entregar buffers, cache e downloads",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "streaming",
       "requirements": [
@@ -1687,7 +1687,7 @@
       "epic": "E05",
       "title": "Entregar feeds e episódios de podcasts",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "streaming",
       "requirements": [
@@ -1717,7 +1717,7 @@
       "epic": "E05",
       "title": "Entregar HLS sob demanda",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "streaming",
       "requirements": [
@@ -1747,7 +1747,7 @@
       "epic": "E05",
       "title": "Entregar HLS live, ABR e timeshift",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "streaming",
       "requirements": [
@@ -1776,7 +1776,7 @@
       "epic": "E05",
       "title": "Entregar gravação de rádios",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "streaming",
       "requirements": [
@@ -1806,7 +1806,7 @@
       "epic": "E05",
       "title": "Endurecer rede e diagnóstico de streaming",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "streaming",
       "requirements": [
@@ -1959,7 +1959,7 @@
       "epic": "E06",
       "title": "Produzir três temas originais",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "extensions",
       "requirements": [
@@ -1989,7 +1989,7 @@
       "epic": "E06",
       "title": "Entregar meters e espectro",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "extensions",
       "requirements": [
@@ -2019,7 +2019,7 @@
       "epic": "E06",
       "title": "Entregar visualizações avançadas",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "extensions",
       "requirements": [
@@ -2048,7 +2048,7 @@
       "epic": "E06",
       "title": "Entregar editor e preview de temas",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "extensions",
       "requirements": [
@@ -2079,7 +2079,7 @@
       "epic": "E06",
       "title": "Entregar galeria local e recovery visual",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "extensions",
       "requirements": [
@@ -2259,7 +2259,7 @@
       "epic": "E07",
       "title": "Implementar lifecycle e circuit breaker",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "extensions",
       "requirements": [
@@ -2288,7 +2288,7 @@
       "epic": "E07",
       "title": "Implementar helper nativo isolado",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "extensions",
       "requirements": [
@@ -2318,7 +2318,7 @@
       "epic": "E07",
       "title": "Entregar templates e plugins de exemplo",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "extensions",
       "requirements": [
@@ -2348,7 +2348,7 @@
       "epic": "E07",
       "title": "Entregar gerenciador de plugins",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "extensions",
       "requirements": [
@@ -2380,7 +2380,7 @@
       "epic": "E07",
       "title": "Entregar documentação e harness do SDK",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "extensions",
       "requirements": [
@@ -2441,7 +2441,7 @@
       "epic": "E07",
       "title": "Auditar isolamento das extensões",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "extensions",
       "requirements": [
@@ -2625,7 +2625,7 @@
       "epic": "E08",
       "title": "Integrar controles do Windows",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "library",
       "requirements": [
@@ -3211,7 +3211,7 @@
       "epic": "E10",
       "title": "Fuzz parsers, pacotes e RPC",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "quality",
       "requirements": [
@@ -3273,7 +3273,7 @@
       "epic": "E10",
       "title": "Instrumentar e medir performance",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "quality",
       "requirements": [
@@ -3305,7 +3305,7 @@
       "epic": "E10",
       "title": "Executar soak e matriz de hardware",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "quality",
       "requirements": [
@@ -3339,7 +3339,7 @@
       "epic": "E10",
       "title": "Validar upgrades, recovery e privacidade",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "quality",
       "requirements": [
@@ -3372,7 +3372,7 @@
       "epic": "E10",
       "title": "Fechar gates e cobertura desktop",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "quality",
       "requirements": [
@@ -3506,7 +3506,7 @@
       "epic": "E11",
       "title": "Completar CI e supply chain",
       "phase": "M1",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "delivery",
       "requirements": [
@@ -3539,7 +3539,7 @@
       "epic": "E11",
       "title": "Implementar config, logs e keychain",
       "phase": "M2",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "delivery",
       "requirements": [
@@ -3570,7 +3570,7 @@
       "epic": "E11",
       "title": "Implementar updater assinado",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "delivery",
       "requirements": [
@@ -3600,7 +3600,7 @@
       "epic": "E11",
       "title": "Entregar distribuição nativa por plataforma",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "delivery",
       "requirements": [
@@ -3632,7 +3632,7 @@
       "epic": "E11",
       "title": "Preparar documentação de lançamento",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "delivery",
       "requirements": [
@@ -3664,7 +3664,7 @@
       "epic": "E11",
       "title": "Preparar stable 1.0 e rollout beta",
       "phase": "M3",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "delivery",
       "requirements": [
@@ -3819,7 +3819,7 @@
       "epic": "E12",
       "title": "Entregar DSD nativo/DoP e PCM 768 kHz",
       "phase": "M5",
-      "priority": "P2",
+      "priority": "P1",
       "status": "planned",
       "owner_role": "expansion",
       "requirements": [
@@ -3851,7 +3851,7 @@
       "epic": "E12",
       "title": "Entregar trackers, MIDI e codecs raros",
       "phase": "M5",
-      "priority": "P2",
+      "priority": "P1",
       "status": "planned",
       "owner_role": "expansion",
       "requirements": [
@@ -6241,7 +6241,7 @@
       "epic": "E20",
       "title": "Entregar acesso a arquivos e biblioteca sob sandbox",
       "phase": "F6",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "android-library",
       "requirements": [
@@ -6273,7 +6273,7 @@
       "epic": "E20",
       "title": "Adaptar DSP e equalização ao layout e ao orçamento iOS",
       "phase": "F6",
-      "priority": "P1",
+      "priority": "P0",
       "status": "planned",
       "owner_role": "android",
       "requirements": [
