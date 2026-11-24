@@ -387,7 +387,8 @@
         "REQ-E01-13"
       ],
       "dependencies": [
-        "TASK-E01-04"
+        "TASK-E01-04",
+        "TASK-E01-12"
       ],
       "spec": "libs/decode/specs/decode.md",
       "module": "vynamp-decode",
@@ -417,6 +418,7 @@
       ],
       "dependencies": [
         "TASK-E01-04",
+        "TASK-E01-12",
         "TASK-E01-13"
       ],
       "spec": "libs/decode/specs/decode.md",
@@ -424,7 +426,7 @@
       "repo": "vynamp-decode",
       "acceptance_ready": true,
       "deliverable": "Adapter Opus SILK e modo híbrido em Ogg.",
-      "acceptance": "SNR >= 80 dB contra a referência (tolerância explícita, menor que CELT pelo codec); `frames()` devolve a contagem bruta do manifesto; seek para o frame da metade cai no slice esperado",
+      "acceptance": "todo pacote do arquivo SILK-only tem config de TOC entre 0 e 11 e todo pacote do arquivo híbrido tem config de TOC entre 12 e 15; SNR >= 80 dB contra a referência (tolerância explícita, menor que CELT pelo codec); `frames()` devolve a contagem bruta do manifesto; seek para o frame da metade cai no slice esperado",
       "qa": [
         "QA-015"
       ],
