@@ -14,6 +14,16 @@ afirmar o que existe.
 
 ---
 
+## Regras inegociáveis (sempre obedecidas)
+
+- **Branch de TASK:** `task/<TASK-ID>` (ou `chore/claude-<slug>` sem TASK)
+- **Fluxo obrigatório:** implementador → checador → revisor → integrador (ordem §6.3)
+- **Merge em develop:** só pelo integrador, com CI verde pelo SHA revisado (§5.4)
+- **Commit único por passo lógico:** Conventional Commits (§0, §10)
+- **Subagentes obrigatórios:** §6.1 e §6.2 — sem exceção por tamanho/urgência
+
+---
+
 ## 0. Idioma, precedência e quem dá ordem
 
 **Idioma.** Português brasileiro em toda comunicação, documentação, spec, ADR, corpo de PR
@@ -285,8 +295,8 @@ tipo de TASK, e decidir que "dessa vez não precisa" não é papel da sessão pr
 
 | Agente | Onde vive | Modelo | Effort | Edita código | Mergeia |
 |---|---|---|---|---|---|
-| orquestrador | sessão principal | `claude-fable-5-2` | medium | não | não |
-| implementador | `.claude/agents/implementador.md` | `claude-fable-5-2` | high | sim | não |
+| orquestrador | sessão principal | `claude-opus-5-5` | medium | não | não |
+| implementador | `.claude/agents/implementador.md` | `claude-opus-5-5` | high | sim | não |
 | checador | `.claude/agents/checador.md` | `claude-sonnet-5-5` | medium | não | não |
 | revisor | `.claude/agents/revisor.md` | `claude-sonnet-5-5` | high | não | não |
 | integrador | `.claude/agents/integrador.md` | `claude-sonnet-5-5` | medium | não | sim, só `develop` |
