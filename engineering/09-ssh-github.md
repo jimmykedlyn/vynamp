@@ -36,15 +36,17 @@ A chave antiga não é apagada; vai para uma pasta de arquivo com o motivo:
 $arq = "$HOME\.ssh\arquivo-AAAA-MM-DD"
 New-Item -ItemType Directory -Force $arq | Out-Null
 Move-Item $HOME\.ssh\id_ed25519, $HOME\.ssh\id_ed25519.pub $arq
-Set-Content "$arq\INDEX.md" 'id_ed25519: passphrase perdida; substituida em AAAA-MM-DD.'
+Set-Content "$arq\INDEX.md" 'id_ed25519: passphrase perdida; substituída em AAAA-MM-DD.'
 ```
 
 Gerar a nova com o `ssh-keygen` do OpenSSH do Windows. A passphrase é digitada por quem
 usa a máquina, nunca passada em argumento:
 
 ```powershell
-C:\Windows\System32\OpenSSH\ssh-keygen.exe -t ed25519 -a 100 -C <usuario>@github-AAAA-MM-DD -f $HOME\.ssh\id_ed25519
+C:\Windows\System32\OpenSSH\ssh-keygen.exe -t ed25519 -a 100 -C usuario@github-AAAA-MM-DD -f $HOME\.ssh\id_ed25519
 ```
+
+Trocar `usuario`, `maquina`, `AAAA-MM-DD` e o id `123456` (abaixo) pelos valores reais.
 
 ## 3. Cadastrar no GitHub
 
@@ -53,7 +55,7 @@ dispositivo):
 
 ```powershell
 gh auth refresh -h github.com -s admin:public_key
-gh ssh-key add $HOME\.ssh\id_ed25519.pub --title "<maquina>-AAAA-MM-DD" --type authentication
+gh ssh-key add $HOME\.ssh\id_ed25519.pub --title "maquina-AAAA-MM-DD" --type authentication
 gh ssh-key list
 ```
 
@@ -64,21 +66,29 @@ Remover a chave antiga da conta só depois de confirmar que é ela (comparar o m
 
 ```powershell
 gh ssh-key list
-gh ssh-key delete <id> --yes
+gh ssh-key delete 123456 --yes
 ```
 
 ## 4. Host do GitHub no `known_hosts`
 
 Conferir as chaves do servidor contra as que o GitHub publica na API antes de gravá-las
-(evita aceitar às cegas o primeiro servidor que responder):
+(evita aceitar às cegas o primeiro servidor que responder). Rodar no **Git Bash**, onde
+`/tmp` e `~` existem; o `~` precisa ser a mesma pasta que `$env:USERPROFILE`, que é onde
+o `ssh.exe` do Windows procura o `known_hosts`:
 
 ```sh
+cp ~/.ssh/known_hosts ~/.ssh/known_hosts.bak-$(date +%F) 2>/dev/null || true
 gh api meta --jq '.ssh_keys[]' | sort > /tmp/gh_meta.txt
 ssh-keyscan -t ed25519,ecdsa,rsa github.com 2>/dev/null | grep -v '^#' | cut -d' ' -f2- | sort > /tmp/gh_scan.txt
-diff /tmp/gh_meta.txt /tmp/gh_scan.txt && sed 's/^/github.com /' /tmp/gh_meta.txt >> ~/.ssh/known_hosts
+diff /tmp/gh_meta.txt /tmp/gh_scan.txt && {
+  [ -s ~/.ssh/known_hosts ] && [ -n "$(tail -c1 ~/.ssh/known_hosts)" ] && echo
+  sed 's/^/github.com /' /tmp/gh_meta.txt
+} >> ~/.ssh/known_hosts
 ```
 
-Fazer backup do `known_hosts` antes. Se o `diff` mostrar diferença, parar: não gravar.
+O `cp` guarda o backup; o `echo` evita colar a primeira linha nova na última quando o
+arquivo não termina em quebra de linha. Se o `diff` mostrar diferença, parar: nada é
+gravado.
 
 ## 5. Agente
 
@@ -107,7 +117,7 @@ Efeito colateral: vale para todo host SSH que o `git` usar, não só o GitHub.
 
 ## 6. Trocar os remotes para SSH
 
-No umbrella, nos submódulos e na URL local de cada submódulo. O `.gitmodules` não muda:
+No umbrella, nos submódulos e na URL local de cada submódulo. O `.gitmodules` não muda. Rodar no **Git Bash**:
 
 ```sh
 cd /d/Projects/vynamp
@@ -119,7 +129,9 @@ done
 ```
 
 As worktrees compartilham o `origin` do umbrella. Outros clones (fora de
-`D:\Projects\vynamp`) precisam da mesma troca no próprio remote.
+`D:\Projects\vynamp`) precisam da mesma troca no próprio remote. Submódulo ainda não inicializado, ou que
+passar por `git submodule sync`, volta à URL HTTPS do `.gitmodules`; isso é esperado e
+funciona pelo `gh` como credencial. Para voltar a SSH, repetir o bloco acima.
 
 ## 7. Conferir
 
