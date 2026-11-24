@@ -84,6 +84,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [ADR-020 — ciclo de vida da TASK](adr/ADR-020-ciclo-de-vida-da-task.md) — adr/ADR-020-ciclo-de-vida-da-task.md
 - [ADR-021 — `cargo xtask ci docs` sai do `pre-push`](adr/ADR-021-ci-docs-fora-do-pre-push.md) — adr/ADR-021-ci-docs-fora-do-pre-push.md
 - [ADR-022 — API GraphQL do GitHub liberada](adr/ADR-022-graphql-liberado.md) — adr/ADR-022-graphql-liberado.md
+- [ADR-023 — andamento das TASKs em GitHub Issues e Projects](adr/ADR-023-andamento-no-github.md) — adr/ADR-023-andamento-no-github.md
 - [Engine de áudio e invariantes](reference/audio/01-engine.md) — reference/audio/01-engine.md
 
 - [Matriz de formatos, codecs e tags](reference/audio/02-formats.md) — reference/audio/02-formats.md
@@ -133,7 +134,6 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [Ativação externa e segredos](engineering/07-segredos.md) — engineering/07-segredos.md
 
 - [Guia de desenvolvimento — passo a passo](engineering/08-reinicio-windows.md) — engineering/08-reinicio-windows.md
-- [Base TASKs no Notion](engineering/09-notion.md) — engineering/09-notion.md
 - [Estado de transição](engineering/10-estado-transicao.md) — engineering/10-estado-transicao.md
 
 - [Evidências e relatórios](evidence/README.md) — evidence/README.md
@@ -486,3 +486,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [libs — submodulos de audio (vazio ate o passo 35)](libs/LEIA-ME.md) — libs/LEIA-ME.md
 - [apps — submodulos de aplicacao (vazio ate o passo 35)](apps/LEIA-ME.md) — apps/LEIA-ME.md
 - [reference — referencia read-only, fora do build](reference/LEIA-ME.md) — reference/LEIA-ME.md
+
+# Arquivado (`_arquivo/`)
+
+- `_arquivo/09-notion.md` — guia da base TASKs do Notion; arquivado em 2026-11-24 porque o andamento passou para GitHub Issues + Project ([ADR-023](adr/ADR-023-andamento-no-github.md)).

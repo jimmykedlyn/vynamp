@@ -3,6 +3,10 @@
 Retrato datado. Este arquivo é o lugar de "como está hoje"; o `AGENTS.md` só guarda regra.
 Cada item tem um critério de saída: cumprido, o item sai daqui.
 
+**Desde 2026-11-24 o andamento está no GitHub** ([ADR-023](../adr/ADR-023-andamento-no-github.md)).
+As seções 1–3 retratam a base do Notion antes da migração; as saídas marcadas "Notion"
+viram ajuste no Project durante a migração (seção 6).
+
 **Conferido em 2026-11-22**, lendo a base TASKs do Notion (pelo MCP) e os 21 índices de
 épico (`E01.md`…`E21.md`).
 
@@ -103,7 +107,7 @@ Pendências da mesma análise:
   tabela.
 - **Workspace do Cargo do umbrella tem só `xtask`.**
 - **`xtask repo worktree` e `check-tasks` validam contra o `backlog.json`, e a claim é
-  local.** Saída: o `xtask` passa a gravar ou consultar `Responsável` no Notion (exige ADR).
+  local.** Saída: o `xtask` passa a gravar ou consultar `Responsável` no Project do GitHub (exige ADR).
 
 ## 5. Perguntas abertas para o mantenedor
 
@@ -118,3 +122,18 @@ Pendências da mesma análise:
    essas TASKs são de spec, QA, gate ou CI, e não código de produto parado no repo errado.
 3. **`TASK-E11-02`**: entregue ou não (item 3 acima)?
 4. **Conversor e restore entram na 1.0?** Decide o que fazer com as 38 TASKs da seção 3.
+
+## 6. Migração Notion → GitHub (ADR-023)
+
+- **Escopo `project` no token.** O Project (v2) exige `gh auth refresh -s project` pelo
+  mantenedor. Saída: `gh auth status` mostra o escopo.
+- **Issues e Project não existem ainda.** O script `tools/migrar-tasks-github.py` gera o
+  plano (`--dry-run`, padrão) e só cria com `--apply`, depois do "pode criar" do mantenedor.
+  É idempotente: Issue cujo título já começa com o id da TASK não é recriada. Saída: uma
+  Issue por TASK `planned`, todas no Project, com `Estado` e `Onda` preenchidos.
+- **Onda sem export do Notion.** Sem export, o script calcula a Onda pela faixa do marco e
+  pela profundidade das dependências; as 18 TASKs ajustadas à mão em 2026-11-22 podem
+  divergir. Saída: mantenedor confere a visão por onda no Project.
+- **`apps/player/tasks/README.md` ainda cita o Notion.** É de outro repo (app); vira
+  ajuste no `vynamp-player`. Saída: PR no player trocando a frase pelo Project.
+- **Base TASKs do Notion congelada.** Não é mais lida nem escrita; fica como histórico.

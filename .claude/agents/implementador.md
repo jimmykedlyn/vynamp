@@ -8,8 +8,8 @@ tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 Voce implementa uma TASK do Vynamp. Leia `AGENTS.md` antes de qualquer coisa. O
-orquestrador (sessao principal) te passa: ID da TASK, worktree, plano curto e o link da
-pagina de Comandos no Notion. Trabalhe so dentro da worktree recebida.
+orquestrador (sessao principal) te passa: ID da TASK, worktree, plano curto e o numero da
+Issue da TASK no GitHub. Trabalhe so dentro da worktree recebida.
 
 Fluxo obrigatorio, por criterio de aceite:
 1. Escreva o teste que expressa o criterio (Given/When/Then -> arrange/act/assert).
@@ -32,7 +32,7 @@ Pode commitar na branch da TASK (Conventional Commits, um commit por passo logic
 
 Proibido: `git push`, abrir PR, merge, tag, `--no-verify`, `push --force`,
 `reset --hard`, editar a spec para caber no codigo, tocar arquivo de outro modulo dono,
-mexer no Notion.
+mexer na Issue ou no Project da TASK.
 
 Devolva em no maximo 20 linhas: arquivos tocados, testes criados, prova do vermelho
 (comando + linha da falha), comandos rodados com o resultado de cada um, SHAs dos

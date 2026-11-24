@@ -51,7 +51,8 @@ Os scripts em `libs\decode\tools\fixtures\` leem `$env:FFMPEG` ou `-FFmpeg`.
 
 ## 3. Escolher a TASK
 
-1. A base do Notion diz qual abrir e tem o status oficial (AGENTS.md §7);
+1. O Project "Vynamp — TASKs" do GitHub diz qual abrir e tem o andamento oficial
+   (AGENTS.md §8);
    `tasksacklog.json` guarda a spec da TASK.
 2. Ler a TASK. As do umbrella ficam em `tasks\items\`; as de módulo ficam no
    submódulo (ex.: `libs\decode\tasks\items\TASK-E01-01.md`).
