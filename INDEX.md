@@ -134,6 +134,9 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [Ativação externa e segredos](engineering/07-segredos.md) — engineering/07-segredos.md
 
 - [Guia de desenvolvimento — passo a passo](engineering/08-reinicio-windows.md) — engineering/08-reinicio-windows.md
+
+- [Git por SSH no Windows, sem pedir senha](engineering/09-ssh-github.md) — engineering/09-ssh-github.md
+
 - [Estado de transição](engineering/10-estado-transicao.md) — engineering/10-estado-transicao.md
 
 - [Evidências e relatórios](evidence/README.md) — evidence/README.md
