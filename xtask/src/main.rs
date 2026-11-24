@@ -9,6 +9,7 @@ mod release;
 mod repo;
 mod secrets;
 mod signing;
+mod tasks_github;
 mod util;
 mod validate;
 use anyhow::{Context, Result};
@@ -77,6 +78,19 @@ enum Action {
     CheckDelivery,
     #[command(name = "check-tasks")]
     CheckTasks,
+    /// Migra o andamento das TASKs para GitHub Issues + Project (ADR-023).
+    #[command(name = "migrate-tasks")]
+    MigrateTasks {
+        /// Cria de fato no GitHub (padrão: só grava o plano).
+        #[arg(long)]
+        apply: bool,
+        /// CSV exportado do Notion com colunas TASK e Onda.
+        #[arg(long)]
+        waves: Option<PathBuf>,
+        /// Onde gravar o plano (padrão: target/migracao-tasks-plano.json).
+        #[arg(long)]
+        plan: Option<PathBuf>,
+    },
     #[command(name = "check-authoring")]
     CheckAuthoring,
     #[command(name = "guard-branch")]
@@ -200,6 +214,9 @@ fn execute() -> Result<()> {
         Action::CheckDocs => validate::spec(&root),
         Action::CheckDelivery => validate::delivery(&root),
         Action::CheckTasks => validate::tasks(&root),
+        Action::MigrateTasks { apply, waves, plan } => {
+            tasks_github::run(&root, apply, waves.as_deref(), plan.as_deref())
+        }
         Action::CheckAuthoring => authoring::check(&root),
         Action::GuardBranch => repo::guard(&root),
         Action::GithubImport { destination, push } => github::import(&root, &destination, push),

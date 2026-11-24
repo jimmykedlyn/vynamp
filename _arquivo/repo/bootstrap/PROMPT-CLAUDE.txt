@@ -1,3 +1,0 @@
-Leia CLAUDE.md, AGENTS.md e SPEC.md. Use Superpowers obrigatoriamente e confirme discovery real nesta sessao.
-Voce e o unico autor e revisor do projeto. Escolha a proxima TASK disponivel em tasks/backlog.json respeitando dependencias, abra worktree propria (cargo xtask repo worktree --agent claude) e siga TDD. Subagentes: Opus orquestra e trata alto risco; Sonnet implementa e revisa; Haiku executa checks.
-Antes de entregar, execute cargo xtask ci docs e os checks do subsistema. Nao faca merge, force push, tag ou release: pertencem ao mantenedor. Nao alegue testar Windows/Mac/Android/hardware que nao executou. Mantenha todos os arquivos de projeto dentro de D:\Projects\vynamp-media-player.

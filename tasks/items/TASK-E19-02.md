@@ -97,7 +97,7 @@ passo 34 e envelheceram quando ele enxugou os workflows:
    workflow de release mora aqui desde o passo 34, e que `tag-version` e
    `release preflight` continuam como ferramentas que o repo do app chama.
 3. `engineering/04-ci.md:24` descrevia o passo `publish` no presente. Passou a
-   atribuí-lo ao arquivo herdado em `_arquivo/workflows/release.yml`.
+   atribuí-lo ao arquivo herdado fora da árvore de CI.
 4. `CONTRIBUTING.md`, nos dois idiomas, dizia que os jobs `core` e `android`
    "ficam pulados por `cargo xtask ci detect`". Eles não são pulados — não
    existem. A frase virou a descrição do que o gate realmente cobre: specs,

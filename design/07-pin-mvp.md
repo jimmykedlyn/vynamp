@@ -1,6 +1,6 @@
 # Referência do MVP web para a UI nativa
 
-Versão: 0.8.0 · Data: 2026-11-03 · Estado: referência atual rev.38 em `vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452`; TASK-E02-11 integrada (PR #23, feita sobre a rev.37, histórico); TASK-E02-12..16 planejadas e apontadas para a rev.38.
+Versão: 0.8.0 · Data: 2026-11-22 · Estado: referência atual rev.38 em `vynamp-mvp-reference@0d9860b901510021bcca4c31a25014373ea7c452`; TASK-E02-11 integrada (PR #23, rev.37 histórica); TASK-E02-12 reservada; TASK-E02-13..16 planejadas e apontadas para a rev.38.
 
 Base: [visual](01-sistema-visual.md), [layouts](02-layouts.md), [marca](04-marca.md), [painel DSP](06-painel-dsp.md), [estratégia de QA](../quality/01-estrategia-testes.md) (QA-034).
 
@@ -40,7 +40,7 @@ Nenhum arquivo do MVP fica neste repositório. O pacote é gerado e mantido em `
 | `out/themes/themes.json` | 12 temas (chaves `generator`, `themes`, `unsetVars`): tokens de origem, todas as custom properties `--*` resolvidas, `colorScheme`, raio, medidor padrão, estilos de `body` e atributos de `<html>`; `unsetVars` lista as variáveis referenciadas que `:root` não define, com fallback do código e origem (CSS de elemento ou script), cujo valor por estado vem do dump de TASK-E02-12 | TASK-E02-02 (loader de temas) |
 | `out/svg/icons/` | 91 ícones standalone (grade 24×24, traço 1,5, `currentColor`), 9 aliases, 4 ícones CSS, `icons.json` e `usage.json` (uso por tela) | TASK-E02-02, E02-03 |
 | `out/svg/meters/<16 diretórios>/` e `out/svg/meters/dynamic.json` | 16 medidores: SVG fonte, metadados (tipo, canais, escala dB/ângulo, pivôs, temas que o citam, selecionável) e atributos dinâmicos. Na rev.38 os 16 são selecionáveis e montados | TASK-E02-07, E02-13 |
-| `out/svg/rendered/` | Cada SVG distinto que a UI desenha, serializado standalone com estilos computados embutidos, e o índice de estados onde aparece; inclui `click-failures.json` | TASK-E02-12, E02-16 |
+| `out/svg/rendered/` | Cada SVG distinto que a UI desenha, serializado standalone com estilos computados embutidos, e o índice de estados onde aparece; inclui `click-failures.json` (3 cliques que estouraram timeout) | TASK-E02-12, E02-16 |
 | `out/check/report.json` (`out/check/diff/` e `out/check/resvg/` são saídas locais do svgcheck, não versionadas) | Comparação resvg × Chrome de cada SVG (substitui o antigo `svg-check.json`) | QA-034 |
 
 A reextração é verificada por `npm run verify`, que extrai de novo para um diretório temporário e compara byte a byte com `out/` (rev.38: 499 arquivos, 0 diferem); cliques que expiram ficam em `out/svg/rendered/click-failures.json`, para que uma diferença de cobertura apareça na comparação.
@@ -89,7 +89,7 @@ Evidência histórica (rev.37): [evidência TASK-E02-11](../evidence/PR/task-e02
 
 ## 6. Fontes
 
-A pilha do MVP é `Inter, system-ui, "Segoe UI", Arial, sans-serif`. No Windows de referência, Inter não está instalada e o texto cai em Segoe UI. Os medidores usam Georgia e Arial/Helvetica; trechos técnicos usam Consolas. As fontes Microsoft não podem ser redistribuídas. TASK-E02-12 captura a fonte efetiva de cada nó e decide, com licença registrada, a fonte do sistema ou a substituta métrica compatível por plataforma.
+A pilha do MVP é `Inter, system-ui, "Segoe UI", Arial, sans-serif`. No Windows de referência, Inter não está instalada e o texto cai em Segoe UI. Os medidores usam Georgia e Arial/Helvetica; trechos técnicos usam Consolas. As fontes Microsoft não podem ser redistribuídas. TASK-E02-12 captura a fonte efetiva de cada nó e decide, com licença registrada, a fonte do sistema ou a substituta métrica compatível por plataforma. O mapping formal (Seção 2.4) suporta essa decisão na UI nativa.
 
 ## 7. Exceções de navegador
 

@@ -73,7 +73,7 @@ static PATTERNS: LazyLock<Vec<Pattern>> = LazyLock::new(|| {
 /// forbids. Add one only after reading the blob, with the maintainer's OK.
 const REVIEWED_BLOBS: &[(&str, &str)] = &[(
     "b846c5d8bcaf45cc1fb347d9879ec4529007ecc1",
-    "_arquivo/media-player/STATE.md:104 narrates the PEM header that once \
+    "media-player/STATE.md:104 narrates the PEM header that once \
      sat in a test; prose, no key material (umbrella PR #49, approved by the \
      maintainer 2026-11-11)",
 )];

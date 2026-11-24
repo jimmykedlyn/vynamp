@@ -59,7 +59,7 @@ Repositório independente, Cargo workspace mínimo, toolchain pin, ADRs e CI ini
 | Item | Comando / fixture | Evidência esperada |
 |---|---|---|
 | Teste automatizado | `cargo test` no repo `vynamp` | verde no CI Gate |
-| Oráculo independente | `git grep -In -i -E "winamp|nullsoft"` na árvore rastreada, fora de `_arquivo/` | 0 arquivos e nenhum asset binário Winamp — a varredura é a evidência, não a ausência de reclamação |
+| Oráculo independente | `git grep -In -i -E "winamp|nullsoft"` na árvore rastreada | 0 arquivos e nenhum asset binário Winamp — a varredura é a evidência, não a ausência de reclamação |
 | Hardware | nenhum: bootstrap de repositório e workspace não tocam dispositivo de áudio | ausência é limitação registrada, não aprovação |
 
 ## DoD — pronto para review
@@ -79,7 +79,7 @@ evidência dizia continua no arquivo; o que segue foi medido agora.
 
 | AC | Verificação executada | Resultado |
 |---|---|---|
-| AC-1 | `git grep -In -i -E "winamp|nullsoft"` na árvore rastreada (fora de `_arquivo/`) | 0 arquivos; nenhum asset binário Winamp |
+| AC-1 | `git grep -In -i -E "winamp|nullsoft"` na árvore rastreada | 0 arquivos; nenhum asset binário Winamp |
 | AC-2 | `cargo build --workspace --locked` | `Finished dev profile … in 10.41s`, exit 0 |
 | AC-3 | `cargo xtask check-docs` | `"result": "passed"`, 193 TASKs, `spec_version 0.7.0` |
 | AC-4 | `libs/decode/tools/fixtures/generate.ps1:14` | raiz resolvida por `Split-Path -Parent (Split-Path -Parent $PSScriptRoot)`; saídas em `tests/fixtures/{pcm,flac,mpeg}` |

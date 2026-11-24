@@ -574,11 +574,10 @@ fn check_permissions(c: &mut Checks, at: &str, perms: &Value) {
 }
 /// CI runs on GitHub Actions (ADR-014). Every action is pinned by full commit
 /// SHA and the aggregate gate fails closed on any non-success dependency.
-///
 /// The umbrella is not an application: it validates the specification, the
 /// tooling and the architecture rules, and builds no desktop or Android
 /// target (D-CI-1). It also carries no release workflow, because it builds no
-/// binary to release (D-CI-3) -- that assertion lives in `archived_release`.
+/// binary to release (D-CI-3) -- that assertion was in `archived_release` (archive removed in step 38).
 fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
     c.check(
         !root.join(".woodpecker").exists(),
@@ -901,30 +900,10 @@ fn github_actions(root: &Path, c: &mut Checks) -> Result<usize> {
     Ok(flows.len())
 }
 
-/// The umbrella publishes no binary, so its `release.yml` was archived in
-/// `_arquivo/workflows/` (D-CI-3). That archive is the source the application
-/// repos inherit, so it keeps being validated: a release must start only from
-/// a `v*` tag and must stay fail-closed before publishing. Absent is valid --
-/// the archive is scratch that step 38 removes.
-fn archived_release(root: &Path, c: &mut Checks) -> Result<()> {
-    let path = root.join("_arquivo/workflows/release.yml");
-    if !path.is_file() {
-        return Ok(());
-    }
-    let v: Value = serde_yaml::from_str(&text(&path)?)?;
-    c.check(
-        triggers(&v) == BTreeSet::from(["push".to_owned()])
-            && strings(&v["on"]["push"]["tags"]) == BTreeSet::from(["v*".to_owned()]),
-        "Archived release workflow must trigger only on push of tags v*",
-    );
-    c.check(
-        v.to_string().contains("release preflight"),
-        "Archived release workflow must run release preflight",
-    );
-    c.check(
-        v.to_string().contains("exit 1"),
-        "Archived release workflow must keep a fail-closed publish step (exit 1)",
-    );
+/// The umbrella publishes no binary, so its `release.yml` was moved to
+/// outside the CI tree (D-CI-3). That archive was the source the application
+/// repos inherit. It was removed in step 38; nothing to validate now.
+fn archived_release(_root: &Path, _c: &mut Checks) -> Result<()> {
     Ok(())
 }
 const AGENT_MODELS: [&str; 3] = ["opus", "sonnet", "haiku"];
@@ -1055,7 +1034,7 @@ pub fn delivery(root: &Path) -> Result<()> {
     // a binary has nothing to install. D-CI-2 of step 34 removed the installer, branding
     // and packaging checks from this gate. packaging/ and assets/branding/ still exist
     // here on purpose: they are the source the app repos inherit, not this repo's own
-    // release inputs. The three reference PNGs, however, are in _arquivo/ and the manifest
+    // release inputs. The three reference PNGs are in assets/branding/ and the manifest
     // is checked against them there (branding::references).
     let mut c = Checks::default();
     c.check(read_json(root.join(".claude/settings.json"))?["enabledPlugins"]["superpowers@claude-plugins-official"]==true,"Claude plugin not enabled");
@@ -2421,33 +2400,13 @@ jobs:
         assert!(e.iter().any(|e| e.contains("CI Gate")), "{e:?}");
     }
     #[test]
-    fn archived_release_workflow_stays_valid_for_the_app_to_copy() {
-        // D-CI-3 moved release.yml to `_arquivo/workflows/`, where it is the
-        // source the app repos inherit. The rules did not disappear with it:
-        // a mangled archive would poison every app that copies from it.
+    fn archived_release_workflow_is_now_absent_and_gate_is_noop() {
+        // The archive directory was removed in step 38; the gate keeps its
+        // signature so callers stay untouched, and it accepts any tree.
         let tmp = tempfile::tempdir().unwrap();
-        let dir = tmp.path().join("_arquivo/workflows");
-        std::fs::create_dir_all(&dir).unwrap();
-        std::fs::write(
-            dir.join("release.yml"),
-            "name: Release
-on:
-  push:
-    branches: [develop]
-jobs:
-  publish:
-    runs-on: ubuntu-22.04
-    steps:
-      - run: |
-          echo 'publishing'
-",
-        )
-        .unwrap();
         let mut c = Checks::default();
         archived_release(tmp.path(), &mut c).unwrap();
-        let e = c.errors;
-        assert!(e.iter().any(|e| e.contains("tags v*")), "{e:?}");
-        assert!(e.iter().any(|e| e.contains("fail-closed")), "{e:?}");
+        assert!(c.errors.is_empty(), "{:?}", c.errors);
     }
     #[test]
     fn archived_release_is_optional() {

@@ -1,8 +1,7 @@
 # Guia de desenvolvimento — passo a passo
 
 Versão 0.8.0 · 2026-11-11 · Substitui o antigo "Reinício Windows" (bootstrap 0.7 em
-`D:\Projects\vynamp-media-player`, pasta apagada em 2026-11-11; histórico em
-`_arquivo/media-player/`). O nome do arquivo ficou para não quebrar links.
+`D:\Projects\vynamp-media-player`, pasta apagada em 2026-11-11; histórico no Git). O nome do arquivo ficou para não quebrar links.
 
 ## 1. Pasta
 
@@ -14,7 +13,6 @@ Tudo acontece em **`D:\Projects\vynamp`** (o umbrella). Não existe outra raiz.
 | `libs\decode`, `libs\output`, `libs\dsp`, `libs\encode`, `libs\engine` | bibliotecas (submódulos) | repo do módulo (`vynamp-decode`, …) |
 | `apps\player`, `apps\converter`, `apps\restore` | aplicativos (submódulos) | repo do app (`vynamp-player`, …) |
 | `reference\vynamp-mvp` | MVP web de referência, **read-only** | nenhum |
-| `_arquivo\` | histórico (STATE.md, fases, media-player) | só para registrar |
 
 ## 2. Preparar (uma vez por máquina, ou depois de um clone novo)
 
@@ -53,7 +51,8 @@ Os scripts em `libs\decode\tools\fixtures\` leem `$env:FFMPEG` ou `-FFmpeg`.
 
 ## 3. Escolher a TASK
 
-1. A base do Notion diz qual abrir e tem o status oficial (AGENTS.md §7);
+1. O Project "Vynamp — TASKs" do GitHub diz qual abrir e tem o andamento oficial
+   (AGENTS.md §8);
    `tasksacklog.json` guarda a spec da TASK.
 2. Ler a TASK. As do umbrella ficam em `tasks\items\`; as de módulo ficam no
    submódulo (ex.: `libs\decode\tasks\items\TASK-E01-01.md`).
@@ -127,5 +126,5 @@ git submodule update --init --recursive
 ```
 
 Verificar o PR real (estado, base, merge commit) antes de seguir. Registrar o que
-mudou em `_arquivo\media-player\STATE.md` quando for decisão de projeto. Nunca usar
+mudou em `STATE.md` quando for decisão de projeto. Nunca usar
 `git reset --hard`, `git clean -fdx`, `--no-verify` ou force push.

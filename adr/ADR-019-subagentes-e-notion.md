@@ -36,7 +36,7 @@ pode ter `Given`/`When` em `PENDENTE`; qualquer outra não). Quem leva uma TASK 
 `planned` atualiza esse campo no mesmo PR.
 
 `cargo xtask docs-sync` sai. `STATE.md` e `tasks/NEXT.md` viram retrato congelado;
-`tasks/ORDER.md` vai para `_arquivo/raiz/`.
+`tasks/ORDER.md` vira retrato congelado ao lado de `tasks/NEXT.md`.
 
 ### 2. Papéis e modelos
 

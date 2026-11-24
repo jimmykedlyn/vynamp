@@ -773,7 +773,7 @@
       "title": "Gerar gabarito visual e estratégia de fontes",
       "phase": "M0",
       "priority": "P0",
-      "status": "planned",
+      "status": "implemented",
       "owner_role": "design",
       "requirements": [
         "REQ-E02-12"
@@ -4533,7 +4533,7 @@
         "REQ-E15-01"
       ],
       "dependencies": [],
-      "spec": "_arquivo/repo/docs/engineering/01-agents-superpowers.md",
+      "spec": "engineering/01-agents-superpowers.md",
       "module": "vynamp",
       "repo": "vynamp",
       "acceptance_ready": true,
@@ -4685,7 +4685,7 @@
         "TASK-E01-10",
         "TASK-E11-04"
       ],
-      "spec": "_arquivo/repo/docs/engineering/06-installers.md",
+      "spec": "engineering/06-installers.md",
       "module": "vynamp",
       "repo": "vynamp",
       "acceptance_ready": true,
@@ -4716,7 +4716,7 @@
         "TASK-E12-01",
         "TASK-E11-04"
       ],
-      "spec": "_arquivo/repo/docs/engineering/06-installers.md",
+      "spec": "engineering/06-installers.md",
       "module": "vynamp",
       "repo": "vynamp",
       "acceptance_ready": true,
@@ -4748,7 +4748,7 @@
         "TASK-E12-02",
         "TASK-E11-04"
       ],
-      "spec": "_arquivo/repo/docs/engineering/06-installers.md",
+      "spec": "engineering/06-installers.md",
       "module": "vynamp",
       "repo": "vynamp",
       "acceptance_ready": true,
@@ -4780,7 +4780,7 @@
         "TASK-E13-09",
         "TASK-E11-04"
       ],
-      "spec": "_arquivo/repo/docs/engineering/06-installers.md",
+      "spec": "engineering/06-installers.md",
       "module": "vynamp",
       "repo": "vynamp",
       "acceptance_ready": true,

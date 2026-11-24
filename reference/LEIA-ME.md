@@ -9,6 +9,6 @@ Referencia read-only, fora do workspace e do build.
 dominio do umbrella: viram spec de `libs/*` e `apps/*` quando cada repositorio
 de modulo for criado, e o arquivo correspondente sai daqui naquele passo. Ate
 la ficam aqui porque 247 links vivos de `architecture/`, `product/`, `quality/`
-e `tasks/` apontam para eles, e `_arquivo/` nao pode receber link.
+e `tasks/` apontam para eles, e o diretório de arquivo nao pode receber link.
 
 Nunca editar. Se a referencia divergir da spec, a spec registra a divergencia e o motivo.
