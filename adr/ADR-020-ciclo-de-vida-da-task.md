@@ -1,6 +1,9 @@
 # ADR-020 — Ciclo de vida da TASK no Notion
 
-- **Status:** Proposta
+- **Status:** Aceita em 2026-11-24, emendada pela
+  [ADR-023](ADR-023-andamento-no-github.md), que prevalece onde as duas divergem: o
+  ciclo de vida e os campos valem, mas são gravados na Issue da TASK no Project do GitHub,
+  não no Notion.
 - **Data:** 2026-11-22
 - **Emenda:** ADR-019 (trecho "não há propriedade Status; o andamento são as três caixas")
 - **Decisor:** jimmykedlyn

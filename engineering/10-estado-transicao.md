@@ -140,6 +140,4 @@ Pendências da mesma análise:
   `Responsável`: TASK `Entregue`/`Integrada` sai sem `SHA revisado`, e PR aberto ou
   branch sem PR sai `Bloqueada` com `Motivo`. Exceção aceita só para o que a migração
   criou. Saída: mantenedor decide cada `Bloqueada` da migração.
-- **ADR-020 está `Proposta`.** O §5 e a ADR-023 a tratam como vigente. Saída: mantenedor
-  aceita a ADR-020 (e decide a numeração repetida com `ADR-020-teste-de-mutacao-no-ci`).
 - **Base TASKs do Notion congelada.** Não é mais lida nem escrita; fica como histórico.
