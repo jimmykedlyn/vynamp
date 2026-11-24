@@ -4,8 +4,8 @@ Retrato datado. Este arquivo é o lugar de "como está hoje"; o `AGENTS.md` só 
 Cada item tem um critério de saída: cumprido, o item sai daqui.
 
 **Desde 2026-11-24 o andamento está no GitHub** ([ADR-023](../adr/ADR-023-andamento-no-github.md)).
-As seções 1–3 retratam a base do Notion antes da migração; as saídas marcadas "Notion"
-viram ajuste no Project durante a migração (seção 6).
+As seções 1–3 retratam a base do Notion antes da migração. Os itens marcados "Notion" na
+seção 2 são resolvidos pela migração, que deriva o estado do GitHub (seção 6).
 
 **Conferido em 2026-11-22**, lendo a base TASKs do Notion (pelo MCP) e os 21 índices de
 épico (`E01.md`…`E21.md`).
@@ -36,11 +36,8 @@ Distribuição por módulo (épicos): `vynamp-player` 98, `vynamp` 57, `vynamp-d
 | 3 | Notion × backlog | `TASK-E11-02` (`vynamp`, M0) está `implemented` no backlog e pendente no Notion | decidir qual está certo; corrigir o outro |
 | 4 | backlog | as 6 entregues continuam `planned` | some com a ADR-020 (status deixa de ser andamento) |
 | 5 | Notion | não se sabe se as 5 entregues de lib já têm repin no umbrella | rodar o "Conferir" de cada uma; marcar `Integrada` ou abrir o repin |
-| 6 | Notion | visão "A fazer" ordena por **Fase** antes de Prio | trocar para Prio ↑, TASK ↑ dentro da onda |
 | 7 | backlog | se o `backlog.json` guarda a Onda, ele ainda tem a Onda antiga das 18 TASKs movidas (seção 3) | atualizar no mesmo PR de spec |
-| 8 | Notion | `Ordem` não acompanha `Onda` (Onda 01 vai de 3 a 204) | documentado como legado; não usar para decidir |
-| 9 | Notion | páginas de Comandos mandam "conferir dependências no backlog" | trocar pelo modelo de `engineering/notion.md` |
-| 10 | Épicos | a coluna "Estado" mostra `planned` para TASK já entregue | tirar a coluna dos índices, ou gerá-la a partir do Notion |
+| 10 | Épicos | a coluna "Estado" mostra `planned` para TASK já entregue | tirar a coluna dos índices, ou gerá-la a partir do Project |
 
 (No item 5 são cinco TASKs de lib: `E01-03`, `E01-05` em engine; `E01-07` em decode;
 `E04-05` em output; `E21-01` em encode. A `E02-01` é do player, que não tem repin.)
@@ -127,13 +124,22 @@ Pendências da mesma análise:
 
 - **Escopo `project` no token.** O Project (v2) exige `gh auth refresh -s project` pelo
   mantenedor. Saída: `gh auth status` mostra o escopo.
-- **Issues e Project não existem ainda.** O script `tools/migrar-tasks-github.py` gera o
-  plano (`--dry-run`, padrão) e só cria com `--apply`, depois do "pode criar" do mantenedor.
-  É idempotente: Issue cujo título já começa com o id da TASK não é recriada. Saída: uma
+- **Issues e Project não existem ainda.** O script `tools/migrar-tasks-github.py` sem
+  argumentos só gera o plano (`target/migracao-tasks-plano.json`) e só cria com `--apply`, depois do "pode criar" do mantenedor.
+  É idempotente: Issue cujo título já começa com o id da TASK não é recriada, e campo já
+  preenchido no Project não é regravado (prova: `python -I tools/test_migrar_tasks_github.py`). Saída: uma
   Issue por TASK `planned`, todas no Project, com `Estado` e `Onda` preenchidos.
 - **Onda sem export do Notion.** Sem export, o script calcula a Onda pela faixa do marco e
   pela profundidade das dependências; as 18 TASKs ajustadas à mão em 2026-11-22 podem
   divergir. Saída: mantenedor confere a visão por onda no Project.
-- **`apps/player/tasks/README.md` ainda cita o Notion.** É de outro repo (app); vira
-  ajuste no `vynamp-player`. Saída: PR no player trocando a frase pelo Project.
+- **READMEs de módulo ainda citam o Notion.** `apps/player/tasks/README.md`,
+  `libs/decode/tasks/README.md` e `libs/engine/tasks/README.md` dizem que o status vive na
+  base do Notion. São de outros repos. Saída: PR em cada um trocando a frase pelo Project
+  (e repin das libs).
+- **Rastreio incompleto nas TASKs migradas.** A migração não conhece `SHA revisado` nem
+  `Responsável`: TASK `Entregue`/`Integrada` sai sem `SHA revisado`, e PR aberto ou
+  branch sem PR sai `Bloqueada` com `Motivo`. Exceção aceita só para o que a migração
+  criou. Saída: mantenedor decide cada `Bloqueada` da migração.
+- **ADR-020 está `Proposta`.** O §5 e a ADR-023 a tratam como vigente. Saída: mantenedor
+  aceita a ADR-020 (e decide a numeração repetida com `ADR-020-teste-de-mutacao-no-ci`).
 - **Base TASKs do Notion congelada.** Não é mais lida nem escrita; fica como histórico.

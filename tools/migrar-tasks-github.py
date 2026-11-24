@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Migra o andamento das TASKs para GitHub Issues + Project (v2), conforme a ADR-023.
 
-Padrão é --dry-run: lê o backlog e o GitHub, grava o plano em JSON e não cria nada.
+Sem --apply: lê o backlog e o GitHub, grava o plano em JSON e não escreve no GitHub.
 --apply cria rótulos, Project, campos, Issues e valores. É idempotente: Issue cujo
-título já começa com o id da TASK é reaproveitada, campo e rótulo existentes também.
+título já começa com o id da TASK é reaproveitada, rótulo e campo existentes também, e
+campo do item que já tem valor no Project não é regravado (o andamento posterior à
+migração sobrevive a uma segunda rodada).
 
 A credencial vem do `gh auth login` (keyring) ou de GH_TOKEN já exportado; o script
 nunca recebe nem imprime token. --apply exige o escopo `project`.
@@ -80,6 +82,10 @@ def calcular_ondas(tasks: dict[str, dict]) -> dict[str, int]:
         ini, fim = FAIXAS[t["phase"]]
         deps = [d for d in t.get("dependencies", []) if d in tasks and tasks[d]["status"] == "planned"]
         valor = max([ini] + [onda(d, pilha + (tid,)) + 1 for d in deps])
+        if valor > fim:
+            print(f"aviso: {tid} precisaria da onda {valor}, acima do teto {fim} da fase "
+                  f"{t['phase']}; fica em {fim}, junto de dependência. Ajustar no Project.",
+                  file=sys.stderr)
         ondas[tid] = min(valor, fim)
         return ondas[tid]
 
@@ -157,9 +163,10 @@ def estado_de(t: dict, gh_info: dict | None) -> dict:
         campos["PR"] = gh_info["pr"]
         campos["Merge commit"] = gh_info["merge_commit"]
     elif rank == 1:
-        campos["Estado"] = "PR aberto"
+        # PR aberto exige SHA revisado, que a migração não conhece.
+        campos["Estado"] = "Bloqueada"
         campos["PR"] = gh_info["pr"]
-        campos["Motivo"] = "migração: SHA revisado desconhecido; conferir antes do merge"
+        campos["Motivo"] = "migração: PR aberto sem SHA revisado registrado; mantenedor decide"
     elif rank == 0:
         campos["Estado"] = "Bloqueada"
         campos["PR"] = gh_info["pr"]
@@ -241,13 +248,22 @@ def campos_do_project(pid: str) -> dict:
 
 
 def issues_existentes() -> dict[str, dict]:
-    todas = rest_all(f"repos/{OWNER}/{UMBRELLA}/issues?state=all&labels=task&per_page=100")
+    # Sem filtro de rótulo: a Issue é achada pelo título mesmo se o rótulo sumiu.
+    todas = rest_all(f"repos/{OWNER}/{UMBRELLA}/issues?state=all&per_page=100")
     out = {}
     for i in todas:
         m = re.match(r"(TASK-[A-Z0-9]+-\d{2})\b", i["title"])
         if m and "pull_request" not in i:
             out[m.group(1)] = i
     return out
+
+
+def campos_preenchidos(item: str) -> set[str]:
+    d = gql("""query($i:ID!){node(id:$i){... on ProjectV2Item{fieldValues(first:50){nodes{
+        ... on ProjectV2ItemFieldTextValue{field{... on ProjectV2FieldCommon{name}}}
+        ... on ProjectV2ItemFieldNumberValue{field{... on ProjectV2FieldCommon{name}}}
+        ... on ProjectV2ItemFieldSingleSelectValue{field{... on ProjectV2FieldCommon{name}}}}}}}}""", i=item)
+    return {v["field"]["name"] for v in d["node"]["fieldValues"]["nodes"] if v and v.get("field")}
 
 
 def aplicar(plano: list[dict]) -> None:
@@ -259,11 +275,15 @@ def aplicar(plano: list[dict]) -> None:
         if not issue:
             issue = gh(["api", "-X", "POST", f"repos/{OWNER}/{UMBRELLA}/issues"],
                        {"title": p["titulo"], "body": p["corpo"], "labels": p["rotulos"]})
+        # addProjectV2ItemById devolve o item existente se a Issue já está no Project.
         item = gql("""mutation($p:ID!,$c:ID!){addProjectV2ItemById(input:{projectId:$p,contentId:$c}){item{id}}}""",
                    p=pid, c=issue["node_id"])["addProjectV2ItemById"]["item"]["id"]
+        preenchidos = campos_preenchidos(item)
+        escreveu_estado = False
         for nome, valor in p["campos"].items():
-            if valor in (None, ""):
+            if valor in (None, "") or nome in preenchidos:
                 continue
+            escreveu_estado |= nome == "Estado"
             campo = campos[nome]
             if nome == "Estado":
                 opcao = next(o["id"] for o in campo["options"] if o["name"] == valor)
@@ -275,7 +295,7 @@ def aplicar(plano: list[dict]) -> None:
             gql("""mutation($p:ID!,$i:ID!,$f:ID!,$v:ProjectV2FieldValue!){updateProjectV2ItemFieldValue(
                 input:{projectId:$p,itemId:$i,fieldId:$f,value:$v}){clientMutationId}}""",
                 p=pid, i=item, f=campo["id"], v=v)
-        if p["fechar"] and issue["state"] == "open":
+        if p["fechar"] and escreveu_estado and issue["state"] == "open":
             gh(["api", "-X", "PATCH", f"repos/{OWNER}/{UMBRELLA}/issues/{issue['number']}"],
                {"state": "closed", "state_reason": "completed"})
         print(f"{p['id']}: #{issue['number']} {p['campos']['Estado']}")
@@ -283,6 +303,7 @@ def aplicar(plano: list[dict]) -> None:
 
 def main() -> int:
     sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--apply", action="store_true", help="cria de fato (padrão: só o plano)")
     ap.add_argument("--ondas", type=Path, help="CSV exportado do Notion com colunas TASK e Onda")

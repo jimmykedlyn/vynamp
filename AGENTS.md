@@ -379,6 +379,9 @@ Regido pela [ADR-023](adr/ADR-023-andamento-no-github.md). Cada TASK `planned` t
 escreve no Project e nas Issues de TASK; subagente recebe dele o que precisa. Leitura e
 escrita por `gh issue …` e `gh api graphql` (ADR-022); o token precisa do escopo `project`.
 
+**Até a migração ser aplicada** ([engineering/10-estado-transicao.md](engineering/10-estado-transicao.md)
+§6), não há fonte de andamento: o orquestrador não reserva TASK nova.
+
 ### 8.1 Propriedades
 
 | Propriedade | Uso |
