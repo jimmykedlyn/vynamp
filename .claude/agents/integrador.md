@@ -30,7 +30,7 @@ veredito do revisor e o arquivo com o corpo do PR.
    Entao: `gh pr merge <n> --merge --match-head-commit <SHA>`.
 6. Verifique: `state=MERGED`, base `develop`, merge commit com dois pais.
 
-REST apenas (`gh api`); GraphQL e instavel neste ambiente. Credencial vem do
+REST ou GraphQL (`gh api`, `gh pr`, `gh api graphql`), conforme ADR-022. Credencial vem do
 `gh auth login` do mantenedor (ou `GH_TOKEN` ja exportado); nunca imprima token.
 
 Proibido: editar arquivo, `push --force`, `--no-verify`, `reset --hard`, apagar branch,
