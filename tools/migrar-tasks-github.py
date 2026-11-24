@@ -279,11 +279,14 @@ def aplicar(plano: list[dict]) -> None:
         item = gql("""mutation($p:ID!,$c:ID!){addProjectV2ItemById(input:{projectId:$p,contentId:$c}){item{id}}}""",
                    p=pid, c=issue["node_id"])["addProjectV2ItemById"]["item"]["id"]
         preenchidos = campos_preenchidos(item)
-        escreveu_estado = False
+        # Fecha antes de gravar o Estado: se cair entre os dois, a próxima rodada ainda vê o
+        # Estado vazio e termina. Estado já gravado = andamento posterior; Issue reaberta fica.
+        if p["fechar"] and "Estado" not in preenchidos and issue["state"] == "open":
+            gh(["api", "-X", "PATCH", f"repos/{OWNER}/{UMBRELLA}/issues/{issue['number']}"],
+               {"state": "closed", "state_reason": "completed"})
         for nome, valor in p["campos"].items():
             if valor in (None, "") or nome in preenchidos:
                 continue
-            escreveu_estado |= nome == "Estado"
             campo = campos[nome]
             if nome == "Estado":
                 opcao = next(o["id"] for o in campo["options"] if o["name"] == valor)
@@ -295,9 +298,6 @@ def aplicar(plano: list[dict]) -> None:
             gql("""mutation($p:ID!,$i:ID!,$f:ID!,$v:ProjectV2FieldValue!){updateProjectV2ItemFieldValue(
                 input:{projectId:$p,itemId:$i,fieldId:$f,value:$v}){clientMutationId}}""",
                 p=pid, i=item, f=campo["id"], v=v)
-        if p["fechar"] and escreveu_estado and issue["state"] == "open":
-            gh(["api", "-X", "PATCH", f"repos/{OWNER}/{UMBRELLA}/issues/{issue['number']}"],
-               {"state": "closed", "state_reason": "completed"})
         print(f"{p['id']}: #{issue['number']} {p['campos']['Estado']}")
 
 

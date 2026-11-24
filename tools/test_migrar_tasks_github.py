@@ -19,7 +19,8 @@ spec.loader.exec_module(migrar)
 
 
 class GitHubFalso:
-    def __init__(self, falhar_na_issue: int | None = None):
+    def __init__(self, falhar_na_issue: int | None = None, falhar_no_fechamento: bool = False):
+        self.falhar_no_fechamento = falhar_no_fechamento
         self.ids = itertools.count(1)
         self.labels: set[str] = set()
         self.issues: list[dict] = []
@@ -48,6 +49,8 @@ class GitHubFalso:
             self.issues.append(issue)
             return issue
         if args[:3] == ["api", "-X", "PATCH"]:
+            if self.falhar_no_fechamento:
+                raise RuntimeError("falha simulada no fechamento")
             num = int(args[3].rsplit("/", 1)[1])
             next(i for i in self.issues if i["number"] == num)["state"] = body["state"]
             return {}
@@ -138,6 +141,16 @@ class AplicarIdempotente(unittest.TestCase):
         self.assertEqual(sorted(i["title"][:11] for i in f.issues),
                          ["TASK-E01-01", "TASK-E01-02", "TASK-E01-03"])
         self.assertEqual(f.estado("TASK-E01-03")["Estado"], "ORascunho")
+
+    def test_queda_no_fechamento_termina_na_seguinte(self):
+        f = GitHubFalso(falhar_no_fechamento=True)
+        with self.assertRaises(RuntimeError):
+            self.rodar(f)
+        f.falhar_no_fechamento = False
+        self.rodar(f)
+        integrada = next(i for i in f.issues if i["title"].startswith("TASK-E01-02"))
+        self.assertEqual(integrada["state"], "closed")
+        self.assertEqual(f.estado("TASK-E01-02")["Estado"], "OIntegrada")
 
 
 if __name__ == "__main__":
