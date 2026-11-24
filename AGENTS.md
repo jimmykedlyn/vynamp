@@ -374,9 +374,10 @@ registrada** — não edição de contrato.
 
 ### API do GitHub
 
-REST apenas. **GraphQL é instável neste ambiente** e não é usado para nada — PR,
-comentário, review, label e arquivo, tudo por REST (`gh api --method PATCH` para
-editar). Nunca passar token como argumento de `gh`: a credencial vem do
+REST e GraphQL são permitidos ([ADR-022](adr/ADR-022-graphql-liberado.md)): `gh pr …`,
+`gh issue …`, `gh api` e `gh api graphql`. Cada operação usa a API que a faz melhor;
+GitHub Projects (v2) só existe em GraphQL. Falha de API é registrada com o erro real,
+sem retry às cegas. Nunca passar token como argumento de `gh`: a credencial vem do
 `gh auth login` do mantenedor, guardada no keyring, ou de `GH_TOKEN` já exportado no
 ambiente da sessão. O valor nunca aparece em comando, log, PR ou evidência.
 
