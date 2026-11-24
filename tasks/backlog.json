@@ -6,7 +6,7 @@
   "source": "backlog.json anterior, 191 tarefas, com module/repo/acceptance_ready acrescentados; FASE 6 (iOS) acrescentada em 2026-11-10, 6 tarefas",
   "note": "Fonte unica de status. O Markdown em tasks/items nao carrega estado confiavel: os campos vem daqui.",
   "counts": {
-    "implemented": 20,
+    "implemented": 21,
     "planned": 199
   },
   "tasks": [
@@ -135,7 +135,7 @@
     {
       "id": "TASK-E01-05",
       "epic": "E01",
-      "title": "Implementar mixer, drain e transições básicas",
+      "title": "Implementar drain, relógio de saída e A/B loop",
       "phase": "M1",
       "priority": "P1",
       "status": "planned",
@@ -150,8 +150,8 @@
       "module": "vynamp-engine",
       "repo": "vynamp-engine",
       "acceptance_ready": true,
-      "deliverable": "Mixer PCM, EOF drain, ramp play/stop e relógio de saída.",
-      "acceptance": "Fim não corta frames; pause/stop não deixam áudio antigo em próximo play; volumes default não amplificam. A/B usa ticks/frames válidos sem drift e encerra ao trocar fonte.",
+      "deliverable": "EOF drain, relógio de saída (`presented`) e A/B loop.",
+      "acceptance": "Fim não corta frames; pause/stop não deixam áudio antigo em próximo play. A/B usa ticks/frames válidos sem drift e encerra ao trocar fonte.",
       "qa": [
         "QA-001",
         "QA-002"
@@ -427,6 +427,36 @@
       "acceptance": "SNR >= 80 dB contra a referência (tolerância explícita, menor que CELT pelo codec); `frames()` devolve a contagem bruta do manifesto; seek para o frame da metade cai no slice esperado",
       "qa": [
         "QA-015"
+      ],
+      "estimate_days": {
+        "min": 2,
+        "max": 5
+      },
+      "risk": "médio"
+    },
+    {
+      "id": "TASK-E01-15",
+      "epic": "E01",
+      "title": "Implementar mixer PCM e ramp de play/stop",
+      "phase": "M1",
+      "priority": "P1",
+      "status": "planned",
+      "owner_role": "audio",
+      "requirements": [
+        "REQ-E01-15"
+      ],
+      "dependencies": [
+        "TASK-E01-05"
+      ],
+      "spec": "reference/audio/01-engine.md",
+      "module": "vynamp-engine",
+      "repo": "vynamp-engine",
+      "acceptance_ready": true,
+      "deliverable": "Mixer PCM que soma streams e ramp de play/stop sem clique.",
+      "acceptance": "Volumes default não amplificam; play e stop aplicam ramp sem clique audível.",
+      "qa": [
+        "QA-001",
+        "QA-002"
       ],
       "estimate_days": {
         "min": 2,
@@ -1233,7 +1263,8 @@
         "REQ-E04-01"
       ],
       "dependencies": [
-        "TASK-E01-05"
+        "TASK-E01-05",
+        "TASK-E01-15"
       ],
       "spec": "reference/audio/04-outputs-hires.md",
       "module": "vynamp-engine",
