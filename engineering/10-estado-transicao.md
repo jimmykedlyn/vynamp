@@ -124,12 +124,12 @@ Pendências da mesma análise:
 
 - **Escopo `project` no token.** O Project (v2) exige `gh auth refresh -s project` pelo
   mantenedor. Saída: `gh auth status` mostra o escopo.
-- **Issues e Project não existem ainda.** O script `tools/migrar-tasks-github.py` sem
-  argumentos só gera o plano (`target/migracao-tasks-plano.json`) e só cria com `--apply`, depois do "pode criar" do mantenedor.
+- **Issues e Project não existem ainda.** `cargo xtask migrate-tasks` sem
+  `--apply` só gera o plano (`target/migracao-tasks-plano.json`) e só cria com `--apply`, depois do "pode criar" do mantenedor.
   É idempotente: Issue cujo título já começa com o id da TASK não é recriada, e campo já
-  preenchido no Project não é regravado (prova: `python -I tools/test_migrar_tasks_github.py`). Saída: uma
+  preenchido no Project não é regravado (prova: `cargo test --manifest-path xtask/Cargo.toml tasks_github`). Saída: uma
   Issue por TASK `planned`, todas no Project, com `Estado` e `Onda` preenchidos.
-- **Onda sem export do Notion.** Sem export, o script calcula a Onda pela faixa do marco e
+- **Onda sem export do Notion.** Sem export (`--waves export.csv`), o comando calcula a Onda pela faixa do marco e
   pela profundidade das dependências; as 18 TASKs ajustadas à mão em 2026-11-22 podem
   divergir. Saída: mantenedor confere a visão por onda no Project.
 - **READMEs de módulo ainda citam o Notion.** `apps/player/tasks/README.md`,
