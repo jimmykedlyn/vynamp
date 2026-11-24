@@ -182,10 +182,11 @@ pub fn compute_waves(tasks: &BTreeMap<String, Value>) -> Result<BTreeMap<String,
     Ok(memo)
 }
 
-/// Uma linha de CSV com campos entre aspas (aspas dobradas escapam aspas).
-fn csv_fields(line: &str) -> Vec<String> {
-    let (mut out, mut cur, mut quoted) = (Vec::new(), String::new(), false);
-    let mut chars = line.chars().peekable();
+/// Registros de CSV com campos entre aspas (aspas dobradas escapam aspas; quebra de
+/// linha dentro de aspas pertence ao campo, como no export do Notion).
+fn csv_records(text: &str) -> Vec<Vec<String>> {
+    let (mut rows, mut row, mut cur, mut quoted) = (Vec::new(), Vec::new(), String::new(), false);
+    let mut chars = text.chars().peekable();
     while let Some(c) = chars.next() {
         match (c, quoted) {
             ('"', true) if chars.peek() == Some(&'"') => {
@@ -193,33 +194,44 @@ fn csv_fields(line: &str) -> Vec<String> {
                 chars.next();
             }
             ('"', _) => quoted = !quoted,
-            (',', false) => out.push(std::mem::take(&mut cur)),
+            (',', false) => row.push(std::mem::take(&mut cur)),
+            ('\r', false) => {}
+            ('\n', false) => {
+                row.push(std::mem::take(&mut cur));
+                rows.push(std::mem::take(&mut row));
+            }
             _ => cur.push(c),
         }
     }
-    out.push(cur);
-    out
+    if !cur.is_empty() || !row.is_empty() {
+        row.push(cur);
+        rows.push(row);
+    }
+    rows
 }
 
-/// Export da base do Notion: colunas `TASK` e `Onda` ("Onda 07" ou "7").
+/// Export da base do Notion: colunas `TASK` e `Onda` ("Onda 07" ou "7"). Onda vazia é
+/// ignorada; Onda preenchida sem número é erro.
 pub fn read_waves_csv(text: &str) -> Result<BTreeMap<String, u32>> {
-    let mut lines = text.trim_start_matches('\u{feff}').lines();
-    let header = csv_fields(lines.next().context("CSV vazio")?);
+    let mut rows = csv_records(text.trim_start_matches('\u{feff}')).into_iter();
+    let header = rows.next().context("CSV vazio")?;
     let col = |n: &str| header.iter().position(|h| h.trim() == n);
     let (ti, oi) = (
         col("TASK").context("CSV sem coluna TASK")?,
         col("Onda").context("CSV sem coluna Onda")?,
     );
     let mut out = BTreeMap::new();
-    for line in lines.filter(|l| !l.trim().is_empty()) {
-        let f = csv_fields(line);
-        let digits: String = f
-            .get(oi)
-            .map(|o| o.chars().filter(char::is_ascii_digit).collect())
-            .unwrap_or_default();
-        if let (Some(t), Ok(n)) = (f.get(ti), digits.parse()) {
-            out.insert(t.trim().to_owned(), n);
+    for f in rows.filter(|r| r.iter().any(|c| !c.trim().is_empty())) {
+        let wave = f.get(oi).map(|o| o.trim()).unwrap_or_default();
+        if wave.is_empty() {
+            continue;
         }
+        let task = f.get(ti).map(|t| t.trim()).unwrap_or_default();
+        let digits: String = wave.chars().filter(char::is_ascii_digit).collect();
+        let n = digits
+            .parse()
+            .with_context(|| format!("Onda sem número para {task}: {wave:?}"))?;
+        out.insert(task.to_owned(), n);
     }
     Ok(out)
 }
@@ -671,6 +683,8 @@ mod tests {
         items: BTreeMap<String, (String, BTreeMap<String, Value>)>,
         fail_on_issue: Option<usize>,
         fail_on_close: bool,
+        /// Respostas de `GET` por caminho.
+        gets: BTreeMap<String, Value>,
     }
 
     impl Fake {
@@ -727,6 +741,7 @@ mod tests {
                     i["state"] = b["state"].clone();
                     Ok(Value::Null)
                 }
+                "GET" if self.gets.contains_key(path) => Ok(self.gets[path].clone()),
                 _ => bail!("chamada inesperada: {method} {path}"),
             }
         }
@@ -915,10 +930,65 @@ mod tests {
     #[test]
     fn waves_csv_accepts_notion_export() {
         let w = read_waves_csv(
-            "\u{feff}Nome,TASK,Onda\n\"x, y\",TASK-E01-01,Onda 07\nz,TASK-E01-02,\n",
+            "\u{feff}Nome,TASK,Onda\r\n\"x,\ny\",TASK-E01-01,Onda 07\r\nz,TASK-E01-02,\r\n",
         )
         .unwrap();
         assert_eq!(w.len(), 1);
         assert_eq!(w["TASK-E01-01"], 7);
+    }
+
+    #[test]
+    fn waves_csv_without_number_fails() {
+        let e = read_waves_csv("TASK,Onda\nTASK-E01-01,sem\n").unwrap_err();
+        assert!(e.to_string().contains("TASK-E01-01"), "{e}");
+    }
+
+    #[test]
+    fn state_follows_github_trace() {
+        let lib = json!({"repo": "vynamp-engine", "acceptance_ready": true});
+        let app = json!({"repo": "vynamp-player", "acceptance_ready": false});
+        let tr = |rank, mc: &str| Trace {
+            branch: "task/TASK-E01-01".into(),
+            rank,
+            pr: if rank.is_some() {
+                "u".into()
+            } else {
+                String::new()
+            },
+            merge_commit: mc.into(),
+        };
+        let mut f = Fake::default();
+        for (path, v) in [
+            (
+                format!("repos/{OWNER}/{UMBRELLA}/git/trees/develop?recursive=1"),
+                json!({"tree": [{"type": "commit", "path": "libs/engine", "sha": "PIN"}]}),
+            ),
+            (
+                format!("repos/{OWNER}/vynamp-engine/compare/NEW...PIN"),
+                json!({"status": "behind"}),
+            ),
+            (
+                format!("repos/{OWNER}/vynamp-engine/compare/OLD...PIN"),
+                json!({"status": "ahead"}),
+            ),
+        ] {
+            f.gets.insert(path, v);
+        }
+        let cases = [
+            (&lib, None, "Pronta", false),
+            (&app, None, "Rascunho", false),
+            (&lib, Some(tr(Some(2), "OLD")), "Integrada", false),
+            (&lib, Some(tr(Some(2), "NEW")), "Entregue", false),
+            (&app, Some(tr(Some(2), "X")), "Integrada", false),
+            (&lib, Some(tr(Some(1), "")), "Bloqueada", true),
+            (&lib, Some(tr(Some(0), "")), "Bloqueada", true),
+            (&lib, Some(tr(None, "")), "Bloqueada", true),
+        ];
+        for (t, trace, want, reason) in cases {
+            let rank = trace.as_ref().map(|x| x.rank);
+            let m = state_of(&mut f, t, trace.as_ref()).unwrap();
+            assert_eq!(m["Estado"], want, "{t} {rank:?}");
+            assert_eq!(m.contains_key("Motivo"), reason, "{t} {rank:?}");
+        }
     }
 }
