@@ -12,8 +12,8 @@ incidente registrado; ficou como regra de contrato.
 
 Ela tem custo:
 
-1. **GitHub Projects (v2) só tem API GraphQL.** Sem ela, o andamento das TASKs não pode
-   morar num Project, que é o substituto planejado para a base do Notion.
+1. **GitHub Projects (v2) só tem API GraphQL.** Sem ela, nenhum agente pode ler ou
+   escrever num Project, o que fecha essa opção para o andamento das TASKs.
 2. **`gh pr …` usa GraphQL por baixo.** A regra obrigava a reescrever em `gh api` REST
    operações que o `gh` já faz, e a própria definição do integrador manda usar
    `gh pr merge --match-head-commit`, que é GraphQL — a regra já era contraditória.
@@ -38,7 +38,8 @@ Ela tem custo:
 
 Positivas:
 
-- O andamento das TASKs pode ir para um GitHub Project.
+- GitHub Projects passa a ser uma opção para o andamento das TASKs (a escolha fica
+  para decisão própria).
 - Fim da contradição entre o contrato e o fluxo do integrador.
 
 Negativas:
