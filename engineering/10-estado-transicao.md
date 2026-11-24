@@ -132,10 +132,14 @@ Pendências da mesma análise:
 - **Onda sem export do Notion.** Sem export (`--waves export.csv`), o comando calcula a Onda pela faixa do marco e
   pela profundidade das dependências; as 18 TASKs ajustadas à mão em 2026-11-22 podem
   divergir. Saída: mantenedor confere a visão por onda no Project.
-- **READMEs de módulo ainda citam o Notion.** `apps/player/tasks/README.md`,
-  `libs/decode/tasks/README.md` e `libs/engine/tasks/README.md` dizem que o status vive na
-  base do Notion. São de outros repos. Saída: PR em cada um trocando a frase pelo Project
-  (e repin das libs).
+- **READMEs de módulo ainda citam o Notion** — resolvido em 2026-11-24: vynamp-player#24,
+  vynamp-decode#33 e vynamp-engine#20 mergeados em `develop`; `libs/engine` repinado no
+  merge commit `ac2f4d2`. O player é app, sem repin.
+- **`libs/decode` pinado fora de `develop`.** O umbrella aponta para `4ce2eed`
+  (`chore(tasks): E01-07 split into E01-07/11/12/13/14`), que só existe na branch
+  `chore/claude-e01-split` do vynamp-decode, sem PR. Repinar no `develop` do decode
+  (`a6883d7`, com o #33) apaga os arquivos das TASK-E01-11 a 14 e reprova o
+  `check-docs`. Saída: PR dessa branch no vynamp-decode e repin no merge commit.
 - **Rastreio incompleto nas TASKs migradas.** A migração não conhece `SHA revisado` nem
   `Responsável`: TASK `Entregue`/`Integrada` sai sem `SHA revisado`, e PR aberto ou
   branch sem PR sai `Bloqueada` com `Motivo`. Exceção aceita só para o que a migração
