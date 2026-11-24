@@ -29,7 +29,8 @@ git submodule foreach --quiet 'if [ -f setup.sh ]; then sh setup.sh >/dev/null &
 
 `setup.sh` instala os hooks (`pre-commit` recusa commit em `main`/`develop` e nome de
 branch fora do padrão). Credencial do GitHub: `gh auth login` uma vez; ela fica no
-keyring. Nunca passar token como argumento de `gh`. API do GitHub: REST e GraphQL
+keyring. Nunca passar token como argumento de `gh`. Para o `git` usar SSH sem pedir senha, ver
+[09-ssh-github.md](09-ssh-github.md). API do GitHub: REST e GraphQL
 ([ADR-022](../adr/ADR-022-graphql-liberado.md)).
 
 Antes de qualquer `cargo`, apontar o temporário para um disco com espaço e **fora
