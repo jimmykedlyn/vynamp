@@ -12,7 +12,7 @@
 | REQ coberto | `REQ-E11-07` |
 | Critérios da spec | n/a — TASK transversal do umbrella; o critério vive na própria TASK |
 | Fase | M3 |
-| Prioridade | P1 |
+| Prioridade | P0 |
 | Estado | planned |
 | Depende de | `TASK-E11-04`, `TASK-E07-05`, `TASK-E11-06` |
 | Bloqueia | `TASK-E11-08`, `TASK-E14-05` |
