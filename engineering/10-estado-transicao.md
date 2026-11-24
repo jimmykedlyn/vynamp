@@ -135,11 +135,9 @@ Pendências da mesma análise:
 - **READMEs de módulo ainda citam o Notion** — resolvido em 2026-11-24: vynamp-player#24,
   vynamp-decode#33 e vynamp-engine#20 mergeados em `develop`; `libs/engine` repinado no
   merge commit `ac2f4d2`. O player é app, sem repin.
-- **`libs/decode` pinado fora de `develop`.** O umbrella aponta para `4ce2eed`
-  (`chore(tasks): E01-07 split into E01-07/11/12/13/14`), que só existe na branch
-  `chore/claude-e01-split` do vynamp-decode, sem PR. Repinar no `develop` do decode
-  (`a6883d7`, com o #33) apaga os arquivos das TASK-E01-11 a 14 e reprova o
-  `check-docs`. Saída: PR dessa branch no vynamp-decode e repin no merge commit.
+- **`libs/decode` pinado fora de `develop`** — resolvido em 2026-11-24: o split da
+  E01-07 entrou pelo vynamp-decode#34, e `libs/decode` foi repinado no merge commit
+  `be79c65`.
 - **Rastreio incompleto nas TASKs migradas.** A migração não conhece `SHA revisado` nem
   `Responsável`: TASK `Entregue`/`Integrada` sai sem `SHA revisado`, e PR aberto ou
   branch sem PR sai `Bloqueada` com `Motivo`. Exceção aceita só para o que a migração
