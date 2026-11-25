@@ -7,7 +7,7 @@
   "note": "Fonte unica de status. O Markdown em tasks/items nao carrega estado confiavel: os campos vem daqui.",
   "counts": {
     "implemented": 21,
-    "planned": 199
+    "planned": 200
   },
   "tasks": [
     {
@@ -2162,6 +2162,38 @@
       "estimate_days": {
         "min": 5,
         "max": 15
+      },
+      "risk": "alto"
+    },
+    {
+      "id": "TASK-E06-11",
+      "epic": "E06",
+      "title": "Entregar os estilos de onda do MVP",
+      "phase": "M2",
+      "priority": "P1",
+      "status": "planned",
+      "owner_role": "extensions",
+      "requirements": [
+        "REQ-E06-11"
+      ],
+      "dependencies": [
+        "TASK-E06-05",
+        "TASK-E02-13",
+        "TASK-E02-16"
+      ],
+      "spec": "extensions/01-temas.md",
+      "module": "vynamp-player",
+      "repo": "vynamp-player",
+      "acceptance_ready": true,
+      "deliverable": "Os 17 estilos de onda do MVP no player, com configuração por estilo persistida.",
+      "acceptance": "Os 17 estilos existem com os parâmetros de `defaultConfigs`; os 14 ao vivo reproduzem as séries de `movimento.json` dentro dos tetos da TASK-E02-13; os 3 de envelope desenham o envelope do arquivo; movimento reduzido leva a cadência a 100 ms; configuração por estilo é editável e persiste entre sessões; o botão direito ou Shift+F10 sobre a onda abre o menu de estilos; com faixa de rádio, `bars-pulse` desenha barras por amostra além de escalar",
+      "qa": [
+        "QA-017",
+        "QA-034"
+      ],
+      "estimate_days": {
+        "min": 5,
+        "max": 10
       },
       "risk": "alto"
     },
