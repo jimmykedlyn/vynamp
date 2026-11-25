@@ -2,14 +2,14 @@
   "required": true,
   "source": "https://github.com/obra/superpowers",
   "expected_versions": {
-    "claude": "7.0.0"
+    "claude": "7.0.2"
   },
   "version_source": "Saida real de `claude plugin list --json` (superpowers@claude-plugins-official). O main do GitHub nao e pin.",
   "metadata_checked_on": "2026-10-16",
   "version_checked_on": {
-    "claude": "2026-10-16"
+    "claude": "2026-11-24"
   },
-  "claude_version_evidence": "evidence/task-e15-01-claude-manager-7.0.0.json",
+  "claude_version_evidence": "evidence/superpowers-claude-manager-7.0.2.json",
   "claude_install": [
     "claude",
     "plugin",

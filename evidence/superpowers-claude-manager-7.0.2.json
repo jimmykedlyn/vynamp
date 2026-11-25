@@ -1,0 +1,165 @@
+[
+  {
+    "id": "frontend-design@claude-plugins-official",
+    "version": "d4226d062928",
+    "scope": "project",
+    "enabled": false,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\frontend-design\\d4226d062928",
+    "installedAt": "2026-10-04T14:44:33.451Z",
+    "lastUpdated": "2026-10-05T22:46:46.315Z",
+    "projectPath": "D:\\Projects\\vigesima",
+    "projectEnabled": false
+  },
+  {
+    "id": "humanizer@humanizer",
+    "version": "3.1.0",
+    "scope": "project",
+    "enabled": false,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\humanizer\\humanizer\\3.1.0",
+    "installedAt": "2026-10-04T14:46:57.640Z",
+    "lastUpdated": "2026-10-04T14:46:57.640Z",
+    "projectPath": "D:\\Projects\\vigesima",
+    "projectEnabled": false
+  },
+  {
+    "id": "rust-analyzer-lsp@claude-plugins-official",
+    "version": "1.0.0",
+    "scope": "user",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\rust-analyzer-lsp\\1.0.0",
+    "installedAt": "2026-11-07T12:52:57.409Z",
+    "lastUpdated": "2026-11-07T12:52:57.409Z",
+    "projectEnabled": false
+  },
+  {
+    "id": "superpowers@claude-plugins-official",
+    "version": "6.4.1",
+    "scope": "project",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\6.4.1",
+    "installedAt": "2026-10-04T14:39:51.715Z",
+    "lastUpdated": "2026-10-04T14:39:51.715Z",
+    "projectPath": "D:\\Projects\\vigesima",
+    "projectEnabled": true
+  },
+  {
+    "id": "superpowers@claude-plugins-official",
+    "version": "7.0.2",
+    "scope": "project",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\7.0.2",
+    "installedAt": "2026-10-14T13:26:43.613Z",
+    "lastUpdated": "2026-11-21T15:19:03.038Z",
+    "projectPath": "C:\\Users\\jimmy",
+    "projectEnabled": true
+  },
+  {
+    "id": "superpowers@claude-plugins-official",
+    "version": "6.4.1",
+    "scope": "project",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\6.4.1",
+    "installedAt": "2026-10-14T23:51:55.610Z",
+    "lastUpdated": "2026-10-14T23:51:55.610Z",
+    "projectPath": "D:\\Projects\\vynamp-git",
+    "projectEnabled": true
+  },
+  {
+    "id": "superpowers@claude-plugins-official",
+    "version": "7.0.2",
+    "scope": "user",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\7.0.2",
+    "installedAt": "2026-10-16T00:54:01.685Z",
+    "lastUpdated": "2026-11-21T14:02:31.211Z",
+    "projectEnabled": true
+  },
+  {
+    "id": "superpowers@claude-plugins-official",
+    "version": "7.0.0",
+    "scope": "project",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\7.0.0",
+    "installedAt": "2026-10-16T12:27:46.808Z",
+    "lastUpdated": "2026-10-16T12:29:04.597Z",
+    "projectPath": "D:\\Projects\\vynamp-media-player\\repo\\.worktrees\\claude\\review-bootstrap",
+    "projectEnabled": true
+  },
+  {
+    "id": "superpowers@claude-plugins-official",
+    "version": "7.0.0",
+    "scope": "project",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\7.0.0",
+    "installedAt": "2026-10-18T16:08:02.457Z",
+    "lastUpdated": "2026-10-18T16:08:02.457Z",
+    "projectPath": "D:\\Projects\\vynamp-media-player\\repo\\.worktrees\\claude\\task-e15-03-gitflow",
+    "projectEnabled": true
+  },
+  {
+    "id": "superpowers@claude-plugins-official",
+    "version": "7.0.0",
+    "scope": "project",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\7.0.0",
+    "installedAt": "2026-10-18T18:19:54.100Z",
+    "lastUpdated": "2026-10-18T18:19:54.100Z",
+    "projectPath": "D:\\Projects\\vynamp-media-player\\repo\\.worktrees\\claude\\task-e01-02-callback",
+    "projectEnabled": true
+  },
+  {
+    "id": "superpowers@claude-plugins-official",
+    "version": "7.0.0",
+    "scope": "project",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\7.0.0",
+    "installedAt": "2026-10-18T21:01:48.329Z",
+    "lastUpdated": "2026-10-18T21:01:48.329Z",
+    "projectPath": "D:\\Projects\\vynamp-media-player\\repo\\.worktrees\\claude\\task-e15-04-woodpecker",
+    "projectEnabled": true
+  },
+  {
+    "id": "superpowers@claude-plugins-official",
+    "version": "7.0.0",
+    "scope": "project",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\7.0.0",
+    "installedAt": "2026-10-28T21:13:27.734Z",
+    "lastUpdated": "2026-10-28T21:13:27.734Z",
+    "projectPath": "D:\\Projects\\vynamp-media-player\\repo\\.worktrees\\claude\\chore-dsp-eq-docs",
+    "projectEnabled": true
+  },
+  {
+    "id": "superpowers@claude-plugins-official",
+    "version": "7.0.2",
+    "scope": "project",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\7.0.2",
+    "installedAt": "2026-11-12T02:08:39.063Z",
+    "lastUpdated": "2026-11-21T14:02:35.945Z",
+    "projectPath": "D:\\Projects\\vynamp",
+    "projectEnabled": true
+  },
+  {
+    "id": "superpowers@claude-plugins-official",
+    "version": "7.0.0",
+    "scope": "project",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\7.0.0",
+    "installedAt": "2026-11-14T18:15:06.441Z",
+    "lastUpdated": "2026-11-14T18:15:06.441Z",
+    "projectPath": "D:\\Projects\\vynamp\\.worktrees\\claude\\task-e11-03-licencas-e-inventario",
+    "projectEnabled": true
+  },
+  {
+    "id": "superpowers@claude-plugins-official",
+    "version": "7.0.2",
+    "scope": "project",
+    "enabled": true,
+    "installPath": "C:\\Users\\jimmy\\.claude\\plugins\\cache\\claude-plugins-official\\superpowers\\7.0.2",
+    "installedAt": "2026-11-24T02:51:30.773Z",
+    "lastUpdated": "2026-11-24T02:51:30.773Z",
+    "projectPath": "D:\\Projects\\vynamp\\.worktrees\\claude\\task-e01-07-aac-lc-he-aac",
+    "projectEnabled": true
+  }
+]
