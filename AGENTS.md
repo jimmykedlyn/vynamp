@@ -349,6 +349,20 @@ conduta, não bloqueio técnico; quem quebrar diz no relatório.
 6. **Integração**: PR com template e `--body-file`, sem duplicar PR existente; merge só
    sob as condições de §5.4.
 7. **Entrega ao mantenedor**: URL do PR, SHA revisado, base, veredito e CI.
+8. **Próxima TASK**: com a TASK em `Integrada` (merge, repin e limpeza feitos), o
+   orquestrador escolhe a próxima pelo §8.2 e a devolve ao mantenedor junto com um prompt
+   curto para outra sessão, num bloco de código. O prompt:
+   - abre mandando ler o `AGENTS.md` inteiro antes de qualquer ação, e diz que ele vale
+     acima do prompt (divergiu: parar e avisar);
+   - nomeia TASK, título, módulo e Issue;
+   - traz o que foi verificado, com data: Estado, Onda, Prio, dependências e o SHA do
+     `develop`, e manda conferir de novo antes de reservar;
+   - lembra: spec incompleta vira `Bloqueada` antes de qualquer código; plano mostrado
+     antes do implementador; os quatro subagentes, §5.4 e repin;
+   - lista TASKs que não podem rodar em paralelo e worktrees de outras sessões que não se
+     tocam.
+
+   Sem TASK elegível, diz isso e por quê, em vez do prompt.
 
 ### 5.4 Merge
 
@@ -495,7 +509,8 @@ orquestrador então: `git fetch origin` e fast-forward do `develop` no checkout 
 limpo, confirmando `HEAD` = `origin/develop`; atualiza o `Estado` da TASK no Project com o
 link do PR e o merge commit; descarta worktree e branch da TASK integrada (worktree de
 outra sessão não). Se a TASK é de módulo, o repin do submódulo no umbrella é um PR
-próprio, apontando para o **merge commit**, nunca para o topo da branch.
+próprio, apontando para o **merge commit**, nunca para o topo da branch. Com a TASK em
+`Integrada`, o orquestrador devolve a próxima TASK e o prompt dela (§6.3, passo 8).
 
 ### Entrega
 
