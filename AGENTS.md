@@ -349,6 +349,15 @@ conduta, não bloqueio técnico; quem quebrar diz no relatório.
 6. **Integração**: PR com template e `--body-file`, sem duplicar PR existente; merge só
    sob as condições de §5.4.
 7. **Entrega ao mantenedor**: URL do PR, SHA revisado, base, veredito e CI.
+8. **Próxima TASK**: com a TASK em `Integrada` (merge, repin quando houver, e limpeza
+   feitos), o orquestrador escolhe a próxima pelo §8.2 e a devolve ao mantenedor com um
+   prompt para outra sessão, num bloco de código de no máximo ~10 linhas. O prompt abre
+   mandando ler o `AGENTS.md` inteiro antes de qualquer ação (ele vale acima do prompt;
+   divergiu, parar e avisar); nomeia TASK, título, módulo e Issue; traz Estado, Onda, Prio,
+   dependências e o SHA do `develop` verificados, com data, para conferir de novo antes de
+   reservar; e lista as TASKs que não podem rodar em paralelo e as worktrees de outras
+   sessões que não se tocam. Não repete regra do contrato. Sem TASK elegível, diz isso e
+   por quê, em vez do prompt.
 
 ### 5.4 Merge
 
@@ -495,7 +504,8 @@ orquestrador então: `git fetch origin` e fast-forward do `develop` no checkout 
 limpo, confirmando `HEAD` = `origin/develop`; atualiza o `Estado` da TASK no Project com o
 link do PR e o merge commit; descarta worktree e branch da TASK integrada (worktree de
 outra sessão não). Se a TASK é de módulo, o repin do submódulo no umbrella é um PR
-próprio, apontando para o **merge commit**, nunca para o topo da branch.
+próprio, apontando para o **merge commit**, nunca para o topo da branch. Com a TASK em
+`Integrada`, o orquestrador devolve a próxima TASK e o prompt dela (§6.3, passo 8).
 
 ### Entrega
 
