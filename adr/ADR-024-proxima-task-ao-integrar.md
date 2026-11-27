@@ -12,9 +12,9 @@ explícito do mantenedor ("qual a próxima task?"). Depois vinha um segundo pedi
 para a outra sessão.
 
 A escolha já tem regra (§8.2: Onda → Prio → TASK, com as dependências em `Integrada`), e
-quem acabou de integrar é quem tem o estado mais fresco do Project e do `develop`. Na
-prática, o prompt que funcionou foi curto e começava mandando ler o `AGENTS.md`. O motivo
-é que a sessão nova não conhece o contrato até lê-lo.
+quem acabou de integrar é quem tem o estado mais fresco do Project e do `develop`. A
+sessão nova não conhece o contrato até lê-lo; por isso o prompt começa mandando ler o
+`AGENTS.md` e não precisa repetir regra nenhuma.
 
 O passo entrou no contrato pelo PR #304 (merge `47b5342`). Como muda o processo do
 contrato, o §1.6 pede esta ADR.
@@ -57,8 +57,9 @@ Negativas:
 - **O estado envelhece.** Entre a entrega do prompt e o início da outra sessão, o Project
   e o `develop` podem mudar. Mitigação: o prompt traz a data e o SHA e manda conferir de
   novo antes de reservar.
-- **Mais um passo no fim do fluxo,** com uma consulta ao Project a cada TASK integrada,
-  que gasta cota de GraphQL ([ADR-022](ADR-022-graphql-liberado.md)).
+- **Mais um passo no fim do fluxo,** com uma consulta a mais ao Project por TASK
+  integrada.
 - **Duas sessões podem receber a mesma TASK** se dois prompts saírem antes de alguém
-  reservar. Mitigação: a reserva continua atômica (§6.3, passo 1) e quem chegar depois vê
-  `Responsável` gravado e não toca.
+  reservar. A claim local do `xtask` só é atômica dentro de uma máquina. Mitigação: antes
+  de reservar, o orquestrador confere `Responsável` no Project (§5, retomada; §8.2;
+  [ADR-023](ADR-023-andamento-no-github.md)).
