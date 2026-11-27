@@ -349,20 +349,15 @@ conduta, não bloqueio técnico; quem quebrar diz no relatório.
 6. **Integração**: PR com template e `--body-file`, sem duplicar PR existente; merge só
    sob as condições de §5.4.
 7. **Entrega ao mantenedor**: URL do PR, SHA revisado, base, veredito e CI.
-8. **Próxima TASK**: com a TASK em `Integrada` (merge, repin e limpeza feitos), o
-   orquestrador escolhe a próxima pelo §8.2 e a devolve ao mantenedor junto com um prompt
-   curto para outra sessão, num bloco de código. O prompt:
-   - abre mandando ler o `AGENTS.md` inteiro antes de qualquer ação, e diz que ele vale
-     acima do prompt (divergiu: parar e avisar);
-   - nomeia TASK, título, módulo e Issue;
-   - traz o que foi verificado, com data: Estado, Onda, Prio, dependências e o SHA do
-     `develop`, e manda conferir de novo antes de reservar;
-   - lembra: spec incompleta vira `Bloqueada` antes de qualquer código; plano mostrado
-     antes do implementador; os quatro subagentes, §5.4 e repin;
-   - lista TASKs que não podem rodar em paralelo e worktrees de outras sessões que não se
-     tocam.
-
-   Sem TASK elegível, diz isso e por quê, em vez do prompt.
+8. **Próxima TASK**: com a TASK em `Integrada` (merge, repin quando houver, e limpeza
+   feitos), o orquestrador escolhe a próxima pelo §8.2 e a devolve ao mantenedor com um
+   prompt para outra sessão, num bloco de código de no máximo ~10 linhas. O prompt abre
+   mandando ler o `AGENTS.md` inteiro antes de qualquer ação (ele vale acima do prompt;
+   divergiu, parar e avisar); nomeia TASK, título, módulo e Issue; traz Estado, Onda, Prio,
+   dependências e o SHA do `develop` verificados, com data, para conferir de novo antes de
+   reservar; e lista as TASKs que não podem rodar em paralelo e as worktrees de outras
+   sessões que não se tocam. Não repete regra do contrato. Sem TASK elegível, diz isso e
+   por quê, em vez do prompt.
 
 ### 5.4 Merge
 
