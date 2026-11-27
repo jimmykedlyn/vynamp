@@ -27,8 +27,12 @@ afirmar o que existe.
 ## 0. Idioma, precedência e quem dá ordem
 
 **Idioma.** Português brasileiro em toda comunicação, documentação, spec, ADR, corpo de PR
-e mensagem de commit. Inglês só em código, API pública, CLI, identificadores e no prefixo
-do Conventional Commits (`feat(engine): adiciona drain do mixer`).
+e mensagem de commit. Inglês em código, **comentários de código** (`//`, `///`, `//!`,
+`// SAFETY:` e justificativas de `#[allow(...)]`), API pública, CLI, identificadores e no
+prefixo do Conventional Commits (`feat(engine): adiciona drain do mixer`).
+
+**Idioma do aplicativo.** Inglês é o idioma principal dos apps: texto padrão da interface,
+das mensagens ao usuário e do fallback. Português brasileiro é tradução, por chave.
 
 **Precedência.** Quando duas fontes divergem, vale a primeira desta lista; a divergência
 **para** a TASK (estado `Bloqueada`) e é corrigida no mesmo PR que a resolve.
@@ -161,7 +165,9 @@ consequências negativas. Decisão só no chat não existe.
   critério e não conta como cobertura.
 - Nada de `todo!()` ou stub que finge funcionar. Botão desabilitado não conta como
   funcionalidade entregue.
-- Nomes em inglês no código e na API pública; documentação e specs em português.
+- Nomes e comentários em inglês no código e na API pública; documentação e specs em
+  português. Comentário em português já existente não é traduzido de carona (mudança
+  cirúrgica); sai em inglês quando a linha for tocada pela TASK.
 - Sem `#[allow(...)]` novo sem justificativa escrita ao lado.
 
 ---
