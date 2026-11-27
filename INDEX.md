@@ -85,6 +85,7 @@ Versão 0.8.1 · 2026-11-07 · Markdown de produto, tooling, bootstrap e evidên
 - [ADR-021 — `cargo xtask ci docs` sai do `pre-push`](adr/ADR-021-ci-docs-fora-do-pre-push.md) — adr/ADR-021-ci-docs-fora-do-pre-push.md
 - [ADR-022 — API GraphQL do GitHub liberada](adr/ADR-022-graphql-liberado.md) — adr/ADR-022-graphql-liberado.md
 - [ADR-023 — andamento das TASKs em GitHub Issues e Projects](adr/ADR-023-andamento-no-github.md) — adr/ADR-023-andamento-no-github.md
+- [ADR-024 — o orquestrador devolve a próxima TASK ao integrar](adr/ADR-024-proxima-task-ao-integrar.md) — adr/ADR-024-proxima-task-ao-integrar.md
 - [Engine de áudio e invariantes](reference/audio/01-engine.md) — reference/audio/01-engine.md
 
 - [Matriz de formatos, codecs e tags](reference/audio/02-formats.md) — reference/audio/02-formats.md
