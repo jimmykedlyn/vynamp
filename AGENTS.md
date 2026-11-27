@@ -349,8 +349,8 @@ conduta, não bloqueio técnico; quem quebrar diz no relatório.
 6. **Integração**: PR com template e `--body-file`, sem duplicar PR existente; merge só
    sob as condições de §5.4.
 7. **Entrega ao mantenedor**: URL do PR, SHA revisado, base, veredito e CI.
-8. **Próxima TASK** ([ADR-024](adr/ADR-024-proxima-task-ao-integrar.md)): com a TASK em `Integrada` (merge, repin quando houver, e limpeza
-   feitos), o orquestrador escolhe a próxima pelo §8.2 e a devolve ao mantenedor com um
+8. **Próxima TASK** ([ADR-024](adr/ADR-024-proxima-task-ao-integrar.md)): com a TASK
+   em `Integrada` (merge, repin quando houver, e limpeza feitos), o orquestrador escolhe a próxima pelo §8.2 e a devolve ao mantenedor com um
    prompt para outra sessão, num bloco de código de no máximo ~10 linhas. O prompt abre
    mandando ler o `AGENTS.md` inteiro antes de qualquer ação (ele vale acima do prompt;
    divergiu, parar e avisar); nomeia TASK, título, módulo e Issue; traz Estado, Onda, Prio,
